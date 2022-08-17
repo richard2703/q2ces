@@ -37,6 +37,8 @@
     <script src="{{ asset('js/core/popper.min.js') }}"></script>
     <script src="{{ asset('js/core/bootstrap-material-design.min.js') }}"></script>
     <script src="{{ asset('js/plugins/perfect-scrollbar.jquery.min.js') }}"></script>
+    <script src="{{ asset('js/material-dashboard.js?v=2.1.1') }}" type="text/javascript"></script>
+
 
     @stack('js')
 </body>
