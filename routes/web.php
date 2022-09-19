@@ -17,6 +17,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+/* Mis rutas */
+Route::get('/dashboard', function () {
+    return view('equipos.dashboard');
+});
+
+Route::get('/verEquipos', function () {
+    return view('equipos.verEquipos');
+});
+
+
+
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => 'auth'], function () {

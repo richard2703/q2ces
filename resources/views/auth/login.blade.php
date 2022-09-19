@@ -1,100 +1,123 @@
-@extends('layouts.main', ['class' => 'off-canvas-sidebar', 'activePage' => 'login', 'title' => __('Material Dashboard')])
+<!DOCTYPE html>
+<html lang="es">
 
-@section('content')
-    <div class="container" style="height: auto;">
-        <div class="row align-items-center">
-            <div class="col-md-9 ml-auto mr-auto mb-3 text-center">
-                <h3>{{ __('Log in to see how you can speed up your web development with out of the box CRUD for #User Management and more.') }}
-                </h3>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
-                <form class="form" method="POST" action="{{ route('login') }}">
-                    @csrf
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-                    <div class="card card-login card-hidden mb-3">
-                        <div class="card-header card-header-primary text-center">
-                            <h4 class="card-title"><strong>{{ __('Login') }}</strong></h4>
-                            <div class="social-line">
-                                <a href="#pablo" class="btn btn-just-icon btn-link btn-white">
-                                    <i class="fa fa-facebook-square"></i>
-                                </a>
-                                <a href="#pablo" class="btn btn-just-icon btn-link btn-white">
-                                    <i class="fa fa-twitter"></i>
-                                </a>
-                                <a href="#pablo" class="btn btn-just-icon btn-link btn-white">
-                                    <i class="fa fa-google-plus"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-description text-center">{{ __('Or Sign in with ') }}
-                                <strong>admin@material.com</strong> {{ __(' and the password ') }}<strong>secret</strong>
-                            </p>
-                            <div class="bmd-form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="material-icons">email</i>
-                                        </span>
-                                    </div>
-                                    <input type="email" name="email" class="form-control"
-                                        placeholder="{{ __('Email...') }}" value="{{ old('email') }}" required autofocus>
-                                </div>
-                                @if ($errors->has('email'))
-                                    <div id="email-error" class="error text-danger pl-3" for="email"
-                                        style="display: block;">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="bmd-form-group{{ $errors->has('password') ? ' has-danger' : '' }} mt-3">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="material-icons">lock_outline</i>
-                                        </span>
-                                    </div>
-                                    <input type="password" name="password" id="password" class="form-control"
-                                        placeholder="{{ __('Password...') }}"
-                                        value="{{ !$errors->has('password') ? 'secret' : '' }}" required>
-                                </div>
-                                @if ($errors->has('password'))
-                                    <div id="password-error" class="error text-danger pl-3" for="password"
-                                        style="display: block;">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="form-check mr-auto ml-3 mt-3">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" name="remember"
-                                        {{ old('remember') ? 'checked' : '' }}> {{ __('Remember me') }}
-                                    <span class="form-check-sign">
-                                        <span class="check"></span>
-                                    </span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="card-footer justify-content-center">
-                            <button type="submit" class="btn btn-primary btn-link btn-lg">{{ __('Lets Go') }}</button>
-                        </div>
+    <!--ESTA ETIQUETA ES EL ENLACE CON BOOSTRAP-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <title>Polion</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/general.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+</head>
+
+<body class="container ">
+    <section class="row align-items-center justify-content-center fondoLogin m-0 p-0">
+
+        <div class="col-8 col-lg-6 col-xl-4  login-box mx-center">
+            <img src="{{ asset('img/login/logoQcem2.svg') }}" class="mx-auto d-block mb-5" width="30%">
+            <p class="bienvenido mt-3">Bienvenido</p>
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    <div class="alert alert-danger">{{ $error }}</div>
+                @endforeach
+            @endif
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="user-box">
+                    <input type="text" name="email" required="" class="inputRelleno">
+                    <label>Correo</label>
+                </div>
+                <div class="user-box">
+                    <input type="password" name="password" required="">
+                    <label>Contraseña</label>
+                </div>
+
+
+                <div class="d-flex align-items-center">
+                    <div class="align-items-center " style="width: 50%;">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label textLabel" for="flexCheckDefault">
+                            Recordar contraseña
+                        </label>
                     </div>
-                </form>
-                <div class="row">
-                    <div class="col-6">
-                        @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}" class="text-light">
-                                <small>{{ __('Forgot password?') }}</small>
-                            </a>
-                        @endif
-                    </div>
-                    <div class="col-6 text-right">
-                        <a href="{{ route('register') }}" class="text-light">
-                            <small>{{ __('Create new account') }}</small>
-                        </a>
+                    <div class="align-items-center " style="width: 50%;">
+                        <p class="txtOlvide align-items-center mt-4">Olvidé contraseña</p>
                     </div>
                 </div>
-            </div>
+
+
+                <button class="mt-5" type="submit">
+                    Entrar
+                </button>
+
+            </form>
         </div>
-    </div>
-@endsection
+
+    </section>
+</body>
+
+
+
+
+{{-- <body class="antialiased">
+
+     @if (Route::has('login'))
+        <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+            @auth
+                <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
+            @else
+                <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}"
+                        class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+                @endif
+            @endauth
+        </div>
+    @endif --}}
+{{-- <section class="vh-100">
+        <div class="login-box">
+            <h2>Iniciar sesion</h2>
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="user-box">
+                    <input type="text" name="email" required="">
+                    <label>Correo</label>
+                </div>
+                <div class="user-box">
+                    <input type="password" name="password" required="">
+                    <label>Contraseña</label>
+                </div>
+                <button type="submit" style="background-color:transparent;border: none; ">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Enviar
+                </button>
+            </form>
+        </div>
+    </section>
+</body> --}}
+
+
+<!--ESTAS 2  ETIQUETAS SON PARA QUE FUNCIONEN LAS ANIMACIONES DE BOOSTRAP-->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+    integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
+    integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous">
+</script>
+</body>
+
+</html>

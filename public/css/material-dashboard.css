@@ -14572,7 +14572,6 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 }
 
 .sidebar .nav {
-  margin-top: 20px;
   display: block;
 }
 
@@ -14596,8 +14595,8 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 .sidebar .nav li .dropdown-menu a:hover,
 .sidebar .nav li .dropdown-menu a:focus,
 .sidebar .nav li.active>[data-toggle="collapse"] {
-  background-color: rgba(200, 200, 200, 0.2);
-  color: #3C4858;
+  background-color: #727176;
+  color: #fff;
   box-shadow: none;
 }
 
@@ -14608,6 +14607,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 .sidebar .nav li.active>a,
 .sidebar .nav li.active>a i {
   color: #fff;
+  background-color: #727176;
 }
 
 .sidebar .nav li.separator {
@@ -14670,7 +14670,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   background-size: cover;
   background-position: center center;
 }
-
+/* aqui */
 .sidebar .sidebar-background:after {
   position: absolute;
   z-index: 3;
@@ -14678,8 +14678,8 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   height: 100%;
   content: "";
   display: block;
-  background: #FFFFFF;
-  opacity: .93;
+  /* background: #FFFFFF; */
+  /* opacity: .93; */
 }
 
 .sidebar .logo {
@@ -14736,8 +14736,8 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   width: 60px;
   height: 60px;
 }
-
-.sidebar[data-background-color="black"] .nav .nav-item .nav-link {
+/* aqui */
+/* .sidebar[data-background-color="black"] .nav .nav-item .nav-link {
   color: #fff;
 }
 
@@ -14862,7 +14862,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 .sidebar[data-image]:after,
 .sidebar.has-image:after {
   opacity: .77;
-}
+} */
 
 .off-canvas-sidebar .navbar-collapse .nav>li>a,
 .off-canvas-sidebar .navbar-collapse .nav>li>a:hover {

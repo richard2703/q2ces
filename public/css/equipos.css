@@ -1,0 +1,10 @@
+.texticonos{
+    font-family: 'Montserrat', sans-serif!important;
+    font-size: 1.8em;
+    font-weight: 400;
+    color:#5C7C26;
+}
+
+.botonIconoPrincipal:hover{
+    opacity: .6;
+}

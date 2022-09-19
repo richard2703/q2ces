@@ -1,50 +1,33 @@
-<div class="sidebar" data-color="orange" data-background-color="white"
-    data-image="{{ asset('material') }}/img/sidebar-1.jpg">
-    <!--
-      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
-
-      Tip 2: you can also add an image using data-image tag
-  -->
+<div class="sidebar sidebarDerecha" data-image="{{ asset('material') }}/img/sidebar-1.jpg">
+    
     <div class="logo">
-        <a href="https://creative-tim.com/" class="simple-text logo-normal">
-            {{ __('Creative Tim') }}
+        <a href="" class="">
+        <img src="{{ asset('img/login/logoQcem2.svg') }}" class="mx-auto d-block " width="30%">
         </a>
     </div>
-    <div class="sidebar-wrapper">
-        <ul class="nav">
-            <li class="nav-item{{ $activePage == 'dashboard' ? ' active' : '' }}">
-                <a class="nav-link" href="{{ route('home') }}">
+    <div class="sidebar-wrapper accordion" id="accordionPanelsStayOpenExample">
+        <ul class="nav" >
+
+
+ 
+            <li class="accordion-item nav-item{{ $activePage == 'dashboard' ? ' active' : '' }} itemNav">
+                <a class="nav-link py-2 accordion-button" href="{{ url('dashboard') }}" data-toggle="collapse" aria-expanded="false">
                     <i class="material-icons">dashboard</i>
-                    <p>{{ __('Dashboard') }}</p>
+                    <p class=" ">{{ __('Equipos') }}</p></a>
                 </a>
+
+
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                      <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                    </div>
+                  </div>
+
             </li>
-            {{-- <li class="nav-item {{ $activePage == 'profile' || $activePage == 'user-management' ? ' active' : '' }}">
-                <a class="nav-link" data-toggle="collapse" href="#laravelExample" aria-expanded="true">
-                    <i><img style="width:25px" src="{{ asset('img/laravel.svg') }}"></i>
-                    <p>{{ __('Laravel Examples') }}
-                        <b class="caret"></b>
-                    </p>
-                </a>
-                <div class="collapse show" id="laravelExample">
-                    <ul class="nav">
-                        <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                            <a class="nav-link" href="#">
-                                <span class="sidebar-mini"> UP </span>
-                                <span class="sidebar-normal">{{ __('User profile') }} </span>
-                            </a>
-                        </li>
-                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                            <a class="nav-link" href="#">
-                                <span class="sidebar-mini"> UM </span>
-                                <span class="sidebar-normal"> {{ __('User Management') }} </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li> --}}
+
             @can('user_index')
                 <li class="nav-item{{ $activePage == 'users' ? ' active' : '' }}">
-                    <a class="nav-link" href="{{ route('users.index') }}">
+                    <a class="nav-link py-2" href="{{ route('users.index') }}">
                         <i class="material-icons">face</i>
                         <p>Usuarios</p>
                     </a>
@@ -52,7 +35,7 @@
             @endcan
             @can('permission_index')
                 <li class="nav-item{{ $activePage == 'permissions' ? ' active' : '' }}">
-                    <a class="nav-link" href="{{ route('permissions.index') }}">
+                    <a class="nav-link py-2" href="{{ route('permissions.index') }}">
                         <i class="material-icons">security</i>
                         <p>Permisos</p>
                     </a>
@@ -60,7 +43,7 @@
             @endcan
             @can('role_index')
                 <li class="nav-item{{ $activePage == 'roles' ? ' active' : '' }}">
-                    <a class="nav-link" href="{{ route('roles.index') }}">
+                    <a class="nav-link py-2" href="{{ route('roles.index') }}">
                         <i class="material-icons">assignment_ind</i>
                         <p>Roles</p>
                     </a>
