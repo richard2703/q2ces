@@ -14650,7 +14650,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 .sidebar .nav li a,
 .sidebar .nav li .dropdown-menu a {
   margin: 10px 15px 0;
-  border-radius: 3px;
+
   color: #3C4858;
   padding-left: 10px;
   padding-right: 10px;
@@ -16664,7 +16664,7 @@ label {
 
 .card .card-body,
 .card .card-footer {
-  padding: 0.9375rem 1.875rem;
+  /*padding: 0.9375rem 1.875rem;*/
 }
 
 .card .card-body+.card-footer {
@@ -16968,7 +16968,7 @@ label {
 }
 
 .card .card-body {
-  padding: 0.9375rem 20px;
+  /*padding: 0.9375rem 20px;*/
   position: relative;
 }
 
@@ -17069,8 +17069,8 @@ label {
 .card .card-body+.card-footer,
 .card .card-footer {
   padding: 0;
-  padding-top: 10px;
-  margin: 0 15px 10px;
+   /*padding-top: 10px;
+ margin: 0 15px 10px;*/
   border-radius: 0;
   justify-content: space-between;
   align-items: center;
@@ -17090,7 +17090,7 @@ label {
 
 .card .card-body+.card-footer .stats .card-category,
 .card .card-footer .stats .card-category {
-  padding-top: 7px;
+  /*padding-top: 7px;*/
   padding-bottom: 7px;
   margin: 0;
 }

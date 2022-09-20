@@ -1,79 +1,188 @@
 <div class="sidebar sidebarDerecha" data-image="{{ asset('material') }}/img/sidebar-1.jpg">
     
     <div class="logo">
-        <a href="" class="">
+        <a href="{{ url('dashboard', session('id')) }}"class="nav-item{{ $activePage == 'dashboard' ? ' active' : '' }}">
         <img src="{{ asset('img/login/logoQcem2.svg') }}" class="mx-auto d-block " width="30%">
         </a>
     </div>
-    <div class="sidebar-wrapper accordion" id="accordionPanelsStayOpenExample">
+
+    <div class="sidebar-wrapper">
         <ul class="nav" >
+<!-- inicio de colapsable -->
 
-
- 
-            <li class="accordion-item nav-item{{ $activePage == 'dashboard' ? ' active' : '' }} itemNav">
-                <a class="nav-link py-2 accordion-button" href="{{ url('dashboard') }}" data-toggle="collapse" aria-expanded="false">
-                    <i class="material-icons">dashboard</i>
-                    <p class=" ">{{ __('Equipos') }}</p></a>
+            <li class="nav-item {{ $activePage == 'dashboard' || $activePage == 'user-management' ? ' active' : '' }}">
+                <a href="#equipo" class="nav-link p-2" data-toggle="collapse"  aria-expanded="false">
+                    <i><img class="imgMenu" style="width:25px" src="{{ asset('/img/navs/eqiposMenu.svg') }}"></i>
+                    <p>{{ __('Equipos') }}
+                        <b class="caret"></b>
+                    </p>
                 </a>
+                <div class="collapse " id="equipo">
+                    <ul class="nav">
+                        <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                        <a  href="{{ url('verEquipos', session('id')) }}"class="nav-link nav-item{{ $activePage == 'equipos' ? ' active' : '' }} ">
+                                <span class="py-2 ps-5 sidebar-normal">{{ __('Ver Equipo') }} </span>
+                            </a>
+                        </li>
 
+                        <!--no colapsable>-->
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                
+                                <span class="sidebar-normal"> {{ __('Alta de Equipo') }} </span>
+                            </a>
+                        </li>
 
-                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-                    <div class="accordion-body">
-                      <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                    </div>
-                  </div>
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                
+                                <span class="sidebar-normal"> {{ __('Accesorios') }} </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li> 
 
+            <li class="nav-item {{ $activePage == 'profile' || $activePage == 'user-management' ? ' active' : '' }}">
+                <a class="nav-link p-2" data-toggle="collapse" href="#personal" aria-expanded="false">
+                    <i><img style="width:25px" src="{{ asset('/img/navs/personalMenu.svg') }}"></i>
+                    <p>{{ __('Personal') }}
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse " id="personal">
+                    <ul class="nav">
+                        <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                
+                                <span class="sidebar-normal">{{ __('Ver Personal') }} </span>
+                            </a>
+                        </li>
+
+                        <!--no colapsable>-->
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                
+                                <span class="sidebar-normal"> {{ __('Alta de Personal') }} </span>
+                            </a>
+                        </li>
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                
+                                <span class="sidebar-normal"> {{ __('Contraseña') }} </span>
+                            </a>
+                        </li>
+
+                        
+                    </ul>
+                </div>
+            </li> 
+
+            <li class="nav-item {{ $activePage == 'profile' || $activePage == 'user-management' ? ' active' : '' }}">
+                <a class="nav-link p-2" data-toggle="collapse" href="#obras" aria-expanded="false">
+                    <i><img style="width:25px" src="{{ asset('/img/navs/obrasMenu.svg') }}"></i>
+                    <p>{{ __('Obra') }}
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse " id="obras">
+                    <ul class="nav">
+                        <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                <span class="sidebar-normal">{{ __('Ver Obra') }} </span>
+                            </a>
+                        </li>
+
+                        <!--no colapsable>-->
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                <span class="sidebar-normal"> {{ __('Alta de Obra') }} </span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                <span class="sidebar-normal"> {{ __('Asignación de Obra') }} </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
 
-            @can('user_index')
-                <li class="nav-item{{ $activePage == 'users' ? ' active' : '' }}">
-                    <a class="nav-link py-2" href="{{ route('users.index') }}">
-                        <i class="material-icons">face</i>
-                        <p>Usuarios</p>
-                    </a>
-                </li>
-            @endcan
-            @can('permission_index')
-                <li class="nav-item{{ $activePage == 'permissions' ? ' active' : '' }}">
-                    <a class="nav-link py-2" href="{{ route('permissions.index') }}">
-                        <i class="material-icons">security</i>
-                        <p>Permisos</p>
-                    </a>
-                </li>
-            @endcan
-            @can('role_index')
-                <li class="nav-item{{ $activePage == 'roles' ? ' active' : '' }}">
-                    <a class="nav-link py-2" href="{{ route('roles.index') }}">
-                        <i class="material-icons">assignment_ind</i>
-                        <p>Roles</p>
-                    </a>
-                </li>
-            @endcan
+            <li class="nav-item {{ $activePage == 'profile' || $activePage == 'user-management' ? ' active' : '' }}">
+                <a class="nav-link p-2" data-toggle="collapse" href="#bitacorass" aria-expanded="false">
+                    <i><img style="width:25px" src="{{ asset('/img/navs/bitacorasMenu.svg') }}"></i>
+                    <p>{{ __('Bitácoras / Reportes') }}
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse " id="bitacoras">
+                    <ul class="nav">
+                        <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                <span class="sidebar-normal">{{ __('Obra') }} </span>
+                            </a>
+                        </li>
 
-            {{-- <li class="nav-item{{ $activePage == 'icons' ? ' active' : '' }}">
-                <a class="nav-link" href="#">
-                    <i class="material-icons">bubble_chart</i>
-                    <p>{{ __('Icons') }}</p>
-                </a>
+                        <!--no colapsable>-->
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                <span class="sidebar-normal"> {{ __('Ver Obra') }} </span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                <span class="sidebar-normal"> {{ __('Alta de Obra') }} </span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                <span class="sidebar-normal"> {{ __('Asignación de Obra') }} </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
-            <li class="nav-item{{ $activePage == 'users' ? ' active' : '' }}">
-                <a class="nav-link" href="#">
-                    <i class="material-icons">location_ons</i>
-                    <p>{{ __('Maps') }}</p>
+
+            <li class="nav-item {{ $activePage == 'profile' || $activePage == 'user-management' ? ' active' : '' }}">
+                <a class="nav-link p-2" data-toggle="collapse" href="#formatoss" aria-expanded="false">
+                    <i><img style="width:25px" src="{{ asset('/img/navs/formatosMenu.svg') }}"></i>
+                    <p>{{ __('Formatos') }}
+                        <b class="caret"></b>
+                    </p>
                 </a>
+                <div class="collapse " id="formatos">
+                    <ul class="nav">
+                        <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                <span class="sidebar-normal">{{ __('Obra') }} </span>
+                            </a>
+                        </li>
+
+                        <!--no colapsable>-->
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                <span class="sidebar-normal"> {{ __('Ver Obra') }} </span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                <span class="sidebar-normal"> {{ __('Alta de Obra') }} </span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                <span class="sidebar-normal"> {{ __('Asignación de Obra') }} </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
-            <li class="nav-item{{ $activePage == 'notifications' ? ' active' : '' }}">
-                <a class="nav-link" href="#">
-                    <i class="material-icons">notifications</i>
-                    <p>{{ __('Notifications') }}</p>
-                </a>
-            </li>
-            <li class="nav-item{{ $activePage == 'language' ? ' active' : '' }}">
-                <a class="nav-link" href="#">
-                    <i class="material-icons">language</i>
-                    <p>{{ __('RTL Support') }}</p>
-                </a>
-            </li> --}}
+
         </ul>
     </div>
 </div>
