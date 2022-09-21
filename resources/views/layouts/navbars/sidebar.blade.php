@@ -88,15 +88,14 @@
                 <div class="collapse " id="obras">
                     <ul class="nav">
                         <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                            <a class="nav-link py-2 ps-5" href="#">
-                                <span class="sidebar-normal">{{ __('Ver Obra') }} </span>
+                        <a  href="{{ url('vistaObra', session('id')) }}"class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
+                                <span class="sidebar-normal py-2 ps-5">{{ __('Ver Obra') }} </span>
                             </a>
                         </li>
 
                         <!--no colapsable>-->
                         <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
                         <a  href="{{ url('altaObra', session('id')) }}"class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
-
                                 <span class="sidebar-normal py-2 ps-5"> {{ __('Alta de Obra') }} </span>
                             </a>
                         </li>

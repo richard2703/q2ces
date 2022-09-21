@@ -30,6 +30,10 @@ Route::get('/altaObra', function () {
     return view('obra.altaObra');
 });
 
+Route::get('/vistaObra', function () {
+    return view('obra.vistaObra');
+});
+
 
 
 
