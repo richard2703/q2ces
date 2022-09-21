@@ -26,6 +26,10 @@ Route::get('/verEquipos', function () {
     return view('equipos.verEquipos');
 });
 
+Route::get('/altaObra', function () {
+    return view('obra.altaObra');
+});
+
 
 
 

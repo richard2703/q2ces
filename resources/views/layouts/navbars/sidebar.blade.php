@@ -8,7 +8,7 @@
 
     <div class="sidebar-wrapper">
         <ul class="nav" >
-<!-- inicio de colapsable -->
+            <!-- inicio de colapsable -->
 
             <li class="nav-item {{ $activePage == 'dashboard' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a href="#equipo" class="nav-link p-2" data-toggle="collapse"  aria-expanded="false">
@@ -95,8 +95,9 @@
 
                         <!--no colapsable>-->
                         <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                            <a class="nav-link py-2 ps-5" href="#">
-                                <span class="sidebar-normal"> {{ __('Alta de Obra') }} </span>
+                        <a  href="{{ url('altaObra', session('id')) }}"class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
+
+                                <span class="sidebar-normal py-2 ps-5"> {{ __('Alta de Obra') }} </span>
                             </a>
                         </li>
 
