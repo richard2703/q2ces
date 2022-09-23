@@ -30,7 +30,17 @@ Route::get('/altaObra', function () {
     return view('obra.altaObra');
 });
 
+Route::get('/vistaObra', function () {
+    return view('obra.vistaObra');
+});
 
+Route::get('/altaDePersonal', function () {
+    return view('personal.altaDePersonal');
+});
+
+Route::get('/detalleDePersonal', function () {
+    return view('personal.detalleDePersonal');
+});
 
 
 
