@@ -49,7 +49,7 @@ CREATE TABLE users (
   remember_token varchar(100) DEFAULT NULL,
   created_at timestamp NULL DEFAULT NULL,
   updated_at timestamp NULL DEFAULT NULL,
-  username varchar(255) NULL
+  username varchar(255) null,
   PRIMARY KEY (id)
 );
 
@@ -314,7 +314,7 @@ CREATE TABLE accesorios(
 CREATE TABLE maqacce(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   maquinariaId bigint(20) unsigned NOT NULL,
-  accesorioIdbigint(20) unsigned NOT NULL,
+  accesorioId bigint(20) unsigned NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT FK_maqacce_maquinariaId foreign key (maquinariaId) references maquinaria(id),
   CONSTRAINT FK_maqacce_accesorioId foreign key (accesorioId) references accesorios(id)
@@ -342,12 +342,11 @@ CREATE TABLE obraMaqPer(
   personalId bigint(20) unsigned NOT NULL,
   obraId bigint(20) unsigned NOT NULL,
   inicio datetime NULL,
-  findatetime NULL,
+  fin datetime NULL,
   PRIMARY KEY (id),
-  CONSTRAINT FK_maqdocs_obraMaqPer foreign key (maquinariaId) references maquinaria(id),
-  CONSTRAINT FK_maqdocs_obraMaqPer foreign key (personalId) references personal(id),
-  CONSTRAINT FK_maqdocs_obraMaqPer foreign key (obraId) references obras(id)
-
+  CONSTRAINT FK_obraMaqPer_maquinaria foreign key (maquinariaId) references maquinaria(id),
+  CONSTRAINT FK_obraMaqPer_persona foreign key (personalId) references personal(id),
+  CONSTRAINT FK_obraMaqPer_obras foreign key (obraId) references obras(id)
  );
 
 

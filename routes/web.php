@@ -48,4 +48,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
     Route::resource('roles', App\Http\Controllers\RoleController::class);
+
+    //Crud Obras
+
+    Route::post('/obras', [App\Http\Controllers\obrasController::class, 'store'])->name('obras.store');
 });
