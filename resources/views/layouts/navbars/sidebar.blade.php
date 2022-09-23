@@ -61,9 +61,8 @@
 
                         <!--no colapsable>-->
                         <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                            <a class="nav-link py-2 ps-5" href="#">
-                                
-                                <span class="sidebar-normal"> {{ __('Alta de Personal') }} </span>
+                            <a  href="{{ url('altaDePersonal', session('id')) }}"class="nav-link -item{{ $activePage == 'personal' ? ' active' : '' }} ">  
+                                <span class="sidebar-normal py-2 ps-5"> {{ __('Alta de Personal') }} </span>
                             </a>
                         </li>
                         <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">

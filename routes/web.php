@@ -34,6 +34,9 @@ Route::get('/vistaObra', function () {
     return view('obra.vistaObra');
 });
 
+Route::get('/altaDePersonal', function () {
+    return view('personal.altaDePersonal');
+});
 
 
 
