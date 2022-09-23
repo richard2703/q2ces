@@ -53,9 +53,8 @@
                 <div class="collapse " id="personal">
                     <ul class="nav">
                         <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                            <a class="nav-link py-2 ps-5" href="#">
-                                
-                                <span class="sidebar-normal">{{ __('Ver Personal') }} </span>
+                        <a  href="{{ url('detalleDePersonal', session('id')) }}"class="nav-link -item{{ $activePage == 'personal' ? ' active' : '' }} ">
+                                <span class="sidebar-normal py-2 ps-5">{{ __('Ver Personal') }} </span>
                             </a>
                         </li>
 

@@ -18,7 +18,7 @@ body{
 
 .texticonos{
   font-family: 'Montserrat', sans-serif!important;
-  font-size: 1.7em;
+  font-size: 1.1em;
   font-weight: 500;
   color:#727176;
 }
@@ -148,3 +148,7 @@ box-shadow: 2px 2px 10px 2px #F7C90D!important;
       width: 30px;
       height: 30px;
     }
+  /* ------- CSS PARA VISTA DE PERSONAL/ DOCUMENTOS ----------*/
+  p span{
+    font-weight: 400;
+  }

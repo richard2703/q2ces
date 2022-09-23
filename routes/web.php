@@ -38,6 +38,9 @@ Route::get('/altaDePersonal', function () {
     return view('personal.altaDePersonal');
 });
 
+Route::get('/detalleDePersonal', function () {
+    return view('personal.detalleDePersonal');
+});
 
 
 
