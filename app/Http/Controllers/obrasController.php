@@ -53,7 +53,7 @@ class obrasController extends Controller
         }
         $obra['estatus'] = 'Activa';
         obras::create($obra);
-        return redirect()->back();
+        return redirect()->route('obras.index');
     }
 
     /**
@@ -64,7 +64,8 @@ class obrasController extends Controller
      */
     public function show(obras $obras)
     {
-        //
+        // dd($obras->logo);
+        return view('obra.vistaObra', compact('obras'));
     }
 
     /**

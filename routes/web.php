@@ -63,4 +63,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/obras/nuevo', [App\Http\Controllers\obrasController::class, 'create'])->name('obras.create');
     Route::post('/obras', [App\Http\Controllers\obrasController::class, 'store'])->name('obras.store');
     Route::get('/obras', [App\Http\Controllers\obrasController::class, 'index'])->name('obras.index');
+    Route::get('/obras/{obras}', [App\Http\Controllers\obrasController::class, 'show'])->name('obras.show');
 });

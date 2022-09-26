@@ -54,7 +54,7 @@
 
                                                         <td class="td-actions text-right">
                                                             {{-- @can('user_show') --}}
-                                                            <a href="{{ route('users.show', $obra->id) }}"
+                                                            <a href="{{ route('obras.show', $obra->id) }}"
                                                                 class="btn btn-info"><i
                                                                     class="material-icons">person</i></a>
                                                             {{-- @endcan --}}
