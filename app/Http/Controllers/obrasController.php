@@ -16,7 +16,9 @@ class obrasController extends Controller
      */
     public function index()
     {
-        //
+        // dd('lista de obras');
+        $obras = obras::paginate(5);
+        return view('obra.indexObras', compact('obras'));
     }
 
     /**
@@ -26,7 +28,7 @@ class obrasController extends Controller
      */
     public function create()
     {
-        //
+        return view('obra.altaObra');
     }
 
     /**
@@ -49,6 +51,7 @@ class obrasController extends Controller
             $obra['foto'] = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
             $request->file('foto')->storeAs('/public/obras', $obra['foto']);
         }
+        $obra['estatus'] = 'Activa';
         obras::create($obra);
         return redirect()->back();
     }
