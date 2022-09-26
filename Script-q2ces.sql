@@ -52,6 +52,8 @@ CREATE TABLE users (
   username varchar(255) null,
   PRIMARY KEY (id)
 );
+INSERT INTO `users` VALUES (1,'admin','a@a.com',NULL,'$2y$10$xchASRodwuYH58CYgTt3r.RWshZp3BzYMd6T7pg3ZNZxd4d3fXzUy',NULL,NULL,NULL,'2022-09-26 19:48:41','2022-09-26 19:48:41',NULL);
+
 
 create  table model_has_permissions (
 permission_id bigint(20) unsigned NOT NULL auto_increment,
@@ -70,6 +72,9 @@ CREATE TABLE model_has_roles (
   KEY model_has_roles_model_id_model_type_index (model_id,model_type),
   CONSTRAINT model_has_roles_role_id_foreign FOREIGN KEY (role_id) REFERENCES roles (id) ON DELETE cascade
 );
+
+INSERT INTO `model_has_roles` VALUES (1,'App\\Models\\User',1);
+
 
 CREATE TABLE role_has_permissions (
   permission_id bigint(20) unsigned NOT NULL,

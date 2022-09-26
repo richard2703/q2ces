@@ -60,6 +60,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('roles', App\Http\Controllers\RoleController::class);
 
     //Crud Obras
-
+    Route::get('/obras/nuevo', [App\Http\Controllers\obrasController::class, 'create'])->name('obras.create');
     Route::post('/obras', [App\Http\Controllers\obrasController::class, 'store'])->name('obras.store');
+    Route::get('/obras', [App\Http\Controllers\obrasController::class, 'index'])->name('obras.index');
 });
