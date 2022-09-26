@@ -1,0 +1,360 @@
+CREATE TABLE roles (
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  name varchar(255) NOT NULL,
+  guard_name varchar(255) NOT NULL,
+  created_at timestamp NULL DEFAULT NULL,
+  updated_at timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY roles_name_guard_name_unique (name,guard_name)
+);
+INSERT INTO roles VALUES 
+(1,'Admin','web','2022-07-25 20:54:16','2022-07-25 20:54:16'),
+(2,'User','web','2022-07-25 20:54:16','2022-07-25 20:54:16');
+
+CREATE TABLE permissions (
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  name varchar(255) NOT NULL,
+  guard_name varchar(255) NOT NULL,
+  created_at timestamp NULL DEFAULT NULL,
+  updated_at timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY permissions_name_guard_name_unique (name,guard_name)
+);
+INSERT INTO permissions VALUES 
+(1,'permission_index','web','2022-07-25 20:54:15','2022-07-25 20:54:15'),
+(2,'permission_create','web','2022-07-25 20:54:15','2022-07-25 20:54:15'),
+(3,'permission_show','web','2022-07-25 20:54:15','2022-07-25 20:54:15'),
+(4,'permission_edit','web','2022-07-25 20:54:16','2022-07-25 20:54:16'),
+(5,'permission_destroy','web','2022-07-25 20:54:16','2022-07-25 20:54:16'),
+(6,'role_index','web','2022-07-25 20:54:16','2022-07-25 20:54:16'),
+(7,'role_create','web','2022-07-25 20:54:16','2022-07-25 20:54:16'),
+(8,'role_show','web','2022-07-25 20:54:16','2022-07-25 20:54:16'),
+(9,'role_edit','web','2022-07-25 20:54:16','2022-07-25 20:54:16'),
+(10,'role_destroy','web','2022-07-25 20:54:16','2022-07-25 20:54:16'),
+(11,'user_index','web','2022-07-25 20:54:16','2022-07-25 20:54:16'),
+(12,'user_create','web','2022-07-25 20:54:16','2022-07-25 20:54:16'),
+(13,'user_show','web','2022-07-25 20:54:16','2022-07-25 20:54:16'),
+(14,'user_edit','web','2022-07-25 20:54:16','2022-07-25 20:54:16'),
+(15,'user_destroy','web','2022-07-25 20:54:16','2022-07-25 20:54:16')
+;
+
+CREATE TABLE users (
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  name varchar(255) NOT NULL,
+  email varchar(255) NOT NULL,
+  email_verified_at timestamp NULL,
+  password varchar(255) NOT NULL,
+  two_factor_secret text DEFAULT NULL,
+  two_factor_recovery_codes text DEFAULT NULL,
+  remember_token varchar(100) DEFAULT NULL,
+  created_at timestamp NULL DEFAULT NULL,
+  updated_at timestamp NULL DEFAULT NULL,
+  username varchar(255) null,
+  PRIMARY KEY (id)
+);
+INSERT INTO `users` VALUES (1,'admin','a@a.com',NULL,'$2y$10$xchASRodwuYH58CYgTt3r.RWshZp3BzYMd6T7pg3ZNZxd4d3fXzUy',NULL,NULL,NULL,'2022-09-26 19:48:41','2022-09-26 19:48:41',NULL);
+
+
+create  table model_has_permissions (
+permission_id bigint(20) unsigned NOT NULL auto_increment,
+model_type varchar(255) NOT NULL,
+model_id bigint(20) unsigned NOT NULL,
+PRIMARY KEY (permission_id,model_id,model_type),
+KEY model_has_permissions_model_id_model_type_index (model_id,model_type),
+CONSTRAINT model_has_permissions_permission_id_foreign FOREIGN KEY (permission_id) REFERENCES permissions (id) ON DELETE CASCADE 
+);
+
+CREATE TABLE model_has_roles (
+  role_id bigint(20) unsigned NOT NULL,
+  model_type varchar(255) NOT NULL,
+  model_id bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (role_id,model_id,model_type),
+  KEY model_has_roles_model_id_model_type_index (model_id,model_type),
+  CONSTRAINT model_has_roles_role_id_foreign FOREIGN KEY (role_id) REFERENCES roles (id) ON DELETE cascade
+);
+
+INSERT INTO `model_has_roles` VALUES (1,'App\\Models\\User',1);
+
+
+CREATE TABLE role_has_permissions (
+  permission_id bigint(20) unsigned NOT NULL,
+  role_id bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`permission_id`,`role_id`),
+  KEY `role_has_permissions_role_id_foreign` (`role_id`),
+  CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
+);
+INSERT INTO role_has_permissions VALUES 
+(1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),
+(8,1),(9,1),(10,1),(11,1),(12,1),(13,1),
+(14,1),(15,1),(16,1),(16,2),(17,1),(17,2),
+(18,1),(18,2),(19,1),(19,2),(20,1),(20,2);
+
+CREATE TABLE password_resets (
+  email varchar(255) NOT NULL,
+  token varchar(255) NOT NULL,
+  created_at timestamp NULL DEFAULT NULL,
+  KEY password_resets_email_index (email)
+);
+
+/*No creo que sirva para algo*/
+create table failed_jobs(
+id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+uuid varchar(255) NOT NULL,
+connection text NOT NULL,
+queue text NOT NULL,
+payload longtext NOT NULL,
+exception longtext NOT NULL,
+failed_at timestamp NOT NULL DEFAULT current_timestamp(),
+PRIMARY KEY (id),
+UNIQUE KEY failed_jobs_uuid_unique (uuid)
+);
+
+CREATE TABLE personal(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  userId bigint(20) unsigned NOT NULL,
+  nombres varchar(255) NULL,
+  apellidoP varchar(255) NULL,
+  apellidoM varchar(255) NULL,
+  fechaNacimiento datetime null,
+  lugarNacimiento varchar(255) null,
+  curp varchar(21) NULL,
+  ine varchar(20) NULL,
+  rfc varchar(20) NULL,
+  licencia varchar(20) NULL,
+  cpf varchar(25) NULL,
+  cpe varchar(25) NULL,
+  sexo varchar(10) NULL,
+  civil varchar(25) NULL,
+  hijos int null,
+  sangre varchar(10) NULL,
+  calle varchar(255) NULL,
+  numero varchar(255) NULL,
+  colonia varchar(255) NULL,
+  estado varchar(255) NULL,
+  cp varchar(255) NULL,
+  particular varchar(255) NULL,
+  celular varchar(255) NULL,
+  mailpersonal varchar(255) NULL,
+  mailEmpresaril varchar(255) NULL,
+  casa varchar(255) NULL,
+  foto varchar(255) NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_personal_userId foreign key (userId) references users(id)
+ );
+
+CREATE TABLE equipo(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  personalId bigint(20) unsigned NOT NULL,
+  casco varchar(200) NULL,
+  chaleco varchar(200) NULL,
+  camisa varchar(200) NULL,
+  arnes varchar(200) NULL,
+  botas varchar(200) NULL,
+  guantes varchar(200) NULL,
+  lentes varchar(200) NULL,
+  comentarios text null,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_equipo_personalId foreign key (personalId) references personal(id)
+ );
+
+CREATE TABLE userdocs(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  personalId bigint(20) unsigned NOT NULL,
+  vitae varchar(255) NULL,
+  nacimiento varchar(255) NULL,
+  ine varchar(255) NULL,
+  curp varchar(255) NULL,
+  licencia varchar(255) NULL,
+  licenciaEstatus varchar(255) NULL,
+  cedula varchar(255) NULL,
+  fiscal varchar(255) NULL,
+  domicilio varchar(255) NULL,
+  penales varchar(255) NULL,
+  recomendacion varchar(255) NULL,
+  dc3 varchar(255) NULL,
+  medico varchar(255) NULL,
+  doping varchar(255) NULL,
+  estudios varchar(255) NULL,
+  nss varchar(255) NULL,
+  ari varchar(255) NULL,
+  puesto varchar(255) NULL,
+  contrato varchar(255) NULL,
+  contratoEstatus varchar(255) NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_userdocs_personalId foreign key (personalId) references personal(id)
+ );
+
+CREATE TABLE contactos(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  personalId bigint(20) unsigned NOT NULL,
+  nombre varchar(255) NULL,
+  apellidos varchar(255) NULL,
+  casa varchar(255) NULL,
+  oficina varchar(255) NULL,
+  parentesco varchar(255) NULL,
+  emergencia varchar(255) NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_contactos_personalId foreign key (personalId) references personal(id)
+ );
+
+CREATE TABLE beneficiario(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  personalId bigint(20) unsigned NOT NULL,
+  nombres varchar(255) NULL,
+  apellidoP varchar(255) NULL,
+  apellidoM varchar(255) NULL,
+  calle varchar(255) NULL,
+  numero varchar(255) NULL,
+  colonia varchar(255) NULL,
+  ciudad varchar(255) NULL,
+  estado varchar(255) NULL,
+  cp varchar(255) NULL,
+  particular varchar(255) NULL,
+  celular varchar(255) NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_beneficiario_personalId foreign key (personalId) references personal(id)
+ );
+
+CREATE TABLE nomina(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  personalId bigint(20) unsigned NOT NULL,
+  nomina int null,
+  imss varchar(255) NULL,
+  clinica varchar(255) NULL,
+  infonavit varchar(255) NULL,
+  afore varchar(255) NULL,
+  pago float(10,2) null,
+  tarjeta varchar(255) NULL,
+  banco varchar(255) NULL,
+  puesto varchar(255) NULL,
+  ingreso datetime null,
+  vactotales int null,
+  vactomadas int null,
+  primavactotal  float(10,2) null,
+  primavactomadas  float(10,2) null,
+  laborables int null,
+  horario varchar(255) NULL,
+  jefeId bigint(20) unsigned NOT NULL,
+  neto  float(10,2) null,
+  bruto  float(10,2) null,
+  diario  float(10,2) null,
+  diariointegro float(10,2) null,
+  mensualintegro float(10,2) null,
+  imssAportacion float(10,2) null,
+  imssriesgo float(10,2) null,
+  aforeAportacion float(10,2) null,
+  isn float(10,2) null,
+  ispt float(10,2) null,
+  aguinaldo float(10,2) null,
+  ptu float(10,2) null,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_nomina_personalId foreign key (personalId) references personal(id),
+  CONSTRAINT FK_nomina_jefeId foreign key (jefeId) references personal(id)
+ );
+
+CREATE TABLE maquinaria(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  nombre varchar(255) NULL,
+  tipo varchar(255) NULL,
+  categoria varchar(255) NULL,
+  marca varchar(255) NULL,
+  submarca varchar(255) NULL,
+  modelo varchar(255) NULL,
+  uso varchar(255) NULL,
+  color varchar(255) NULL,
+  placas varchar(255) NULL,
+  motor varchar(255) NULL,
+  nummotor varchar(255) NULL,
+  numserie varchar(255) NULL,
+  vin varchar(255) NULL,
+  capacidad varchar(255) NULL,
+  tanque int NULL,
+  ejes varchar(255) NULL,
+  rinD varchar(255) NULL,
+  rinT varchar(255) NULL,
+  llantaD varchar(255) NULL,
+  llantaT varchar(255) NULL,
+  aceitemotor  varchar(255) NULL,
+  aceitetras varchar(255) NULL,
+  aceitehidra varchar(255) NULL,
+  filtroaceite varchar(255) NULL,
+  filtroaire varchar(255) NULL,
+  bujias varchar(255) NULL,
+  tipobujia varchar(255) NULL,
+  horometro int NULL,
+  kilometraje int NULL,
+  kom varchar(255) NULL,
+  foto varchar(255) NULL,
+  PRIMARY KEY (id)
+ );
+
+CREATE TABLE maqdocs(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  maquinariaId bigint(20) unsigned NOT NULL,
+  factura varchar(255) NULL,
+  circulacion varchar(255) NULL,
+  veriicacion varchar(255) NULL,
+  verificacionEstado varchar(255) NULL,
+  ficha varchar(255) NULL,
+  manual varchar(255) NULL,
+  seguro varchar(255) NULL,
+  seguroEstatus varchar(255) NULL,
+  registro varchar(255) NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_maqdocs_maquinariaId foreign key (maquinariaId) references maquinaria(id)
+ );
+
+CREATE TABLE accesorios(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  nombre varchar(255) NULL,
+  marca varchar(255) NULL,
+  modelo varchar(255) NULL,
+  color varchar(255) NULL,
+  año varchar(255) NULL,
+  serie varchar(255) NULL,
+  PRIMARY KEY (id)
+ );
+
+CREATE TABLE maqacce(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  maquinariaId bigint(20) unsigned NOT NULL,
+  accesorioId bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_maqacce_maquinariaId foreign key (maquinariaId) references maquinaria(id),
+  CONSTRAINT FK_maqacce_accesorioId foreign key (accesorioId) references accesorios(id)
+ );
+
+CREATE TABLE obras(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  nombre varchar(255) NULL,
+  tipo varchar(255) NULL,
+  calle varchar(255) NULL,
+  numero varchar(255) NULL,
+  colonia  varchar(255) NULL,
+  estado varchar(255) NULL,
+  ciudad varchar(255) NULL,
+  cp varchar(255) NULL,
+  logo varchar(255) NULL,
+  foto varchar(255) NULL,
+  estatus varchar(255) NULL,
+  PRIMARY KEY (id)
+ );
+
+CREATE TABLE obraMaqPer(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  maquinariaId bigint(20) unsigned NOT NULL,
+  personalId bigint(20) unsigned NOT NULL,
+  obraId bigint(20) unsigned NOT NULL,
+  inicio datetime NULL,
+  fin datetime NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_obraMaqPer_maquinaria foreign key (maquinariaId) references maquinaria(id),
+  CONSTRAINT FK_obraMaqPer_persona foreign key (personalId) references personal(id),
+  CONSTRAINT FK_obraMaqPer_obras foreign key (obraId) references obras(id)
+ );
+
+
+
+
+
