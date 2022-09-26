@@ -3,7 +3,7 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-12 align-self-start">
+                <div class="col-11 align-self-start">
                     <div class="card">
                         <div class="card-body contCart">
                             <div class="p-1 align-self-start bacTituloPrincipal">     
@@ -77,7 +77,7 @@
 
                                     </div>
 
-                                    <div class"row">
+                                    <div class="row">
                                         <div class=" col-12 col-sm-6  mb-3 ">
                                             <p class="textTitulo my-2">Obra Asignada: <span>Parque Metropolitano</span></p>
                                             <p class="textTitulo my-2">Equipo Asignado: <span>Parque Retroexcabadora</span></p>

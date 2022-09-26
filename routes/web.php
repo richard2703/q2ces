@@ -22,6 +22,10 @@ Route::get('/dashboard', function () {
     return view('equipos.dashboard');
 });
 
+Route::get('/altaDeEquipos', function () {
+    return view('equipos.altaDeEquipos');
+});
+
 Route::get('/verEquipos', function () {
     return view('equipos.verEquipos');
 });
