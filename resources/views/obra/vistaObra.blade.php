@@ -3,7 +3,7 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-12 align-self-start">
+                <div class="col-11 align-self-start">
                     <div class="card">
                         <div class="card-body contCart">
                             <div class="p-1 align-self-start bacTituloPrincipal">
@@ -41,6 +41,7 @@
                                             <h2 class="fs-5 textTitulo">Residente Responsable:</h2></br>
                                             <p class="txtVistaObra">(falta agregar bloque)</p>
                                         </div>
+                                        
 
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <h2 class="fs-5 textTitulo">Equipos Asignados:</h2></br>
