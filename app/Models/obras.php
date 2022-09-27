@@ -9,7 +9,7 @@ class obras extends Model
 {
     use HasFactory;
     protected $table = "obras";
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'nombre', 'tipo', 'calle', 'numero', 'colonia', 'estado', 'ciudad', 'cp', 'logo', 'foto', 'estatus',

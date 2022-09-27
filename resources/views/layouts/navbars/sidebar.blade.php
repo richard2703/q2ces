@@ -44,7 +44,7 @@
                 </div>
             </li>
 
-            <li class="nav-item {{ $activePage == 'profile' || $activePage == 'user-management' ? ' active' : '' }}">
+            <li class="nav-item {{ $activePage == 'personal' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a class="nav-link p-2" data-toggle="collapse" href="#personal" aria-expanded="false">
                     <i><img style="width:25px" src="{{ asset('/img/navs/personalMenu.svg') }}"></i>
                     <p>{{ __('Personal') }}
@@ -55,7 +55,7 @@
                     <ul class="nav">
                         <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
                             <a
-                                href="{{ url('detalleDePersonal', session('id')) }}"class="nav-link -item{{ $activePage == 'personal' ? ' active' : '' }} ">
+                                href="{{ route('personal.index') }}"class="nav-link -item{{ $activePage == 'personal' ? ' active' : '' }} ">
                                 <span class="sidebar-normal py-2 ps-5">{{ __('Ver Personal') }} </span>
                             </a>
                         </li>
@@ -91,7 +91,7 @@
                         <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
                             <a
                                 href="{{ route('obras.index', session('id')) }}"class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
-                                <span class="sidebar-normal py-2 ps-5">{{ __('Ver Obra') }} </span>
+                                <span class="sidebar-normal py-2 ps-5">{{ __('Ver Obras') }} </span>
                             </a>
                         </li>
 

@@ -68,13 +68,13 @@ a.textEquipo:hover{
 
   .vistaLogo{
     width: 15%;
-    height: 50%;
+    /* height: 50%; */
   }
 
   @media (max-width: 576px) {
     .vistaLogo{
       width: 35%;
-      height: 50%;
+      /* height: 50%; */
     }
   }
 

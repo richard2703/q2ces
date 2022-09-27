@@ -17,7 +17,7 @@ class obrasController extends Controller
     public function index()
     {
         // dd('lista de obras');
-        $obras = obras::paginate(5);
+        $obras = obras::orderBy('created_at', 'desc')->paginate(5);
         return view('obra.indexObras', compact('obras'));
     }
 
@@ -53,7 +53,7 @@ class obrasController extends Controller
         }
         $obra['estatus'] = 'Activa';
         obras::create($obra);
-        return redirect()->back();
+        return redirect()->route('obras.index');
     }
 
     /**
@@ -64,7 +64,8 @@ class obrasController extends Controller
      */
     public function show(obras $obras)
     {
-        //
+        // dd($obras->logo);
+        return view('obra.vistaObra', compact('obras'));
     }
 
     /**
