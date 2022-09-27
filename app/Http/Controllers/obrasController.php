@@ -17,7 +17,7 @@ class obrasController extends Controller
     public function index()
     {
         // dd('lista de obras');
-        $obras = obras::paginate(5);
+        $obras = obras::orderBy('created_at', 'desc')->paginate(5);
         return view('obra.indexObras', compact('obras'));
     }
 

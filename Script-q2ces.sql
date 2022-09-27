@@ -139,9 +139,12 @@ CREATE TABLE personal(
   mailEmpresaril varchar(255) NULL,
   casa varchar(255) NULL,
   foto varchar(255) NULL,
+  created_at timestamp NULL DEFAULT NULL,
+  updated_at timestamp NULL DEFAULT NULL,
   PRIMARY KEY (id),
   CONSTRAINT FK_personal_userId foreign key (userId) references users(id)
  );
+
 
 CREATE TABLE equipo(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -338,6 +341,8 @@ CREATE TABLE obras(
   logo varchar(255) NULL,
   foto varchar(255) NULL,
   estatus varchar(255) NULL,
+  created_at timestamp NULL DEFAULT NULL,
+  updated_at timestamp NULL DEFAULT NULL,
   PRIMARY KEY (id)
  );
 
