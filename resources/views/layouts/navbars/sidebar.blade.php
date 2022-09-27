@@ -28,9 +28,8 @@
 
                         <!--no colapsable>-->
                         <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                            <a class="nav-link py-2 ps-5" href="#">
-
-                                <span class="sidebar-normal"> {{ __('Alta de Equipo') }} </span>
+                            <a  href="{{ url('altaDeEquipos', session('id')) }}"class="nav-link nav-item{{ $activePage == 'equipos' ? ' active' : '' }} ">
+                                <span class="sidebar-normal py-2 ps-5"> {{ __('Alta de Equipo') }} </span>
                             </a>
                         </li>
 
@@ -40,6 +39,13 @@
                                 <span class="sidebar-normal"> {{ __('Accesorios') }} </span>
                             </a>
                         </li>
+
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a  href="{{ url('altaDeAccesorios', session('id')) }}"class="nav-link nav-item{{ $activePage == 'equipos' ? ' active' : '' }} ">
+                                <span class="sidebar-normal py-2 ps-5"> {{ __('Alta de Accesorios') }} </span>
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
             </li>

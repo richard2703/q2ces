@@ -20,7 +20,8 @@
                                                 <div class="row mt-3">
                                                     <div class="col-12 col-md-4  "> 
                                                         <div class="text-center mx-auto border vistaFoto mb-4">
-                                                            <i><img class="imgVista img-fluid" src="{{ asset('/img/general/vistaAerea.jpg') }}"></i>
+                                                            <i><img class="imgVista img-fluid mb-5" src="{{ asset('/img/general/vistaAerea.jpg') }}"></i>
+                                                            <input class="mb-4" type="file" name="logo" id=" ">
                                                         </div>
                                                     </div>  
                                                                                         
@@ -1171,6 +1172,10 @@
                                               </div>
                                         </div>
                                     </div>
+                                    <div class="col-12 text-center mb-3 ">
+                                        <button type="submit" class="btn botonGral">Guardar</button>
+                                    </div>
+
                                 
                                 </form>    
                             </div>   
