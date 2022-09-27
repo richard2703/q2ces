@@ -26,6 +26,10 @@ Route::get('/altaDeEquipos', function () {
     return view('equipos.altaDeEquipos');
 });
 
+Route::get('/altaDeAccesorios', function () {
+    return view('equipos.altaDeAccesorios');
+});
+
 Route::get('/verEquipos', function () {
     return view('equipos.verEquipos');
 });
