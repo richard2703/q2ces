@@ -34,9 +34,8 @@
                         </li>
 
                         <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                            <a class="nav-link py-2 ps-5" href="#">
-
-                                <span class="sidebar-normal"> {{ __('Accesorios') }} </span>
+                            <a  href="{{ url('verAccesorios', session('id')) }}"class="nav-link nav-item{{ $activePage == 'equipos' ? ' active' : '' }} ">
+                                <span class="sidebar-normal py-2 ps-5"> {{ __('Ver Accesorios') }} </span>
                             </a>
                         </li>
 
