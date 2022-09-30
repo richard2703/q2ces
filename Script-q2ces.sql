@@ -112,7 +112,7 @@ UNIQUE KEY failed_jobs_uuid_unique (uuid)
 
 CREATE TABLE personal(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  userId bigint(20) unsigned NOT NULL,
+  userId bigint(20) unsigned  NULL,
   nombres varchar(255) NULL,
   apellidoP varchar(255) NULL,
   apellidoM varchar(255) NULL,
@@ -128,10 +128,14 @@ CREATE TABLE personal(
   civil varchar(25) NULL,
   hijos int null,
   sangre varchar(10) NULL,
+  aler text null,
+  profe varchar (255) null,
   calle varchar(255) NULL,
   numero varchar(255) NULL,
+  interior varchar (255) null,
   colonia varchar(255) NULL,
   estado varchar(255) NULL,
+  ciudad varchar(255) null,
   cp varchar(255) NULL,
   particular varchar(255) NULL,
   celular varchar(255) NULL,
@@ -149,17 +153,21 @@ CREATE TABLE personal(
 CREATE TABLE equipo(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   personalId bigint(20) unsigned NOT NULL,
-  casco varchar(200) NULL,
   chaleco varchar(200) NULL,
   camisa varchar(200) NULL,
-  arnes varchar(200) NULL,
   botas varchar(200) NULL,
   guantes varchar(200) NULL,
-  lentes varchar(200) NULL,
   comentarios text null,
+  pc varchar(200) NULL,
+  pcSerial varchar(200) NULL,
+  celular varchar(200) NULL,
+  celularImei varchar(200) NULL,
+  radio varchar(200) NULL,
+  radioSerial varchar(200) NULL,
+  cargadorSerial varchar(200) null,
   PRIMARY KEY (id),
   CONSTRAINT FK_equipo_personalId foreign key (personalId) references personal(id)
- );
+ ); 
 
 CREATE TABLE userdocs(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -192,14 +200,14 @@ CREATE TABLE contactos(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   personalId bigint(20) unsigned NOT NULL,
   nombre varchar(255) NULL,
-  apellidos varchar(255) NULL,
-  casa varchar(255) NULL,
-  oficina varchar(255) NULL,
+  particular varchar(255) NULL,
+  celular varchar(255) NULL,
   parentesco varchar(255) NULL,
-  emergencia varchar(255) NULL,
+  nombreP varchar(255) null,
+  nombreM varchar(255) null,
   PRIMARY KEY (id),
   CONSTRAINT FK_contactos_personalId foreign key (personalId) references personal(id)
- );
+ ); 
 
 CREATE TABLE beneficiario(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -207,27 +215,22 @@ CREATE TABLE beneficiario(
   nombres varchar(255) NULL,
   apellidoP varchar(255) NULL,
   apellidoM varchar(255) NULL,
-  calle varchar(255) NULL,
-  numero varchar(255) NULL,
-  colonia varchar(255) NULL,
-  ciudad varchar(255) NULL,
-  estado varchar(255) NULL,
-  cp varchar(255) NULL,
   particular varchar(255) NULL,
   celular varchar(255) NULL,
+  nacimiento datetime null,
   PRIMARY KEY (id),
   CONSTRAINT FK_beneficiario_personalId foreign key (personalId) references personal(id)
  );
 
 CREATE TABLE nomina(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  personalId bigint(20) unsigned NOT NULL,
+  personalId bigint(20) unsigned NULL,
   nomina int null,
   imss varchar(255) NULL,
   clinica varchar(255) NULL,
   infonavit varchar(255) NULL,
   afore varchar(255) NULL,
-  pago float(10,2) null,
+  pago varchar(25) null,
   tarjeta varchar(255) NULL,
   banco varchar(255) NULL,
   puesto varchar(255) NULL,

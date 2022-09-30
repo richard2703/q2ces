@@ -36,25 +36,25 @@
                                             <thead class="labelTitulo">
                                                 <th>ID</th>
                                                 <th>Nombre</th>
-                                                <th>Ciudad</th>
-                                                <th>Residente</th>
+                                                <th>Apellido</th>
+                                                <th>Profesion </th>
                                                 <th>Telefono</th>
-                                                <th>Estatus</th>
+                                                <th>Mail</th>
                                                 <th class="text-right">Acciones</th>
                                             </thead>
                                             <tbody>
                                                 @forelse ($personal as $persona)
                                                     <tr>
                                                         <td>{{ $persona->id }}</td>
-                                                        <td>{{ $persona->nombre }}</td>
-                                                        <td>{{ $persona->ciudad }}</td>
-                                                        <td>{{ $persona->residente }}</td>
-                                                        <td>{{ $persona->telefono }}</td>
-                                                        <td>{{ $persona->estatus }}</td>
+                                                        <td>{{ $persona->nombres }}</td>
+                                                        <td>{{ $persona->apellidoP }}</td>
+                                                        <td>{{ $persona->profe }}</td>
+                                                        <td>{{ $persona->celular }}</td>
+                                                        <td>{{ $persona->mailEmpresaril }}</td>
 
                                                         <td class="td-actions text-right">
                                                             {{-- @can('user_show') --}}
-                                                            <a href="{{ route('persona.show', $persona->id) }}"
+                                                            <a href="{{ route('personal.show', $persona->id) }}"
                                                                 class="btn btn-info"><i
                                                                     class="material-icons">person</i></a>
                                                             {{-- @endcan --}}
