@@ -51,26 +51,36 @@ color: #727176 !important;
 
 a.textEquipo:hover{
   color: #F7C90D !important;     
-  }
+}
 
 
-  /* ------- CSS PARA Vista OBRAS ----------*/
-  .vistaFoto{
-    width: 85%;
+/* ------- CSS PARA Vista OBRAS ----------*/
+.vistaFoto{
+  width: 85%;
+}
 
-  }
+.imgVista{
+  object-fit: cover;
+  width:100%;
+  height:100%;
+}
 
-  .imgVista{
-    object-fit: cover;
-    width:100%;
-    height:100%;
-  }
+.vistaLogo{
+  width: 15%;
+  height: 50%;
+}
 
+@media (max-width: 576px) {
   .vistaLogo{
     width: 15%;
     /* height: 50%; */
   }
+}
 
+.txtVistaObra{
+  font-size: 1.1em;
+  line-height: 1.5em;
+}
   @media (max-width: 576px) {
     .vistaLogo{
       width: 35%;
@@ -78,13 +88,8 @@ a.textEquipo:hover{
     }
   }
 
-  .txtVistaObra{
-    font-size: 1.1em;
-    line-height: 1.5em;
-  }
 
-
-  /* ------- CSS PARA TABLERO Alta de OBRA ----------*/
+/* ------- CSS PARA TABLERO Alta de OBRA ----------*/
 .altalogo{
 width: 60%;
 height: 40%;
@@ -121,13 +126,13 @@ box-shadow: 2px 2px 10px 2px #F7C90D!important;
 
 
  /* ------- CSS PARA ALTA DE PERSONAL ----------*/
- .bacTituloPrincipal{
+.bacTituloPrincipal{
   font-size: 1.6em;
   font-weight: 500;
   color:#727176;
+}
 
- }
- .bacTituloPrincipal:not(.collapsed) {
+.bacTituloPrincipal:not(.collapsed) {
   color: #727176;
   background-color: #F7C90D;
   box-shadow: 2px 2px 5px 1px #727176!important;
@@ -139,26 +144,73 @@ box-shadow: 2px 2px 10px 2px #F7C90D!important;
   outline: 0;
   box-shadow: 2px 2px 5px 1px #727176!important;
 }
-    /* ------- CSS PARA ALTA DE PERSONAL/ DOCUMENTOS ----------*/
-    .contDocumentos{
-      border: #5C7C26 1px solid!important;
-    }
-    .semaforo{
-      background-color: red;
-      width: 30px;
-      height: 30px;
-    }
+
+/* ------- CSS PARA ALTA DE PERSONAL/ DOCUMENTOS ----------*/
+.contDocumentos{
+  border: #5C7C26 1px solid!important;
+}
+
+.semaforo{
+  background-color: red;
+  width: 30px;
+  height: 30px;
+}
 
 
-  /* ------- CSS PARA VISTA DE PERSONAL/ DOCUMENTOS ----------*/
-  p span{
-    font-weight: 400;
-  }
+/* ------- CSS PARA VISTA DE PERSONAL/ DOCUMENTOS ----------*/
+p span{
+  font-weight: 400;
+}
 
 
-  /* ------- CSS PARA ALTA DE EQUIPO ----------*/
+/* ------- CSS PARA ALTA DE EQUIPO ----------*/
 
-  .btnMas{
-    width: 60%;
-    color: #F7C90D;
-  }
+.btnMas{
+  width: 60%;
+  color: #F7C90D;
+}
+
+
+/* ------- CSS PARA DETALLE DE EQUIPO ----------*/
+
+#muestra {
+  position: relative; 
+  margin: 1rem auto; 
+  width: 100%; height: 342px; 
+  background-color: #fff; 
+  overflow: hidden; 
+}
+
+
+#selectores img{
+  padding: 3px;
+  margin: none; 
+  cursor: pointer; 
+  background-size: cover;
+  border: #F7C90D solid 1px;
+  width: 20%; 
+}
+
+#visor {
+  width: 100%;
+  background-size: cover;
+  object-fit: cover;
+}
+      
+#visor img {
+  background-size: cover;
+  object-fit: cover;
+  object-position: center;
+}
+
+.btnModal{
+  border: none;
+  background-color: #fff;
+}
+
+/* ------- CSS PARA TABLA DE ACCESORIOS ----------*/
+th .tablaTitulos{
+  font-weight: 800;
+  color: #5C7C26;
+
+}

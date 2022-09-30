@@ -19,7 +19,7 @@
                                                 <div class="col-8  p-2">
                                                     <h2 class="text-start fs-5 textTitulo">Maquinaria Pesada</h2>
                                                     <ul>
-                                                        <a class="textEquipo" href="#"><li class="text-start my-3">Retroexcavadora</li></a>
+                                                        <a class="textEquipo" href="{{ url('detalleEquipo', session('id')) }}"><li class="text-start my-3">Retroexcavadora</li></a>
                                                         <a class="textEquipo" href="#"><li class="text-start my-3">Camión de Volteo</li></a>
                                                         <a class="textEquipo" href="#"><li class="text-start my-3">Pipa de Agua</li></a>
                                                         <a class="textEquipo" href="#"><li class="text-start my-3">Camión Orquesta</li></a>
