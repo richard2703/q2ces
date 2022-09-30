@@ -72,8 +72,8 @@ a.textEquipo:hover{
 
 @media (max-width: 576px) {
   .vistaLogo{
-    width: 35%;
-    height: 50%;
+    width: 15%;
+    /* height: 50%; */
   }
 }
 
@@ -81,6 +81,12 @@ a.textEquipo:hover{
   font-size: 1.1em;
   line-height: 1.5em;
 }
+  @media (max-width: 576px) {
+    .vistaLogo{
+      width: 35%;
+      /* height: 50%; */
+    }
+  }
 
 
 /* ------- CSS PARA TABLERO Alta de OBRA ----------*/
@@ -156,55 +162,11 @@ p span{
   font-weight: 400;
 }
 
-
-/* ------- CSS PARA ALTA DE EQUIPO ----------*/
-
-.btnMas{
-  width: 60%;
-  color: #F7C90D;
-}
-
-
-/* ------- CSS PARA DETALLE DE EQUIPO ----------*/
-
-#muestra {
-  position: relative; 
-  margin: 1rem auto; 
-  width: 100%; height: 342px; 
-  background-color: #fff; 
-  overflow: hidden; 
-}
-
-
-#selectores img{
-  padding: 3px;
-  margin: none; 
-  cursor: pointer; 
-  background-size: cover;
-  border: #F7C90D solid 1px;
-  width: 20%; 
-}
-
-#visor {
-  width: 100%;
-  background-size: cover;
-  object-fit: cover;
-}
-      
-#visor img {
-  background-size: cover;
-  object-fit: cover;
-  object-position: center;
-}
-
-.btnModal{
-  border: none;
-  background-color: #fff;
-}
-
-/* ------- CSS PARA TABLA DE ACCESORIOS ----------*/
-th .tablaTitulos{
-  font-weight: 800;
-  color: #5C7C26;
-
-}
+  .btnMas{
+    width: 60%;
+    color: #F7C90D;
+  }
+  /* ------------Alineacion de items------------ */
+  .alin{
+    align-items:baseline
+  }

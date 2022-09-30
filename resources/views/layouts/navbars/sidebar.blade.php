@@ -28,19 +28,22 @@
 
                         <!--no colapsable>-->
                         <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                            <a  href="{{ url('altaDeEquipos', session('id')) }}"class="nav-link nav-item{{ $activePage == 'equipos' ? ' active' : '' }} ">
+                            <a
+                                href="{{ url('altaDeEquipos', session('id')) }}"class="nav-link nav-item{{ $activePage == 'equipos' ? ' active' : '' }} ">
                                 <span class="sidebar-normal py-2 ps-5"> {{ __('Alta de Equipo') }} </span>
                             </a>
                         </li>
 
                         <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                            <a  href="{{ url('indexAccesorios', session('id')) }}"class="nav-link nav-item{{ $activePage == 'equipos' ? ' active' : '' }} ">
+                            <a
+                                href="{{ url('verAccesorios', session('id')) }}"class="nav-link nav-item{{ $activePage == 'equipos' ? ' active' : '' }} ">
                                 <span class="sidebar-normal py-2 ps-5"> {{ __('Ver Accesorios') }} </span>
                             </a>
                         </li>
 
                         <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                            <a  href="{{ url('altaDeAccesorios', session('id')) }}"class="nav-link nav-item{{ $activePage == 'equipos' ? ' active' : '' }} ">
+                            <a
+                                href="{{ url('altaDeAccesorios', session('id')) }}"class="nav-link nav-item{{ $activePage == 'equipos' ? ' active' : '' }} ">
                                 <span class="sidebar-normal py-2 ps-5"> {{ __('Alta de Accesorios') }} </span>
                             </a>
                         </li>
@@ -49,7 +52,7 @@
                 </div>
             </li>
 
-            <li class="nav-item {{ $activePage == 'profile' || $activePage == 'user-management' ? ' active' : '' }}">
+            <li class="nav-item {{ $activePage == 'personal' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a class="nav-link p-2" data-toggle="collapse" href="#personal" aria-expanded="false">
                     <i><img style="width:25px" src="{{ asset('/img/navs/personalMenu.svg') }}"></i>
                     <p>{{ __('Personal') }}
@@ -60,7 +63,7 @@
                     <ul class="nav">
                         <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
                             <a
-                                href="{{ url('detalleDePersonal', session('id')) }}"class="nav-link -item{{ $activePage == 'personal' ? ' active' : '' }} ">
+                                href="{{ route('personal.index') }}"class="nav-link -item{{ $activePage == 'personal' ? ' active' : '' }} ">
                                 <span class="sidebar-normal py-2 ps-5">{{ __('Ver Personal') }} </span>
                             </a>
                         </li>
@@ -68,7 +71,7 @@
                         <!--no colapsable>-->
                         <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
                             <a
-                                href="{{ url('altaDePersonal', session('id')) }}"class="nav-link -item{{ $activePage == 'personal' ? ' active' : '' }} ">
+                                href="{{ route('personal.create') }}"class="nav-link -item{{ $activePage == 'personal' ? ' active' : '' }} ">
                                 <span class="sidebar-normal py-2 ps-5"> {{ __('Alta de Personal') }} </span>
                             </a>
                         </li>
@@ -95,15 +98,15 @@
                     <ul class="nav">
                         <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
                             <a
-                                href="{{ route('obras.index', session('id')) }}"class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
-                                <span class="sidebar-normal py-2 ps-5">{{ __('Ver Obra') }} </span>
+                                href="{{ route('obras.index') }}"class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
+                                <span class="sidebar-normal py-2 ps-5">{{ __('Ver Obras') }} </span>
                             </a>
                         </li>
 
                         <!--no colapsable>-->
                         <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
                             <a
-                                href="{{ url('altaObra', session('id')) }}"class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
+                                href="{{ route('obras.create') }}"class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
                                 <span class="sidebar-normal py-2 ps-5"> {{ __('Alta de Obra') }} </span>
                             </a>
                         </li>

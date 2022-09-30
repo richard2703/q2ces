@@ -43,17 +43,17 @@ Route::get('/verEquipos', function () {
     return view('equipos.verEquipos');
 });
 
-Route::get('/altaObra', function () {
-    return view('obra.altaObra');
-});
+// Route::get('/altaObra', function () {
+//     return view('obra.altaObra');
+// });
 
-Route::get('/vistaObra', function () {
-    return view('obra.vistaObra');
-});
+// Route::get('/vistaObra', function () {
+//     return view('obra.vistaObra');
+// });
 
-Route::get('/altaDePersonal', function () {
-    return view('personal.altaDePersonal');
-});
+// Route::get('/altaDePersonal', function () {
+//     return view('personal.altaDePersonal');
+// });
 
 Route::get('/detalleDePersonal', function () {
     return view('personal.detalleDePersonal');
@@ -80,4 +80,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/obras/nuevo', [App\Http\Controllers\obrasController::class, 'create'])->name('obras.create');
     Route::post('/obras', [App\Http\Controllers\obrasController::class, 'store'])->name('obras.store');
     Route::get('/obras', [App\Http\Controllers\obrasController::class, 'index'])->name('obras.index');
+    Route::get('/obras/{obras}', [App\Http\Controllers\obrasController::class, 'show'])->name('obras.show');
+
+    //Crud personal
+    Route::get('/personal/nuevo', [App\Http\Controllers\personalController::class, 'create'])->name('personal.create');
+    Route::post('/personal', [App\Http\Controllers\personalController::class, 'store'])->name('personal.store');
+    Route::get('/personal', [App\Http\Controllers\personalController::class, 'index'])->name('personal.index');
+    Route::get('/personal/{personal}', [App\Http\Controllers\personalController::class, 'show'])->name('personal.show');
 });
