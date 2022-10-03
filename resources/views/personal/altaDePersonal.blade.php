@@ -188,7 +188,7 @@
                                                                 <label class="labelTitulo">Correo Electrónico
                                                                     Empresa:</label></br>
                                                                 <input type="email" class="inputCaja"
-                                                                    id="mailEmpresarial" name="mailEmpresarial"
+                                                                    id="mailEmpresaril" name="mailEmpresaril"
                                                                     value="">
                                                             </div>
                                                         </div>
@@ -761,7 +761,7 @@
                                                             <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                                 <label class="labelTitulo">Número de Serie:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
-                                                                    name="pcSerie" value="">
+                                                                    name="pcSerial" value="">
                                                             </div>
 
                                                             {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
@@ -791,14 +791,14 @@
                                                             <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                                 <label class="labelTitulo">Número de Serie:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
-                                                                    name="radioSerie" value="">
+                                                                    name="radioSerial" value="">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                                 <label class="labelTitulo">Cargador Radio Núm. de
                                                                     Serie:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
-                                                                    name="cargadorSerie" value="">
+                                                                    name="cargadorSerial" value="">
                                                             </div>
 
                                                         </div>
