@@ -170,3 +170,109 @@ p span{
   .alin{
     align-items:baseline
   }
+  /* ------- CSS PARA DETALLE DE EQUIPO ----------*/
+
+#muestra {
+  position: relative; 
+  margin: 1rem auto; 
+  width: 100%; height: 342px; 
+  background-color: #fff; 
+  overflow: hidden; 
+}
+
+
+#selectores img{
+  padding: 3px;
+  margin: none; 
+  cursor: pointer; 
+  background-size: cover;
+  border: #F7C90D solid 1px;
+  width: 20%; 
+}
+
+#visor {
+  width: 100%;
+  background-size: cover;
+  object-fit: cover;
+}
+      
+#visor img {
+  background-size: cover;
+  object-fit: cover;
+  object-position: center;
+}
+
+.btnModal{
+  border: none;
+  background-color: #fff;
+}
+
+
+  /* ------- CSS PARA DETALLE DE EQUIPO ----------*/
+
+
+  /* ---------- MENU ---------*/
+.barra-lateral .menu a{
+  text-decoration: none;
+  display:block;
+  padding: 10px!important;
+
+  border-bottom: 1px solid rgba(255,255,255, .2);
+}
+.barra-lateral .menu li a:active{
+  background-color: #727176!important;
+  /* box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4); */
+}
+
+.barra-lateral .menu li a:hover{
+  background:#727176;
+  text-decoration: none;
+}
+
+ul li a.nav-link li.nav-item i svg.iconMenu{
+  color: #fff!important;
+  margin-right: 50px!important;
+  font-weight: normal;
+}
+
+.iconMenu:hover{
+color: #fff!important;
+}
+
+
+/* ----------- PAGINACIÓN ----------------*/
+
+.card .card-body+.card-footer, .card .card-footer {
+  margin: auto!important;
+}
+
+.page-link{
+color:#5C7C26!important;
+}
+
+.page-item{
+margin: 4px!important;
+}
+
+.page-link:active,
+.page-link:focus{
+background-color: #F7C90D!important;
+}
+
+.page-link:hover{
+  background-color:#fff!important;
+  border-bottom: #F7C90D 2px solid!important;
+  color: #727176!important;
+  }
+  
+  .page-item.active .page-link{
+    background-color: #F7C90D!important;
+    border:#F7C90D!important;
+    color: #727176!important;
+  }
+  .page-link{
+    padding: 2px 3px !important;
+
+  }
+
+

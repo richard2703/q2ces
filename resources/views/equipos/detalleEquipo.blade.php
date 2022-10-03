@@ -416,7 +416,7 @@
                                                                             <div class=" ">
                                                                                 <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                                                                                 <label class="form-check-label text-start fs-5 textTitulo mb-2" for="flexCheckDefault">
-                                                                                        Permosos Especiales
+                                                                                        Permisos Especiales
                                                                                 </label>
                                                                             </div>  
                                                                             <div class="contIconosDocumentos d-flex align-items-end">
