@@ -72,8 +72,8 @@ a.textEquipo:hover{
 
 @media (max-width: 576px) {
   .vistaLogo{
-    width: 35%;
-    height: 50%;
+    width: 15%;
+    /* height: 50%; */
   }
 }
 
@@ -81,6 +81,12 @@ a.textEquipo:hover{
   font-size: 1.1em;
   line-height: 1.5em;
 }
+  @media (max-width: 576px) {
+    .vistaLogo{
+      width: 35%;
+      /* height: 50%; */
+    }
+  }
 
 
 /* ------- CSS PARA TABLERO Alta de OBRA ----------*/
@@ -156,6 +162,15 @@ p span{
   font-weight: 400;
 }
 
+  .btnMas{
+    width: 60%;
+    color: #F7C90D;
+  }
+  /* ------------Alineacion de items------------ */
+  .alin{
+    align-items:baseline
+  }
+  /* ------- CSS PARA DETALLE DE EQUIPO ----------*/
 
 /* ------- CSS PARA ALTA DE EQUIPO ----------*/
 
@@ -204,9 +219,94 @@ p span{
   background-color: #fff;
 }
 
-/* ------- CSS PARA TABLA DE ACCESORIOS ----------*/
-th .tablaTitulos{
-  font-weight: 800;
+
+  /* ------- CSS PARA DETALLE DE EQUIPO ----------*/
+
+
+  /* ---------- MENU ---------*/
+.barra-lateral .menu a{
+  text-decoration: none;
+  display:block;
+  padding: 10px!important;
+
+  border-bottom: 1px solid rgba(255,255,255, .2);
+}
+.barra-lateral .menu li a:active{
+  background-color: #727176!important;
+  /* box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4); */
+}
+
+.barra-lateral .menu li a:hover{
+  background:#727176;
+  text-decoration: none;
+}
+
+ul li a.nav-link li.nav-item i svg.iconMenu{
+  color: #fff!important;
+  margin-right: 50px!important;
+  font-weight: normal;
+}
+
+.iconMenu:hover{
+color: #fff!important;
+}
+
+
+/* ----------- PAGINACIÓN ----------------*/
+
+.card .card-body+.card-footer, .card .card-footer {
+  margin: auto!important;
+}
+
+.page-link{
+color:#5C7C26!important;
+}
+
+.page-item{
+margin: 4px!important;
+}
+
+.page-link:active,
+.page-link:focus{
+background-color: #F7C90D!important;
+}
+
+.page-link:hover{
+  background-color:#fff!important;
+  border-bottom: #F7C90D 2px solid!important;
+  color: #727176!important;
+  }
+  
+  .page-item.active .page-link{
+    background-color: #F7C90D!important;
+    border:#F7C90D!important;
+    color: #727176!important;
+  }
+  .page-link{
+    padding: 2px 3px !important;
+
+  }
+
+
+/* --------- ICONOS MENÚ --------- */
+.iconMenu{
+  font-size: 24px!important;
+  float: left!important;
+  margin-right: 15px!important;
+  line-height: 30px!important;
+  width: 30px!important;
+  text-align: center!important;
+  fill: #727176!important;
+}
+
+
+/* -------  MENÚ MÓVIL  ------- */
+input.placeholderMenuMovil::placeholder{
   color: #5C7C26;
+}
+
+.lupaMovil{
+  background-color:transparent!important;
 
 }
+
