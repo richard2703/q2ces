@@ -6,7 +6,8 @@
                 <div class="col-11 align-self-start">
                     <div class="card">
                         <div class="card-body contCart">
-                            <form class="row" action="{{ route('maquinaria.store') }}" method="post">
+                            <form class="row" action="{{ route('maquinaria.store') }}" method="post"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <div class="accordion my-3" id="accordionExample">
 

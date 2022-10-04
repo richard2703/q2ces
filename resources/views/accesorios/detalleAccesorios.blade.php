@@ -6,9 +6,11 @@
                 <div class="col-11 align-self-start">
                     <div class="card">
                         <div class="card-body contCart">
-                            <form action="{{ route('accesorios.store') }}" method="post"class="row"
+                            <form action="{{ route('accesorios.update', $accesorios->id) }}" method="post"class="row"
                                 enctype="multipart/form-data">
                                 @csrf
+                                @method('put')
+
                                 <div class="p-1 align-self-start bacTituloPrincipal">
                                     <h2 class="my-3 ms-3 texticonos ">Alta de Accesorios</h2>
                                 </div>
@@ -16,7 +18,7 @@
                                     <div class="col-12 col-md-4  my-3">
                                         <div class="text-center mx-auto border vistaFoto mb-4">
                                             <i><img class="imgVista img-fluid mb-5"
-                                                    src="{{ asset('/img/general/vistaAerea.jpg') }}"></i>
+                                                    src="{{ asset('storage/accesorio/') . '/' . $accesorios->foto }}"></i>
                                             <input class="mb-4" type="file" name="foto" id="foto">
                                         </div>
                                     </div>
@@ -26,38 +28,38 @@
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Nombre:</label></br>
                                                 <input type="text" class="inputCaja" id="nombre" name="nombre"
-                                                    value="">
+                                                    value="{{ $accesorios->nombre }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Año:</label></br>
                                                 <input type="text" class="inputCaja" id="ano" name="ano"
-                                                    value="">
+                                                    value="{{ $accesorios->ano }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Marca:</label></br>
                                                 <input type="text" class="inputCaja" id="marca" name="marca"
-                                                    value="">
+                                                    value="{{ $accesorios->marca }}">
                                             </div>
 
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Número Serie:</label></br>
                                                 <input type="text" class="inputCaja" id="serie" name="serie"
-                                                    value="">
+                                                    value="{{ $accesorios->serie }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Modelo:</label></br>
                                                 <input type="text" class="inputCaja" id="modelo" name="modelo"
-                                                    value="">
+                                                    value="{{ $accesorios->modelo }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Color:</label></br>
                                                 <input type="text" class="inputCaja" id="color" name="color"
-                                                    value="">
+                                                    value="{{ $accesorios->color }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">

@@ -323,8 +323,9 @@ CREATE TABLE accesorios(
   marca varchar(255) NULL,
   modelo varchar(255) NULL,
   color varchar(255) NULL,
-  año varchar(255) NULL,
+  ano varchar(255) NULL,
   serie varchar(255) NULL,
+  foto varchar(255)null,
   PRIMARY KEY (id)
  );
 
