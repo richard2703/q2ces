@@ -47,8 +47,25 @@
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Tipo de Sangre:</label></br>
-                                            <input type="text" class="inputCaja" id="" name="calle"
-                                                value="{{ $personal->sangre }}"readonly>
+                                            <select class="form-select" aria-label="Default select example" id="sangre"
+                                                name="sangre">
+                                                <option value="A+" {{ $personal->sangre == 'A+' ? ' selected' : '' }}>A+
+                                                </option>
+                                                <option value="A-"{{ $personal->sangre == 'A-' ? ' selected' : '' }}>A-
+                                                </option>
+                                                <option value="B+"{{ $personal->sangre == 'B+' ? ' selected' : '' }}>B+
+                                                </option>
+                                                <option value="B-"{{ $personal->sangre == 'B-' ? ' selected' : '' }}>B-
+                                                </option>
+                                                <option value="AB+"{{ $personal->sangre == 'AB+' ? ' selected' : '' }}>
+                                                    AB+</option>
+                                                <option value="AB-"{{ $personal->sangre == 'AB-' ? ' selected' : '' }}>
+                                                    AB-</option>
+                                                <option value="O+"{{ $personal->sangre == 'O+' ? ' selected' : '' }}>O+
+                                                </option>
+                                                <option value="O-"{{ $personal->sangre == 'O-' ? ' selected' : '' }}>O-
+                                                </option>
+                                            </select>
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -60,7 +77,7 @@
                                         <div class=" col-12 col-sm-6 mb-3 ">
                                             <label class="labelTitulo">Correo Electrónico Empresa:</label></br>
                                             <input type="text" class="inputCaja" id="" name="calle"
-                                                value="{{ $personal->emailEmpresaril }}"readonly>
+                                                value="{{ $personal->mailEmpresaril }}"readonly>
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -106,6 +123,7 @@
                     </div>
                     <div class="accordion my-3" id="accordionExample">
                         {{--  Datos Personales  --}}
+
                         <div class="accordion-item">
                             <h2 class="accordion-header " id="headingOne">
                                 <button class="accordion-button bacTituloPrincipal" type="button" data-bs-toggle="collapse"
@@ -113,7 +131,7 @@
                                     Datos Personales
                                 </button>
                             </h2>
-                            <div id="datosPersonales" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                            <div id="datosPersonales" class="accordion-collapse collapse show" aria-labelledby="headingOne"
                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <div class="row mt-3">
@@ -127,30 +145,6 @@
 
                                         <div class="col-12 ">
                                             <div class="row alin">
-
-                                                {{--  <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                    <label class="labelTitulo">Número del Empleado:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="" readonly>
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                    <label class="labelTitulo">Nombre(s):</label></br>
-                                                    <input type="text" class="inputCaja" id="nombres"
-                                                        name="nombres" value="">
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                    <label class="labelTitulo">Apellido Paterno:</label></br>
-                                                    <input type="text" class="inputCaja" id="apellidoP"
-                                                        name="apellidoP" value="">
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                    <label class="labelTitulo">Apellio Materno:</label></br>
-                                                    <input type="text" class="inputCaja" id="apellidoM"
-                                                        name="apellidoM" value="">
-                                                </div>  --}}
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Fecha de Nacimiento: </label></br>
@@ -166,10 +160,10 @@
                                                 </div>
 
                                                 {{--  <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                    <label class="labelTitulo">Edad:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
-                                                </div>  --}}
+                                                <label class="labelTitulo">Edad:</label></br>
+                                                <input type="text" class="inputCaja" id=""
+                                                    name="calle" value="">
+                                            </div>  --}}
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">CURP:</label></br>
@@ -234,17 +228,17 @@
                                                         name="civil" value="{{ $personal->civil }}">
                                                 </div>
                                                 {{--  
-                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                    <label class="labelTitulo">Tipo de Sangre:</label></br>
-                                                    <input type="text" class="inputCaja" id="sangre"
-                                                        name="sangre" value="">
-                                                </div>  --}}
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                <label class="labelTitulo">Tipo de Sangre:</label></br>
+                                                <input type="text" class="inputCaja" id="sangre"
+                                                    name="sangre" value="">
+                                            </div>  --}}
 
                                                 {{--  <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                    <label class="labelTitulo">Alergias:</label></br>
-                                                    <input type="text" class="inputCaja" id="aler"
-                                                        name="aler" value="">
-                                                </div>  --}}
+                                                <label class="labelTitulo">Alergias:</label></br>
+                                                <input type="text" class="inputCaja" id="aler"
+                                                    name="aler" value="">
+                                            </div>  --}}
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Profesión:</label></br>
@@ -258,11 +252,11 @@
                                                         name="particular" value="{{ $personal->particular }}">
                                                 </div>
                                                 {{--  
-                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                    <label class="labelTitulo">Celular:</label></br>
-                                                    <input type="text" class="inputCaja" id="celular"
-                                                        name="celular" value="">
-                                                </div>  --}}
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                <label class="labelTitulo">Celular:</label></br>
+                                                <input type="text" class="inputCaja" id="celular"
+                                                    name="celular" value="">
+                                            </div>  --}}
 
                                                 <div class=" col-12 col-sm-6 mb-3 ">
                                                     <label class="labelTitulo">Correo Electrónico
@@ -272,11 +266,11 @@
                                                 </div>
 
                                                 {{--  <div class=" col-12 col-sm-6  mb-3 ">
-                                                    <label class="labelTitulo">Correo Electrónico
-                                                        Empresa:</label></br>
-                                                    <input type="text" class="inputCaja" id="mailEmpresarial"
-                                                        name="mailEmpresarial" value="">
-                                                </div>  --}}
+                                                <label class="labelTitulo">Correo Electrónico
+                                                    Empresa:</label></br>
+                                                <input type="text" class="inputCaja" id="mailEmpresarial"
+                                                    name="mailEmpresarial" value="">
+                                            </div>  --}}
                                             </div>
                                         </div>
                                     </div>
@@ -322,11 +316,11 @@
                                                         name="interior" value="{{ $personal->interior }}">
                                                 </div>
                                                 {{--  
-                                                <div class=" col-12 col-sm-6  mb-3 ">
-                                                    <label class="labelTitulo">Entre las Calles:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
-                                                </div>  --}}
+                                    <div class=" col-12 col-sm-6  mb-3 ">
+                                        <label class="labelTitulo">Entre las Calles:</label></br>
+                                        <input type="text" class="inputCaja" id=""
+                                            name="calle" value="">
+                                    </div>  --}}
 
                                                 <div class=" col-12 col-sm-6  mb-3 ">
                                                     <label class="labelTitulo">Colonia:</label></br>
@@ -341,10 +335,10 @@
                                                 </div>
 
                                                 {{--  <div class=" col-12 col-sm-6  mb-3 ">
-                                                    <label class="labelTitulo">Localidad:</label></br>
-                                                    <input type="text" class="inputCaja" id="colonia"
-                                                        name="colonia" value="{{ $personal->colonia }}">
-                                                </div>  --}}
+                                        <label class="labelTitulo">Localidad:</label></br>
+                                        <input type="text" class="inputCaja" id="colonia"
+                                            name="colonia" value="{{ $personal->colonia }}">
+                                    </div>  --}}
 
                                                 <div class=" col-12 col-sm-6  mb-3 ">
                                                     <label class="labelTitulo">Municipio:</label></br>
@@ -366,7 +360,7 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                        {{--  
                                         <div class="col-12  ">
                                             <div class="row">
 
@@ -428,7 +422,7 @@
                                                 </div>
 
                                             </div>
-                                        </div>
+                                        </div>  --}}
                                     </div>
                                 </div>
                             </div>
@@ -456,64 +450,42 @@
 
                                                 <div class=" col-12 col-sm-6   mb-3 ">
                                                     <label class="labelTitulo">Nombre del Padre:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="text" class="inputCaja" id="nombreP"
+                                                        name="nombreP" value="{{ $contacto->nombreP }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6   mb-3 ">
                                                     <label class="labelTitulo">Nombre de la Madre:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="text" class="inputCaja" id="nombreM"
+                                                        name="nombreM" value="{{ $contacto->nombreM }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6   mb-3 ">
                                                     <label class="labelTitulo">En Caso de Accidente Avisar
                                                         A:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="text" class="inputCaja" id="nombreE"
+                                                        name="nombreE" value="{{ $contacto->nombre }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6   mb-3 ">
                                                     <label class="labelTitulo">Teléfono:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="text" class="inputCaja" id="particularE"
+                                                        name="particularE" value="{{ $contacto->particular }}">
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-md-4  mb-3 ">
-                                                    <label class="labelTitulo">Correo Electrónico:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                <div class=" col-12 col-sm-6   mb-3 ">
+                                                    <label class="labelTitulo">Celular:</label></br>
+                                                    <input type="text" class="inputCaja" id="celularE"
+                                                        name="celularE" value="{{ $contacto->celular }}">
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                    <label class="labelTitulo">Calle y Número:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                <div class=" col-12 col-sm-6  mb-3 ">
+                                                    <label class="labelTitulo">Parentesco:</label></br>
+                                                    <input type="text" class="inputCaja" id="parentesco"
+                                                        name="parentesco" value="{{ $contacto->parentesco }}">
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                    <label class="labelTitulo">Colonia:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
-                                                </div>
 
-                                                <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                    <label class="labelTitulo">Código Postal:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                    <label class="labelTitulo">Municipio:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                    <label class="labelTitulo">Entidad Federativa:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
-                                                </div>
                                             </div>
                                         </div>
 
@@ -527,38 +499,39 @@
 
                                                 <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                     <label class="labelTitulo">Nombres:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="text" class="inputCaja" id="nombreB"
+                                                        name="nombreB" value="{{ $beneficiario->nombres }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                     <label class="labelTitulo">Apellido Paterno:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="text" class="inputCaja" id="apellidoP"
+                                                        name="apellidoPB" value="{{ $beneficiario->apellidoP }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                     <label class="labelTitulo">Apellido Materno :</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="text" class="inputCaja" id="apellidoM"
+                                                        name="apellidoMB" value="{{ $beneficiario->apellidoM }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                     <label class="labelTitulo">Teléfono:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="text" class="inputCaja" id="particular"
+                                                        name="particularB" value="{{ $beneficiario->particular }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                     <label class="labelTitulo">Celular:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="text" class="inputCaja" id="celular"
+                                                        name="celularB" value="{{ $beneficiario->celular }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                    <label class="labelTitulo">Correo Electrónico:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <label class="labelTitulo">Fecha de
+                                                        Nacimiento:</label></br>
+                                                    <input type="date" class="inputCaja" id="nacimiento"
+                                                        name="nacimientoB"value="{{ \Carbon\Carbon::parse($beneficiario->nacimiento)->format('Y-m-d') }}">
                                                 </div>
 
 
@@ -584,143 +557,150 @@
 
                                         <div class="col-12 border-end">
                                             <div class="row alin">
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Número de Nómina:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="number" class="inputCaja" id=""
+                                                        name="nomina" value="{{ $nomina->nomina }}">
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-lg-3  mb-3 ">
+                                                <div class=" col-12 col-sm-6 col-lg-4  mb-3 ">
                                                     <label class="labelTitulo">Número de IMSS:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                        name="imss" value="{{ $nomina->imss }}">
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-lg-3  mb-3 ">
+                                                <div class=" col-12 col-sm-6 col-lg-4  mb-3 ">
                                                     <label class="labelTitulo">Número de Clínica de
                                                         IMSS:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                        name="clinica" value="{{ $nomina->clinica }}">
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-lg-3  mb-3 ">
+                                                <div class=" col-12 col-sm-6 col-lg-4  mb-3 ">
                                                     <label class="labelTitulo">Crédito Infonavit:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                        name="infonavit" value="{{ $nomina->infonavit }}">
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Afore:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                        name="afore" value="{{ $nomina->afore }}">
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Pago
                                                         (Semanal/quincenal):</label></br>
-                                                    <select class="form-select" aria-label="Default select example">
-                                                        <option selected>Semanal</option>
-                                                        <option value="1">Quincenal</option>
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        name="pago">
+                                                        <option value="Semanal"
+                                                            {{ $personal->pago == 'Semanal' ? ' selected' : '' }}>Semanal
+                                                        </option>
+                                                        <option value="Quincenal"
+                                                            {{ $personal->pago == 'Quincenal' ? ' selected' : '' }}>
+                                                            Quincenal</option>
                                                     </select>
                                                 </div>
-
+                                                {{--  
                                                 <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Cantidad:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
-                                                </div>
+                                                        name="calle1" value="">
+                                                </div>  --}}
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Número Tarjeta
                                                         Nómina:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                        name="tarjeta" value="{{ $nomina->tarjeta }}">
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Banco:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                        name="banco" value="{{ $nomina->banco }}">
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Puesto:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                        name="puesto" value="{{ $nomina->puesto }}">
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Permisos:</label></br>
-                                                    <select class="form-select" aria-label="Default select example">
+                                                    <select class="form-select"
+                                                        aria-label="Default select example">
                                                         <option selected>Opción 1</option>
                                                         <option value="1">Opcion 2</option>
                                                     </select>
-                                                </div>
+                                                </div>  --}}
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Fecha de Ingreso:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="date" class="inputCaja" id=""
+                                                        name="ingreso"
+                                                        value="{{ \Carbon\Carbon::parse($beneficiario->ingreso)->format('Y-m-d') }}">
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Días Trabajados
                                                         (Años/Meses):</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
-                                                </div>
+                                                        name="calle1" value="">
+                                                </div>  --}}
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Días de Derecho a
                                                         Vacaciones:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
-                                                </div>
+                                                        name="calle1" value="">
+                                                </div>  --}}
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Vacaciones Tomadas en el
                                                         Año:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
-                                                </div>
+                                                        name="calle1" value="">
+                                                </div>  --}}
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Días Restantes de
                                                         Vacaciones:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
-                                                </div>
+                                                        name="calle1" value="">
+                                                </div>  --}}
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Días Laborables:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
-                                                </div>
+                                                        name="calle1" value="">
+                                                </div>  --}}
 
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Horario:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                        name="horario" value="{{ $nomina->horario }}">
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Jefe Inmediato:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                        name="jefeId" value="{{ $nomina->jefeId }}">
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                {{--  <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Obra o Lugar de
                                                         Trabajo:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
-                                                </div>
+                                                        name="calle1" value="">
+                                                </div>  --}}
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Sueldo Neto:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="number" class="inputCaja" id=""
+                                                        name="neto" value="{{ $nomina->neto }}">
                                                 </div>
 
                                             </div>
@@ -744,75 +724,117 @@
                                     <div class="row mt-3">
 
                                         <div class="col-12 border-end">
-                                            <div class="row">
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                            <div class="row alin">
+                                                {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">EPP Casco:</label></br>
-                                                    <select class="form-select" aria-label="Default select example">
+                                                    <select class="form-select"
+                                                        aria-label="Default select example">
                                                         <option selected>Chica</option>
                                                         <option value="1">Mediana</option>
                                                         <option value="1">Grande</option>
                                                         <option value="1">Extra Grande</option>
                                                     </select>
-                                                </div>
+                                                </div>  --}}
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">EPP Chaleco:</label></br>
-                                                    <select class="form-select" aria-label="Default select example">
-                                                        <option selected>Chica</option>
-                                                        <option value="1">Mediana</option>
-                                                        <option value="1">Grande</option>
-                                                        <option value="1">Extra Grande</option>
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        name="chaleco">
+                                                        <option
+                                                            value="XS"{{ $equipo->chaleco == 'XS' ? ' selected' : '' }}>
+                                                            XS</option>
+                                                        <option
+                                                            value="S"{{ $equipo->chaleco == 'S' ? ' selected' : '' }}>
+                                                            S</option>
+                                                        <option
+                                                            value="M"{{ $equipo->chaleco == 'M' ? ' selected' : '' }}>
+                                                            M Grande</option>
+                                                        <option
+                                                            value="G"{{ $equipo->chaleco == 'G' ? ' selected' : '' }}>
+                                                            G</option>
+                                                        <option
+                                                            value="XG"{{ $equipo->chaleco == 'XG' ? ' selected' : '' }}>
+                                                            XG</option>
+                                                        <option
+                                                            value="2XG"{{ $equipo->chaleco == '2XG' ? ' selected' : '' }}>
+                                                            2XG Grande</option>
+                                                        <option
+                                                            value="3XG"{{ $equipo->chaleco == '3XG' ? ' selected' : '' }}>
+                                                            3XG Grande</option>
                                                     </select>
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">EPP Camisas (2):</label></br>
-                                                    <select class="form-select" aria-label="Default select example">
-                                                        <option selected>Chica</option>
-                                                        <option value="1">Mediana</option>
-                                                        <option value="1">Grande</option>
-                                                        <option value="1">Extra Grande</option>
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        name="camisa">
+                                                        <option
+                                                            value="XS"{{ $equipo->camisa == 'XS' ? ' selected' : '' }}>
+                                                            XS</option>
+                                                        <option
+                                                            value="S"{{ $equipo->camisa == 'S' ? ' selected' : '' }}>
+                                                            S</option>
+                                                        <option
+                                                            value="M"{{ $equipo->camisa == 'M' ? ' selected' : '' }}>
+                                                            M Grande</option>
+                                                        <option
+                                                            value="G"{{ $equipo->camisa == 'G' ? ' selected' : '' }}>
+                                                            G</option>
+                                                        <option
+                                                            value="XG"{{ $equipo->camisa == 'XG' ? ' selected' : '' }}>
+                                                            XG</option>
+                                                        <option
+                                                            value="2XG"{{ $equipo->camisa == '2XG' ? ' selected' : '' }}>
+                                                            2XG Grande</option>
+                                                        <option
+                                                            value="3XG"{{ $equipo->camisa == '3XG' ? ' selected' : '' }}>
+                                                            3XG Grande</option>
                                                     </select>
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">EPP Arnes y Línea de
                                                         Vida:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
-                                                </div>
+                                                        name="calle1" value="">
+                                                </div>  --}}
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">EPP Botas:</label></br>
-                                                    <select class="form-select" aria-label="Default select example">
-                                                        <option selected>6</option>
-                                                        <option value="1">7</option>
-                                                        <option value="1">8</option>
-                                                        <option value="1">9</option>
-                                                    </select>
+                                                    <input type="text" class="inputCaja" id=""
+                                                        name="botas" value="{{ $equipo->botas }}">
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">EPP Guentes:</label></br>
-                                                    <select class="form-select" aria-label="Default select example">
-                                                        <option selected>Chica</option>
-                                                        <option value="1">Mediana</option>
-                                                        <option value="1">Grande</option>
-                                                        <option value="1">Extra Grande</option>
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        name="guantes">
+                                                        <option value="Chica"
+                                                            {{ $equipo->guantes == 'Chica' ? ' selected' : '' }}>Chica
+                                                        </option>
+                                                        <option
+                                                            value="Mediana"{{ $equipo->guantes == 'Mediana' ? ' selected' : '' }}>
+                                                            Mediana</option>
+                                                        <option
+                                                            value="Grande"{{ $equipo->guantes == 'Grande' ? ' selected' : '' }}>
+                                                            Grande</option>
+                                                        <option
+                                                            value="Extra Grande"{{ $equipo->guantes == 'Extra Grande' ? ' selected' : '' }}>
+                                                            Extra Grande</option>
                                                     </select>
                                                 </div>
-
+                                                {{--  
                                                 <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Epp Lentes:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                        name="calle1" value="">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Credencial:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
-                                                </div>
+                                                        name="calle1" value="">
+                                                </div>  --}}
                                             </div>
                                         </div>
                                     </div>
@@ -834,64 +856,72 @@
                                     <div class="row mt-3">
 
                                         <div class="col-12 border-end">
-                                            <div class="row">
+                                            <div class="row alin">
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Automóvil 1
                                                         Asignado:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                        name="calle1" value="" placeholder="Marca">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Automóvil 2
                                                         Asignado:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
-                                                </div>
+                                                        name="calle1" value="">
+                                                </div>  --}}
 
                                                 <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Equipo de Cómputo:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                        name="pc" value="" placeholder="Marca y Modelo">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Número de Serie:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                        name="pcSerial" value="{{ $equipo->pcSerial }}">
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Accesorios:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                        name="calle1" value="">
+                                                </div>  --}}
+
+                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                    <label class="labelTitulo">Teléfono Celular:</label></br>
+                                                    <input type="text" class="inputCaja" id=""
+                                                        name="celularEquipo" value="{{ $equipo->celular }}"
+                                                        placeholder="Marca y Modelo">
+                                                </div>
+                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                    <label class="labelTitulo">Número de Imei:</label></br>
+                                                    <input type="text" class="inputCaja" id=""
+                                                        name="celularImei" value="{{ $equipo->celularImei }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Radio Cominicación:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                        name="radio" placeholder="Marca y Modelo"
+                                                        value="{{ $equipo->radio }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Número de Serie:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                        name="radioSerial" value="{{ $equipo->radioSerial }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Cargador Radio Núm. de
                                                         Serie:</label></br>
                                                     <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                        name="cargadorSerial" value="{{ $equipo->cargadorSerial }}">
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Teléfono Celular:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1434,6 +1464,9 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-12 text-center mb-3 ">
+                        <button type="submit" class="btn botonGral">Guardar</button>
                     </div>
                 </div>
             </div>

@@ -172,6 +172,18 @@ p span{
   }
   /* ------- CSS PARA DETALLE DE EQUIPO ----------*/
 
+/* ------- CSS PARA ALTA DE EQUIPO ----------*/
+
+.btnMas{
+  width: 60%;
+  color: #F7C90D;
+}
+
+
+
+
+/* ------- CSS PARA DETALLE DE EQUIPO ----------*/
+
 #muestra {
   position: relative; 
   margin: 1rem auto; 
