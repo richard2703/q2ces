@@ -276,3 +276,25 @@ background-color: #F7C90D!important;
   }
 
 
+/* --------- ICONOS MENÚ --------- */
+.iconMenu{
+  font-size: 24px!important;
+  float: left!important;
+  margin-right: 15px!important;
+  line-height: 30px!important;
+  width: 30px!important;
+  text-align: center!important;
+  fill: #727176!important;
+}
+
+
+/* -------  MENÚ MÓVIL  ------- */
+input.placeholderMenuMovil::placeholder{
+  color: #5C7C26;
+}
+
+.lupaMovil{
+  background-color:transparent!important;
+
+}
+
