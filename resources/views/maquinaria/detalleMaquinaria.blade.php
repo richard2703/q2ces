@@ -6,7 +6,10 @@
                 <div class="col-11 align-self-start">
                     <div class="card">
                         <div class="card-body contCart">
-                            <form class="row">
+                            <form action="{{ route('maquinaria.update', $maquinaria->id) }}" method="post"class="row"
+                                enctype="multipart/form-data">
+                                @csrf
+                                @method('put')
                                 <div class="accordion my-3" id="accordionExample">
 
                                     <div class="accordion-item">
@@ -568,24 +571,18 @@
                                                                                     src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
 
                                                                         </div>
-
-
                                                                     </div>
                                                                 </div>
                                                             </div>
-
                                                         </div>
-
                                                     </div>
                                                 </div>
-
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 text-center mb-3 ">
-                                    <button type="submit" class="btn botonGral">Guardar</button>
+                                    <button type="submit" class="btn botonGral">Guardar Edicion</button>
                                 </div>
 
                             </form>

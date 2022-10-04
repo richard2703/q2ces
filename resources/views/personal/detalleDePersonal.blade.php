@@ -10,8 +10,10 @@
                                 <h2 class="my-3 ms-3 texticonos ">{{ $personal->nombres }} {{ $personal->apellidoP }}
                                     {{ $personal->apellidoM }}</h2>
                             </div>
-                            <form class="row">
-
+                            <form action="{{ route('personal.update', $personal->id) }}" method="post"class="row"
+                                enctype="multipart/form-data">
+                                @csrf
+                                @method('put')
                                 <div class="col-12 col-md-4  my-3">
                                     <div class="text-center mx-auto border vistaFoto mb-4">
                                         <i><img class="imgVista img-fluid"
@@ -24,25 +26,25 @@
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Número del Empleado:</label></br>
                                             <input type="text" class="inputCaja" id="" name="calle"
-                                                value=""readonly>
+                                                value="">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Nombre(s):</label></br>
-                                            <input type="text" class="inputCaja" id="" name="calle"
-                                                value="{{ $personal->nombres }}"readonly>
+                                            <input type="text" class="inputCaja" id="nombres" name="nombres"
+                                                value="{{ $personal->nombres }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Apellido Paterno:</label></br>
-                                            <input type="text" class="inputCaja" id="" name="calle"
-                                                value="{{ $personal->apellidoP }}"readonly>
+                                            <input type="text" class="inputCaja" id="apellidoP" name="apellidoP"
+                                                value="{{ $personal->apellidoP }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Apellio Materno:</label></br>
-                                            <input type="text" class="inputCaja" id="" name="calle"
-                                                value="{{ $personal->apellidoM }}"readonly>
+                                            <input type="text" class="inputCaja" id="apellidoM" name="apellidoM"
+                                                value="{{ $personal->apellidoM }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -70,20 +72,20 @@
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Alergias:</label></br>
-                                            <input type="text" class="inputCaja" id="" name="calle"
-                                                value="{{ $personal->aler }}"readonly>
+                                            <input type="text" class="inputCaja" id="aler" name="aler"
+                                                value="{{ $personal->aler }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 mb-3 ">
                                             <label class="labelTitulo">Correo Electrónico Empresa:</label></br>
-                                            <input type="text" class="inputCaja" id="" name="calle"
-                                                value="{{ $personal->mailEmpresaril }}"readonly>
+                                            <input type="text" class="inputCaja" id="mailEmpresaril"
+                                                name="mailEmpresaril" value="{{ $personal->mailEmpresaril }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Celular:</label></br>
-                                            <input type="text" class="inputCaja" id="" name="calle"
-                                                value="{{ $personal->celular }}" readonly>
+                                            <input type="text" class="inputCaja" id="celular" name="celular"
+                                                value="{{ $personal->celular }}">
                                         </div>
 
                                         {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
@@ -117,7 +119,6 @@
                                     <button type="submit" class="btn botonGral">Guardar</button>
                                 </div>  --}}
 
-                            </form>
 
                         </div>
                     </div>
@@ -1468,6 +1469,8 @@
                     <div class="col-12 text-center mb-3 ">
                         <button type="submit" class="btn botonGral">Guardar</button>
                     </div>
+                    </form>
+
                 </div>
             </div>
         </div>

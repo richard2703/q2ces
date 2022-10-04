@@ -74,7 +74,9 @@ class maquinariaController extends Controller
      */
     public function update(Request $request, maquinaria $maquinaria)
     {
-        //
+        $data = $request->all();
+        $maquinaria->update($data);
+        return redirect()->route('maquinaria.index');
     }
 
     /**

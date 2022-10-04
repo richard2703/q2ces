@@ -93,6 +93,10 @@ class accesoriosController extends Controller
             'ano',
             'foto'
         );
+        if ($request->hasFile("foto")) {
+            $accesorio['foto'] = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
+            $request->file('foto')->storeAs('/public/accesorio', $accesorio['foto']);
+        }
         $accesorios->update($data);
         return redirect()->route('accesorios.index');
     }
