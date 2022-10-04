@@ -267,6 +267,7 @@ CREATE TABLE maquinaria(
   marca varchar(255) NULL,
   submarca varchar(255) NULL,
   modelo varchar(255) NULL,
+  ano int null,
   uso varchar(255) NULL,
   color varchar(255) NULL,
   placas varchar(255) NULL,
@@ -275,6 +276,7 @@ CREATE TABLE maquinaria(
   numserie varchar(255) NULL,
   vin varchar(255) NULL,
   capacidad varchar(255) NULL,
+  combustible varchar(255) null,
   tanque int NULL,
   ejes varchar(255) NULL,
   rinD varchar(255) NULL,
@@ -284,6 +286,7 @@ CREATE TABLE maquinaria(
   aceitemotor  varchar(255) NULL,
   aceitetras varchar(255) NULL,
   aceitehidra varchar(255) NULL,
+  aceitedirec varchar(255) NULL,
   filtroaceite varchar(255) NULL,
   filtroaire varchar(255) NULL,
   bujias varchar(255) NULL,
@@ -292,6 +295,9 @@ CREATE TABLE maquinaria(
   kilometraje int NULL,
   kom varchar(255) NULL,
   foto varchar(255) NULL,
+  foto2 varchar(255) NULL,
+  foto3 varchar(255) NULL,
+  foto4 varchar(255) NULL,
   PRIMARY KEY (id)
  );
 
@@ -317,8 +323,9 @@ CREATE TABLE accesorios(
   marca varchar(255) NULL,
   modelo varchar(255) NULL,
   color varchar(255) NULL,
-  año varchar(255) NULL,
+  ano varchar(255) NULL,
   serie varchar(255) NULL,
+  foto varchar(255)null,
   PRIMARY KEY (id)
  );
 

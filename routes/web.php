@@ -18,13 +18,22 @@ Route::get('/', function () {
 });
 
 /* Mis rutas */
+
 Route::get('/dashboard', function () {
-    return view('equipos.dashboard');
+    return view('dashboard');
 });
 
-Route::get('/altaDeEquipos', function () {
-    return view('equipos.altaDeEquipos');
-});
+// Route::get('/altaDeEquipos', function () {
+//     return view('equipos.altaDeEquipos');
+// });
+
+// Route::get('/detalleEquipo', function () {
+//     return view('equipos.detalleEquipo');
+// });
+
+// Route::get('/verEquipos', function () {
+//     return view('equipos.verEquipos');
+// });
 
 Route::get('/altaDeAccesorios', function () {
     return view('accesorios.altaDeAccesorios');
@@ -32,15 +41,6 @@ Route::get('/altaDeAccesorios', function () {
 
 Route::get('/indexAccesorios', function () {
     return view('accesorios.indexAccesorios');
-});
-
-
-Route::get('/detalleEquipo', function () {
-    return view('equipos.detalleEquipo');
-});
-
-Route::get('/verEquipos', function () {
-    return view('equipos.verEquipos');
 });
 
 // Route::get('/altaObra', function () {
@@ -58,9 +58,6 @@ Route::get('/verEquipos', function () {
 Route::get('/detalleDePersonal', function () {
     return view('personal.detalleDePersonal');
 });
-
-
-
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -87,4 +84,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/personal', [App\Http\Controllers\personalController::class, 'store'])->name('personal.store');
     Route::get('/personal', [App\Http\Controllers\personalController::class, 'index'])->name('personal.index');
     Route::get('/personal/{personal}', [App\Http\Controllers\personalController::class, 'show'])->name('personal.show');
+
+    //Crud maquinaria
+    Route::get('/maquinaria/nuevo', [App\Http\Controllers\maquinariaController::class, 'create'])->name('maquinaria.create');
+    Route::post('/maquinaria', [App\Http\Controllers\maquinariaController::class, 'store'])->name('maquinaria.store');
+    Route::get('/maquinaria', [App\Http\Controllers\maquinariaController::class, 'index'])->name('maquinaria.index');
+    Route::get('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'show'])->name('maquinaria.show');
+
+    //Crud accesorios
+    Route::get('/accesorios/nuevo', [App\Http\Controllers\accesoriosController::class, 'create'])->name('accesorios.create');
+    Route::post('/accesorios', [App\Http\Controllers\accesoriosController::class, 'store'])->name('accesorios.store');
+    Route::get('/accesorios', [App\Http\Controllers\accesoriosController::class, 'index'])->name('accesorios.index');
+    Route::get('/accesorios/{accesorios}', [App\Http\Controllers\accesoriosController::class, 'show'])->name('accesorios.show');
+    Route::put('/accesorios/{accesorios}', [App\Http\Controllers\accesoriosController::class, 'update'])->name('accesorios.update');
 });

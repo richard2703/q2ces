@@ -170,3 +170,49 @@ p span{
   .alin{
     align-items:baseline
   }
+
+  
+
+/* ------- CSS PARA DETALLE DE EQUIPO ----------*/
+
+#muestra {
+  position: relative; 
+  margin: 1rem auto; 
+  width: 100%; height: 342px; 
+  background-color: #fff; 
+  overflow: hidden; 
+}
+
+
+#selectores img{
+  padding: 3px;
+  margin: none; 
+  cursor: pointer; 
+  background-size: cover;
+  border: #F7C90D solid 1px;
+  width: 20%; 
+}
+
+#visor {
+  width: 100%;
+  background-size: cover;
+  object-fit: cover;
+}
+      
+#visor img {
+  background-size: cover;
+  object-fit: cover;
+  object-position: center;
+}
+
+.btnModal{
+  border: none;
+  background-color: #fff;
+}
+
+/* ------- CSS PARA TABLA DE ACCESORIOS ----------*/
+th .tablaTitulos{
+  font-weight: 800;
+  color: #5C7C26;
+
+}
