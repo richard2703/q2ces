@@ -14600,8 +14600,16 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   box-shadow: none;
 }
 
+
+
+.sidebar .nav li:hover>a i svg,{
+  background-color: #727176;
+  color: #F7C90D;
+  box-shadow: none;
+}
+
 .sidebar .nav li.active>[data-toggle="collapse"] i {
-  color: #a9afbb;
+  color: #F7C90D;
 }
 
 .sidebar .nav li.active>a,
@@ -18359,7 +18367,7 @@ Copyright (c) 2015 Daniel Eden
     height: 100%;
     width: 100%;
     position: absolute;
-    background-color: #282828;
+    
     display: block;
     content: "";
     z-index: 1;
