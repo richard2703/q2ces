@@ -18,13 +18,22 @@ Route::get('/', function () {
 });
 
 /* Mis rutas */
+
 Route::get('/dashboard', function () {
-    return view('equipos.dashboard');
+    return view('dashboard');
 });
 
-Route::get('/altaDeEquipos', function () {
-    return view('equipos.altaDeEquipos');
-});
+// Route::get('/altaDeEquipos', function () {
+//     return view('equipos.altaDeEquipos');
+// });
+
+// Route::get('/detalleEquipo', function () {
+//     return view('equipos.detalleEquipo');
+// });
+
+// Route::get('/verEquipos', function () {
+//     return view('equipos.verEquipos');
+// });
 
 Route::get('/altaDeAccesorios', function () {
     return view('accesorios.altaDeAccesorios');
@@ -35,13 +44,6 @@ Route::get('/indexAccesorios', function () {
 });
 
 
-Route::get('/detalleEquipo', function () {
-    return view('equipos.detalleEquipo');
-});
-
-Route::get('/verEquipos', function () {
-    return view('equipos.verEquipos');
-});
 
 // Route::get('/altaObra', function () {
 //     return view('obra.altaObra');
@@ -87,4 +89,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/personal', [App\Http\Controllers\personalController::class, 'store'])->name('personal.store');
     Route::get('/personal', [App\Http\Controllers\personalController::class, 'index'])->name('personal.index');
     Route::get('/personal/{personal}', [App\Http\Controllers\personalController::class, 'show'])->name('personal.show');
+
+    //Crud maquinaria
+    Route::get('/maquinaria/nuevo', [App\Http\Controllers\maquinariaController::class, 'create'])->name('maquinaria.create');
+    Route::post('/maquinaria', [App\Http\Controllers\maquinariaController::class, 'store'])->name('maquinaria.store');
+    Route::get('/maquinaria', [App\Http\Controllers\maquinariaController::class, 'index'])->name('maquinaria.index');
+    Route::get('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'show'])->name('maquinaria.show');
 });

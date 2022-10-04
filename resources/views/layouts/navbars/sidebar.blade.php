@@ -10,10 +10,10 @@
         <ul class="nav">
             <!-- inicio de colapsable -->
 
-            <li class="nav-item {{ $activePage == 'dashboard' || $activePage == 'user-management' ? ' active' : '' }}">
+            <li class="nav-item {{ $activePage == 'maquinaria' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a href="#equipo" class="nav-link p-2" data-toggle="collapse" aria-expanded="false">
                     <i><img class="imgMenu" style="width:25px" src="{{ asset('/img/navs/eqiposMenu.svg') }}"></i>
-                    <p>{{ __('Equipos') }}
+                    <p>{{ __('Maquinaria') }}
                         <b class="caret"></b>
                     </p>
                 </a>
@@ -21,8 +21,8 @@
                     <ul class="nav">
                         <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
                             <a
-                                href="{{ url('verEquipos', session('id')) }}"class="nav-link nav-item{{ $activePage == 'equipos' ? ' active' : '' }} ">
-                                <span class="py-2 ps-5 sidebar-normal">{{ __('Ver Equipo') }} </span>
+                                href="{{ route('maquinaria.index') }}"class="nav-link nav-item{{ $activePage == 'maquinaria' ? ' active' : '' }} ">
+                                <span class="py-2 ps-5 sidebar-normal">{{ __('Ver Maquinaria') }} </span>
                             </a>
                         </li>
 
