@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\obras;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
+
 
 
 class obrasController extends Controller
@@ -28,6 +30,7 @@ class obrasController extends Controller
      */
     public function create()
     {
+        Session::flash('message', 1);
         return view('obra.altaObra');
     }
 
@@ -88,6 +91,8 @@ class obrasController extends Controller
      */
     public function update(Request $request, obras $obras)
     {
+        Session::flash('message', 1);
+
         //
     }
 

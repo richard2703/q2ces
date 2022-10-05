@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\maquinaria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+
 
 class maquinariaController extends Controller
 {
@@ -40,6 +42,7 @@ class maquinariaController extends Controller
         // dd($request);
         $maquinaria = $request->all();
         $maquinaria = maquinaria::create($maquinaria);
+        Session::flash('message', 1);
         return redirect()->route('maquinaria.index');
     }
 
@@ -76,6 +79,8 @@ class maquinariaController extends Controller
     {
         $data = $request->all();
         $maquinaria->update($data);
+        Session::flash('message', 1);
+
         return redirect()->route('maquinaria.index');
     }
 

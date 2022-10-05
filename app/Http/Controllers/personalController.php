@@ -11,6 +11,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
+
 
 class personalController extends Controller
 {
@@ -33,6 +35,8 @@ class personalController extends Controller
      */
     public function create()
     {
+        Session::flash('message', 1);
+
         return view('personal.altaDePersonal');
     }
 
@@ -162,7 +166,7 @@ class personalController extends Controller
         $newequipo->cargadorSerial = $request->cargadorSerial;
         $newequipo->save();
 
-
+        Session::flash('message', 1);
         return redirect()->route('personal.index');
     }
 
@@ -240,8 +244,8 @@ class personalController extends Controller
         );
 
         if ($request->hasFile("foto")) {
-            $personal['foto'] = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
-            $request->file('foto')->storeAs('/public/personal', $personal['foto']);
+            $data['foto'] = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
+            $request->file('foto')->storeAs('/public/personal', $data['foto']);
         }
         $personal->update($data);
 
@@ -293,6 +297,7 @@ class personalController extends Controller
         $equipo->radioSerial = $request->radioSerial;
         $equipo->cargadorSerial = $request->cargadorSerial;
         $equipo->save();
+        Session::flash('message', 1);
 
         return redirect()->route('personal.index');
     }

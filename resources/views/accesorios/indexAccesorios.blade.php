@@ -96,4 +96,33 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('js/alertas.js') }}"></script>
+
+    <script>
+        function Guardado() {
+            // alert('test');
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Guardado con exito'
+            })
+        }
+        var slug = '1';
+        if (slug == 1) {
+            alert();
+            Guardado();
+
+        }
+    </script>
 @endsection
