@@ -6,8 +6,8 @@
                 <div class="col-11 align-self-start">
                     <div class="card">
                         <div class="card-body contCart">
-                            <form action="{{ route('accesorios.update', $accesorios->id) }}" method="post"class="row"
-                                enctype="multipart/form-data">
+                            <form action="{{ route('accesorios.update', $accesorios->id) }}"
+                                method="post"class="row alertaGuardar" enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
 
@@ -75,7 +75,8 @@
                                     </div>
 
                                     <div class="col-12 text-end mb-3 ">
-                                        <button type="submit" class="btn botonGral">Guardar</button>
+                                        <button type="submit" class="btn botonGral"
+                                            onclick="alertaGuardar()">Guardar</button>
                                     </div>
                                 </div>
                             </form>

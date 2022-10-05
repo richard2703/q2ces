@@ -6,7 +6,7 @@
                 <div class="col-11 align-self-start">
                     <div class="card">
                         <div class="card-body contCart">
-                            <form action="{{ route('accesorios.store') }}" method="post"class="row"
+                            <form class="alertaGuardar" action="{{ route('accesorios.store') }}" method="post"class="row"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="p-1 align-self-start bacTituloPrincipal">
@@ -73,7 +73,8 @@
                                     </div>
 
                                     <div class="col-12 text-end mb-3 ">
-                                        <button type="submit" class="btn botonGral">Guardar</button>
+                                        <button type="submit" class="btn botonGral"
+                                            onclick="alertaGuardar()">Guardar</button>
                                     </div>
                                 </div>
                             </form>
