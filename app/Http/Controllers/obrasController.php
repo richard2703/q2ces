@@ -30,7 +30,6 @@ class obrasController extends Controller
      */
     public function create()
     {
-        Session::flash('message', 1);
         return view('obra.altaObra');
     }
 
@@ -56,6 +55,8 @@ class obrasController extends Controller
         }
         $obra['estatus'] = 'Activa';
         obras::create($obra);
+        Session::flash('message', 1);
+
         return redirect()->route('obras.index');
     }
 

@@ -10,7 +10,7 @@
                                 <h2 class="my-3 ms-3 texticonos ">Alta de Obra</h2>
                             </div>
 
-                            <form class="row" action="{{ route('obras.store') }}" method="post"
+                            <form class="row alertaGuardar" action="{{ route('obras.store') }}" method="post"
                                 enctype="multipart/form-data">
                                 @csrf
 
@@ -88,7 +88,7 @@
                         </div>
 
                         <div class="col-12 text-end mb-3 ">
-                            <button type="submit" class="btn botonGral">Guardar</button>
+                            <button type="submit" class="btn botonGral" onclick="alertaGuardar()">Guardar</button>
                         </div>
 
                         </form>

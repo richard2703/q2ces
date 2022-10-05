@@ -10,8 +10,8 @@
                                 <h2 class="my-3 ms-3 texticonos ">{{ $personal->nombres }} {{ $personal->apellidoP }}
                                     {{ $personal->apellidoM }}</h2>
                             </div>
-                            <form action="{{ route('personal.update', $personal->id) }}" method="post"class="row"
-                                enctype="multipart/form-data">
+                            <form action="{{ route('personal.update', $personal->id) }}"
+                                method="post"class="row alertaGuardar" enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
                                 <div class="col-12 col-md-4  my-3">
@@ -1467,7 +1467,7 @@
                         </div>
                     </div>
                     <div class="col-12 text-center mb-3 ">
-                        <button type="submit" class="btn botonGral">Guardar</button>
+                        <button type="submit" class="btn botonGral" onclick="alertaGuardar()">Guardar</button>
                     </div>
                     </form>
 

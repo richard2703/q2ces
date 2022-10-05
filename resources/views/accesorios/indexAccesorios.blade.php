@@ -118,9 +118,8 @@
                 title: 'Guardado con exito'
             })
         }
-        var slug = '1';
+        var slug = '{{ Session::get('message') }}';
         if (slug == 1) {
-            alert();
             Guardado();
 
         }

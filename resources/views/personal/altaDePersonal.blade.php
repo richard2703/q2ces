@@ -6,7 +6,7 @@
                 <div class="col-11 align-self-start">
                     <div class="card">
                         <div class="card-body contCart">
-                            <form class="row" action="{{ route('personal.store') }}" method="post"
+                            <form class="row alertaGuardar" action="{{ route('personal.store') }}" method="post"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="accordion my-3" id="accordionExample">
@@ -1383,7 +1383,8 @@
                                     </div>
                                 </div>
                                 <div class="col-12 text-center mb-3 ">
-                                    <button type="submit" class="btn botonGral">Guardar</button>
+                                    <button type="submit" class="btn botonGral"
+                                        onclick="alertaGuardar()">Guardar</button>
                                 </div>
 
 

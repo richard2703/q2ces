@@ -114,7 +114,6 @@
         }
         var slug = '1';
         if (slug == 1) {
-            alert();
             Guardado();
 
         }
