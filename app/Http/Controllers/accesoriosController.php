@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\accesorios;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
+
+
 
 class accesoriosController extends Controller
 {
@@ -36,6 +40,7 @@ class accesoriosController extends Controller
      */
     public function store(Request $request)
     {
+        // dd('test');
         $accesorio = $request->only(
             'nombre',
             'marca',
@@ -50,6 +55,7 @@ class accesoriosController extends Controller
             $request->file('foto')->storeAs('/public/accesorio', $accesorio['foto']);
         }
         $accesorio = accesorios::create($accesorio);
+        Session::flash('message', 1);
         return redirect()->route('accesorios.index');
     }
 
@@ -93,7 +99,14 @@ class accesoriosController extends Controller
             'ano',
             'foto'
         );
+
+        if ($request->hasFile("foto")) {
+            $data['foto'] = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
+            $request->file('foto')->storeAs('/public/accesorio', $data['foto']);
+        }
+
         $accesorios->update($data);
+        Session::flash('message', 1);
         return redirect()->route('accesorios.index');
     }
 

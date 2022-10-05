@@ -84,12 +84,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/personal', [App\Http\Controllers\personalController::class, 'store'])->name('personal.store');
     Route::get('/personal', [App\Http\Controllers\personalController::class, 'index'])->name('personal.index');
     Route::get('/personal/{personal}', [App\Http\Controllers\personalController::class, 'show'])->name('personal.show');
+    Route::put('/personal/{personal}', [App\Http\Controllers\personalController::class, 'update'])->name('personal.update');
 
     //Crud maquinaria
     Route::get('/maquinaria/nuevo', [App\Http\Controllers\maquinariaController::class, 'create'])->name('maquinaria.create');
     Route::post('/maquinaria', [App\Http\Controllers\maquinariaController::class, 'store'])->name('maquinaria.store');
     Route::get('/maquinaria', [App\Http\Controllers\maquinariaController::class, 'index'])->name('maquinaria.index');
     Route::get('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'show'])->name('maquinaria.show');
+    Route::put('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'update'])->name('maquinaria.update');
 
     //Crud accesorios
     Route::get('/accesorios/nuevo', [App\Http\Controllers\accesoriosController::class, 'create'])->name('accesorios.create');

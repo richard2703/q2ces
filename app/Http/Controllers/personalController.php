@@ -11,6 +11,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
+
 
 class personalController extends Controller
 {
@@ -33,6 +35,8 @@ class personalController extends Controller
      */
     public function create()
     {
+        Session::flash('message', 1);
+
         return view('personal.altaDePersonal');
     }
 
@@ -162,7 +166,7 @@ class personalController extends Controller
         $newequipo->cargadorSerial = $request->cargadorSerial;
         $newequipo->save();
 
-
+        Session::flash('message', 1);
         return redirect()->route('personal.index');
     }
 
@@ -204,7 +208,98 @@ class personalController extends Controller
      */
     public function update(Request $request, personal $personal)
     {
-        //
+        $id = $personal->id;
+        $data = $request->only(
+            'userId',
+            'nombres',
+            'apellidoP',
+            'apellidoM',
+            'fechaNacimiento',
+            'lugarNacimiento',
+            'curp',
+            'ine',
+            'rfc',
+            'licencia',
+            'cpf',
+            'cpe',
+            'sexo',
+            'civil',
+            'hijos',
+            'sangre',
+            'calle',
+            'numero',
+            'colonia',
+            'estado',
+            'ciudad',
+            'cp',
+            'particular',
+            'celular',
+            'mailpersonal',
+            'mailEmpresaril',
+            'casa',
+            'foto',
+            'aler',
+            'profe',
+            'interior'
+        );
+
+        if ($request->hasFile("foto")) {
+            $data['foto'] = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
+            $request->file('foto')->storeAs('/public/personal', $data['foto']);
+        }
+        $personal->update($data);
+
+        $contacto = contactos::where("personalId", "$id")->first();
+        $contacto->nombre = $request->nombreE;
+        $contacto->particular = $request->particularE;
+        $contacto->celular = $request->celularE;
+        $contacto->parentesco = $request->parentesco;
+        $contacto->nombreP = $request->nombreP;
+        $contacto->nombreM = $request->nombreM;
+        $contacto->save();
+
+        $beneficiario = beneficiario::where("personalId", "$id")->first();
+        $beneficiario->nombres = $request->nombreE;
+        $beneficiario->apellidoP = $request->apellidoPB;
+        $beneficiario->apellidoM = $request->apellidoMB;
+        $beneficiario->particular = $request->particularB;
+        $beneficiario->celular = $request->celularB;
+        $beneficiario->nacimiento = $request->nacimientoB;
+        $beneficiario->save();
+
+        $nomina = nomina::where("personalId", "$id")->first();;
+        $nomina->nomina = $request->nomina;
+        $nomina->imss = $request->imss;
+        $nomina->clinica = $request->clinica;
+        $nomina->infonavit = $request->infonavit;
+        $nomina->afore = $request->afore;
+        $nomina->pago = $request->pago;
+        $nomina->tarjeta = $request->tarjeta;
+        $nomina->banco = $request->banco;
+        $nomina->puesto = $request->puesto;
+        $nomina->ingreso = $request->ingreso;
+        $nomina->horario = $request->horario;
+        $nomina->jefeId = $request->jefeId;
+        $nomina->neto = $request->neto;
+        $nomina->save();
+
+        $equipo = equipo::where("personalId", "$id")->first();
+        $equipo->chaleco = $request->chaleco;
+        $equipo->camisa = $request->camisa;
+        $equipo->botas = $request->botas;
+        $equipo->guantes = $request->guantes;
+        $equipo->comentarios = $request->comentarios;
+        $equipo->pc = $request->pc;
+        $equipo->pcSerial = $request->pcSerial;
+        $equipo->celular = $request->celular;
+        $equipo->celularImei = $request->imei;
+        $equipo->radio = $request->radio;
+        $equipo->radioSerial = $request->radioSerial;
+        $equipo->cargadorSerial = $request->cargadorSerial;
+        $equipo->save();
+        Session::flash('message', 1);
+
+        return redirect()->route('personal.index');
     }
 
     /**

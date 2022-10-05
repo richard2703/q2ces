@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\obras;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
+
 
 
 class obrasController extends Controller
@@ -53,6 +55,8 @@ class obrasController extends Controller
         }
         $obra['estatus'] = 'Activa';
         obras::create($obra);
+        Session::flash('message', 1);
+
         return redirect()->route('obras.index');
     }
 
@@ -88,6 +92,8 @@ class obrasController extends Controller
      */
     public function update(Request $request, obras $obras)
     {
+        Session::flash('message', 1);
+
         //
     }
 
