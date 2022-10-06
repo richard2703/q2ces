@@ -18,6 +18,7 @@
                                     <div class="text-center mx-auto border vistaFoto mb-4">
                                         <i><img class="imgVista img-fluid"
                                                 src="{{ asset('storage/personal/') . '/' . $personal->foto }}"></i>
+                                        <input class="mb-4" type="file" name="foto" id="foto" accept="image/*">
                                     </div>
                                 </div>
 
@@ -132,8 +133,8 @@
                                     Datos Personales
                                 </button>
                             </h2>
-                            <div id="datosPersonales" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                                data-bs-parent="#accordionExample">
+                            <div id="datosPersonales" class="accordion-collapse collapse show"
+                                aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <div class="row mt-3">
                                         {{--  <div class="col-12 col-md-4  ">

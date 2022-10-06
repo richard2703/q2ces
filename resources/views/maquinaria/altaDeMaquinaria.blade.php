@@ -286,272 +286,421 @@
                                         <div id="documentos" class="accordion-collapse collapse"
                                             aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
-                                                <div class="row mt-3">
-
-                                                    <div class="col-12">
-                                                        <div class="row">
-
-                                                            <div class="col-12 col-md-6 col-lg-4">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div class=" ">
-                                                                            <input class="form-check-input"
-                                                                                type="checkbox" value=""
-                                                                                id="flexCheckDefault">
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
-                                                                                Factura
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <div class="semaforo rounded-circle mx-2">
-                                                                            </div>
-                                                                            <div class="semaforo rounded-circle mx-2">
-                                                                            </div>
-                                                                            <i><img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                            <i><img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
-
-                                                                        </div>
+                                                {{--  <div class="row mt-3">
 
 
-                                                                    </div>
-                                                                </div>
+
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="card contDocumentos">
+                                                            <div class="col-8">
+
+                                                                Factura
+
+                                                            </div>
+                                                            <div class="col-2">
+
+                                                                Factura
+
                                                             </div>
 
-                                                            <div class="col-12 col-md-6 col-lg-4">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
+                                                            <div
+                                                                class=" col-12 contIconosDocumentos d-flex align-items-end">
 
-                                                                        <div class=" ">
-                                                                            <input class="form-check-input"
-                                                                                type="checkbox" value=""
-                                                                                id="flexCheckDefault">
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
-                                                                                Verificación
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <div class="semaforo rounded-circle mx-2">
-                                                                            </div>
-                                                                            <div class="semaforo rounded-circle mx-2">
-                                                                            </div>
-                                                                            <i><img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                            <i><img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
-
-                                                                        </div>
-
-
-                                                                    </div>
+                                                                <div class="semaforo rounded-circle mx-2">
                                                                 </div>
+                                                                <label class="custom-file-upload">
+                                                                    <input class="mb-4" type="file" name="foto"
+                                                                        id="foto">
+                                                                    <img class="mx-2" style="height:23px"
+                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}">
+                                                                </label>
+
+                                                                <i><img class="mx-2" style="height:23px"
+                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+
                                                             </div>
-
-                                                            <div class="col-12 col-md-6 col-lg-4">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div class=" ">
-                                                                            <input class="form-check-input"
-                                                                                type="checkbox" value=""
-                                                                                id="flexCheckDefault">
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
-                                                                                Manual de Uso
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <div class="semaforo rounded-circle mx-2">
-                                                                            </div>
-                                                                            <div class="semaforo rounded-circle mx-2">
-                                                                            </div>
-                                                                            <i><img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                            <i><img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
-
-                                                                        </div>
-
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-12 col-md-6 col-lg-4">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div class=" ">
-                                                                            <input class="form-check-input"
-                                                                                type="checkbox" value=""
-                                                                                id="flexCheckDefault">
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
-                                                                                Registro
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <div class="semaforo rounded-circle mx-2">
-                                                                            </div>
-                                                                            <div class="semaforo rounded-circle mx-2">
-                                                                            </div>
-                                                                            <i><img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                            <i><img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
-
-                                                                        </div>
-
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-12 col-md-6 col-lg-4">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div class=" ">
-                                                                            <input class="form-check-input"
-                                                                                type="checkbox" value=""
-                                                                                id="flexCheckDefault">
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
-                                                                                Tarjeta de Circulación
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <div class="semaforo rounded-circle mx-2">
-                                                                            </div>
-                                                                            <div class="semaforo rounded-circle mx-2">
-                                                                            </div>
-                                                                            <i><img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                            <i><img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
-
-                                                                        </div>
-
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-12 col-md-6 col-lg-4">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div class=" ">
-                                                                            <input class="form-check-input"
-                                                                                type="checkbox" value=""
-                                                                                id="flexCheckDefault">
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
-                                                                                Ficha Técnica del Proveedor
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <div class="semaforo rounded-circle mx-2">
-                                                                            </div>
-                                                                            <div class="semaforo rounded-circle mx-2">
-                                                                            </div>
-                                                                            <i><img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                            <i><img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
-
-                                                                        </div>
-
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-12 col-md-6 col-lg-4">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div class=" ">
-                                                                            <input class="form-check-input"
-                                                                                type="checkbox" value=""
-                                                                                id="flexCheckDefault">
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
-                                                                                Seguros
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <div class="semaforo rounded-circle mx-2">
-                                                                            </div>
-                                                                            <div class="semaforo rounded-circle mx-2">
-                                                                            </div>
-                                                                            <i><img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                            <i><img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
-
-                                                                        </div>
-
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-12 col-md-6 col-lg-4">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div class=" ">
-                                                                            <input class="form-check-input"
-                                                                                type="checkbox" value=""
-                                                                                id="flexCheckDefault">
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
-                                                                                Permosos Especiales
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <div class="semaforo rounded-circle mx-2">
-                                                                            </div>
-                                                                            <div class="semaforo rounded-circle mx-2">
-                                                                            </div>
-                                                                            <i><img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                            <i><img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
-
-                                                                        </div>
-
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
                                                         </div>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="card contDocumentos">
+                                                            <div class="card-body m-2">
+
+                                                                <div class=" ">
+                                                                    <label
+                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        for="flexCheckDefault">
+                                                                        Factura
+                                                                    </label>
+                                                                </div>
+                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                    <div class="semaforo rounded-circle mx-2">
+                                                                    </div>
+                                                                    <div class="semaforo rounded-circle mx-2">
+                                                                    </div>
+                                                                    <label class="custom-file-upload">
+                                                                        <input class="mb-4" type="file"
+                                                                            name="foto" id="foto">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}">
+                                                                    </label>
+
+                                                                    <i><img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="card contDocumentos">
+                                                            <div class="card-body m-2">
+
+                                                                <div class=" ">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        value="" id="flexCheckDefault">
+                                                                    <label
+                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        for="flexCheckDefault">
+                                                                        Verificación
+                                                                    </label>
+                                                                </div>
+                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                    <div class="semaforo rounded-circle mx-2">
+                                                                    </div>
+                                                                    <div class="semaforo rounded-circle mx-2">
+                                                                    </div>
+                                                                    <i><img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
+                                                                    <i><img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="card contDocumentos">
+                                                            <div class="card-body m-2">
+
+                                                                <div class=" ">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        value="" id="flexCheckDefault">
+                                                                    <label
+                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        for="flexCheckDefault">
+                                                                        Manual de Uso
+                                                                    </label>
+                                                                </div>
+                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                    <div class="semaforo rounded-circle mx-2">
+                                                                    </div>
+                                                                    <div class="semaforo rounded-circle mx-2">
+                                                                    </div>
+                                                                    <i><img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
+                                                                    <i><img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="card contDocumentos">
+                                                            <div class="card-body m-2">
+
+                                                                <div class=" ">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        value="" id="flexCheckDefault">
+                                                                    <label
+                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        for="flexCheckDefault">
+                                                                        Registro
+                                                                    </label>
+                                                                </div>
+                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                    <div class="semaforo rounded-circle mx-2">
+                                                                    </div>
+                                                                    <div class="semaforo rounded-circle mx-2">
+                                                                    </div>
+                                                                    <i><img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
+                                                                    <i><img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="card contDocumentos">
+                                                            <div class="card-body m-2">
+
+                                                                <div class=" ">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        value="" id="flexCheckDefault">
+                                                                    <label
+                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        for="flexCheckDefault">
+                                                                        Tarjeta de Circulación
+                                                                    </label>
+                                                                </div>
+                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                    <div class="semaforo rounded-circle mx-2">
+                                                                    </div>
+                                                                    <div class="semaforo rounded-circle mx-2">
+                                                                    </div>
+                                                                    <i><img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
+                                                                    <i><img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="card contDocumentos">
+                                                            <div class="card-body m-2">
+
+                                                                <div class=" ">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        value="" id="flexCheckDefault">
+                                                                    <label
+                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        for="flexCheckDefault">
+                                                                        Ficha Técnica del Proveedor
+                                                                    </label>
+                                                                </div>
+                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                    <div class="semaforo rounded-circle mx-2">
+                                                                    </div>
+                                                                    <div class="semaforo rounded-circle mx-2">
+                                                                    </div>
+                                                                    <i><img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
+                                                                    <i><img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="card contDocumentos">
+                                                            <div class="card-body m-2">
+
+                                                                <div class=" ">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        value="" id="flexCheckDefault">
+                                                                    <label
+                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        for="flexCheckDefault">
+                                                                        Seguros
+                                                                    </label>
+                                                                </div>
+                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                    <div class="semaforo rounded-circle mx-2">
+                                                                    </div>
+                                                                    <div class="semaforo rounded-circle mx-2">
+                                                                    </div>
+                                                                    <i><img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
+                                                                    <i><img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="card contDocumentos">
+                                                            <div class="card-body m-2">
+
+                                                                <div class=" ">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        value="" id="flexCheckDefault">
+                                                                    <label
+                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        for="flexCheckDefault">
+                                                                        Permosos Especiales
+                                                                    </label>
+                                                                </div>
+                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                    <div class="semaforo rounded-circle mx-2">
+                                                                    </div>
+                                                                    <div class="semaforo rounded-circle mx-2">
+                                                                    </div>
+                                                                    <i><img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
+                                                                    <i><img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>  --}}
+                                                <div class="row mt-3">
+                                                    <div class="col-12 col-md-8 ">
+                                                        <div class="row alin">
+                                                            {{--  <div class=" col-12 col-sm-6  mb-3 ">
+                                                                <label class="labelTitulo">Nombre:</label></br>
+                                                                <input type="text" class="inputCaja" id=""
+                                                                name="calle" value="">
+                                                            </div>  --}}
+
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                                <label class="labelTitulo">Marca:</label></br>
+                                                                <input type="text" class="inputCaja" id="marca"
+                                                                    name="marca" value="">
+                                                            </div>
+
+                                                            <div class="col-12 col-sm-6 col-lg-4 card contDocumentos">
+                                                                <div class="row">
+                                                                    <div class="col-8 mb-1 mt-1"> <label
+                                                                            class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                            for="flexCheckDefault">
+                                                                            Factura
+                                                                        </label></div>
+                                                                    <div class="col-4 mb-1 mt-1"><i
+                                                                            class="fa fa-user semaforo2"></i>
+                                                                    </div>
+                                                                    <div class="col-6 mb-1 mt-1 "> <input class="mb-4"
+                                                                            type="file" name="foto" id="foto">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}">
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="col-6 mb-1 mt-1"> <input class="mb-4"
+                                                                            type="file" name="foto" id="foto">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}">
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="col-12 col-sm-6 col-lg-4 card contDocumentos">
+                                                                <div class="row">
+                                                                    <div class="col-8 mb-1 mt-1"> <label
+                                                                            class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                            for="flexCheckDefault">
+                                                                            Factura
+                                                                        </label></div>
+                                                                    <div class="col-4 mb-1 mt-1"><i
+                                                                            class="fa fa-user semaforo2"></i>
+                                                                    </div>
+                                                                    <div class="col-6 mb-1 mt-1 "> <input class="mb-4"
+                                                                            type="file" name="foto" id="foto">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}">
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="col-6 mb-1 mt-1"> <input class="mb-4"
+                                                                            type="file" name="foto" id="foto">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}">
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="col-12 col-sm-6 col-lg-4 card contDocumentos">
+                                                                <div class="row">
+                                                                    <div class="col-8 mb-1 mt-1"> <label
+                                                                            class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                            for="flexCheckDefault">
+                                                                            Factura
+                                                                        </label></div>
+                                                                    <div class="col-4 mb-1 mt-1"><i
+                                                                            class="fa fa-user semaforo2"></i>
+                                                                    </div>
+                                                                    <div class="col-6 mb-1 mt-1 "> <input class="mb-4"
+                                                                            type="file" name="foto" id="foto">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}">
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="col-6 mb-1 mt-1"> <input class="mb-4"
+                                                                            type="file" name="foto" id="foto">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}">
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                                <label class="labelTitulo">Modelo:</label></br>
+                                                                <input type="text" class="inputCaja" id="modelo"
+                                                                    name="modelo" value="">
+                                                            </div>
+
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                                <label class="labelTitulo">Sub Marca:</label></br>
+                                                                <input type="text" class="inputCaja" id="submarca"
+                                                                    name="submarca" value="">
+                                                            </div>
+
+                                                            <div class=" col-12 col-sm-6  mb-3 ">
+                                                                <label class="labelTitulo">Categoría:</label></br>
+                                                                <input type="text" class="inputCaja" id="categoria"
+                                                                    name="categoria" value=""
+                                                                    placeholder="ej: excavadora">
+                                                            </div>
+
+
+                                                            <div class=" col-8   mb-3 ">
+                                                                <div class="row align-items-end">
+                                                                    <div class="col-7">
+                                                                        <label class="labelTitulo">Kilometraje / Millaje
+                                                                            Inicial:</label></br>
+                                                                        <input type="number" class="inputCaja"
+                                                                            id="kilometraje" name="kilometraje"
+                                                                            value="">
+
+                                                                    </div>
+                                                                    <div class="col-5">
+                                                                        <select class="form-select"
+                                                                            aria-label="Default select example"
+                                                                            name="kom">
+                                                                            <option value="Km">Km</option>
+                                                                            <option value="Ml">Ml</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
 
                                                     </div>
                                                 </div>
-
 
                                             </div>
                                         </div>
