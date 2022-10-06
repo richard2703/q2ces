@@ -21,7 +21,8 @@
                                             <div class="text-center mx-auto mb-2 border altalogo">
                                                 Logo de la Empresa
                                             </div>
-                                            <input class="mb-4" type="file" name="logo" id=" ">
+                                            <input class="mb-4" type="file" name="logo" id=" "
+                                                accept="image/*">
                                             <br>
                                         </div>
 
@@ -30,7 +31,8 @@
                                             <div class="text-center mx-auto mb-2 border altaEmpresaFoto">
                                                 Foto Aérea de la Empresa
                                             </div>
-                                            <input class="mb-4" type="file" name="foto" id=" ">
+                                            <input class="mb-4" type="file" name="foto" id=" "
+                                                accept="image/*">
                                         </div>
                                     </div>
 

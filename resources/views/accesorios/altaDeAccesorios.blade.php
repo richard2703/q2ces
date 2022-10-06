@@ -17,7 +17,8 @@
                                         <div class="text-center mx-auto border vistaFoto mb-4">
                                             <i><img class="imgVista img-fluid mb-5"
                                                     src="{{ asset('/img/general/vistaAerea.jpg') }}"></i>
-                                            <input class="mb-4" type="file" name="foto" id="foto">
+                                            <input class="mb-4" type="file" name="foto" id="foto"
+                                                accept="image/*">
                                         </div>
                                     </div>
 

@@ -41,7 +41,7 @@ class maquinariaController extends Controller
     {
         // dd($request);
         $maquinaria = $request->all();
-        $maquinaria = maquinaria::create($maquinaria);
+        // $maquinaria = maquinaria::create($maquinaria);
         Session::flash('message', 1);
         return redirect()->route('maquinaria.index');
     }
