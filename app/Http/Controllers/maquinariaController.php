@@ -28,7 +28,7 @@ class maquinariaController extends Controller
      */
     public function create()
     {
-        return view('maquinaria.altademaquinaria');
+        return view('maquinaria.altaDeMaquinaria');
     }
 
     /**
@@ -39,7 +39,7 @@ class maquinariaController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+        dd($request);
         $maquinaria = $request->all();
         // $maquinaria = maquinaria::create($maquinaria);
         Session::flash('message', 1);

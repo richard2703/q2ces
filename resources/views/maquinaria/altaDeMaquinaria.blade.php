@@ -296,7 +296,7 @@
                                                                     <label
                                                                         class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                         for="flexCheckDefault">
-                                                                        <i class="fa fa-user semaforo2"></i>
+                                                                        <i class="fa fa-check-circle semaforo2"></i>
                                                                         Factura
                                                                     </label>
                                                                 </div>
@@ -304,7 +304,7 @@
 
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
+                                                                            name="factura" id="foto">
                                                                         <img class="mx-2" style="height:23px"
                                                                             src="{{ asset('/img/general/guardarVerde.svg') }}"
                                                                             title="Subir Documento">
@@ -339,7 +339,7 @@
                                                                 <div class="contIconosDocumentos d-flex align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
+                                                                            name="verificacion" id="foto">
                                                                         <img class="mx-2" style="height:23px"
                                                                             src="{{ asset('/img/general/guardarVerde.svg') }}"
                                                                             title="Subir Documento">
@@ -375,7 +375,7 @@
                                                                 <div class="contIconosDocumentos d-flex align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
+                                                                            name="manual" id="foto">
                                                                         <img class="mx-2" style="height:23px"
                                                                             src="{{ asset('/img/general/guardarVerde.svg') }}"
                                                                             title="Subir Documento">
@@ -411,7 +411,7 @@
                                                                 <div class="contIconosDocumentos d-flex align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
+                                                                            name="registro" id="foto">
                                                                         <img class="mx-2" style="height:23px"
                                                                             src="{{ asset('/img/general/guardarVerde.svg') }}"
                                                                             title="Subir Documento">
@@ -444,7 +444,7 @@
                                                                 <div class="contIconosDocumentos d-flex align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
+                                                                            name="circulacion" id="foto">
                                                                         <img class="mx-2" style="height:23px"
                                                                             src="{{ asset('/img/general/guardarVerde.svg') }}"
                                                                             title="Subir Documento">
@@ -479,7 +479,7 @@
                                                                 <div class="contIconosDocumentos d-flex align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
+                                                                            name="ficha" id="foto">
                                                                         <img class="mx-2" style="height:23px"
                                                                             src="{{ asset('/img/general/guardarVerde.svg') }}"
                                                                             title="Subir Documento">
@@ -515,7 +515,7 @@
                                                                 <div class="contIconosDocumentos d-flex align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
+                                                                            name="seguro" id="foto">
                                                                         <img class="mx-2" style="height:23px"
                                                                             src="{{ asset('/img/general/guardarVerde.svg') }}"
                                                                             title="Subir Documento">
@@ -544,14 +544,14 @@
                                                                         class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                         for="flexCheckDefault">
                                                                         <i class="fa fa-user semaforo2"></i>
-                                                                        Permosos Especiales
+                                                                        Permisos Especiales
                                                                     </label>
 
                                                                 </div>
                                                                 <div class="contIconosDocumentos d-flex align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
+                                                                            name="especial" id="foto">
                                                                         <img class="mx-2" style="height:23px"
                                                                             src="{{ asset('/img/general/guardarVerde.svg') }}"
                                                                             title="Subir Documento">
