@@ -77,9 +77,9 @@
                                                                 </select>
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-8  mb-3 ">
-                                                                <div class="row align-items-end">
-                                                                    <div class="col-8">
+                                                            <div class=" col-12 col-sm-6 col-lg-5 mb-3 ">
+                                                                <div class="row align-items-end g-0">
+                                                                    <div class="col-9">
                                                                         <label class="labelTitulo">Tipo:</label></br>
                                                                         <select class="form-select"
                                                                             aria-label="Default select example"
@@ -90,8 +90,8 @@
                                                                         </select>
 
                                                                     </div>
-                                                                    <div class="col-4">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                    <div class="col-3">
+                                                                        <svg  xmlns="http://www.w3.org/2000/svg"
                                                                             fill="currentColor"
                                                                             class="bi bi-plus-circle-fill btnMas"
                                                                             viewBox="0 0 16 16">
@@ -102,7 +102,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                            <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                                 <label class="labelTitulo">Año:</label></br>
                                                                 <input type="number" class="inputCaja" id="ano"
                                                                     name="ano" value="">
@@ -111,16 +111,16 @@
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Color:</label></br>
                                                                 <input type="text" class="inputCaja" id="color"
-                                                                    name="color" value="">
+                                                                    name="color" value="" placeholder="amarillo">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Placas:</label></br>
                                                                 <input type="text" class="inputCaja" id="placas"
-                                                                    name="placas" value="">
+                                                                    name="placas" value="" placeholder="MW88888">
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6  mb-3 ">
+                                                            <div class=" col-12 col-sm-6 col-lg-8 mb-3 ">
                                                                 <label class="labelTitulo">Motor:</label></br>
                                                                 <input type="text" class="inputCaja" id="motor"
                                                                     name="motor" value="">
@@ -144,7 +144,7 @@
                                                                     name="vin" value="">
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                            <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
                                                                 <label class="labelTitulo">Capacidad en kW:</label></br>
                                                                 <input type="text" class="inputCaja" id="capacidad"
                                                                     name="capacidad" value="" placeholder="">

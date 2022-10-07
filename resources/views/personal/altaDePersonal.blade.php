@@ -113,7 +113,7 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Cédula Profesional
-                                                                    federal:</label></br>
+                                                                    Federal:</label></br>
                                                                 <input type="text" class="inputCaja" id="cpf"
                                                                     name="cpf" value="">
                                                             </div>
@@ -177,14 +177,14 @@
                                                                     name="celular" value="">
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6 mb-3 ">
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Correo Electrónico
                                                                     Personal:</label></br>
                                                                 <input type="email" class="inputCaja" id="mailpersonal"
                                                                     name="mailpersonal" value="">
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6  mb-3 ">
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Correo Electrónico
                                                                     Empresa:</label></br>
                                                                 <input type="email" class="inputCaja"
@@ -418,7 +418,7 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                                <label class="labelTitulo">Nombres:</label></br>
+                                                                <label class="labelTitulo">Nombre(s):</label></br>
                                                                 <input type="text" class="inputCaja" id="nombreB"
                                                                     name="nombreB" value="">
                                                             </div>
@@ -777,13 +777,13 @@
                                                                     placeholder="Marca y Modelo">
                                                             </div>
                                                             <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                                <label class="labelTitulo">Número de Imei:</label></br>
+                                                                <label class="labelTitulo">Número de IMEI:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
                                                                     name="imei" value="">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                                <label class="labelTitulo">Radio Cominicación:</label></br>
+                                                                <label class="labelTitulo">Radio Comunicación:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
                                                                     name="radio" placeholder="Marca y Modelo">
                                                             </div>

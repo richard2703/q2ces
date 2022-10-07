@@ -37,8 +37,8 @@
                                                 <th>ID</th>
                                                 <th>Nombre</th>
                                                 <th>Apellido</th>
-                                                <th>Profesion </th>
-                                                <th>Telefono</th>
+                                                <th>Profesión </th>
+                                                <th>Teléfono</th>
                                                 <th>Mail</th>
                                                 <th class="text-right">Acciones</th>
                                             </thead>
