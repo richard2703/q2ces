@@ -38,7 +38,7 @@
                                                 <th>Nombre</th>
                                                 <th>Ciudad</th>
                                                 <th>Residente</th>
-                                                <th>Telefono</th>
+                                                <th>Teléfono</th>
                                                 <th>Estatus</th>
                                                 <th class="text-right">Acciones</th>
                                             </thead>
