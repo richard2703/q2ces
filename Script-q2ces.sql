@@ -306,13 +306,14 @@ CREATE TABLE maqdocs(
   maquinariaId bigint(20) unsigned NOT NULL,
   factura varchar(255) NULL,
   circulacion varchar(255) NULL,
-  veriicacion varchar(255) NULL,
+  verificacion varchar(255) NULL,
   verificacionEstado varchar(255) NULL,
   ficha varchar(255) NULL,
   manual varchar(255) NULL,
   seguro varchar(255) NULL,
   seguroEstatus varchar(255) NULL,
   registro varchar(255) NULL,
+  especial varchar(255) NULL,
   PRIMARY KEY (id),
   CONSTRAINT FK_maqdocs_maquinariaId foreign key (maquinariaId) references maquinaria(id)
  );
