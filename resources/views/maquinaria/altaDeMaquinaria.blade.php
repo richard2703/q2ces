@@ -304,7 +304,7 @@
 
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="factura" id="foto">
+                                                                            name="factura" id="foto" accept=".pdf">
                                                                         <img class="mx-2" style="height:23px"
                                                                             src="{{ asset('/img/general/guardarVerde.svg') }}"
                                                                             title="Subir Documento">
