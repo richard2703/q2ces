@@ -13,7 +13,7 @@ class personal extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'userId', 'nombres', 'apellidoP', 'apellidoM', 'fechaNacimiento', 'lugarNacimiento', 'curp', 'ine', 'rfc', 'licencia',
+        'userId', 'nombres', 'apellidoP', 'apellidoM', 'fechaNacimiento', 'lugarNacimiento', 'curp', 'fine', 'rfc', 'licencia',
         'cpf', 'cpe', 'sexo', 'civil', 'hijos', 'sangre', 'calle', 'numero', 'colonia', 'estado', 'ciudad', 'cp', 'particular',
         'celular', 'mailpersonal', 'mailEmpresaril', 'casa', 'foto', 'aler', 'profe', 'interior', 'mailEmpresaril'
     ];

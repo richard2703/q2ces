@@ -86,7 +86,8 @@ class maquinariaController extends Controller
      */
     public function show(maquinaria $maquinaria)
     {
-        return view('maquinaria.detalleMaquinaria', compact('maquinaria'));
+        $docs = maqdocs::where("maquinariaId", $maquinaria->id)->first();
+        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'docs'));
     }
 
     /**
@@ -140,7 +141,10 @@ class maquinariaController extends Controller
             $request->file('registro')->storeAs('/public/docmaquinaria', $docs['registro']);
         }
         $docu = maqdocs::where("maquinariaId", $maquinaria->id);
-        $docu->update($docs);
+        if (isset($docs)) {
+            $docu->update($docs);
+            # code...
+        }
         Session::flash('message', 1);
 
         return redirect()->route('maquinaria.index');
@@ -155,5 +159,13 @@ class maquinariaController extends Controller
     public function destroy(maquinaria $maquinaria)
     {
         //
+    }
+    public function download($id, $doc)
+    {
+        $book = maqdocs::where('id', $id)->firstOrFail();
+
+        $pathToFile = storage_path("app/public/docmaquinaria/" . $book->$doc);
+        // return response()->download($pathToFile);
+        return response()->file($pathToFile);
     }
 }

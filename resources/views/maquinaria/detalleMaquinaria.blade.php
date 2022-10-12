@@ -326,7 +326,8 @@
                                                                     <label
                                                                         class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                         for="flexCheckDefault">
-                                                                        <i class="fa fa-check-circle semaforo2"></i>
+                                                                        <i
+                                                                            class="fa  {{ $docs->factura != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Factura
                                                                     </label>
                                                                 </div>
@@ -341,11 +342,13 @@
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                            title="Ver Documento">
+                                                                        <a href="{{ route('maquinaria.download', [$docs->id, 'factura']) }}"
+                                                                            class="" target="blank">
+                                                                            <img class="mx-2" style="height:23px"
+                                                                                src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                                title="Ver Documento">
+                                                                        </a>
+
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -360,7 +363,8 @@
                                                                     <label
                                                                         class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                         for="flexCheckDefault">
-                                                                        <i class="fa fa-user semaforo2"></i>
+                                                                        <i
+                                                                            class="fa {{ $docs->verificacion != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Verificación
                                                                     </label>
 
@@ -368,18 +372,20 @@
                                                                 <div class="contIconosDocumentos d-flex align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="verificacion" id="foto">
+                                                                            name="verificacion" id="foto"
+                                                                            accept=".pdf">
                                                                         <img class="mx-2" style="height:23px"
                                                                             src="{{ asset('/img/general/guardarVerde.svg') }}"
                                                                             title="Subir Documento">
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                            title="Ver Documento">
+                                                                        <a href="{{ route('maquinaria.download', [$docs->id, 'verificacion']) }}"
+                                                                            class="" target="blank">
+                                                                            <img class="mx-2" style="height:23px"
+                                                                                src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                                title="Ver Documento">
+                                                                        </a>
                                                                     </label>
                                                                 </div>
 
@@ -396,7 +402,8 @@
                                                                     <label
                                                                         class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                         for="flexCheckDefault">
-                                                                        <i class="fa fa-user semaforo2"></i>
+                                                                        <i
+                                                                            class="fa {{ $docs->manual != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Manual de Uso
                                                                     </label>
 
@@ -404,18 +411,19 @@
                                                                 <div class="contIconosDocumentos d-flex align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="manual" id="foto">
+                                                                            name="manual" id="foto" accept=".pdf">
                                                                         <img class="mx-2" style="height:23px"
                                                                             src="{{ asset('/img/general/guardarVerde.svg') }}"
                                                                             title="Subir Documento">
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                            title="Ver Documento">
+                                                                        <a href="{{ route('maquinaria.download', [$docs->id, 'manual']) }}"
+                                                                            class="" target="blank">
+                                                                            <img class="mx-2" style="height:23px"
+                                                                                src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                                title="Ver Documento">
+                                                                        </a>
                                                                     </label>
                                                                 </div>
 
@@ -432,7 +440,8 @@
                                                                     <label
                                                                         class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                         for="flexCheckDefault">
-                                                                        <i class="fa fa-user semaforo2"></i>
+                                                                        <i
+                                                                            class="fa {{ $docs->registro != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Registro
                                                                     </label>
 
@@ -440,18 +449,20 @@
                                                                 <div class="contIconosDocumentos d-flex align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="registro" id="foto">
+                                                                            name="registro" id="foto"
+                                                                            accept=".pdf">
                                                                         <img class="mx-2" style="height:23px"
                                                                             src="{{ asset('/img/general/guardarVerde.svg') }}"
                                                                             title="Subir Documento">
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                            title="Ver Documento">
+                                                                        <a href="{{ route('maquinaria.download', [$docs->id, 'registro']) }}"
+                                                                            class="" target="blank">
+                                                                            <img class="mx-2" style="height:23px"
+                                                                                src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                                title="Ver Documento">
+                                                                        </a>
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -466,25 +477,28 @@
                                                                     <label
                                                                         class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                         for="flexCheckDefault">
-                                                                        <i class="fa fa-user semaforo2"></i>
+                                                                        <i
+                                                                            class="fa {{ $docs->circulacion != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Tarjeta de Circulación
                                                                     </label>
                                                                 </div>
                                                                 <div class="contIconosDocumentos d-flex align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="circulacion" id="foto">
+                                                                            name="circulacion" id="foto"
+                                                                            accept=".pdf">
                                                                         <img class="mx-2" style="height:23px"
                                                                             src="{{ asset('/img/general/guardarVerde.svg') }}"
                                                                             title="Subir Documento">
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                            title="Ver Documento">
+                                                                        <a href="{{ route('maquinaria.download', [$docs->id, 'circulacion']) }}"
+                                                                            class="" target="blank">
+                                                                            <img class="mx-2" style="height:23px"
+                                                                                src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                                title="Ver Documento">
+                                                                        </a>
                                                                     </label>
                                                                 </div>
 
@@ -501,25 +515,27 @@
                                                                     <label
                                                                         class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                         for="flexCheckDefault">
-                                                                        <i class="fa fa-user semaforo2"></i>
+                                                                        <i
+                                                                            class="fa {{ $docs->ficha != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Ficha Técnica del Proveedor
                                                                     </label>
                                                                 </div>
                                                                 <div class="contIconosDocumentos d-flex align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="ficha" id="foto">
+                                                                            name="ficha" id="foto" accept=".pdf">
                                                                         <img class="mx-2" style="height:23px"
                                                                             src="{{ asset('/img/general/guardarVerde.svg') }}"
                                                                             title="Subir Documento">
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                            title="Ver Documento">
+                                                                        <a href="{{ route('maquinaria.download', [$docs->id, 'ficha']) }}"
+                                                                            class="" target="blank">
+                                                                            <img class="mx-2" style="height:23px"
+                                                                                src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                                title="Ver Documento">
+                                                                        </a>
                                                                     </label>
                                                                 </div>
 
@@ -536,7 +552,8 @@
                                                                     <label
                                                                         class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                         for="flexCheckDefault">
-                                                                        <i class="fa fa-user semaforo2"></i>
+                                                                        <i
+                                                                            class="fa {{ $docs->seguro != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Seguros
                                                                     </label>
 
@@ -544,18 +561,19 @@
                                                                 <div class="contIconosDocumentos d-flex align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="seguro" id="foto">
+                                                                            name="seguro" id="foto" accept=".pdf">
                                                                         <img class="mx-2" style="height:23px"
                                                                             src="{{ asset('/img/general/guardarVerde.svg') }}"
                                                                             title="Subir Documento">
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                            title="Ver Documento">
+                                                                        <a href="{{ route('maquinaria.download', [$docs->id, 'seguro']) }}"
+                                                                            class="" target="blank">
+                                                                            <img class="mx-2" style="height:23px"
+                                                                                src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                                title="Ver Documento">
+                                                                        </a>
                                                                     </label>
                                                                 </div>
 
@@ -572,7 +590,8 @@
                                                                     <label
                                                                         class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                         for="flexCheckDefault">
-                                                                        <i class="fa fa-user semaforo2"></i>
+                                                                        <i
+                                                                            class="fa {{ $docs->especial != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Permisos Especiales
                                                                     </label>
 
@@ -580,22 +599,22 @@
                                                                 <div class="contIconosDocumentos d-flex align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="especial" id="foto">
+                                                                            name="especial" id="foto"
+                                                                            accept=".pdf">
                                                                         <img class="mx-2" style="height:23px"
                                                                             src="{{ asset('/img/general/guardarVerde.svg') }}"
                                                                             title="Subir Documento">
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                            title="Ver Documento">
+                                                                        <a href="{{ route('maquinaria.download', [$docs->id, 'especial']) }}"
+                                                                            class="" target="blank">
+                                                                            <img class="mx-2" style="height:23px"
+                                                                                src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                                title="Ver Documento">
+                                                                        </a>
                                                                     </label>
                                                                 </div>
-
-
                                                             </div>
                                                         </div>
                                                     </div>
