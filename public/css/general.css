@@ -313,7 +313,8 @@ input.placeholderMenuMovil::placeholder{
 
 }
 
-/* -------  Boton de subir archivo  ------- */
+
+/* -------  Boton de subir archivo documentos  ------- */
 input[type="file"] {
   display: none;
 }
@@ -322,4 +323,22 @@ input[type="file"] {
   display: inline-block;
   padding: 6px 12px;
   cursor: pointer;
+}
+/* -------  Boton de subir archivo  imagenes ------- */
+label[for="mi-archivo"] {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #106BA0;
+  display: inline-block;
+  transition: all .5s;
+  cursor: pointer;
+  padding: 15px 40px !important;
+  text-transform: uppercase;
+  width: fit-content;
+  text-align: center;
+  }
+/* -------  Boton de subir archivo  ------- */
+.ver.input[type="file"] {
+  display: block !important;
 }

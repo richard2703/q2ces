@@ -17,8 +17,13 @@
                                 <div class="col-12 col-md-4  my-3">
                                     <div class="text-center mx-auto border vistaFoto mb-4">
                                         <i><img class="imgVista img-fluid"
-                                                src="{{ asset('storage/personal/') . '/' . $personal->foto }}"></i>
-                                        <input class="mb-4" type="file" name="foto" id="foto" accept="image/*">
+                                                src="{{ $personal->foto == '' ? ' /img/general/default.jpg' : '/storage/personal/' . $personal->foto }}"></i>
+
+                                        <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"
+                                                id="mi-archivo" accept="image/*"></span>
+                                        <label for="mi-archivo">
+                                            <span>sube imagen</span>
+                                        </label>
                                     </div>
                                 </div>
 
@@ -128,8 +133,9 @@
 
                         <div class="accordion-item">
                             <h2 class="accordion-header " id="headingOne">
-                                <button class="accordion-button bacTituloPrincipal" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#datosPersonales" aria-expanded="true" aria-controls="collapseOne">
+                                <button class="accordion-button bacTituloPrincipal" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#datosPersonales" aria-expanded="true"
+                                    aria-controls="collapseOne">
                                     Datos Personales
                                 </button>
                             </h2>
@@ -1543,4 +1549,15 @@
             </div>
         </div>
     </div>
+
+    <script type="application/javascript">
+        jQuery('input[type=file]').change(function(){
+         var filename = jQuery(this).val().split('\\').pop();
+         var idname = jQuery(this).attr('id');
+         console.log(jQuery(this));
+         console.log(filename);
+         console.log(idname);
+         jQuery('span.'+idname).next().find('span').html(filename);
+        });
+        </script>
 @endsection
