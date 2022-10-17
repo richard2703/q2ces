@@ -17,8 +17,13 @@
                                 <div class="col-12 col-md-4  my-3">
                                     <div class="text-center mx-auto border vistaFoto mb-4">
                                         <i><img class="imgVista img-fluid"
-                                                src="{{ asset('storage/personal/') . '/' . $personal->foto }}"></i>
-                                        <input class="mb-4" type="file" name="foto" id="foto" accept="image/*">
+                                                src="{{ $personal->foto == '' ? ' /img/general/default.jpg' : '/storage/personal/' . $personal->foto }}"></i>
+
+                                        <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"
+                                                id="mi-archivo" accept="image/*"></span>
+                                        <label for="mi-archivo">
+                                            <span>sube imagen</span>
+                                        </label>
                                     </div>
                                 </div>
 
@@ -128,8 +133,9 @@
 
                         <div class="accordion-item">
                             <h2 class="accordion-header " id="headingOne">
-                                <button class="accordion-button bacTituloPrincipal" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#datosPersonales" aria-expanded="true" aria-controls="collapseOne">
+                                <button class="accordion-button bacTituloPrincipal" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#datosPersonales" aria-expanded="true"
+                                    aria-controls="collapseOne">
                                     Datos Personales
                                 </button>
                             </h2>
@@ -195,7 +201,7 @@
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Folio INE:</label></br>
                                                     <input type="text" class="inputCaja" id="ine"
-                                                        name="ine" value="{{ $personal->ine }}">
+                                                        name="ine" value="{{ $personal->fine }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -946,520 +952,587 @@
 
                                         <div class="col-12">
                                             <div class="row">
-
-                                                <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="col-12 col-md-6 col-lg-3">
                                                     <div class="card contDocumentos">
                                                         <div class="card-body m-2">
 
-                                                            <div class=" ">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="" id="flexCheckDefault">
+                                                            <div>
                                                                 <label
                                                                     class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                     for="flexCheckDefault">
+                                                                    <i
+                                                                        class="fa {{ $docs->dvitae != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                     Solicitud o Curriculum Vitae
                                                                 </label>
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+                                                                <label class="custom-file-upload">
+                                                                    <input class="mb-4" type="file" name="dvitae"
+                                                                        id="foto" accept=".pdf">
+                                                                    <img class="mx-2" style="height:23px"
+                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"
+                                                                        title="Subir Documento">
+                                                                </label>
+
+                                                                <label class="custom-file-upload">
+                                                                    <a href="{{ route('personal.download', [$docs->id, 'dvitae']) }}"
+                                                                        class="" target="blank">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                            title="Ver Documento">
+                                                                    </a>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="col-12 col-md-6 col-lg-3">
                                                     <div class="card contDocumentos">
                                                         <div class="card-body m-2">
-
-                                                            <div class=" ">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="" id="flexCheckDefault">
+                                                            <div>
                                                                 <label
                                                                     class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                     for="flexCheckDefault">
-                                                                    Acta de Nacimiento
+                                                                    <i
+                                                                        class="fa {{ $docs->dnacimiento != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
+                                                                    Acta de nacimiento
                                                                 </label>
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+                                                                <label class="custom-file-upload">
+                                                                    <input class="mb-4" type="file"
+                                                                        name="dnacimiento" id="foto" accept=".pdf">
+                                                                    <img class="mx-2" style="height:23px"
+                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"
+                                                                        title="Subir Documento">
+                                                                </label>
+
+                                                                <label class="custom-file-upload">
+                                                                    <a href="{{ route('personal.download', [$docs->id, 'dnacimiento']) }}"
+                                                                        class="" target="blank">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                            title="Ver Documento">
+                                                                    </a>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="col-12 col-md-6 col-lg-3">
                                                     <div class="card contDocumentos">
                                                         <div class="card-body m-2">
 
-                                                            <div class=" ">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="" id="flexCheckDefault">
+                                                            <div>
                                                                 <label
                                                                     class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                     for="flexCheckDefault">
+                                                                    <i
+                                                                        class="fa {{ $docs->dine != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                     INE
                                                                 </label>
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+                                                                <label class="custom-file-upload">
+                                                                    <input class="mb-4" type="file" name="dine"
+                                                                        id="foto" accept=".pdf">
+                                                                    <img class="mx-2" style="height:23px"
+                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"
+                                                                        title="Subir Documento">
+                                                                </label>
+
+                                                                <label class="custom-file-upload">
+                                                                    <a href="{{ route('personal.download', [$docs->id, 'dine']) }}"
+                                                                        class="" target="blank">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                            title="Ver Documento">
+                                                                    </a>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="col-12 col-md-6 col-lg-3">
                                                     <div class="card contDocumentos">
                                                         <div class="card-body m-2">
 
-                                                            <div class=" ">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="" id="flexCheckDefault">
+                                                            <div>
                                                                 <label
                                                                     class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                     for="flexCheckDefault">
+                                                                    <i
+                                                                        class="fa {{ $docs->dcurp != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                     CURP
                                                                 </label>
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+                                                                <label class="custom-file-upload">
+                                                                    <input class="mb-4" type="file" name="dcurp"
+                                                                        id="foto" accept=".pdf">
+                                                                    <img class="mx-2" style="height:23px"
+                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"
+                                                                        title="Subir Documento">
+                                                                </label>
+
+                                                                <label class="custom-file-upload">
+                                                                    <a href="{{ route('personal.download', [$docs->id, 'dcurp']) }}"
+                                                                        class="" target="blank">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                            title="Ver Documento">
+                                                                    </a>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="col-12 col-md-6 col-lg-3">
                                                     <div class="card contDocumentos">
                                                         <div class="card-body m-2">
 
-                                                            <div class=" ">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="" id="flexCheckDefault">
+                                                            <div>
                                                                 <label
                                                                     class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                     for="flexCheckDefault">
-                                                                    Licencia (Automovilista / Chofer)
+                                                                    <i
+                                                                        class="fa {{ $docs->dlicencia != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
+                                                                    licencia de conduccion
                                                                 </label>
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+                                                                <label class="custom-file-upload">
+                                                                    <input class="mb-4" type="file" name="dlicencia"
+                                                                        id="foto" accept=".pdf">
+                                                                    <img class="mx-2" style="height:23px"
+                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"
+                                                                        title="Subir Documento">
+                                                                </label>
+
+                                                                <label class="custom-file-upload">
+                                                                    <a href="{{ route('personal.download', [$docs->id, 'dlicencia']) }}"
+                                                                        class="" target="blank">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                            title="Ver Documento">
+                                                                    </a>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="col-12 col-md-6 col-lg-3">
                                                     <div class="card contDocumentos">
                                                         <div class="card-body m-2">
 
-                                                            <div class=" ">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="" id="flexCheckDefault">
+                                                            <div>
                                                                 <label
                                                                     class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                     for="flexCheckDefault">
-                                                                    Cédula Profesional
+                                                                    <i
+                                                                        class="fa {{ $docs->dcedula != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
+                                                                    Cédula Profecional
                                                                 </label>
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+                                                                <label class="custom-file-upload">
+                                                                    <input class="mb-4" type="file" name="dcedula"
+                                                                        id="foto" accept=".pdf">
+                                                                    <img class="mx-2" style="height:23px"
+                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"
+                                                                        title="Subir Documento">
+                                                                </label>
+
+                                                                <label class="custom-file-upload">
+                                                                    <a href="{{ route('personal.download', [$docs->id, 'dcedula']) }}"
+                                                                        class="" target="blank">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                            title="Ver Documento">
+                                                                    </a>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="col-12 col-md-6 col-lg-3">
                                                     <div class="card contDocumentos">
                                                         <div class="card-body m-2">
 
-                                                            <div class=" ">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="" id="flexCheckDefault">
+                                                            <div>
                                                                 <label
                                                                     class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                     for="flexCheckDefault">
-                                                                    Constancia de Situación Fiscal
+                                                                    <i
+                                                                        class="fa {{ $docs->dfiscal != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
+                                                                    Constancia de Situacion Fiscal
                                                                 </label>
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                                <label class="custom-file-upload">
+                                                                    <input class="mb-4" type="file" name="dfiscal"
+                                                                        id="foto" accept=".pdf">
+                                                                    <img class="mx-2" style="height:23px"
+                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"
+                                                                        title="Subir Documento">
+                                                                </label>
 
-                                                <div class="col-12 col-md-6 col-lg-4">
-                                                    <div class="card contDocumentos">
-                                                        <div class="card-body m-2">
-
-                                                            <div class=" ">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="" id="flexCheckDefault">
-                                                                <label
-                                                                    class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                    for="flexCheckDefault">
-                                                                    Comprobante de Domicilio
+                                                                <label class="custom-file-upload">
+                                                                    <a href="{{ route('personal.download', [$docs->id, 'dfiscal']) }}"
+                                                                        class="" target="blank">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                            title="Ver Documento">
+                                                                    </a>
                                                                 </label>
                                                             </div>
-                                                            <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="col-12 col-md-6 col-lg-3">
                                                     <div class="card contDocumentos">
                                                         <div class="card-body m-2">
 
-                                                            <div class=" ">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="" id="flexCheckDefault">
+                                                            <div>
                                                                 <label
                                                                     class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                     for="flexCheckDefault">
+                                                                    <i
+                                                                        class="fa {{ $docs->dpenales != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                     Carta de no Antecedentes Penales
                                                                 </label>
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+                                                                <label class="custom-file-upload">
+                                                                    <input class="mb-4" type="file" name="dpenales"
+                                                                        id="foto" accept=".pdf">
+                                                                    <img class="mx-2" style="height:23px"
+                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"
+                                                                        title="Subir Documento">
+                                                                </label>
+
+                                                                <label class="custom-file-upload">
+                                                                    <a href="{{ route('personal.download', [$docs->id, 'dpenales']) }}"
+                                                                        class="" target="blank">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                            title="Ver Documento">
+                                                                    </a>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="col-12 col-md-6 col-lg-3">
                                                     <div class="card contDocumentos">
                                                         <div class="card-body m-2">
 
-                                                            <div class=" ">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="" id="flexCheckDefault">
+                                                            <div>
                                                                 <label
                                                                     class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                     for="flexCheckDefault">
-                                                                    Cartas de Recomendación
+                                                                    <i
+                                                                        class="fa {{ $docs->drecomendacion != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
+                                                                    Cartas de Recomendacion
                                                                 </label>
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+                                                                <label class="custom-file-upload">
+                                                                    <input class="mb-4" type="file"
+                                                                        name="drecomendacion" id="foto"
+                                                                        accept=".pdf">
+                                                                    <img class="mx-2" style="height:23px"
+                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"
+                                                                        title="Subir Documento">
+                                                                </label>
+
+                                                                <label class="custom-file-upload">
+                                                                    <a href="{{ route('personal.download', [$docs->id, 'drecomendacion']) }}"
+                                                                        class="" target="blank">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                            title="Ver Documento">
+                                                                    </a>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="col-12 col-md-6 col-lg-3">
                                                     <div class="card contDocumentos">
                                                         <div class="card-body m-2">
 
-                                                            <div class=" ">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="" id="flexCheckDefault">
+                                                            <div>
                                                                 <label
                                                                     class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                     for="flexCheckDefault">
+                                                                    <i
+                                                                        class="fa {{ $docs->ddc3 != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                     DC3
                                                                 </label>
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+                                                                <label class="custom-file-upload">
+                                                                    <input class="mb-4" type="file" name="ddc3"
+                                                                        id="foto" accept=".pdf">
+                                                                    <img class="mx-2" style="height:23px"
+                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"
+                                                                        title="Subir Documento">
+                                                                </label>
+
+                                                                <label class="custom-file-upload">
+                                                                    <a href="{{ route('personal.download', [$docs->id, 'ddc3']) }}"
+                                                                        class="" target="blank">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                            title="Ver Documento">
+                                                                    </a>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="col-12 col-md-6 col-lg-3">
                                                     <div class="card contDocumentos">
                                                         <div class="card-body m-2">
 
-                                                            <div class=" ">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="" id="flexCheckDefault">
+                                                            <div>
                                                                 <label
                                                                     class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                     for="flexCheckDefault">
+                                                                    <i
+                                                                        class="fa {{ $docs->dmedico != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                     Exámen Médico
                                                                 </label>
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+                                                                <label class="custom-file-upload">
+                                                                    <input class="mb-4" type="file" name="dmedico"
+                                                                        id="foto" accept=".pdf">
+                                                                    <img class="mx-2" style="height:23px"
+                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"
+                                                                        title="Subir Documento">
+                                                                </label>
+
+                                                                <label class="custom-file-upload">
+                                                                    <a href="{{ route('personal.download', [$docs->id, 'dmedico']) }}"
+                                                                        class="" target="blank">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                            title="Ver Documento">
+                                                                    </a>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="col-12 col-md-6 col-lg-3">
                                                     <div class="card contDocumentos">
                                                         <div class="card-body m-2">
 
-                                                            <div class=" ">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="" id="flexCheckDefault">
+                                                            <div>
                                                                 <label
                                                                     class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                     for="flexCheckDefault">
-                                                                    Prueba Antidoping
+                                                                    <i
+                                                                        class="fa {{ $docs->ddoping != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
+                                                                    Prueba antidoping
                                                                 </label>
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+                                                                <label class="custom-file-upload">
+                                                                    <input class="mb-4" type="file" name="ddoping"
+                                                                        id="foto" accept=".pdf">
+                                                                    <img class="mx-2" style="height:23px"
+                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"
+                                                                        title="Subir Documento">
+                                                                </label>
+
+                                                                <label class="custom-file-upload">
+                                                                    <a href="{{ route('personal.download', [$docs->id, 'ddoping']) }}"
+                                                                        class="" target="blank">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                            title="Ver Documento">
+                                                                    </a>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="col-12 col-md-6 col-lg-3">
                                                     <div class="card contDocumentos">
                                                         <div class="card-body m-2">
 
-                                                            <div class=" ">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="" id="flexCheckDefault">
+                                                            <div>
                                                                 <label
                                                                     class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                     for="flexCheckDefault">
+                                                                    <i
+                                                                        class="fa {{ $docs->destudios != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                     Comprobante de Estudios
                                                                 </label>
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+                                                                <label class="custom-file-upload">
+                                                                    <input class="mb-4" type="file" name="destudios"
+                                                                        id="foto" accept=".pdf">
+                                                                    <img class="mx-2" style="height:23px"
+                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"
+                                                                        title="Subir Documento">
+                                                                </label>
+
+                                                                <label class="custom-file-upload">
+                                                                    <a href="{{ route('personal.download', [$docs->id, 'destudios']) }}"
+                                                                        class="" target="blank">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                            title="Ver Documento">
+                                                                    </a>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="col-12 col-md-6 col-lg-3">
                                                     <div class="card contDocumentos">
                                                         <div class="card-body m-2">
 
-                                                            <div class=" ">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="" id="flexCheckDefault">
+                                                            <div>
                                                                 <label
                                                                     class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                     for="flexCheckDefault">
+                                                                    <i
+                                                                        class="fa {{ $docs->dnss != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                     Número de Seguro Social
                                                                 </label>
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+                                                                <label class="custom-file-upload">
+                                                                    <input class="mb-4" type="file" name="dnss"
+                                                                        id="foto" accept=".pdf">
+                                                                    <img class="mx-2" style="height:23px"
+                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"
+                                                                        title="Subir Documento">
+                                                                </label>
+
+                                                                <label class="custom-file-upload">
+                                                                    <a href="{{ route('personal.download', [$docs->id, 'dnss']) }}"
+                                                                        class="" target="blank">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                            title="Ver Documento">
+                                                                    </a>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="col-12 col-md-6 col-lg-3">
                                                     <div class="card contDocumentos">
                                                         <div class="card-body m-2">
 
-                                                            <div class=" ">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="" id="flexCheckDefault">
+                                                            <div>
                                                                 <label
                                                                     class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                     for="flexCheckDefault">
-                                                                    Aviso de Retención de Infonavit
+                                                                    <i
+                                                                        class="fa {{ $docs->dari != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
+                                                                    Aviso de Retencion de Infonavit
                                                                 </label>
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                                <label class="custom-file-upload">
+                                                                    <input class="mb-4" type="file"
+                                                                        name="dari" id="foto" accept=".pdf">
+                                                                    <img class="mx-2" style="height:23px"
+                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"
+                                                                        title="Subir Documento">
+                                                                </label>
 
-                                                <div class="col-12 col-md-6 col-lg-4">
-                                                    <div class="card contDocumentos">
-                                                        <div class="card-body m-2">
-
-                                                            <div class=" ">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="" id="flexCheckDefault">
-                                                                <label
-                                                                    class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                    for="flexCheckDefault">
-                                                                    Gestión de Días de Vacaciones
+                                                                <label class="custom-file-upload">
+                                                                    <a href="{{ route('personal.download', [$docs->id, 'dari']) }}"
+                                                                        class="" target="blank">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                            title="Ver Documento">
+                                                                    </a>
                                                                 </label>
                                                             </div>
-                                                            <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="col-12 col-md-6 col-lg-3">
                                                     <div class="card contDocumentos">
                                                         <div class="card-body m-2">
 
-                                                            <div class=" ">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="" id="flexCheckDefault">
+                                                            <div>
                                                                 <label
                                                                     class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                     for="flexCheckDefault">
+                                                                    <i
+                                                                        class="fa {{ $docs->dpuesto != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                     Perfil y Descripción del Puesto
                                                                 </label>
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+                                                                <label class="custom-file-upload">
+                                                                    <input class="mb-4" type="file"
+                                                                        name="dpuesto" id="foto" accept=".pdf">
+                                                                    <img class="mx-2" style="height:23px"
+                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"
+                                                                        title="Subir Documento">
+                                                                </label>
+
+                                                                <label class="custom-file-upload">
+                                                                    <a href="{{ route('personal.download', [$docs->id, 'dpuesto']) }}"
+                                                                        class="" target="blank">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                            title="Ver Documento">
+                                                                    </a>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="col-12 col-md-6 col-lg-3">
                                                     <div class="card contDocumentos">
                                                         <div class="card-body m-2">
 
-                                                            <div class=" ">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="" id="flexCheckDefault">
+                                                            <div>
                                                                 <label
                                                                     class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                     for="flexCheckDefault">
+                                                                    <i
+                                                                        class="fa {{ $docs->dcontrato != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                     Contrato Firmado
                                                                 </label>
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <div class="semaforo rounded-circle mx-2">
-                                                                </div>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"></i>
-                                                                <i><img class="mx-2" style="height:23px"
-                                                                        src="{{ asset('/img/general/fotoVerde.svg') }}"></i>
+                                                                <label class="custom-file-upload">
+                                                                    <input class="mb-4" type="file"
+                                                                        name="dcontrato" id="foto"
+                                                                        accept=".pdf">
+                                                                    <img class="mx-2" style="height:23px"
+                                                                        src="{{ asset('/img/general/guardarVerde.svg') }}"
+                                                                        title="Subir Documento">
+                                                                </label>
 
+                                                                <label class="custom-file-upload">
+                                                                    <a href="{{ route('personal.download', [$docs->id, 'dcontrato']) }}"
+                                                                        class="" target="blank">
+                                                                        <img class="mx-2" style="height:23px"
+                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
+                                                                            title="Ver Documento">
+                                                                    </a>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -1476,4 +1549,15 @@
             </div>
         </div>
     </div>
+
+    <script type="application/javascript">
+        jQuery('input[type=file]').change(function(){
+         var filename = jQuery(this).val().split('\\').pop();
+         var idname = jQuery(this).attr('id');
+         console.log(jQuery(this));
+         console.log(filename);
+         console.log(idname);
+         jQuery('span.'+idname).next().find('span').html(filename);
+        });
+        </script>
 @endsection

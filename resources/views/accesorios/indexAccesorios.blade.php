@@ -46,7 +46,7 @@
                                             @forelse ($accesorios as $accesorio)
                                                 <tr>
                                                     <th scope="row"><img style="width: 100px;"
-                                                            src="{{ asset('storage/accesorio/') . '/' . $accesorio->foto }}">
+                                                            src="{{ $accesorio->foto == '' ? ' /img/general/default.jpg' : '/storage/accesorio/' . $accesorio->foto }}">
                                                     </th>
                                                     <td>{{ $accesorio->nombre }}</td>
                                                     <td>{{ $accesorio->apellidoP }}</td>
@@ -97,6 +97,16 @@
         </div>
     </div>
     <script src="{{ asset('js/alertas.js') }}"></script>
+    <script type="application/javascript">
+        jQuery('input[type=file]').change(function(){
+         var filename = jQuery(this).val().split('\\').pop();
+         var idname = jQuery(this).attr('id');
+         console.log(jQuery(this));
+         console.log(filename);
+         console.log(idname);
+         jQuery('span.'+idname).next().find('span').html(filename);
+        });
+        </script>
 
     <script>
         function Guardado() {
