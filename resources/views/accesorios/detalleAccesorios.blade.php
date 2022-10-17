@@ -18,9 +18,12 @@
                                     <div class="col-12 col-md-4  my-3">
                                         <div class="text-center mx-auto border vistaFoto mb-4">
                                             <i><img class="imgVista img-fluid mb-5"
-                                                    src="{{ asset('storage/accesorio/') . '/' . $accesorios->foto }}"></i>
-                                            <input class="mb-4" type="file" name="foto" id="foto"
-                                                accept="image/*">
+                                                    src="{{ $accesorios->foto == '' ? ' /img/general/default.jpg' : '/storage/accesorio/' . $accesorios->foto }}"></i>
+                                            <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"
+                                                    id="mi-archivo" accept="image/*"></span>
+                                            <label for="mi-archivo">
+                                                <span>sube imagen</span>
+                                            </label>
                                         </div>
                                     </div>
 
