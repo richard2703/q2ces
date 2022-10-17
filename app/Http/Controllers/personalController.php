@@ -8,6 +8,7 @@ use App\Models\beneficiario;
 use App\Models\nomina;
 use App\Models\equipo;
 use App\Models\User;
+use App\Models\userdocs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -35,8 +36,6 @@ class personalController extends Controller
      */
     public function create()
     {
-        Session::flash('message', 1);
-
         return view('personal.altaDePersonal');
     }
 
@@ -57,7 +56,7 @@ class personalController extends Controller
             'fechaNacimiento',
             'lugarNacimiento',
             'curp',
-            'ine',
+            'fine',
             'rfc',
             'licencia',
             'cpf',
@@ -113,6 +112,78 @@ class personalController extends Controller
 
         $personal = personal::create($personal);
 
+        if ($request->hasFile("dvitae")) {
+            $docs['dvitae'] = time() . '_' . $request->file('dvitae')->getClientOriginalName();
+            $request->file('dvitae')->storeAs('/public/docusers', $docs['dvitae']);
+        }
+        if ($request->hasFile("dnacimiento")) {
+            $docs['dnacimiento'] = time() . '_' . $request->file('dnacimiento')->getClientOriginalName();
+            $request->file('dnacimiento')->storeAs('/public/docusers', $docs['dnacimiento']);
+        }
+        if ($request->hasFile("dine")) {
+            $docs['dine'] = time() . '_' . $request->file('dine')->getClientOriginalName();
+            $request->file('dine')->storeAs('/public/docusers', $docs['dine']);
+        }
+        if ($request->hasFile("dcurp")) {
+            $docs['dcurp'] = time() . '_' . $request->file('dcurp')->getClientOriginalName();
+            $request->file('dcurp')->storeAs('/public/docusers', $docs['dcurp']);
+        }
+        if ($request->hasFile("dlicencia")) {
+            $docs['dlicencia'] = time() . '_' . $request->file('dlicencia')->getClientOriginalName();
+            $request->file('dlicencia')->storeAs('/public/docusers', $docs['dlicencia']);
+        }
+        if ($request->hasFile("dcedula")) {
+            $docs['dcedula'] = time() . '_' . $request->file('dcedula')->getClientOriginalName();
+            $request->file('dcedula')->storeAs('/public/docusers', $docs['dcedula']);
+        }
+        if ($request->hasFile("dfiscal")) {
+            $docs['dfiscal'] = time() . '_' . $request->file('dfiscal')->getClientOriginalName();
+            $request->file('dfiscal')->storeAs('/public/docusers', $docs['dfiscal']);
+        }
+        if ($request->hasFile("dpenales")) {
+            $docs['dpenales'] = time() . '_' . $request->file('dpenales')->getClientOriginalName();
+            $request->file('dpenales')->storeAs('/public/docusers', $docs['dpenales']);
+        }
+        if ($request->hasFile("drecomendacion")) {
+            $docs['drecomendacion'] = time() . '_' . $request->file('drecomendacion')->getClientOriginalName();
+            $request->file('drecomendacion')->storeAs('/public/docusers', $docs['drecomendacion']);
+        }
+        if ($request->hasFile("ddc3")) {
+            $docs['ddc3'] = time() . '_' . $request->file('ddc3')->getClientOriginalName();
+            $request->file('ddc3')->storeAs('/public/docusers', $docs['ddc3']);
+        }
+        if ($request->hasFile("dmedico")) {
+            $docs['dmedico'] = time() . '_' . $request->file('dmedico')->getClientOriginalName();
+            $request->file('dmedico')->storeAs('/public/docusers', $docs['dmedico']);
+        }
+        if ($request->hasFile("ddoping")) {
+            $docs['ddoping'] = time() . '_' . $request->file('ddoping')->getClientOriginalName();
+            $request->file('ddoping')->storeAs('/public/docusers', $docs['ddoping']);
+        }
+        if ($request->hasFile("destudios")) {
+            $docs['destudios'] = time() . '_' . $request->file('destudios')->getClientOriginalName();
+            $request->file('destudios')->storeAs('/public/docusers', $docs['destudios']);
+        }
+        if ($request->hasFile("dnss")) {
+            $docs['dnss'] = time() . '_' . $request->file('dnss')->getClientOriginalName();
+            $request->file('dnss')->storeAs('/public/docusers', $docs['dnss']);
+        }
+        if ($request->hasFile("dari")) {
+            $docs['dari'] = time() . '_' . $request->file('dari')->getClientOriginalName();
+            $request->file('dari')->storeAs('/public/docusers', $docs['dari']);
+        }
+        if ($request->hasFile("dpuesto")) {
+            $docs['dpuesto'] = time() . '_' . $request->file('dpuesto')->getClientOriginalName();
+            $request->file('dpuesto')->storeAs('/public/docusers', $docs['dpuesto']);
+        }
+        if ($request->hasFile("dcontrato")) {
+            $docs['dcontrato'] = time() . '_' . $request->file('dcontrato')->getClientOriginalName();
+            $request->file('dcontrato')->storeAs('/public/docusers', $docs['dcontrato']);
+        }
+        $docs['personalId'] = $personal->id;
+        $docs = userdocs::create($docs);
+
+
         $newcontacto = new contactos();
         $newcontacto->personalId = $personal->id;
         $newcontacto->nombre = $request->nombreE;
@@ -146,7 +217,8 @@ class personalController extends Controller
         $newnomina->puesto = $request->puesto;
         $newnomina->ingreso = $request->ingreso;
         $newnomina->horario = $request->horario;
-        $newnomina->jefeId = $request->jefeId;
+        // $newnomina->jefeId = $request->jefeId;
+        $newnomina->jefeId = 1;
         $newnomina->neto = $request->neto;
         $newnomina->save();
 
@@ -183,9 +255,10 @@ class personalController extends Controller
         $beneficiario = beneficiario::where("personalId", "$personal->id")->first();
         $nomina = nomina::where("personalId", "$personal->id")->first();
         $equipo = equipo::where("personalId", "$personal->id")->first();
+        $docs = userdocs::where("personalId", $personal->id)->first();
 
         // dd($contacto);
-        return view('personal.detalleDePersonal', compact('personal', 'contacto', 'beneficiario', 'nomina', 'equipo'));
+        return view('personal.detalleDePersonal', compact('personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs'));
     }
 
     /**
@@ -217,7 +290,7 @@ class personalController extends Controller
             'fechaNacimiento',
             'lugarNacimiento',
             'curp',
-            'ine',
+            'fine',
             'rfc',
             'licencia',
             'cpf',
@@ -248,7 +321,7 @@ class personalController extends Controller
             $request->file('foto')->storeAs('/public/personal', $data['foto']);
         }
         $personal->update($data);
-
+        // dd();
         $contacto = contactos::where("personalId", "$id")->first();
         $contacto->nombre = $request->nombreE;
         $contacto->particular = $request->particularE;
@@ -297,6 +370,80 @@ class personalController extends Controller
         $equipo->radioSerial = $request->radioSerial;
         $equipo->cargadorSerial = $request->cargadorSerial;
         $equipo->save();
+
+        if ($request->hasFile("dvitae")) {
+            $docs['dvitae'] = time() . '_' . $request->file('dvitae')->getClientOriginalName();
+            $request->file('dvitae')->storeAs('/public/docusers', $docs['dvitae']);
+        }
+        if ($request->hasFile("dnacimiento")) {
+            $docs['dnacimiento'] = time() . '_' . $request->file('dnacimiento')->getClientOriginalName();
+            $request->file('dnacimiento')->storeAs('/public/docusers', $docs['dnacimiento']);
+        }
+        if ($request->hasFile("dine")) {
+            $docs['dine'] = time() . '_' . $request->file('dine')->getClientOriginalName();
+            $request->file('dine')->storeAs('/public/docusers', $docs['dine']);
+        }
+        if ($request->hasFile("dcurp")) {
+            $docs['dcurp'] = time() . '_' . $request->file('dcurp')->getClientOriginalName();
+            $request->file('dcurp')->storeAs('/public/docusers', $docs['dcurp']);
+        }
+        if ($request->hasFile("dlicencia")) {
+            $docs['dlicencia'] = time() . '_' . $request->file('dlicencia')->getClientOriginalName();
+            $request->file('dlicencia')->storeAs('/public/docusers', $docs['dlicencia']);
+        }
+        if ($request->hasFile("dcedula")) {
+            $docs['dcedula'] = time() . '_' . $request->file('dcedula')->getClientOriginalName();
+            $request->file('dcedula')->storeAs('/public/docusers', $docs['dcedula']);
+        }
+        if ($request->hasFile("dfiscal")) {
+            $docs['dfiscal'] = time() . '_' . $request->file('dfiscal')->getClientOriginalName();
+            $request->file('dfiscal')->storeAs('/public/docusers', $docs['dfiscal']);
+        }
+        if ($request->hasFile("dpenales")) {
+            $docs['dpenales'] = time() . '_' . $request->file('dpenales')->getClientOriginalName();
+            $request->file('dpenales')->storeAs('/public/docusers', $docs['dpenales']);
+        }
+        if ($request->hasFile("drecomendacion")) {
+            $docs['drecomendacion'] = time() . '_' . $request->file('drecomendacion')->getClientOriginalName();
+            $request->file('drecomendacion')->storeAs('/public/docusers', $docs['drecomendacion']);
+        }
+        if ($request->hasFile("ddc3")) {
+            $docs['ddc3'] = time() . '_' . $request->file('ddc3')->getClientOriginalName();
+            $request->file('ddc3')->storeAs('/public/docusers', $docs['ddc3']);
+        }
+        if ($request->hasFile("dmedico")) {
+            $docs['dmedico'] = time() . '_' . $request->file('dmedico')->getClientOriginalName();
+            $request->file('dmedico')->storeAs('/public/docusers', $docs['dmedico']);
+        }
+        if ($request->hasFile("ddoping")) {
+            $docs['ddoping'] = time() . '_' . $request->file('ddoping')->getClientOriginalName();
+            $request->file('ddoping')->storeAs('/public/docusers', $docs['ddoping']);
+        }
+        if ($request->hasFile("destudios")) {
+            $docs['destudios'] = time() . '_' . $request->file('destudios')->getClientOriginalName();
+            $request->file('destudios')->storeAs('/public/docusers', $docs['destudios']);
+        }
+        if ($request->hasFile("dnss")) {
+            $docs['dnss'] = time() . '_' . $request->file('dnss')->getClientOriginalName();
+            $request->file('dnss')->storeAs('/public/docusers', $docs['dnss']);
+        }
+        if ($request->hasFile("dari")) {
+            $docs['dari'] = time() . '_' . $request->file('dari')->getClientOriginalName();
+            $request->file('dari')->storeAs('/public/docusers', $docs['dari']);
+        }
+        if ($request->hasFile("dpuesto")) {
+            $docs['dpuesto'] = time() . '_' . $request->file('dpuesto')->getClientOriginalName();
+            $request->file('dpuesto')->storeAs('/public/docusers', $docs['dpuesto']);
+        }
+        if ($request->hasFile("dcontrato")) {
+            $docs['dcontrato'] = time() . '_' . $request->file('dcontrato')->getClientOriginalName();
+            $request->file('dcontrato')->storeAs('/public/docusers', $docs['dcontrato']);
+        }
+        $docu = userdocs::where("personalId", $id);
+        if (isset($docs)) {
+            $docu->update($docs);
+            # code...
+        }
         Session::flash('message', 1);
 
         return redirect()->route('personal.index');
@@ -311,5 +458,13 @@ class personalController extends Controller
     public function destroy(personal $personal)
     {
         //
+    }
+    public function download($id, $doc)
+    {
+        $book = userdocs::where('id', $id)->firstOrFail();
+
+        $pathToFile = storage_path("app/public/docusers/" . $book->$doc);
+        // return response()->download($pathToFile);
+        return response()->file($pathToFile);
     }
 }

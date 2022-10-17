@@ -14,7 +14,7 @@
                                 <div class="col-12 col-md-5  my-3 align-self-center">
                                     <div class="text-center mx-auto mb-2 border vistaFoto ">
                                         <i><img class="imgVista"
-                                                src="{{ asset('storage/obras/') . '/' . $obras->foto }}"></i>
+                                                src="{{ $obras->foto == '' ? ' /img/general/default.jpg' : '/storage/obras/' . $obras->foto }}"></i>
                                     </div>
                                 </div>
 
@@ -41,7 +41,7 @@
                                             <h2 class="fs-5 textTitulo">Residente Responsable:</h2></br>
                                             <p class="txtVistaObra">(falta agregar bloque)</p>
                                         </div>
-                                        
+
 
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <h2 class="fs-5 textTitulo">Equipos Asignados:</h2></br>
@@ -55,7 +55,8 @@
                                 </div>
 
                                 <div class="col-12 text-end mb-3 ">
-                                    <i><img src="{{ asset('storage/obras/') . '/' . $obras->logo }}" class="vistaLogo"></i>
+                                    <i><img src="{{ $obras->logo == '' ? ' /img/general/default.jpg' : '/storage/obras/' . $obras->logo }}"
+                                            class="vistaLogo"></i>
                                 </div>
 
                             </form>
