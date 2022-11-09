@@ -52,7 +52,7 @@
 
                                                     </div>
 
-                                                    <div class="col-12 col-md-8 ">
+                                                    <div class="col-12 col-lg-8">
 
                                                         <div class="row alin">
                                                             {{--  <div class=" col-12 col-sm-6  mb-3 ">
@@ -80,14 +80,14 @@
                                                                     name="submarca" value="{{ $maquinaria->submarca }}">
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6  mb-3 ">
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Categoría:</label></br>
                                                                 <input type="text" class="inputCaja" id="categoria"
                                                                     name="categoria" value="{{ $maquinaria->categoria }}"
                                                                     placeholder="ej: excavadora">
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6  mb-3 ">
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Uso:</label></br>
                                                                 <select class="form-select"
                                                                     aria-label="Default select example" id="uso"
@@ -97,7 +97,7 @@
                                                                 </select>
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-8  mb-3 ">
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <div class="row align-items-end">
                                                                     <div class="col-8">
                                                                         <label class="labelTitulo">Tipo:</label></br>
@@ -114,9 +114,8 @@
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                                             fill="currentColor"
                                                                             class="bi bi-plus-circle-fill btnMas"
-                                                                            viewBox="0 0 16 16">
-                                                                            <path
-                                                                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                                                            viewBox="0 0 16 16" style="width:40px">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
                                                                         </svg>
                                                                     </div>
                                                                 </div>
@@ -276,7 +275,7 @@
                                                                     value="{{ $maquinaria->horometro }}">
                                                             </div>
 
-                                                            <div class=" col-8   mb-3 ">
+                                                            <div class=" col-12 col-sm-6 col-lg-4   mb-3 ">
                                                                 <div class="row align-items-end">
                                                                     <div class="col-7">
                                                                         <label class="labelTitulo">Kilometraje / Millaje
