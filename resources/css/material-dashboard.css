@@ -10894,7 +10894,7 @@ fieldset[disabled] .form-group.is-focused .form-check .form-check-label {
 }
 
 .form-check .form-check-input:checked+.form-check-sign .check {
-  background: #9c27b0;
+  background: #A6CE34;
 }
 
 .form-check .form-check-input:checked+.form-check-sign .check:before {
