@@ -20,7 +20,7 @@
                                             <span class="mi-archivo"> <input class="mb-4 ver " type="file" name="foto"
                                                     id="mi-archivo" accept="image/*"></span>
                                             <label for="mi-archivo">
-                                                <span class="btn botonGral">sube imagen</span>
+                                                <span class="">sube imagen</span>
                                             </label>
                                         </div>
                                     </div>

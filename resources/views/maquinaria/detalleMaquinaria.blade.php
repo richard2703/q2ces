@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-11 align-self-start">
-                    <div class="card">
+                    <div class="card col-11">
                         <div class="card-body contCart">
                             <form action="{{ route('maquinaria.update', $maquinaria->id) }}"
                                 method="post"class="row alertaGuardar" enctype="multipart/form-data">
@@ -318,36 +318,23 @@
                                                 <div class="row mt-3">
 
                                                     <div class="col-12 col-md-4 col-lg-3">
-                                                        <div class="card contDocumentos">
+                                                        <div class="card h-99 contDocumentos ">
                                                             <div class="card-body m-2">
-
                                                                 <div>
-                                                                    <label
-                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                        for="flexCheckDefault">
-                                                                        <i
-                                                                            class="fa  {{ $docs->factura != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
+                                                                    <label  class="form-check-label text-start fs-5 textTitulo mb-2"  for="flexCheckDefault">
+                                                                        <i class="fa  {{ $docs->factura != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Factura
                                                                     </label>
                                                                 </div>
                                                                 <div class="contIconosDocumentos d-flex align-items-end">
-
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="factura" id="foto" accept=".pdf">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                            title="Subir Documento">
-                                                                    </label>
-
+                                                                        <input class="mb-4" type="file" name="factura" id="foto" accept=".pdf">
+                                                                        <img class="mx-2" style="height:23px"  src="{{ asset('/img/general/guardarVerde.svg') }}"  title="Subir Documento">
+                                                                    </label> 
                                                                     <label class="custom-file-upload">
-                                                                        <a href="{{ route('maquinaria.download', [$docs->id, 'factura']) }}"
-                                                                            class="" target="blank">
-                                                                            <img class="mx-2" style="height:23px"
-                                                                                src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                                title="Ver Documento">
+                                                                        <a href="{{ route('maquinaria.download', [$docs->id, 'factura']) }}" class="" target="blank">
+                                                                            <img class="mx-2" style="height:23px"  src="{{ asset('/img/general/fotoVerde.svg') }}"  title="Ver Documento">
                                                                         </a>
-
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -355,40 +342,26 @@
                                                     </div>
 
                                                     <div class="col-12 col-md-4 col-lg-3">
-                                                        <div class="card contDocumentos">
+                                                        <div class="card h-99 contDocumentos">
                                                             <div class="card-body m-2">
-
                                                                 <div>
-                                                                    <label
-                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                        for="flexCheckDefault">
-                                                                        <i
-                                                                            class="fa {{ $docs->verificacion != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
+                                                                    <label  class="form-check-label text-start fs-5 textTitulo mb-2" for="flexCheckDefault">
+                                                                        <i class="fa {{ $docs->verificacion != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Verificación
                                                                     </label>
-
                                                                 </div>
                                                                 <div class="contIconosDocumentos d-flex align-items-end">
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="verificacion" id="foto"
-                                                                            accept=".pdf">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                            title="Subir Documento">
+                                                                        <input class="mb-4" type="file" name="verificacion" id="foto" accept=".pdf">
+                                                                        <img class="mx-2" style="height:23px"  src="{{ asset('/img/general/guardarVerde.svg') }}" title="Subir Documento">
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
-                                                                        <a href="{{ route('maquinaria.download', [$docs->id, 'verificacion']) }}"
-                                                                            class="" target="blank">
-                                                                            <img class="mx-2" style="height:23px"
-                                                                                src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                                title="Ver Documento">
+                                                                        <a href="{{ route('maquinaria.download', [$docs->id, 'verificacion']) }}" class="" target="blank">
+                                                                            <img class="mx-2" style="height:23px"  src="{{ asset('/img/general/fotoVerde.svg') }}" title="Ver Documento">
                                                                         </a>
                                                                     </label>
                                                                 </div>
-
-
                                                             </div>
                                                         </div>
                                                     </div>
