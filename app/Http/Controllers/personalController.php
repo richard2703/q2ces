@@ -220,6 +220,7 @@ class personalController extends Controller
         // $newnomina->jefeId = $request->jefeId;
         $newnomina->jefeId = 1;
         $newnomina->neto = $request->neto;
+        $newnomina->isr = $request->isr;
         $newnomina->save();
 
         $newequipo = new equipo();
@@ -253,9 +254,25 @@ class personalController extends Controller
         // dd($personal->id);
         $contacto = contactos::where("personalId", "$personal->id")->first();
         $beneficiario = beneficiario::where("personalId", "$personal->id")->first();
-        $nomina = nomina::where("personalId", "$personal->id")->first();
-        $equipo = equipo::where("personalId", "$personal->id")->first();
+        $nomina = nomina::where("personalId", $personal->id)->first();
+        $equipo = equipo::where("personalId", $personal->id)->first();
         $docs = userdocs::where("personalId", $personal->id)->first();
+
+        $nomina->decSalarioDiario = ($nomina->neto);
+        $nomina->decSalarioDiarioIntegrado = round($nomina->decSalarioDiario * 1.05137, 2);
+        $nomina->decSalarioMensual = round($nomina->decSalarioDiario * 30, 2);
+        $nomina->decSalarioMensualIntegrado = round($nomina->decSalarioDiarioIntegrado * 30, 2);
+        $nomina->decEstado = round($nomina->decSalarioMensual * 0.025, 2);
+        $nomina->decImss = round($nomina->decSalarioMensualIntegrado  * 0.0938, 2);
+        $nomina->decImssRiesgo = round($nomina->decSalarioMensualIntegrado * 0.0658875, 2);
+        $nomina->decAfore = round($nomina->decSalarioMensualIntegrado * 0.0628, 2);
+        $nomina->decInfonavit = round($nomina->decSalarioMensualIntegrado * 0.05, 2);
+        $nomina->decVacaciones = round($nomina->decSalarioDiario * 6, 2);
+        $nomina->decPrimaVacacional = round($nomina->decVacaciones * 0.25, 2);
+        $nomina->decAguinaldo = round($nomina->decSalarioDiario * 15, 2);
+        $nomina->decTotal = round($nomina->decSalarioMensual + $nomina->decEstado + $nomina->decImss + $nomina->decImssRiesgo +
+            $nomina->decAfore + $nomina->decInfonavit + $nomina->decVacaciones + $nomina->decPrimaVacacional + $nomina->decAguinaldo + $nomina->isr, 2);
+
 
         // dd($contacto);
         return view('personal.detalleDePersonal', compact('personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs'));
@@ -321,7 +338,7 @@ class personalController extends Controller
             $request->file('foto')->storeAs('/public/personal', $data['foto']);
         }
         $personal->update($data);
-        // dd();
+        // dd($request->diario);
         $contacto = contactos::where("personalId", "$id")->first();
         $contacto->nombre = $request->nombreE;
         $contacto->particular = $request->particularE;
@@ -353,7 +370,8 @@ class personalController extends Controller
         $nomina->ingreso = $request->ingreso;
         $nomina->horario = $request->horario;
         $nomina->jefeId = $request->jefeId;
-        $nomina->neto = $request->neto;
+        $nomina->neto = $request->diario;
+        $nomina->isr = $request->isr;
         $nomina->save();
 
         $equipo = equipo::where("personalId", "$id")->first();

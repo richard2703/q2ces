@@ -254,6 +254,7 @@ CREATE TABLE nomina(
   ispt float(10,2) null,
   aguinaldo float(10,2) null,
   ptu float(10,2) null,
+  isr float(10,2) null,
   PRIMARY KEY (id),
   CONSTRAINT FK_nomina_personalId foreign key (personalId) references personal(id),
   CONSTRAINT FK_nomina_jefeId foreign key (jefeId) references personal(id)

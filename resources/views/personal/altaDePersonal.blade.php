@@ -283,7 +283,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    {{--  
+
                                                     <div class="col-12  ">
                                                         <div class="row">
 
@@ -292,60 +292,67 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
-                                                                <label class="labelTitulo">Calle y Número:</label></br>
-                                                                <input type="text" class="inputCaja" id=""
+                                                                <label class="labelTitulo">Codigo Postalo:</label></br>
+                                                                <input type="number" class="inputCaja" id="cpfiscal"
+                                                                    name="calle" value="">
+                                                            </div>
+
+                                                            <div class=" col-12 col-sm-6  mb-3 ">
+                                                                <label class="labelTitulo">Tipo de Vialidad:</label></br>
+                                                                <input type="text" class="inputCaja" id="tipofiscal"
+                                                                    name="calle" value="">
+                                                            </div>
+
+                                                            <div class=" col-12 col-sm-6  mb-3 ">
+                                                                <label class="labelTitulo">Calle:</label></br>
+                                                                <input type="text" class="inputCaja" id="callefiscal"
                                                                     name="calle" value="">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Número Exterior:</label></br>
-                                                                <input type="text" class="inputCaja" id=""
-                                                                    name="calle" value="">
+                                                                <input type="text" class="inputCaja"
+                                                                    id="nexteriorfiscal" name="calle" value="">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Número Interior:</label></br>
-                                                                <input type="text" class="inputCaja" id=""
-                                                                    name="calle" value="">
-                                                            </div>
-
-                                                            <div class=" col-12 col-sm-6  mb-3 ">
-                                                                <label class="labelTitulo">Entre las Calles:</label></br>
-                                                                <input type="text" class="inputCaja" id=""
-                                                                    name="calle" value="">
+                                                                <input type="text" class="inputCaja"
+                                                                    id="ninteriorfical" name="calle" value="">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Colonia:</label></br>
-                                                                <input type="text" class="inputCaja" id=""
-                                                                    name="calle" value="">
-                                                            </div>
-
-                                                            <div class=" col-12 col-sm-6  mb-3 ">
-                                                                <label class="labelTitulo">Código Postal:</label></br>
-                                                                <input type="text" class="inputCaja" id=""
-                                                                    name="calle" value="">
+                                                                <input type="text" class="inputCaja"
+                                                                    id="coloniafiscal" name="calle" value="">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Localidad:</label></br>
-                                                                <input type="text" class="inputCaja" id=""
-                                                                    name="calle" value="">
+                                                                <input type="text" class="inputCaja"
+                                                                    id="localidadfiscal" name="calle" value="">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Municipio:</label></br>
-                                                                <input type="text" class="inputCaja" id=""
-                                                                    name="calle" value="">
+                                                                <input type="text" class="inputCaja"
+                                                                    id="municipiofiscal" name="calle" value="">
                                                             </div>
+
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Entidad Federativa:</label></br>
-                                                                <input type="text" class="inputCaja" id=""
+                                                                <input type="text" class="inputCaja"
+                                                                    id="federativafiscal" name="calle" value="">
+                                                            </div>
+
+                                                            <div class=" col-12 col-sm-6  mb-3 ">
+                                                                <label class="labelTitulo">Entre calle:</label></br>
+                                                                <input type="text" class="inputCaja" id="entrefiscal"
                                                                     name="calle" value="">
                                                             </div>
 
                                                         </div>
-                                                    </div>  --}}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -616,9 +623,16 @@
                                                             </div>  --}}
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Sueldo Neto:</label></br>
+                                                                <label class="labelTitulo">Sueldo diario:</label></br>
                                                                 <input type="number" class="inputCaja" id=""
                                                                     name="neto" value="">
+                                                            </div>
+
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                                <label class="labelTitulo">ISR:</label></br>
+                                                                <input type="number" class="inputCaja" id=""
+                                                                    name="isr" step='0.01'
+                                                                    value="{{ old('isr') }}">
                                                             </div>
 
                                                         </div>
