@@ -25,15 +25,18 @@
                                             <div class="accordion-body">
                                                 <div class="row mt-3">
                                                     <div class="col-12 col-md-4  ">
+
                                                         <div class="text-center mx-auto border vistaFoto mb-4">
                                                             <i><img class="imgVista img-fluid mb-5"
                                                                     src="{{ asset('/img/general/default.jpg') }}"></i>
+
                                                             <span class="mi-archivo"> <input class="mb-4 ver" type="file"
                                                                     name="foto" id="mi-archivo" accept="image/*"></span>
                                                             <label for="mi-archivo">
                                                                 <span>sube imagen</span>
                                                             </label>
                                                         </div>
+                                                        
                                                     </div>
 
                                                     <div class="col-12 col-md-8 ">

@@ -61,12 +61,12 @@ a.textEquipo:hover{
 
 /* ------- CSS PARA Vista OBRAS ----------*/
 .vistaFoto{
-  width: 85%;
+  width: 75%;
 }
 
 .imgVista{
   object-fit: cover;
-  width:100%;
+  width:80%;
   height:100%;
 }
 
@@ -325,7 +325,8 @@ input[type="file"] {
   cursor: pointer;
 }
 /* -------  Boton de subir archivo  imagenes ------- */
-label[for="mi-archivo"] {
+label[for="mi-archivo"],
+label[for="mi-archivo2"] {
   font-size: 14px;
   font-weight: 600;
   color: #fff;
@@ -338,6 +339,11 @@ label[for="mi-archivo"] {
   width: 100%;
   text-align: center;
   }
+
+
+
+
+
 /* -------  Boton de subir archivo  ------- */
 .ver.input[type="file"] {
   display: block !important;
