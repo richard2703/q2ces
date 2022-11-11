@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-11 align-self-start">
-                    <div class="card">
+                    <div class="card col-11">
                         <div class="card-body contCart">
                             <form class="row alertaGuardar" action="{{ route('maquinaria.store') }}" method="post"
                                 enctype="multipart/form-data">
@@ -25,10 +25,11 @@
                                                 <div class="row mt-3">
                                                     <div class="col-12 col-md-4  my-3">
                                                         <div class="text-center mx-auto border vistaFoto mb-4">
-                                                            <i><img class="imgVista img-fluid mb-5"
-                                                                    src="{{ asset('/img/general/vistaAerea.jpg') }}"></i>
-                                                            <input class="mb-4" type="file" name="foto"
-                                                                id="foto">
+                                                            <i><img class="imgVista img-fluid mb-5" src="{{ asset('/img/general/vistaAerea.jpg') }}"></i>
+                                                            <input class="mb-4" type="file" name="foto" id="foto">
+                                                            <label for="mi-archivo">
+                                                                <span class="">sube imagen</span>
+                                                            </label>
                                                         </div>
                                                     </div>
 
@@ -60,14 +61,14 @@
                                                                     name="submarca" value="">
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6  mb-3 ">
+                                                            <div class=" col-12 col-sm-6 col-lg-4  mb-3 ">
                                                                 <label class="labelTitulo">Categoría:</label></br>
                                                                 <input type="text" class="inputCaja" id="categoria"
                                                                     name="categoria" value=""
                                                                     placeholder="ej: excavadora">
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6  mb-3 ">
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Uso:</label></br>
                                                                 <select class="form-select"
                                                                     aria-label="Default select example" id="uso"
@@ -77,7 +78,7 @@
                                                                 </select>
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6 col-lg-5 mb-3 ">
+                                                            <div class="col-12 col-sm-6 col-lg-4 mb-3">
                                                                 <div class="row align-items-end g-0">
                                                                     <div class="col-9">
                                                                         <label class="labelTitulo">Tipo:</label></br>
@@ -102,7 +103,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
+                                                            <div class="col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Año:</label></br>
                                                                 <input type="number" class="inputCaja" id="ano"
                                                                     name="ano" value="">
@@ -120,7 +121,7 @@
                                                                     name="placas" value="" placeholder="MW88888">
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6 col-lg-8 mb-3 ">
+                                                            <div class=" col-12 col-sm-6  mb-3">
                                                                 <label class="labelTitulo">Motor:</label></br>
                                                                 <input type="text" class="inputCaja" id="motor"
                                                                     name="motor" value="">
@@ -150,7 +151,7 @@
                                                                     name="capacidad" value="" placeholder="">
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                            <div class="col-12 col-sm-6  mb-3">
                                                                 <label class="labelTitulo">Capacidad Tanque:</label></br>
                                                                 <input type="number" class="inputCaja" id="tanque"
                                                                     name="tanque" value="">
