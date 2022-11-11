@@ -584,6 +584,12 @@
                                                         name="clinica" value="{{ $nomina->clinica }}">
                                                 </div>
 
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                    <label class="labelTitulo">Agregado IMSS:</label></br>
+                                                    <input type="number" class="inputCaja" id=""
+                                                        name="" value="{{ $nomina->decImss }}" disabled>
+                                                </div>
+
                                                 <div class=" col-12 col-sm-6 col-lg-4  mb-3 ">
                                                     <label class="labelTitulo">Crédito Infonavit:</label></br>
                                                     <input type="text" class="inputCaja" id=""
@@ -591,9 +597,21 @@
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                    <label class="labelTitulo">Agregado infonavit:</label></br>
+                                                    <input type="number" class="inputCaja" id=""
+                                                        name="" value="{{ $nomina->decInfonavit }}" disabled>
+                                                </div>
+
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Afore:</label></br>
                                                     <input type="text" class="inputCaja" id=""
                                                         name="afore" value="{{ $nomina->afore }}">
+                                                </div>
+
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                    <label class="labelTitulo">Agregado Afore:</label></br>
+                                                    <input type="number" class="inputCaja" id=""
+                                                        name="" value="{{ $nomina->decAfore }}" disabled>
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -609,12 +627,6 @@
                                                             Quincenal</option>
                                                     </select>
                                                 </div>
-                                                {{--  
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Cantidad:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle1" value="">
-                                                </div>  --}}
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Número Tarjeta
@@ -635,56 +647,12 @@
                                                         name="puesto" value="{{ $nomina->puesto }}">
                                                 </div>
 
-                                                {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Permisos:</label></br>
-                                                    <select class="form-select"
-                                                        aria-label="Default select example">
-                                                        <option selected>Opción 1</option>
-                                                        <option value="1">Opcion 2</option>
-                                                    </select>
-                                                </div>  --}}
-
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Fecha de Ingreso:</label></br>
                                                     <input type="date" class="inputCaja" id=""
                                                         name="ingreso"
                                                         value="{{ \Carbon\Carbon::parse($beneficiario->ingreso)->format('Y-m-d') }}">
                                                 </div>
-
-                                                {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Días Trabajados
-                                                        (Años/Meses):</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle1" value="">
-                                                </div>  --}}
-
-                                                {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Días de Derecho a
-                                                        Vacaciones:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle1" value="">
-                                                </div>  --}}
-
-                                                {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Vacaciones Tomadas en el
-                                                        Año:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle1" value="">
-                                                </div>  --}}
-
-                                                {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Días Restantes de
-                                                        Vacaciones:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle1" value="">
-                                                </div>  --}}
-
-                                                {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Días Laborables:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle1" value="">
-                                                </div>  --}}
-
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Horario:</label></br>
@@ -698,17 +666,66 @@
                                                         name="jefeId" value="{{ $nomina->jefeId }}">
                                                 </div>
 
-                                                {{--  <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                    <label class="labelTitulo">Obra o Lugar de
-                                                        Trabajo:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle1" value="">
-                                                </div>  --}}
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                    <label class="labelTitulo">Sueldo Diario:</label></br>
+                                                    <input type="number" class="inputCaja" id=""
+                                                        name="diario" value="{{ $nomina->neto }}">
+                                                </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                    <label class="labelTitulo">Sueldo Neto:</label></br>
+                                                    <label class="labelTitulo">Salario integrado:</label></br>
                                                     <input type="number" class="inputCaja" id=""
-                                                        name="neto" value="{{ $nomina->neto }}">
+                                                        name="" value="{{ $nomina->decSalarioDiarioIntegrado }}"
+                                                        disabled>
+                                                </div>
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                    <label class="labelTitulo">Salario Mensualo:</label></br>
+                                                    <input type="number" class="inputCaja" id=""
+                                                        name="" value="{{ $nomina->decSalarioMensual }}" disabled>
+                                                </div>
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                    <label class="labelTitulo">Salario Mensualo integrado:</label></br>
+                                                    <input type="number" class="inputCaja" id=""
+                                                        name="" value="{{ $nomina->decSalarioMensualIntegrado }}"
+                                                        disabled>
+                                                </div>
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                    <label class="labelTitulo">Estado:</label></br>
+                                                    <input type="number" class="inputCaja" id=""
+                                                        name="" value="{{ $nomina->decEstado }}" disabled>
+                                                </div>
+
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                    <label class="labelTitulo">Riesgo de Trabajo:</label></br>
+                                                    <input type="number" class="inputCaja" id=""
+                                                        name="" value="{{ $nomina->decImssRiesgo }}" disabled>
+                                                </div>
+
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                    <label class="labelTitulo">ISR:</label></br>
+                                                    <input type="number" class="inputCaja" id=""
+                                                        name="isr" value="{{ $nomina->isr }}">
+                                                </div>
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                    <label class="labelTitulo">Vacaciones:</label></br>
+                                                    <input type="number" class="inputCaja" id=""
+                                                        name="" value="{{ $nomina->decVacaciones }}" disabled>
+                                                </div>
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                    <label class="labelTitulo">Prima Vacacional:</label></br>
+                                                    <input type="number" class="inputCaja" id=""
+                                                        name="" value="{{ $nomina->decPrimaVacacional }}"
+                                                        disabled>
+                                                </div>
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                    <label class="labelTitulo">Aguinaldo:</label></br>
+                                                    <input type="number" class="inputCaja" id=""
+                                                        name="" value="{{ $nomina->decAguinaldo }}" disabled>
+                                                </div>
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                    <label class="labelTitulo">total:</label></br>
+                                                    <input type="number" class="inputCaja" id=""
+                                                        name="" value="{{ $nomina->decTotal }}" disabled>
                                                 </div>
 
                                             </div>
@@ -1342,8 +1359,8 @@
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
                                                                 <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file" name="ddoping"
-                                                                        id="foto" accept=".pdf">
+                                                                    <input class="mb-4" type="file"
+                                                                        name="ddoping" id="foto" accept=".pdf">
                                                                     <img class="mx-2" style="height:23px"
                                                                         src="{{ asset('/img/general/guardarVerde.svg') }}"
                                                                         title="Subir Documento">
@@ -1376,8 +1393,9 @@
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
                                                                 <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file" name="destudios"
-                                                                        id="foto" accept=".pdf">
+                                                                    <input class="mb-4" type="file"
+                                                                        name="destudios" id="foto"
+                                                                        accept=".pdf">
                                                                     <img class="mx-2" style="height:23px"
                                                                         src="{{ asset('/img/general/guardarVerde.svg') }}"
                                                                         title="Subir Documento">
@@ -1410,8 +1428,8 @@
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
                                                                 <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file" name="dnss"
-                                                                        id="foto" accept=".pdf">
+                                                                    <input class="mb-4" type="file"
+                                                                        name="dnss" id="foto" accept=".pdf">
                                                                     <img class="mx-2" style="height:23px"
                                                                         src="{{ asset('/img/general/guardarVerde.svg') }}"
                                                                         title="Subir Documento">
