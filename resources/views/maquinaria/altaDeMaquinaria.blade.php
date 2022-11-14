@@ -25,7 +25,7 @@
                                                 <div class="row mt-3">
                                                     <div class="col-12 col-md-4  my-3">
                                                         <div class="text-center mx-auto border vistaFoto mb-4">
-                                                            <i><img class="imgVista img-fluid mb-5" src="{{ asset('/img/general/vistaAerea.jpg') }}"></i>
+                                                            <i><img class="imgVista img-fluid mb-2" src="{{ asset('/img/general/vistaAerea.jpg') }}"></i>
                                                             <input class="mb-4" type="file" name="foto" id="foto">
                                                             <label for="mi-archivo">
                                                                 <span class="">sube imagen</span>
@@ -301,22 +301,20 @@
                                                                         Factura
                                                                     </label>
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
 
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="factura" id="foto" accept=".pdf">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                            title="Subir Documento">
+                                                                        <input class="mb-4" type="file" name="factura" id="foto" accept=".pdf">
+                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                            title="Ver Documento">
+                                                                        <input class="mb-4" type="file" name="foto" id="foto">
+                                                                        <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
 
                                                                 </div>
@@ -337,21 +335,20 @@
                                                                     </label>
 
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="verificacion" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                            title="Subir Documento">
+                                                                        <input class="mb-4" type="file" name="verificacion" id="foto">
+                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                            title="Ver Documento">
+                                                                            <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
                                                                 </div>
 
@@ -373,21 +370,21 @@
                                                                     </label>
 
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="manual" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                            title="Subir Documento">
+                                                                            <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                            title="Ver Documento">
+                                                                            <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
                                                                 </div>
 
@@ -409,21 +406,21 @@
                                                                     </label>
 
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="registro" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                            title="Subir Documento">
+                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                            title="Ver Documento">
+                                                                        <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -442,21 +439,21 @@
                                                                         Tarjeta de Circulación
                                                                     </label>
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="circulacion" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                            title="Subir Documento">
+                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                            title="Ver Documento">
+                                                                        <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
                                                                 </div>
 
@@ -477,21 +474,20 @@
                                                                         Ficha Técnica del Proveedor
                                                                     </label>
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="ficha" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                            title="Subir Documento">
+                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                            title="Ver Documento">
+                                                                        <input class="mb-4" type="file" name="foto" id="foto">
+                                                                            <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
                                                                 </div>
 
@@ -513,21 +509,20 @@
                                                                     </label>
 
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="seguro" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                            title="Subir Documento">
+                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                            title="Ver Documento">
+                                                                        <input class="mb-4" type="file" name="foto" id="foto">
+                                                                            <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
                                                                 </div>
 
@@ -549,21 +544,20 @@
                                                                     </label>
 
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="especial" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                            title="Subir Documento">
+                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                            title="Ver Documento">
+                                                                        <input class="mb-4" type="file" name="foto" id="foto">
+                                                                            <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
                                                                 </div>
 
@@ -590,8 +584,9 @@
                                                                     </div>
                                                                     <div class="col-6 mb-1 mt-1 "> <input class="mb-4"
                                                                             type="file" name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}">
+                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </div>
                                                                     <br>
                                                                     <div class="col-6 mb-1 mt-1"> <input class="mb-4"
@@ -615,8 +610,9 @@
                                                                     </div>
                                                                     <div class="col-6 mb-1 mt-1 "> <input class="mb-4"
                                                                             type="file" name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}">
+                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </div>
                                                                     <br>
                                                                     <div class="col-6 mb-1 mt-1"> <input class="mb-4"
@@ -640,8 +636,9 @@
                                                                     </div>
                                                                     <div class="col-6 mb-1 mt-1 "> <input class="mb-4"
                                                                             type="file" name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}">
+                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </div>
                                                                     <br>
                                                                     <div class="col-6 mb-1 mt-1"> <input class="mb-4"

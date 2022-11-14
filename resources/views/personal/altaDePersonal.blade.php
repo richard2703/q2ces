@@ -27,7 +27,7 @@
                                                     <div class="col-12 col-md-4  ">
 
                                                         <div class="text-center mx-auto border vistaFoto mb-4">
-                                                            <i><img class="imgVista img-fluid mb-5"
+                                                            <i><img class="imgVista img-fluid mb-2"
                                                                     src="{{ asset('/img/general/default.jpg') }}"></i>
 
                                                             <span class="mi-archivo"> <input class="mb-4 ver" type="file"
@@ -36,7 +36,7 @@
                                                                 <span>sube imagen</span>
                                                             </label>
                                                         </div>
-                                                        
+
                                                     </div>
 
                                                     <div class="col-12 col-md-8 ">
@@ -349,7 +349,7 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
-                                                                <label class="labelTitulo">Entre calle:</label></br>
+                                                                <label class="labelTitulo">Entre Calle:</label></br>
                                                                 <input type="text" class="inputCaja" id="entrefiscal"
                                                                     name="calle" value="">
                                                             </div>
@@ -626,7 +626,7 @@
                                                             </div>  --}}
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Sueldo diario:</label></br>
+                                                                <label class="labelTitulo">Sueldo Diario:</label></br>
                                                                 <input type="number" class="inputCaja" id=""
                                                                     name="neto" value="">
                                                             </div>
@@ -713,7 +713,7 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">EPP Guentes:</label></br>
+                                                                <label class="labelTitulo">EPP Guantes:</label></br>
                                                                 <select class="form-select"
                                                                     aria-label="Default select example" name="guantes">
                                                                     <option value="Chica" selected>Chica</option>
@@ -849,7 +849,7 @@
 
                                                                         <div>
                                                                             <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
                                                                                 for="flexCheckDefault">
 
                                                                                 Solicitud o Curriculum Vitae
@@ -861,9 +861,9 @@
                                                                                 <input class="mb-4" type="file"
                                                                                     name="dvitae" id="foto"
                                                                                     accept=".pdf">
-                                                                                <img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                                    title="Subir Documento">
+                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                </lord-icon>
                                                                             </label>
 
 
@@ -877,10 +877,10 @@
                                                                     <div class="card-body m-2">
                                                                         <div>
                                                                             <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
                                                                                 for="flexCheckDefault">
 
-                                                                                Acta de nacimiento
+                                                                                Acta de Nacimiento
                                                                             </label>
                                                                         </div>
                                                                         <div
@@ -889,9 +889,9 @@
                                                                                 <input class="mb-4" type="file"
                                                                                     name="dnacimiento" id="foto"
                                                                                     accept=".pdf">
-                                                                                <img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                                    title="Subir Documento">
+                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                </lord-icon>
                                                                             </label>
 
 
@@ -904,9 +904,7 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
+                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
 
                                                                                 INE
                                                                             </label>
@@ -917,9 +915,9 @@
                                                                                 <input class="mb-4" type="file"
                                                                                     name="dine" id="foto"
                                                                                     accept=".pdf">
-                                                                                <img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                                    title="Subir Documento">
+                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                </lord-icon>
                                                                             </label>
 
 
@@ -932,9 +930,7 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
+                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break  mb-2" for="flexCheckDefault">
 
                                                                                 CURP
                                                                             </label>
@@ -945,9 +941,9 @@
                                                                                 <input class="mb-4" type="file"
                                                                                     name="dcurp" id="foto"
                                                                                     accept=".pdf">
-                                                                                <img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                                    title="Subir Documento">
+                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                </lord-icon>
                                                                             </label>
 
 
@@ -960,22 +956,18 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
+                                                                            <label  class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
 
-                                                                                licencia de conduccion
+                                                                                licencia de Conducción
                                                                             </label>
                                                                         </div>
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dlicencia" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                                    title="Subir Documento">
+                                                                                <input class="mb-4" type="file" name="dlicencia" id="foto" accept=".pdf">
+                                                                                    <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                                     stroke="65" style="width:50px;height:70px">
+                                                                                    </lord-icon>
                                                                             </label>
 
 
@@ -988,22 +980,18 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
+                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
 
-                                                                                Cédula Profecional
+                                                                                Cédula Profesional
                                                                             </label>
                                                                         </div>
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dcedula" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                                    title="Subir Documento">
+                                                                                <input class="mb-4" type="file" name="dcedula" id="foto" accept=".pdf">
+                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                </lord-icon>
                                                                             </label>
 
 
@@ -1016,22 +1004,18 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
+                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
 
-                                                                                Constancia de Situacion Fiscal
+                                                                                Constancia de Situación Fiscal
                                                                             </label>
                                                                         </div>
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dfiscal" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                                    title="Subir Documento">
+                                                                                <input class="mb-4" type="file" name="dfiscal" id="foto" accept=".pdf">
+                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                </lord-icon>
                                                                             </label>
 
 
@@ -1044,9 +1028,7 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
+                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
 
                                                                                 Carta de no Antecedentes Penales
                                                                             </label>
@@ -1054,12 +1036,10 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dpenales" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                                    title="Subir Documento">
+                                                                                <input class="mb-4" type="file" name="dpenales" id="foto" accept=".pdf">
+                                                                                    <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                </lord-icon>
                                                                             </label>
 
 
@@ -1072,22 +1052,18 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
+                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
 
-                                                                                Cartas de Recomendacion
+                                                                                Cartas de Recomendación
                                                                             </label>
                                                                         </div>
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="drecomendacion" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                                    title="Subir Documento">
+                                                                                <input class="mb-4" type="file" name="drecomendacion" id="foto"  accept=".pdf">
+                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                </lord-icon>
                                                                             </label>
 
 
@@ -1100,9 +1076,7 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
+                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
 
                                                                                 DC3
                                                                             </label>
@@ -1110,12 +1084,10 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="ddc3" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                                    title="Subir Documento">
+                                                                                <input class="mb-4" type="file" name="ddc3" id="foto" accept=".pdf">
+                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                </lord-icon>
                                                                             </label>
 
 
@@ -1128,9 +1100,7 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
+                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
 
                                                                                 Exámen Médico
                                                                             </label>
@@ -1138,12 +1108,10 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dmedico" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                                    title="Subir Documento">
+                                                                                <input class="mb-4" type="file"  name="dmedico" id="foto" accept=".pdf">
+                                                                                    <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                </lord-icon>
                                                                             </label>
 
 
@@ -1156,22 +1124,17 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
-
-                                                                                Prueba antidoping
+                                                                            <label  class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
+                                                                                Prueba Antidoping
                                                                             </label>
                                                                         </div>
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="ddoping" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                                    title="Subir Documento">
+                                                                                <input class="mb-4" type="file" name="ddoping" id="foto" accept=".pdf">
+                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                </lord-icon>
                                                                             </label>
 
 
@@ -1184,9 +1147,7 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
+                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2"  for="flexCheckDefault">
 
                                                                                 Comprobante de Estudios
                                                                             </label>
@@ -1194,12 +1155,10 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="destudios" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                                    title="Subir Documento">
+                                                                                <input class="mb-4" type="file" name="destudios" id="foto" accept=".pdf">
+                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                </lord-icon>
                                                                             </label>
 
 
@@ -1213,7 +1172,7 @@
 
                                                                         <div>
                                                                             <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
                                                                                 for="flexCheckDefault">
 
                                                                                 Número de Seguro Social
@@ -1222,12 +1181,10 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dnss" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                                    title="Subir Documento">
+                                                                                <input class="mb-4" type="file" name="dnss" id="foto" accept=".pdf">
+                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                </lord-icon>
                                                                             </label>
 
 
@@ -1240,9 +1197,7 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
+                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
 
                                                                                 Aviso de Retencion de Infonavit
                                                                             </label>
@@ -1250,12 +1205,10 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dari" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                                    title="Subir Documento">
+                                                                                <input class="mb-4" type="file" name="dari" id="foto" accept=".pdf">
+                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                </lord-icon>
                                                                             </label>
 
 
@@ -1268,9 +1221,7 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
+                                                                            <label  class="form-check-label text-start fs-5 textTitulo text-break mb-2"   for="flexCheckDefault">
 
                                                                                 Perfil y Descripción del Puesto
                                                                             </label>
@@ -1278,12 +1229,10 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dpuesto" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                                    title="Subir Documento">
+                                                                                <input class="mb-4" type="file"  name="dpuesto" id="foto" accept=".pdf">
+                                                                                    <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                </lord-icon>
                                                                             </label>
 
 
@@ -1296,9 +1245,7 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                                for="flexCheckDefault">
+                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
 
                                                                                 Contrato Firmado
                                                                             </label>
@@ -1306,12 +1253,10 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dcontrato" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <img class="mx-2" style="height:23px"
-                                                                                    src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                                    title="Subir Documento">
+                                                                                <input class="mb-4" type="file" name="dcontrato" id="foto"  accept=".pdf">
+                                                                                    <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                </lord-icon>
                                                                             </label>
 
 

@@ -326,14 +326,18 @@
                                                                         Factura
                                                                     </label>
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file" name="factura" id="foto" accept=".pdf">
-                                                                        <img class="mx-2" style="height:23px"  src="{{ asset('/img/general/guardarVerde.svg') }}"  title="Subir Documento">
+                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label> 
                                                                     <label class="custom-file-upload">
                                                                         <a href="{{ route('maquinaria.download', [$docs->id, 'factura']) }}" class="" target="blank">
-                                                                            <img class="mx-2" style="height:23px"  src="{{ asset('/img/general/fotoVerde.svg') }}"  title="Ver Documento">
+                                                                        <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                         </a>
                                                                     </label>
                                                                 </div>
@@ -350,15 +354,19 @@
                                                                         Verificación
                                                                     </label>
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                <div class="contIconosDocumentos d-flex flex-wrap  align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file" name="verificacion" id="foto" accept=".pdf">
-                                                                        <img class="mx-2" style="height:23px"  src="{{ asset('/img/general/guardarVerde.svg') }}" title="Subir Documento">
+                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
                                                                         <a href="{{ route('maquinaria.download', [$docs->id, 'verificacion']) }}" class="" target="blank">
-                                                                            <img class="mx-2" style="height:23px"  src="{{ asset('/img/general/fotoVerde.svg') }}" title="Ver Documento">
+                                                                        <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                         </a>
                                                                     </label>
                                                                 </div>
@@ -374,27 +382,26 @@
                                                                     <label
                                                                         class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                         for="flexCheckDefault">
-                                                                        <i
-                                                                            class="fa {{ $docs->manual != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
+                                                                        <i class="fa {{ $docs->manual != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Manual de Uso
                                                                     </label>
 
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                <div class="contIconosDocumentos d-flex flex-wrap  align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="manual" id="foto" accept=".pdf">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                            title="Subir Documento">
+                                                                            <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
                                                                         <a href="{{ route('maquinaria.download', [$docs->id, 'manual']) }}"
                                                                             class="" target="blank">
-                                                                            <img class="mx-2" style="height:23px"
-                                                                                src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                                title="Ver Documento">
+                                                                        <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                         </a>
                                                                     </label>
                                                                 </div>
@@ -412,28 +419,27 @@
                                                                     <label
                                                                         class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                         for="flexCheckDefault">
-                                                                        <i
-                                                                            class="fa {{ $docs->registro != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
+                                                                        <i class="fa {{ $docs->registro != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Registro
                                                                     </label>
 
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                <div class="contIconosDocumentos d-flex flex-wrap  align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="registro" id="foto"
                                                                             accept=".pdf">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                            title="Subir Documento">
+                                                                            <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
                                                                         <a href="{{ route('maquinaria.download', [$docs->id, 'registro']) }}"
                                                                             class="" target="blank">
-                                                                            <img class="mx-2" style="height:23px"
-                                                                                src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                                title="Ver Documento">
+                                                                        <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                         </a>
                                                                     </label>
                                                                 </div>
@@ -449,27 +455,26 @@
                                                                     <label
                                                                         class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                         for="flexCheckDefault">
-                                                                        <i
-                                                                            class="fa {{ $docs->circulacion != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
+                                                                        <i class="fa {{ $docs->circulacion != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Tarjeta de Circulación
                                                                     </label>
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                <div class="contIconosDocumentos d-flex flex-wrap  align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="circulacion" id="foto"
                                                                             accept=".pdf">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                            title="Subir Documento">
+                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
                                                                         <a href="{{ route('maquinaria.download', [$docs->id, 'circulacion']) }}"
                                                                             class="" target="blank">
-                                                                            <img class="mx-2" style="height:23px"
-                                                                                src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                                title="Ver Documento">
+                                                                        <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                         </a>
                                                                     </label>
                                                                 </div>
@@ -487,26 +492,25 @@
                                                                     <label
                                                                         class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                         for="flexCheckDefault">
-                                                                        <i
-                                                                            class="fa {{ $docs->ficha != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
+                                                                        <i class="fa {{ $docs->ficha != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Ficha Técnica del Proveedor
                                                                     </label>
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                <div class="contIconosDocumentos d-flex flex-wrap  align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="ficha" id="foto" accept=".pdf">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                            title="Subir Documento">
+                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
                                                                         <a href="{{ route('maquinaria.download', [$docs->id, 'ficha']) }}"
                                                                             class="" target="blank">
-                                                                            <img class="mx-2" style="height:23px"
-                                                                                src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                                title="Ver Documento">
+                                                                        <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                         </a>
                                                                     </label>
                                                                 </div>
@@ -524,27 +528,25 @@
                                                                     <label
                                                                         class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                         for="flexCheckDefault">
-                                                                        <i
-                                                                            class="fa {{ $docs->seguro != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
+                                                                        <i class="fa {{ $docs->seguro != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Seguros
                                                                     </label>
 
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                <div class="contIconosDocumentos d-flexflex-wrap   align-items-end">
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="seguro" id="foto" accept=".pdf">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                            title="Subir Documento">
+                                                                        <input class="mb-4" type="file"  name="seguro" id="foto" accept=".pdf">
+                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
                                                                         <a href="{{ route('maquinaria.download', [$docs->id, 'seguro']) }}"
                                                                             class="" target="blank">
-                                                                            <img class="mx-2" style="height:23px"
-                                                                                src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                                title="Ver Documento">
+                                                                        <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                         </a>
                                                                     </label>
                                                                 </div>
@@ -562,28 +564,24 @@
                                                                     <label
                                                                         class="form-check-label text-start fs-5 textTitulo mb-2"
                                                                         for="flexCheckDefault">
-                                                                        <i
-                                                                            class="fa {{ $docs->especial != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
+                                                                        <i class="fa {{ $docs->especial != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Permisos Especiales
                                                                     </label>
 
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex align-items-end">
+                                                                <div class="contIconosDocumentos d-flex flex-wrap  align-items-end">
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="especial" id="foto"
-                                                                            accept=".pdf">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}"
-                                                                            title="Subir Documento">
+                                                                        <input class="mb-4" type="file"  name="especial" id="foto" accept=".pdf">
+                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
-                                                                        <a href="{{ route('maquinaria.download', [$docs->id, 'especial']) }}"
-                                                                            class="" target="blank">
-                                                                            <img class="mx-2" style="height:23px"
-                                                                                src="{{ asset('/img/general/fotoVerde.svg') }}"
-                                                                                title="Ver Documento">
+                                                                        <a href="{{ route('maquinaria.download', [$docs->id, 'especial']) }}" class="" target="blank">
+                                                                        <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
                                                                         </a>
                                                                     </label>
                                                                 </div>
