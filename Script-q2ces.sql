@@ -371,6 +371,18 @@ CREATE TABLE obraMaqPer(
   CONSTRAINT FK_obraMaqPer_obras foreign key (obraId) references obras(id)
  );
 
+CREATE TABLE inventario(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  maquinariaId bigint(20) unsigned NOT NULL,
+  personalId bigint(20) unsigned NOT NULL,
+  obraId bigint(20) unsigned NOT NULL,
+  inicio datetime NULL,
+  fin datetime NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_obraMaqPer_maquinaria foreign key (maquinariaId) references maquinaria(id),
+  CONSTRAINT FK_obraMaqPer_persona foreign key (personalId) references personal(id),
+  CONSTRAINT FK_obraMaqPer_obras foreign key (obraId) references obras(id)
+ );
 
 
 

@@ -348,3 +348,7 @@ label[for="mi-archivo2"] {
 .ver.input[type="file"] {
   display: block !important;
 }
+
+table.table{
+  text-align: center;
+}
