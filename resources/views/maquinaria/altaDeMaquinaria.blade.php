@@ -295,7 +295,7 @@
 
                                                                 <div>
                                                                     <label
-                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
                                                                         for="flexCheckDefault">
                                                                         <i class="fa fa-check-circle semaforo2"></i>
                                                                         Factura
@@ -328,7 +328,7 @@
 
                                                                 <div>
                                                                     <label
-                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        class="form-check-label text-start fs-5 textTitulotext-break  mb-2"
                                                                         for="flexCheckDefault">
                                                                         <i class="fa fa-user semaforo2"></i>
                                                                         Verificación
@@ -363,7 +363,7 @@
 
                                                                 <div>
                                                                     <label
-                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
                                                                         for="flexCheckDefault">
                                                                         <i class="fa fa-user semaforo2"></i>
                                                                         Manual de Uso
@@ -399,7 +399,7 @@
 
                                                                 <div>
                                                                     <label
-                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
                                                                         for="flexCheckDefault">
                                                                         <i class="fa fa-user semaforo2"></i>
                                                                         Registro
@@ -433,7 +433,7 @@
 
                                                                 <div>
                                                                     <label
-                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
                                                                         for="flexCheckDefault">
                                                                         <i class="fa fa-user semaforo2"></i>
                                                                         Tarjeta de Circulación
@@ -468,7 +468,7 @@
 
                                                                 <div>
                                                                     <label
-                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
                                                                         for="flexCheckDefault">
                                                                         <i class="fa fa-user semaforo2"></i>
                                                                         Ficha Técnica del Proveedor
@@ -502,7 +502,7 @@
 
                                                                 <div>
                                                                     <label
-                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
                                                                         for="flexCheckDefault">
                                                                         <i class="fa fa-user semaforo2"></i>
                                                                         Seguros
@@ -537,7 +537,7 @@
 
                                                                 <div>
                                                                     <label
-                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
                                                                         for="flexCheckDefault">
                                                                         <i class="fa fa-user semaforo2"></i>
                                                                         Permisos Especiales

@@ -321,7 +321,7 @@
                                                         <div class="card h-99 contDocumentos ">
                                                             <div class="card-body m-2">
                                                                 <div>
-                                                                    <label  class="form-check-label text-start fs-5 textTitulo mb-2"  for="flexCheckDefault">
+                                                                    <label  class="form-check-label text-start fs-5 textTitulo text-break mb-2"  for="flexCheckDefault">
                                                                         <i class="fa  {{ $docs->factura != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Factura
                                                                     </label>
@@ -349,7 +349,7 @@
                                                         <div class="card h-99 contDocumentos">
                                                             <div class="card-body m-2">
                                                                 <div>
-                                                                    <label  class="form-check-label text-start fs-5 textTitulo mb-2" for="flexCheckDefault">
+                                                                    <label  class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
                                                                         <i class="fa {{ $docs->verificacion != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Verificación
                                                                     </label>
@@ -380,7 +380,7 @@
 
                                                                 <div>
                                                                     <label
-                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
                                                                         for="flexCheckDefault">
                                                                         <i class="fa {{ $docs->manual != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Manual de Uso
@@ -417,7 +417,7 @@
 
                                                                 <div>
                                                                     <label
-                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
                                                                         for="flexCheckDefault">
                                                                         <i class="fa {{ $docs->registro != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Registro
@@ -453,7 +453,7 @@
 
                                                                 <div>
                                                                     <label
-                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
                                                                         for="flexCheckDefault">
                                                                         <i class="fa {{ $docs->circulacion != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Tarjeta de Circulación
@@ -490,7 +490,7 @@
 
                                                                 <div>
                                                                     <label
-                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
                                                                         for="flexCheckDefault">
                                                                         <i class="fa {{ $docs->ficha != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Ficha Técnica del Proveedor
@@ -526,7 +526,7 @@
 
                                                                 <div>
                                                                     <label
-                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
                                                                         for="flexCheckDefault">
                                                                         <i class="fa {{ $docs->seguro != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Seguros
@@ -562,7 +562,7 @@
 
                                                                 <div>
                                                                     <label
-                                                                        class="form-check-label text-start fs-5 textTitulo mb-2"
+                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
                                                                         for="flexCheckDefault">
                                                                         <i class="fa {{ $docs->especial != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
                                                                         Permisos Especiales

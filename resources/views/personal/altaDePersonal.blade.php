@@ -1199,7 +1199,7 @@
                                                                         <div>
                                                                             <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
 
-                                                                                Aviso de Retencion de Infonavit
+                                                                                Aviso de Retención de Infonavit
                                                                             </label>
                                                                         </div>
                                                                         <div
