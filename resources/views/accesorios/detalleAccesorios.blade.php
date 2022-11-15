@@ -17,7 +17,7 @@
                                 <div class="row mt-3">
                                     <div class="col-12 col-md-4  my-3">
                                         <div class="text-center mx-auto border vistaFoto mb-4">
-                                            <i><img class="imgVista img-fluid mb-5"
+                                            <i><img class="imgVista img-fluid mb-2"
                                                     src="{{ $accesorios->foto == '' ? ' /img/general/default.jpg' : '/storage/accesorio/' . $accesorios->foto }}"></i>
                                             <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"
                                                     id="mi-archivo" accept="image/*"></span>
