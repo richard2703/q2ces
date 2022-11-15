@@ -18,6 +18,16 @@ Route::get('/', function () {
 });
 
 /* Mis rutas */
+Route::get('/index', function () {
+    return view('inventario.indexInventario');
+});
+
+Route::get('/nuevo', function () {
+    return view('inventario.inventarioNuevo');
+});
+Route::get('/modifi', function () {
+    return view('inventario.inventarioModifi');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -18,21 +18,24 @@
 
                                     <div class="row d-flex">
                                         <div class="col-12 col-sm-6 ">
-                                            <div class="text-center mx-auto mb-2 border altalogo">
-                                                Logo de la Empresa
+                                            <div class="text-center mx-auto border vistaFoto mb-4">
+                                                <i><img class="imgVista img-fluid mb-5" src="{{ asset('/img/general/default.jpg') }}"></i>
+                                                <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto" id="mi-archivo" accept="image/*"></span>
+                                                <label for="mi-archivo">
+                                                    <span>sube vista aérea</span>
+                                                </label>
                                             </div>
-                                            <input class="mb-4 ver" type="file" name="logo" id=" "
-                                                accept="image/*" style="display: block;">
-                                            <br>
                                         </div>
 
 
                                         <div class="col-12 col-sm-6 ">
-                                            <div class="text-center mx-auto mb-2 border altaEmpresaFoto">
-                                                Foto Aérea de la Empresa
+                                            <div class="text-center mx-auto border vistaFoto mb-4">
+                                                <i><img class="imgVista img-fluid mb-5" src="{{ asset('/img/general/default.jpg') }}"></i>
+                                                <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto" id="mi-archivo2" accept="image/*"></span>
+                                                <label for="mi-archivo2">
+                                                    <span>sube Logo</span>
+                                                </label>
                                             </div>
-                                            <input class="mb-4 ver" type="file" name="foto" id=" "
-                                                accept="image/*" style="display: block;">
                                         </div>
                                     </div>
 

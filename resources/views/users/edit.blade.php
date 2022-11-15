@@ -8,7 +8,7 @@
                         @csrf
                         @method('put')
                         <div class="card">
-                            <div class="card-header card-header-primary">
+                            <div class="card-header bacTituloPrincipal">
                                 <h4 class="card-title">Usuario</h4>
                                 <p class="card-category">Editar datos</p>
                             </div>
@@ -16,7 +16,7 @@
                                 <div class="row">
                                     <label for="name" class="col-sm-2 col-form-label">Nombre</label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="name"
+                                        <input type="text" class="inputCaja" name="name"
                                             value="{{ old('name', $user->name) }}" autofocus>
                                         @if ($errors->has('name'))
                                             <span class="error text-danger"
@@ -27,7 +27,7 @@
                                 <div class="row">
                                     <label for="username" class="col-sm-2 col-form-label">Nombre de usuario</label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="username"
+                                        <input type="text" class="inputCaja" name="username"
                                             value="{{ old('username', $user->username) }}">
                                         @if ($errors->has('username'))
                                             <span class="error text-danger"
@@ -38,7 +38,7 @@
                                 <div class="row">
                                     <label for="email" class="col-sm-2 col-form-label">Correo</label>
                                     <div class="col-sm-7">
-                                        <input type="email" class="form-control" name="email"
+                                        <input type="email" class="inputCaja" name="email"
                                             value="{{ old('email', $user->email) }}">
                                         @if ($errors->has('email'))
                                             <span class="error text-danger"
@@ -49,7 +49,7 @@
                                 <div class="row">
                                     <label for="password" class="col-sm-2 col-form-label">Contraseña</label>
                                     <div class="col-sm-7">
-                                        <input type="password" class="form-control" name="password"
+                                        <input type="password" class="inputCaja" name="password"
                                             placeholder="Contraseña">
                                         @if ($errors->has('password'))
                                             <span class="error text-danger"
@@ -97,7 +97,7 @@
                             </div>
                             <!--Footer-->
                             <div class="card-footer ml-auto mr-auto">
-                                <button type="submit" class="btn btn-primary">actualizar</button>
+                                <button type="submit" class="btn botonGral">actualizar</button>
                             </div>
                             <!--End footer-->
                         </div>

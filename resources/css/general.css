@@ -1,4 +1,4 @@
-/* { 
+/**, div { 
     border: #212529 1px solid;
 }*/
 
@@ -61,12 +61,12 @@ a.textEquipo:hover{
 
 /* ------- CSS PARA Vista OBRAS ----------*/
 .vistaFoto{
-  width: 85%;
+  width: 75%;
 }
 
 .imgVista{
   object-fit: cover;
-  width:100%;
+  width:85%;
   height:100%;
 }
 
@@ -160,6 +160,16 @@ box-shadow: 2px 2px 10px 2px #F7C90D!important;
   width: 30px;
   height: 30px;
 }
+.semaforo2{
+  color: red;
+  padding-top: 5px;
+  font-size: 1.25rem
+}
+.semaforo3{
+  color: green;
+  padding-top: 5px;
+  font-size: 1.25rem
+}
 
 
 /* ------- CSS PARA VISTA DE PERSONAL/ DOCUMENTOS ----------*/
@@ -168,7 +178,7 @@ p span{
 }
 
   .btnMas{
-    width: 60%;
+    width: 100%;
     color: #F7C90D;
   }
   /* ------------Alineacion de items------------ */
@@ -303,3 +313,38 @@ input.placeholderMenuMovil::placeholder{
 
 }
 
+
+/* -------  Boton de subir archivo documentos  ------- */
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  border: 0px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+/* -------  Boton de subir archivo  imagenes ------- */
+label[for="mi-archivo"],
+label[for="mi-archivo2"] {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #A6CE34;
+  display: inline-block;
+  transition: all .5s;
+  cursor: pointer;
+  padding: 15px 40px !important;
+  text-transform: uppercase;
+  width: 100%;
+  text-align: center;
+  }
+
+
+
+
+
+/* -------  Boton de subir archivo  ------- */
+.ver.input[type="file"] {
+  display: block !important;
+}
