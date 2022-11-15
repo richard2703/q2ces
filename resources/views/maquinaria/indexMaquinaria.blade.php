@@ -2,8 +2,8 @@
 @section('content')
     <div class="content">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-11">
+            <div class="row justify-content-center ">
+                <div class="col-md-10 align-self-center">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
