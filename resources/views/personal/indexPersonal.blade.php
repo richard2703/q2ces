@@ -50,7 +50,7 @@
                                                         <td>{{ $persona->apellidoP }}</td>
                                                         <td>{{ $persona->profe }}</td>
                                                         <td>{{ $persona->celular }}</td>
-                                                        <td>{{ $persona->mailEmpresaril }}</td>
+                                                        <td>{{ $persona->mailEmpresarial }}</td>
 
                                                         <td class="td-actions text-right">
                                                             {{-- @can('user_show') --}}
@@ -59,12 +59,12 @@
                                                                     class="material-icons">person</i></a>
                                                             {{-- @endcan --}}
                                                             {{-- @can('user_edit') --}}
-                                                            <a href="{{ route('users.edit', $persona->id) }}"
+                                                            {{--  <a href="{{ route('personal.edit', $persona->id) }}"
                                                                 class="btn btn-warning"><i
-                                                                    class="material-icons">edit</i></a>
+                                                                    class="material-icons">edit</i></a> --}}
                                                             {{-- @endcan --}}
                                                             {{-- @can('user_destroy') --}}
-                                                            <form action="{{ route('users.delete', $persona->id) }}"
+                                                            <form action="{{ route('personal.delete', $persona->id) }}"
                                                                 method="POST" style="display: inline-block;"
                                                                 onsubmit="return confirm('Seguro?')">
                                                                 @csrf

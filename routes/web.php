@@ -65,9 +65,9 @@ Route::get('/indexAccesorios', function () {
 //     return view('personal.altaDePersonal');
 // });
 
-Route::get('/detalleDePersonal', function () {
-    return view('personal.detalleDePersonal');
-});
+// Route::get('/detalleDePersonal', function () {
+//     return view('personal.detalleDePersonal');
+// });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -93,9 +93,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/personal/nuevo', [App\Http\Controllers\personalController::class, 'create'])->name('personal.create');
     Route::post('/personal', [App\Http\Controllers\personalController::class, 'store'])->name('personal.store');
     Route::get('/personal', [App\Http\Controllers\personalController::class, 'index'])->name('personal.index');
+    // Route::get('/personal', [App\Http\Controllers\personalController::class, 'index'])->name('personal.indexPersonal');
     Route::get('/personal/{personal}', [App\Http\Controllers\personalController::class, 'show'])->name('personal.show');
     Route::put('/personal/{personal}', [App\Http\Controllers\personalController::class, 'update'])->name('personal.update');
     Route::get('personal/{id}/{doc}', [App\Http\Controllers\personalController::class, 'download'])->name('personal.download');
+    Route::delete('/personal/{personal}', [App\Http\Controllers\UserController::class, 'destroy'])->name('personal.delete');
 
     //Crud maquinaria
     Route::get('/maquinaria/nuevo', [App\Http\Controllers\maquinariaController::class, 'create'])->name('maquinaria.create');
