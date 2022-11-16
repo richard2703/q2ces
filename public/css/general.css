@@ -349,6 +349,7 @@ label[for="mi-archivo2"] {
   display: block !important;
 }
 
-table.table{
+table.table-responsive{
   text-align: center;
+  display: inline-table;
 }
