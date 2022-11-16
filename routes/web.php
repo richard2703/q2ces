@@ -53,6 +53,19 @@ Route::get('/indexAccesorios', function () {
     return view('accesorios.indexAccesorios');
 });
 
+
+//Inventario
+Route::get('/dashInventario', function () {
+    return view('inventario.dashInventario');
+});
+Route::get('/inventario', function () {
+    return view('inventario.inventario');
+});
+
+
+
+
+
 // Route::get('/altaObra', function () {
 //     return view('obra.altaObra');
 // });

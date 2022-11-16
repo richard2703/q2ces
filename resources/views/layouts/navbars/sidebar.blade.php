@@ -67,7 +67,7 @@
                     </ul>
                 </div>
             </li>
-
+<!------ PERSONAL ------>
             <li class="nav-item {{ $activePage == 'personal' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a class="nav-link p-2 " data-toggle="collapse" href="#personal" aria-expanded="false">
                     <i><img style="width:25px" src="{{ asset('/img/navs/personalMenu.svg') }}"></i>
@@ -78,8 +78,7 @@
                 <div class="collapse " id="personal">
                     <ul class="nav">
                         <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                            <a
-                                href="{{ route('personal.index') }}"class="nav-link -item{{ $activePage == 'personal' ? ' active' : '' }} ">
+                            <a href="{{ route('personal.index') }}"class="nav-link -item{{ $activePage == 'personal' ? ' active' : '' }} ">
                                 <span class="sidebar-normal py-2 ps-5">{{ __('Ver Personal') }} </span>
                             </a>
                         </li>
@@ -103,6 +102,17 @@
                 </div>
             </li>
 
+<!------ INVENTARIO ------>
+
+            <li class="nav-item {{ $activePage == 'profile' || $activePage == 'user-management' ? ' active' : '' }}">
+                <a  href="{{ url('/dashInventario') }}"class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
+                    <i><img style="width:25px" src="{{ asset('/img/navs/bitacorasMenu.svg') }}"></i>
+                    <p> {{ __('inventario') }} </p>
+                    <b class="caret"></b>
+                </a>
+            </li>
+
+<!------ OBRA ------>
             <li class="nav-item {{ $activePage == 'obra' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a class="nav-link p-2" data-toggle="collapse" href="#obras" aria-expanded="false">
                     <i><img style="width:25px" src="{{ asset('/img/navs/obrasMenu.svg') }}"></i>
@@ -135,7 +145,7 @@
                     </ul>
                 </div>
             </li>
-
+<!------ BITÁCORAS ------>
             <li class="nav-item {{ $activePage == 'profile' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a class="nav-link p-2" data-toggle="collapse" href="#bitacorass" aria-expanded="false">
                     <i><img style="width:25px" src="{{ asset('/img/navs/bitacorasMenu.svg') }}"></i>
@@ -172,7 +182,7 @@
                     </ul>
                 </div>
             </li>
-
+<!------ FORMATOS ------>
             <li class="nav-item {{ $activePage == 'profile' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a class="nav-link p-2" data-toggle="collapse" href="#formatoss" aria-expanded="false">
                     <i><img style="width:25px" src="{{ asset('/img/navs/formatosMenu.svg') }}"></i>
