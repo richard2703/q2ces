@@ -373,17 +373,47 @@ CREATE TABLE obraMaqPer(
 
 CREATE TABLE inventario(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  maquinariaId bigint(20) unsigned NOT NULL,
-  personalId bigint(20) unsigned NOT NULL,
-  obraId bigint(20) unsigned NOT NULL,
-  inicio datetime NULL,
-  fin datetime NULL,
-  PRIMARY KEY (id),
-  CONSTRAINT FK_obraMaqPer_maquinaria foreign key (maquinariaId) references maquinaria(id),
-  CONSTRAINT FK_obraMaqPer_persona foreign key (personalId) references personal(id),
-  CONSTRAINT FK_obraMaqPer_obras foreign key (obraId) references obras(id)
+  numparte varchar(255) NOT NULL,
+  nombre varchar(255) NOT NULL,
+  marca varchar(255) NULL,
+  modelo varchar(255) NULL,
+  proveedor varchar(255) NULL,
+  cantidad float(10,2) null,
+  reorden float(10,2) null,
+  maximo float(10,2) null,
+  Valor float(10,2) null,
+  imagen varchar(255) NULL,
+  tipo varchar(255) NULL,
+  created_at datetime NULL,
+  updated_at datetime NULL,
+  PRIMARY KEY (id)
  );
 
+CREATE TABLE restock(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  productoId bigint(20) unsigned NOT NULL,
+  cantidad float(10,2) not null,
+  costo float(10,2) not null,
+  created_at datetime NULL,
+  updated_at datetime NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_inventario_producto foreign key (productoId) references inventario(id)
+ );
+
+CREATE TABLE invconsu(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  productoId bigint(20) unsigned NOT NULL,
+  cantidad float(10,2) not null,
+  desde bigint(20) unsigned NOT NULL,
+  hasta bigint(20) unsigned NOT NULL,
+  created_at datetime NULL,
+  updated_at datetime NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_invconsu_producto foreign key (productoId) references inventario(id),
+  CONSTRAINT FK_invconsu_desde foreign key (desde) references maquinaria(id),
+  CONSTRAINT FK_invconsu_hasta foreign key (hasta) references maquinaria(id)
+
+ );
 
 
 
