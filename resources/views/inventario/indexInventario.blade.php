@@ -33,7 +33,7 @@
                                     </div>
 
 
-                                    <table class="table">
+                                    <table class="table-responsive">
                                         <thead class="labelTitulo">
                                             <tr>
                                                 <th scope="col" class="tablaTitulos fw-bolder">Imagen</th>

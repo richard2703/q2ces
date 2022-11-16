@@ -81,7 +81,7 @@
                                                 id="aler" name="aler" value="">
                                         </div>
 
-                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                        <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
                                             <label class="labelTitulo">Tipo:</label></br>
                                             <select class="form-select" aria-label="Default select example" id="sangre"
                                                 name="sangre">
