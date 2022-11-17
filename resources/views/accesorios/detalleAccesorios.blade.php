@@ -1,6 +1,17 @@
-@extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Alta de Accesorios')])
+@extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Detalle de Accesorios')])
 @section('content')
     <div class="content">
+        @if ($errors->any())
+            <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+            <div class="alert alert-danger">
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-11 align-self-start">
@@ -12,7 +23,7 @@
                                 @method('put')
 
                                 <div class="p-1 align-self-start bacTituloPrincipal">
-                                    <h2 class="my-3 ms-3 texticonos ">Alta de Accesorios</h2>
+                                    <h2 class="my-3 ms-3 texticonos ">Detalle de Accesorios</h2>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-12 col-md-4  my-3">

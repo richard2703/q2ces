@@ -414,6 +414,23 @@ CREATE TABLE invconsu(
   CONSTRAINT FK_invconsu_hasta foreign key (hasta) references maquinaria(id)
 
  );
+ 
+CREATE TABLE fiscal(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  personalId bigint(20) unsigned NOT NULL,
+  cp varchar(255) NULL,
+  tipo varchar(255) null,
+  calle varchar(255) NULL,
+  numero varchar(255) NULL,
+  interior varchar (255) null,
+  colonia varchar(255) NULL,
+  localidad varchar(255) null,
+  municipio varchar(255) null,
+  estado varchar(255) NULL,
+  entre varchar(255) null,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_fiscal_personalId foreign key (personalId) references personal(id)
+ );
 
 
 

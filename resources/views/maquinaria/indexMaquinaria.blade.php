@@ -3,7 +3,7 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row justify-content-center ">
-                <div class="col-md-10 align-self-center">
+                <div class="col-md-11 align-self-center">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
@@ -59,12 +59,12 @@
                                                                     class="material-icons">person</i></a>
                                                             {{-- @endcan --}}
                                                             {{-- @can('user_edit') --}}
-                                                            <a href="{{ route('users.edit', $maquina->id) }}"
+                                                            <a href="{{ route('maquinaria.show', $maquina->id) }}"
                                                                 class="btn btn-warning"><i
                                                                     class="material-icons">edit</i></a>
                                                             {{-- @endcan --}}
                                                             {{-- @can('user_destroy') --}}
-                                                            <form action="{{ route('users.delete', $maquina->id) }}"
+                                                            <form action="{{ route('maquinaria.delete', $maquina->id) }}"
                                                                 method="POST" style="display: inline-block;"
                                                                 onsubmit="return confirm('Seguro?')">
                                                                 @csrf

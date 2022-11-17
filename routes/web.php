@@ -45,13 +45,13 @@ Route::get('/dashboard', function () {
 //     return view('equipos.verEquipos');
 // });
 
-Route::get('/altaDeAccesorios', function () {
-    return view('accesorios.altaDeAccesorios');
-});
+// Route::get('/altaDeAccesorios', function () {
+//     return view('accesorios.altaDeAccesorios');
+// });
 
-Route::get('/indexAccesorios', function () {
-    return view('accesorios.indexAccesorios');
-});
+// Route::get('/indexAccesorios', function () {
+//     return view('accesorios.indexAccesorios');
+// });
 
 // Route::get('/altaObra', function () {
 //     return view('obra.altaObra');
@@ -88,6 +88,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/obras', [App\Http\Controllers\obrasController::class, 'store'])->name('obras.store');
     Route::get('/obras', [App\Http\Controllers\obrasController::class, 'index'])->name('obras.index');
     Route::get('/obras/{obras}', [App\Http\Controllers\obrasController::class, 'show'])->name('obras.show');
+    Route::get('/obras/{obras}/edit', [App\Http\Controllers\obrasController::class, 'edit'])->name('obras.edit');
+    Route::delete('/obras/{obras}', [App\Http\Controllers\obrasController::class, 'destroy'])->name('obras.delete');
+    Route::put('/obras/{obras}', [App\Http\Controllers\obrasController::class, 'update'])->name('obras.update');
 
     //Crud personal
     Route::get('/personal/nuevo', [App\Http\Controllers\personalController::class, 'create'])->name('personal.create');
@@ -106,6 +109,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'show'])->name('maquinaria.show');
     Route::put('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'update'])->name('maquinaria.update');
     Route::get('maquinaria/{id}/{doc}', [App\Http\Controllers\maquinariaController::class, 'download'])->name('maquinaria.download');
+    Route::get('/maquinaria/{maquinaria}/edit', [App\Http\Controllers\maquinariaController::class, 'edit'])->name('maquinaria.edit');
+    Route::delete('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'destroy'])->name('maquinaria.delete');
 
     //Crud accesorios
     Route::get('/accesorios/nuevo', [App\Http\Controllers\accesoriosController::class, 'create'])->name('accesorios.create');
@@ -113,4 +118,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/accesorios', [App\Http\Controllers\accesoriosController::class, 'index'])->name('accesorios.index');
     Route::get('/accesorios/{accesorios}', [App\Http\Controllers\accesoriosController::class, 'show'])->name('accesorios.show');
     Route::put('/accesorios/{accesorios}', [App\Http\Controllers\accesoriosController::class, 'update'])->name('accesorios.update');
+    Route::get('/accesorios/{accesorios}/edit', [App\Http\Controllers\accesoriosController::class, 'edit'])->name('accesorios.edit');
+    Route::delete('/accesorios/{accesorios}', [App\Http\Controllers\accesoriosController::class, 'destroy'])->name('accesorios.delete');
 });

@@ -1,10 +1,21 @@
 @extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Alta de Maquinaria')])
 @section('content')
     <div class="content">
+        @if ($errors->any())
+            <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+            <div class="alert alert-danger">
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-11 align-self-start">
-                    <div class="card col-11">
+                <div class="col-11 align-self-center">
+                    <div class="card col-12">
                         <div class="card-body contCart">
                             <form class="row alertaGuardar" action="{{ route('maquinaria.store') }}" method="post"
                                 enctype="multipart/form-data">
@@ -36,35 +47,35 @@
                                                     <div class="col-12 col-md-8 ">
 
                                                         <div class="row alin">
-                                                            {{--  <div class=" col-12 col-sm-6  mb-3 ">
+                                                            <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Nombre:</label></br>
-                                                                <input type="text" class="inputCaja" id=""
-                                                                name="calle" value="">
-                                                            </div>  --}}
+                                                                <input type="text" class="inputCaja" id="nombre"
+                                                                name="nombre" value="{{ old('nombre') }}">
+                                                            </div>  
 
-                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                            <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Marca:</label></br>
                                                                 <input type="text" class="inputCaja" id="marca"
-                                                                    name="marca" value="">
+                                                                    name="marca" value="{{ old('marca') }}">
                                                             </div>
 
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Modelo:</label></br>
                                                                 <input type="text" class="inputCaja" id="modelo"
-                                                                    name="modelo" value="">
+                                                                    name="modelo" value="{{ old('modelo') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Sub Marca:</label></br>
                                                                 <input type="text" class="inputCaja" id="submarca"
-                                                                    name="submarca" value="">
+                                                                    name="submarca" value="{{ old('submarca') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4  mb-3 ">
                                                                 <label class="labelTitulo">Categoría:</label></br>
                                                                 <input type="text" class="inputCaja" id="categoria"
-                                                                    name="categoria" value=""
+                                                                    name="categoria" value="{{ old('categoria') }}"
                                                                     placeholder="ej: excavadora">
                                                             </div>
 
@@ -106,145 +117,145 @@
                                                             <div class="col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Año:</label></br>
                                                                 <input type="number" class="inputCaja" id="ano"
-                                                                    name="ano" value="">
+                                                                    name="ano" value="{{ old('ano') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Color:</label></br>
                                                                 <input type="text" class="inputCaja" id="color"
-                                                                    name="color" value="" placeholder="amarillo">
+                                                                    name="color" value="{{ old('color') }}" placeholder="amarillo">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Placas:</label></br>
                                                                 <input type="text" class="inputCaja" id="placas"
-                                                                    name="placas" value="" placeholder="MW88888">
+                                                                    name="placas" value="{{ old('placas') }}" placeholder="MW88888">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3">
                                                                 <label class="labelTitulo">Motor:</label></br>
                                                                 <input type="text" class="inputCaja" id="motor"
-                                                                    name="motor" value="">
+                                                                    name="motor" value="{{ old('motor') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Número Motor:</label></br>
                                                                 <input type="text" class="inputCaja" id="nummotor"
-                                                                    name="nummotor" value="">
+                                                                    name="nummotor" value="{{ old('nummotor') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Número Serie:</label></br>
                                                                 <input type="text" class="inputCaja" id="numserie"
-                                                                    name="numserie" value="">
+                                                                    name="numserie" value="{{ old('numserie') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Número VIN:</label></br>
                                                                 <input type="text" class="inputCaja" id="vin"
-                                                                    name="vin" value="">
+                                                                    name="vin" value="{{ old('vin') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
                                                                 <label class="labelTitulo">Capacidad en kW:</label></br>
                                                                 <input type="text" class="inputCaja" id="capacidad"
-                                                                    name="capacidad" value="" placeholder="">
+                                                                    name="capacidad" value="{{ old('capacidad') }}" placeholder="">
                                                             </div>
 
                                                             <div class="col-12 col-sm-6  mb-3">
                                                                 <label class="labelTitulo">Capacidad Tanque:</label></br>
                                                                 <input type="number" class="inputCaja" id="tanque"
-                                                                    name="tanque" value="">
+                                                                    name="tanque" value="{{ old('tanque') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Ejes:</label></br>
                                                                 <input type="text" class="inputCaja" id="ejes"
-                                                                    name="ejes" value="">
+                                                                    name="ejes" value="{{ old('ejes') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Rin Delantero:</label></br>
                                                                 <input type="text" class="inputCaja" id="rinD"
-                                                                    name="rinD" value="">
+                                                                    name="rinD" value="{{ old('rinD') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Rin Trasero:</label></br>
                                                                 <input type="text" class="inputCaja" id="rinT"
-                                                                    name="rinT" value="">
+                                                                    name="rinT" value="{{ old('rinT') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Llanta Delantera:</label></br>
                                                                 <input type="text" class="inputCaja" id="llantaD"
-                                                                    name="llantaD" value="">
+                                                                    name="llantaD" value="{{ old('llantaD') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Llanta Trasera:</label></br>
                                                                 <input type="text" class="inputCaja" id="llantaT"
-                                                                    name="llantaT" value="">
+                                                                    name="llantaT" value="{{ old('llantaT') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Combustible:</label></br>
                                                                 <input type="text" class="inputCaja" id="combustible"
-                                                                    name="combustible" value="">
+                                                                    name="combustible" value="{{ old('combustible') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Motor:</label></br>
                                                                 <input type="text" class="inputCaja" id="aceitemotor"
-                                                                    name="aceitemotor" value="">
+                                                                    name="aceitemotor" value="{{ old('aceitemotor') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Transmisión:</label></br>
                                                                 <input type="text" class="inputCaja" id="aceitetras"
-                                                                    name="aceitetras" value="">
+                                                                    name="aceitetras" value="{{ old('aceitetras') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Dirección:</label></br>
                                                                 <input type="text" class="inputCaja" id="aceitedirec"
-                                                                    name="aceitedirec" value="">
+                                                                    name="aceitedirec" value="{{ old('aceitedirec') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Hidráulico:</label></br>
                                                                 <input type="text" class="inputCaja"
-                                                                    name="aceitehidra" value="">
+                                                                    name="aceitehidra" value="{{ old('aceitehidra') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Filtro Aceite:</label></br>
                                                                 <input type="text" class="inputCaja" id="filtroaceite"
-                                                                    name="filtroaceite" value="">
+                                                                    name="filtroaceite" value="{{ old('filtroaceite') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Filtro Aire:</label></br>
                                                                 <input type="text" class="inputCaja" id="filtroaire"
-                                                                    name="filtroaire" value="">
+                                                                    name="filtroaire" value="{{ old('filtroaire') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Bujías:</label></br>
                                                                 <input type="text" class="inputCaja" id="bujias"
-                                                                    name="bujias" value="">
+                                                                    name="bujias" value="{{ old('bujias') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Tipo de Bujías:</label></br>
                                                                 <input type="text" class="inputCaja" id="tipobujia"
-                                                                    name="tipobujia" value="">
+                                                                    name="tipobujia" value="{{ old('tipobujia') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Horómetro Inicial:</label></br>
                                                                 <input type="number" class="inputCaja" id="horometro"
-                                                                    name="horometro" value="">
+                                                                    name="horometro" value="{{ old('horometro') }}">
                                                             </div>
 
                                                             <div class=" col-8   mb-3 ">
@@ -254,7 +265,7 @@
                                                                             Inicial:</label></br>
                                                                         <input type="number" class="inputCaja"
                                                                             id="kilometraje" name="kilometraje"
-                                                                            value="">
+                                                                            value="{{ old('kilometraje') }}">
 
                                                                     </div>
                                                                     <div class="col-5">
@@ -337,7 +348,7 @@
                                                                 </div>
                                                                 <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file" name="verificacion" id="foto">
+                                                                        <input class="mb-4" type="file" name="verificacion" id="foto" accept=".pdf">
                                                                         <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
@@ -373,7 +384,7 @@
                                                                 <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="manual" id="foto">
+                                                                            name="manual" id="foto" accept=".pdf">
                                                                             <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
@@ -409,7 +420,7 @@
                                                                 <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="registro" id="foto">
+                                                                            name="registro" id="foto" accept=".pdf">
                                                                         <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
@@ -442,7 +453,7 @@
                                                                 <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="circulacion" id="foto">
+                                                                            name="circulacion" id="foto" accept=".pdf">
                                                                         <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
@@ -477,7 +488,7 @@
                                                                 <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="ficha" id="foto">
+                                                                            name="ficha" id="foto" accept=".pdf">
                                                                         <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
@@ -512,7 +523,7 @@
                                                                 <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="seguro" id="foto">
+                                                                            name="seguro" id="foto" accept=".pdf">
                                                                         <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
@@ -547,7 +558,7 @@
                                                                 <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="especial" id="foto">
+                                                                            name="especial" id="foto" accept=".pdf">
                                                                         <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>

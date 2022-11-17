@@ -40,7 +40,24 @@ class accesoriosController extends Controller
      */
     public function store(Request $request)
     {
-        // dd('test');
+        // dd('test');        
+        $request->validate([
+            'nombre' => 'required|max:250',
+            'modelo' => 'nullable|max:200',
+            'marca' => 'nullable|max:200',
+            'serie' => 'nullable|max:200',
+            'ano' => 'nullable|max:9999|numeric',
+            'color' => 'nullable|max:200',
+        ], [
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
+            'modelo.max' => 'El campo modelo excede el límite de caracteres permitidos.',
+            'marca.max' => 'El campo marca excede el límite de caracteres permitidos.',
+            'ano.numeric' => 'El campo año debe ser numérico.',
+            'ano.max' => 'El campo serie excede el límite de caracteres permitidos.',
+            'ano.min' => 'El campo año requiere de al menos 4 caracteres.',
+            'color.max' => 'El campo color excede el límite de caracteres permitidos.',
+        ]);
         $accesorio = $request->only(
             'nombre',
             'marca',
@@ -50,6 +67,8 @@ class accesoriosController extends Controller
             'ano',
             'foto'
         );
+        $accesorio['serie'] = strtoupper($accesorio['serie']);
+
         if ($request->hasFile("foto")) {
             $accesorio['foto'] = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
             $request->file('foto')->storeAs('/public/accesorio', $accesorio['foto']);
@@ -78,7 +97,7 @@ class accesoriosController extends Controller
      */
     public function edit(accesorios $accesorios)
     {
-        //
+        return view('accesorios.detalleAccesorios', compact('accesorios'));
     }
 
     /**
@@ -90,6 +109,23 @@ class accesoriosController extends Controller
      */
     public function update(Request $request, accesorios $accesorios)
     {
+        $request->validate([
+            'nombre' => 'required|max:250',
+            'modelo' => 'nullable|max:200',
+            'marca' => 'nullable|max:200',
+            'serie' => 'nullable|max:200',
+            'ano' => 'nullable|max:9999|numeric',
+            'color' => 'nullable|max:200',
+        ], [
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
+            'modelo.max' => 'El campo modelo excede el límite de caracteres permitidos.',
+            'marca.max' => 'El campo marca excede el límite de caracteres permitidos.',
+            'ano.numeric' => 'El campo año debe ser numérico.',
+            'ano.max' => 'El campo serie excede el límite de caracteres permitidos.',
+            'ano.min' => 'El campo año requiere de al menos 4 caracteres.',
+            'color.max' => 'El campo color excede el límite de caracteres permitidos.',
+        ]);
         $data = $request->only(
             'nombre',
             'marca',
@@ -99,6 +135,8 @@ class accesoriosController extends Controller
             'ano',
             'foto'
         );
+
+        $data['serie'] = strtoupper($data['serie']);
 
         if ($request->hasFile("foto")) {
             $data['foto'] = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
@@ -118,6 +156,6 @@ class accesoriosController extends Controller
      */
     public function destroy(accesorios $accesorios)
     {
-        //
+        return redirect()->back()->with('failed', 'No se puede eliminar');
     }
 }
