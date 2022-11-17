@@ -25,7 +25,7 @@
                                     <div class="row">
                                         <div class="col-12 text-right">
                                             {{-- @can('user_create') --}}
-                                            <a href="{{ url('index') }}">
+                                            <a href="{{ route('inventario.create') }}">
                                                 <button type="button" class="btn botonGral">Nuevo</button>
                                             </a>
                                             {{-- @endcan --}}
