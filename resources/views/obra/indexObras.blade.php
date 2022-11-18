@@ -59,12 +59,12 @@
                                                                     class="material-icons">person</i></a>
                                                             {{-- @endcan --}}
                                                             {{-- @can('user_edit') --}}
-                                                            <a href="{{ route('users.edit', $obra->id) }}"
+                                                            <a href="{{ route('obras.edit', $obra->id) }}"
                                                                 class="btn btn-warning"><i
                                                                     class="material-icons">edit</i></a>
                                                             {{-- @endcan --}}
                                                             {{-- @can('user_destroy') --}}
-                                                            <form action="{{ route('users.delete', $obra->id) }}"
+                                                            <form action="{{ route('obras.delete', $obra->id) }}"
                                                                 method="POST" style="display: inline-block;"
                                                                 onsubmit="return confirm('Seguro?')">
                                                                 @csrf

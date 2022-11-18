@@ -1,6 +1,17 @@
 @extends('layouts.main', ['activePage' => 'personal', 'titlePage' => __('Vista de Personal')])
 @section('content')
     <div class="content">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-11 align-self-start">
@@ -84,8 +95,8 @@
 
                                         <div class=" col-12 col-sm-6 mb-3 ">
                                             <label class="labelTitulo">Correo Electrónico Empresa:</label></br>
-                                            <input type="text" class="inputCaja" id="mailEmpresaril"
-                                                name="mailEmpresaril" value="{{ $personal->mailEmpresaril }}">
+                                            <input type="text" class="inputCaja" id="mailEmpresarial"
+                                                name="mailEmpresarial" value="{{ $personal->mailEmpresarial }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -201,7 +212,7 @@
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Folio INE:</label></br>
                                                     <input type="text" class="inputCaja" id="ine"
-                                                        name="ine" value="{{ $personal->fine }}">
+                                                        name="ine" value="{{ $personal->ine }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -232,8 +243,22 @@
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Estado Civil:</label></br>
-                                                    <input type="text" class="inputCaja" id="civil"
-                                                        name="civil" value="{{ $personal->civil }}">
+                                                    {{--  <input type="text" class="inputCaja" id="civil"
+                                                        name="civil" value="{{ $personal->civil }}"> --}}
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        id="civil" name="civil">
+                                                        <option value="Soltero"
+                                                            {{ $personal->civil == 'Soltero' ? ' selected' : '' }}>Soltero
+                                                        </option>
+                                                        <option
+                                                            value="Casado"{{ $personal->civil == 'Casado' ? ' selected' : '' }}>
+                                                            Casado
+                                                        </option>
+                                                        <option
+                                                            value="Unión libre"{{ $personal->civil == 'Unión libre' ? ' selected' : '' }}>
+                                                            Unión libre
+                                                        </option>
+                                                    </select>
                                                 </div>
                                                 {{--  
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -368,7 +393,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        {{--  
                                         <div class="col-12  ">
                                             <div class="row">
 
@@ -377,60 +401,60 @@
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  mb-3 ">
-                                                    <label class="labelTitulo">Calle y Número:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <label class="labelTitulo">Calle:</label></br>
+                                                    <input type="text" class="inputCaja" id="callef"
+                                                        name="callef" value="{{ $fiscal->calle }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  mb-3 ">
                                                     <label class="labelTitulo">Número Exterior:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="text" class="inputCaja" id="numerof"
+                                                        name="numerof" value="{{ $fiscal->numero }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  mb-3 ">
                                                     <label class="labelTitulo">Número Interior:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="text" class="inputCaja" id="interiorf"
+                                                        name="interiorf" value="{{ $fiscal->interior }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  mb-3 ">
                                                     <label class="labelTitulo">Entre las Calles:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="text" class="inputCaja" id="entref"
+                                                        name="entref" value="{{ $fiscal->entre }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  mb-3 ">
                                                     <label class="labelTitulo">Colonia:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="text" class="inputCaja" id="coloniaf"
+                                                        name="coloniaf" value="{{ $fiscal->colonia }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  mb-3 ">
                                                     <label class="labelTitulo">Código Postal:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="text" class="inputCaja" id="cp_f"
+                                                        name="cp_f" value="{{ $fiscal->cp }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  mb-3 ">
                                                     <label class="labelTitulo">Localidad:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="text" class="inputCaja" id="localidadf"
+                                                        name="localidadf" value="{{ $fiscal->localidad }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  mb-3 ">
                                                     <label class="labelTitulo">Municipio:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="text" class="inputCaja" id="municipiof"
+                                                        name="municipiof" value="{{ $fiscal->municipio }}">
                                                 </div>
                                                 <div class=" col-12 col-sm-6  mb-3 ">
                                                     <label class="labelTitulo">Entidad Federativa:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle" value="">
+                                                    <input type="text" class="inputCaja" id="estadof"
+                                                        name="estadof" value="{{ $fiscal->estado }}">
                                                 </div>
 
                                             </div>
-                                        </div>  --}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -492,8 +516,6 @@
                                                     <input type="text" class="inputCaja" id="parentesco"
                                                         name="parentesco" value="{{ $contacto->parentesco }}">
                                                 </div>
-
-
                                             </div>
                                         </div>
 
@@ -541,7 +563,6 @@
                                                     <input type="date" class="inputCaja" id="nacimiento"
                                                         name="nacimientoB"value="{{ \Carbon\Carbon::parse($beneficiario->nacimiento)->format('Y-m-d') }}">
                                                 </div>
-
 
                                             </div>
                                         </div>
@@ -669,7 +690,7 @@
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Sueldo Diario:</label></br>
                                                     <input type="number" class="inputCaja" id=""
-                                                        name="diario" value="{{ $nomina->neto }}">
+                                                        name="diario" value="{{ $nomina->diario }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -899,13 +920,14 @@
 
                                                 <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Equipo de Cómputo:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="pc" value="" placeholder="Marca y Modelo">
+                                                    <input type="text" class="inputCaja" id="pc"
+                                                        name="pc" value="{{ $equipo->pc }}"
+                                                        placeholder="Marca y Modelo">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Número de Serie:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
+                                                    <input type="text" class="inputCaja" id="pcSerial"
                                                         name="pcSerial" value="{{ $equipo->pcSerial }}">
                                                 </div>
 
