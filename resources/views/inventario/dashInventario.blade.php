@@ -9,7 +9,7 @@
                         <div class="card-body">
                             <div class="row d-flex ">
                                 <div class="col-12 col-md-6 text-center my-4">
-                                    <a href="{{ url('/inventario') }}" class="">    
+                                    <a href="{{ url('/indexInventario') }}" class="">    
                                         <img src="/img/inventario/herramientas.svg" alt="equipos" title="equipos" width="30%" class="botonIconoPrincipal">
                                         <p class="mt-4 texticonos">Herramientas</p>
                                     </a>

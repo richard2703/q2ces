@@ -58,8 +58,8 @@ Route::get('/indexAccesorios', function () {
 Route::get('/dashInventario', function () {
     return view('inventario.dashInventario');
 });
-Route::get('/inventario', function () {
-    return view('inventario.inventario');
+Route::get('/indexInventario', function () {
+    return view('inventario.indexInventario');
 });
 
 

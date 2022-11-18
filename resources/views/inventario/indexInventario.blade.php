@@ -1,17 +1,17 @@
-@extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('index')])
+@extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Inventario Herramientas')])
 @section('content')
     <div class="content">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
+            <div class="row justify-content-center">
+                <div class="col-md-11">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Inventario</h4>
+                                    <h4 class="card-title">Inventario Herramientas</h4>
                                     {{-- <p class="card-category">Usuarios registrados</p> --}}
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body table-responsive">
                                     @if (session('success'))
                                         <div class="alert alert-success" role="success">
                                             {{ session('success') }}
@@ -22,12 +22,15 @@
                                             {{ session('faild') }}
                                         </div>
                                     @endif
-                                    <div class="row">
-                                        <div class="col-12 text-right">
+                                    <div class="row justify-content-end">
+                                        <div class="col-2 text-center mb-5">
                                             {{-- @can('user_create') --}}
+
                                             <a href="{{ url('index') }}">
-                                                <button type="button" class="btn botonGral">Nuevo</button>
+                                                <button type="button" class="botonSinFondo "><img  style="width: 30px;"src="{{ '/img/inventario/nuevo.svg' }}"></button>
                                             </a>
+                                            <p>Nuevo</p>
+
                                             {{-- @endcan --}}
                                         </div>
                                     </div>
@@ -35,7 +38,7 @@
 
                                     <table class="table-responsive">
                                         <thead class="labelTitulo">
-                                            <tr>
+                                            <tr class="">
                                                 <th scope="col" class="tablaTitulos fw-bolder">Imagen</th>
                                                 <th scope="col" class="tablaTitulos fw-bolder">Nombre</th>
                                                 <th scope="col" class="tablaTitulos fw-bolder">Taller</th>
@@ -45,32 +48,34 @@
                                         </thead>
                                         <tbody>
                                             {{--  @forelse ($accesorios as $accesorio)  --}}
-                                            <tr>
-                                                <th scope="row"><img
-                                                        style="width: 100px;"src="{{ '/img/general/defaultinventario.jpg' }}">
+                                            <tr class=" border-top border-bottom">
+                                                <th scope="row"><img class="my-4" style="width: 100px;"src="{{ '/img/general/defaultinventario.jpg' }}">
                                                     {{--  src="{{ $accesorio->foto == '' ? ' /img/general/default.jpg' : '/storage/accesorio/' . $accesorio->foto }}">  --}} </th>
                                                 <td> desarmador</td>
                                                 <td> 5 </td>
                                                 <td> 1 </td>
-                                                <td class="td-actions text-right">
+                                                <td class="td-actions justify-content-end d-flex">
                                                     {{-- @can('user_show') --}}
-                                                    <a href="#" class="btn btn-info" title="Editar"><i
-                                                            class="material-icons">person</i></a>
+                                                    <div class="col-5" >
+                                                        <button type="button" class="botonSinFondo mx-2"title="Resurtir"><img  style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}"></button>
+                                                        <p class="botonTitulos mt-2">Resurtir</p>
+                                                    </div>
                                                     {{-- @endcan --}}
                                                     {{-- @can('user_edit') --}}
-
-                                                    <a href="#" class="btn btn-warning" title="Resurtir"
-                                                        data-bs-toggle="modal" data-bs-target="#modal-cliente"><i
-                                                            class="material-icons">edit</i></a>
+                                                    <div class="col-5">
+                                                    <button type="button" class="botonSinFondo mx-2"title="Detalle"><img  style="width: 30px;"src="{{ '/img/inventario/detalle.svg' }}"> </button>
+                                                    <p class="botonTitulos mt-2">Detalle</p>
+                                                </div>
+                                                    {{-- @endcan --}}
                                                     {{-- @endcan --}}
                                                     {{-- @can('user_destroy') --}}
                                                     <form action="#" method="POST" style="display: inline-block;"
                                                         onsubmit="return confirm('Seguro?')">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button class="btn btn-danger" type="submit" rel="tooltip">
+                                                        <!--<button class="btn btn-danger" type="submit" rel="tooltip">
                                                             <i class="material-icons">close</i>
-                                                        </button>
+                                                        </button>-->
                                                     </form>
                                                     {{-- @endcan --}}
                                                 </td>
