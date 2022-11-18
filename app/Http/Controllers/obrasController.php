@@ -6,6 +6,7 @@ use App\Models\obras;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
+use App\Helpers\Validaciones;
 
 
 
@@ -44,6 +45,26 @@ class obrasController extends Controller
         // dd($request);
         // $obra = obras::create($request->only('nombre', 'tipo', 'calle', 'numero', 'colonia', 'estado', 'ciudad', 'cp'));
 
+        $request->validate([
+            'nombre' => 'required|max:250',
+            'calle' => 'nullable|max:250',
+            'numero' => 'nullable|max:20',
+            'colonia' => 'nullable|max:200',
+            'cp' => 'nullable|max:99999|numeric',
+            'ciudad' => 'nullable|max:200',
+            'estado' => 'nullable|max:200',
+        ], [
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
+            'calle.max' => 'El campo calle excede el límite de caracteres permitidos.',
+            'numero.max' => 'El campo número excede el límite de caracteres permitidos.',
+            'colonia.max' => 'El campo colonia excede el límite de caracteres permitidos.',
+            'cp.numeric' => 'El campo código postal debe de ser numérico.',
+            'cp.min' => 'El campo código postal requiere de al menos 5 caracteres.',
+            'cp.max' => 'El campo código postal excede el límite de caracteres permitidos.',
+            'ciudad.max' => 'El campo localidad excede el límite de caracteres permitidos.',
+            'estado.max' => 'El campo estado excede el límite de caracteres permitidos.',
+        ]);
         $obra = $request->all();
         if ($request->hasFile("logo")) {
             $obra['logo'] = time() . '_' . 'logo.' . $request->file('logo')->getClientOriginalExtension();
@@ -80,7 +101,8 @@ class obrasController extends Controller
      */
     public function edit(obras $obras)
     {
-        //
+        // dd($obras);
+        return view('obra.detalleObra', compact('obras'));
     }
 
     /**
@@ -92,9 +114,51 @@ class obrasController extends Controller
      */
     public function update(Request $request, obras $obras)
     {
+        $request->validate([
+            'nombre' => 'required|max:250',
+            'calle' => 'nullable|max:250',
+            'numero' => 'nullable|max:20',
+            'colonia' => 'nullable|max:200',
+            'cp' => 'nullable|max:99999|numeric',
+            'ciudad' => 'nullable|max:200',
+            'estado' => 'nullable|max:200',
+        ], [
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
+            'calle.max' => 'El campo calle excede el límite de caracteres permitidos.',
+            'numero.max' => 'El campo número excede el límite de caracteres permitidos.',
+            'colonia.max' => 'El campo colonia excede el límite de caracteres permitidos.',
+            'cp.numeric' => 'El campo código postal debe de ser numérico.',
+            'cp.min' => 'El campo código postal requiere de al menos 5 caracteres.',
+            'cp.max' => 'El campo código postal excede el límite de caracteres permitidos.',
+            'ciudad.max' => 'El campo localidad excede el límite de caracteres permitidos.',
+            'estado.max' => 'El campo estado excede el límite de caracteres permitidos.',
+        ]);
+
+         $data = $request->only( 
+            'nombre', 
+            'calle',
+            'numero',
+            'colonia',
+            'estado',
+            'ciudad',
+            'cp', 
+            'foto', 
+            'logo', 
+        );
+
+        if ($request->hasFile("logo")) {
+            $data['logo'] = time() . '_' . 'logo.' . $request->file('logo')->getClientOriginalExtension();
+            $request->file('logo')->storeAs('/public/obras', $data['logo']);
+        }
+        if ($request->hasFile("foto")) {
+            $data['foto'] = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
+            $request->file('foto')->storeAs('/public/obras', $data['foto']);
+        }
+        $obras->update($data); 
         Session::flash('message', 1);
 
-        //
+        return redirect()->route('obras.index');
     }
 
     /**
@@ -105,6 +169,6 @@ class obrasController extends Controller
      */
     public function destroy(obras $obras)
     {
-        //
+        return redirect()->back()->with('failed', 'No se puede eliminar');
     }
 }

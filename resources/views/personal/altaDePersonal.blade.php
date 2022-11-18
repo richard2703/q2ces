@@ -1,6 +1,17 @@
 @extends('layouts.main', ['activePage' => 'personal', 'titlePage' => __('Alta de Personal')])
 @section('content')
     <div class="content">
+        @if ($errors->any())
+            <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+            <div class="alert alert-danger">
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-11 align-self-start">
@@ -51,31 +62,33 @@
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Nombre(s):</label></br>
                                                                 <input type="text" class="inputCaja" id="nombres"
-                                                                    name="nombres" value="">
+                                                                    name="nombres" value="{{ old('nombres') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Apellido Paterno:</label></br>
                                                                 <input type="text" class="inputCaja" id="apellidoP"
-                                                                    name="apellidoP" value="">
+                                                                    name="apellidoP" value="{{ old('apellidoP') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Apellio Materno:</label></br>
                                                                 <input type="text" class="inputCaja" id="apellidoM"
-                                                                    name="apellidoM" value="">
+                                                                    name="apellidoM" value="{{ old('apellidoM') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Fecha de Nacimiento:</label></br>
                                                                 <input type="date" class="inputCaja" id="fechaNacimiento"
-                                                                    name="fechaNacimiento" value="">
+                                                                    name="fechaNacimiento"
+                                                                    value="{{ old('fechaNacimiento') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Lugar de Nacimiento:</label></br>
                                                                 <input type="text" class="inputCaja" id="lugarNacimiento"
-                                                                    name="lugarNacimiento" value="">
+                                                                    name="lugarNacimiento"
+                                                                    value="{{ old('lugarNacimiento') }}">
                                                             </div>
 
                                                             {{--  <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -87,13 +100,13 @@
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">CURP:</label></br>
                                                                 <input type="text" class="inputCaja" id="curp"
-                                                                    name="curp" value="">
+                                                                    name="curp" value="{{ old('curp') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">RFC:</label></br>
                                                                 <input type="text" class="inputCaja" id="rfc"
-                                                                    name="rfc" value="">
+                                                                    name="rfc" value="{{ old('rfc') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -108,39 +121,39 @@
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Folio INE:</label></br>
                                                                 <input type="text" class="inputCaja" id="ine"
-                                                                    name="fine" value="">
+                                                                    name="ine" value="{{ old('ine') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Núm. Licencia :</label></br>
                                                                 <input type="text" class="inputCaja" id="licencia"
-                                                                    name="licencia" value="">
+                                                                    name="licencia" value="{{ old('licencia') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Cédula Profesional
                                                                     Federal:</label></br>
                                                                 <input type="text" class="inputCaja" id="cpf"
-                                                                    name="cpf" value="">
+                                                                    name="cpf" value="{{ old('cpf') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Cédula Profesional
                                                                     Estatal:</label></br>
                                                                 <input type="text" class="inputCaja" id="cpe"
-                                                                    name="cpe" value="">
+                                                                    name="cpe" value="{{ old('cpe') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Hijos:</label></br>
                                                                 <input type="number" class="inputCaja" id="hijos"
-                                                                    name="hijos" value="">
+                                                                    name="hijos" value="{{ old('hijos') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Estado Civil:</label></br>
                                                                 <input type="text" class="inputCaja" id="civil"
-                                                                    name="civil" value="">
+                                                                    name="civil" value="{{ old('civil') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -162,40 +175,41 @@
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Alergias:</label></br>
                                                                 <input type="text" class="inputCaja" id="aler"
-                                                                    name="aler" value="">
+                                                                    name="aler" value="{{ old('aler') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Profesión:</label></br>
                                                                 <input type="text" class="inputCaja" id="profe"
-                                                                    name="profe" value="">
+                                                                    name="profe" value="{{ old('profe') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Teléfono de Casa:</label></br>
                                                                 <input type="text" class="inputCaja" id="particular"
-                                                                    name="particular" value="">
+                                                                    name="particular" value="{{ old('particular') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Celular:</label></br>
                                                                 <input type="text" class="inputCaja" id="celular"
-                                                                    name="celular" value="">
+                                                                    name="celular" value="{{ old('celular') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Correo Electrónico
                                                                     Personal:</label></br>
                                                                 <input type="email" class="inputCaja" id="mailpersonal"
-                                                                    name="mailpersonal" value="">
+                                                                    name="mailpersonal"
+                                                                    value="{{ old('mailpersonal') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Correo Electrónico
                                                                     Empresa:</label></br>
                                                                 <input type="email" class="inputCaja"
-                                                                    id="mailEmpresaril" name="mailEmpresaril"
-                                                                    value="">
+                                                                    id="mailEmpresarial" name="mailEmpresarial"
+                                                                    value="{{ old('mailEmpresarial') }}">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -227,19 +241,19 @@
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Calle:</label></br>
                                                                 <input type="text" class="inputCaja" id="calle"
-                                                                    name="calle">
+                                                                    name="calle" value="{{ old('calle') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Número Exterior:</label></br>
                                                                 <input type="text" class="inputCaja" id="numero"
-                                                                    name="numero">
+                                                                    name="numero" value="{{ old('numero') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Número Interior:</label></br>
                                                                 <input type="text" class="inputCaja" id="interior"
-                                                                    name="interior">
+                                                                    name="interior" value="{{ old('interior') }}">
                                                             </div>
                                                             {{--  
                                                 <div class=" col-12 col-sm-6  mb-3 ">
@@ -251,13 +265,13 @@
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Colonia:</label></br>
                                                                 <input type="text" class="inputCaja" id="colonia"
-                                                                    name="colonia">
+                                                                    name="colonia" value="{{ old('colonia') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Código Postal:</label></br>
                                                                 <input type="text" class="inputCaja" id="cp"
-                                                                    name="cp">
+                                                                    name="cp" value="{{ old('cp') }}">
                                                             </div>
 
                                                             {{--  <div class=" col-12 col-sm-6  mb-3 ">
@@ -269,24 +283,23 @@
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Municipio:</label></br>
                                                                 <input type="text" class="inputCaja" id="ciudad"
-                                                                    name="ciudad">
+                                                                    name="ciudad" value="{{ old('ciudad') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Entidad Federativa:</label></br>
                                                                 <input type="text" class="inputCaja" id="estado"
-                                                                    name="estado">
+                                                                    name="estado" value="{{ old('estado') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Casa Propia o
                                                                     Rentada:</label></br>
                                                                 <input type="text" class="inputCaja" id="casa"
-                                                                    name="casa" value="">
+                                                                    name="casa" value="{{ old('casa') }}">
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                     <div class="col-12  ">
                                                         <div class="row">
 
@@ -295,63 +308,63 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
-                                                                <label class="labelTitulo">Codigo Postalo:</label></br>
-                                                                <input type="number" class="inputCaja" id="cpfiscal"
-                                                                    name="calle" value="">
+                                                                <label class="labelTitulo">Codigo Postal:</label></br>
+                                                                <input type="number" class="inputCaja" id="cp_f"
+                                                                    name="cp_f" value="{{ old('cp_f') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Tipo de Vialidad:</label></br>
-                                                                <input type="text" class="inputCaja" id="tipofiscal"
-                                                                    name="calle" value="">
+                                                                <input type="text" class="inputCaja" id="tipof"
+                                                                    name="tipof" value="{{ old('tipof') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Calle:</label></br>
-                                                                <input type="text" class="inputCaja" id="callefiscal"
-                                                                    name="calle" value="">
+                                                                <input type="text" class="inputCaja" id="callef"
+                                                                    name="callef" value="{{ old('callef') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Número Exterior:</label></br>
-                                                                <input type="text" class="inputCaja"
-                                                                    id="nexteriorfiscal" name="calle" value="">
+                                                                <input type="text" class="inputCaja" id="numerof"
+                                                                    name="numerof" value="{{ old('numerof') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Número Interior:</label></br>
-                                                                <input type="text" class="inputCaja"
-                                                                    id="ninteriorfical" name="calle" value="">
+                                                                <input type="text" class="inputCaja" id="interiorf"
+                                                                    name="interiorf" value="{{ old('interiorf') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Colonia:</label></br>
-                                                                <input type="text" class="inputCaja"
-                                                                    id="coloniafiscal" name="calle" value="">
+                                                                <input type="text" class="inputCaja" id="coloniaf"
+                                                                    name="coloniaf" value="{{ old('coloniaf') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Localidad:</label></br>
-                                                                <input type="text" class="inputCaja"
-                                                                    id="localidadfiscal" name="calle" value="">
+                                                                <input type="text" class="inputCaja" id="localidadf"
+                                                                    name="localidadf" value="{{ old('localidadf') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Municipio:</label></br>
-                                                                <input type="text" class="inputCaja"
-                                                                    id="municipiofiscal" name="calle" value="">
+                                                                <input type="text" class="inputCaja" id="municipiof"
+                                                                    name="municipiof" value="{{ old('municipiof') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Entidad Federativa:</label></br>
-                                                                <input type="text" class="inputCaja"
-                                                                    id="federativafiscal" name="calle" value="">
+                                                                <input type="text" class="inputCaja" id="estadof"
+                                                                    name="estadof" value="{{ old('estadof') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
-                                                                <label class="labelTitulo">Entre Calle:</label></br>
-                                                                <input type="text" class="inputCaja" id="entrefiscal"
-                                                                    name="calle" value="">
+                                                                <label class="labelTitulo">Entre calle:</label></br>
+                                                                <input type="text" class="inputCaja" id="entref"
+                                                                    name="entref" value="{{ old('entref') }}">
                                                             </div>
 
                                                         </div>
@@ -384,38 +397,38 @@
                                                             <div class=" col-12 col-sm-6   mb-3 ">
                                                                 <label class="labelTitulo">Nombre del Padre:</label></br>
                                                                 <input type="text" class="inputCaja" id="nombreP"
-                                                                    name="nombreP" value="">
+                                                                    name="nombreP" value="{{ old('nombreP') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6   mb-3 ">
                                                                 <label class="labelTitulo">Nombre de la Madre:</label></br>
                                                                 <input type="text" class="inputCaja" id="nombreM"
-                                                                    name="nombreM" value="">
+                                                                    name="nombreM" value="{{ old('nombreM') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6   mb-3 ">
                                                                 <label class="labelTitulo">En Caso de Accidente Avisar
                                                                     A:</label></br>
                                                                 <input type="text" class="inputCaja" id="nombreE"
-                                                                    name="nombreE" value="">
+                                                                    name="nombreE" value="{{ old('nombreE') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6   mb-3 ">
                                                                 <label class="labelTitulo">Teléfono:</label></br>
                                                                 <input type="text" class="inputCaja" id="particularE"
-                                                                    name="particularE" value="">
+                                                                    name="particularE" value="{{ old('particularE') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6   mb-3 ">
                                                                 <label class="labelTitulo">Celular:</label></br>
                                                                 <input type="text" class="inputCaja" id="celularE"
-                                                                    name="celularE" value="">
+                                                                    name="celularE" value="{{ old('celularE') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Parentesco:</label></br>
                                                                 <input type="text" class="inputCaja" id="parentesco"
-                                                                    name="parentesco" value="">
+                                                                    name="parentesco" value="{{ old('parentesco') }}">
                                                             </div>
 
 
@@ -433,38 +446,38 @@
                                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                                 <label class="labelTitulo">Nombre(s):</label></br>
                                                                 <input type="text" class="inputCaja" id="nombreB"
-                                                                    name="nombreB" value="">
+                                                                    name="nombreB" value="{{ old('nombreB') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                                 <label class="labelTitulo">Apellido Paterno:</label></br>
                                                                 <input type="text" class="inputCaja" id="apellidoPB"
-                                                                    name="apellidoPB" value="">
+                                                                    name="apellidoPB" value="{{ old('apellidoPB') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                                 <label class="labelTitulo">Apellido Materno :</label></br>
                                                                 <input type="text" class="inputCaja" id="apellidoMB"
-                                                                    name="apellidoMB" value="">
+                                                                    name="apellidoMB" value="{{ old('apellidoMB') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                                 <label class="labelTitulo">Teléfono:</label></br>
                                                                 <input type="text" class="inputCaja" id="particularB"
-                                                                    name="particularB" value="">
+                                                                    name="particularB" value="{{ old('particularB') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                                 <label class="labelTitulo">Celular:</label></br>
                                                                 <input type="text" class="inputCaja" id="celularB"
-                                                                    name="celularB" value="">
+                                                                    name="celularB" value="{{ old('celularB') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                                 <label class="labelTitulo">Fecha de
                                                                     Nacimiento:</label></br>
                                                                 <input type="date" class="inputCaja" id="nacimientoB"
-                                                                    name="nacimientoB" value="">
+                                                                    name="nacimientoB" value="{{ old('nacimientoB') }}">
                                                             </div>
 
 
@@ -493,32 +506,32 @@
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Número de Nómina:</label></br>
                                                                 <input type="number" class="inputCaja" id=""
-                                                                    name="nomina" value="">
+                                                                    name="nomina" value="{{ old('nomina') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4  mb-3 ">
                                                                 <label class="labelTitulo">Número de IMSS:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
-                                                                    name="imss" value="">
+                                                                    name="imss" value="{{ old('imss') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4  mb-3 ">
                                                                 <label class="labelTitulo">Número de Clínica de
                                                                     IMSS:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
-                                                                    name="clinica" value="">
+                                                                    name="clinica" value="{{ old('clinica') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4  mb-3 ">
                                                                 <label class="labelTitulo">Crédito Infonavit:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
-                                                                    name="infonavit" value="">
+                                                                    name="infonavit" value="{{ old('infonavit') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Afore:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
-                                                                    name="afore" value="">
+                                                                    name="afore" value="{{ old('afore') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -541,19 +554,19 @@
                                                                 <label class="labelTitulo">Número Tarjeta
                                                                     Nómina:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
-                                                                    name="tarjeta" value="">
+                                                                    name="tarjeta" value="{{ old('tarjeta') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Banco:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
-                                                                    name="banco" value="">
+                                                                    name="banco" value="{{ old('banco') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Puesto:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
-                                                                    name="puesto" value="">
+                                                                    name="puesto" value="{{ old('puesto') }}">
                                                             </div>
 
                                                             {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
@@ -568,7 +581,7 @@
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Fecha de Ingreso:</label></br>
                                                                 <input type="date" class="inputCaja" id=""
-                                                                    name="ingreso" value="">
+                                                                    name="ingreso" value="{{ old('ingreso') }}">
                                                             </div>
 
                                                             {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
@@ -609,13 +622,13 @@
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Horario:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
-                                                                    name="horario" value="">
+                                                                    name="horario" value="{{ old('horario') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Jefe Inmediato:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
-                                                                    name="jefeId" value="">
+                                                                    name="jefeId" value="{{ old('jefeId') }}">
                                                             </div>
 
                                                             {{--  <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -628,7 +641,7 @@
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Sueldo Diario:</label></br>
                                                                 <input type="number" class="inputCaja" id=""
-                                                                    name="neto" value="">
+                                                                    name="diario" value="{{ old('diario') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -709,7 +722,7 @@
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">EPP Botas:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
-                                                                    name="botas" value="">
+                                                                    name="botas" value="{{ old('botas') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -774,14 +787,14 @@
                                                             <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                                 <label class="labelTitulo">Equipo de Cómputo:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
-                                                                    name="pc" value=""
+                                                                    name="pc" value="{{ old('pc') }}"
                                                                     placeholder="Marca y Modelo">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                                 <label class="labelTitulo">Número de Serie:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
-                                                                    name="pcSerial" value="">
+                                                                    name="pcSerial" value="{{ old('pcSerial') }}">
                                                             </div>
 
                                                             {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
@@ -793,7 +806,8 @@
                                                             <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                                 <label class="labelTitulo">Teléfono Celular:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
-                                                                    name="celularEquipo" value=""
+                                                                    name="celularEquipo"
+                                                                    value="{{ old('celularEquipo') }}"
                                                                     placeholder="Marca y Modelo">
                                                             </div>
                                                             <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
@@ -805,20 +819,22 @@
                                                             <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                                 <label class="labelTitulo">Radio Comunicación:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
-                                                                    name="radio" placeholder="Marca y Modelo">
+                                                                    name="radio" placeholder="Marca y Modelo"
+                                                                    value="{{ old('radio') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                                 <label class="labelTitulo">Número de Serie:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
-                                                                    name="radioSerial" value="">
+                                                                    name="radioSerial" value="{{ old('radioSerial') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                                 <label class="labelTitulo">Cargador Radio Núm. de
                                                                     Serie:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
-                                                                    name="cargadorSerial" value="">
+                                                                    name="cargadorSerial"
+                                                                    value="{{ old('cargadorSerial') }}">
                                                             </div>
 
                                                         </div>

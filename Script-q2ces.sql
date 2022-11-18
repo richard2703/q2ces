@@ -140,7 +140,7 @@ CREATE TABLE personal(
   particular varchar(255) NULL,
   celular varchar(255) NULL,
   mailpersonal varchar(255) NULL,
-  mailEmpresaril varchar(255) NULL,
+  mailEmpresarial varchar(255) NULL,
   casa varchar(255) NULL,
   foto varchar(255) NULL,
   created_at timestamp NULL DEFAULT NULL,
@@ -222,6 +222,7 @@ CREATE TABLE beneficiario(
   CONSTRAINT FK_beneficiario_personalId foreign key (personalId) references personal(id)
  );
 
+
 CREATE TABLE nomina(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   personalId bigint(20) unsigned NULL,
@@ -245,8 +246,8 @@ CREATE TABLE nomina(
   neto  float(10,2) null,
   bruto  float(10,2) null,
   diario  float(10,2) null,
-  diariointegro float(10,2) null,
-  mensualintegro float(10,2) null,
+  diariointegrado float(10,2) null,
+  mensualintegrado float(10,2) null,
   imssAportacion float(10,2) null,
   imssriesgo float(10,2) null,
   aforeAportacion float(10,2) null,
@@ -254,7 +255,6 @@ CREATE TABLE nomina(
   ispt float(10,2) null,
   aguinaldo float(10,2) null,
   ptu float(10,2) null,
-  isr float(10,2) null,
   PRIMARY KEY (id),
   CONSTRAINT FK_nomina_personalId foreign key (personalId) references personal(id),
   CONSTRAINT FK_nomina_jefeId foreign key (jefeId) references personal(id)
@@ -413,6 +413,23 @@ CREATE TABLE invconsu(
   CONSTRAINT FK_invconsu_desde foreign key (desde) references maquinaria(id),
   CONSTRAINT FK_invconsu_hasta foreign key (hasta) references maquinaria(id)
 
+ );
+ 
+CREATE TABLE fiscal(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  personalId bigint(20) unsigned NOT NULL,
+  cp varchar(255) NULL,
+  tipo varchar(255) null,
+  calle varchar(255) NULL,
+  numero varchar(255) NULL,
+  interior varchar (255) null,
+  colonia varchar(255) NULL,
+  localidad varchar(255) null,
+  municipio varchar(255) null,
+  estado varchar(255) NULL,
+  entre varchar(255) null,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_fiscal_personalId foreign key (personalId) references personal(id)
  );
 
 
