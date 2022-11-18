@@ -62,6 +62,11 @@ Route::get('/indexInventario', function () {
     return view('inventario.indexInventario');
 });
 
+Route::get('/detalleHerramienta', function () {
+    return view('inventario.detalleHerramienta');
+});
+
+
 
 
 

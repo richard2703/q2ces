@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'personal', 'titlePage' => __('Equipo Nuevo')])
+@extends('layouts.main', ['activePage' => 'personal', 'titlePage' => __('Detalle Herramienta')])
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -7,7 +7,7 @@
                     <div class="card">
                         <div class="card-body contCart">
                             <div class="p-1 align-self-start bacTituloPrincipal">
-                                <h2 class="my-3 ms-3 texticonos ">Equipo Nuevo</h2>
+                                <h2 class="my-3 ms-3 texticonos ">Detalle Herramienta</h2>
                             </div>
                             <form action="#" method="post"class="row alertaGuardar" enctype="multipart/form-data">
                                 @csrf

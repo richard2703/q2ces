@@ -66,10 +66,11 @@
                                                     {{-- @endcan --}}
                                                     {{-- @can('user_edit') --}}
                                                     <div class="col-5">
-                                                        <button type="button"
-                                                            class="botonSinFondo mx-2"title="Detalle"><img
-                                                                style="width: 30px;"src="{{ '/img/inventario/detalle.svg' }}">
+                                                        <a href="{{ url('detalleHerramienta') }}">
+                                                        <button type="button" class="botonSinFondo mx-2"title="Detalle">
+                                                            <img style="width: 30px;"src="{{ '/img/inventario/detalle.svg' }}">
                                                         </button>
+                                                    </a>
                                                         <p class="botonTitulos mt-2">Detalle</p>
                                                     </div>
                                                     {{-- @endcan --}}
