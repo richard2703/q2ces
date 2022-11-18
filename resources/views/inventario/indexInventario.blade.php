@@ -25,8 +25,7 @@
                                     <div class="row justify-content-end">
                                         <div class="col-2 text-center mb-5">
                                             {{-- @can('user_create') --}}
-
-                                            <a href="{{ url('index') }}">
+                                            <a href="{{ route('inventario.create') }}">
                                                 <button type="button" class="botonSinFondo "><img  style="width: 30px;"src="{{ '/img/inventario/nuevo.svg' }}"></button>
                                             </a>
                                             <p>Nuevo</p>
