@@ -57,11 +57,11 @@
                                                             class="btn btn-info"><i class="material-icons">person</i></a>
                                                         {{-- @endcan --}}
                                                         {{-- @can('user_edit') --}}
-                                                        <a href="{{ route('users.edit', $accesorio->id) }}"
+                                                        <a href="{{ route('accesorios.edit', $accesorio->id) }}"
                                                             class="btn btn-warning"><i class="material-icons">edit</i></a>
                                                         {{-- @endcan --}}
                                                         {{-- @can('user_destroy') --}}
-                                                        <form action="{{ route('users.delete', $accesorio->id) }}"
+                                                        <form action="{{ route('accesorios.delete', $accesorio->id) }}"
                                                             method="POST" style="display: inline-block;"
                                                             onsubmit="return confirm('Seguro?')">
                                                             @csrf
