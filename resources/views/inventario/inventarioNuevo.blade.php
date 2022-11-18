@@ -1,13 +1,13 @@
-@extends('layouts.main', ['activePage' => 'personal', 'titlePage' => __('Vista de Personal')])
+@extends('layouts.main', ['activePage' => 'personal', 'titlePage' => __('Equipo Nuevo')])
 @section('content')
     <div class="content">
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-11 align-self-start">
+                <div class="col-11 align-self-center">
                     <div class="card">
                         <div class="card-body contCart">
                             <div class="p-1 align-self-start bacTituloPrincipal">
-                                <h2 class="my-3 ms-3 texticonos ">Nombre de producto</h2>
+                                <h2 class="my-3 ms-3 texticonos ">Equipo Nuevo</h2>
                             </div>
                             <form action="#" method="post"class="row alertaGuardar" enctype="multipart/form-data">
                                 @csrf
@@ -23,9 +23,13 @@
                                             <span>sube imagen</span>
                                         </label>
                                     </div>
+
+                                    <div class="col-12 text-center mb-3 ">
+                                        <button type="submit" class="btn botonGral" onclick="alertaGuardar()">Guardar</button>
+                                    </div>
                                 </div>
 
-                                <div class="col-12 col-md-8 my-3">
+                                <div class="col-12 col-md-8 my-3 ">
                                     <div class="row alin">
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Número del Parte:</label></br>
@@ -93,37 +97,74 @@
 
                                             </select>
                                         </div>
+                                       
 
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class=" col-12   mb-3 ">
-                                        <p class="textTitulo my-2">Obra Asignada: <span>Falta Agregar Bloque</span></p>
-                                        <p class="textTitulo my-2">Equipo Asignado: <span>Falta Agregar Bloque</span>
-                                        </p>
-                                        <p class="textTitulo my-2">Fecha de Inicio: <span>Falta Agregar Bloque</span>
-                                        </p>
-                                    </div>
-                                </div>
+                                
                                 {{--  <div class="col-12 text-end mb-3 ">
                                     <button type="submit" class="btn botonGral">Guardar</button>
                                 </div>  --}}
+                            </form>
+
+                            <div class="col-11 my-5">
+                                <div class="row my-5 pt-5 border-top">
+                                    <div class="col-6 col-lg-4 my-5">
+                                        <div class="process-container">
+                                            <div class="process-inner">
+                                            <div class="icon-holder">
+                                                <i class=""><img class="mb-4"  style="width: 60px;"src="{{ '/img/equipos/obras.svg' }}"></i>
+                                            </div>
+                                            <h4 class="textTitulo">Obra Asignada</h4>
+                                            <p class="description">This is content and this is actually something.</p>
+                                        </div>
+                                    </div>
+                                </div>
 
 
+                                    <div class="col-6 col-lg-4 my-5">
+                                        <div class="process-container">
+                                            <div class="process-inner">
+                                                <div class="icon-holder">
+                                                    <i class=""><img class="mb-4"  style="width: 60px;"src="{{ '/img/equipos/equipo.svg' }}"></i>
+                                                </div>
+                                                <h4 class="textTitulo">Equipo Asignado</h4>
+                                                <p class="description">This is content and this is actually something.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-6 col-lg-4 my-5">
+                                        <div class="process-container">
+                                            <div class="process-inner">
+                                                <div class="icon-holder">
+                                                    <i class=""><img class="mb-4"  style="width: 55px;"src="{{ '/img/equipos/calendar.svg' }}"></i>
+                                                </div>
+                                                <h4 class="textTitulo text-dark ">Fecha de Inicio</h4>
+                                                <p class="description bolder">No asignado <br>aún.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                            
+                                </div>
+
+                            </div>
                         </div>
+
+
+
+
                     </div>
 
-                    <div class="col-12 text-center mb-3 ">
-                        <button type="submit" class="btn botonGral" onclick="alertaGuardar()">Guardar</button>
-                    </div>
-                    </form>
-
+                  
                 </div>
+                
             </div>
         </div>
     </div>
 
-    <script type="application/javascript">
+<script type="application/javascript">
         jQuery('input[type=file]').change(function(){
          var filename = jQuery(this).val().split('\\').pop();
          var idname = jQuery(this).attr('id');
@@ -132,5 +173,82 @@
          console.log(idname);
          jQuery('span.'+idname).next().find('span').html(filename);
         });
-        </script>
+</script>
+
+<style>
+
+
+    .process-inner {
+        background-color: transparent;
+        color: #333;
+        text-align: center;
+        border: 1px solid #dedede;
+    }
+    .process-inner {
+        width: 100%;
+        text-align: center;
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+    }
+    
+    .process-inner .icon-holder {
+        position: relative;
+        top: 70px;
+        display: inline-block;
+        padding: 10px;
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+        background-color: #fff;
+    }
+    .process-inner .textTitulo {
+        position: relative;
+        top: 60px;
+        -webkit-transition: all 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        transition: all 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    .process-inner i {
+        font-size: 40px;
+        margin-bottom: 35px;
+        
+    }
+    .process-inner h4 {
+        font-size: 16px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    .process-inner .description {
+        width: 80%;
+        margin: 0 auto;
+        opacity: 0;
+        padding-bottom: 40px;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 200;
+        -webkit-transition: all 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        transition: all 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        -webkit-transform: scale(0);
+        -ms-transform: scale(0);
+        transform: scale(0);
+    }
+    .process-inner:hover {
+        border-color: #F7C90D;
+    }
+    
+    .process-inner:hover .icon-holder {
+        top: -30px;
+    }
+    
+    .process-inner:hover .textTitulo {
+        top: -30px;
+    }
+    .process-inner:hover .description {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+    }
+
+</style>
+
+
 @endsection
