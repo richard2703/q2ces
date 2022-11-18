@@ -26,7 +26,8 @@
                                         <div class="col-2 text-center mb-5">
                                             {{-- @can('user_create') --}}
                                             <a href="{{ route('inventario.create') }}">
-                                                <button type="button" class="botonSinFondo "><img  style="width: 30px;"src="{{ '/img/inventario/nuevo.svg' }}"></button>
+                                                <button type="button" class="botonSinFondo "><img
+                                                        style="width: 30px;"src="{{ '/img/inventario/nuevo.svg' }}"></button>
                                             </a>
                                             <p>Nuevo</p>
 
@@ -48,23 +49,29 @@
                                         <tbody>
                                             {{--  @forelse ($accesorios as $accesorio)  --}}
                                             <tr class=" border-top border-bottom">
-                                                <th scope="row"><img class="my-4" style="width: 100px;"src="{{ '/img/general/defaultinventario.jpg' }}">
+                                                <th scope="row"><img class="my-4"
+                                                        style="width: 100px;"src="{{ '/img/general/defaultinventario.jpg' }}">
                                                     {{--  src="{{ $accesorio->foto == '' ? ' /img/general/default.jpg' : '/storage/accesorio/' . $accesorio->foto }}">  --}} </th>
                                                 <td> desarmador</td>
                                                 <td> 5 </td>
                                                 <td> 1 </td>
                                                 <td class="td-actions justify-content-end d-flex">
                                                     {{-- @can('user_show') --}}
-                                                    <div class="col-5" >
-                                                        <button type="button" class="botonSinFondo mx-2"title="Resurtir"><img  style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}"></button>
+                                                    <div class="col-5">
+                                                        <button type="button" class="botonSinFondo mx-2"title="Resurtir"
+                                                            data-bs-toggle="modal" data-bs-target="#modal-cliente"><img
+                                                                style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}"></button>
                                                         <p class="botonTitulos mt-2">Resurtir</p>
                                                     </div>
                                                     {{-- @endcan --}}
                                                     {{-- @can('user_edit') --}}
                                                     <div class="col-5">
-                                                    <button type="button" class="botonSinFondo mx-2"title="Detalle"><img  style="width: 30px;"src="{{ '/img/inventario/detalle.svg' }}"> </button>
-                                                    <p class="botonTitulos mt-2">Detalle</p>
-                                                </div>
+                                                        <button type="button"
+                                                            class="botonSinFondo mx-2"title="Detalle"><img
+                                                                style="width: 30px;"src="{{ '/img/inventario/detalle.svg' }}">
+                                                        </button>
+                                                        <p class="botonTitulos mt-2">Detalle</p>
+                                                    </div>
                                                     {{-- @endcan --}}
                                                     {{-- @endcan --}}
                                                     {{-- @can('user_destroy') --}}
@@ -73,8 +80,8 @@
                                                         @csrf
                                                         @method('DELETE')
                                                         <!--<button class="btn btn-danger" type="submit" rel="tooltip">
-                                                            <i class="material-icons">close</i>
-                                                        </button>-->
+                                                                <i class="material-icons">close</i>
+                                                            </button>-->
                                                     </form>
                                                     {{-- @endcan --}}
                                                 </td>
@@ -134,13 +141,13 @@
                                     </div>
                                     <div class="col-12 col-lg-6">
                                         <label class="labelTitulo" for="">Cantidad:</label></br>
-                                        <input class="inputCaja" type="number" step="0.01" min="0.01" id=""
-                                            name="calleNum" value="" required></br>
+                                        <input class="inputCaja" type="number" step="0.01" min="0.01"
+                                            id="" name="calleNum" value="" required></br>
                                     </div>
                                     <div class="col-12 col-lg-6">
                                         <label class="labelTitulo" for="">Costo unitario:</label></br>
-                                        <input class="inputCaja" type="number" step="0.01" min="0.01" id=""
-                                            name="colonia" value="" required></br>
+                                        <input class="inputCaja" type="number" step="0.01" min="0.01"
+                                            id="" name="colonia" value="" required></br>
                                     </div>
 
                                 </div>
