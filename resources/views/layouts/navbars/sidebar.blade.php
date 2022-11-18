@@ -67,7 +67,7 @@
                     </ul>
                 </div>
             </li>
-
+            <!------ PERSONAL ------>
             <li class="nav-item {{ $activePage == 'personal' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a class="nav-link p-2 " data-toggle="collapse" href="#personal" aria-expanded="false">
                     <i><img style="width:25px" src="{{ asset('/img/navs/personalMenu.svg') }}"></i>
@@ -103,6 +103,18 @@
                 </div>
             </li>
 
+            <!------ INVENTARIO ------>
+
+            <li class="nav-item {{ $activePage == 'profile' || $activePage == 'user-management' ? ' active' : '' }}">
+                <a
+                    href="{{ route('inventario.dash') }}"class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
+                    <i><img style="width:25px" src="{{ asset('/img/navs/bitacorasMenu.svg') }}"></i>
+                    <p> {{ __('inventario') }} </p>
+                    {{--  <b class="caret"></b>  --}}
+                </a>
+            </li>
+
+            <!------ OBRA ------>
             <li class="nav-item {{ $activePage == 'obra' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a class="nav-link p-2" data-toggle="collapse" href="#obras" aria-expanded="false">
                     <i><img style="width:25px" src="{{ asset('/img/navs/obrasMenu.svg') }}"></i>
@@ -135,7 +147,7 @@
                     </ul>
                 </div>
             </li>
-
+            <!------ BITÁCORAS ------>
             <li class="nav-item {{ $activePage == 'profile' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a class="nav-link p-2" data-toggle="collapse" href="#bitacorass" aria-expanded="false">
                     <i><img style="width:25px" src="{{ asset('/img/navs/bitacorasMenu.svg') }}"></i>
@@ -172,7 +184,7 @@
                     </ul>
                 </div>
             </li>
-
+            <!------ FORMATOS ------>
             <li class="nav-item {{ $activePage == 'profile' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a class="nav-link p-2" data-toggle="collapse" href="#formatoss" aria-expanded="false">
                     <i><img style="width:25px" src="{{ asset('/img/navs/formatosMenu.svg') }}"></i>

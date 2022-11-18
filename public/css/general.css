@@ -353,3 +353,21 @@ table.table-responsive{
   text-align: center;
   display: inline-table;
 }
+
+
+
+/* ------ BOTON NUEVO RESURTIR DETALLE ---------*/
+.botonSinFondo{
+background-color: #fff;
+padding: 0px;
+border: none;
+}
+.botonSinFondo:hover{
+opacity: .5;
+}
+
+p.botonTitulos{
+  color: #5C7C26!important;
+  font-weight: 400;
+}
+
