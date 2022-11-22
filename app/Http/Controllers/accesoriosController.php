@@ -158,4 +158,8 @@ class accesoriosController extends Controller
     {
         return redirect()->back()->with('failed', 'No se puede eliminar');
     }
+    public function test(Request $request)
+    {
+        dd('test');
+    }
 }

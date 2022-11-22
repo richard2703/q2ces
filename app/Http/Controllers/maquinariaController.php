@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\maquinaria;
 use App\Models\maqdocs;
+use App\Models\maqimagen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -40,6 +41,17 @@ class maquinariaController extends Controller
      */
     public function store(Request $request)
     {
+        // if ($request->hasFile("ruta")) {
+        //     dd(count($request->ruta));
+        // }
+        // // dd('no hay');
+        // // dd($request->file('factura')->getClientOriginalName());
+        // foreach ($request->file('ruta') as $ruta) {
+        //     dd(time() . '_' . $ruta->getClientOriginalName());
+        // }
+        // dd('no hay');
+
+
         $request->validate([
             'nombre' => 'required|max:250',
             'marca' => 'required|max:250',
@@ -152,6 +164,19 @@ class maquinariaController extends Controller
         $docs['maquinariaId'] = $maquinaria->id;
         $docs = maqdocs::create($docs);
 
+        if ($request->hasFile("ruta")) {
+            foreach ($request->file('ruta') as $ruta) {
+                $imagen['maquinariaId'] = $maquinaria->id;
+                $imagen['ruta'] = time() . '_' . $ruta->getClientOriginalName();
+                $ruta->storeAs('/public/imgmaquinaria', $imagen['ruta']);
+                maqimagen::create($imagen);
+            }
+        }
+
+        // dd('no hay');
+
+
+
         Session::flash('message', 1);
         return redirect()->route('maquinaria.index');
     }
@@ -165,7 +190,9 @@ class maquinariaController extends Controller
     public function show(maquinaria $maquinaria)
     {
         $docs = maqdocs::where("maquinariaId", $maquinaria->id)->first();
-        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'docs'));
+        $fotos = maqimagen::where("maquinariaId", $maquinaria->id)->get();
+        // dd($imgs);
+        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'docs', 'fotos'));
     }
 
     /**
