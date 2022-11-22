@@ -107,7 +107,7 @@
                                 </div>  --}}
                             </form>
 
-                            <div class="col-11 my-5">
+                           <!-- <div class="col-11 my-5">
                                 <div class="row my-5 pt-5 border-top">
                                     <div class="col-6 col-lg-4 my-5">
                                         <div class="process-container">
@@ -149,7 +149,7 @@
                             
                                 </div>
 
-                            </div>
+                            </div>-->
                         </div>
 
 

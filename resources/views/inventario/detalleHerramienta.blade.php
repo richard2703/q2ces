@@ -4,8 +4,8 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-11 align-self-center">
-                    <div class="card">
-                        <div class="card-body contCart">
+                        <div class="card-body contCart justify-content-center">
+                    <div class="card ">
                             <div class="p-1 align-self-start bacTituloPrincipal">
                                 <h2 class="my-3 ms-3 texticonos ">Detalle Herramienta</h2>
                             </div>
@@ -107,7 +107,7 @@
                                 </div>  --}}
                             </form>
 
-                            <div class="col-11 my-5">
+                            <div class="col-11 align-self-center my-5">
                                 <div class="row my-5 pt-5 border-top">
                                     <div class="col-6 col-lg-4 my-5">
                                         <div class="process-container">
@@ -122,7 +122,7 @@
                                 </div>
 
 
-                                    <div class="col-6 col-lg-4 my-5">
+                                    <div class="col-6 col-lg-4 my-5 ">
                                         <div class="process-container">
                                             <div class="process-inner">
                                                 <div class="icon-holder">
