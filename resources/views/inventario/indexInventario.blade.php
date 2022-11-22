@@ -47,50 +47,52 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {{--  @forelse ($accesorios as $accesorio)  --}}
-                                            <tr class=" border-top border-bottom">
-                                                <th scope="row"><img class="my-4"
-                                                        style="width: 100px;"src="{{ '/img/general/defaultinventario.jpg' }}">
-                                                    {{--  src="{{ $accesorio->foto == '' ? ' /img/general/default.jpg' : '/storage/accesorio/' . $accesorio->foto }}">  --}} </th>
-                                                <td> desarmador</td>
-                                                <td> 5 </td>
-                                                <td> 1 </td>
-                                                <td class="td-actions justify-content-end d-flex">
-                                                    {{-- @can('user_show') --}}
-                                                    <div class="col-5">
-                                                        <button type="button" class="botonSinFondo mx-2"title="Resurtir"
-                                                            data-bs-toggle="modal" data-bs-target="#modal-cliente"><img
-                                                                style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}"></button>
-                                                        <p class="botonTitulos mt-2">Resurtir</p>
-                                                    </div>
-                                                    {{-- @endcan --}}
-                                                    {{-- @can('user_edit') --}}
-                                                    <div class="col-5">
-                                                        <button type="button"
-                                                            class="botonSinFondo mx-2"title="Detalle"><img
-                                                                style="width: 30px;"src="{{ '/img/inventario/detalle.svg' }}">
-                                                        </button>
-                                                        <p class="botonTitulos mt-2">Detalle</p>
-                                                    </div>
-                                                    {{-- @endcan --}}
-                                                    {{-- @endcan --}}
-                                                    {{-- @can('user_destroy') --}}
-                                                    <form action="#" method="POST" style="display: inline-block;"
-                                                        onsubmit="return confirm('Seguro?')">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <!--<button class="btn btn-danger" type="submit" rel="tooltip">
-                                                                <i class="material-icons">close</i>
-                                                            </button>-->
-                                                    </form>
-                                                    {{-- @endcan --}}
-                                                </td>
-                                            </tr>
-                                            {{--  @empty  --}}
-                                            {{--  <tr>
+                                            @forelse ($inventarios as $inventario)
+                                                <tr class=" border-top border-bottom">
+                                                    <th scope="row"><img class="my-4" style="width: 100px;"
+                                                            {{-- src="{{ '/img/general/defaultinventario.jpg' }}"> --}}
+                                                            src="{{ $inventario->imagen == '' ? ' /img/general/default.jpg' : '/storage/inventario/' . $inventario->imagen }}">
+                                                    </th>
+                                                    <td>{{ $inventario->nombre }}</td>
+                                                    <td>{{ $inventario->cantidad }}</td>
+                                                    <td>{{ $inventario->maximo }}</td>
+                                                    <td class="td-actions justify-content-end d-flex">
+                                                        {{-- @can('user_show') --}}
+                                                        <div class="col-5">
+                                                            <button type="button"
+                                                                class="botonSinFondo mx-2"title="Resurtir"
+                                                                data-bs-toggle="modal" data-bs-target="#modal-cliente"><img
+                                                                    style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}"></button>
+                                                            <p class="botonTitulos mt-2">Resurtir</p>
+                                                        </div>
+                                                        {{-- @endcan --}}
+                                                        {{-- @can('user_edit') --}}
+                                                        <div class="col-5">
+                                                            <button type="button"
+                                                                class="botonSinFondo mx-2"title="Detalle"><img
+                                                                    style="width: 30px;"src="{{ '/img/inventario/detalle.svg' }}">
+                                                            </button>
+                                                            <p class="botonTitulos mt-2">Detalle</p>
+                                                        </div>
+                                                        {{-- @endcan --}}
+                                                        {{-- @endcan --}}
+                                                        {{-- @can('user_destroy') --}}
+                                                        <form action="#" method="POST" style="display: inline-block;"
+                                                            onsubmit="return confirm('Seguro?')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <!--<button class="btn btn-danger" type="submit" rel="tooltip">
+                                                                    <i class="material-icons">close</i>
+                                                                </button>-->
+                                                        </form>
+                                                        {{-- @endcan --}}
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
                                                     <td colspan="2">Sin registros.</td>
                                                 </tr>
-                                            @endforelse  --}}
+                                            @endforelse
 
                                         </tbody>
                                     </table>
