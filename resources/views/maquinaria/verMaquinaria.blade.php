@@ -9,6 +9,7 @@
                             <div class="p-1 align-self-start bacTituloPrincipal">     
                                 <h2 class="my-3 ms-3 texticonos ">Ver Equipos</h2>   
                             </div> 
+                            
                             <div class="col-10  mx-auto d-block my-4">   
                                 <div class="row d-flex ">
                                     <div class="col-10 col-md-5  mx-auto d-block my-4 ">
