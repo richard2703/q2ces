@@ -39,25 +39,20 @@
                                                         <div class="row">
 
                                                             <div class="col-12" id="visor">
-                                                                <img src="{{ asset('img/general/img1.png') }}"
+                                                                <img src="{{ $fotos[0]->id == '' ? ' /img/general/default.jpg' : '/storage/imgmaquinaria/' . $fotos[0]->ruta }}"
                                                                     class="mx-auto d-block img-fluid">
                                                             </div>
 
-
                                                             <div class="col-12 my-3 d-flex justify-content-around"
                                                                 id="selectores">
-                                                                <img onclick="abre(this)" title="'Nereida'."
-                                                                    src="{{ asset('img/general/img1.png') }}"
-                                                                    class="img-fluid ">
-                                                                <img onclick="abre(this)" title="Ricardo Crespo."
-                                                                    src="{{ asset('img/general/img2.jpg') }}"
-                                                                    class="img-fluid ">
-                                                                <img onclick="abre(this)" title="Roberto Cortez."
-                                                                    src="{{ asset('img/general/img3.jpg') }}"
-                                                                    class="img-fluid ">
-                                                                <img onclick="abre(this)" title="Ricardo Cinalli."
-                                                                    src="{{ asset('img/general/img4.jpg') }}"
-                                                                    class="img-fluid ">
+                                                                @forelse ($fotos as $foto)
+                                                                    <img onclick="abre(this)" title="'Nereida'."
+                                                                        src="{{ asset('/storage/imgmaquinaria/' . $foto->ruta) }}"
+                                                                        class="img-fluid ">
+                                                                @empty
+                                                                @endforelse
+
+
                                                             </div>
                                                         </div>
 
@@ -103,8 +98,12 @@
                                                                 <select class="form-select"
                                                                     aria-label="Default select example" id="uso"
                                                                     name="uso">
-                                                                    <option value="Mov. Tierras"{{ $maquinaria->uso == 'Mov. Tierras' ? ' selected' : '' }}>Mov. Tierras</option>
-                                                                    <option value="Completo"{{ $maquinaria->uso == 'Completo' ? ' selected' : '' }}>Completo</option>
+                                                                    <option
+                                                                        value="Mov. Tierras"{{ $maquinaria->uso == 'Mov. Tierras' ? ' selected' : '' }}>
+                                                                        Mov. Tierras</option>
+                                                                    <option
+                                                                        value="Completo"{{ $maquinaria->uso == 'Completo' ? ' selected' : '' }}>
+                                                                        Completo</option>
                                                                 </select>
                                                             </div>
 
@@ -115,9 +114,15 @@
                                                                         <select class="form-select"
                                                                             aria-label="Default select example"
                                                                             id="tipo" name="tipo">
-                                                                            <option value="Pesada"{{ $maquinaria->tipo == 'Pesada' ? ' selected' : '' }}>Pesada</option>
-                                                                            <option value="Ligero"{{ $maquinaria->tipo == 'Ligero' ? ' selected' : '' }}>Ligero</option>
-                                                                            <option value="Grua"{{ $maquinaria->tipo == 'Grua' ? ' selected' : '' }}>Grua</option>
+                                                                            <option
+                                                                                value="Pesada"{{ $maquinaria->tipo == 'Pesada' ? ' selected' : '' }}>
+                                                                                Pesada</option>
+                                                                            <option
+                                                                                value="Ligero"{{ $maquinaria->tipo == 'Ligero' ? ' selected' : '' }}>
+                                                                                Ligero</option>
+                                                                            <option
+                                                                                value="Grua"{{ $maquinaria->tipo == 'Grua' ? ' selected' : '' }}>
+                                                                                Grua</option>
                                                                         </select>
 
                                                                     </div>
@@ -301,10 +306,14 @@
                                                                         <select class="form-select"
                                                                             aria-label="Default select example"
                                                                             name="kom">
-                                                                            <option value="Km"{{ $maquinaria->kom == 'Km' ? ' selected' : '' }}>Km</option>
-                                                                            <option value="Ml"{{ $maquinaria->kom == 'Ml' ? ' selected' : '' }}>Ml</option>
+                                                                            <option
+                                                                                value="Km"{{ $maquinaria->kom == 'Km' ? ' selected' : '' }}>
+                                                                                Km</option>
+                                                                            <option
+                                                                                value="Ml"{{ $maquinaria->kom == 'Ml' ? ' selected' : '' }}>
+                                                                                Ml</option>
                                                                         </select>
- 
+
                                                                     </div>
                                                                 </div>
                                                             </div>
