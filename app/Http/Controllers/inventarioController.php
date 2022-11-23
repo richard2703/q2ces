@@ -68,7 +68,7 @@ class inventarioController extends Controller
             'maximo.numeric' => 'El campo valor debe de ser numérico.',
         ]);
         $producto = $request->all();
- 
+
         if ($request->hasFile("imagen")) {
             $producto['imagen'] = time() . '_' . 'imagen.' . $request->file('imagen')->getClientOriginalExtension();
             $request->file('imagen')->storeAs('/public/inventario', $producto['imagen']);
@@ -88,7 +88,7 @@ class inventarioController extends Controller
      */
     public function show(inventario $inventario)
     {
-        //
+        return view('inventario.detalleInventario');
     }
 
     /**
