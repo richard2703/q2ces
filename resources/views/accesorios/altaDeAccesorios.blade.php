@@ -1,24 +1,13 @@
 @extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Alta de Accesorios')])
 @section('content')
     <div class="content">
-        @if ($errors->any())
-            <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
-            <div class="alert alert-danger">
-                <p>Listado de errores a corregir</p>
-                <ul>
-                    @foreach ($errors->all() as $item)
-                        <li>{{ $item }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-11 align-self-start">
                     <div class="card">
                         <div class="card-body contCart">
-                            <form class="row alertaGuardar" action="{{ route('accesorios.store') }}" method="post"class="row"
-                                enctype="multipart/form-data">
+                            <form class="row alertaGuardar" action="{{ route('accesorios.store') }}"
+                                method="post"class="row" enctype="multipart/form-data">
                                 @csrf
                                 <div class="p-1 align-self-start bacTituloPrincipal">
                                     <h2 class="my-3 ms-3 texticonos ">Alta de Accesorios</h2>
@@ -40,28 +29,33 @@
                                         <div class="row">
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Nombre:</label></br>
-                                                <input type="text" class="inputCaja" id="nombre" name="nombre" value="">
+                                                <input type="text" class="inputCaja" id="nombre" name="nombre"
+                                                    value="">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Año:</label></br>
-                                                <input type="text" class="inputCaja" id="ano" name="ano" value="">
+                                                <input type="text" class="inputCaja" id="ano" name="ano"
+                                                    value="">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Marca:</label></br>
-                                                <input type="text" class="inputCaja" id="marca" name="marca" value="">
+                                                <input type="text" class="inputCaja" id="marca" name="marca"
+                                                    value="">
                                             </div>
 
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Número Serie:</label></br>
-                                                <input type="text" class="inputCaja" id="serie" name="serie"  value="">
+                                                <input type="text" class="inputCaja" id="serie" name="serie"
+                                                    value="">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Modelo:</label></br>
-                                                <input type="text" class="inputCaja" id="modelo" name="modelo" value="">
+                                                <input type="text" class="inputCaja" id="modelo" name="modelo"
+                                                    value="">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -93,7 +87,7 @@
             </div>
         </div>
     </div>
-<script type="application/javascript">
+    <script type="application/javascript">
         jQuery('input[type=file]').change(function(){
          var filename = jQuery(this).val().split('\\').pop();
          var idname = jQuery(this).attr('id');

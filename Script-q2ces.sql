@@ -432,5 +432,12 @@ CREATE TABLE fiscal(
   CONSTRAINT FK_fiscal_personalId foreign key (personalId) references personal(id)
  );
 
+CREATE TABLE maqimagen(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  maquinariaId bigint(20) unsigned NOT NULL,
+  ruta varchar(255) null,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_maqimagen_maquinariaId foreign key (maquinariaId) references maquinaria(id)
+ );
 
 

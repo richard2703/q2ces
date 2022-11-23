@@ -1,4 +1,4 @@
-/**, div { 
+/**, div, col { 
     border: #212529 1px solid;
 }*/
 
@@ -371,3 +371,73 @@ p.botonTitulos{
   font-weight: 400;
 }
 
+/* --------- cusdritos con ícono que sube ---------- */
+.process-inner {
+  background-color: transparent;
+  color: #333;
+  text-align: center;
+  border: 1px solid #dedede;
+}
+.process-inner {
+  width: 100%;
+  text-align: center;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.process-inner .icon-holder {
+  position: relative;
+  top: 70px;
+  display: inline-block;
+  padding: 10px;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: #fff;
+}
+.process-inner .textTitulo {
+  position: relative;
+  top: 60px;
+  -webkit-transition: all 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: all 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.process-inner i {
+  font-size: 40px;
+  margin-bottom: 35px;
+  
+}
+.process-inner h4 {
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.process-inner .description {
+  width: 80%;
+  margin: 0 auto;
+  opacity: 0;
+  padding-bottom: 40px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 200;
+  -webkit-transition: all 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: all 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+}
+.process-inner:hover {
+  border-color: #F7C90D;
+}
+
+.process-inner:hover .icon-holder {
+  top: -30px;
+}
+
+.process-inner:hover .textTitulo {
+  top: -30px;
+}
+.process-inner:hover .description {
+  opacity: 1;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}

@@ -68,11 +68,12 @@
                                                         {{-- @endcan --}}
                                                         {{-- @can('user_edit') --}}
                                                         <div class="col-5">
-                                                            <button type="button"
+                                                            <a href="{{ route('inventario.show', $inventario->id) }}"
+                                                                <button type="button"
                                                                 class="botonSinFondo mx-2"title="Detalle"><img
                                                                     style="width: 30px;"src="{{ '/img/inventario/detalle.svg' }}">
-                                                            </button>
-                                                            <p class="botonTitulos mt-2">Detalle</p>
+                                                                </button>
+                                                                <p class="botonTitulos mt-2">Detalle</p>
                                                         </div>
                                                         {{-- @endcan --}}
                                                         {{-- @endcan --}}
@@ -82,8 +83,8 @@
                                                             @csrf
                                                             @method('DELETE')
                                                             <!--<button class="btn btn-danger" type="submit" rel="tooltip">
-                                                                    <i class="material-icons">close</i>
-                                                                </button>-->
+                                                                        <i class="material-icons">close</i>
+                                                                    </button>-->
                                                         </form>
                                                         {{-- @endcan --}}
                                                     </td>
