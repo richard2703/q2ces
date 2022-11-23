@@ -62,6 +62,11 @@ Route::get('/indexInventario', function () {
     return view('inventario.indexInventario');
 });
 
+Route::get('/detalleHerramienta', function () {
+    return view('inventario.detalleHerramienta');
+});
+
+
 
 
 
@@ -139,7 +144,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/inventarios', [App\Http\Controllers\inventarioController::class, 'dash'])->name('inventario.dash');
     Route::get('/inventario/{tipo}', [App\Http\Controllers\inventarioController::class, 'index'])->name('inventario.index');
     Route::get('/inventario/producto/nuevo', [App\Http\Controllers\inventarioController::class, 'create'])->name('inventario.create');
-    // Route::post('/accesorios', [App\Http\Controllers\inventarioController::class, 'store'])->name('inventario.store');
-    // Route::get('/accesorios/{accesorios}', [App\Http\Controllers\inventarioController::class, 'show'])->name('inventario.show');
+    Route::post('/inventario', [App\Http\Controllers\inventarioController::class, 'store'])->name('inventario.store');
+    Route::get('/accesorios/{accesorios}', [App\Http\Controllers\inventarioController::class, 'show'])->name('inventario.show');
     // Route::put('/accesorios/{accesorios}', [App\Http\Controllers\inventarioController::class, 'update'])->name('inventario.update');
 });
