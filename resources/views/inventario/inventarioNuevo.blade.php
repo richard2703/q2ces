@@ -1,6 +1,17 @@
 @extends('layouts.main', ['activePage' => 'personal', 'titlePage' => __('Equipo Nuevo')])
 @section('content')
     <div class="content">
+        @if ($errors->any())
+            <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+            <div class="alert alert-danger">
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-11 align-self-center">
@@ -9,15 +20,15 @@
                             <div class="p-1 align-self-start bacTituloPrincipal">
                                 <h2 class="my-3 ms-3 texticonos ">Equipo Nuevo</h2>
                             </div>
-                            <form action="#" method="post"class="row alertaGuardar" enctype="multipart/form-data">
-                                @csrf
-                                @method('put')
+                            <form class="row alertaGuardar" action="{{ route('inventario.store') }}"
+                                method="post"class="row" enctype="multipart/form-data">
+                                @csrf 
                                 <div class="col-12 col-md-4  my-3">
                                     <div class="text-center mx-auto border vistaFoto mb-4">
                                         <i><img class="imgVista img-fluid"
                                                 src="{{ '/img/general/defaultinventario.jpg' }}"></i>
 
-                                        <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"
+                                        <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="imagen"
                                                 id="mi-archivo" accept="image/*"></span>
                                         <label for="mi-archivo">
                                             <span>sube imagen</span>
@@ -33,67 +44,67 @@
                                     <div class="row alin">
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Número del Parte:</label></br>
-                                            <input type="text" class="inputCaja" id="" name="calle"
-                                                value="">
+                                            <input type="text" class="inputCaja" id="numparte" name="numparte"
+                                                value="{{ old('numparte')}}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Nombre:</label></br>
-                                            <input type="text" class="inputCaja" id="nombres" name="nombres"
-                                                value="">
+                                            <input type="text" class="inputCaja" id="nombre" name="nombre"
+                                                value="{{ old('nombre')}}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Marca:</label></br>
-                                            <input type="text" class="inputCaja" id="apellidoP" name="apellidoP"
-                                                value="">
+                                            <input type="text" class="inputCaja" id="marca" name="marca"
+                                                value="{{ old('marca')}}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Modelo:</label></br>
-                                            <input type="text" class="inputCaja" id="apellidoM" name="apellidoM"
-                                                value="">
+                                            <input type="text" class="inputCaja" id="modelo" name="modelo"
+                                                value="{{ old('modelo')}}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Proovedor:</label></br>
-                                            <input type="text" class="inputCaja" id="aler" name="aler"
-                                                value="">
+                                            <input type="text" class="inputCaja" id="proveedor" name="proveedor"
+                                                value="{{ old('proveedor')}}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Cantidad a ingresar:</label></br>
                                             <input type="number" step="0.01" min="0.01" class="inputCaja"
-                                                id="aler" name="aler" value="">
+                                                id="cantidad" name="cantidad" value="{{ old('cantidad')}}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Minimo:</label></br>
                                             <input type="number" step="0.01" min="0.01" class="inputCaja"
-                                                id="aler" name="aler" value="">
+                                                id="reorden" name="reorden" value="{{ old('reorden')}}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Maximo:</label></br>
                                             <input type="number" step="0.01" min="0.01" class="inputCaja"
-                                                id="aler" name="aler" value="">
+                                                id="maximo" name="maximo" value="{{ old('maximo')}}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Costo unitario:</label></br>
                                             <input type="number" step="0.01" min="0.01" class="inputCaja"
-                                                id="aler" name="aler" value="">
+                                                id="valor" name="valor" value="{{ old('valor')}}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
                                             <label class="labelTitulo">Tipo:</label></br>
-                                            <select class="form-select" aria-label="Default select example" id="sangre"
-                                                name="sangre">
+                                            <select class="form-select" aria-label="Default select example"
+                                                id="tipo" name="tipo">
                                                 {{--  <option value="A+" {{ $personal->sangre == 'A+' ? ' selected' : '' }}>A+
                                                 </option>  --}}
-                                                <option value="herramienta">Herramienta</option>
-                                                <option value="refaccion">Refaccion</option>
-                                                <option value="consumible">Consumible</option>
+                                                <option value="herramientas">Herramienta</option>
+                                                <option value="refacciones">Refaccion</option>
+                                                <option value="consumibles">Consumible</option>
 
                                             </select>
                                         </div>

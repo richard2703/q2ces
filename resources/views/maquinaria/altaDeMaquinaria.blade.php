@@ -36,8 +36,11 @@
                                                 <div class="row mt-3">
                                                     <div class="col-12 col-md-4  my-3">
                                                         <div class="text-center mx-auto border vistaFoto mb-4">
-                                                            <i><img class="imgVista img-fluid mb-2" src="{{ asset('/img/general/vistaAerea.jpg') }}"></i>
-                                                            <input class="mb-4" type="file" name="foto" id="foto">
+                                                            <i><img class="imgVista img-fluid mb-2"
+                                                                    src="{{ asset('/img/general/default.jpg') }}"></i>
+                                                            <span class="mi-archivo"> <input class="mb-4 ver "
+                                                                    type="file" name="ruta[]" id="mi-archivo"
+                                                                    accept="image/*" multiple></span>
                                                             <label for="mi-archivo">
                                                                 <span class="">sube imagen</span>
                                                             </label>
@@ -50,8 +53,8 @@
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Nombre:</label></br>
                                                                 <input type="text" class="inputCaja" id="nombre"
-                                                                name="nombre" value="{{ old('nombre') }}">
-                                                            </div>  
+                                                                    name="nombre" value="{{ old('nombre') }}">
+                                                            </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Marca:</label></br>
@@ -122,13 +125,15 @@
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Color:</label></br>
                                                                 <input type="text" class="inputCaja" id="color"
-                                                                    name="color" value="{{ old('color') }}" placeholder="amarillo">
+                                                                    name="color" value="{{ old('color') }}"
+                                                                    placeholder="amarillo">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Placas:</label></br>
                                                                 <input type="text" class="inputCaja" id="placas"
-                                                                    name="placas" value="{{ old('placas') }}" placeholder="MW88888">
+                                                                    name="placas" value="{{ old('placas') }}"
+                                                                    placeholder="MW88888">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3">
@@ -158,7 +163,8 @@
                                                             <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
                                                                 <label class="labelTitulo">Capacidad en kW:</label></br>
                                                                 <input type="text" class="inputCaja" id="capacidad"
-                                                                    name="capacidad" value="{{ old('capacidad') }}" placeholder="">
+                                                                    name="capacidad" value="{{ old('capacidad') }}"
+                                                                    placeholder="">
                                                             </div>
 
                                                             <div class="col-12 col-sm-6  mb-3">
@@ -230,7 +236,8 @@
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Filtro Aceite:</label></br>
                                                                 <input type="text" class="inputCaja" id="filtroaceite"
-                                                                    name="filtroaceite" value="{{ old('filtroaceite') }}">
+                                                                    name="filtroaceite"
+                                                                    value="{{ old('filtroaceite') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -311,18 +318,27 @@
                                                                         Factura
                                                                     </label>
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
+                                                                <div
+                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
 
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file" name="factura" id="foto" accept=".pdf">
-                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                        <input class="mb-4" type="file"
+                                                                            name="factura" id="foto" accept=".pdf">
+                                                                        <lord-icon
+                                                                            src="https://cdn.lordicon.com/koyivthb.json"
+                                                                            trigger="hover"
+                                                                            colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file" name="foto" id="foto">
-                                                                        <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                        <input class="mb-4" type="file"
+                                                                            name="foto" id="foto">
+                                                                        <lord-icon
+                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
+                                                                            trigger="hover"
+                                                                            colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </label>
@@ -338,17 +354,23 @@
 
                                                                 <div>
                                                                     <label
-                                                                        class="form-check-label text-start fs-5 textTitulotext-break  mb-2"
+                                                                        class="form-check-label text-start fs-5 textTitulo text-break  mb-2"
                                                                         for="flexCheckDefault">
                                                                         <i class="fa fa-user semaforo2"></i>
                                                                         Verificación
                                                                     </label>
 
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                <div
+                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file" name="verificacion" id="foto" accept=".pdf">
-                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                        <input class="mb-4" type="file"
+                                                                            name="verificacion" id="foto"
+                                                                            accept=".pdf">
+                                                                        <lord-icon
+                                                                            src="https://cdn.lordicon.com/koyivthb.json"
+                                                                            trigger="hover"
+                                                                            colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </label>
@@ -356,7 +378,10 @@
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="foto" id="foto">
-                                                                            <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                        <lord-icon
+                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
+                                                                            trigger="hover"
+                                                                            colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </label>
@@ -380,11 +405,15 @@
                                                                     </label>
 
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                <div
+                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="manual" id="foto" accept=".pdf">
-                                                                            <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                        <lord-icon
+                                                                            src="https://cdn.lordicon.com/koyivthb.json"
+                                                                            trigger="hover"
+                                                                            colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </label>
@@ -392,7 +421,10 @@
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="foto" id="foto">
-                                                                            <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                        <lord-icon
+                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
+                                                                            trigger="hover"
+                                                                            colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </label>
@@ -416,11 +448,16 @@
                                                                     </label>
 
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                <div
+                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="registro" id="foto" accept=".pdf">
-                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            name="registro" id="foto"
+                                                                            accept=".pdf">
+                                                                        <lord-icon
+                                                                            src="https://cdn.lordicon.com/koyivthb.json"
+                                                                            trigger="hover"
+                                                                            colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </label>
@@ -428,7 +465,10 @@
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="foto" id="foto">
-                                                                        <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                        <lord-icon
+                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
+                                                                            trigger="hover"
+                                                                            colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </label>
@@ -449,11 +489,16 @@
                                                                         Tarjeta de Circulación
                                                                     </label>
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                <div
+                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="circulacion" id="foto" accept=".pdf">
-                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            name="circulacion" id="foto"
+                                                                            accept=".pdf">
+                                                                        <lord-icon
+                                                                            src="https://cdn.lordicon.com/koyivthb.json"
+                                                                            trigger="hover"
+                                                                            colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </label>
@@ -461,7 +506,10 @@
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="foto" id="foto">
-                                                                        <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                        <lord-icon
+                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
+                                                                            trigger="hover"
+                                                                            colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </label>
@@ -484,18 +532,26 @@
                                                                         Ficha Técnica del Proveedor
                                                                     </label>
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                <div
+                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="ficha" id="foto" accept=".pdf">
-                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                        <lord-icon
+                                                                            src="https://cdn.lordicon.com/koyivthb.json"
+                                                                            trigger="hover"
+                                                                            colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file" name="foto" id="foto">
-                                                                            <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                        <input class="mb-4" type="file"
+                                                                            name="foto" id="foto">
+                                                                        <lord-icon
+                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
+                                                                            trigger="hover"
+                                                                            colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </label>
@@ -519,18 +575,26 @@
                                                                     </label>
 
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                <div
+                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="seguro" id="foto" accept=".pdf">
-                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                        <lord-icon
+                                                                            src="https://cdn.lordicon.com/koyivthb.json"
+                                                                            trigger="hover"
+                                                                            colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file" name="foto" id="foto">
-                                                                            <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                        <input class="mb-4" type="file"
+                                                                            name="foto" id="foto">
+                                                                        <lord-icon
+                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
+                                                                            trigger="hover"
+                                                                            colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </label>
@@ -554,18 +618,27 @@
                                                                     </label>
 
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                <div
+                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="especial" id="foto" accept=".pdf">
-                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
+                                                                            name="especial" id="foto"
+                                                                            accept=".pdf">
+                                                                        <lord-icon
+                                                                            src="https://cdn.lordicon.com/koyivthb.json"
+                                                                            trigger="hover"
+                                                                            colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </label>
 
                                                                     <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file" name="foto" id="foto">
-                                                                            <lord-icon src="https://cdn.lordicon.com/tyounuzx.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230"
+                                                                        <input class="mb-4" type="file"
+                                                                            name="foto" id="foto">
+                                                                        <lord-icon
+                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
+                                                                            trigger="hover"
+                                                                            colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </label>
@@ -678,8 +751,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 text-center mb-3 ">
-                                    <button type="submit" class="btn botonGral"
-                                        onclick="alertaGuardar()">Guardar</button>
+                                    <button type="submit" class="btn botonGral" onclick="test()">Guardar</button>
                                 </div>
 
                             </form>
@@ -696,7 +768,29 @@
          console.log(jQuery(this));
          console.log(filename);
          console.log(idname);
-         jQuery('span.'+idname).next().find('span').html(filename);
+         var $fileUpload = $("input[type='file']");
+         if (parseInt($fileUpload.get(0).files.length) > 1) {
+            jQuery('span.'+idname).next().find('span').html(parseInt($fileUpload.get(0).files.length)+' archivos');
+
+         } else {
+            jQuery('span.'+idname).next().find('span').html(filename);
+        }
         });
         </script>
+
+    <script>
+        function test() {
+            var $fileUpload = $("input[type='file']");
+            if (parseInt($fileUpload.get(0).files.length) > 4) {
+                event.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Maximo 4 imagenes',
+                })
+            } else {
+                alertaGuardar()
+            }
+        }
+    </script>
 @endsection
