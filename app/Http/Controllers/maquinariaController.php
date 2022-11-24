@@ -191,7 +191,7 @@ class maquinariaController extends Controller
     {
         $docs = maqdocs::where("maquinariaId", $maquinaria->id)->first();
         $fotos = maqimagen::where("maquinariaId", $maquinaria->id)->get();
-        // dd($imgs);
+        // dd($fotos);
         return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'docs', 'fotos'));
     }
 
