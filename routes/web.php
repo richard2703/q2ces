@@ -144,6 +144,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/inventario/{tipo}', [App\Http\Controllers\inventarioController::class, 'index'])->name('inventario.index');
     Route::get('/inventario/producto/nuevo', [App\Http\Controllers\inventarioController::class, 'create'])->name('inventario.create');
     Route::post('/inventario', [App\Http\Controllers\inventarioController::class, 'store'])->name('inventario.store');
-    // Route::get('/inventario/{accesorios}', [App\Http\Controllers\inventarioController::class, 'show'])->name('inventario.show');
-    // Route::put('/inventario/{accesorios}', [App\Http\Controllers\inventarioController::class, 'update'])->name('inventario.update');
+    Route::get('/inventario/{accesorios}', [App\Http\Controllers\inventarioController::class, 'show'])->name('inventario.show');
+    Route::put('/inventario/{accesorios}', [App\Http\Controllers\inventarioController::class, 'update'])->name('inventario.update');
 });
