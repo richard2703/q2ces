@@ -403,9 +403,11 @@ CREATE TABLE restock(
 CREATE TABLE invconsu(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   productoId bigint(20) unsigned NOT NULL,
+  tipo varchar(255) NULL,
   cantidad float(10,2) not null,
   desde bigint(20) unsigned NOT NULL,
   hasta bigint(20) unsigned NOT NULL,
+  comentarios text DEFAULT NULL,
   created_at datetime NULL,
   updated_at datetime NULL,
   PRIMARY KEY (id),
