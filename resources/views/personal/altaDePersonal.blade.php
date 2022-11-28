@@ -255,7 +255,7 @@
                                                                 <input type="text" class="inputCaja" id="interior"
                                                                     name="interior" value="{{ old('interior') }}">
                                                             </div>
-                                                            {{--  
+                                                            {{--
                                                 <div class=" col-12 col-sm-6  mb-3 ">
                                                     <label class="labelTitulo">Entre las Calles:</label></br>
                                                     <input type="text" class="inputCaja" id=""
@@ -543,7 +543,7 @@
                                                                     <option value="Quincenal">Quincenal</option>
                                                                 </select>
                                                             </div>
-                                                            {{--  
+                                                            {{--
                                                             <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                                 <label class="labelTitulo">Cantidad:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
@@ -625,10 +625,23 @@
                                                                     name="horario" value="{{ old('horario') }}">
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                            {{-- <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Jefe Inmediato:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
                                                                     name="jefeId" value="{{ old('jefeId') }}">
+                                                            </div> --}}
+
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                                <label class="labelTitulo">Jefe Inmediato:</label></br>
+                                                                <select id="jefeId" name="jefeId"
+                                                                    class="form-select" aria-label="Default select example">
+
+                                                                    <option value="">Seleccione</option>
+                                                                    @foreach ($personal as $persona)
+                                                                        <option value="{{ $persona->id }}">
+                                                                            {{ $persona->nombres . ' ' . $persona->apellidoP }}</option>
+                                                                    @endforeach
+                                                                </select>
                                                             </div>
 
                                                             {{--  <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -735,7 +748,7 @@
                                                                     <option value="Extra Grande">Extra Grande</option>
                                                                 </select>
                                                             </div>
-                                                            {{--  
+                                                            {{--
                                                             <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                                 <label class="labelTitulo">Epp Lentes:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
@@ -877,8 +890,12 @@
                                                                                 <input class="mb-4" type="file"
                                                                                     name="dvitae" id="foto"
                                                                                     accept=".pdf">
-                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                <lord-icon
+                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                    trigger="hover"
+                                                                                    colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65"
+                                                                                    style="width:50px;height:70px">
                                                                                 </lord-icon>
                                                                             </label>
 
@@ -905,8 +922,12 @@
                                                                                 <input class="mb-4" type="file"
                                                                                     name="dnacimiento" id="foto"
                                                                                     accept=".pdf">
-                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                <lord-icon
+                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                    trigger="hover"
+                                                                                    colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65"
+                                                                                    style="width:50px;height:70px">
                                                                                 </lord-icon>
                                                                             </label>
 
@@ -920,7 +941,9 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
+                                                                            <label
+                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                                for="flexCheckDefault">
 
                                                                                 INE
                                                                             </label>
@@ -931,8 +954,12 @@
                                                                                 <input class="mb-4" type="file"
                                                                                     name="dine" id="foto"
                                                                                     accept=".pdf">
-                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                <lord-icon
+                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                    trigger="hover"
+                                                                                    colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65"
+                                                                                    style="width:50px;height:70px">
                                                                                 </lord-icon>
                                                                             </label>
 
@@ -946,7 +973,9 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break  mb-2" for="flexCheckDefault">
+                                                                            <label
+                                                                                class="form-check-label text-start fs-5 textTitulo text-break  mb-2"
+                                                                                for="flexCheckDefault">
 
                                                                                 CURP
                                                                             </label>
@@ -957,8 +986,12 @@
                                                                                 <input class="mb-4" type="file"
                                                                                     name="dcurp" id="foto"
                                                                                     accept=".pdf">
-                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                <lord-icon
+                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                    trigger="hover"
+                                                                                    colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65"
+                                                                                    style="width:50px;height:70px">
                                                                                 </lord-icon>
                                                                             </label>
 
@@ -972,7 +1005,9 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label  class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
+                                                                            <label
+                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                                for="flexCheckDefault">
 
                                                                                 licencia de Conducción
                                                                             </label>
@@ -980,10 +1015,16 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file" name="dlicencia" id="foto" accept=".pdf">
-                                                                                    <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                                     stroke="65" style="width:50px;height:70px">
-                                                                                    </lord-icon>
+                                                                                <input class="mb-4" type="file"
+                                                                                    name="dlicencia" id="foto"
+                                                                                    accept=".pdf">
+                                                                                <lord-icon
+                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                    trigger="hover"
+                                                                                    colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65"
+                                                                                    style="width:50px;height:70px">
+                                                                                </lord-icon>
                                                                             </label>
 
 
@@ -996,7 +1037,9 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
+                                                                            <label
+                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                                for="flexCheckDefault">
 
                                                                                 Cédula Profesional
                                                                             </label>
@@ -1004,9 +1047,15 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file" name="dcedula" id="foto" accept=".pdf">
-                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                <input class="mb-4" type="file"
+                                                                                    name="dcedula" id="foto"
+                                                                                    accept=".pdf">
+                                                                                <lord-icon
+                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                    trigger="hover"
+                                                                                    colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65"
+                                                                                    style="width:50px;height:70px">
                                                                                 </lord-icon>
                                                                             </label>
 
@@ -1020,7 +1069,9 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
+                                                                            <label
+                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                                for="flexCheckDefault">
 
                                                                                 Constancia de Situación Fiscal
                                                                             </label>
@@ -1028,9 +1079,15 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file" name="dfiscal" id="foto" accept=".pdf">
-                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                <input class="mb-4" type="file"
+                                                                                    name="dfiscal" id="foto"
+                                                                                    accept=".pdf">
+                                                                                <lord-icon
+                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                    trigger="hover"
+                                                                                    colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65"
+                                                                                    style="width:50px;height:70px">
                                                                                 </lord-icon>
                                                                             </label>
 
@@ -1044,7 +1101,9 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
+                                                                            <label
+                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                                for="flexCheckDefault">
 
                                                                                 Carta de no Antecedentes Penales
                                                                             </label>
@@ -1052,9 +1111,15 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file" name="dpenales" id="foto" accept=".pdf">
-                                                                                    <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                <input class="mb-4" type="file"
+                                                                                    name="dpenales" id="foto"
+                                                                                    accept=".pdf">
+                                                                                <lord-icon
+                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                    trigger="hover"
+                                                                                    colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65"
+                                                                                    style="width:50px;height:70px">
                                                                                 </lord-icon>
                                                                             </label>
 
@@ -1068,7 +1133,9 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
+                                                                            <label
+                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                                for="flexCheckDefault">
 
                                                                                 Cartas de Recomendación
                                                                             </label>
@@ -1076,9 +1143,15 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file" name="drecomendacion" id="foto"  accept=".pdf">
-                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                <input class="mb-4" type="file"
+                                                                                    name="drecomendacion" id="foto"
+                                                                                    accept=".pdf">
+                                                                                <lord-icon
+                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                    trigger="hover"
+                                                                                    colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65"
+                                                                                    style="width:50px;height:70px">
                                                                                 </lord-icon>
                                                                             </label>
 
@@ -1092,7 +1165,9 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
+                                                                            <label
+                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                                for="flexCheckDefault">
 
                                                                                 DC3
                                                                             </label>
@@ -1100,9 +1175,15 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file" name="ddc3" id="foto" accept=".pdf">
-                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                <input class="mb-4" type="file"
+                                                                                    name="ddc3" id="foto"
+                                                                                    accept=".pdf">
+                                                                                <lord-icon
+                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                    trigger="hover"
+                                                                                    colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65"
+                                                                                    style="width:50px;height:70px">
                                                                                 </lord-icon>
                                                                             </label>
 
@@ -1116,7 +1197,9 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
+                                                                            <label
+                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                                for="flexCheckDefault">
 
                                                                                 Exámen Médico
                                                                             </label>
@@ -1124,9 +1207,15 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"  name="dmedico" id="foto" accept=".pdf">
-                                                                                    <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                <input class="mb-4" type="file"
+                                                                                    name="dmedico" id="foto"
+                                                                                    accept=".pdf">
+                                                                                <lord-icon
+                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                    trigger="hover"
+                                                                                    colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65"
+                                                                                    style="width:50px;height:70px">
                                                                                 </lord-icon>
                                                                             </label>
 
@@ -1140,16 +1229,24 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label  class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
+                                                                            <label
+                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                                for="flexCheckDefault">
                                                                                 Prueba Antidoping
                                                                             </label>
                                                                         </div>
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file" name="ddoping" id="foto" accept=".pdf">
-                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                <input class="mb-4" type="file"
+                                                                                    name="ddoping" id="foto"
+                                                                                    accept=".pdf">
+                                                                                <lord-icon
+                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                    trigger="hover"
+                                                                                    colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65"
+                                                                                    style="width:50px;height:70px">
                                                                                 </lord-icon>
                                                                             </label>
 
@@ -1163,7 +1260,9 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2"  for="flexCheckDefault">
+                                                                            <label
+                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                                for="flexCheckDefault">
 
                                                                                 Comprobante de Estudios
                                                                             </label>
@@ -1171,9 +1270,15 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file" name="destudios" id="foto" accept=".pdf">
-                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                <input class="mb-4" type="file"
+                                                                                    name="destudios" id="foto"
+                                                                                    accept=".pdf">
+                                                                                <lord-icon
+                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                    trigger="hover"
+                                                                                    colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65"
+                                                                                    style="width:50px;height:70px">
                                                                                 </lord-icon>
                                                                             </label>
 
@@ -1197,9 +1302,15 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file" name="dnss" id="foto" accept=".pdf">
-                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                <input class="mb-4" type="file"
+                                                                                    name="dnss" id="foto"
+                                                                                    accept=".pdf">
+                                                                                <lord-icon
+                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                    trigger="hover"
+                                                                                    colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65"
+                                                                                    style="width:50px;height:70px">
                                                                                 </lord-icon>
                                                                             </label>
 
@@ -1213,7 +1324,9 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
+                                                                            <label
+                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                                for="flexCheckDefault">
 
                                                                                 Aviso de Retención de Infonavit
                                                                             </label>
@@ -1221,9 +1334,15 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file" name="dari" id="foto" accept=".pdf">
-                                                                                <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                <input class="mb-4" type="file"
+                                                                                    name="dari" id="foto"
+                                                                                    accept=".pdf">
+                                                                                <lord-icon
+                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                    trigger="hover"
+                                                                                    colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65"
+                                                                                    style="width:50px;height:70px">
                                                                                 </lord-icon>
                                                                             </label>
 
@@ -1237,7 +1356,9 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label  class="form-check-label text-start fs-5 textTitulo text-break mb-2"   for="flexCheckDefault">
+                                                                            <label
+                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                                for="flexCheckDefault">
 
                                                                                 Perfil y Descripción del Puesto
                                                                             </label>
@@ -1245,9 +1366,15 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"  name="dpuesto" id="foto" accept=".pdf">
-                                                                                    <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                <input class="mb-4" type="file"
+                                                                                    name="dpuesto" id="foto"
+                                                                                    accept=".pdf">
+                                                                                <lord-icon
+                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                    trigger="hover"
+                                                                                    colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65"
+                                                                                    style="width:50px;height:70px">
                                                                                 </lord-icon>
                                                                             </label>
 
@@ -1261,7 +1388,9 @@
                                                                     <div class="card-body m-2">
 
                                                                         <div>
-                                                                            <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
+                                                                            <label
+                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                                for="flexCheckDefault">
 
                                                                                 Contrato Firmado
                                                                             </label>
@@ -1269,9 +1398,15 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex align-items-end">
                                                                             <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file" name="dcontrato" id="foto"  accept=".pdf">
-                                                                                    <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65" style="width:50px;height:70px">
+                                                                                <input class="mb-4" type="file"
+                                                                                    name="dcontrato" id="foto"
+                                                                                    accept=".pdf">
+                                                                                <lord-icon
+                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                    trigger="hover"
+                                                                                    colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65"
+                                                                                    style="width:50px;height:70px">
                                                                                 </lord-icon>
                                                                             </label>
 

@@ -37,7 +37,9 @@ class personalController extends Controller
      */
     public function create()
     {
-        return view('personal.altaDePersonal');
+
+        $vctPersonal = personal::all();
+        return view('personal.altaDePersonal')->with('personal',$vctPersonal);
     }
 
     /**
@@ -229,11 +231,11 @@ class personalController extends Controller
         $personal['rfc'] = strtoupper($personal['rfc']);
         $personal['licencia'] = strtoupper($personal['licencia']);
         $personal['cpf'] = strtoupper($personal['cpf']);
-        // conversion a minuscula de algunos campos 
+        // conversion a minuscula de algunos campos
         $personal['mailpersonal'] = strtolower($personal['mailpersonal']);
-        /* Generación del email empresarial */ 
+        /* Generación del email empresarial */
         $personal['mailEmpresarial'] =  strtolower($this->generarCorreoEmpresarial($personal['nombres'], $personal['apellidoP'], $personal['apellidoM']));
- 
+
         if ($request->hasFile("foto")) {
             $personal['foto'] = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
             $request->file('foto')->storeAs('/public/personal', $personal['foto']);
@@ -357,8 +359,7 @@ class personalController extends Controller
         $newnomina->puesto = $request->puesto;
         $newnomina->ingreso = $request->ingreso;
         $newnomina->horario = $request->horario;
-        // $newnomina->jefeId = $request->jefeId;
-        $newnomina->jefeId = 1;
+        $newnomina->jefeId = $request->jefeId;
         $newnomina->neto = $request->neto;
         $newnomina->isr = $request->isr;
         $newnomina->save();
@@ -428,6 +429,7 @@ class personalController extends Controller
         $equipo = equipo::where("personalId", $personal->id)->first();
         $docs = userdocs::where("personalId", $personal->id)->first();
         $fiscal = fiscal::where("personalId", $personal->id)->first();
+        $vctPersonal = personal::all();
 
         $nomina->decSalarioDiario = ($nomina->diario);
         $nomina->decSalarioDiarioIntegrado = round($nomina->decSalarioDiario * 1.05137, 2);
@@ -445,7 +447,7 @@ class personalController extends Controller
             $nomina->decAfore + $nomina->decInfonavit + $nomina->decVacaciones + $nomina->decPrimaVacacional + $nomina->decAguinaldo + $nomina->isr, 2);
 
         // dd($nomina);
-        return view('personal.detalleDePersonal', compact('personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal'));
+        return view('personal.detalleDePersonal', compact('personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal','vctPersonal'));
     }
 
     /**
@@ -691,7 +693,7 @@ class personalController extends Controller
         $nomina->puesto = $request->puesto;
         $nomina->ingreso = $request->ingreso;
         $nomina->horario = $request->horario;
-        $nomina->jefeId = 1; //$request->jefeId;
+        $nomina->jefeId = $request->jefeId;
         $nomina->neto = $request->neto;
         $nomina->diario = $request->diario;
         $nomina->isr = $request->isr;

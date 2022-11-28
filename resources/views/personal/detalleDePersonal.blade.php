@@ -260,7 +260,7 @@
                                                         </option>
                                                     </select>
                                                 </div>
-                                                {{--  
+                                                {{--
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Tipo de Sangre:</label></br>
                                                 <input type="text" class="inputCaja" id="sangre"
@@ -284,7 +284,7 @@
                                                     <input type="text" class="inputCaja" id="particular"
                                                         name="particular" value="{{ $personal->particular }}">
                                                 </div>
-                                                {{--  
+                                                {{--
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Celular:</label></br>
                                                 <input type="text" class="inputCaja" id="celular"
@@ -348,7 +348,7 @@
                                                     <input type="text" class="inputCaja" id="interior"
                                                         name="interior" value="{{ $personal->interior }}">
                                                 </div>
-                                                {{--  
+                                                {{--
                                     <div class=" col-12 col-sm-6  mb-3 ">
                                         <label class="labelTitulo">Entre las Calles:</label></br>
                                         <input type="text" class="inputCaja" id=""
@@ -681,10 +681,21 @@
                                                         name="horario" value="{{ $nomina->horario }}">
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                {{-- <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Jefe Inmediato:</label></br>
                                                     <input type="text" class="inputCaja" id=""
                                                         name="jefeId" value="{{ $nomina->jefeId }}">
+                                                </div> --}}
+
+                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                    <label class="labelTitulo">Jefe Inmediato:</label></br>
+                                                    <select id="jefeId" name="jefeId"
+                                                        class="form-select" aria-label="Default select example">
+                                                        @foreach ($vctPersonal as $persona)
+                                                            <option value="{{ $persona->id }}"  {{ $persona->id ==  $nomina->jefeId ? ' selected' : '' }}>
+                                                                {{ $persona->nombres . ' ' . $persona->apellidoP }} </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -869,7 +880,7 @@
                                                             Extra Grande</option>
                                                     </select>
                                                 </div>
-                                                {{--  
+                                                {{--
                                                 <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                     <label class="labelTitulo">Epp Lentes:</label></br>
                                                     <input type="text" class="inputCaja" id=""

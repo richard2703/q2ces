@@ -12,6 +12,17 @@ class invconsu extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'productoId', 'tipo', 'cantidad', 'desde', 'hasta', 'comentarios'
+        'productoId', 'tipo', 'cantidad', 'desde', 'hasta', 'comentarios', 'maquinariasDesde', 'maquinariasHasta'
     ];
+
+
+    public function maquinariasDesde()
+    {
+        return $this->belongsTo(maquinaria::class, 'desde');
+    }
+
+    public function maquinariasHasta()
+    {
+        return $this->belongsTo(maquinaria::class, 'hasta');
+    }
 }

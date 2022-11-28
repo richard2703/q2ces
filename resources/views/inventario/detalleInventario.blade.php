@@ -103,9 +103,7 @@
                                         <div class=" col-12 col-sm-6 col-lg-6 mb-5 ">
                                             <label class="labelTitulo">Tipo:</label></br>
                                             <select class="form-select" aria-label="Default select example"
-                                                id="sangre" name="sangre">
-                                                {{--  <option value="A+" {{ $personal->sangre == 'A+' ? ' selected' : '' }}>A+
-                                                </option>  --}}
+                                                id="tipo" name="tipo">
                                                 <option value="herramientas"
                                                     {{ $inventario->tipo == 'herramientas' ? ' selected' : '' }}>
                                                     Herramienta</option>
@@ -115,7 +113,6 @@
                                                 <option value="consumibles"
                                                     {{ $inventario->tipo == 'consumibles' ? ' selected' : '' }}>Consumible
                                                 </option>
-
                                             </select>
                                         </div>
 
@@ -181,7 +178,7 @@
                                 </div>
 
                             </div>
-                        </div> 
+                        </div>
                     </div>
                 </div>
 
@@ -225,10 +222,22 @@
                         name="cantidad" value="">
 
                     <label class="labelTitulo mt-3">Origen:</label></br>
-                    <input type="text" class="inputCaja" id="desde" name="desde" value="">
+                    {{-- <input type="text" class="inputCaja" id="desde" name="desde" value=""> --}}
+                    <select id="desde" name="desde" class="form-select" aria-label="Default select example">
+                        @foreach ($vctDesde as $maquina)
+                            <option value="{{ $maquina->id }}" {{ $maquina->id == $inventario->id ? ' selected' : '' }}>
+                                {{ $maquina->nombre . ' / ' . $maquina->modelo . ( $maquina->placas != "" ? ' [' . $maquina->placas . ']' : "") }} </option>
+                        @endforeach
+                    </select>
 
                     <label class="labelTitulo mt-3">Destino:</label></br>
-                    <input type="text" class="inputCaja" id="hasta" name="hasta" value="">
+                    {{-- <input type="text" class="inputCaja" id="hasta" name="hasta" value=""> --}}
+                    <select id="hasta" name="hasta" class="form-select" aria-label="Default select example">
+                        @foreach ($vctHasta as $maquina)
+                            <option value="{{ $maquina->id }}" {{ $maquina->id == $inventario->id ? ' selected' : '' }}>
+                                {{ $maquina->nombre . ' / ' . $maquina->modelo . ( $maquina->placas != "" ? ' [' . $maquina->placas . ']' : "") }} </option>
+                        @endforeach
+                    </select>
 
                     <label class="labelTitulo mt-3">Comentario:</label></br>
                     <textarea class="col-12 inputCaja mb-3" id="comentarios" name="comentarios"></textarea>
