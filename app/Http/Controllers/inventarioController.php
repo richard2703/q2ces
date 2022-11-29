@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use App\Helpers\Validaciones;
+use App\Models\maquinaria;
 
 class inventarioController extends Controller
 {
@@ -35,7 +36,6 @@ class inventarioController extends Controller
      */
     public function create()
     {
-        // dd('test');
         return view('inventario.inventarioNuevo');
     }
 
@@ -90,9 +90,11 @@ class inventarioController extends Controller
      */
     public function show(inventario $inventario)
     {
+        $vctDesde = maquinaria::all();
+        $vctHasta = maquinaria::all();
+        // dd($vctDesde);
         $inventario = inventario::where("id", $inventario->id)->first();
-        // dd($inventario);
-        return view('inventario.detalleInventario', compact('inventario'));
+        return view('inventario.detalleInventario', compact('inventario','vctDesde','vctHasta'));
     }
 
     /**
@@ -117,7 +119,7 @@ class inventarioController extends Controller
      */
     public function update(Request $request, inventario $inventario)
     {
-        // dd($inventario); 
+        // dd($inventario);
 
         $request->validate([
             'nombre' => 'required|max:250',
@@ -162,7 +164,7 @@ class inventarioController extends Controller
         $inventario->update($data);
 
         Session::flash('message', 1);
-        // dd($request); 
+        // dd($request);
         return redirect()->route('inventario.index', $inventario->tipo);
     }
 
@@ -185,7 +187,7 @@ class inventarioController extends Controller
      */
     public function restock(Request $request)
     {
-        // dd($request); 
+        // dd($request);
         $restock = $request->only(
             'productoid',
             'cantidad',
