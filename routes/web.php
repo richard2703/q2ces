@@ -135,7 +135,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/accesorios', [App\Http\Controllers\accesoriosController::class, 'store'])->name('accesorios.store');
     Route::get('/accesorios', [App\Http\Controllers\accesoriosController::class, 'index'])->name('accesorios.index');
     Route::get('/accesorios/{accesorios}', [App\Http\Controllers\accesoriosController::class, 'show'])->name('accesorios.show');
-    Route::put('/accesorios/{accesorios}', [App\Http\Controllers\accesoriosController::class, 'update'])->name('accesorios.update');
+    Route::put('/accesorios/{accesorios}', [App\Http\Controllers\accesoriosController::class, 'update'])->name('accesorios.update'); 
     Route::get('/accesorios/{accesorios}/edit', [App\Http\Controllers\accesoriosController::class, 'edit'])->name('accesorios.edit');
     Route::delete('/accesorios/{accesorios}', [App\Http\Controllers\accesoriosController::class, 'destroy'])->name('accesorios.delete');
 
@@ -144,6 +144,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/inventario/{tipo}', [App\Http\Controllers\inventarioController::class, 'index'])->name('inventario.index');
     Route::get('/inventario/producto/nuevo', [App\Http\Controllers\inventarioController::class, 'create'])->name('inventario.create');
     Route::post('/inventario', [App\Http\Controllers\inventarioController::class, 'store'])->name('inventario.store');
-    Route::get('/inventario/{accesorios}', [App\Http\Controllers\inventarioController::class, 'show'])->name('inventario.show');
-    Route::put('/inventario/{accesorios}', [App\Http\Controllers\inventarioController::class, 'update'])->name('inventario.update');
+    Route::put('/inventario/{producto}/restock', [App\Http\Controllers\inventarioController::class, 'restock'])->name('inventario.restock');
+    Route::put('/inventario/{producto}/mover', [App\Http\Controllers\inventarioController::class, 'mover'])->name('inventario.mover');
+    Route::get('/inventario/producto/{inventario}', [App\Http\Controllers\inventarioController::class, 'show'])->name('inventario.show');
+    Route::get('/inventario/producto/{inventario}/edit', [App\Http\Controllers\inventarioController::class, 'edit'])->name('inventario.edit');
+    Route::put('/inventario/{inventario}', [App\Http\Controllers\inventarioController::class, 'update'])->name('inventario.update');
 });

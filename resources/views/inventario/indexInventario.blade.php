@@ -61,10 +61,12 @@
                                                         <div class="col-5">
                                                             <button type="button"
                                                                 class="botonSinFondo mx-2"title="Resurtir"
-                                                                data-bs-toggle="modal" data-bs-target="#modal-cliente"><img
+                                                                data-bs-toggle="modal" data-bs-target="#modal-cliente"
+                                                                onclick="cargar('{{ $inventario->nombre }}','{{ $inventario->imagen }}','{{ $inventario->id }}')"><img
                                                                     style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}"></button>
                                                             <p class="botonTitulos mt-2">Resurtir</p>
                                                         </div>
+
                                                         {{-- @endcan --}}
                                                         {{-- @can('user_edit') --}}
                                                         <div class="col-5">
@@ -83,11 +85,13 @@
                                                             @csrf
                                                             @method('DELETE')
                                                             <!--<button class="btn btn-danger" type="submit" rel="tooltip">
-                                                                        <i class="material-icons">close</i>
-                                                                    </button>-->
+                                                                                                                <i class="material-icons">close</i>
+                                                                                                            </button>-->
                                                         </form>
                                                         {{-- @endcan --}}
                                                     </td>
+
+
                                                 </tr>
                                             @empty
                                                 <tr>
@@ -120,7 +124,7 @@
             <div class="modal-content">
                 <div class="col-12">
                     <div class="card ">
-                        <form action="#" method="post">
+                        <form action="{{ route('inventario.restock', $inventario->id) }}" method="post">
                             @csrf
                             @method('put')
                             <div class="card-header bacTituloPrincipal ">
@@ -134,23 +138,23 @@
                             </div>
                             <div class="row  card-body">
                                 <div class="row card-body" style="
-                                text-align: center;">
-                                    <input type="hidden" name="id" value="">
+                         text-align: center;">
+                                    <input type="hidden" name="productoid" id="productoid" value="">
                                     <div class="col-12 ">
-                                        <img style="width: 100px;"src="{{ '/img/general/defaultinventario.jpg' }}">
+                                        <img style="width: 100px;" id="imagenM">
                                     </div>
                                     <div class="col-12 border-bottom mb-3 labelTitulo">
-                                        <h3 class="titulos hSub h3 ">Nombre producto</h3>
+                                        <h3 class="titulos hSub h3 " id="nombreM"> </h3>
                                     </div>
                                     <div class="col-12 col-lg-6">
                                         <label class="labelTitulo" for="">Cantidad:</label></br>
                                         <input class="inputCaja" type="number" step="0.01" min="0.01"
-                                            id="" name="calleNum" value="" required></br>
+                                            id="cantidad" name="cantidad" value="" required></br>
                                     </div>
                                     <div class="col-12 col-lg-6">
                                         <label class="labelTitulo" for="">Costo unitario:</label></br>
                                         <input class="inputCaja" type="number" step="0.01" min="0.01"
-                                            id="" name="colonia" value="" required></br>
+                                            id="costo" name="costo" value="" required></br>
                                     </div>
 
                                 </div>
@@ -165,7 +169,7 @@
             </div>
         </div>
     </div>
-
+    
     <script src="{{ asset('js/alertas.js') }}"></script>
     <script src="https://cdn.lordicon.com/qjzruarw.js"></script>
 
@@ -204,6 +208,17 @@
         if (slug == 1) {
             Guardado();
 
+        }
+    </script>
+
+    <script>
+        function cargar(nombre, img, id) {
+            const imagen = document.getElementById('imagenM');
+            imagen.src = '/storage/inventario/' + img;
+            const p = document.getElementById('nombreM');
+            p.innerText = nombre;
+            const productoid = document.getElementById('productoid');
+            productoid.value = id;
         }
     </script>
 @endsection

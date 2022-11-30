@@ -7,7 +7,7 @@ CREATE TABLE roles (
   PRIMARY KEY (id),
   UNIQUE KEY roles_name_guard_name_unique (name,guard_name)
 );
-INSERT INTO roles VALUES 
+INSERT INTO roles VALUES
 (1,'Admin','web','2022-07-25 20:54:16','2022-07-25 20:54:16'),
 (2,'User','web','2022-07-25 20:54:16','2022-07-25 20:54:16');
 
@@ -20,7 +20,7 @@ CREATE TABLE permissions (
   PRIMARY KEY (id),
   UNIQUE KEY permissions_name_guard_name_unique (name,guard_name)
 );
-INSERT INTO permissions VALUES 
+INSERT INTO permissions VALUES
 (1,'permission_index','web','2022-07-25 20:54:15','2022-07-25 20:54:15'),
 (2,'permission_create','web','2022-07-25 20:54:15','2022-07-25 20:54:15'),
 (3,'permission_show','web','2022-07-25 20:54:15','2022-07-25 20:54:15'),
@@ -61,7 +61,7 @@ model_type varchar(255) NOT NULL,
 model_id bigint(20) unsigned NOT NULL,
 PRIMARY KEY (permission_id,model_id,model_type),
 KEY model_has_permissions_model_id_model_type_index (model_id,model_type),
-CONSTRAINT model_has_permissions_permission_id_foreign FOREIGN KEY (permission_id) REFERENCES permissions (id) ON DELETE CASCADE 
+CONSTRAINT model_has_permissions_permission_id_foreign FOREIGN KEY (permission_id) REFERENCES permissions (id) ON DELETE CASCADE
 );
 
 CREATE TABLE model_has_roles (
@@ -84,7 +84,7 @@ CREATE TABLE role_has_permissions (
   CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
   CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
 );
-INSERT INTO role_has_permissions VALUES 
+INSERT INTO role_has_permissions VALUES
 (1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),
 (8,1),(9,1),(10,1),(11,1),(12,1),(13,1),
 (14,1),(15,1),(16,1),(16,2),(17,1),(17,2),
@@ -167,7 +167,7 @@ CREATE TABLE equipo(
   cargadorSerial varchar(200) null,
   PRIMARY KEY (id),
   CONSTRAINT FK_equipo_personalId foreign key (personalId) references personal(id)
- ); 
+ );
 
 CREATE TABLE userdocs(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -207,7 +207,7 @@ CREATE TABLE contactos(
   nombreM varchar(255) null,
   PRIMARY KEY (id),
   CONSTRAINT FK_contactos_personalId foreign key (personalId) references personal(id)
- ); 
+ );
 
 CREATE TABLE beneficiario(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -242,7 +242,7 @@ CREATE TABLE nomina(
   primavactomadas  float(10,2) null,
   laborables int null,
   horario varchar(255) NULL,
-  jefeId bigint(20) unsigned NOT NULL,
+  jefeId bigint(20) unsigned NULL,
   neto  float(10,2) null,
   bruto  float(10,2) null,
   diario  float(10,2) null,
@@ -403,9 +403,11 @@ CREATE TABLE restock(
 CREATE TABLE invconsu(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   productoId bigint(20) unsigned NOT NULL,
+  tipo varchar(255) NULL,
   cantidad float(10,2) not null,
   desde bigint(20) unsigned NOT NULL,
   hasta bigint(20) unsigned NOT NULL,
+  comentarios text DEFAULT NULL,
   created_at datetime NULL,
   updated_at datetime NULL,
   PRIMARY KEY (id),
@@ -414,7 +416,7 @@ CREATE TABLE invconsu(
   CONSTRAINT FK_invconsu_hasta foreign key (hasta) references maquinaria(id)
 
  );
- 
+
 CREATE TABLE fiscal(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   personalId bigint(20) unsigned NOT NULL,
