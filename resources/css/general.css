@@ -441,3 +441,37 @@ p.botonTitulos{
   -ms-transform: scale(1);
   transform: scale(1);
 }
+
+/* -------- CARGA Y DESCARCARGA DE COMBISTIBLE ------*/
+.combustibleBorde{
+  border: #F7C90D 2px solid;
+  border-radius: 10px;
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+}
+.bordeTitulo{
+  border-bottom: #F7C90D 2px solid;
+}
+.combustibleTitulo,
+.combustibleFecha{
+  font-size: 2em;
+  color: #5C7C26;
+}
+
+.combustibleTitulo{
+  padding-bottom: 2px;
+}
+.combustibleLitros,
+.combustibleHora{
+  font-size: 1.5em;
+  color: #5C7C26;
+}
+
+.combustiblefecha{
+  font-size: 1.1em;
+  color: #5C7C26;
+}
+.combustibleColorTexto{
+  font-weight: 500;
+  color: #5C7C26;
+}
+
