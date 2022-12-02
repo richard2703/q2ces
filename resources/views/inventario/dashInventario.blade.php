@@ -29,7 +29,11 @@
                                     </a>
                                 </div>
                                 <div class="col-12 col-md-6 text-center my-4">
-                                    <a href="{{ route('inventario.index', 'combustibles') }}" class="">
+
+
+                                
+
+                                    <a href="{{ url( '/dashCombustible') }}" class="">
                                         <img src="/img/inventario/combustible.svg" alt="obras" title="Combustibles"
                                             width="30%" class="botonIconoPrincipal">
                                         <p class="mt-4 texticonos">Combustibles</p>
