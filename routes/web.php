@@ -66,6 +66,10 @@ Route::get('/detalleHerramienta', function () {
     return view('inventario.detalleHerramienta');
 });
 
+Route::get('/dashCombustible', function () {
+    return view('inventario.dashCombustible');
+});
+
 
 
 
