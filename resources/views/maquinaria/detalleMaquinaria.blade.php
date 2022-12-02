@@ -39,7 +39,7 @@
                                                         <div class="row">
 
                                                             <div class="col-12" id="visor">
-                                                                <img src="{{ $fotos[0]->id == '' ? ' /img/general/default.jpg' : '/storage/imgmaquinaria/' . $fotos[0]->ruta }}"
+                                                                <img src="{{ empty($fotos[0]) ? ' /img/general/default.jpg' : '/storage/imgmaquinaria/' . $fotos[0]->ruta }}"
                                                                     class="mx-auto d-block img-fluid">
                                                             </div>
 

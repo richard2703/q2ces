@@ -66,6 +66,10 @@ Route::get('/detalleHerramienta', function () {
     return view('inventario.detalleHerramienta');
 });
 
+Route::get('/dashCombustible', function () {
+    return view('inventario.dashCombustible');
+});
+
 
 
 
@@ -132,8 +136,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Crud accesorios
     Route::get('/accesorios/nuevo', [App\Http\Controllers\accesoriosController::class, 'create'])->name('accesorios.create');
-    // Route::post('/accesorios', [App\Http\Controllers\accesoriosController::class, 'store'])->name('accesorios.store');
-    Route::post('/accesorios', [App\Http\Controllers\accesoriosController::class, 'test'])->name('accesorios.store');
+    Route::post('/accesorios', [App\Http\Controllers\accesoriosController::class, 'store'])->name('accesorios.store');
     Route::get('/accesorios', [App\Http\Controllers\accesoriosController::class, 'index'])->name('accesorios.index');
     Route::get('/accesorios/{accesorios}', [App\Http\Controllers\accesoriosController::class, 'show'])->name('accesorios.show');
     Route::put('/accesorios/{accesorios}', [App\Http\Controllers\accesoriosController::class, 'update'])->name('accesorios.update'); 

@@ -108,7 +108,7 @@
             <li class="nav-item {{ $activePage == 'profile' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a
                     href="{{ route('inventario.dash') }}"class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
-                    <i><img style="width:25px" src="{{ asset('/img/navs/bitacorasMenu.svg') }}"></i>
+                    <i><img style="width:25px" src="{{ asset('/img/navs/inventarioMenu.svg') }}"></i>
                     <p> {{ __('inventario') }} </p>
                     {{--  <b class="caret"></b>  --}}
                 </a>
