@@ -251,7 +251,7 @@
                                                             </div>
                                                             <div class=" col-6 d-flex mb-4">
                                                                 <div class="me-2">
-                                                                    <img src="{{ asset('/img/navs/personalMenu.svg') }}"
+                                                                    <img src="{{ asset('/img/inventario/iconoKm.svg') }}"
                                                                         alt="" style="width:40px;">
                                                                 </div>
                                                                 <div>
@@ -264,7 +264,7 @@
 
                                                             <div class=" col-6 d-flex mb-4">
                                                                 <div class="me-2">
-                                                                    <img src="{{ asset('/img/navs/personalMenu.svg') }}"
+                                                                    <img src="{{ asset('/img/inventario/horometroIcono.svg') }}"
                                                                         alt="" style="width:40px;">
                                                                 </div>
                                                                 <div>
