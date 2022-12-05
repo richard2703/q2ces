@@ -15,19 +15,17 @@
                                 <nav class=" ">
                                     <div class="nav nav-tabs navMenuBalance justify-content-evenly" id="nav-tab"
                                         role="tablist">
-                                        <button class="nav-link active BTNbalance col-4" id="balanceUno-tab"
-                                            data-bs-toggle="tab" data-bs-target="#balanceUno" type="button" role="tab"
-                                            aria-controls="balanceUno" aria-selected="true">
-                                            <img src="{{ asset('img/inventario/cargaVerde.svg') }}" class="mx-auto d-block"
-                                                width="65%">
+                                        <button class="nav-link active combustiblePestaña  col-4" id="balanceUno-tab"
+                                            data-bs-toggle="tab" data-bs-target="#balanceUno" type="button" role="tab" aria-controls="balanceUno" aria-selected="true">
+
+
+                                            <img id="myImage" onclick="changeImage()" src="{{ asset('img/inventario/cargaVerde.svg') }}" class="mx-auto d-block" width="65%">
                                             <p class="text-center mt-2">CARGA</p>
                                         </button>
+                                        <button class="nav-link  combustiblePestaña col-4" id="balanceDos-tab" data-bs-toggle="tab" data-bs-target="#balanceDos" type="button" role="tab" aria-controls="balanceDos" aria-selected="false">
+                                           
 
-                                        <button class="nav-link BTNbalance col-4" id="balanceDos-tab" data-bs-toggle="tab"
-                                            data-bs-target="#balanceDos" type="button" role="tab"
-                                            aria-controls="balanceDos" aria-selected="false">
-                                            <img src="{{ asset('img/inventario/descargaVerde.svg') }}"
-                                                class="mx-auto d-block" width="65%">
+                                            <img id="myImage1" onclick="changeImage1()" src="{{ asset('img/inventario/descargaGris.svg') }}" class="mx-auto d-block" width="65%">
                                             <p class="text-center mt-2">DESCARGA</p>
                                         </button>
                                         <div class="col-4">
@@ -37,7 +35,6 @@
                                         </div>
                                     </div>
                                 </nav>
-
                                 <div class="tab-content" id="nav-tabContent ">
 
                                     <div class="tab-pane fade show active border" id="balanceUno" role="tabpanel"
@@ -225,10 +222,8 @@
 
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
                     <!--Espacio para los tres camiones-->
                     <div class="row">
                         <div class="col-sm-4">
@@ -328,22 +323,26 @@
                         </div>
 
                     </div>
-
-
-
-
-
-
-
-
-
-
                 </div>
             </div>
         </div>
-
-
-
-
     </div>
-@endsection
+@endsection 
+<script> 
+function changeImage() {
+    var image = document.getElementById('myImage');
+    image.src = "{{ asset('img/inventario/cargaVerde.svg') }}";
+    var image = document.getElementById('myImage1');
+   image.src = "{{ asset('img/inventario/descargaGris.svg') }}";
+}
+
+
+function changeImage1() {
+    var image = document.getElementById('myImage1');
+    image.src = "{{ asset('img/inventario/descargaRojo.svg') }}";
+    var image = document.getElementById('myImage');
+   image.src = "{{ asset('img/inventario/cargaGris.svg') }}";
+}
+</script>
+
+
