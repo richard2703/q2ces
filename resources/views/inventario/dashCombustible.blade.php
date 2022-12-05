@@ -142,22 +142,27 @@
                                             <div class="col-12 my-5 ">
                                                 <div class="row mt-5">
                                                     <div class="col-4">
-                                                        <div class="mb-5">
-                                                            <img class="imgVista img-fluid mb-2"
-                                                                src="{{ asset('/img/inventario/horometro.svg') }}">
+                                                        <div class="text-center mx-auto border vistaFoto mb-4">
+                                                            <i><img class="imgVista img-fluid mb-2"
+                                                                    src="{{ asset('/img/inventario/horometro.svg') }}"></i>
                                                             <span class="mi-archivo"> <input class="mb-4 ver "
                                                                     type="file" name="ruta[]" id="mi-archivo"
                                                                     accept="image/*" multiple></span>
+                                                            <label for="mi-archivo">
+                                                                <span class="">Sube Imagen</span>
+                                                            </label>
                                                         </div>
-
-
-                                                        <div class="mb-5">
-                                                            <img class="imgVista img-fluid mb-2"
-                                                                src="{{ asset('/img/inventario/kilometraje.svg') }}">
+                                                        <div class="text-center mx-auto border vistaFoto mb-4">
+                                                            <i><img class="imgVista img-fluid mb-2"
+                                                                    src="{{ asset('/img/inventario/kilometraje.svg') }}"></i>
                                                             <span class="mi-archivo"> <input class="mb-4 ver "
                                                                     type="file" name="ruta[]" id="mi-archivo"
                                                                     accept="image/*" multiple></span>
+                                                            <label for="mi-archivo">
+                                                                <span class="">Sube Imagen</span>
+                                                            </label>
                                                         </div>
+
                                                     </div>
                                                     <div class="col-8">
                                                         <div class="row ">
