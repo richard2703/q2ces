@@ -51,19 +51,7 @@
                                             @method('put')
                                             <div class="col-12 my-5 ">
                                                 <div class="row mt-5">
-                                                    <div class="col-4">
-                                                        <div class="text-center mx-auto border vistaFoto mb-4">
-                                                            <i><img class="imgVista img-fluid mb-2"
-                                                                    src="{{ asset('/img/general/default.jpg') }}"></i>
-                                                            <span class="mi-archivo"> <input class="mb-4 ver "
-                                                                    type="file" name="ruta[]" id="mi-archivo"
-                                                                    accept="image/*" multiple></span>
-                                                            <label for="mi-archivo">
-                                                                <span class="">Sube Imagen</span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-8">
+                                                    <div class="col-12">
                                                         <div class="row ">
                                                             <div class=" col-6 d-flex mb-4">
                                                                 <div class="me-2">
@@ -154,15 +142,21 @@
                                             <div class="col-12 my-5 ">
                                                 <div class="row mt-5">
                                                     <div class="col-4">
-                                                        <div class="text-center mx-auto border vistaFoto mb-4">
-                                                            <i><img class="imgVista img-fluid mb-2"
-                                                                    src="{{ asset('/img/general/default.jpg') }}"></i>
+                                                        <div class="mb-5">
+                                                            <img class="imgVista img-fluid mb-2"
+                                                                src="{{ asset('/img/inventario/horometro.svg') }}">
                                                             <span class="mi-archivo"> <input class="mb-4 ver "
                                                                     type="file" name="ruta[]" id="mi-archivo"
                                                                     accept="image/*" multiple></span>
-                                                            <label for="mi-archivo">
-                                                                <span class="">Sube Imagen</span>
-                                                            </label>
+                                                        </div>
+
+
+                                                        <div class="mb-5">
+                                                            <img class="imgVista img-fluid mb-2"
+                                                                src="{{ asset('/img/inventario/kilometraje.svg') }}">
+                                                            <span class="mi-archivo"> <input class="mb-4 ver "
+                                                                    type="file" name="ruta[]" id="mi-archivo"
+                                                                    accept="image/*" multiple></span>
                                                         </div>
                                                     </div>
                                                     <div class="col-8">
@@ -175,14 +169,14 @@
                                                                 <div>
                                                                     <label class="labelTitulo">Equipo:</label></br>
                                                                     <select id="servicioId" name="servicioId"
-                                                                    class="form-select"
-                                                                    aria-label="Default select example">
-                                                                    @foreach ($maquinaria as $maquina)
-                                                                        <option value="{{ $maquina->id }}">
-                                                                            {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
+                                                                        class="form-select"
+                                                                        aria-label="Default select example">
+                                                                        @foreach ($maquinaria as $maquina)
+                                                                            <option value="{{ $maquina->id }}">
+                                                                                {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
                                                                 </div>
                                                             </div>
 
@@ -194,14 +188,14 @@
                                                                 <div>
                                                                     <label class="labelTitulo">Maquinaria:</label></br>
                                                                     <select id="maquinariaId" name="maquinariaId"
-                                                                    class="form-select"
-                                                                    aria-label="Default select example">
-                                                                    @foreach ($maquinaria as $maquina)
-                                                                        <option value="{{ $maquina->id }}">
-                                                                            {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
+                                                                        class="form-select"
+                                                                        aria-label="Default select example">
+                                                                        @foreach ($maquinaria as $maquina)
+                                                                            <option value="{{ $maquina->id }}">
+                                                                                {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
                                                                 </div>
                                                             </div>
 
@@ -232,14 +226,14 @@
                                                                 <div>
                                                                     <label class="labelTitulo">Operador:</label></br>
                                                                     <select id="receptorId" name="receptorId"
-                                                                    class="form-select"
-                                                                    aria-label="Default select example">
-                                                                    @foreach ($personal as $persona)
-                                                                        <option value="{{ $persona->id }}">
-                                                                            {{ $persona->nombres . ' ' . $persona->apellidoP }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
+                                                                        class="form-select"
+                                                                        aria-label="Default select example">
+                                                                        @foreach ($personal as $persona)
+                                                                            <option value="{{ $persona->id }}">
+                                                                                {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
                                                                 </div>
                                                             </div>
 
