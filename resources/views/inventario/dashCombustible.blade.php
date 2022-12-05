@@ -40,9 +40,6 @@
                                     <div class="tab-pane fade show active border" id="balanceUno" role="tabpanel"
                                         aria-labelledby="balanceUno-tab" tabindex="0">
                                         <form action="" method="post">
-                                            
-                                               
-                                                   
                                                     <div class="col-12 mt-5">
                                                         <div class="row ">
                                                             <div class=" col-6 d-flex mb-4">
@@ -98,19 +95,12 @@
                                                         </div>
 
                                                     </div>
-
-
-                                                
-                                            
                                             <div class="col-12 text-center mb-3 ">
                                                 <button type="submit" class="btn botonGral"
                                                     onclick="test()">Guardar</button>
                                             </div>
-
                                         </form>
-
                                     </div>
-
                                     <div class="tab-pane fade border" id="balanceDos" role="tabpanel"
                                         aria-labelledby="balanceDos-tab" tabindex="0">
                                         <form action="" method="post">
@@ -200,7 +190,7 @@
 
                                                             <div class=" col-6 d-flex mb-4">
                                                                 <div class="me-2">
-                                                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                                                    <img src="{{ asset('/img/inventario/horometroIcono.svg') }}"
                                                                         alt="" style="width:40px;">
                                                                 </div>
                                                                 <div>
@@ -214,7 +204,7 @@
 
                                                             <div class=" col-6 d-flex mb-4">
                                                                 <div class="me-2">
-                                                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                                                    <img src="{{ asset('/img/inventario/iconoKm.svg') }}"
                                                                         alt="" style="width:40px;">
                                                                 </div>
                                                                 <div>
