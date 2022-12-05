@@ -442,4 +442,33 @@ CREATE TABLE maqimagen(
   CONSTRAINT FK_maqimagen_maquinariaId foreign key (maquinariaId) references maquinaria(id)
  );
 
+CREATE TABLE carga(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  maquinariaId bigint(20) unsigned NOT NULL,
+  operadorId bigint(20) unsigned NOT NULL,
+  precio float(10,2) not null, 
+  litros float(10,2) not null,
+  created_at datetime NULL,
+  updated_at datetime NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_carga_operadorlId foreign key (operadorId) references personal(id),
+  CONSTRAINT FK_carga_maquinariaId foreign key (maquinariaId) references maquinaria(id)
+ );
 
+CREATE TABLE descarga(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  maquinariaId bigint(20) unsigned NOT NULL,
+  operadorId bigint(20) unsigned NOT NULL,
+  servicioId bigint(20) unsigned NOT NULL,
+  receptorId bigint(20) unsigned NOT NULL,
+  litros float(10,2) not null,
+  km int not null,
+  Horas float(10,2) not null,
+  created_at datetime NULL,
+  updated_at datetime NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_descarga_operadorlId foreign key (operadorId) references personal(id),
+  CONSTRAINT FK_descarga_maquinariaId foreign key (maquinariaId) references maquinaria(id),
+  CONSTRAINT FK_descarga_serviciolId foreign key (operadorId) references personal(id),
+  CONSTRAINT FK_descarga_receptorId foreign key (maquinariaId) references maquinaria(id)
+ );
