@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\inventario;
+use App\Models\personal;
 use App\Models\restock;
 use App\Models\invconsu;
+use App\Models\carga;
+use App\Models\descarga;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
@@ -17,6 +20,7 @@ class inventarioController extends Controller
     {
         return view('inventario.dashInventario');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,9 +28,16 @@ class inventarioController extends Controller
      */
     public function index($tipo)
     {
-        $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(5);
+        if ($tipo == 'combustible') {
 
-        return view('inventario.indexInventario', compact('inventarios'));
+            $personal = personal::all();
+            $maquinaria = maquinaria::all();
+
+            return view('inventario.dashCombustible', compact('personal', 'maquinaria'));
+        } else {
+            $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(5);
+            return view('inventario.indexInventario', compact('inventarios'));
+        }
     }
 
     /**
@@ -94,7 +105,7 @@ class inventarioController extends Controller
         $vctHasta = maquinaria::all();
         // dd($vctDesde);
         $inventario = inventario::where("id", $inventario->id)->first();
-        return view('inventario.detalleInventario', compact('inventario','vctDesde','vctHasta'));
+        return view('inventario.detalleInventario', compact('inventario', 'vctDesde', 'vctHasta'));
     }
 
     /**
@@ -246,5 +257,68 @@ class inventarioController extends Controller
         }
         Session::flash('message', 1);
         return redirect()->route('inventario.show', $invconsu->productoId);
+    }
+
+
+    /**
+     * Captura de movimientos de combustible
+     *
+     * @return void
+     */
+    public function dashCombustible()
+    {
+        dd('Hola');
+    }
+
+    /**
+     * Realiza la carga y registro de combustible
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function cargaCombustible(Request $request)
+    {
+        $carga = $request->only(
+            'litros',
+            'maquinariaId',
+            'operadorId',
+            'precio',
+        );
+
+        carga::create($carga);
+        Session::flash('message', 1);
+        return view('inventario.dashInventario');
+    }
+
+    /**
+     * Realiza la descarga y registro de combustible
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function descargaCombustible(Request $request)
+    {
+        $descarga = $request->only(
+            'horas',
+            'km',
+            'imgKm',
+            'imgHoras',
+            'litros',
+            'maquinariaId',
+            'operadorId',
+            'receptorId',
+            'servicioId',
+        );
+
+        // dd($request);
+
+        // if ($request->hasFile("imgKm")) {
+        //     $ruta['imgKm'] = time() . '_' . 'imgKm.' . $request->file('ruta')->getClientOriginalExtension();
+        //     $request->file('imgKm')->storeAs('/public/inventario/combustibles', $ruta['imgKm']);
+        // }
+
+        descarga::create($descarga);
+        Session::flash('message', 1);
+        return view('inventario.dashInventario');
     }
 }

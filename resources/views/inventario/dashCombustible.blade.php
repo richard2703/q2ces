@@ -16,16 +16,23 @@
                                     <div class="nav nav-tabs navMenuBalance justify-content-evenly" id="nav-tab"
                                         role="tablist">
                                         <button class="nav-link active combustiblePestaña  col-4" id="balanceUno-tab"
-                                            data-bs-toggle="tab" data-bs-target="#balanceUno" type="button" role="tab" aria-controls="balanceUno" aria-selected="true">
+                                            data-bs-toggle="tab" data-bs-target="#balanceUno" type="button" role="tab"
+                                            aria-controls="balanceUno" aria-selected="true">
 
 
-                                            <img id="myImage" onclick="changeImage()" src="{{ asset('img/inventario/cargaVerde.svg') }}" class="mx-auto d-block" width="65%">
+                                            <img id="myImage" onclick="changeImage()"
+                                                src="{{ asset('img/inventario/cargaVerde.svg') }}" class="mx-auto d-block"
+                                                width="65%">
                                             <p class="text-center mt-2">CARGA</p>
                                         </button>
-                                        <button class="nav-link  combustiblePestaña col-4" id="balanceDos-tab" data-bs-toggle="tab" data-bs-target="#balanceDos" type="button" role="tab" aria-controls="balanceDos" aria-selected="false">
-                                           
+                                        <button class="nav-link  combustiblePestaña col-4" id="balanceDos-tab"
+                                            data-bs-toggle="tab" data-bs-target="#balanceDos" type="button" role="tab"
+                                            aria-controls="balanceDos" aria-selected="false">
 
-                                            <img id="myImage1" onclick="changeImage1()" src="{{ asset('img/inventario/descargaGris.svg') }}" class="mx-auto d-block" width="65%">
+
+                                            <img id="myImage1" onclick="changeImage1()"
+                                                src="{{ asset('img/inventario/descargaGris.svg') }}" class="mx-auto d-block"
+                                                width="65%">
                                             <p class="text-center mt-2">DESCARGA</p>
                                         </button>
                                         <div class="col-4">
@@ -39,7 +46,9 @@
 
                                     <div class="tab-pane fade show active border" id="balanceUno" role="tabpanel"
                                         aria-labelledby="balanceUno-tab" tabindex="0">
-                                        <form action="" method="post">
+                                        <form action="{{ route('inventario.cargaCombustible') }}" method="post">
+                                            @csrf
+                                            @method('put')
                                             <div class="col-12 my-5 ">
                                                 <div class="row mt-5">
                                                     <div class="col-4">
@@ -63,8 +72,15 @@
                                                                 </div>
                                                                 <div>
                                                                     <label class="labelTitulo">Equipo:</label></br>
-                                                                    <input type="text" class="inputCaja" id="marca"
-                                                                        name="marca" value="{{ old('marca') }}">
+                                                                    <select id="maquinariaId" name="maquinariaId"
+                                                                        class="form-select"
+                                                                        aria-label="Default select example">
+                                                                        @foreach ($maquinaria as $maquina)
+                                                                            <option value="{{ $maquina->id }}">
+                                                                                {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
                                                                 </div>
                                                             </div>
 
@@ -75,8 +91,15 @@
                                                                 </div>
                                                                 <div>
                                                                     <label class="labelTitulo">Despachador:</label></br>
-                                                                    <input type="text" class="inputCaja" id="marca"
-                                                                        name="marca" value="{{ old('marca') }}">
+                                                                    <select id="operadorId" name="operadorId"
+                                                                        class="form-select"
+                                                                        aria-label="Default select example">
+                                                                        @foreach ($personal as $persona)
+                                                                            <option value="{{ $persona->id }}">
+                                                                                {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
                                                                 </div>
                                                             </div>
 
@@ -87,8 +110,9 @@
                                                                 </div>
                                                                 <div>
                                                                     <label class="labelTitulo">Litros:</label></br>
-                                                                    <input type="text" class="inputCaja" id="marca"
-                                                                        name="marca" value="{{ old('marca') }}">
+                                                                    <input type="number" step="0.01" min="0.01"
+                                                                        class="inputCaja" id="litros" name="litros"
+                                                                        value="{{ old('litros') }}">
                                                                 </div>
                                                             </div>
 
@@ -100,9 +124,9 @@
                                                                 </div>
                                                                 <div>
                                                                     <label class="labelTitulo">Precio:</label></br>
-                                                                    <input type="text" class="inputCaja"
-                                                                        id="marca" name="marca"
-                                                                        value="{{ old('marca') }}">
+                                                                    <input type="number" step="0.01" min="0.01"
+                                                                        class="inputCaja" id="precio" name="precio"
+                                                                        value="{{ old('precio') }}">
                                                                 </div>
                                                             </div>
 
@@ -124,7 +148,9 @@
 
                                     <div class="tab-pane fade border" id="balanceDos" role="tabpanel"
                                         aria-labelledby="balanceDos-tab" tabindex="0">
-                                        <form action="" method="post">
+                                        <form action="{{ route('inventario.descargaCombustible') }}" method="post">
+                                            @csrf
+                                            @method('put')
                                             <div class="col-12 my-5 ">
                                                 <div class="row mt-5">
                                                     <div class="col-4">
@@ -148,9 +174,15 @@
                                                                 </div>
                                                                 <div>
                                                                     <label class="labelTitulo">Equipo:</label></br>
-                                                                    <input type="text" class="inputCaja"
-                                                                        id="marca" name="marca"
-                                                                        value="{{ old('marca') }}">
+                                                                    <select id="servicioId" name="servicioId"
+                                                                    class="form-select"
+                                                                    aria-label="Default select example">
+                                                                    @foreach ($maquinaria as $maquina)
+                                                                        <option value="{{ $maquina->id }}">
+                                                                            {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
                                                                 </div>
                                                             </div>
 
@@ -161,9 +193,15 @@
                                                                 </div>
                                                                 <div>
                                                                     <label class="labelTitulo">Maquinaria:</label></br>
-                                                                    <input type="text" class="inputCaja"
-                                                                        id="marca" name="marca"
-                                                                        value="{{ old('marca') }}">
+                                                                    <select id="maquinariaId" name="maquinariaId"
+                                                                    class="form-select"
+                                                                    aria-label="Default select example">
+                                                                    @foreach ($maquinaria as $maquina)
+                                                                        <option value="{{ $maquina->id }}">
+                                                                            {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
                                                                 </div>
                                                             </div>
 
@@ -174,9 +212,15 @@
                                                                 </div>
                                                                 <div>
                                                                     <label class="labelTitulo">Despachador:</label></br>
-                                                                    <input type="text" class="inputCaja"
-                                                                        id="marca" name="marca"
-                                                                        value="{{ old('marca') }}">
+                                                                    <select id="operadorId" name="operadorId"
+                                                                        class="form-select"
+                                                                        aria-label="Default select example">
+                                                                        @foreach ($personal as $persona)
+                                                                            <option value="{{ $persona->id }}">
+                                                                                {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
                                                                 </div>
                                                             </div>
 
@@ -187,9 +231,15 @@
                                                                 </div>
                                                                 <div>
                                                                     <label class="labelTitulo">Operador:</label></br>
-                                                                    <input type="text" class="inputCaja"
-                                                                        id="marca" name="marca"
-                                                                        value="{{ old('marca') }}">
+                                                                    <select id="receptorId" name="receptorId"
+                                                                    class="form-select"
+                                                                    aria-label="Default select example">
+                                                                    @foreach ($personal as $persona)
+                                                                        <option value="{{ $persona->id }}">
+                                                                            {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
                                                                 </div>
                                                             </div>
 
@@ -200,9 +250,34 @@
                                                                 </div>
                                                                 <div>
                                                                     <label class="labelTitulo">Litros:</label></br>
-                                                                    <input type="text" class="inputCaja"
-                                                                        id="marca" name="marca"
-                                                                        value="{{ old('marca') }}">
+                                                                    <input type="number" step="0.01" min="0.01"
+                                                                        class="inputCaja" id="litros" name="litros"
+                                                                        value="{{ old('litros') }}">
+                                                                </div>
+                                                            </div>
+                                                            <div class=" col-6 d-flex mb-4">
+                                                                <div class="me-2">
+                                                                    <img src="{{ asset('/img/navs/personalMenu.svg') }}"
+                                                                        alt="" style="width:40px;">
+                                                                </div>
+                                                                <div>
+                                                                    <label class="labelTitulo">Km/Mi:</label></br>
+                                                                    <input type="number" step="0.01" min="0.01"
+                                                                        class="inputCaja" id="km" name="km"
+                                                                        value="{{ old('km') }}">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class=" col-6 d-flex mb-4">
+                                                                <div class="me-2">
+                                                                    <img src="{{ asset('/img/navs/personalMenu.svg') }}"
+                                                                        alt="" style="width:40px;">
+                                                                </div>
+                                                                <div>
+                                                                    <label class="labelTitulo">Horómetro:</label></br>
+                                                                    <input type="number" step="0.01" min="0.01"
+                                                                        class="inputCaja" id="horas" name="horas"
+                                                                        value="{{ old('horas') }}">
                                                                 </div>
                                                             </div>
 
@@ -327,22 +402,20 @@
             </div>
         </div>
     </div>
-@endsection 
-<script> 
-function changeImage() {
-    var image = document.getElementById('myImage');
-    image.src = "{{ asset('img/inventario/cargaVerde.svg') }}";
-    var image = document.getElementById('myImage1');
-   image.src = "{{ asset('img/inventario/descargaGris.svg') }}";
-}
+@endsection
+<script>
+    function changeImage() {
+        var image = document.getElementById('myImage');
+        image.src = "{{ asset('img/inventario/cargaVerde.svg') }}";
+        var image = document.getElementById('myImage1');
+        image.src = "{{ asset('img/inventario/descargaGris.svg') }}";
+    }
 
 
-function changeImage1() {
-    var image = document.getElementById('myImage1');
-    image.src = "{{ asset('img/inventario/descargaRojo.svg') }}";
-    var image = document.getElementById('myImage');
-   image.src = "{{ asset('img/inventario/cargaGris.svg') }}";
-}
+    function changeImage1() {
+        var image = document.getElementById('myImage1');
+        image.src = "{{ asset('img/inventario/descargaRojo.svg') }}";
+        var image = document.getElementById('myImage');
+        image.src = "{{ asset('img/inventario/cargaGris.svg') }}";
+    }
 </script>
-
-
