@@ -475,3 +475,11 @@ p.botonTitulos{
   color: #5C7C26;
 }
 
+.combustiblePestaña{
+  border: none;
+}
+.combustiblePestaña:hover,
+.combustiblePestaña:focus,
+.combustiblePestaña.active{
+  border: none;
+}
