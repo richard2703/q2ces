@@ -40,21 +40,10 @@
                                     <div class="tab-pane fade show active border" id="balanceUno" role="tabpanel"
                                         aria-labelledby="balanceUno-tab" tabindex="0">
                                         <form action="" method="post">
-                                            <div class="col-12 my-5 ">
-                                                <div class="row mt-5">
-                                                    <div class="col-4">
-                                                        <div class="text-center mx-auto border vistaFoto mb-4">
-                                                            <i><img class="imgVista img-fluid mb-2"
-                                                                    src="{{ asset('/img/general/default.jpg') }}"></i>
-                                                            <span class="mi-archivo"> <input class="mb-4 ver "
-                                                                    type="file" name="ruta[]" id="mi-archivo"
-                                                                    accept="image/*" multiple></span>
-                                                            <label for="mi-archivo">
-                                                                <span class="">Sube Imagen</span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-8">
+                                            
+                                               
+                                                   
+                                                    <div class="col-12 mt-5">
                                                         <div class="row ">
                                                             <div class=" col-6 d-flex mb-4">
                                                                 <div class="me-2">
@@ -111,8 +100,8 @@
                                                     </div>
 
 
-                                                </div>
-                                            </div>
+                                                
+                                            
                                             <div class="col-12 text-center mb-3 ">
                                                 <button type="submit" class="btn botonGral"
                                                     onclick="test()">Guardar</button>
@@ -128,16 +117,19 @@
                                             <div class="col-12 my-5 ">
                                                 <div class="row mt-5">
                                                     <div class="col-4">
-                                                        <div class="text-center mx-auto border vistaFoto mb-4">
-                                                            <i><img class="imgVista img-fluid mb-2"
-                                                                    src="{{ asset('/img/general/default.jpg') }}"></i>
-                                                            <span class="mi-archivo"> <input class="mb-4 ver "
-                                                                    type="file" name="ruta[]" id="mi-archivo"
-                                                                    accept="image/*" multiple></span>
-                                                            <label for="mi-archivo">
-                                                                <span class="">Sube Imagen</span>
-                                                            </label>
-                                                        </div>
+                                                        <div class="mb-5">
+                                                            <img class="imgVista img-fluid mb-2" src="{{ asset('/img/inventario/horometro.svg') }}">
+                                                            <span class="mi-archivo"> <input class="mb-4 ver " type="file" name="ruta[]" id="mi-archivo" accept="image/*" multiple></span>
+                                                          </div>  
+
+
+                                                          <div class="mb-5">
+                                                            <img class="imgVista img-fluid mb-2" src="{{ asset('/img/inventario/kilometraje.svg') }}">
+                                                            <span class="mi-archivo"> <input class="mb-4 ver " type="file" name="ruta[]" id="mi-archivo" accept="image/*" multiple></span>
+                                                          </div>  
+
+
+                                                        
                                                     </div>
                                                     <div class="col-8">
                                                         <div class="row ">
@@ -205,6 +197,34 @@
                                                                         value="{{ old('marca') }}">
                                                                 </div>
                                                             </div>
+
+                                                            <div class=" col-6 d-flex mb-4">
+                                                                <div class="me-2">
+                                                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                                                        alt="" style="width:40px;">
+                                                                </div>
+                                                                <div>
+                                                                    <label class="labelTitulo">Horómetro en máquinaria:</label></br>
+                                                                    <input type="text" class="inputCaja"
+                                                                        id="marca" name="marca"
+                                                                        value="{{ old('marca') }}">
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class=" col-6 d-flex mb-4">
+                                                                <div class="me-2">
+                                                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                                                        alt="" style="width:40px;">
+                                                                </div>
+                                                                <div>
+                                                                    <label class="labelTitulo">Kilometraje en máquinaria:</label></br>
+                                                                    <input type="text" class="inputCaja"
+                                                                        id="marca" name="marca"
+                                                                        value="{{ old('marca') }}">
+                                                                </div>
+                                                            </div>
+
 
                                                         </div>
 
