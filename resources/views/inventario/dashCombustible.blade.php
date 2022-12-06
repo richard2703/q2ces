@@ -1,6 +1,17 @@
 @extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Carga y Descarga')])
 @section('content')
     <div class="content">
+        @if ($errors->any())
+            <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+            <div class="alert alert-danger">
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-md-11 align-self-center">
@@ -63,7 +74,7 @@
                                                                     <select id="maquinariaId" name="maquinariaId"
                                                                         class="form-select"
                                                                         aria-label="Default select example">
-                                                                        @foreach ($maquinaria as $maquina)
+                                                                        @foreach ($cisternas as $maquina)
                                                                             <option value="{{ $maquina->id }}">
                                                                                 {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
                                                                             </option>
@@ -82,7 +93,7 @@
                                                                     <select id="operadorId" name="operadorId"
                                                                         class="form-select"
                                                                         aria-label="Default select example">
-                                                                        @foreach ($personal as $persona)
+                                                                        @foreach ($despachador as $persona)
                                                                             <option value="{{ $persona->id }}">
                                                                                 {{ $persona->nombres . ' ' . $persona->apellidoP }}
                                                                             </option>
@@ -136,7 +147,8 @@
 
                                     <div class="tab-pane fade border" id="balanceDos" role="tabpanel"
                                         aria-labelledby="balanceDos-tab" tabindex="0">
-                                        <form action="{{ route('inventario.descargaCombustible') }}" method="post">
+                                        <form action="{{ route('inventario.descargaCombustible') }}" method="post"
+                                            enctype="multipart/form-data">
                                             @csrf
                                             @method('put')
                                             <div class="col-12 my-5 ">
@@ -146,7 +158,7 @@
                                                             <i><img class="imgVista img-fluid mb-2"
                                                                     src="{{ asset('/img/inventario/horometro.svg') }}"></i>
                                                             <span class="mi-archivo"> <input class="mb-4 ver "
-                                                                    type="file" name="ruta[]" id="mi-archivo"
+                                                                    type="file" name="imgKm" id="mi-archivo"
                                                                     accept="image/*" multiple></span>
                                                             <label for="mi-archivo">
                                                                 <span class="">Sube Imagen</span>
@@ -155,10 +167,10 @@
                                                         <div class="text-center mx-auto border vistaFoto mb-4">
                                                             <i><img class="imgVista img-fluid mb-2"
                                                                     src="{{ asset('/img/inventario/kilometraje.svg') }}"></i>
-                                                            <span class="mi-archivo"> <input class="mb-4 ver "
-                                                                    type="file" name="ruta[]" id="mi-archivo"
+                                                            <span class="mi-archivo2"> <input class="mb-4 ver "
+                                                                    type="file" name="imgHoras" id="mi-archivo2"
                                                                     accept="image/*" multiple></span>
-                                                            <label for="mi-archivo">
+                                                            <label for="mi-archivo2">
                                                                 <span class="">Sube Imagen</span>
                                                             </label>
                                                         </div>
@@ -176,7 +188,7 @@
                                                                     <select id="servicioId" name="servicioId"
                                                                         class="form-select"
                                                                         aria-label="Default select example">
-                                                                        @foreach ($maquinaria as $maquina)
+                                                                        @foreach ($cisternas as $maquina)
                                                                             <option value="{{ $maquina->id }}">
                                                                                 {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
                                                                             </option>
@@ -214,7 +226,7 @@
                                                                     <select id="operadorId" name="operadorId"
                                                                         class="form-select"
                                                                         aria-label="Default select example">
-                                                                        @foreach ($personal as $persona)
+                                                                        @foreach ($despachador as $persona)
                                                                             <option value="{{ $persona->id }}">
                                                                                 {{ $persona->nombres . ' ' . $persona->apellidoP }}
                                                                             </option>
@@ -401,7 +413,6 @@
             </div>
         </div>
     </div>
-@endsection
 <script>
     function changeImage() {
         var image = document.getElementById('myImage');
@@ -418,3 +429,15 @@
         image.src = "{{ asset('img/inventario/cargaGris.svg') }}";
     }
 </script>
+
+<script type="application/javascript">
+    jQuery('input[type=file]').change(function(){
+     var filename = jQuery(this).val().split('\\').pop();
+     var idname = jQuery(this).attr('id');
+     console.log(jQuery(this));
+     console.log(filename);
+     console.log(idname);
+     jQuery('span.'+idname).next().find('span').html(filename);
+    });
+    </script>
+@endsection

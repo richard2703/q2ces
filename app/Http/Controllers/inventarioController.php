@@ -30,10 +30,12 @@ class inventarioController extends Controller
     {
         if ($tipo == 'combustible') {
 
+            $despachador = personal::where("userId", auth()->user()->id)->get();
             $personal = personal::all();
-            $maquinaria = maquinaria::all();
+            $maquinaria = maquinaria::where("cisterna", 0)->orderBy('nombre', 'asc')->get();
+            $cisternas = maquinaria::where("cisterna", 1)->orderBy('nombre', 'asc')->get();
 
-            return view('inventario.dashCombustible', compact('personal', 'maquinaria'));
+            return view('inventario.dashCombustible', compact('despachador','personal', 'maquinaria','cisternas'));
         } else {
             $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(5);
             return view('inventario.indexInventario', compact('inventarios'));
@@ -278,6 +280,15 @@ class inventarioController extends Controller
      */
     public function cargaCombustible(Request $request)
     {
+        $request->validate([
+            'litros' => 'required|numeric',
+            'precio' => 'required|numeric',
+        ], [
+            'litros.required' => 'El campo litros es obligatorio.',
+            'precio.required' => 'El campo precio es obligatorio.',
+            'litros.numeric' => 'El campo litros debe de ser numérico.',
+            'precio.numeric' => 'El campo precio debe de ser numérico.',
+        ]);
         $carga = $request->only(
             'litros',
             'maquinariaId',
@@ -285,7 +296,14 @@ class inventarioController extends Controller
             'precio',
         );
 
+        //*** guardamos el registro */
         carga::create($carga);
+
+        //buscamos el equipo para actulizar el nivel de la cisterna
+        $cisterna =   maquinaria::where("id", $request['maquinariaId'])->first();
+        $cisterna->cisternaNivel = ( $cisterna->cisternaNivel + $request['litros']);
+        $cisterna->update();
+
         Session::flash('message', 1);
         return view('inventario.dashInventario');
     }
@@ -298,6 +316,22 @@ class inventarioController extends Controller
      */
     public function descargaCombustible(Request $request)
     {
+        $request->validate([
+            'litros' => 'required|numeric',
+            'km' => 'required|numeric',
+            'horas' => 'required|numeric',
+            'imgKm' => 'required',
+            'imgHoras' => 'required',
+        ], [
+            'litros.required' => 'El campo litros es obligatorio.',
+            'km.required' => 'El campo Km/Mi es obligatorio.',
+            'horas.required' => 'El campo horómetro es obligatorio.',
+            'imgKm.required' => 'El campo imagen de kilometraje es obligatorio.',
+            'imgHoras.required' => 'El campo imagen de horómetro es obligatorio.',
+            'litros.numeric' => 'El campo litros debe de ser numérico.',
+            'km.numeric' => 'El campo Km/Mi debe de ser numérico.',
+            'horas.numeric' => 'El campo horometro debe de ser numérico.',
+        ]);
         $descarga = $request->only(
             'horas',
             'km',
@@ -310,12 +344,21 @@ class inventarioController extends Controller
             'servicioId',
         );
 
+        if ($request->hasFile("imgKm")) {
+            $descarga['imgKm'] = time() . '_' . 'imgKm.' . $request->file('imgKm')->getClientOriginalExtension();
+            $request->file('imgKm')->storeAs('/public/combustibles', $descarga['imgKm']);
+        }
+        if ($request->hasFile("imgHoras")) {
+            $descarga['imgHoras'] = time() . '_' . 'imgHoras.' . $request->file('imgHoras')->getClientOriginalExtension();
+            $request->file('imgHoras')->storeAs('/public/combustibles', $descarga['imgHoras']);
+        }
         // dd($request);
 
-        // if ($request->hasFile("imgKm")) {
-        //     $ruta['imgKm'] = time() . '_' . 'imgKm.' . $request->file('ruta')->getClientOriginalExtension();
-        //     $request->file('imgKm')->storeAs('/public/inventario/combustibles', $ruta['imgKm']);
-        // }
+
+        //buscamos el equipo para actulizar el nivel de la cisterna
+        $cisterna =   maquinaria::where("id", $request['servicioId'])->first();
+        $cisterna->cisternaNivel = ( $cisterna->cisternaNivel - $request['litros']);
+        $cisterna->update();
 
         descarga::create($descarga);
         Session::flash('message', 1);
