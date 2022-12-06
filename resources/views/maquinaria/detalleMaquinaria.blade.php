@@ -317,6 +317,17 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                                <label class="labelTitulo">Uso como
+                                                                    cisterna:</label></br>
+                                                                <select class="form-select"
+                                                                    aria-label="Default select example" id="cisterna"
+                                                                    name="cisterna">
+                                                                    <option value="0" {{ $maquinaria->cisterna == 0 ? ' selected' : '' }}>No</option>
+                                                                    <option value="1" {{ $maquinaria->cisterna == 1 ? ' selected' : '' }}>Sí</option>
+                                                                </select>
+                                                            </div>
                                                         </div>
 
 

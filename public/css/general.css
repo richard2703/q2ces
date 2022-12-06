@@ -67,7 +67,6 @@ a.textEquipo:hover{
 .imgVista{
   object-fit: cover;
   width:85%;
-  height:100%;
 }
 
 .vistaLogo{

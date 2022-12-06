@@ -299,6 +299,8 @@ CREATE TABLE maquinaria(
   foto2 varchar(255) NULL,
   foto3 varchar(255) NULL,
   foto4 varchar(255) NULL,
+  cisterna int(1) NULL,
+  cisternaNivel float(10,2) NULL,
   PRIMARY KEY (id)
  );
 
@@ -446,7 +448,7 @@ CREATE TABLE carga(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   maquinariaId bigint(20) unsigned NOT NULL,
   operadorId bigint(20) unsigned NOT NULL,
-  precio float(10,2) not null, 
+  precio float(10,2) not null,
   litros float(10,2) not null,
   created_at datetime NULL,
   updated_at datetime NULL,
@@ -463,7 +465,9 @@ CREATE TABLE descarga(
   receptorId bigint(20) unsigned NOT NULL,
   litros float(10,2) not null,
   km int not null,
-  Horas float(10,2) not null,
+  imgKm varchar(255) not null,
+  horas float(10,2) not null,
+  imgHoras varchar(255) not null,
   created_at datetime NULL,
   updated_at datetime NULL,
   PRIMARY KEY (id),

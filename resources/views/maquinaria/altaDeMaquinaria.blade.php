@@ -110,7 +110,8 @@
                                                                             fill="currentColor"
                                                                             class="bi bi-plus-circle-fill btnMas"
                                                                             viewBox="0 0 16 16">
-                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                                                            <path
+                                                                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
                                                                         </svg>
                                                                     </div>
                                                                 </div>
@@ -284,10 +285,23 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                                <label class="labelTitulo">Uso como
+                                                                    cisterna:</label></br>
+                                                                <select class="form-select"
+                                                                    aria-label="Default select example" id="cisterna"
+                                                                    name="cisterna">
+                                                                    <option value="0">No</option>
+                                                                    <option value="1">Sí</option>
+                                                                </select>
+                                                                <input type="hidden" id="cisternaNivel"
+                                                                    name="cisternaNivel" value="0">
+                                                            </div>
                                                         </div>
-
-
                                                     </div>
+
+
                                                 </div>
                                             </div>
                                         </div>
