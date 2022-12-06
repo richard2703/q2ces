@@ -8,27 +8,11 @@
 
     <div class="sidebar-wrapper menu">
         <ul class="nav">
-            <!-- inicio de colapsable -->
-
+            
+        <!-- EQUIPOS -->
             <li class="nav-item {{ $activePage == 'dashboard' || $activePage == 'user-management' ? ' active' : '' }}">
-                <a href="#equipo" class="nav-link p-2" data-toggle="collapse" aria-expanded="false">
-
-                    <svg class="iconMenu " style="width:25px" id="Capa_1" data-name="Capa 1"
-                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 40">
-                        <defs>
-                        </defs>
-                        <g id="Capa_2" data-name="Capa 2">
-                            <g id="Capa_5" data-name="Capa 5">
-                                <path class="cls-1"
-                                    d="M25.43,0H15a1.38,1.38,0,0,0-1.36,1.25l-.93,19.31H10.3V15a1,1,0,0,0-1-1h0a1,1,0,0,0-1,1v5.53h-1V16.89a.71.71,0,0,0-.7-.72h0a.71.71,0,0,0-.7.72h0v3.67H5a1.16,1.16,0,0,0-1.15,1l-.79,5.5a6.89,6.89,0,0,1,3.32-.85,7.11,7.11,0,0,1,7,7.2v.49h3.79a11,11,0,0,1-.52-3.31A10.31,10.31,0,0,1,26.8,20.16V1.41A1.39,1.39,0,0,0,25.43,0Zm-.71,17.79a1.37,1.37,0,0,1-1.07,1.36,10.32,10.32,0,0,0-7.43,6.37.94.94,0,0,1-.85.59h-.46a.94.94,0,0,1-.92-1s0-.06,0-.09L15.22,3.15A1.39,1.39,0,0,1,16.58,1.9h6.77a1.39,1.39,0,0,1,1.37,1.41h0ZM7.46,33.42a1.05,1.05,0,1,1-1-1.08h0A1.06,1.06,0,0,1,7.46,33.42Zm5.36-1v2.06a.4.4,0,0,1-.38.39h0a.4.4,0,0,0-.37.28,6.26,6.26,0,0,1-.48,1.2.39.39,0,0,0,.06.47h0a.4.4,0,0,1,0,.56L10.23,38.8a.38.38,0,0,1-.54,0h0a.38.38,0,0,0-.45-.07,5.5,5.5,0,0,1-1.17.5.4.4,0,0,0-.28.38h0a.4.4,0,0,1-.38.39h-2A.38.38,0,0,1,5,39.63v0H5a.4.4,0,0,0-.28-.38,5.5,5.5,0,0,1-1.17-.5.38.38,0,0,0-.45.07h0a.39.39,0,0,1-.55,0L1.17,37.35a.4.4,0,0,1,0-.56h0a.39.39,0,0,0,.06-.47,6.26,6.26,0,0,1-.48-1.2.4.4,0,0,0-.37-.28h0A.4.4,0,0,1,0,34.45V32.39A.4.4,0,0,1,.38,32h0a.4.4,0,0,0,.37-.28,6.26,6.26,0,0,1,.48-1.2.39.39,0,0,0-.06-.47h0a.4.4,0,0,1,0-.56L2.58,28a.39.39,0,0,1,.55,0,.38.38,0,0,0,.45.07,5.5,5.5,0,0,1,1.17-.5A.41.41,0,0,0,5,27.23H5a.38.38,0,0,1,.37-.39h2a.38.38,0,0,1,.38.38h0a.4.4,0,0,0,.28.38,5.5,5.5,0,0,1,1.17.5A.37.37,0,0,0,9.69,28h0a.38.38,0,0,1,.54,0h0l1.42,1.45a.4.4,0,0,1,0,.56h0a.39.39,0,0,0-.06.47,6.26,6.26,0,0,1,.48,1.2.4.4,0,0,0,.37.28h0a.38.38,0,0,1,.38.4v.06Zm-3.42,1a3,3,0,0,0-2.93-3.07H6.4a3.07,3.07,0,1,0,0,6.14,3,3,0,0,0,3-3Zm19-2.82a1.51,1.51,0,1,1-1.5-1.54,1.52,1.52,0,0,1,1.5,1.54ZM36,29.14v2.93a.55.55,0,0,1-.54.56h0a.55.55,0,0,0-.52.41,8.74,8.74,0,0,1-.69,1.71.58.58,0,0,0,.09.67h0a.57.57,0,0,1,0,.79l-2,2.08a.55.55,0,0,1-.77,0,.55.55,0,0,0-.66-.1,7.83,7.83,0,0,1-1.66.71.56.56,0,0,0-.4.54h0a.55.55,0,0,1-.54.56H25.42a.56.56,0,0,1-.55-.56h0a.56.56,0,0,0-.4-.54,7.83,7.83,0,0,1-1.66-.71.53.53,0,0,0-.65.1.56.56,0,0,1-.78,0l-2-2.08a.57.57,0,0,1,0-.79h0a.56.56,0,0,0,.09-.67,9.13,9.13,0,0,1-.7-1.75.56.56,0,0,0-.53-.41h0a.56.56,0,0,1-.55-.56V29.14a.56.56,0,0,1,.55-.56h0a.56.56,0,0,0,.53-.41,9.67,9.67,0,0,1,.68-1.71.56.56,0,0,0-.09-.67.57.57,0,0,1,0-.79l2-2.08a.54.54,0,0,1,.76,0l0,0a.53.53,0,0,0,.65.09,8.35,8.35,0,0,1,1.66-.7.56.56,0,0,0,.4-.54h0a.56.56,0,0,1,.55-.56h2.86a.55.55,0,0,1,.54.56h0a.56.56,0,0,0,.4.54,8.35,8.35,0,0,1,1.66.7.56.56,0,0,0,.66-.09.53.53,0,0,1,.75,0l0,0,2,2.08a.57.57,0,0,1,0,.79h0a.58.58,0,0,0-.09.67,8.74,8.74,0,0,1,.69,1.71.55.55,0,0,0,.52.41h0a.56.56,0,0,1,.59.51ZM31.12,30.6A4.27,4.27,0,1,0,26.85,35a4.31,4.31,0,0,0,4.27-4.37Z"
-                                    transform="translate(0)" />
-                            </g>
-                        </g>
-                    </svg>
-
-
-
-                    <!--<i><img class="imgMenu" style="width:25px" src="{{ asset('/img/navs/eqiposMenu.svg') }}"></i>-->
+                <a href="#equipo" onmouseover="cambiar();" onmouseout="volver();" class="nav-link p-2" data-toggle="collapse" aria-expanded="false">
+                    <i><img id="cambiaBCO" ssrc="{{ $activePage == 'equipos' ? ' img/navs/eqiposMenuBCO.svg' : '/img/navs/eqiposMenu.svg' }}"  style="width:25px">  </i> 
                     <p>{{ __('Equipos') }}
                         <b class="caret"></b>
                     </p>
@@ -67,10 +51,11 @@
                     </ul>
                 </div>
             </li>
+
             <!------ PERSONAL ------>
             <li class="nav-item {{ $activePage == 'personal' || $activePage == 'user-management' ? ' active' : '' }}">
-                <a class="nav-link p-2 " data-toggle="collapse" href="#personal" aria-expanded="false">
-                    <i><img style="width:25px" src="{{ asset('/img/navs/personalMenu.svg') }}"></i>
+                <a class="nav-link p-2 " onmouseover="cambiar2();" onmouseout="volver2();" data-toggle="collapse" href="#personal" aria-expanded="false">
+                    <i><img id="cambiaBCO2" style="width:25px" src="{{ $activePage == 'personal' ? ' img/navs/personalMenuBCO.svg' : '/img/navs/personalMenu.svg' }}"></i>
                     <p>{{ __('Personal') }}
                         <b class="caret"></b>
                     </p>
@@ -104,11 +89,9 @@
             </li>
 
             <!------ INVENTARIO ------>
-
-            <li class="nav-item {{ $activePage == 'profile' || $activePage == 'user-management' ? ' active' : '' }}">
-                <a
-                    href="{{ route('inventario.dash') }}"class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
-                    <i><img style="width:25px" src="{{ asset('/img/navs/inventarioMenu.svg') }}"></i>
+            <li class="nav-item {{ $activePage == 'inventario' || $activePage == 'user-management' ? ' active' : '' }}">
+                <a href="{{ route('inventario.dash') }}" onmouseover="cambiar3();" onmouseout="volver3();" class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
+                    <i><img id="cambiaBCO3" style="width:25px" src="{{ $activePage == 'inventario' ? ' img/navs/inventarioMenuBCO.svg' : '/img/navs/inventarioMenu.svg' }}"></i>
                     <p> {{ __('inventario') }} </p>
                     {{--  <b class="caret"></b>  --}}
                 </a>
@@ -116,8 +99,8 @@
 
             <!------ OBRA ------>
             <li class="nav-item {{ $activePage == 'obra' || $activePage == 'user-management' ? ' active' : '' }}">
-                <a class="nav-link p-2" data-toggle="collapse" href="#obras" aria-expanded="false">
-                    <i><img style="width:25px" src="{{ asset('/img/navs/obrasMenu.svg') }}"></i>
+                <a class="nav-link p-2" onmouseover="cambiar4();" onmouseout="volver4();" data-toggle="collapse" href="#obras" aria-expanded="false">
+                    <i><img id="cambiaBCO4" src="{{ $activePage == 'obra' ? ' img/navs/obrasMenuBCO.svg' : '/img/navs/obrasMenu.svg' }}" style="width:25px"></i>
                     <p>{{ __('Obra') }}
                         <b class="caret"></b>
                     </p>
@@ -148,9 +131,9 @@
                 </div>
             </li>
             <!------ BITÁCORAS ------>
-            <li class="nav-item {{ $activePage == 'profile' || $activePage == 'user-management' ? ' active' : '' }}">
-                <a class="nav-link p-2" data-toggle="collapse" href="#bitacorass" aria-expanded="false">
-                    <i><img style="width:25px" src="{{ asset('/img/navs/bitacorasMenu.svg') }}"></i>
+            <li class="nav-item {{ $activePage == 'bitacoras' || $activePage == 'user-management' ? ' active' : '' }}">
+                <a class="nav-link p-2" onmouseover="cambiar5();" onmouseout="volver5();" data-toggle="collapse" href="#bitacorass" aria-expanded="false">
+                    <i><img id="cambiaBCO5" src="{{ $activePage == 'bitacoras' ? ' img/navs/bitacorasMenuBCO.svg' : '/img/navs/bitacorasMenu.svg' }}" style="width:25px"></i>
                     <p>{{ __('Bitácoras / Reportes') }}
                         <b class="caret"></b>
                     </p>
@@ -185,9 +168,9 @@
                 </div>
             </li>
             <!------ FORMATOS ------>
-            <li class="nav-item {{ $activePage == 'profile' || $activePage == 'user-management' ? ' active' : '' }}">
-                <a class="nav-link p-2" data-toggle="collapse" href="#formatoss" aria-expanded="false">
-                    <i><img style="width:25px" src="{{ asset('/img/navs/formatosMenu.svg') }}"></i>
+            <li class="nav-item {{ $activePage == 'formatos' || $activePage == 'user-management' ? ' active' : '' }}">
+                <a class="nav-link p-2" onmouseover="cambiar6();" onmouseout="volver6();" data-toggle="collapse" href="#formatoss" aria-expanded="false">
+                    <i><img id="cambiaBCO6" src="{{ $activePage == 'formatos' ? ' img/navs/formatosmenuBCO.svg' : '/img/navs/formatosmenu.svg' }}" style="width:25px"></i>
                     <p>{{ __('Formatos') }}
                         <b class="caret"></b>
                     </p>
@@ -227,16 +210,69 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-
 <script>
     $('.nav-item').on('mouseover', function() {
-
         $(this).css({
-
             'fill': '#fff'
-
         });
-
     });
+
+//FUNCIONES PARA CAMBIAR BOTONES A BLANCO
+//---equipos-----
+function cambiar(){
+  document.getElementById('cambiaBCO').src="{{ asset('/img/navs/eqiposMenuBCO.svg') }}";
+}
+function volver(){
+  document.getElementById('cambiaBCO').src="{{ asset('/img/navs/eqiposMenu.svg') }}";
+}
+
+//---personal-----
+function cambiar2(){
+  document.getElementById('cambiaBCO2').src="{{ asset('/img/navs/personalMenuBCO.svg') }}";
+}
+function volver2(){
+  document.getElementById('cambiaBCO2').src="{{ asset('/img/navs/personalMenu.svg') }}";
+}
+
+//---inventario-----
+function cambiar3(){
+  document.getElementById('cambiaBCO3').src="{{ asset('/img/navs/inventarioMenuBCO.svg') }}";
+}
+function volver3(){
+  document.getElementById('cambiaBCO3').src="{{ asset('/img/navs/inventarioMenu.svg') }}";
+}
+
+//---obra-----
+function cambiar4(){
+  document.getElementById('cambiaBCO4').src="{{ asset('/img/navs/obrasMenuBCO.svg') }}";
+}
+function volver4(){
+  document.getElementById('cambiaBCO4').src="{{ asset('/img/navs/obrasMenu.svg') }}";
+}
+
+//---bitacora-----
+function cambiar5(){
+  document.getElementById('cambiaBCO5').src="{{ asset('/img/navs/bitacorasMenuBCO.svg') }}";
+}
+function volver5(){
+  document.getElementById('cambiaBCO5').src="{{ asset('/img/navs/bitacorasMenu.svg') }}";
+}
+
+//---formatos-----
+function cambiar6(){
+  document.getElementById('cambiaBCO6').src="{{ asset('/img/navs/formatosmenuBCO.svg') }}";
+}
+function volver6(){
+  document.getElementById('cambiaBCO6').src="{{ asset('/img/navs/formatosmenu.svg') }}";
+}
+
+
+
+
+
+
+
+
+
+
 </script>
