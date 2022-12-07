@@ -413,24 +413,24 @@
             </div>
         </div>
     </div>
-<script>
-    function changeImage() {
-        var image = document.getElementById('myImage');
-        image.src = "{{ asset('img/inventario/cargaVerde.svg') }}";
-        var image = document.getElementById('myImage1');
-        image.src = "{{ asset('img/inventario/descargaGris.svg') }}";
-    }
+    <script>
+        function changeImage() {
+            var image = document.getElementById('myImage');
+            image.src = "{{ asset('img/inventario/cargaVerde.svg') }}";
+            var image = document.getElementById('myImage1');
+            image.src = "{{ asset('img/inventario/descargaGris.svg') }}";
+        }
 
 
-    function changeImage1() {
-        var image = document.getElementById('myImage1');
-        image.src = "{{ asset('img/inventario/descargaRojo.svg') }}";
-        var image = document.getElementById('myImage');
-        image.src = "{{ asset('img/inventario/cargaGris.svg') }}";
-    }
-</script>
+        function changeImage1() {
+            var image = document.getElementById('myImage1');
+            image.src = "{{ asset('img/inventario/descargaRojo.svg') }}";
+            var image = document.getElementById('myImage');
+            image.src = "{{ asset('img/inventario/cargaGris.svg') }}";
+        }
+    </script>
 
-<script type="application/javascript">
+    <script type="application/javascript">
     jQuery('input[type=file]').change(function(){
      var filename = jQuery(this).val().split('\\').pop();
      var idname = jQuery(this).attr('id');
