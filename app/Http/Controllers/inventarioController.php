@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\inventario;
+use App\Models\personal;
 use App\Models\restock;
 use App\Models\invconsu;
+use App\Models\carga;
+use App\Models\descarga;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
@@ -17,6 +20,7 @@ class inventarioController extends Controller
     {
         return view('inventario.dashInventario');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,9 +28,18 @@ class inventarioController extends Controller
      */
     public function index($tipo)
     {
-        $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(5);
+        if ($tipo == 'combustible') {
 
-        return view('inventario.indexInventario', compact('inventarios'));
+            $despachador = personal::where("userId", auth()->user()->id)->get();
+            $personal = personal::all();
+            $maquinaria = maquinaria::where("cisterna", 0)->orderBy('nombre', 'asc')->get();
+            $cisternas = maquinaria::where("cisterna", 1)->orderBy('nombre', 'asc')->get();
+
+            return view('inventario.dashCombustible', compact('despachador','personal', 'maquinaria','cisternas'));
+        } else {
+            $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(5);
+            return view('inventario.indexInventario', compact('inventarios'));
+        }
     }
 
     /**
@@ -94,7 +107,7 @@ class inventarioController extends Controller
         $vctHasta = maquinaria::all();
         // dd($vctDesde);
         $inventario = inventario::where("id", $inventario->id)->first();
-        return view('inventario.detalleInventario', compact('inventario','vctDesde','vctHasta'));
+        return view('inventario.detalleInventario', compact('inventario', 'vctDesde', 'vctHasta'));
     }
 
     /**
@@ -246,5 +259,109 @@ class inventarioController extends Controller
         }
         Session::flash('message', 1);
         return redirect()->route('inventario.show', $invconsu->productoId);
+    }
+
+
+    /**
+     * Captura de movimientos de combustible
+     *
+     * @return void
+     */
+    public function dashCombustible()
+    {
+        dd('Hola');
+    }
+
+    /**
+     * Realiza la carga y registro de combustible
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function cargaCombustible(Request $request)
+    {
+        $request->validate([
+            'litros' => 'required|numeric',
+            'precio' => 'required|numeric',
+        ], [
+            'litros.required' => 'El campo litros es obligatorio.',
+            'precio.required' => 'El campo precio es obligatorio.',
+            'litros.numeric' => 'El campo litros debe de ser numérico.',
+            'precio.numeric' => 'El campo precio debe de ser numérico.',
+        ]);
+        $carga = $request->only(
+            'litros',
+            'maquinariaId',
+            'operadorId',
+            'precio',
+        );
+
+        //*** guardamos el registro */
+        carga::create($carga);
+
+        //buscamos el equipo para actulizar el nivel de la cisterna
+        $cisterna =   maquinaria::where("id", $request['maquinariaId'])->first();
+        $cisterna->cisternaNivel = ( $cisterna->cisternaNivel + $request['litros']);
+        $cisterna->update();
+
+        Session::flash('message', 1);
+        return view('inventario.dashInventario');
+    }
+
+    /**
+     * Realiza la descarga y registro de combustible
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function descargaCombustible(Request $request)
+    {
+        $request->validate([
+            'litros' => 'required|numeric',
+            'km' => 'required|numeric',
+            'horas' => 'required|numeric',
+            'imgKm' => 'required',
+            'imgHoras' => 'required',
+        ], [
+            'litros.required' => 'El campo litros es obligatorio.',
+            'km.required' => 'El campo Km/Mi es obligatorio.',
+            'horas.required' => 'El campo horómetro es obligatorio.',
+            'imgKm.required' => 'El campo imagen de kilometraje es obligatorio.',
+            'imgHoras.required' => 'El campo imagen de horómetro es obligatorio.',
+            'litros.numeric' => 'El campo litros debe de ser numérico.',
+            'km.numeric' => 'El campo Km/Mi debe de ser numérico.',
+            'horas.numeric' => 'El campo horometro debe de ser numérico.',
+        ]);
+        $descarga = $request->only(
+            'horas',
+            'km',
+            'imgKm',
+            'imgHoras',
+            'litros',
+            'maquinariaId',
+            'operadorId',
+            'receptorId',
+            'servicioId',
+        );
+
+        if ($request->hasFile("imgKm")) {
+            $descarga['imgKm'] = time() . '_' . 'imgKm.' . $request->file('imgKm')->getClientOriginalExtension();
+            $request->file('imgKm')->storeAs('/public/combustibles', $descarga['imgKm']);
+        }
+        if ($request->hasFile("imgHoras")) {
+            $descarga['imgHoras'] = time() . '_' . 'imgHoras.' . $request->file('imgHoras')->getClientOriginalExtension();
+            $request->file('imgHoras')->storeAs('/public/combustibles', $descarga['imgHoras']);
+        }
+        // dd($request);
+
+
+        //buscamos el equipo para actulizar el nivel de la cisterna
+        $cisterna =   maquinaria::where("id", $request['servicioId'])->first();
+        $cisterna->cisternaNivel = ( $cisterna->cisternaNivel - $request['litros']);
+        $cisterna->update();
+
+        descarga::create($descarga);
+        Session::flash('message', 1);
+        return view('inventario.dashInventario');
     }
 }

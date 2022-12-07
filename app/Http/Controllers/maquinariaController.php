@@ -128,6 +128,7 @@ class maquinariaController extends Controller
         $maquinaria['numserie'] = strtoupper($maquinaria['numserie']);
 
         //  dd($request);
+
         $maquinaria = maquinaria::create($maquinaria);
         if ($request->hasFile("factura")) {
             $docs['factura'] = time() . '_' . $request->file('factura')->getClientOriginalName();

@@ -66,9 +66,9 @@ Route::get('/detalleHerramienta', function () {
     return view('inventario.detalleHerramienta');
 });
 
-Route::get('/dashCombustible', function () {
-    return view('inventario.dashCombustible');
-});
+// Route::get('/dashCombustible', function () {
+//     return view('inventario.dashCombustible');
+// });
 
 
 
@@ -139,7 +139,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/accesorios', [App\Http\Controllers\accesoriosController::class, 'store'])->name('accesorios.store');
     Route::get('/accesorios', [App\Http\Controllers\accesoriosController::class, 'index'])->name('accesorios.index');
     Route::get('/accesorios/{accesorios}', [App\Http\Controllers\accesoriosController::class, 'show'])->name('accesorios.show');
-    Route::put('/accesorios/{accesorios}', [App\Http\Controllers\accesoriosController::class, 'update'])->name('accesorios.update'); 
+    Route::put('/accesorios/{accesorios}', [App\Http\Controllers\accesoriosController::class, 'update'])->name('accesorios.update');
     Route::get('/accesorios/{accesorios}/edit', [App\Http\Controllers\accesoriosController::class, 'edit'])->name('accesorios.edit');
     Route::delete('/accesorios/{accesorios}', [App\Http\Controllers\accesoriosController::class, 'destroy'])->name('accesorios.delete');
 
@@ -153,4 +153,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/inventario/producto/{inventario}', [App\Http\Controllers\inventarioController::class, 'show'])->name('inventario.show');
     Route::get('/inventario/producto/{inventario}/edit', [App\Http\Controllers\inventarioController::class, 'edit'])->name('inventario.edit');
     Route::put('/inventario/{inventario}', [App\Http\Controllers\inventarioController::class, 'update'])->name('inventario.update');
+
+    Route::get('/inventario/combustible', [App\Http\Controllers\inventarioController::class, 'dashCombustible'])->name('inventario.dashCombustible');
+    Route::put('/inventario/combustible/carga', [App\Http\Controllers\inventarioController::class, 'cargaCombustible'])->name('inventario.cargaCombustible');
+    Route::put('/inventario/combustible/descarga', [App\Http\Controllers\inventarioController::class, 'descargaCombustible'])->name('inventario.descargaCombustible');
 });
