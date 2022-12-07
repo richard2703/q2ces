@@ -169,7 +169,7 @@
             </div>
         </div>
     </div>
-    
+
     <script src="{{ asset('js/alertas.js') }}"></script>
     <script src="https://cdn.lordicon.com/qjzruarw.js"></script>
 

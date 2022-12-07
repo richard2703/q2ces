@@ -67,7 +67,6 @@ a.textEquipo:hover{
 .imgVista{
   object-fit: cover;
   width:85%;
-  height:100%;
 }
 
 .vistaLogo{
@@ -250,7 +249,7 @@ ul li a.nav-link li.nav-item i svg.iconMenu{
   font-weight: normal;
 }
 
-.iconMenu:hover{
+svg.iconMenu:hover{
 color: #fff!important;
 }
 

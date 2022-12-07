@@ -4108,7 +4108,9 @@ tbody.collapse.show {
 .nav-tabs .nav-link:focus {
   /*border-color: #e9ecef #e9ecef #dee2e6;*/
 }
-
+.nav-link i svg:hover{
+color: #fff!important;
+}
 .nav-tabs .nav-link.disabled {
   color: #6c757d;
   background-color: transparent;
