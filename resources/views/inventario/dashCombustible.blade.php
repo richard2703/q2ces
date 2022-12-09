@@ -46,11 +46,11 @@
                                                 width="65%">
                                             <p class="text-center mt-2">DESCARGA</p>
                                         </button>
-                                        <div class="col-4">
+                                        {{--  <div class="col-4">
                                             <p class="text-end mb-2">Datos de Registro</p>
                                             <p class="text-end combustibleFecha"> 22/11/2022</p>
                                             <p class="text-end combustibleHora my-2">2:00 pm</p>
-                                        </div>
+                                        </div>  --}}
                                     </div>
                                 </nav>
                                 <div class="tab-content" id="nav-tabContent ">
@@ -305,7 +305,47 @@
                     </div>
                     <!--Espacio para los tres camiones-->
                     <div class="row">
-                        <div class="col-sm-4">
+
+                        @foreach ($gasolinas as $gasolina)
+                            <div class="col-sm-4">
+                                <div class="card">
+                                    <div class="card-body combustibleBorde">
+                                        <div class="bordeTitulo mb-3">
+                                            <h2 class="combustibleTitulo fw-semibold  my-3"> {{ $gasolina->nombre }}</h2>
+                                        </div>
+                                        <div class="row ">
+                                            <div class="col-12 mb-5">
+                                                <p class="text-end">Reserva</p>
+                                                <p class="combustibleLitros fw-semibold text-end">
+                                                    {{ $gasolina->cisternaNivel }} lts.</p>
+                                            </div>
+                                            <div class="col mb-3">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <p class=" ">Útima carga</p>
+                                                        <p class="combustiblefecha fw-semibold mb-3">
+                                                            {{ \Carbon\Carbon::parse($gasolina->created_at)->format('Y-m-d') }}
+                                                        </p>
+                                                        <p class="">$ por litro</p>
+                                                        <p class="combustibleLitros fw-semibold">$ {{ $gasolina->precio }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <p class=" text-end">Litros Cargados</p>
+                                                        <p class="combustibleLitros fw-semibold text-end">
+                                                            {{ $gasolina->litros }} lts.</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+
+                        {{--  <div class="col-sm-4">
                             <div class="card">
                                 <div class="card-body combustibleBorde">
                                     <div class="bordeTitulo mb-3">
@@ -399,7 +439,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>  --}}
 
                     </div>
                 </div>
