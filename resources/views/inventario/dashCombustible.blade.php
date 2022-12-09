@@ -46,11 +46,11 @@
                                                 width="65%">
                                             <p class="text-center mt-2">DESCARGA</p>
                                         </button>
-                                        <div class="col-4">
+                                        {{--  <div class="col-4">
                                             <p class="text-end mb-2">Datos de Registro</p>
                                             <p class="text-end combustibleFecha"> 22/11/2022</p>
                                             <p class="text-end combustibleHora my-2">2:00 pm</p>
-                                        </div>
+                                        </div>  --}}
                                     </div>
                                 </nav>
                                 <div class="tab-content" id="nav-tabContent ">
