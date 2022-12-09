@@ -39,7 +39,7 @@ class personalController extends Controller
     {
 
         $vctPersonal = personal::all();
-        return view('personal.altaDePersonal')->with('personal',$vctPersonal);
+        return view('personal.altaDePersonal')->with('personal', $vctPersonal);
     }
 
     /**
@@ -249,6 +249,9 @@ class personalController extends Controller
             $newuser->email =  $personal['mailEmpresarial'];
             $newuser->password = bcrypt('12345678');
             $newuser->save();
+
+            //** guardamos el id de usuario para el registro de personal */
+            $personal['userId'] = $newuser->id;
         }
 
         $personal = personal::create($personal);
@@ -447,7 +450,7 @@ class personalController extends Controller
             $nomina->decAfore + $nomina->decInfonavit + $nomina->decVacaciones + $nomina->decPrimaVacacional + $nomina->decAguinaldo + $nomina->isr, 2);
 
         // dd($nomina);
-        return view('personal.detalleDePersonal', compact('personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal','vctPersonal'));
+        return view('personal.detalleDePersonal', compact('personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal', 'vctPersonal'));
     }
 
     /**
