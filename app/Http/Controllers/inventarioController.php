@@ -47,16 +47,15 @@ class inventarioController extends Controller
             //     ->get();
 
 
-            $sql = 'select m.id,m.cisternaNivel ,m.nombre,c.precio ,c.litros, c.created_at  from maquinaria m 
-            inner join carga c on m.id =c.maquinariaId 
+            $sql = 'select m.id,m.cisternaNivel ,m.nombre,c.precio ,c.litros, c.created_at  from maquinaria m
+            inner join carga c on m.id =c.maquinariaId
             inner join (select max(c.id) id from carga c group by maquinariaId ) s
-            on s.id=c.id 
-            where m.cisterna = 1 
+            on s.id=c.id
+            where m.cisterna = 1
             order by m.nombre ';
             $gasolinas = DB::select($sql);
 
             // dd($gasolinas);
-
 
             // $cisternas = maquinaria::join('carga', 'maquinaria.id', '=', 'carga.maquinariaId')
             //     ->joinSub($carga, 'carga', function ($join) {
@@ -346,8 +345,15 @@ class inventarioController extends Controller
         $personal = personal::all();
         $maquinaria = maquinaria::where("cisterna", 0)->orderBy('nombre', 'asc')->get();
         $cisternas = maquinaria::where("cisterna", 1)->orderBy('nombre', 'asc')->get();
+        $sql = 'select m.id,m.cisternaNivel ,m.nombre,c.precio ,c.litros, c.created_at  from maquinaria m
+        inner join carga c on m.id =c.maquinariaId
+        inner join (select max(c.id) id from carga c group by maquinariaId ) s
+        on s.id=c.id
+        where m.cisterna = 1
+        order by m.nombre ';
+        $gasolinas = DB::select($sql);
 
-        return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas'));
+        return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas','gasolinas'));
     }
 
     /**
