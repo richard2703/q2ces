@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use App\Helpers\Validaciones;
 use App\Models\maquinaria;
+use Illuminate\Support\Facades\DB;
+
 
 class inventarioController extends Controller
 {
@@ -35,7 +37,38 @@ class inventarioController extends Controller
             $maquinaria = maquinaria::where("cisterna", 0)->orderBy('nombre', 'asc')->get();
             $cisternas = maquinaria::where("cisterna", 1)->orderBy('nombre', 'asc')->get();
 
-            return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas'));
+            // $lastcarga = carga::select('maquinariaId')->selectraw('max(id) as id')->groupBy('maquinariaId')->get();
+            $lastcarga = carga::select('maquinariaId')->selectraw('max(id) as id')->groupBy('maquinariaId')->get();
+
+            // $cisternas = maquinaria::join('carga', 'maquinaria.id', '=', 'carga.maquinariaId')
+            //     ->joinSub($lastcarga, 'last_carga', function ($join) {
+            //         $join->on('carga.id', '=', 'last_carga.id');
+            //     })
+            //     ->get();
+
+
+            $sql = 'select m.id,m.cisternaNivel ,m.nombre,c.precio ,c.litros, c.created_at  from maquinaria m 
+            inner join carga c on m.id =c.maquinariaId 
+            inner join (select max(c.id) id from carga c group by maquinariaId ) s
+            on s.id=c.id 
+            where m.cisterna = 1 
+            order by m.nombre ';
+            $gasolinas = DB::select($sql);
+
+            // dd($gasolinas);
+
+
+            // $cisternas = maquinaria::join('carga', 'maquinaria.id', '=', 'carga.maquinariaId')
+            //     ->joinSub($carga, 'carga', function ($join) {
+            //         $join->on('carga.max', '=', 'maquinaria.id');
+            //     })
+            //     ->select('maquinaria.id', 'maquinaria.nombre', 'carga.precio', 'carga.litros', 'carga.created_at')
+            //     ->where('maquinaria.cisterna', '=', '1')->get();
+
+
+            // dd($cisterna);
+
+            return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas', 'gasolinas'));
         } else {
             $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(5);
             return view('inventario.indexInventario', compact('inventarios'));
