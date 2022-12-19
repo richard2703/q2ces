@@ -45,7 +45,7 @@
                                             <tbody>
                                                 @forelse ($maquinaria as $maquina)
                                                     <tr>
-                                                        <td>{{ $maquina->id }}</td>
+                                                        <td>{{ $maquina->identificador }}</td>
                                                         <td>{{ $maquina->marca }}</td>
                                                         <td>{{ $maquina->modelo }}</td>
                                                         <td>{{ $maquina->categoria }}</td>
