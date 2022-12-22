@@ -47,16 +47,15 @@ class inventarioController extends Controller
             //     ->get();
 
 
-            $sql = 'select m.id,m.cisternaNivel ,m.nombre,c.precio ,c.litros, c.created_at  from maquinaria m 
-            inner join carga c on m.id =c.maquinariaId 
+            $sql = 'select m.id,m.cisternaNivel ,m.nombre,c.precio ,c.litros, c.created_at  from maquinaria m
+            inner join carga c on m.id =c.maquinariaId
             inner join (select max(c.id) id from carga c group by maquinariaId ) s
-            on s.id=c.id 
-            where m.cisterna = 1 
+            on s.id=c.id
+            where m.cisterna = 1
             order by m.nombre ';
             $gasolinas = DB::select($sql);
 
             // dd($gasolinas);
-
 
             // $cisternas = maquinaria::join('carga', 'maquinaria.id', '=', 'carga.maquinariaId')
             //     ->joinSub($carga, 'carga', function ($join) {
@@ -315,12 +314,14 @@ class inventarioController extends Controller
     {
         $request->validate([
             'litros' => 'required|numeric',
-            'precio' => 'required|numeric',
+            'precio' => 'required|numeric|max:30|min:10',
         ], [
             'litros.required' => 'El campo litros es obligatorio.',
             'precio.required' => 'El campo precio es obligatorio.',
             'litros.numeric' => 'El campo litros debe de ser numérico.',
             'precio.numeric' => 'El campo precio debe de ser numérico.',
+            'precio.minimo' => 'El campo precio debiera de ser mayor a 10 pesos.',
+            'precio.maximo' => 'El campo precio debiera de ser menor a 30 pesos.',
         ]);
         $carga = $request->only(
             'litros',
@@ -338,7 +339,21 @@ class inventarioController extends Controller
         $cisterna->update();
 
         Session::flash('message', 1);
-        return view('inventario.dashInventario');
+
+        //** reacargamos */
+        $despachador = personal::where("userId", auth()->user()->id)->get();
+        $personal = personal::all();
+        $maquinaria = maquinaria::where("cisterna", 0)->orderBy('nombre', 'asc')->get();
+        $cisternas = maquinaria::where("cisterna", 1)->orderBy('nombre', 'asc')->get();
+        $sql = 'select m.id,m.cisternaNivel ,m.nombre,c.precio ,c.litros, c.created_at  from maquinaria m
+        inner join carga c on m.id =c.maquinariaId
+        inner join (select max(c.id) id from carga c group by maquinariaId ) s
+        on s.id=c.id
+        where m.cisterna = 1
+        order by m.nombre ';
+        $gasolinas = DB::select($sql);
+
+        return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas','gasolinas'));
     }
 
     /**
@@ -349,12 +364,13 @@ class inventarioController extends Controller
      */
     public function descargaCombustible(Request $request)
     {
+        $blnHayImagen = false;
         $request->validate([
             'litros' => 'required|numeric',
             'km' => 'required|numeric',
             'horas' => 'required|numeric',
-            'imgKm' => 'required',
-            'imgHoras' => 'required',
+            'imgKm' => 'nullable',
+            'imgHoras' => 'nullable',
         ], [
             'litros.required' => 'El campo litros es obligatorio.',
             'km.required' => 'El campo Km/Mi es obligatorio.',
@@ -380,13 +396,18 @@ class inventarioController extends Controller
         if ($request->hasFile("imgKm")) {
             $descarga['imgKm'] = time() . '_' . 'imgKm.' . $request->file('imgKm')->getClientOriginalExtension();
             $request->file('imgKm')->storeAs('/public/combustibles', $descarga['imgKm']);
+            $blnHayImagen = true;
         }
         if ($request->hasFile("imgHoras")) {
             $descarga['imgHoras'] = time() . '_' . 'imgHoras.' . $request->file('imgHoras')->getClientOriginalExtension();
             $request->file('imgHoras')->storeAs('/public/combustibles', $descarga['imgHoras']);
+            $blnHayImagen = true;
         }
-        // dd($request);
 
+        //*** Preguntamos si no hay una imagen cargada */
+        if ($blnHayImagen == false) {
+            return redirect()->back()->withInput()->withErrors("Se requiere al menos una imagen de kilometraje o del homometro.");
+        }
 
         //buscamos el equipo para actulizar el nivel de la cisterna
         $cisterna =   maquinaria::where("id", $request['servicioId'])->first();
@@ -395,6 +416,13 @@ class inventarioController extends Controller
 
         descarga::create($descarga);
         Session::flash('message', 1);
-        return view('inventario.dashInventario');
+
+        //** reacargamos */
+        $despachador = personal::where("userId", auth()->user()->id)->get();
+        $personal = personal::all();
+        $maquinaria = maquinaria::where("cisterna", 0)->orderBy('nombre', 'asc')->get();
+        $cisternas = maquinaria::where("cisterna", 1)->orderBy('nombre', 'asc')->get();
+
+        return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas'));
     }
 }
