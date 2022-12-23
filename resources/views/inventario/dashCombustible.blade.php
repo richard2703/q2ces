@@ -449,10 +449,293 @@
                         </div>  --}}
 
                     </div>
+                    {{--  GRAFICO CARGAS  --}}
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="card card-chart">
+                                <div class="card-header ">
+                                    <div class="row">
+                                        <div class="col-sm-6 text-left">
+                                            <h5 class="card-category">Total de cargas</h5>
+                                            <h2 class="card-title">Ultimos 30 Dias</h2>
+                                        </div>
+                                        <div class="col-sm-6 ">
+                                            <div class="btn-group btn-group-toggle float-right d-flex"
+                                                data-toggle="buttons">
+                                                {{--  <label class="btn btn-sm btn-primary btn-simple active" id="0">
+                                                    <input type="radio" name="options" checked>
+                                                    <span
+                                                        class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Orquesta</span>
+                                                    <span class="d-block d-sm-none">
+                                                        <i class="tim-icons icon-single-02"></i>
+                                                    </span>
+                                                </label>  --}}
+                                                @foreach ($gasolinas as $gasolina)
+                                                    <label class="btn btn-sm btn-primary btn-simple" id="1"
+                                                        aria-controls={{ $gasolina->id }}>
+                                                        <input type="radio" class="d-none d-sm-none" name="options">
+                                                        <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block"
+                                                            onclick="actualizar({{ $gasolina->id }})">
+                                                            {{ $gasolina->nombre }}
+                                                            <span class="d-block d-sm-none">
+                                                                <i class="tim-icons icon-gift-2"></i>
+                                                            </span>
+                                                    </label>
+                                                @endforeach
+
+                                            </div>
+                                        </div>
+                                        {{--  <div class="col-sm-6">
+                                            <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                                                <label class="btn btn-sm btn-primary btn-simple active" id="0">
+                                                    <input type="radio" name="options" checked>
+                                                    <span
+                                                        class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Orquesta</span>
+                                                    <span class="d-block d-sm-none">
+                                                        <i class="tim-icons icon-single-02"></i>
+                                                    </span>
+                                                </label>
+                                                <label class="btn btn-sm btn-primary btn-simple" id="1"
+                                                    aria-controls=8>
+                                                    <input type="radio" class="d-none d-sm-none" name="options">
+                                                    <span
+                                                        class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Kangoo</span>
+                                                    <span class="d-block d-sm-none">
+                                                        <i class="tim-icons icon-gift-2"></i>
+                                                    </span>
+                                                </label>
+                                                <label class="btn btn-sm btn-primary btn-simple" id="2"
+                                                    aria-controls=7>
+                                                    <input type="radio" class="d-none" name="options">
+                                                    <span
+                                                        class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Sessions</span>
+                                                    <span class="d-block d-sm-none">
+                                                        <i class="tim-icons icon-tap-02"></i>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>  --}}
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas id="chartBig1"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{--  <div class="row">
+                        <div class="col-12">
+                            <form action="{{ route('inventario.dashCombustible') }}" method="post">
+                                @csrf
+                                <input type="date" name="inicio" id="">
+                                <input type="date" name="fin" id="">
+
+                                <button type="submit"></button>
+                            </form>
+                        </div>
+                    </div>  --}}
+
                 </div>
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function actualizar(id) {
+
+            $.ajax({
+                type: 'post',
+                url: '/inventario/combustible/',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": id
+                },
+                success: function(data) {
+                    var datos = JSON.parse(data);
+                    var chart_labels = datos.dia;
+                    var chart_data = datos.suma;
+
+                    //alert(chart_labels);
+                    var data = myChartData.config.data;
+                    data.datasets[0].data = chart_data;
+                    data.labels = chart_labels;
+                    myChartData.update();
+                    console.log(chart_data);
+                },
+                error: function() {
+                    console.log('Error');
+                }
+            });
+
+
+        };
+    </script>
+    <script>
+        const ctx = document.getElementById('chartBig1');
+
+        gradientChartOptionsConfigurationWithTooltipPurple = {
+            maintainAspectRatio: false,
+            legend: {
+                display: false
+            },
+
+            tooltips: {
+                backgroundColor: '#f5f5f5',
+                titleFontColor: '#333',
+                bodyFontColor: '#666',
+                bodySpacing: 4,
+                xPadding: 12,
+                mode: "nearest",
+                intersect: 0,
+                position: "nearest"
+            },
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    barPercentage: 1.6,
+                    gridLines: {
+                        drawBorder: false,
+                        color: 'rgba(29,140,248,0.0)',
+                        zeroLineColor: "transparent",
+                    },
+                    ticks: {
+                        suggestedMin: 60,
+                        suggestedMax: 125,
+                        padding: 20,
+                        fontColor: "#9a9a9a"
+                    }
+                }],
+
+                xAxes: [{
+                    barPercentage: 1.6,
+                    gridLines: {
+                        drawBorder: false,
+                        color: 'rgba(225,78,202,0.1)',
+                        zeroLineColor: "transparent",
+                    },
+                    ticks: {
+                        padding: 20,
+                        fontColor: "#9a9a9a"
+                    }
+                }]
+            }
+        };
+
+        //var chart_labels = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+        //var chart_data = [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100];
+
+        var chart_labels = new Array();
+        <?php
+        foreach ($dia as $indice => $valor) {
+            echo "chart_labels[$indice] = $valor;\n";
+        }
+        ?>
+
+        var chart_data = new Array();
+        <?php
+        foreach ($suma as $indice => $valor) {
+            echo "chart_data[$indice] = $valor;\n";
+        }
+        ?>
+
+
+        var myChartData = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: chart_labels,
+                datasets: [{
+                    label: '# of Votes', //titulo
+                    data: chart_data,
+                    backgroundColor: '#9a9a9a',
+                    orderColor: '# DF0101 ', //no se
+                    borderWidth: 2, //borde de la tabla
+                    borderDash: [],
+                    pointStyle: "circle", //puntos de interseccion
+                    borderDashOffset: 0.0,
+                    pointBackgroundColor: '#DF0101', //color de punto de interceccion
+                    pointBorderColor: 'rgba(255,255,255,0)',
+                    pointHoverBackgroundColor: '#DF0101',
+                    pointBorderWidth: 20,
+                    pointHoverRadius: 4,
+                    pointHoverBorderWidth: 15,
+                    pointRadius: 4,
+                    borderWidth: 1
+                }]
+            },
+            options: gradientChartOptionsConfigurationWithTooltipPurple
+        });
+
+        $("#0").click(function() {
+            console.log(chart_data);
+            var data = myChartData.config.data;
+            data.datasets[0].data = chart_data;
+            data.labels = chart_labels;
+            myChartData.update();
+            console.log(chart_data);
+
+        });
+
+        $("#1").click(function(e) {
+            let id = $(this).attr("aria-controls");
+            $.ajax({
+                type: 'post',
+                url: '/inventario/combustible/',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": id
+                },
+                success: function(data) {
+                    var datos = JSON.parse(data);
+                    var chart_labels = datos.dia;
+                    var chart_data = datos.suma;
+
+                    //alert(chart_labels);
+                    var data = myChartData.config.data;
+                    data.datasets[0].data = chart_data;
+                    data.labels = chart_labels;
+                    myChartData.update();
+                    console.log(chart_data);
+                },
+                error: function() {
+                    console.log('Error');
+                }
+            });
+
+
+        });
+
+        $("#2").click(function(e) {
+            let id = $(this).attr("aria-controls");
+            $.ajax({
+                type: 'post',
+                url: '/inventario/combustible/',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": id
+                },
+                success: function(data) {
+                    var datos = JSON.parse(data);
+                    var chart_labels = datos.dia;
+                    var chart_data = datos.suma;
+
+                    //alert(chart_labels);
+                    var data = myChartData.config.data;
+                    data.datasets[0].data = chart_data;
+                    data.labels = chart_labels;
+                    myChartData.update();
+                    console.log(chart_data);
+                },
+                error: function() {
+                    console.log('Error');
+                }
+            });
+        });
+    </script>
+
     <script>
         function changeImage() {
             var image = document.getElementById('myImage');
