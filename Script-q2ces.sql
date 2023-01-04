@@ -87,8 +87,7 @@ CREATE TABLE role_has_permissions (
 INSERT INTO role_has_permissions VALUES
 (1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),
 (8,1),(9,1),(10,1),(11,1),(12,1),(13,1),
-(14,1),(15,1),(16,1),(16,2),(17,1),(17,2),
-(18,1),(18,2),(19,1),(19,2),(20,1),(20,2);
+(14,1),(15,1);
 
 CREATE TABLE password_resets (
   email varchar(255) NOT NULL,
@@ -263,6 +262,7 @@ CREATE TABLE nomina(
 CREATE TABLE maquinaria(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   nombre varchar(255) NULL,
+  identificador varchar(8) NULL,
   tipo varchar(255) NULL,
   categoria varchar(255) NULL,
   marca varchar(255) NULL,

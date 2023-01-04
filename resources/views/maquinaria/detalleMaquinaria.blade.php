@@ -28,7 +28,7 @@
                                             <button class="accordion-button bacTituloPrincipal" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#datosPersonales"
                                                 aria-expanded="true" aria-controls="collapseOne">
-                                                Retroexcabadora
+                                                {{ $maquinaria->identificador }} {{ $maquinaria->nombre }}
                                             </button>
                                         </h2>
                                         <div id="datosPersonales" class="accordion-collapse collapse show"
@@ -86,11 +86,28 @@
                                                                     name="submarca" value="{{ $maquinaria->submarca }}">
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                            {{-- <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Categoría:</label></br>
                                                                 <input type="text" class="inputCaja" id="categoria"
                                                                     name="categoria" value="{{ $maquinaria->categoria }}"
                                                                     placeholder="ej: excavadora">
+                                                            </div> --}}
+
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                                <label class="labelTitulo">Categoría:</label></br>
+                                                                <select class="form-select"
+                                                                    aria-label="Default select example" id="categoria"
+                                                                    name="categoria">
+                                                                    <option value="Accesorios" {{ $maquinaria->categoria == 'Accesorios' ? ' selected' : '' }}>Accesorios</option>
+                                                                    <option value="Campers" {{ $maquinaria->categoria == 'Campers' ? ' selected' : '' }}>Campers</option>
+                                                                    <option value="Cisterna" {{ $maquinaria->categoria == 'Cisterna' ? ' selected' : '' }}>Cisterna</option>
+                                                                    <option value="Maquinaria ligera" {{ $maquinaria->categoria == 'Maquinaria ligera' ? ' selected' : '' }}>Maquinaria ligera</option>
+                                                                    <option value="Maquinaria pesada" {{ $maquinaria->categoria == 'Maquinaria pesada' ? ' selected' : '' }}>Maquinaria pesada</option>
+                                                                    <option value="Retroexcavadoras" {{ $maquinaria->categoria == 'Retroexcavadoras' ? ' selected' : '' }}>Retroexcavadoras</option>
+                                                                    <option value="Tractocamiones" {{ $maquinaria->categoria == 'Tractocamiones' ? ' selected' : '' }}>Tractocamiones</option>
+                                                                    <option value="Otros" {{ $maquinaria->categoria == 'Otros' ? ' selected' : '' }}>Otros</option>
+                                                                    <option value="Utilitarios" {{ $maquinaria->categoria == 'Utilitarios' ? ' selected' : '' }}>Utilitarios</option>
+                                                                </select>
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -123,6 +140,9 @@
                                                                             <option
                                                                                 value="Grua"{{ $maquinaria->tipo == 'Grua' ? ' selected' : '' }}>
                                                                                 Grua</option>
+                                                                                <option
+                                                                                    value="N/A"{{ $maquinaria->tipo == 'no_aplica' ? ' selected' : '' }}>
+                                                                                    N/A</option>
                                                                         </select>
 
                                                                     </div>
@@ -154,6 +174,13 @@
                                                                 <label class="labelTitulo">Placas:</label></br>
                                                                 <input type="text" class="inputCaja" id="placas"
                                                                     name="placas" value="{{ $maquinaria->placas }}">
+                                                            </div>
+
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                                <label class="labelTitulo">Identificador:</label></br>
+                                                                <input type="text" class="inputCaja" id="identificador"
+                                                                    name="identificador" value="{{ $maquinaria->identificador }}"
+                                                                    placeholder="ej: MT-00">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
