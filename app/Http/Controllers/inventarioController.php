@@ -8,6 +8,7 @@ use App\Models\restock;
 use App\Models\invconsu;
 use App\Models\carga;
 use App\Models\descarga;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
@@ -46,28 +47,35 @@ class inventarioController extends Controller
             //     })
             //     ->get();
 
-
-            $sql = 'select m.id,m.cisternaNivel ,m.nombre,c.precio ,c.litros, c.created_at  from maquinaria m
-            inner join carga c on m.id =c.maquinariaId
+            $sql = 'select m.id,m.cisternaNivel ,m.nombre,c.precio ,c.litros, c.created_at  from maquinaria m 
+            inner join carga c on m.id =c.maquinariaId 
             inner join (select max(c.id) id from carga c group by maquinariaId ) s
             on s.id=c.id
             where m.cisterna = 1
             order by m.nombre ';
             $gasolinas = DB::select($sql);
 
-            // dd($gasolinas);
+            $date = Carbon::now();
+            $endDate = $date->subMonth();
+            // dd($date->toDateString(), $endDate->toDateString());
 
-            // $cisternas = maquinaria::join('carga', 'maquinaria.id', '=', 'carga.maquinariaId')
-            //     ->joinSub($carga, 'carga', function ($join) {
-            //         $join->on('carga.max', '=', 'maquinaria.id');
-            //     })
-            //     ->select('maquinaria.id', 'maquinaria.nombre', 'carga.precio', 'carga.litros', 'carga.created_at')
-            //     ->where('maquinaria.cisterna', '=', '1')->get();
+            $sql1 = " select id,sum(litros) as suma ,day(created_at) as dia from carga c where created_at  
+                        between '" . $endDate->toDateString() . "' and '" . Carbon::now()->addDay()->toDateString() . "' and maquinariaId = '9' 
+                        group by date(created_at) order by created_at";
+            $script = DB::select($sql1);
+
+            $suma = [];
+            $dia = [];
+            foreach ($script as $key) {
+                array_push($suma, $key->suma);
+                array_push($dia, $key->dia);
+            }
+
 
 
             // dd($cisterna);
 
-            return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas', 'gasolinas'));
+            return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas', 'gasolinas', 'suma', 'dia'));
         } else {
             $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(5);
             return view('inventario.indexInventario', compact('inventarios'));
@@ -299,9 +307,26 @@ class inventarioController extends Controller
      *
      * @return void
      */
-    public function dashCombustible()
+    public function dashCombustible(Request $request)
     {
-        dd('Hola');
+        // return "hola";
+        $date = Carbon::now();
+        $endDate = $date->subMonth();
+
+        $sql1 = " select id,sum(litros) as suma ,day(created_at) as dia from carga c where created_at  
+                    between '" . $endDate->toDateString() . "' and '" . Carbon::now()->addDay()->toDateString() . "' and maquinariaId = '" . $request->id . "' 
+                    group by date(created_at) order by created_at";
+        $script = DB::select($sql1);
+
+        $suma = [];
+        $dia = [];
+        foreach ($script as $key) {
+            array_push($suma, $key->suma);
+            array_push($dia, $key->dia);
+        }
+        $datos = array('suma' => $suma, 'dia' => $dia);
+        // return view('inventario.dashCombustible', compact('suma', 'dia'));
+        return response(json_encode($datos), 200)->header('Content-type', 'text/plain');
     }
 
     /**
@@ -340,20 +365,7 @@ class inventarioController extends Controller
 
         Session::flash('message', 1);
 
-        //** reacargamos */
-        $despachador = personal::where("userId", auth()->user()->id)->get();
-        $personal = personal::all();
-        $maquinaria = maquinaria::where("cisterna", 0)->orderBy('nombre', 'asc')->get();
-        $cisternas = maquinaria::where("cisterna", 1)->orderBy('nombre', 'asc')->get();
-        $sql = 'select m.id,m.cisternaNivel ,m.nombre,c.precio ,c.litros, c.created_at  from maquinaria m
-        inner join carga c on m.id =c.maquinariaId
-        inner join (select max(c.id) id from carga c group by maquinariaId ) s
-        on s.id=c.id
-        where m.cisterna = 1
-        order by m.nombre ';
-        $gasolinas = DB::select($sql);
-
-        return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas','gasolinas'));
+        return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
     }
 
     /**
@@ -417,12 +429,6 @@ class inventarioController extends Controller
         descarga::create($descarga);
         Session::flash('message', 1);
 
-        //** reacargamos */
-        $despachador = personal::where("userId", auth()->user()->id)->get();
-        $personal = personal::all();
-        $maquinaria = maquinaria::where("cisterna", 0)->orderBy('nombre', 'asc')->get();
-        $cisternas = maquinaria::where("cisterna", 1)->orderBy('nombre', 'asc')->get();
-
-        return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas'));
+        return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
     }
 }
