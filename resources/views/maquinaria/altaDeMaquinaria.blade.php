@@ -75,11 +75,29 @@
                                                                     name="submarca" value="{{ old('submarca') }}">
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6 col-lg-4  mb-3 ">
+                                                            {{-- <div class=" col-12 col-sm-6 col-lg-4  mb-3 ">
                                                                 <label class="labelTitulo">Categoría:</label></br>
                                                                 <input type="text" class="inputCaja" id="categoria"
                                                                     name="categoria" value="{{ old('categoria') }}"
                                                                     placeholder="ej: excavadora">
+                                                            </div> --}}
+
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                                <label class="labelTitulo">Categoría:</label></br>
+                                                                <select class="form-select"
+                                                                    aria-label="Default select example" id="categoria"
+                                                                    name="categoria">
+                                                                    <option value="">Seleccione</option>
+                                                                    <option value="Accesorios">Accesorios</option>
+                                                                    <option value="Campers">Campers</option>
+                                                                    <option value="Cisterna">Cisterna</option>
+                                                                    <option value="Maquinaria ligera">Maquinaria ligera</option>
+                                                                    <option value="Maquinaria pesada">Maquinaria pesada</option>
+                                                                    <option value="Retroexcavadoras">Retroexcavadoras</option>
+                                                                    <option value="Tractocamiones">Tractocamiones</option>
+                                                                    <option value="Otros">Otros</option>
+                                                                    <option value="Utilitarios">Utilitarios</option>
+                                                                </select>
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -102,6 +120,7 @@
                                                                             <option value="Pesada">Pesada</option>
                                                                             <option value="Ligero">Ligero</option>
                                                                             <option value="Grua">Grua</option>
+                                                                            <option value="no_aplica">N/A</option>
                                                                         </select>
 
                                                                     </div>
@@ -136,6 +155,15 @@
                                                                     name="placas" value="{{ old('placas') }}"
                                                                     placeholder="MW88888">
                                                             </div>
+
+                                                            {{-- <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                                <label class="labelTitulo">Identificador:</label></br>
+                                                                <input type="text" class="inputCaja" id="identificador"
+                                                                    name="identificador" value="{{ old('identificador') }}"
+                                                                    placeholder="ej: MT-00">
+                                                            </div> --}}
+
+                                                            <input type="hidden" id="identificador" name="identificador" value="">
 
                                                             <div class=" col-12 col-sm-6  mb-3">
                                                                 <label class="labelTitulo">Motor:</label></br>

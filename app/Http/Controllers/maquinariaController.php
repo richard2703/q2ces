@@ -7,7 +7,7 @@ use App\Models\maqdocs;
 use App\Models\maqimagen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-
+use PhpParser\Node\Stmt\Switch_;
 
 class maquinariaController extends Controller
 {
@@ -41,25 +41,16 @@ class maquinariaController extends Controller
      */
     public function store(Request $request)
     {
-        // if ($request->hasFile("ruta")) {
-        //     dd(count($request->ruta));
-        // }
-        // // dd('no hay');
-        // // dd($request->file('factura')->getClientOriginalName());
-        // foreach ($request->file('ruta') as $ruta) {
-        //     dd(time() . '_' . $ruta->getClientOriginalName());
-        // }
-        // dd('no hay');
-
 
         $request->validate([
             'nombre' => 'required|max:250',
+            // 'identificador' => 'required|max:8',
             'marca' => 'required|max:250',
             'modelo' => 'required|max:250',
             'horometro' => 'nullable|numeric',
             'kilometraje' => 'nullable|numeric',
             'submarca' => 'nullable|max:200',
-            'categoria' => 'nullable|max:200',
+            'categoria' => 'required|max:200',
             'ano' => 'nullable|max:9999|numeric',
             'color' => 'nullable|max:200',
             'placas' => 'nullable|max:200',
@@ -86,6 +77,8 @@ class maquinariaController extends Controller
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
+            // 'identificador.required' => 'El campo identificador es obligatorio.',
+            // 'identificador.max' => 'El campo identificador excede el límite de caracteres permitidos.',
             'marca.required' => 'El campo marca es obligatorio.',
             'marca.max' => 'El campo marca excede el límite de caracteres permitidos.',
             'modelo.required' => 'El campo modelo es obligatorio.',
@@ -93,7 +86,7 @@ class maquinariaController extends Controller
             'horometro.numeric' => 'El campo horómetro debe de ser numérico.',
             'kilometraje.numeric' => 'El campo kilometraje debe de ser numérico.',
             'submarca.max' => 'El campo submarca excede el límite de caracteres permitidos.',
-            'categoria.max' => 'El campo categoria excede el límite de caracteres permitidos.',
+            'categoria.required' => 'El campo categoria es obligatorio.',
             'ano.numeric' => 'El campo año debe ser numérico.',
             'ano.max' => 'El campo serie excede el límite de caracteres permitidos.',
             'color.max' => 'El campo color excede el límite de caracteres permitidos.',
@@ -123,11 +116,14 @@ class maquinariaController extends Controller
 
         $maquinaria = $request->all();
 
+        //** Generamos el identificador de la maquinaria */
+        $maquinaria['identificador'] = $this->generaCodigoIdentificacion($maquinaria['categoria']);
+        // dd($maquinaria['identificador']);
+
         $maquinaria['placas'] = strtoupper($maquinaria['placas']);
         $maquinaria['nummotor'] = strtoupper($maquinaria['nummotor']);
         $maquinaria['numserie'] = strtoupper($maquinaria['numserie']);
 
-        //  dd($request);
 
         $maquinaria = maquinaria::create($maquinaria);
         if ($request->hasFile("factura")) {
@@ -220,6 +216,7 @@ class maquinariaController extends Controller
     {
         $request->validate([
             'nombre' => 'required|max:250',
+            'identificador' => 'required|max:8',
             'marca' => 'required|max:250',
             'modelo' => 'required|max:250',
             'horometro' => 'nullable|numeric',
@@ -252,6 +249,8 @@ class maquinariaController extends Controller
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
+            'identificador.required' => 'El campo identificador es obligatorio.',
+            'identificador.max' => 'El campo identificador excede el límite de caracteres permitidos.',
             'marca.required' => 'El campo marca es obligatorio.',
             'marca.max' => 'El campo marca excede el límite de caracteres permitidos.',
             'modelo.required' => 'El campo modelo es obligatorio.',
@@ -288,6 +287,7 @@ class maquinariaController extends Controller
 
         $data = $request->all();
 
+        $data['identificador'] = strtoupper($data['identificador']);
         $data['placas'] = strtoupper($data['placas']);
         $data['nummotor'] = strtoupper($data['nummotor']);
         $data['numserie'] = strtoupper($data['numserie']);
@@ -359,5 +359,64 @@ class maquinariaController extends Controller
                 return redirect('404');
             }
         }
+    }
+
+    public function generaCodigoIdentificacion($categoria)
+    {
+        $strCodigo = null;
+        $intEquipos = 0;
+        //*** obtenemos el numero de elementos existentes */
+        switch (strtolower($categoria)) {
+            case 'otros':
+            case 'cisterna':
+            case 'utilitarios':
+                $intEquipos = (int) maquinaria::where('categoria', 'otros')->get()->count();
+                $intEquipos +=  (int)  maquinaria::where('categoria', 'cisterna')->get()->count();
+                $intEquipos += (int)   maquinaria::where('categoria', 'utilitarios')->get()->count();
+                break;
+
+            default:
+                $intEquipos = maquinaria::where('categoria', $categoria)->get()->count();
+                break;
+        }
+
+        /*** buscamos el tipo para crear el tipo */
+        switch (strtolower($categoria)) {
+            case 'campers':
+                $strCodigo = "CAM-" . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
+                break;
+
+            case 'retroexcavadoras':
+                $strCodigo = "RET-" . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
+                break;
+
+            case 'maquinaria pesada':
+                $strCodigo = "MP-" . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
+                break;
+
+            case 'maquinaria ligera':
+                $strCodigo = "ML-" . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
+                break;
+
+            case 'tractocamiones':
+                $strCodigo = "TRA-" . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
+                break;
+
+            case 'accesorios':
+                $strCodigo = "ACC-" . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
+                break;
+
+            case 'otros':
+            case 'cisterna':
+            case 'utilitarios':
+                $strCodigo = "Q2S-" . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
+                break;
+
+            default:
+            $strCodigo = "DES-" . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
+                break;
+        }
+
+        return $strCodigo;
     }
 }

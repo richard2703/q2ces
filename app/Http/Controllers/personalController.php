@@ -242,12 +242,17 @@ class personalController extends Controller
         }
 
         $existeUsuario = User::where('email', $personal["mailEmpresarial"])->get();
+
         if ($existeUsuario->isEmpty() == true) {
+
+            $roles[] = 2;
+
             $newuser = new User();
             $newuser->name = Str::substr($personal['nombres'], 0, 1) . ' ' . str_replace(' ', '', $personal['apellidoP']) . ' ' . str_replace(' ', '', $personal['apellidoM']);
             // $newuser->username =  Str::substr($personal['nombres'], 0, 1) . $personal['apellidoP'];
             $newuser->email =  $personal['mailEmpresarial'];
             $newuser->password = bcrypt('12345678');
+            $newuser->syncRoles($roles);
             $newuser->save();
 
             //** guardamos el id de usuario para el registro de personal */

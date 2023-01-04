@@ -13,7 +13,7 @@ class maquinaria extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nombre', 'tipo', 'categoria', 'marca', 'submarca', 'modelo', 'uso', 'color', 'placas', 'motor',
+        'nombre','identificador', 'tipo', 'categoria', 'marca', 'submarca', 'modelo', 'uso', 'color', 'placas', 'motor',
         'nummotor', 'numserie', 'vin', 'capacidad', 'tanque', 'ejes', 'rinD', 'rinT', 'llantaD', 'llantaT', 'aceitemotor',
         'aceitetras', 'aceitehidra', 'filtroaceite', 'filtroaire', 'bujias', 'tipobujia', 'horometro', 'kilometraje', 'kom', 'foto',
         'ano', 'aceitedirec', 'combustible','cisterna','cisternaNivel'
