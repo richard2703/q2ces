@@ -47,8 +47,9 @@ body{
   background-color: #A6CE34;
 }
 .textTitulo{
-  font-weight: 600;
-  color:#5C7C26;
+  font-size: 2em!important;
+  font-weight: 500;
+  color: #5C7C26;
 }
 a.textEquipo{
 color: #727176 !important;     
@@ -60,13 +61,36 @@ a.textEquipo:hover{
 
 
 /* ------- CSS PARA Vista OBRAS ----------*/
+
+.divBorder{
+  border-bottom: #F7C90D solid 3px!important;
+}
+
+.tituloEncabezado{
+ font-size: 2em;
+ font-weight: 500;
+ color:#5C7C26;
+}
+
+input[type=checkbox].check{
+  width:25px ;
+  height: 25px!important;
+}
+
+input[type=checkbox].check:focus,
+input[type=checkbox].check:checked{
+background-color: #A6CE34;
+}
+
 .vistaFoto{
+
   width: 75%;
 }
 
 .imgVista{
   object-fit: cover;
-  width:85%;
+  width:300px;
+  height: 300px;
 }
 
 .vistaLogo{
@@ -92,6 +116,29 @@ a.textEquipo:hover{
     }
   }
 
+
+  /*------ botones mas y menos -------*/
+.btnVerde{
+  background-image: url('/img/general/plus-circle-fill.svg')!important;
+  background-repeat: no-repeat;
+  background-position:  center;
+  background-size: 20px 20px;
+  border-radius: 100px;
+  width: 20px;
+  height: 20px;
+  border: none;
+}  
+
+.btnRojo{
+  background-image: url('/img/general/dash-circle-fill.svg')!important;
+  background-repeat: no-repeat;
+  background-position:  center;
+  background-size: 20px 20px;
+  border-radius: 100px;
+  width: 20px;
+  height: 20px;
+  border: none;
+}  
 
 /* ------- CSS PARA TABLERO Alta de OBRA ----------*/
 .altalogo{
