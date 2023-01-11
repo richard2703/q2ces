@@ -93,6 +93,11 @@ background-color: #A6CE34;
   height: 300px;
 }
 
+.imgVistaCombustible{
+  object-fit: cover;
+  width:300px;
+}
+
 .vistaLogo{
   width: 15%;
   height: 50%;
