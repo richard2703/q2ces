@@ -155,7 +155,7 @@
                                                 <div class="row mt-5">
                                                     <div class="col-4">
                                                         <div class="text-center mx-auto border vistaFoto mb-4">
-                                                            <i><img class="imgVista img-fluid mb-2"
+                                                            <i><img class="imgVistaCombustible img-fluid mb-2"
                                                                     src="{{ asset('/img/inventario/horometro.svg') }}"></i>
                                                             <span class="mi-archivo"> <input class="mb-4 ver "
                                                                     type="file" name="imgKm" id="mi-archivo"
@@ -165,7 +165,7 @@
                                                             </label>
                                                         </div>
                                                         <div class="text-center mx-auto border vistaFoto mb-4">
-                                                            <i><img class="imgVista img-fluid mb-2"
+                                                            <i><img class="imgVistaCombustible img-fluid mb-2"
                                                                     src="{{ asset('/img/inventario/kilometraje.svg') }}"></i>
                                                             <span class="mi-archivo2"> <input class="mb-4 ver "
                                                                     type="file" name="imgHoras" id="mi-archivo2"
