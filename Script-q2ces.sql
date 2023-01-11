@@ -367,6 +367,7 @@ CREATE TABLE obraMaqPer(
   obraId bigint(20) unsigned NOT NULL,
   inicio datetime NULL,
   fin datetime NULL,
+  combustible int DEFAULT 0,
   PRIMARY KEY (id),
   CONSTRAINT FK_obraMaqPer_maquinaria foreign key (maquinariaId) references maquinaria(id),
   CONSTRAINT FK_obraMaqPer_persona foreign key (personalId) references personal(id),
@@ -476,3 +477,20 @@ CREATE TABLE descarga(
   CONSTRAINT FK_descarga_serviciolId foreign key (operadorId) references personal(id),
   CONSTRAINT FK_descarga_receptorId foreign key (maquinariaId) references maquinaria(id)
  );
+
+CREATE TABLE residente(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  userId bigint(20) unsigned NOT NULL,
+  obraId bigint(20) unsigned NOT NULL,
+  nombre varchar(255) null,
+  apellido varchar(255) null,
+  empresa varchar(255) null,
+  puesto varchar(255) null,
+  telefono varchar(255) null,
+  firma varchar(255) null,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_residente_userId foreign key (userId) references users(id),
+  CONSTRAINT FK_residente_obraId foreign key (obraId) references obra(id)
+ );
+
+alter table obramaqper add combustible int DEFAULT 0;
