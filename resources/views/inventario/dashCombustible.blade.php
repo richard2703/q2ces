@@ -132,19 +132,12 @@
                                                         </div>
 
                                                     </div>
-
-
-                                                </div>
-                                            </div>
                                             <div class="col-12 text-center mb-3 ">
                                                 <button type="submit" class="btn botonGral"
                                                     onclick="test()">Guardar</button>
                                             </div>
-
                                         </form>
-
                                     </div>
-
                                     <div class="tab-pane fade border" id="balanceDos" role="tabpanel"
                                         aria-labelledby="balanceDos-tab" tabindex="0">
                                         <form action="{{ route('inventario.descargaCombustible') }}" method="post"
