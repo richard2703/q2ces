@@ -352,102 +352,6 @@
                             </div>
                         @endforeach
 
-                        {{--  <div class="col-sm-4">
-                            <div class="card">
-                                <div class="card-body combustibleBorde">
-                                    <div class="bordeTitulo mb-3">
-                                        <h2 class="combustibleTitulo fw-semibold  my-3"> TOYOTA HILUX</h2>
-                                    </div>
-                                    <div class="row ">
-                                        <div class="col-12 mb-5">
-                                            <p class="text-end">Reserva</p>
-                                            <p class="combustibleLitros fw-semibold text-end">20 lts.</p>
-                                        </div>
-                                        <div class="col mb-3">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <p class=" ">Útima carga</p>
-                                                    <p class="combustiblefecha fw-semibold mb-3">20/11/2022</p>
-                                                    <p class="">$ por litro</p>
-                                                    <p class="combustibleLitros fw-semibold">$ 30.5</p>
-                                                </div>
-                                                <div class="col-6">
-                                                    <p class=" text-end">Litros Cargados</p>
-                                                    <p class="combustibleLitros fw-semibold text-end">30 lts.</p>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <div class="card">
-                                <div class="card-body combustibleBorde">
-                                    <div class="bordeTitulo mb-3">
-                                        <h2 class="combustibleTitulo fw-semibold  my-3"> RENAULT KANGOO</h2>
-                                    </div>
-                                    <div class="row ">
-                                        <div class="col-12 mb-5">
-                                            <p class="text-end">Reserva</p>
-                                            <p class="combustibleLitros fw-semibold text-end">20 lts.</p>
-                                        </div>
-                                        <div class="col mb-3">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <p class=" ">Útima carga</p>
-                                                    <p class="combustiblefecha fw-semibold mb-3">20/11/2022</p>
-                                                    <p class="">$ Por litro</p>
-                                                    <p class="combustibleLitros fw-semibold">$ 30.5</p>
-                                                </div>
-                                                <div class="col-6">
-                                                    <p class=" text-end">Litros Cargados</p>
-                                                    <p class="combustibleLitros fw-semibold text-end">30 lts.</p>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <div class="card">
-                                <div class="card-body combustibleBorde">
-                                    <div class="bordeTitulo mb-3">
-                                        <h2 class="combustibleTitulo fw-semibold  my-3"> CAMIÓN ORQUESTA</h2>
-                                    </div>
-                                    <div class="row ">
-                                        <div class="col-12 mb-5">
-                                            <p class="text-end">Reserva</p>
-                                            <p class="combustibleLitros fw-semibold text-end">20 lts.</p>
-                                        </div>
-                                        <div class="col mb-3">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <p class=" ">Útima carga</p>
-                                                    <p class="combustiblefecha fw-semibold mb-3">20/11/2022</p>
-                                                    <p class="">$ Por litro</p>
-                                                    <p class="combustibleLitros fw-semibold">$ 30.5</p>
-                                                </div>
-                                                <div class="col-6">
-                                                    <p class=" text-end">Litros Cargados</p>
-                                                    <p class="combustibleLitros fw-semibold text-end">30 lts.</p>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>  --}}
-
                     </div>
                     {{--  GRAFICO CARGAS  --}}
                     <div class="row">
@@ -527,22 +431,339 @@
                         </div>
                     </div>
 
-                    {{--  <div class="row">
-                        <div class="col-12">
-                            <form action="{{ route('inventario.dashCombustible') }}" method="post">
-                                @csrf
-                                <input type="date" name="inicio" id="">
-                                <input type="date" name="fin" id="">
+                    <!--Espacio para index carga y descarga-->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <!-- <div class="card-header bacTituloPrincipal">
+                                                <h4 class="card-title">Carga y descarga de combustible</h4>
+                                                
+                                            </div>-->
+                                <div class="card-body mb-3">
+                                    <div class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
+                                        <button class=" nav-item col-6 BTNbCargaDescarga py-3 border-0 active "
+                                            role="presentation" id="home-tab" data-bs-toggle="tab"
+                                            data-bs-target="#home-tab-pane" type="button" role="tab"
+                                            aria-controls="home-tab-pane" aria-selected="true">Relación Cargas de
+                                            Combustible</button>
+                                        <button class="nav-item col-6 BTNbCargaDescarga " role="presentation"
+                                            id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
+                                            type="button" role="tab" aria-controls="profile-tab-pane"
+                                            aria-selected="false"> Relación Descargas de Combustible</button>
+                                    </div>
 
-                                <button type="submit"></button>
-                            </form>
+                                    <div class="tab-content contentCargas" id="myTabContent">
+                                        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
+                                            aria-labelledby="home-tab" tabindex="0">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="table-responsive">
+                                                                <table class="table">
+                                                                    <thead class="labelTitulo">
+                                                                        <th class="fw-bolder">ID</th>
+                                                                        <th class="fw-bold">Equipos</th>
+                                                                        <th class="fw-bolder">Despachador</th>
+                                                                        <th class="fw-bolder">Litros</th>
+                                                                        <th class="fw-bolder">Precio</th>
+                                                                        <th class="fw-bolder">fecha</th>
+                                                                        <th class="fw-bolder text-right">Acciones</th>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>50</td>
+                                                                            <td>Toyota Hilux </td>
+                                                                            <td>Jalisco </td>
+                                                                            <td>Javier</td>
+                                                                            <td>300</td>
+                                                                            <td>12/01/2023 </td>
+
+
+
+                                                                            <td class="td-actions justify-content-end">
+                                                                                <a href="#" class=""
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#cargaCombustible">
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg "
+                                                                                        width="28" height="28"
+                                                                                        fill="currentColor"
+                                                                                        class="bi bi-pencil accionesIconos"
+                                                                                        viewBox="0 0 16 16">
+                                                                                        <path
+                                                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                                    </svg>
+                                                                                </a>
+
+                                                                                <form action="">
+                                                                                    <button class=" btnSinFondo"
+                                                                                        type="submit" rel="tooltip">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                            width="28" height="28"
+                                                                                            fill="currentColor"
+                                                                                            class="bi bi-x-circle"
+                                                                                            viewBox="0 0 16 16">
+                                                                                            <path
+                                                                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                                            <path
+                                                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                        </svg>
+                                                                                    </button>
+                                                                                </form>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel"
+                                            aria-labelledby="profile-tab" tabindex="0">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="table-responsive">
+                                                                <table class="table">
+                                                                    <thead class="labelTitulo">
+                                                                        <th class="fw-bolder">ID</th>
+                                                                        <th class="fw-bold">Equipo</th>
+                                                                        <th class="fw-bolder">Maquinaria</th>
+                                                                        <th class="fw-bolder">Despachador</th>
+                                                                        <th class="fw-bolder">Operador</th>
+                                                                        <th class="fw-bolder">Litros</th>
+                                                                        <th class="fw-bolder">Precio</th>
+                                                                        <th class="fw-bolder">fecha</th>
+                                                                        <th class="fw-bolder text-right">Acciones</th>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>50</td>
+                                                                            <td>Toyota Hilux </td>
+                                                                            <td>Retroexcabadora </td>
+                                                                            <td>Javier</td>
+                                                                            <td>Jorge</td>
+                                                                            <td>300 </td>
+                                                                            <td>20.99 </td>
+                                                                            <td>20/05/2023 </td>
+
+                                                                            <td class="td-actions justify-content-end">
+                                                                                <a href="#" class=""
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#descargaCombustible">
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg "
+                                                                                        width="28" height="28"
+                                                                                        fill="currentColor"
+                                                                                        class="bi bi-pencil accionesIconos"
+                                                                                        viewBox="0 0 16 16">
+                                                                                        <path
+                                                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                                    </svg>
+                                                                                </a>
+
+                                                                                <form action="">
+                                                                                    <button class=" btnSinFondo"
+                                                                                        type="submit" rel="tooltip">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                            width="28" height="28"
+                                                                                            fill="currentColor"
+                                                                                            class="bi bi-x-circle"
+                                                                                            viewBox="0 0 16 16">
+                                                                                            <path
+                                                                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                                            <path
+                                                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                        </svg>
+                                                                                    </button>
+                                                                                </form>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
                         </div>
-                    </div>  --}}
+                    </div>
 
                 </div>
             </div>
         </div>
     </div>
+
+    <!------MODALES DE CARGA Y DESCARGA ----- -->
+
+    <!-- Button trigger modal -->
+
+
+    <!-- Modal Carga-->
+    <div class="modal fade" id="cargaCombustible" tabindex="-1" aria-labelledby="cargaCombustibleLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bacTituloPrincipal">
+                    <h1 class="modal-title fs-5" id="cargaCombustibleLabel">Modificar Carga de Combustible</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row">
+                        <div class="col-4 my-3">
+                            <label for="inputEmail4" class="form-label">Equipo</label>
+                            <select id="" class="form-select">
+                                <option selected>Opción 1</option>
+                                <option>Opción 2</option>
+                                <option>Opción 3</option>
+                                <option>Opción 4</option>
+                                <option>Opción 5</option>
+                            </select>
+                        </div>
+
+                        <div class="col-4 my-3">
+                            <label for="inputEmail4" class="form-label">Despachador</label>
+                            <select id="" class="form-select">
+                                <option selected>Opción 1</option>
+                                <option>Opción 2</option>
+                                <option>Opción 3</option>
+                                <option>Opción 4</option>
+                                <option>Opción 5</option>
+                            </select>
+                        </div>
+
+                        <div class="col-4 my-3">
+                            <label for="inputEmail4" class="form-label">Litros</label>
+                            <input type="number" class="form-control" id="">
+                        </div>
+                        <div class="col-4 my-3">
+                            <label for="inputEmail4" class="form-label">Precio</label>
+                            <input type="number" class="form-control" id="">
+                        </div>
+
+                        <div class="col-4 my-3">
+                            <label for="inputEmail4" class="form-label">Fecha</label>
+                            <input type="date" class="form-control" id="">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn botonGral">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Descarga-->
+    <div class="modal fade" id="descargaCombustible" tabindex="-1" aria-labelledby="descargaCombustibleLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bacTituloPrincipal">
+                    <h1 class="modal-title fs-5" id="descargaCombustibleLabel">Modificar Descarga de Combustible</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row">
+                        <div class="col-4 my-3">
+                            <label for="inputEmail4" class="form-label">Equipo</label>
+                            <select id="" class="form-select">
+                                <option selected>Opción 1</option>
+                                <option>Opción 2</option>
+                                <option>Opción 3</option>
+                                <option>Opción 4</option>
+                                <option>Opción 5</option>
+                            </select>
+                        </div>
+
+                        <div class="col-4 my-3">
+                            <label for="inputEmail4" class="form-label">Maquinaria</label>
+                            <select id="" class="form-select">
+                                <option selected>Opción 1</option>
+                                <option>Opción 2</option>
+                                <option>Opción 3</option>
+                                <option>Opción 4</option>
+                                <option>Opción 5</option>
+                            </select>
+                        </div>
+
+                        <div class="col-4 my-3">
+                            <label for="inputEmail4" class="form-label">Despachador</label>
+                            <select id="" class="form-select">
+                                <option selected>Opción 1</option>
+                                <option>Opción 2</option>
+                                <option>Opción 3</option>
+                                <option>Opción 4</option>
+                                <option>Opción 5</option>
+                            </select>
+                        </div>
+
+                        <div class="col-4 my-3">
+                            <label for="inputEmail4" class="form-label">Operador</label>
+                            <select id="" class="form-select">
+                                <option selected>Opción 1</option>
+                                <option>Opción 2</option>
+                                <option>Opción 3</option>
+                                <option>Opción 4</option>
+                                <option>Opción 5</option>
+                            </select>
+                        </div>
+
+                        <div class="col-6 my-3">
+                            <label for="inputEmail4" class="form-label">Litros</label>
+                            <input type="number" class="form-control" id="">
+                        </div>
+
+                        <div class="col-6 my-3">
+                            <label for="inputEmail4" class="form-label">Fecha</label>
+                            <input type="date" class="form-control" id="">
+                        </div>
+
+                        <div class="col-6 my-3">
+                            <label for="inputEmail4" class="form-label">Horómetro</label>
+                            <input type="number" class="form-control" id="">
+                        </div>
+
+                        <div class="col-6 my-3">
+                            <label for="inputEmail4" class="form-label">Km Mi</label>
+                            <input type="number" class="form-control" id="">
+                        </div>
+
+                        <div class="col-12 my-3">
+                            <div class=" mx-auto border vistaFoto mb-4">
+                                <i><img class=" img-fluid mb-5" src="{{ asset('/img/general/default.jpg') }}"></i>
+                                <span class="botonGral"> <input class="mb-4 ver" type="file" name="foto"
+                                        id="mi-archivo" accept="image/*"></span>
+                                <label for="mi-archivo">
+                                    <span>Fotografía</span>
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn botonGral">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         function actualizar(id) {
