@@ -83,8 +83,8 @@ background-color: #A6CE34;
 }
 
 .vistaFoto{
-
-  width: 75%;
+  width: 45%;
+  height: 45%;
 }
 
 .imgVista{
@@ -95,7 +95,7 @@ background-color: #A6CE34;
 
 .imgVistaCombustible{
   object-fit: cover;
-  width:300px;
+  width:100%;
 }
 
 .vistaLogo{
@@ -120,8 +120,41 @@ background-color: #A6CE34;
       /* height: 50%; */
     }
   }
+/*------ Estructura carga y descarga de comustible pestañas interactivas ----------*/
 
+  .contentCargas{
+    border: 1px solid #F7C90D;
+    border-radius: 9px;
+  }
+  button.BTNbCargaDescarga{
+    border: none!important;
+    background-color: #d7f49f!important;
+    color: #727176!important;
+    font-size: 1.3em;
+    letter-spacing: .4em;
+    text-align: center!important;
+  }
+  
 
+  button.BTNbCargaDescarga.active,
+  button.BTNbCargaDescarga.active:hover,
+  button.BTNbCargaDescarga.active:focus{
+    border: none!important;
+    background-color: #8caf48!important;
+    color: #fff!important;
+    border-color: none!important;
+  
+    text-align: center!important;
+  }
+  svg.accionesIconos{
+  color: #8caf48;
+}
+/*---------- ESTE ESTILO ES SOLO PARA EL BOTÓN DE LAS ACCIONES EN LAS TABLAS ----------*/
+.btnSinFondo{
+  background-color: #fff;
+  border: none;
+  color: red;
+}
   /*------ botones mas y menos -------*/
 .btnVerde{
   background-image: url('/img/general/plus-circle-fill.svg')!important;
@@ -422,7 +455,7 @@ p.botonTitulos{
   font-weight: 400;
 }
 
-/* --------- cusdritos con ícono que sube ---------- */
+/* --------- cuadritos con ícono que sube ---------- */
 .process-inner {
   background-color: transparent;
   color: #333;
@@ -494,6 +527,10 @@ p.botonTitulos{
 }
 
 /* -------- CARGA Y DESCARCARGA DE COMBISTIBLE ------*/
+.imgcargas{
+  width: 150px;
+  height: 150px;
+  }
 .combustibleBorde{
   border: #F7C90D 2px solid;
   border-radius: 10px;
