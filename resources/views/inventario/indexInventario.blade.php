@@ -23,11 +23,10 @@
                                         </div>
                                     @endif
                                     <div class="row justify-content-end">
-                                        <div class="col-2 text-center mb-5">
+                                        <div class="col-12 text-end mb-5">
                                             {{-- @can('user_create') --}}
                                             <a href="{{ route('inventario.create') }}">
-                                                <button type="button" class="botonSinFondo "><img
-                                                        style="width: 30px;"src="{{ '/img/inventario/nuevo.svg' }}"></button>
+                                                <button type="button" class="botonSinFondo "><img style="width: 30px;"src="{{ '/img/inventario/nuevo.svg' }}"></button>
                                             </a>
                                             <p>Nuevo</p>
 
@@ -49,7 +48,7 @@
                                         <tbody>
                                             @forelse ($inventarios as $inventario)
                                                 <tr class=" border-top border-bottom">
-                                                    <th scope="row"><img class="my-4" style="width: 100px;"
+                                                    <th scope="row"><img class="my-4 " style="width: 100px;"
                                                             {{-- src="{{ '/img/general/defaultinventario.jpg' }}"> --}}
                                                             src="{{ $inventario->imagen == '' ? ' /img/general/default.jpg' : '/storage/inventario/' . $inventario->imagen }}">
                                                     </th>
@@ -58,7 +57,7 @@
                                                     <td>{{ $inventario->maximo }}</td>
                                                     <td class="td-actions justify-content-end d-flex">
                                                         {{-- @can('user_show') --}}
-                                                        <div class="col-5">
+                                                        <div >
                                                             <button type="button"
                                                                 class="botonSinFondo mx-2"title="Resurtir"
                                                                 data-bs-toggle="modal" data-bs-target="#modal-cliente"
@@ -69,7 +68,7 @@
 
                                                         {{-- @endcan --}}
                                                         {{-- @can('user_edit') --}}
-                                                        <div class="col-5">
+                                                        <div >
                                                             <a href="{{ route('inventario.show', $inventario->id) }}"
                                                                 <button type="button"
                                                                 class="botonSinFondo mx-2"title="Detalle"><img
