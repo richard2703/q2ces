@@ -29,7 +29,7 @@
 
                                     <div class="row d-flex justify-content-around">
                                         <div class="col-12 col-sm-4 ">
-                                            <div class="text-center mx-auto border vistaFoto mb-4">
+                                            <div class="text-center mx-auto border mb-4">
                                                 <i><img class="imgVista img-fluid mb-5" src="{{ asset('/img/general/default.jpg') }}"></i>
                                                 <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto" id="mi-archivo" accept="image/*"></span>
                                                 <label for="mi-archivo">

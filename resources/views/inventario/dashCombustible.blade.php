@@ -26,24 +26,22 @@
                                 <nav class=" ">
                                     <div class="nav nav-tabs navMenuBalance justify-content-evenly" id="nav-tab"
                                         role="tablist">
-                                        <button class="nav-link active combustiblePestaña  col-4" id="balanceUno-tab"
+                                        <button class="nav-link active combustiblePestaña  col-6" id="balanceUno-tab"
                                             data-bs-toggle="tab" data-bs-target="#balanceUno" type="button" role="tab"
                                             aria-controls="balanceUno" aria-selected="true">
 
 
                                             <img id="myImage" onclick="changeImage()"
-                                                src="{{ asset('img/inventario/cargaVerde.svg') }}" class="mx-auto d-block"
-                                                width="65%">
+                                                src="{{ asset('img/inventario/cargaVerde.svg') }}" class="mx-auto d-block imgCargaDescarga" >
                                             <p class="text-center mt-2">CARGA</p>
                                         </button>
-                                        <button class="nav-link  combustiblePestaña col-4" id="balanceDos-tab"
+                                        <button class="nav-link  combustiblePestaña col-5" id="balanceDos-tab"
                                             data-bs-toggle="tab" data-bs-target="#balanceDos" type="button" role="tab"
                                             aria-controls="balanceDos" aria-selected="false">
 
 
                                             <img id="myImage1" onclick="changeImage1()"
-                                                src="{{ asset('img/inventario/descargaGris.svg') }}" class="mx-auto d-block"
-                                                width="65%">
+                                                src="{{ asset('img/inventario/descargaGris.svg') }}" class="mx-auto d-block imgCargaDescarga" >
                                             <p class="text-center mt-2">DESCARGA</p>
                                         </button>
                                         {{--  <div class="col-4">
@@ -55,7 +53,7 @@
                                 </nav>
                                 <div class="tab-content" id="nav-tabContent ">
 
-                                    <div class="tab-pane fade show active border" id="balanceUno" role="tabpanel"
+                                    <div class="tab-pane fade show active conteDivCArgaDescarga " id="balanceUno" role="tabpanel"
                                         aria-labelledby="balanceUno-tab" tabindex="0">
                                         <form action="{{ route('inventario.cargaCombustible') }}" method="post">
                                             @csrf
@@ -64,7 +62,7 @@
                                                 <div class="row mt-5">
                                                     <div class="col-12">
                                                         <div class="row ">
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/inventario/equipo_1.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -83,7 +81,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/inventario/despachador.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -102,7 +100,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/inventario/litros.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -116,7 +114,7 @@
                                                             </div>
 
 
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/inventario/precio.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -145,7 +143,7 @@
 
                                     </div>
 
-                                    <div class="tab-pane fade border" id="balanceDos" role="tabpanel"
+                                    <div class="tab-pane fade conteDivCArgaDescarga" id="balanceDos" role="tabpanel"
                                         aria-labelledby="balanceDos-tab" tabindex="0">
                                         <form action="{{ route('inventario.descargaCombustible') }}" method="post"
                                             enctype="multipart/form-data">
@@ -153,32 +151,35 @@
                                             @method('put')
                                             <div class="col-12 my-5 ">
                                                 <div class="row mt-5">
-                                                    <div class="col-4">
-                                                        <div class="text-center mx-auto border vistaFoto mb-4">
-                                                            <i><img class="imgVistaCombustible img-fluid mb-2"
-                                                                    src="{{ asset('/img/inventario/horometro.svg') }}"></i>
-                                                            <span class="mi-archivo"> <input class="mb-4 ver "
-                                                                    type="file" name="imgKm" id="mi-archivo"
-                                                                    accept="image/*" multiple></span>
-                                                            <label for="mi-archivo">
-                                                                <span class="">Sube Imagen</span>
-                                                            </label>
-                                                        </div>
-                                                        <div class="text-center mx-auto border vistaFoto mb-4">
-                                                            <i><img class="imgVistaCombustible img-fluid mb-2"
-                                                                    src="{{ asset('/img/inventario/kilometraje.svg') }}"></i>
-                                                            <span class="mi-archivo2"> <input class="mb-4 ver "
-                                                                    type="file" name="imgHoras" id="mi-archivo2"
-                                                                    accept="image/*" multiple></span>
-                                                            <label for="mi-archivo2">
-                                                                <span class="">Sube Imagen</span>
-                                                            </label>
+                                                    <div class="col-12 col-lg-3">
+                                                        <div class="row" >
+                                                            <div class="col-12 col-md-6 col-lg-12 text-center mx-auto border vistaFotoCombustibles mb-4">
+                                                                <i><img class="imgVistaCombustible img-fluid mb-2"
+                                                                        src="{{ asset('/img/inventario/horometro.svg') }}"></i>
+                                                                <span class="mi-archivo"> <input class="mb-4 ver "
+                                                                        type="file" name="imgKm" id="mi-archivo"
+                                                                        accept="image/*" multiple></span>
+                                                                <label for="mi-archivo">
+                                                                    <span class="">Sube Imagen</span>
+                                                                </label>
+                                                            </div>
+                                                            
+                                                            <div class="col-12 col-md-6 col-lg-12 text-center mx-auto border vistaFotoCombustibles mb-4">
+                                                                <i><img class="imgVistaCombustible img-fluid mb-2"
+                                                                        src="{{ asset('/img/inventario/kilometraje.svg') }}"></i>
+                                                                <span class="mi-archivo2"> <input class="mb-4 ver "
+                                                                        type="file" name="imgHoras" id="mi-archivo2"
+                                                                        accept="image/*" multiple></span>
+                                                                <label for="mi-archivo2">
+                                                                    <span class="">Sube Imagen</span>
+                                                                </label>
+                                                            </div>
                                                         </div>
 
                                                     </div>
-                                                    <div class="col-8">
+                                                    <div class="col-12 col-md-12 col-lg-9">
                                                         <div class="row ">
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/inventario/equipo_1.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -197,7 +198,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/navs/eqiposMenu.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -216,7 +217,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/inventario/despachador.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -235,7 +236,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/navs/personalMenu.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -254,7 +255,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/inventario/litros.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -266,7 +267,7 @@
                                                                         value="{{ old('litros') }}">
                                                                 </div>
                                                             </div>
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/inventario/iconoKm.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -279,7 +280,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/inventario/horometroIcono.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -365,8 +366,7 @@
                                             <h2 class="card-title">Ultimos 30 Dias</h2>
                                         </div>
                                         <div class="col-sm-6 ">
-                                            <div class="btn-group btn-group-toggle float-right d-flex"
-                                                data-toggle="buttons">
+                                            <div class="btn-group btn-group-toggle float-right d-flex" data-toggle="buttons">
                                                 {{--  <label class="btn btn-sm btn-primary btn-simple active" id="0">
                                                     <input type="radio" name="options" checked>
                                                     <span
@@ -376,12 +376,9 @@
                                                     </span>
                                                 </label>  --}}
                                                 @foreach ($gasolinas as $gasolina)
-                                                    <label class="btn btn-sm btn-primary btn-simple" id="1"
-                                                        aria-controls={{ $gasolina->id }}>
+                                                    <label class="btn btn-sm btn-primary btn-simple botongrafica" id="1" aria-controls={{ $gasolina->id }}>
                                                         <input type="radio" class="d-none d-sm-none" name="options">
-                                                        <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block"
-                                                            onclick="actualizar({{ $gasolina->id }})">
-                                                            {{ $gasolina->nombre }}
+                                                        <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block"  onclick="actualizar({{ $gasolina->id }})"> {{ $gasolina->nombre }}
                                                             <span class="d-block d-sm-none">
                                                                 <i class="tim-icons icon-gift-2"></i>
                                                             </span>
@@ -441,12 +438,12 @@
                                             </div>-->
                                 <div class="card-body mb-3">
                                     <div class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
-                                        <button class=" nav-item col-6 BTNbCargaDescarga py-3 border-0 active "
+                                        <button class=" nav-item col-12 col-md-6 BTNbCargaDescarga py-3 border-0 active "
                                             role="presentation" id="home-tab" data-bs-toggle="tab"
                                             data-bs-target="#home-tab-pane" type="button" role="tab"
                                             aria-controls="home-tab-pane" aria-selected="true">Relación Cargas de
                                             Combustible</button>
-                                        <button class="nav-item col-6 BTNbCargaDescarga " role="presentation"
+                                        <button class="nav-item col-12 col-md-6 BTNbCargaDescarga " role="presentation"
                                             id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
                                             type="button" role="tab" aria-controls="profile-tab-pane"
                                             aria-selected="false"> Relación Descargas de Combustible</button>
@@ -482,31 +479,17 @@
 
 
                                                                             <td class="td-actions justify-content-end">
-                                                                                <a href="#" class=""
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="#cargaCombustible">
-                                                                                    <svg xmlns="http://www.w3.org/2000/svg "
-                                                                                        width="28" height="28"
-                                                                                        fill="currentColor"
-                                                                                        class="bi bi-pencil accionesIconos"
-                                                                                        viewBox="0 0 16 16">
-                                                                                        <path
-                                                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                                <a href="#" class=""  data-bs-toggle="modal" data-bs-target="#cargaCombustible">
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg "  width="28" height="28" fill="currentColor" class="bi bi-pencil accionesIconos"  viewBox="0 0 16 16">
+                                                                                        <path  d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                                                                     </svg>
                                                                                 </a>
 
                                                                                 <form action="">
-                                                                                    <button class=" btnSinFondo"
-                                                                                        type="submit" rel="tooltip">
-                                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                            width="28" height="28"
-                                                                                            fill="currentColor"
-                                                                                            class="bi bi-x-circle"
-                                                                                            viewBox="0 0 16 16">
-                                                                                            <path
-                                                                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                                            <path
-                                                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                    <button class=" btnSinFondo" type="submit" rel="tooltip">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg"  width="28" height="28"  fill="currentColor"  class="bi bi-x-circle"  viewBox="0 0 16 16">
+                                                                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                                                                                         </svg>
                                                                                     </button>
                                                                                 </form>

@@ -12,7 +12,7 @@
         <!-- EQUIPOS -->
             <li class="nav-item {{ $activePage == 'dashboard' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a href="#equipo" onmouseover="cambiar();" onmouseout="volver();" class="nav-link p-2" data-toggle="collapse" aria-expanded="false">
-                    <i><img id="cambiaBCO" ssrc="{{ $activePage == 'equipos' ? ' img/navs/eqiposMenuBCO.svg' : '/img/navs/eqiposMenu.svg' }}"  style="width:25px">  </i> 
+                    <i><img id="cambiaBCO" ssrc="{{ $activePage == 'equipos' ? ' img/navs/eqiposmenubco.svg' : '/img/navs/eqiposmenu.svg' }}"  style="width:25px">  </i> 
                     <p>{{ __('Equipos') }}
                         <b class="caret"></b>
                     </p>
@@ -55,7 +55,7 @@
             <!------ PERSONAL ------>
             <li class="nav-item {{ $activePage == 'personal' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a class="nav-link p-2 " onmouseover="cambiar2();" onmouseout="volver2();" data-toggle="collapse" href="#personal" aria-expanded="false">
-                    <i><img id="cambiaBCO2" style="width:25px" src="{{ $activePage == 'personal' ? ' img/navs/personalMenuBCO.svg' : '/img/navs/personalMenu.svg' }}"></i>
+                    <i><img id="cambiaBCO2" style="width:25px" src="{{ $activePage == 'personal' ? ' img/navs/personalmenubco.svg' : '/img/navs/personalmenu.svg' }}"></i>
                     <p>{{ __('Personal') }}
                         <b class="caret"></b>
                     </p>
@@ -91,7 +91,7 @@
             <!------ INVENTARIO ------>
             <li class="nav-item {{ $activePage == 'inventario' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a href="{{ route('inventario.dash') }}" onmouseover="cambiar3();" onmouseout="volver3();" class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
-                    <i><img id="cambiaBCO3" style="width:25px" src="{{ $activePage == 'inventario' ? ' img/navs/inventarioMenuBCO.svg' : '/img/navs/inventarioMenu.svg' }}"></i>
+                    <i><img id="cambiaBCO3" style="width:25px" src="{{ $activePage == 'inventario' ? ' img/navs/inventariomenubco.svg' : '/img/navs/inventariomenu.svg' }}"></i>
                     <p> {{ __('inventario') }} </p>
                     {{--  <b class="caret"></b>  --}}
                 </a>
@@ -100,7 +100,7 @@
             <!------ OBRA ------>
             <li class="nav-item {{ $activePage == 'obra' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a class="nav-link p-2" onmouseover="cambiar4();" onmouseout="volver4();" data-toggle="collapse" href="#obras" aria-expanded="false">
-                    <i><img id="cambiaBCO4" src="{{ $activePage == 'obra' ? ' img/navs/obrasMenuBCO.svg' : '/img/navs/obrasMenu.svg' }}" style="width:25px"></i>
+                    <i><img id="cambiaBCO4" src="{{ $activePage == 'obra' ? ' img/navs/obrasmenuco.svg' : '/img/navs/obrasmenu.svg' }}" style="width:25px"></i>
                     <p>{{ __('Obra') }}
                         <b class="caret"></b>
                     </p>
@@ -133,7 +133,7 @@
             <!------ BITÁCORAS ------>
             <li class="nav-item {{ $activePage == 'bitacoras' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a class="nav-link p-2" onmouseover="cambiar5();" onmouseout="volver5();" data-toggle="collapse" href="#bitacorass" aria-expanded="false">
-                    <i><img id="cambiaBCO5" src="{{ $activePage == 'bitacoras' ? ' img/navs/bitacorasMenuBCO.svg' : '/img/navs/bitacorasMenu.svg' }}" style="width:25px"></i>
+                    <i><img id="cambiaBCO5" src="{{ $activePage == 'bitacoras' ? ' img/navs/bitacorasmenubco.svg' : '/img/navs/bitacorasmenu.svg' }}" style="width:25px"></i>
                     <p>{{ __('Bitácoras / Reportes') }}
                         <b class="caret"></b>
                     </p>
@@ -170,7 +170,7 @@
             <!------ FORMATOS ------>
             <li class="nav-item {{ $activePage == 'formatos' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a class="nav-link p-2" onmouseover="cambiar6();" onmouseout="volver6();" data-toggle="collapse" href="#formatoss" aria-expanded="false">
-                    <i><img id="cambiaBCO6" src="{{ $activePage == 'formatos' ? ' img/navs/formatosmenuBCO.svg' : '/img/navs/formatosmenu.svg' }}" style="width:25px"></i>
+                    <i><img id="cambiaBCO6" src="{{ $activePage == 'formatos' ? ' img/navs/formatosmenubco.svg' : '/img/navs/formatosmenu.svg' }}" style="width:25px"></i>
                     <p>{{ __('Formatos') }}
                         <b class="caret"></b>
                     </p>
@@ -220,47 +220,47 @@
 //FUNCIONES PARA CAMBIAR BOTONES A BLANCO
 //---equipos-----
 function cambiar(){
-  document.getElementById('cambiaBCO').src="{{ asset('/img/navs/eqiposMenuBCO.svg') }}";
+  document.getElementById('cambiaBCO').src="{{ asset('/img/navs/eqiposMenubCO.svg') }}";
 }
 function volver(){
-  document.getElementById('cambiaBCO').src="{{ asset('/img/navs/eqiposMenu.svg') }}";
+  document.getElementById('cambiaBCO').src="{{ asset('/img/navs/eqiposmenu.svg') }}";
 }
 
 //---personal-----
 function cambiar2(){
-  document.getElementById('cambiaBCO2').src="{{ asset('/img/navs/personalMenuBCO.svg') }}";
+  document.getElementById('cambiaBCO2').src="{{ asset('/img/navs/personalmenubco.svg') }}";
 }
 function volver2(){
-  document.getElementById('cambiaBCO2').src="{{ asset('/img/navs/personalMenu.svg') }}";
+  document.getElementById('cambiaBCO2').src="{{ asset('/img/navs/personalmenu.svg') }}";
 }
 
 //---inventario-----
 function cambiar3(){
-  document.getElementById('cambiaBCO3').src="{{ asset('/img/navs/inventarioMenuBCO.svg') }}";
+  document.getElementById('cambiaBCO3').src="{{ asset('/img/navs/inventariomenubco.svg') }}";
 }
 function volver3(){
-  document.getElementById('cambiaBCO3').src="{{ asset('/img/navs/inventarioMenu.svg') }}";
+  document.getElementById('cambiaBCO3').src="{{ asset('/img/navs/inventariomenu.svg') }}";
 }
 
 //---obra-----
 function cambiar4(){
-  document.getElementById('cambiaBCO4').src="{{ asset('/img/navs/obrasMenuBCO.svg') }}";
+  document.getElementById('cambiaBCO4').src="{{ asset('/img/navs/obrasmenubco.svg') }}";
 }
 function volver4(){
-  document.getElementById('cambiaBCO4').src="{{ asset('/img/navs/obrasMenu.svg') }}";
+  document.getElementById('cambiaBCO4').src="{{ asset('/img/navs/obrasmenu.svg') }}";
 }
 
 //---bitacora-----
 function cambiar5(){
-  document.getElementById('cambiaBCO5').src="{{ asset('/img/navs/bitacorasMenuBCO.svg') }}";
+  document.getElementById('cambiaBCO5').src="{{ asset('/img/navs/bitacorasmenubco.svg') }}";
 }
 function volver5(){
-  document.getElementById('cambiaBCO5').src="{{ asset('/img/navs/bitacorasMenu.svg') }}";
+  document.getElementById('cambiaBCO5').src="{{ asset('/img/navs/bitacorasmenu.svg') }}";
 }
 
 //---formatos-----
 function cambiar6(){
-  document.getElementById('cambiaBCO6').src="{{ asset('/img/navs/formatosmenuBCO.svg') }}";
+  document.getElementById('cambiaBCO6').src="{{ asset('/img/navs/formatosmenubco.svg') }}";
 }
 function volver6(){
   document.getElementById('cambiaBCO6').src="{{ asset('/img/navs/formatosmenu.svg') }}";
