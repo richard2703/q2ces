@@ -465,6 +465,7 @@
                                                                         <th class="fw-bolder">Litros</th>
                                                                         <th class="fw-bolder">Precio</th>
                                                                         <th class="fw-bolder">fecha</th>
+                                                                        <th> Hora</th>
                                                                         <th class="fw-bolder text-right">Acciones</th>
                                                                     </thead>
                                                                     <tbody>
@@ -475,6 +476,8 @@
                                                                             <td>Javier</td>
                                                                             <td>300</td>
                                                                             <td>12/01/2023 </td>
+                                                                            <td> 
+                                                                                12:00 </td>
 
 
 
@@ -522,6 +525,7 @@
                                                                         <th class="fw-bolder">Litros</th>
                                                                         <th class="fw-bolder">Precio</th>
                                                                         <th class="fw-bolder">fecha</th>
+                                                                        <th> Hora</th>
                                                                         <th class="fw-bolder text-right">Acciones</th>
                                                                     </thead>
                                                                     <tbody>
@@ -534,6 +538,8 @@
                                                                             <td>300 </td>
                                                                             <td>20.99 </td>
                                                                             <td>20/05/2023 </td>
+                                                                            <td>
+                                                                                12:00 </td>
 
                                                                             <td class="td-actions justify-content-end">
                                                                                 <a href="#" class=""
@@ -590,7 +596,7 @@
         </div>
     </div>
 
-    <!------MODALES DE CARGA Y DESCARGA ----- -->
+    <!-- ----MODALES DE CARGA Y DESCARGA ----- -->
 
     <!-- Button trigger modal -->
 
@@ -606,7 +612,7 @@
                 </div>
                 <div class="modal-body">
                     <form class="row">
-                        <div class="col-4 my-3">
+                        <div class="col-6 my-3">
                             <label for="inputEmail4" class="form-label">Equipo</label>
                             <select id="" class="form-select">
                                 <option selected>Opción 1</option>
@@ -617,7 +623,7 @@
                             </select>
                         </div>
 
-                        <div class="col-4 my-3">
+                        <div class="col-6 my-3">
                             <label for="inputEmail4" class="form-label">Despachador</label>
                             <select id="" class="form-select">
                                 <option selected>Opción 1</option>
@@ -628,18 +634,22 @@
                             </select>
                         </div>
 
-                        <div class="col-4 my-3">
+                        <div class="col-3 my-3">
                             <label for="inputEmail4" class="form-label">Litros</label>
                             <input type="number" class="form-control" id="">
                         </div>
-                        <div class="col-4 my-3">
+                        <div class="col-3 my-3">
                             <label for="inputEmail4" class="form-label">Precio</label>
                             <input type="number" class="form-control" id="">
                         </div>
 
-                        <div class="col-4 my-3">
+                        <div class="col-3 my-3">
                             <label for="inputEmail4" class="form-label">Fecha</label>
                             <input type="date" class="form-control" id="">
+                        </div>
+                        <div class="col-3 my-3">
+                            <label for="inputEmail4" class="form-label">Hora Carga</label>
+                            <input type="time" class="form-control" id="">
                         </div>
                     </form>
                 </div>
@@ -654,7 +664,7 @@
     <!-- Modal Descarga-->
     <div class="modal fade" id="descargaCombustible" tabindex="-1" aria-labelledby="descargaCombustibleLabel"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
                     <h1 class="modal-title fs-5" id="descargaCombustibleLabel">Modificar Descarga de Combustible</h1>
@@ -662,7 +672,7 @@
                 </div>
                 <div class="modal-body">
                     <form class="row">
-                        <div class="col-4 my-3">
+                        <div class="col-6 my-3">
                             <label for="inputEmail4" class="form-label">Equipo</label>
                             <select id="" class="form-select">
                                 <option selected>Opción 1</option>
@@ -673,18 +683,7 @@
                             </select>
                         </div>
 
-                        <div class="col-4 my-3">
-                            <label for="inputEmail4" class="form-label">Maquinaria</label>
-                            <select id="" class="form-select">
-                                <option selected>Opción 1</option>
-                                <option>Opción 2</option>
-                                <option>Opción 3</option>
-                                <option>Opción 4</option>
-                                <option>Opción 5</option>
-                            </select>
-                        </div>
-
-                        <div class="col-4 my-3">
+                        <div class="col-6 my-3">
                             <label for="inputEmail4" class="form-label">Despachador</label>
                             <select id="" class="form-select">
                                 <option selected>Opción 1</option>
@@ -695,8 +694,8 @@
                             </select>
                         </div>
 
-                        <div class="col-4 my-3">
-                            <label for="inputEmail4" class="form-label">Operador</label>
+                        <div class="col-6 my-3">
+                            <label for="inputEmail4" class="form-label">Maquinaria</label>
                             <select id="" class="form-select">
                                 <option selected>Opción 1</option>
                                 <option>Opción 2</option>
@@ -707,13 +706,28 @@
                         </div>
 
                         <div class="col-6 my-3">
+                            <label for="inputEmail4" class="form-label">Operador</label>
+                            <select id="" class="form-select">
+                                <option selected>Opción 1</option>
+                                <option>Opción 2</option>
+                                <option>Opción 3</option>
+                                <option>Opción 4</option>
+                                <option>Opción 5</option>
+                            </select>
+                        </div>
+
+                        <div class="col-4 my-3">
                             <label for="inputEmail4" class="form-label">Litros</label>
                             <input type="number" class="form-control" id="">
                         </div>
 
-                        <div class="col-6 my-3">
+                        <div class="col-4 my-3">
                             <label for="inputEmail4" class="form-label">Fecha</label>
                             <input type="date" class="form-control" id="">
+                        </div>
+                        <div class="col-4 my-3">
+                            <label for="inputEmail4" class="form-label">Hora Carga</label>
+                            <input type="time" class="form-control" id="">
                         </div>
 
                         <div class="col-6 my-3">
@@ -726,14 +740,27 @@
                             <input type="number" class="form-control" id="">
                         </div>
 
-                        <div class="col-12 my-3">
-                            <div class=" mx-auto border vistaFoto mb-4">
-                                <i><img class=" img-fluid mb-5" src="{{ asset('/img/general/default.jpg') }}"></i>
-                                <span class="botonGral"> <input class="mb-4 ver" type="file" name="foto"
-                                        id="mi-archivo" accept="image/*"></span>
-                                <label for="mi-archivo">
-                                    <span>Fotografía</span>
-                                </label>
+                        <div class="row justify-content-evenly ">
+                            <div class="col-5 my-3">
+                                <div class=" mx-auto border vistaFoto mb-4">
+                                    <i><img class=" img-fluid mb-5" src="{{ asset('/img/general/default.jpg') }}"></i>
+                                    <span class="botonGral"> <input class="mb-4 ver" type="file" name="foto"
+                                            id="mi-archivo" accept="image/*"></span>
+                                    <label for="mi-archivo">
+                                        <span class="text-center">Fotografía</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-5  my-3">
+                                <div class=" mx-auto border vistaFotoModalCarga-Desc mb-4">
+                                    <i><img class=" img-fluid mb-5" src="{{ asset('/img/general/default.jpg') }}"></i>
+                                    <span class="botonGral"> <input class="mb-4 ver" type="file" name="foto"
+                                            id="mi-archivo" accept="image/*"></span>
+                                    <label for="mi-archivo">
+                                        <span>logo</span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </form>

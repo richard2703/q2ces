@@ -74,7 +74,7 @@
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Número:</label></br>
-                                            <input type="text" class="inputCaja" id="numero" name="numero"
+                                            <input type="number" class="inputCaja" id="numero" name="numero"
                                                 value="{{ old('numero') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
@@ -84,7 +84,7 @@
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Código Postal:</label></br>
-                                            <input type="text" class="inputCaja" id="cp" name="cp"
+                                            <input type="number" class="inputCaja" id="cp" name="cp"
                                                 value="{{ old('cp') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
@@ -139,7 +139,12 @@
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Código de Confirmación:</label></br>
-                                                    <input type="text" class="inputCaja" id="nombre" name="nombre"
+                                                    <input type="password" class="inputCaja" id="nombre" name="nombre"
+                                                        value="{{ old('nombre') }}">
+                                                </div>
+                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">E-mail</label></br>
+                                                    <input type="email" class="inputCaja" id="nombre" name="nombre"
                                                         value="{{ old('nombre') }}">
                                                 </div>
                                             </div>
@@ -163,31 +168,32 @@
 
                                             <div class="row">
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Nombre:</label></br>
-                                                    <input type="text" class="inputCaja" id="nombre" name="nombre"
-                                                        value="{{ old('nombre') }}">
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Equipo:</label></br>
-                                                    <input type="text" class="inputCaja" id="nombre" name="nombre"
+                                                    <input type="text" class="form-select inputCaja" id="nombre" name="nombre"
                                                         value="{{ old('nombre') }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Operador:</label></br>
-                                                    <input type="text" class="inputCaja" id="nombre" name="nombre"
-                                                        value="{{ old('nombre') }}">
+                                                    <select class="form-select" aria-label="Default select example" id="tipo"  name="tipo">
+                                                        <option selected>Seleccione</option>
+                                                        <option value="">Operador 1</option>
+                                                        <option value="">Operador 2</option>
+                                                    </select>
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Combustible:</label></br>
-                                                <input class="check" type="checkbox" value="" id="flexCheckDefault">
+                                                    <select class="form-select" aria-label="Default select example" id="tipo"  name="tipo">
+                                                        <option selected>Seleccione</option>
+                                                        <option value="">Gasolina</option>
+                                                        <option value="">Diesel</option>
+                                                    </select>
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Fecha de Inicio:</label></br>
-                                                    <input type="date" class="" id="nombre" name="nombre"
+                                                    <input type="date" class="inputCaja" id="nombre" name="nombre"
                                                         value="{{ old('nombre') }}">
                                                 </div>
 
