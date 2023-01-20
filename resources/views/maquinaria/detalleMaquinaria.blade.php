@@ -36,11 +36,11 @@
                                             <div class="accordion-body">
                                                 <div class="row mt-3">
                                                     <div class="col-12 col-lg-4  my-3">
-                                                        <div class="row">
+                                                        <div class="row mb-5">
 
-                                                            <div class="col-12" id="visor">
+                                                            <div class="col-12 contFotoMaquinaria" id="visor">
                                                                 <img src="{{ empty($fotos[0]) ? ' /img/general/default.jpg' : '/storage/imgmaquinaria/' . $fotos[0]->ruta }}"
-                                                                    class="mx-auto d-block img-fluid">
+                                                                    class="mx-auto d-block img-fluid imgMaquinaria">
                                                             </div>
 
                                                             <div class="col-12 my-3 d-flex justify-content-around"
@@ -51,9 +51,16 @@
                                                                         class="img-fluid ">
                                                                 @empty
                                                                 @endforelse
+                                                                
 
 
                                                             </div>
+                                                            <span class="mi-archivo"> <input class="mb-4 ver "
+                                                                    type="file" name="ruta[]" id="mi-archivo"
+                                                                    accept="image/*" multiple></span>
+                                                            <label for="mi-archivo">
+                                                                <span class="">sube imagen</span>
+                                                            </label>
                                                         </div>
 
                                                     </div>

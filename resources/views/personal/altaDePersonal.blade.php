@@ -37,9 +37,9 @@
                                                 <div class="row mt-3">
                                                     <div class="col-12 col-md-4  ">
 
-                                                        <div class="text-center mx-auto border vistaFoto mb-4">
-                                                            <i><img class="imgVista img-fluid mb-2"
-                                                                    src="{{ asset('/img/general/default.jpg') }}"></i>
+                                                        <div class="text-center mx-auto border  mb-4">
+                                                            <i><img class="img-fluid imgPersonal mb-2"
+                                                                    src="{{ asset('/img/general/avatar.jpg') }}"></i>
 
                                                             <span class="mi-archivo"> <input class="mb-4 ver" type="file"
                                                                     name="foto" id="mi-archivo" accept="image/*"></span>
