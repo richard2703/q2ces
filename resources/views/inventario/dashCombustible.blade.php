@@ -46,11 +46,6 @@
                                                 width="65%">
                                             <p class="text-center mt-2">DESCARGA</p>
                                         </button>
-                                        {{--  <div class="col-4">
-                                            <p class="text-end mb-2">Datos de Registro</p>
-                                            <p class="text-end combustibleFecha"> 22/11/2022</p>
-                                            <p class="text-end combustibleHora my-2">2:00 pm</p>
-                                        </div>  --}}
                                     </div>
                                 </nav>
                                 <div class="tab-content" id="nav-tabContent ">
@@ -185,7 +180,7 @@
                                                                 </div>
                                                                 <div>
                                                                     <label class="labelTitulo">Equipo:</label></br>
-                                                                    <select id="servicioId" name="servicioId"
+                                                                    <select id="maquinariaId" name="maquinariaId"
                                                                         class="form-select"
                                                                         aria-label="Default select example">
                                                                         @foreach ($cisternas as $maquina)
@@ -204,7 +199,7 @@
                                                                 </div>
                                                                 <div>
                                                                     <label class="labelTitulo">Maquinaria:</label></br>
-                                                                    <select id="maquinariaId" name="maquinariaId"
+                                                                    <select id="servicioId" name="servicioId"
                                                                         class="form-select"
                                                                         aria-label="Default select example">
                                                                         @foreach ($maquinaria as $maquina)
@@ -367,14 +362,6 @@
                                         <div class="col-sm-6 ">
                                             <div class="btn-group btn-group-toggle float-right d-flex"
                                                 data-toggle="buttons">
-                                                {{--  <label class="btn btn-sm btn-primary btn-simple active" id="0">
-                                                    <input type="radio" name="options" checked>
-                                                    <span
-                                                        class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Orquesta</span>
-                                                    <span class="d-block d-sm-none">
-                                                        <i class="tim-icons icon-single-02"></i>
-                                                    </span>
-                                                </label>  --}}
                                                 @foreach ($gasolinas as $gasolina)
                                                     <label class="btn btn-sm btn-primary btn-simple" id="1"
                                                         aria-controls={{ $gasolina->id }}>
@@ -390,36 +377,6 @@
 
                                             </div>
                                         </div>
-                                        {{--  <div class="col-sm-6">
-                                            <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
-                                                <label class="btn btn-sm btn-primary btn-simple active" id="0">
-                                                    <input type="radio" name="options" checked>
-                                                    <span
-                                                        class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Orquesta</span>
-                                                    <span class="d-block d-sm-none">
-                                                        <i class="tim-icons icon-single-02"></i>
-                                                    </span>
-                                                </label>
-                                                <label class="btn btn-sm btn-primary btn-simple" id="1"
-                                                    aria-controls=8>
-                                                    <input type="radio" class="d-none d-sm-none" name="options">
-                                                    <span
-                                                        class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Kangoo</span>
-                                                    <span class="d-block d-sm-none">
-                                                        <i class="tim-icons icon-gift-2"></i>
-                                                    </span>
-                                                </label>
-                                                <label class="btn btn-sm btn-primary btn-simple" id="2"
-                                                    aria-controls=7>
-                                                    <input type="radio" class="d-none" name="options">
-                                                    <span
-                                                        class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Sessions</span>
-                                                    <span class="d-block d-sm-none">
-                                                        <i class="tim-icons icon-tap-02"></i>
-                                                    </span>
-                                                </label>
-                                            </div>
-                                        </div>  --}}
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -436,9 +393,9 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <!-- <div class="card-header bacTituloPrincipal">
-                                                <h4 class="card-title">Carga y descarga de combustible</h4>
-                                                
-                                            </div>-->
+                                                                                                                                                <h4 class="card-title">Carga y descarga de combustible</h4>
+
+                                                                                                                                            </div>-->
                                 <div class="card-body mb-3">
                                     <div class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
                                         <button class=" nav-item col-6 BTNbCargaDescarga py-3 border-0 active "
@@ -468,50 +425,71 @@
                                                                         <th class="fw-bolder">Litros</th>
                                                                         <th class="fw-bolder">Precio</th>
                                                                         <th class="fw-bolder">fecha</th>
+                                                                        <th class="fw-bolder">hora</th>
                                                                         <th class="fw-bolder text-right">Acciones</th>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <tr>
-                                                                            <td>50</td>
-                                                                            <td>Toyota Hilux </td>
-                                                                            <td>Jalisco </td>
-                                                                            <td>Javier</td>
-                                                                            <td>300</td>
-                                                                            <td>12/01/2023 </td>
+                                                                        @forelse ($cargas as $carga)
+                                                                            <tr>
+                                                                                <td>{{ $carga->id }}</td>
+                                                                                <td>{{ $carga->equipo }}</td>
+                                                                                <td>{{ $carga->operador }} </td>
+                                                                                <td>
+                                                                                    {{ number_format($carga->litros, 2, '.', ',') }}
+                                                                                </td>
+                                                                                <td>
+                                                                                    $
+                                                                                    {{ number_format($carga->precio, 2, '.', ',') }}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{ \Carbon\Carbon::parse($carga->fecha)->format('Y-m-d') }}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{ \Carbon\Carbon::parse($carga->fecha)->format('H:m') }}
+                                                                                </td>
 
-
-
-                                                                            <td class="td-actions justify-content-end">
-                                                                                <a href="#" class=""
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="#cargaCombustible">
-                                                                                    <svg xmlns="http://www.w3.org/2000/svg "
-                                                                                        width="28" height="28"
-                                                                                        fill="currentColor"
-                                                                                        class="bi bi-pencil accionesIconos"
-                                                                                        viewBox="0 0 16 16">
-                                                                                        <path
-                                                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                                                                    </svg>
-                                                                                </a>
-
-                                                                                <form action="">
-                                                                                    <button class=" btnSinFondo"
-                                                                                        type="submit" rel="tooltip">
-                                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                <td class="td-actions justify-content-end">
+                                                                                    <a href="#" class=""
+                                                                                        data-bs-toggle="modal"
+                                                                                        data-bs-target="#cargaCombustible"
+                                                                                        onclick="loadCarga('{{ $carga->id }}','{{ $carga->maquinariaid }}','{{ $carga->operadorid }}'
+                                                                                        ,'{{ $carga->litros }}','{{ $carga->precio }}'
+                                                                                        ,'{{ \Carbon\Carbon::parse($carga->fecha)->format('Y-m-d') }}','{{ \Carbon\Carbon::parse($carga->fecha)->format('H:m') }}')">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg "
                                                                                             width="28" height="28"
                                                                                             fill="currentColor"
-                                                                                            class="bi bi-x-circle"
+                                                                                            class="bi bi-pencil accionesIconos"
                                                                                             viewBox="0 0 16 16">
                                                                                             <path
-                                                                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                                            <path
-                                                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                                d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                                                                         </svg>
-                                                                                    </button>
-                                                                                </form>
-                                                                            </td>
-                                                                        </tr>
+                                                                                    </a>
+
+                                                                                    <form action="">
+                                                                                        <button class=" btnSinFondo"
+                                                                                            type="submit" rel="tooltip">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                width="28"
+                                                                                                height="28"
+                                                                                                fill="currentColor"
+                                                                                                class="bi bi-x-circle"
+                                                                                                viewBox="0 0 16 16">
+                                                                                                <path
+                                                                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                                                <path
+                                                                                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                    </form>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @empty
+                                                                            <tr>
+                                                                                <td colspan="7" class="text-center">Sin
+                                                                                    información registrada.</td>
+                                                                            </tr>
+                                                                        @endforelse
+
 
                                                                     </tbody>
                                                                 </table>
@@ -533,57 +511,79 @@
                                                                     <thead class="labelTitulo">
                                                                         <th class="fw-bolder">ID</th>
                                                                         <th class="fw-bold">Equipo</th>
-                                                                        <th class="fw-bolder">Maquinaria</th>
                                                                         <th class="fw-bolder">Despachador</th>
+                                                                        <th class="fw-bolder">Maquinaria</th>
                                                                         <th class="fw-bolder">Operador</th>
+                                                                        <th class="fw-bolder">Kms</th>
+                                                                        <th class="fw-bolder">Horas</th>
                                                                         <th class="fw-bolder">Litros</th>
-                                                                        <th class="fw-bolder">Precio</th>
                                                                         <th class="fw-bolder">fecha</th>
+                                                                        <th class="fw-bolder">hora</th>
                                                                         <th class="fw-bolder text-right">Acciones</th>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <tr>
-                                                                            <td>50</td>
-                                                                            <td>Toyota Hilux </td>
-                                                                            <td>Retroexcabadora </td>
-                                                                            <td>Javier</td>
-                                                                            <td>Jorge</td>
-                                                                            <td>300 </td>
-                                                                            <td>20.99 </td>
-                                                                            <td>20/05/2023 </td>
 
-                                                                            <td class="td-actions justify-content-end">
-                                                                                <a href="#" class=""
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="#descargaCombustible">
-                                                                                    <svg xmlns="http://www.w3.org/2000/svg "
-                                                                                        width="28" height="28"
-                                                                                        fill="currentColor"
-                                                                                        class="bi bi-pencil accionesIconos"
-                                                                                        viewBox="0 0 16 16">
-                                                                                        <path
-                                                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                                                                    </svg>
-                                                                                </a>
+                                                                        @forelse ($descargas as $descarga)
+                                                                            <tr>
+                                                                                <td>{{ $descarga->id }}</td>
+                                                                                <td>{{ $descarga->maquinaria }}</td>
+                                                                                <td>{{ $descarga->operador }}</td>
+                                                                                <td>{{ $descarga->servicio }}</td>
+                                                                                <td>{{ $descarga->receptor }}</td>
+                                                                                <td>{{ $descarga->km }}</td>
+                                                                                <td>{{ $descarga->horas }}</td>
+                                                                                <td>
+                                                                                    {{ number_format($descarga->litros, 2, '.', ',') }}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{ \Carbon\Carbon::parse($descarga->fecha)->format('Y-m-d') }}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{ \Carbon\Carbon::parse($descarga->fecha)->format('H:m') }}
+                                                                                </td>
 
-                                                                                <form action="">
-                                                                                    <button class=" btnSinFondo"
-                                                                                        type="submit" rel="tooltip">
-                                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                <td class="td-actions justify-content-end">
+                                                                                    <a href="#" class=""
+                                                                                        data-bs-toggle="modal"
+                                                                                        data-bs-target="#descargaCombustible"
+                                                                                        onclick="loadDescarga('{{ $descarga->id }}','{{ $descarga->maquinariaId }}','{{ $descarga->operadorId }}',
+                                                                                        '{{ $descarga->servicioId }}','{{ $descarga->receptorId }}','{{ $descarga->litros }}',
+                                                                                        '{{ $descarga->km }}','{{ $descarga->imgKm }}','{{ $descarga->horas }}','{{ $descarga->imgHoras }}'
+                                                                                        ,'{{ \Carbon\Carbon::parse($descarga->fecha)->format('Y-m-d') }}','{{ \Carbon\Carbon::parse($descarga->fecha)->format('H:m') }}')">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg "
                                                                                             width="28" height="28"
                                                                                             fill="currentColor"
-                                                                                            class="bi bi-x-circle"
+                                                                                            class="bi bi-pencil accionesIconos"
                                                                                             viewBox="0 0 16 16">
                                                                                             <path
-                                                                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                                            <path
-                                                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                                d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                                                                         </svg>
-                                                                                    </button>
-                                                                                </form>
-                                                                            </td>
-                                                                        </tr>
-
+                                                                                    </a>
+                                                                                    {{-- id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms, horas, imgHoras, fecha --}}
+                                                                                    <form action="">
+                                                                                        <button class=" btnSinFondo"
+                                                                                            type="submit" rel="tooltip">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                width="28"
+                                                                                                height="28"
+                                                                                                fill="currentColor"
+                                                                                                class="bi bi-x-circle"
+                                                                                                viewBox="0 0 16 16">
+                                                                                                <path
+                                                                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                                                <path
+                                                                                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                    </form>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @empty
+                                                                            <tr>
+                                                                                <td colspan="9" class="text-center">Sin
+                                                                                    información registrada.</td>
+                                                                            </tr>
+                                                                        @endforelse
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -622,47 +622,61 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row">
-                        <div class="col-4 my-3">
+                    <form action="{{ route('inventario.updateCarga') }}" method="post" class="row">
+                        @csrf
+                        @method('put')
+
+                        <input type="hidden" name="cargaId" id="cargaId" value="">
+                        <div class="col-6 my-3">
                             <label for="inputEmail4" class="form-label">Equipo</label>
-                            <select id="" class="form-select">
-                                <option selected>Opción 1</option>
-                                <option>Opción 2</option>
-                                <option>Opción 3</option>
-                                <option>Opción 4</option>
-                                <option>Opción 5</option>
+                            <select id="cargaMaquinaria" name="cargaMaquinaria" class="form-select">
+                                @foreach ($cisternas as $maquina)
+                                    <option value="{{ $maquina->id }}">
+                                        {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
-                        <div class="col-4 my-3">
+                        <div class="col-6 my-3">
                             <label for="inputEmail4" class="form-label">Despachador</label>
-                            <select id="" class="form-select">
-                                <option selected>Opción 1</option>
-                                <option>Opción 2</option>
-                                <option>Opción 3</option>
-                                <option>Opción 4</option>
-                                <option>Opción 5</option>
+                            <select id="cargaOperador" name="cargaOperador" class="form-select">
+                                @foreach ($despachadores as $persona)
+                                    <option value="{{ $persona->id }}">
+                                        {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
-                        <div class="col-4 my-3">
+                        <div class="col-3 my-3">
                             <label for="inputEmail4" class="form-label">Litros</label>
-                            <input type="number" class="form-control" id="">
-                        </div>
-                        <div class="col-4 my-3">
-                            <label for="inputEmail4" class="form-label">Precio</label>
-                            <input type="number" class="form-control" id="">
+                            <input type="number" step="0.01" min="0.01" class="form-control" id="cargaLitros"
+                                name="cargaLitros">
                         </div>
 
-                        <div class="col-4 my-3">
+                        <div class="col-3 my-3">
+                            <label for="inputEmail4" class="form-label">Precio</label>
+                            <input type="number" step="0.01" min="0.01" class="form-control" id="cargaPrecio"
+                                name="cargaPrecio">
+                        </div>
+
+                        <div class="col-3 my-3">
                             <label for="inputEmail4" class="form-label">Fecha</label>
-                            <input type="date" class="form-control" id="">
+                            <input type="datetime" class="form-control" id="cargaFecha" name="cargaFecha"
+                                value="">
+                        </div>
+
+                        <div class="col-3 my-3">
+                            <label for="inputEmail4" class="form-label">Hora carga</label>
+                            <input type="time" class="form-control" id="cargaHora" name="cargaHora" value="">
+                        </div>
+
+                        <div class="modal-footer">
+
+                            <button type="submit" class="btn botonGral">Guardar</button>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-
-                    <button type="button" class="btn botonGral">Guardar</button>
                 </div>
             </div>
         </div>
@@ -678,86 +692,116 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row">
-                        <div class="col-4 my-3">
+                    <form action="{{ route('inventario.updateDescarga') }}" method="post" class="row"
+                    enctype="multipart/form-data">
+                    @csrf
+                    @method('put')
+
+                        <input type="hidden" name="descargaId" id="descargaId" value="">
+
+                        <div class="col-6 my-3">
                             <label for="inputEmail4" class="form-label">Equipo</label>
-                            <select id="" class="form-select">
-                                <option selected>Opción 1</option>
-                                <option>Opción 2</option>
-                                <option>Opción 3</option>
-                                <option>Opción 4</option>
-                                <option>Opción 5</option>
+                            <select id="descargaMaquinaria" name="descargaMaquinaria" class="form-select">
+                                @foreach ($cisternas as $maquina)
+                                    <option value="{{ $maquina->id }}">
+                                        {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
-                        <div class="col-4 my-3">
-                            <label for="inputEmail4" class="form-label">Maquinaria</label>
-                            <select id="" class="form-select">
-                                <option selected>Opción 1</option>
-                                <option>Opción 2</option>
-                                <option>Opción 3</option>
-                                <option>Opción 4</option>
-                                <option>Opción 5</option>
-                            </select>
-                        </div>
-
-                        <div class="col-4 my-3">
+                        <div class="col-6 my-3">
                             <label for="inputEmail4" class="form-label">Despachador</label>
-                            <select id="" class="form-select">
-                                <option selected>Opción 1</option>
-                                <option>Opción 2</option>
-                                <option>Opción 3</option>
-                                <option>Opción 4</option>
-                                <option>Opción 5</option>
+                            <select id="descargaOperador" name="descargaOperador" class="form-select">
+                                @foreach ($despachadores as $persona)
+                                    <option value="{{ $persona->id }}">
+                                        {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                    </option>
+                                @endforeach
                             </select>
+                        </div>
+
+                        <div class="col-6 my-3">
+                            <label for="inputEmail4" class="form-label">Maquinaria</label>
+                            <select id="descargaServicio" name="descargaServicio" class="form-select">
+                                @foreach ($maquinaria as $maquina)
+                                    <option value="{{ $maquina->id }}">
+                                        {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-6 my-3">
+                            <label for="inputEmail4" class="form-label">Operador</label>
+                            <select id="descargaDespachador" name="descargaDespachador" class="form-select">
+                                @foreach ($despachadores as $persona)
+                                    <option value="{{ $persona->id }}">
+                                        {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+
+                        <div class="col-4 my-3">
+                            <label for="inputEmail4" class="form-label">Litros</label>
+                            <input type="number" step="0.01" min="0.01" class="form-control"
+                                id="descargaLitros" name="descargaLitros">
                         </div>
 
                         <div class="col-4 my-3">
-                            <label for="inputEmail4" class="form-label">Operador</label>
-                            <select id="" class="form-select">
-                                <option selected>Opción 1</option>
-                                <option>Opción 2</option>
-                                <option>Opción 3</option>
-                                <option>Opción 4</option>
-                                <option>Opción 5</option>
-                            </select>
-                        </div>
-
-                        <div class="col-6 my-3">
-                            <label for="inputEmail4" class="form-label">Litros</label>
-                            <input type="number" class="form-control" id="">
-                        </div>
-
-                        <div class="col-6 my-3">
                             <label for="inputEmail4" class="form-label">Fecha</label>
-                            <input type="date" class="form-control" id="">
+                            <input type="datetime" class="form-control" id="descargaFecha" name="descargaFecha"
+                                value="">
+                        </div>
+
+                        <div class="col-4 my-3">
+                            <label for="inputEmail4" class="form-label">Hora descarga</label>
+                            <input type="time" class="form-control" id="descargaHora" name="descargaHora"
+                                value="">
                         </div>
 
                         <div class="col-6 my-3">
                             <label for="inputEmail4" class="form-label">Horómetro</label>
-                            <input type="number" class="form-control" id="">
+                            <input type="number"step="1" min="1" class="form-control" id="descargaHoras"
+                                name="descargaHoras">
                         </div>
 
                         <div class="col-6 my-3">
                             <label for="inputEmail4" class="form-label">Km Mi</label>
-                            <input type="number" class="form-control" id="">
+                            <input type="number" step="1" min="1" class="form-control" id="descargaKms"
+                                name="descargaKms">
                         </div>
 
-                        <div class="col-12 my-3">
+                        <div class="col-6 my-3">
                             <div class=" mx-auto border vistaFoto mb-4">
-                                <i><img class=" img-fluid mb-5" src="{{ asset('/img/general/default.jpg') }}"></i>
-                                <span class="botonGral"> <input class="mb-4 ver" type="file" name="foto"
+                                <i><img class=" img-fluid mb-5" id="descargaImgKms"></i>
+
+                                <span class="botonGral"> <input class="mb-4 ver" type="file" name="descargaImagenKms"
                                         id="mi-archivo" accept="image/*"></span>
                                 <label for="mi-archivo">
                                     <span>Fotografía</span>
                                 </label>
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
 
-                    <button type="button" class="btn botonGral">Guardar</button>
+                        <div class="col-6 my-3">
+                            <div class=" mx-auto border vistaFoto mb-4">
+                                <i><img class=" img-fluid mb-5" id="descargaImgHoras"></i>
+
+                                <span class="botonGral"> <input class="mb-4 ver" type="file"
+                                        name="descargaImagenHoras" id="mi-archivo2" accept="image/*"></span>
+                                <label for="mi-archivo2">
+                                    <span>Fotografía</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn botonGral">Guardar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -974,6 +1018,63 @@
         }
     </script>
 
+    <script>
+        function loadCarga(id, maquinariaId, operadorId, litros, precio, fecha, hora) {
+
+            const txtId = document.getElementById('cargaId');
+            txtId.value = id;
+
+            const lstEquipo = document.getElementById('cargaMaquinaria').value = maquinariaId;
+
+            const lstOperador = document.getElementById('cargaOperador').value = operadorId;
+
+            const txtLitros = document.getElementById('cargaLitros');
+            txtLitros.value = litros;
+
+            const txtPrecio = document.getElementById('cargaPrecio');
+            txtPrecio.value = precio;
+
+            const dteFecha = document.getElementById('cargaFecha').value = fecha;
+            const dteHora = document.getElementById('cargaHora').value = hora;
+        }
+    </script>
+
+    <script>
+        function loadDescarga(id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms, horas, imgHoras,
+            fecha, hora) {
+
+            const txtId = document.getElementById('descargaId');
+            txtId.value = id;
+
+            const lstEquipo = document.getElementById('descargaMaquinaria').value = maquinariaId;
+
+            const lstOperador = document.getElementById('descargaOperador').value = operadorId;
+
+            const lstServicio = document.getElementById('descargaServicio').value = servicioId;
+
+            const lstReceptor = document.getElementById('descargaDespachador').value = receptorId;
+
+            const txtLitros = document.getElementById('descargaLitros');
+            txtLitros.value = litros;
+
+            const txtKms = document.getElementById('descargaKms');
+            txtKms.value = kms;
+
+            const txtHoras = document.getElementById('descargaHoras');
+            txtHoras.value = horas;
+
+            const dteFecha = document.getElementById('descargaFecha').value = fecha;
+            const dteHora = document.getElementById('descargaHora').value = hora;
+
+            const imagen1 = document.getElementById('descargaImgKms');
+            imagen1.src = '/storage/combustibles/' + imagenKms;
+
+            const imagen2 = document.getElementById('descargaImgHoras');
+            imagen2.src = '/storage/combustibles/' + imgHoras;
+
+        }
+    </script>
+
     <script type="application/javascript">
     jQuery('input[type=file]').change(function(){
      var filename = jQuery(this).val().split('\\').pop();
@@ -984,4 +1085,5 @@
      jQuery('span.'+idname).next().find('span').html(filename);
     });
     </script>
+
 @endsection

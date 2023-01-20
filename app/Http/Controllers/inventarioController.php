@@ -34,6 +34,7 @@ class inventarioController extends Controller
         if ($tipo == 'combustible') {
 
             $despachador = personal::where("userId", auth()->user()->id)->get();
+            $despachadores = personal::all();
             $personal = personal::all();
             $maquinaria = maquinaria::where("cisterna", 0)->orderBy('nombre', 'asc')->get();
             $cisternas = maquinaria::where("cisterna", 1)->orderBy('nombre', 'asc')->get();
@@ -47,8 +48,8 @@ class inventarioController extends Controller
             //     })
             //     ->get();
 
-            $sql = 'select m.id,m.cisternaNivel ,m.nombre,c.precio ,c.litros, c.created_at  from maquinaria m 
-            inner join carga c on m.id =c.maquinariaId 
+            $sql = 'select m.id,m.cisternaNivel ,m.nombre,c.precio ,c.litros, c.created_at  from maquinaria m
+            inner join carga c on m.id =c.maquinariaId
             inner join (select max(c.id) id from carga c group by maquinariaId ) s
             on s.id=c.id
             where m.cisterna = 1
@@ -59,8 +60,8 @@ class inventarioController extends Controller
             $endDate = $date->subMonth();
             // dd($date->toDateString(), $endDate->toDateString());
 
-            $sql1 = " select id,sum(litros) as suma ,day(created_at) as dia from carga c where created_at  
-                        between '" . $endDate->toDateString() . "' and '" . Carbon::now()->addDay()->toDateString() . "' and maquinariaId = '9' 
+            $sql1 = " select id,sum(litros) as suma ,day(created_at) as dia from carga c where created_at
+                        between '" . $endDate->toDateString() . "' and '" . Carbon::now()->addDay()->toDateString() . "' and maquinariaId = '9'
                         group by date(created_at) order by created_at";
             $script = DB::select($sql1);
 
@@ -71,11 +72,49 @@ class inventarioController extends Controller
                 array_push($dia, $key->dia);
             }
 
+            $cargas = carga::select(
+                'carga.id',
+                db::raw("CONCAT(maquinaria.identificador,' ',maquinaria.nombre) AS equipo"),
+                'carga.maquinariaid',
+                DB::raw("CONCAT(personal.nombres,' ',personal.apellidoP) AS operador"),
+                'carga.operadorid',
+                'carga.litros',
+                'carga.precio',
+                'carga.created_at AS fecha'
+            )
+                ->join('maquinaria', 'maquinaria.id', '=', 'carga.maquinariaId')
+                ->join('personal', 'personal.id', '=', 'carga.operadorId')
+                ->where('maquinaria.cisterna', '=', 1)
+                ->orderBy('carga.created_at', 'desc')
+                ->paginate(10);
 
+            $descargas = descarga::select(
+                'descarga.id',
+                'descarga.maquinariaId',
+                'descarga.operadorId',
+                db::raw("CONCAT(maquinaria.identificador,' ',maquinaria.nombre) AS maquinaria"),
+                DB::raw("CONCAT(personal.nombres,' ',personal.apellidoP) AS operador"),
+                'descarga.servicioId',
+                'descarga.receptorId',
+                db::raw("CONCAT(m2.identificador,' ',m2.nombre) AS servicio"),
+                DB::raw("CONCAT(p2.nombres,' ',p2.apellidoP) AS receptor"),
+                'descarga.km',
+                'descarga.horas',
+                'descarga.imgHoras',
+                'descarga.imgKm',
+                'descarga.litros',
+                'descarga.created_at AS fecha'
+            )
+                ->join('maquinaria', 'maquinaria.id', '=', 'descarga.maquinariaId')
+                ->join('personal', 'personal.id', '=', 'descarga.operadorId')
+                ->join('maquinaria as m2', 'm2.id', '=', 'descarga.servicioId')
+                ->join('personal as p2', 'p2.id', '=', 'descarga.receptorId')
+                ->orderBy('descarga.created_at', 'desc')
+                ->paginate(10);
 
-            // dd($cisterna);
+            // dd($cargas);
 
-            return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas', 'gasolinas', 'suma', 'dia'));
+            return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas', 'gasolinas', 'suma', 'dia', 'despachadores', 'cargas', 'descargas'));
         } else {
             $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(5);
             return view('inventario.indexInventario', compact('inventarios'));
@@ -172,7 +211,7 @@ class inventarioController extends Controller
      */
     public function update(Request $request, inventario $inventario)
     {
-        // dd($inventario);
+        // dd($request);
 
         $request->validate([
             'nombre' => 'required|max:250',
@@ -313,8 +352,8 @@ class inventarioController extends Controller
         $date = Carbon::now();
         $endDate = $date->subMonth();
 
-        $sql1 = " select id,sum(litros) as suma ,day(created_at) as dia from carga c where created_at  
-                    between '" . $endDate->toDateString() . "' and '" . Carbon::now()->addDay()->toDateString() . "' and maquinariaId = '" . $request->id . "' 
+        $sql1 = " select id,sum(litros) as suma ,day(created_at) as dia from carga c where created_at
+                    between '" . $endDate->toDateString() . "' and '" . Carbon::now()->addDay()->toDateString() . "' and maquinariaId = '" . $request->id . "'
                     group by date(created_at) order by created_at";
         $script = DB::select($sql1);
 
@@ -422,11 +461,124 @@ class inventarioController extends Controller
         }
 
         //buscamos el equipo para actulizar el nivel de la cisterna
-        $cisterna =   maquinaria::where("id", $request['servicioId'])->first();
+        $cisterna =   maquinaria::where("id", $request['maquinariaId'])->first();
         $cisterna->cisternaNivel = ($cisterna->cisternaNivel - $request['litros']);
         $cisterna->update();
 
         descarga::create($descarga);
+        Session::flash('message', 1);
+
+        return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
+    }
+
+    public function updateCarga(Request $request)
+    {
+        // dd($request);
+
+        $request->validate([
+            'cargaLitros' => 'required|numeric|between:0,9999.99',
+            'cargaPrecio' => 'required|numeric|max:30|min:10',
+        ], [
+            'cargaLitros.required' => 'El campo litros es obligatorio.',
+            'cargaPrecio.required' => 'El campo precio es obligatorio.',
+            'cargaLitros.numeric' => 'El campo litros debe de ser numérico.',
+            'cargaPrecio.numeric' => 'El campo precio debe de ser numérico.',
+            'cargaPrecio.minimo' => 'El campo precio debiera de ser mayor a 10 pesos.',
+            'cargaPrecio.maximo' => 'El campo precio debiera de ser menor a 30 pesos.',
+        ]);
+
+        //*** guardamos el registro */
+        $carga = carga::where("id", $request['cargaId'])->first();
+
+        //*** obtenemos informacion para ajustes */
+        $strSegundos = substr($carga->created_at, -2);
+        $decLitros = $carga->litros;
+
+        $carga->litros = $request['cargaLitros'];
+        $carga->maquinariaId = $request['cargaMaquinaria'];
+        $carga->operadorId = $request['cargaOperador'];
+        $carga->precio = $request['cargaPrecio'];
+
+
+        $carga->created_at = ($request['cargaFecha'] . " " . $request['cargaHora'] . ":" . $strSegundos);
+
+        // dd($carga);
+        $carga->update();
+
+        // //buscamos el equipo para actulizar el nivel de la cisterna
+        // $cisterna =   maquinaria::where("id", $request['maquinariaId'])->first();
+        // $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $request['litros']);
+        // $cisterna->update();
+
+        Session::flash('message', 1);
+
+        return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
+    }
+
+    public function updateDescarga(Request $request)
+    {
+        dd($request);
+        $request->validate([
+            'descargaLitros' => 'required|numeric',
+            'descargaKms' => 'required|numeric',
+            'descargaHoras' => 'required|numeric',
+            'descargaImagenKms' => 'nullable',
+            'descargaImagenHoras' => 'nullable',
+        ], [
+            'descargaLitros.required' => 'El campo litros es obligatorio.',
+            'descargaKms.required' => 'El campo Km/Mi es obligatorio.',
+            'descargaHoras.required' => 'El campo horómetro es obligatorio.',
+            'descargaImgenKms.required' => 'El campo imagen de kilometraje es obligatorio.',
+            'descargaImgenHoras.required' => 'El campo imagen de horómetro es obligatorio.',
+            'descargaLitros.numeric' => 'El campo litros debe de ser numérico.',
+            'descargaKms.numeric' => 'El campo Km/Mi debe de ser numérico.',
+            'descargaHoras.numeric' => 'El campo horometro debe de ser numérico.',
+        ]);
+        //*** guardamos el registro */
+        $descarga = descarga::where("id", $request['descargaId'])->first();
+
+        //*** obtenemos informacion para ajustes */
+        $strSegundos = substr($descarga->created_at, -2);
+        $decLitros = $descarga->litros;
+
+        $descarga->litros = $request['descargaLitros'];
+        $descarga->km = $request['descargaKms'];
+        $descarga->horas = $request['descargaHoras'];
+        $descarga->maquinariaId = $request['descargaMaquinaria'];
+        $descarga->operadorId = $request['descargaOperador'];
+        $descarga->servicioId = $request['descargaServicio'];
+        $descarga->receptorId = $request['descargaDespachador'];
+
+        $descarga->created_at = ($request['descargaFecha'] . " " . $request['descargaHora'] . ":" . $strSegundos);
+
+
+        if ($request->hasFile("descargaImagenKms")) {
+            dd('Hola imagen de Kms');
+            $descarga['descargaImagenKms'] = time() . '_' . 'imgKm.' . $request->file('descargaImagenKms')->getClientOriginalExtension();
+            $request->file('descargaImagenKms')->storeAs('/public/combustibles', $descarga['descargaImagenKms']);
+            // $blnHayImagen = true;
+        }
+        if ($request->hasFile("descargaImagenHoras")) {
+            dd('Hola imagen de Horas');
+            $descarga['descargaImagenHoras'] = time() . '_' . 'imgHoras.' . $request->file('descargaImagenHoras')->getClientOriginalExtension();
+            $request->file('descargaImagenHoras')->storeAs('/public/combustibles', $descarga['descargaImagenHoras']);
+            // $blnHayImagen = true;
+        }
+
+        // //*** Preguntamos si no hay una imagen cargada */
+        // if ($blnHayImagen == false) {
+        //     return redirect()->back()->withInput()->withErrors("Se requiere al menos una imagen de kilometraje o del homometro.");
+        // }
+
+        // dd($descarga);
+        $descarga->update();
+
+        // //buscamos el equipo para actulizar el nivel de la cisterna
+        // $cisterna =   maquinaria::where("id", $request['maquinariaId'])->first();
+        // $cisterna->cisternaNivel = ($cisterna->cisternaNivel - $request['litros']);
+        // $cisterna->update();
+
+        // descarga::create($descarga);
         Session::flash('message', 1);
 
         return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);

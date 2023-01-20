@@ -157,4 +157,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/inventario/combustible', [App\Http\Controllers\inventarioController::class, 'dashCombustible'])->name('inventario.dashCombustible');
     Route::put('/inventario/combustible/carga', [App\Http\Controllers\inventarioController::class, 'cargaCombustible'])->name('inventario.cargaCombustible');
     Route::put('/inventario/combustible/descarga', [App\Http\Controllers\inventarioController::class, 'descargaCombustible'])->name('inventario.descargaCombustible');
+
+    Route::put('/inventario/combustible/carga/edit', [App\Http\Controllers\inventarioController::class, 'updateCarga'])->name('inventario.updateCarga');
+    Route::put('/inventario/combustible/descarga/edit', [App\Http\Controllers\inventarioController::class, 'updateDescarga'])->name('inventario.updateDescarga');
 });
