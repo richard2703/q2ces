@@ -23,20 +23,21 @@
             </form>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">
-                        <i class="material-icons">dashboard</i>
+                    <a class="nav-link" href="{{ route('home') }}" onmouseover="cambiar10();" onmouseout="volver10();">
+                    <i><img id="cambiaBCO10" style="width:25px" src="{{ $activePage == 'Notificaciones' ? ' img/navs/housebco.svg' : '/img/navs/house.svg' }}"></i>
                         <p class="d-lg-none d-md-block">
-                            {{ __('Stats') }}
+                            {{ __('Home') }}
                         </p>
                     </a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <i class="material-icons">notifications</i>
+                        aria-haspopup="true" aria-expanded="false" onmouseover="cambiar20();" onmouseout="volver20();">
+                       <i>
+                        <img id="cambiaBCO20" style="width:25px" src="{{ $activePage == 'Notificaciones' ? ' img/navs/bellbco.svg' : '/img/navs/bell.svg' }}"></i>
                         <span class="notification">5</span>
                         <p class="d-lg-none d-md-block">
-                            {{ __('Some Actions') }}
+                            {{ __('Notificacioness') }}
                         </p>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
@@ -49,10 +50,10 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <i class="material-icons">person</i>
+                        aria-haspopup="true" aria-expanded="false" onmouseover="cambiar30();" onmouseout="volver30();">
+                        <i><img id="cambiaBCO30" style="width:25px" src="{{ $activePage == 'Notificaciones' ? ' img/navs/accountbco.svg' : '/img/navs/account.svg' }}"></i>
                         <p class="d-lg-none d-md-block">
-                            {{ __('Account') }}
+                            {{ __('Perfil') }}
                         </p>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
@@ -67,3 +68,35 @@
         </div>
     </div>
 </nav>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+//FUNCIONES PARA CAMBIAR BOTONES A BLANCO
+//---equipos-----
+//---- HOME--------
+function cambiar10(){
+
+  document.getElementById('cambiaBCO10').src="{{ asset('/img/navs/housebco.svg') }}";
+}
+function volver10(){
+  document.getElementById('cambiaBCO10').src="{{ asset('/img/navs/house.svg') }}";
+}
+
+//---- NOTIFICACIONES--------
+function cambiar20(){
+  document.getElementById('cambiaBCO20').src="{{ asset('/img/navs/housebco.svg') }}";
+}
+function volver20(){
+  document.getElementById('cambiaBCO20').src="{{ asset('/img/navs/house.svg') }}";
+}
+
+//---- HPERFIL--------
+function cambiar30(){
+  document.getElementById('cambiaBCO30').src="{{ asset('/img/navs/housebco.svg') }}";
+}
+function volver30(){
+  document.getElementById('cambiaBCO30').src="{{ asset('/img/navs/house.svg') }}";
+}
+
+</script>
