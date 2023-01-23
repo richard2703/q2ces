@@ -398,9 +398,9 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <!-- <div class="card-header bacTituloPrincipal">
-                                                                                                                                                                                        <h4 class="card-title">Carga y descarga de combustible</h4>
+                                                                                                                                                                                                                    <h4 class="card-title">Carga y descarga de combustible</h4>
 
-                                                                                                                                                                                    </div>-->
+                                                                                                                                                                                                                </div>-->
                                 <div class="card-body mb-3">
                                     <div class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
                                         <button class=" nav-item col-12 col-md-6 BTNbCargaDescarga py-3 border-0 active "
@@ -470,7 +470,13 @@
                                                                                         </svg>
                                                                                     </a>
 
-                                                                                    <form action="">
+                                                                                    <form
+                                                                                        action="{{ route('inventario.deleteCarga', $carga->id) }}"
+                                                                                        method="POST"
+                                                                                        style="display: inline-block;"
+                                                                                        onsubmit="return confirm('¿Estás seguro?')">
+                                                                                        @csrf
+                                                                                        @method('DELETE')
                                                                                         <button class=" btnSinFondo"
                                                                                             type="submit" rel="tooltip">
                                                                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -565,7 +571,13 @@
                                                                                         </svg>
                                                                                     </a>
                                                                                     {{-- id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms, horas, imgHoras, fecha --}}
-                                                                                    <form action="">
+                                                                                    <form
+                                                                                        action="{{ route('inventario.deleteDescarga', $descarga->id) }}"
+                                                                                        method="POST"
+                                                                                        style="display: inline-block;"
+                                                                                        onsubmit="return confirm('¿Estás seguro?')">
+                                                                                        @csrf
+                                                                                        @method('DELETE')
                                                                                         <button class=" btnSinFondo"
                                                                                             type="submit" rel="tooltip">
                                                                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -758,10 +770,10 @@
                             <input type="datetime" class="form-control" id="descargaFecha" name="descargaFecha"
                                 value="">
                         </div>
-                        <div class="col-4 my-3">
+                        {{-- <div class="col-4 my-3">
                             <label for="inputEmail4" class="form-label">Hora Carga</label>
                             <input type="time" class="form-control" id="">
-                        </div>
+                        </div> --}}
 
                         <div class="col-4 my-3">
                             <label for="inputEmail4" class="form-label">Hora descarga</label>
@@ -785,10 +797,10 @@
                             <div class="row justify-content-evenly ">
                                 <div class="col-5 my-3">
                                     <div class=" mx-auto border vistaFoto mb-4">
-                                        <i><img class=" img-fluid mb-5"
+                                        <i><img class=" img-fluid mb-5" id="descargaImgKms"
                                                 src="{{ asset('/img/general/default.jpg') }}"></i>
-                                        <span class="botonGral"> <input class="mb-4 ver" type="file" name="foto"
-                                                id="mi-archivo" accept="image/*"></span>
+                                        <span class="botonGral"> <input class="mb-4 ver" type="file"
+                                                name="descargaFileImgKms" id="mi-archivo" accept="image/*"></span>
                                         <label for="mi-archivo">
                                             <span class="text-center">Fotografía</span>
                                         </label>
@@ -797,10 +809,10 @@
 
                                 <div class="col-5  my-3">
                                     <div class=" mx-auto border vistaFotoModalCarga-Desc mb-4">
-                                        <i><img class=" img-fluid mb-5"
+                                        <i><img class=" img-fluid mb-5" id="descargaImgHoras"
                                                 src="{{ asset('/img/general/default.jpg') }}"></i>
-                                        <span class="botonGral"> <input class="mb-4 ver" type="file" name="foto"
-                                                id="mi-archivo" accept="image/*"></span>
+                                        <span class="botonGral"> <input class="mb-4 ver" type="file"
+                                                name="descargaFileImgHoras" id="mi-archivo" accept="image/*"></span>
                                         <label for="mi-archivo">
                                             <span>logo</span>
                                         </label>
@@ -1079,10 +1091,18 @@
             const dteHora = document.getElementById('descargaHora').value = hora;
 
             const imagen1 = document.getElementById('descargaImgKms');
-            imagen1.src = '/storage/combustibles/' + imagenKms;
+            if (imagenKms === null) {
+                imagen1.src = "{{ asset('/img/general/default.jpg') }}";
+            } else {
+                imagen1.src = '/storage/combustibles/' + imagenKms;
+            }
 
             const imagen2 = document.getElementById('descargaImgHoras');
-            imagen2.src = '/storage/combustibles/' + imgHoras;
+            if (imgHoras === null) {
+                imagen2.src = "{{ asset('/img/general/default.jpg') }}";
+            } else {
+                imagen2.src = '/storage/combustibles/' + imgHoras;
+            }
 
         }
     </script>

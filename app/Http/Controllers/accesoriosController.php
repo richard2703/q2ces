@@ -40,7 +40,7 @@ class accesoriosController extends Controller
      */
     public function store(Request $request)
     {
-        // dd('test');        
+        // dd('test');
         $request->validate([
             'nombre' => 'required|max:250',
             'modelo' => 'nullable|max:200',
@@ -158,6 +158,7 @@ class accesoriosController extends Controller
     {
         return redirect()->back()->with('failed', 'No se puede eliminar');
     }
+
     public function test(Request $request)
     {
         dd('test');
