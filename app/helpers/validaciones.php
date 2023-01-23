@@ -69,7 +69,7 @@ class Validaciones
     public function preparaArreglo($arreglo)
     {
         if (is_array($arreglo) == true) {
-
+            $vctArreglo = null;
             for ($i = 0; $i < count($arreglo); $i++) {
                 $vctArreglo[] = (int)$arreglo[$i];
             }

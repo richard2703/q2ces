@@ -15,6 +15,18 @@ class personal extends Model
     protected $fillable = [
         'userId', 'nombres', 'apellidoP', 'apellidoM', 'fechaNacimiento', 'lugarNacimiento', 'curp', 'fine', 'rfc', 'licencia',
         'cpf', 'cpe', 'sexo', 'civil', 'hijos', 'sangre', 'calle', 'numero', 'colonia', 'estado', 'ciudad', 'cp', 'particular',
-        'celular', 'mailpersonal', 'mailEmpresarial', 'casa', 'foto', 'aler', 'profe', 'interior',  
+        'celular', 'mailpersonal', 'mailEmpresarial', 'casa', 'foto', 'aler', 'profe', 'interior',
     ];
+
+    /**
+     * Get the user's full concatenated name.
+     * -- Must postfix the word 'Attribute' to the function name
+     *
+     * @return string
+     */
+
+    public function getFullnameAttribute()
+    {
+        return "{$this->nombres} {$this->apellidoP} {$this->apellidoM}";
+    }
 }
