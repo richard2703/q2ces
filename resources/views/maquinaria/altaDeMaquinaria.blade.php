@@ -35,12 +35,9 @@
                                             <div class="accordion-body">
                                                 <div class="row mt-3">
                                                     <div class="col-12 col-md-4  my-3">
-                                                        <div class="text-center mx-auto border vistaFoto mb-4">
-                                                            <i><img class="imgVista img-fluid mb-2"
-                                                                    src="{{ asset('/img/general/default.jpg') }}"></i>
-                                                            <span class="mi-archivo"> <input class="mb-4 ver "
-                                                                    type="file" name="ruta[]" id="mi-archivo"
-                                                                    accept="image/*" multiple></span>
+                                                        <div class="text-center mx-auto border contFotoMaquinaria mb-4">
+                                                            <i><img class="imgMaquinaria img-fluid mb-2"  src="{{ asset('/img/general/default.jpg') }}"></i>
+                                                            <span class="mi-archivo"> <input class="mb-4 ver "  type="file" name="ruta[]" id="mi-archivo"  accept="image/*" multiple></span>
                                                             <label for="mi-archivo">
                                                                 <span class="">sube imagen</span>
                                                             </label>

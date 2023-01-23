@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\obras;
+use App\Models\maquinaria;
+use App\Models\personal;
+use App\Models\obramaqpr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use App\Helpers\Validaciones;
-
+use App\Models\obraMaqPer;
+use App\Models\residente;
 
 
 class obrasController extends Controller
@@ -31,7 +35,9 @@ class obrasController extends Controller
      */
     public function create()
     {
-        return view('obra.altaObra');
+        $vctMaquinaria = maquinaria::all();
+        $vctPersonal = personal::all();
+        return view('obra.altaObra', compact('vctMaquinaria', 'vctPersonal'));
     }
 
     /**
@@ -47,6 +53,7 @@ class obrasController extends Controller
 
         $request->validate([
             'nombre' => 'required|max:250',
+            // 'email' => 'required|email|max:200',
             'calle' => 'nullable|max:250',
             'numero' => 'nullable|max:20',
             'colonia' => 'nullable|max:200',
@@ -56,6 +63,7 @@ class obrasController extends Controller
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
+            // 'email.required' => 'El campo nombre es obligatorio.',
             'calle.max' => 'El campo calle excede el límite de caracteres permitidos.',
             'numero.max' => 'El campo número excede el límite de caracteres permitidos.',
             'colonia.max' => 'El campo colonia excede el límite de caracteres permitidos.',
@@ -65,6 +73,9 @@ class obrasController extends Controller
             'ciudad.max' => 'El campo localidad excede el límite de caracteres permitidos.',
             'estado.max' => 'El campo estado excede el límite de caracteres permitidos.',
         ]);
+
+        $objValida = new Validaciones();
+
         $obra = $request->all();
         if ($request->hasFile("logo")) {
             $obra['logo'] = time() . '_' . 'logo.' . $request->file('logo')->getClientOriginalExtension();
@@ -75,7 +86,35 @@ class obrasController extends Controller
             $request->file('foto')->storeAs('/public/obras', $obra['foto']);
         }
         $obra['estatus'] = 'Activa';
-        obras::create($obra);
+        $obra = obras::create($obra);
+
+        $obraId = $obra->id;
+        //*** registro de residentes */
+        for ($i = 0; $i < count($request['rnombre']); $i++) {
+            $objResidente = new residente();
+            $objResidente->obraid  = $obraId;
+            $objResidente->userid  = 1;
+            $objResidente->nombre  = $objValida->validaTexto($request['rnombre'][$i]);
+            $objResidente->empresa  = $objValida->validaTexto($request['rempresa'][$i]);
+            $objResidente->telefono = $objValida->validaTelefono($request['rtelefono'][$i]);
+            $objResidente->puesto = $objValida->validaTexto($request['rpuesto'][$i]);
+            $objResidente->firma = $objValida->validaTexto($request['rfirma'][$i]);
+            $objResidente->email = $objValida->validaTexto($request['remail'][$i]);
+            $objResidente->save();
+        }
+
+        //*** registro de maquinas */
+        for ($i = 0; $i < count($request['maquinariaId']); $i++) {
+            $objMaq = new obraMaqPer();
+            $objMaq->obraId  = $obraId;
+            $objMaq->maquinariaId = $request['maquinariaId'][$i];
+            $objMaq->personalId  = $request['personalId'][$i];
+            $objMaq->inicio  = $request['inicio'][$i];
+            $objMaq->fin  = $request['fin'][$i];
+            $objMaq->combustible  = $request['combustible'][$i];
+            $objMaq->save();
+        }
+
         Session::flash('message', 1);
 
         return redirect()->route('obras.index');
@@ -101,8 +140,14 @@ class obrasController extends Controller
      */
     public function edit(obras $obras)
     {
-        // dd($obras);
-        return view('obra.detalleObra', compact('obras'));
+        $vctMaquinaria = maquinaria::all();
+        $vctPersonal = personal::all();
+
+        $vctMaquinariaAsignada = obraMaqPer::select("*")->where("obraId", "=", $obras->id)->get();
+        $vctResidenteAsignado = residente::select("*")->where("obraId", "=", $obras->id)->get();
+
+        // dd($vctResidenteAsignado);
+        return view('obra.detalleObra', compact('obras', 'vctPersonal', 'vctMaquinaria', 'vctResidenteAsignado', 'vctMaquinariaAsignada'));
     }
 
     /**
@@ -114,16 +159,21 @@ class obrasController extends Controller
      */
     public function update(Request $request, obras $obras)
     {
+        // dd($request);
+        $objValida = new Validaciones();
+
         $request->validate([
             'nombre' => 'required|max:250',
             'calle' => 'nullable|max:250',
             'numero' => 'nullable|max:20',
             'colonia' => 'nullable|max:200',
+            // 'email' => 'require|email|max:200',
             'cp' => 'nullable|max:99999|numeric',
             'ciudad' => 'nullable|max:200',
             'estado' => 'nullable|max:200',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
+            // 'email.required' => 'El campo email es obligatorio.',
             'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
             'calle.max' => 'El campo calle excede el límite de caracteres permitidos.',
             'numero.max' => 'El campo número excede el límite de caracteres permitidos.',
@@ -135,16 +185,16 @@ class obrasController extends Controller
             'estado.max' => 'El campo estado excede el límite de caracteres permitidos.',
         ]);
 
-         $data = $request->only( 
-            'nombre', 
+        $data = $request->only(
+            'nombre',
             'calle',
             'numero',
             'colonia',
             'estado',
             'ciudad',
-            'cp', 
-            'foto', 
-            'logo', 
+            'cp',
+            'foto',
+            'logo',
         );
 
         if ($request->hasFile("logo")) {
@@ -155,7 +205,135 @@ class obrasController extends Controller
             $data['foto'] = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
             $request->file('foto')->storeAs('/public/obras', $data['foto']);
         }
-        $obras->update($data); 
+        $obras->update($data);
+
+        //*** registro de residentes */
+        $vctRegistrados = $objValida->preparaArreglo(residente::where("obraId", "=", $obras->id)->pluck('id')->toArray());
+        $vctArreglo = $objValida->preparaArreglo($request['idResidente']);
+
+        //*** Preguntamos si existen registros en el arreglo */
+        if (is_array($vctArreglo) && count($vctArreglo) > 0) {
+
+            //** buscamos si el registrado esta en el arreglo, de no ser asi se elimina */
+            if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
+                for ($i = 0; $i < count($vctRegistrados); $i++) {
+                    $intValor = (int) $vctRegistrados[$i];
+
+                    if (in_array($intValor, $vctArreglo) == false) {
+                        /*** no existe y se debe de eliminar */
+                         residente::destroy($vctRegistrados[$i]);
+                        // dd('Borrando por que se quito el residente');
+                    } else {
+                        /*** existe el registro */
+                        // dd('Sigue vivo en el arreglo');
+                    }
+                }
+            }
+
+            //*** trabajamos el resto */
+            for ($i = 0; $i < count($request['idResidente']); $i++) {
+                if ($request['idResidente'][$i] != "") {
+                    //** Actualizacion de registro */
+                    $objResidente =  residente::where("id", "=", $request['idResidente'][$i])->first();
+
+                    if ($objResidente && $objResidente->id > 0) {
+                        $objResidente->nombre  = $objValida->validaTexto($request['rnombre'][$i]);
+                        $objResidente->empresa  = $objValida->validaTexto($request['rempresa'][$i]);
+                        $objResidente->telefono = $objValida->validaTelefono($request['rtelefono'][$i]);
+                        $objResidente->puesto = $objValida->validaTexto($request['rpuesto'][$i]);
+                        $objResidente->firma = $objValida->validaTexto($request['rfirma'][$i]);
+                        $objResidente->email = $objValida->validaEmail($request['remail'][$i]);
+                        $objResidente->save();
+                        // dd('Actualizando residente');
+                    }
+                } else {
+
+                    //** No existe en bd */
+                    $objResidente = new residente();
+                    $objResidente->obraid  = $obras->id;
+                    $objResidente->userid  = 1;
+                    $objResidente->nombre  = $objValida->validaTexto($request['rnombre'][$i]);
+                    $objResidente->empresa  = $objValida->validaTexto($request['rempresa'][$i]);
+                    $objResidente->telefono = $objValida->validaTelefono($request['rtelefono'][$i]);
+                    $objResidente->puesto = $objValida->validaTexto($request['rpuesto'][$i]);
+                    $objResidente->firma = $objValida->validaTexto($request['rfirma'][$i]);
+                    $objResidente->email = $objValida->validaEmail($request['remail'][$i]);
+                    $objResidente->save();
+                    // dd('Guardando residente');
+                }
+            }
+        } else {
+            //*** se deben de eliminar todos los registrados */
+            if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
+                for ($i = 0; $i < count($vctRegistrados); $i++) {
+                     residente::destroy($vctRegistrados[$i]);
+                    // dd('Borrando todo residente');
+                }
+            }
+        }
+
+        //*** registro de maquinaria */
+        $vctRegistrados = $objValida->preparaArreglo(obraMaqPer::where("obraId", "=", $obras->id)->pluck('id')->toArray());
+        $vctArreglo = $objValida->preparaArreglo($request['idObraMaqPer']);
+
+        //*** Preguntamos si existen registros en el arreglo */
+        if (is_array($vctArreglo) && count($vctArreglo) > 0) {
+
+            //** buscamos si el registrado esta en el arreglo, de no ser asi se elimina */
+            if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
+                for ($i = 0; $i < count($vctRegistrados); $i++) {
+                    $intValor = (int) $vctRegistrados[$i];
+
+                    if (in_array($intValor, $vctArreglo) == false) {
+                        /*** no existe y se debe de eliminar */
+                         obraMaqPer::destroy($vctRegistrados[$i]);
+                        // dd('Borrando por que se quito la maquina');
+                    } else {
+                        /*** existe el registro */
+                    }
+                }
+            }
+
+            //*** trabajamos el resto */
+            for ($i = 0; $i < count($request['maquinariaId']); $i++) {
+                if ($request['idObraMaqPer'][$i] != "") {
+                    //** Actualizacion de registro */
+                    $objMaq =  obraMaqPer::where("id", "=", $request['idObraMaqPer'][$i])->first();
+
+                    if ($objMaq && $objMaq->id > 0) {
+                        $objMaq->maquinariaId = $request['maquinariaId'][$i];
+                        $objMaq->personalId  = $request['personalId'][$i];
+                        $objMaq->inicio  = $request['inicio'][$i];
+                        $objMaq->fin  = $request['fin'][$i];
+                        $objMaq->combustible  = $request['combustible'][$i];
+                        $objMaq->save();
+                        // dd('Actualizando Maq');
+                    }
+                } else {
+
+                    //** No existe en bd */
+                    $objMaq = new obraMaqPer();
+                    $objMaq->obraId  = $obras->id;
+                    $objMaq->maquinariaId = $request['maquinariaId'][$i];
+                    $objMaq->personalId  = $request['personalId'][$i];
+                    $objMaq->inicio  = $request['inicio'][$i];
+                    $objMaq->fin  = $request['fin'][$i];
+                    $objMaq->combustible  = $request['combustible'][$i];
+                    $objMaq->save();
+                    // dd('Guardando Maq');
+                }
+            }
+        } else {
+            //*** se deben de eliminar todos los registrados */
+            if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
+                for ($i = 0; $i < count($vctRegistrados); $i++) {
+                     obraMaqPer::destroy($vctRegistrados[$i]);
+                    // dd('Borrando todo obra per maq');
+                }
+            }
+        }
+
+
         Session::flash('message', 1);
 
         return redirect()->route('obras.index');

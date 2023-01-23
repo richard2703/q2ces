@@ -488,9 +488,10 @@ CREATE TABLE residente(
   puesto varchar(255) null,
   telefono varchar(255) null,
   firma varchar(255) null,
+  email varchar(255) NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT FK_residente_userId foreign key (userId) references users(id),
-  CONSTRAINT FK_residente_obraId foreign key (obraId) references obra(id)
+  CONSTRAINT FK_residente_obraId foreign key (obraId) references obras(id)
  );
 
 alter table obramaqper add combustible int DEFAULT 0;
