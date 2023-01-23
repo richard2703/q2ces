@@ -29,7 +29,7 @@
 
                                     <div class="row d-flex justify-content-around">
                                         <div class="col-12 col-sm-4 ">
-                                            <div class="text-center mx-auto border vistaFoto mb-4">
+                                            <div class="text-center mx-auto border mb-4">
                                                 <i><img class="imgVista img-fluid mb-5"
                                                         src="{{ asset('/img/general/default.jpg') }}"></i>
                                                 <span class="mi-archivo"> <input class="mb-4 ver" type="file"
@@ -78,7 +78,7 @@
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Número:</label></br>
-                                            <input type="text" class="inputCaja" id="numero" name="numero"
+                                            <input type="number" class="inputCaja" id="numero" name="numero"
                                                 value="{{ old('numero') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
@@ -88,7 +88,7 @@
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Código Postal:</label></br>
-                                            <input type="text" class="inputCaja" id="cp" name="cp"
+                                            <input type="number" class="inputCaja" id="cp" name="cp"
                                                 value="{{ old('cp') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
@@ -151,6 +151,11 @@
                                                     <input type="text" class="inputCaja" id="rfirma"
                                                         name="rfirma[]" value="">
                                                 </div>
+                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">E-mail</label></br>
+                                                    <input type="email" class="inputCaja" id="nombre" name="nombre"
+                                                        value="{{ old('nombre') }}">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -172,12 +177,6 @@
                                             </div>
 
                                             <div class="row">
-                                                {{-- <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Nombre:</label></br>
-                                                    <input type="text" class="inputCaja" id="nombre"
-                                                        name="nombre" value="{{ old('nombre') }}">
-                                                </div> --}}
-
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Equipo:</label></br>
                                                     <select id="maquinariaId" name="maquinariaId[]" class="form-select"

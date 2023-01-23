@@ -23,7 +23,7 @@
 <body class="container ">
     <section class="row align-items-center justify-content-center fondoLogin m-0 p-0">
 
-        <div class="col-8 col-lg-6 col-xl-4  login-box mx-center">
+        <div class="col-10 col-md-8 col-lg-6 col-xl-4  login-box mx-center">
             <img src="{{ asset('img/login/logoQcem2.svg') }}" class="mx-auto d-block mb-5" width="30%">
             <p class="bienvenido mt-3">Bienvenido</p>
             @if ($errors->any())

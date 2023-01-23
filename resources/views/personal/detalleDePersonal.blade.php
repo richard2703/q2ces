@@ -26,8 +26,8 @@
                                 @csrf
                                 @method('put')
                                 <div class="col-12 col-md-4  my-3">
-                                    <div class="text-center mx-auto border vistaFoto mb-4">
-                                        <i><img class="imgVista img-fluid"
+                                    <div class="text-center mx-auto border  mb-4">
+                                        <i><img class="imgPersonal img-fluid"
                                                 src="{{ $personal->foto == '' ? ' /img/general/default.jpg' : '/storage/personal/' . $personal->foto }}"></i>
 
                                         <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"

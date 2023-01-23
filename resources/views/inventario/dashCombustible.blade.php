@@ -26,32 +26,32 @@
                                 <nav class=" ">
                                     <div class="nav nav-tabs navMenuBalance justify-content-evenly" id="nav-tab"
                                         role="tablist">
-                                        <button class="nav-link active combustiblePestaña  col-4" id="balanceUno-tab"
+                                        <button class="nav-link active combustiblePestaña  col-6" id="balanceUno-tab"
                                             data-bs-toggle="tab" data-bs-target="#balanceUno" type="button" role="tab"
                                             aria-controls="balanceUno" aria-selected="true">
 
 
                                             <img id="myImage" onclick="changeImage()"
-                                                src="{{ asset('img/inventario/cargaVerde.svg') }}" class="mx-auto d-block"
-                                                width="65%">
+                                                src="{{ asset('img/inventario/cargaVerde.svg') }}"
+                                                class="mx-auto d-block imgCargaDescarga">
                                             <p class="text-center mt-2">CARGA</p>
                                         </button>
-                                        <button class="nav-link  combustiblePestaña col-4" id="balanceDos-tab"
+                                        <button class="nav-link  combustiblePestaña col-5" id="balanceDos-tab"
                                             data-bs-toggle="tab" data-bs-target="#balanceDos" type="button" role="tab"
                                             aria-controls="balanceDos" aria-selected="false">
 
 
                                             <img id="myImage1" onclick="changeImage1()"
-                                                src="{{ asset('img/inventario/descargaGris.svg') }}" class="mx-auto d-block"
-                                                width="65%">
+                                                src="{{ asset('img/inventario/descargaGris.svg') }}"
+                                                class="mx-auto d-block imgCargaDescarga">
                                             <p class="text-center mt-2">DESCARGA</p>
                                         </button>
                                     </div>
                                 </nav>
                                 <div class="tab-content" id="nav-tabContent ">
 
-                                    <div class="tab-pane fade show active border" id="balanceUno" role="tabpanel"
-                                        aria-labelledby="balanceUno-tab" tabindex="0">
+                                    <div class="tab-pane fade show active conteDivCArgaDescarga " id="balanceUno"
+                                        role="tabpanel" aria-labelledby="balanceUno-tab" tabindex="0">
                                         <form action="{{ route('inventario.cargaCombustible') }}" method="post">
                                             @csrf
                                             @method('put')
@@ -59,7 +59,7 @@
                                                 <div class="row mt-5">
                                                     <div class="col-12">
                                                         <div class="row ">
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/inventario/equipo_1.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -78,7 +78,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/inventario/despachador.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -97,7 +97,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/inventario/litros.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -111,7 +111,7 @@
                                                             </div>
 
 
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/inventario/precio.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -140,7 +140,7 @@
 
                                     </div>
 
-                                    <div class="tab-pane fade border" id="balanceDos" role="tabpanel"
+                                    <div class="tab-pane fade conteDivCArgaDescarga" id="balanceDos" role="tabpanel"
                                         aria-labelledby="balanceDos-tab" tabindex="0">
                                         <form action="{{ route('inventario.descargaCombustible') }}" method="post"
                                             enctype="multipart/form-data">
@@ -148,32 +148,37 @@
                                             @method('put')
                                             <div class="col-12 my-5 ">
                                                 <div class="row mt-5">
-                                                    <div class="col-4">
-                                                        <div class="text-center mx-auto border vistaFoto mb-4">
-                                                            <i><img class="imgVistaCombustible img-fluid mb-2"
-                                                                    src="{{ asset('/img/inventario/horometro.svg') }}"></i>
-                                                            <span class="mi-archivo"> <input class="mb-4 ver "
-                                                                    type="file" name="imgKm" id="mi-archivo"
-                                                                    accept="image/*" multiple></span>
-                                                            <label for="mi-archivo">
-                                                                <span class="">Sube Imagen</span>
-                                                            </label>
-                                                        </div>
-                                                        <div class="text-center mx-auto border vistaFoto mb-4">
-                                                            <i><img class="imgVistaCombustible img-fluid mb-2"
-                                                                    src="{{ asset('/img/inventario/kilometraje.svg') }}"></i>
-                                                            <span class="mi-archivo2"> <input class="mb-4 ver "
-                                                                    type="file" name="imgHoras" id="mi-archivo2"
-                                                                    accept="image/*" multiple></span>
-                                                            <label for="mi-archivo2">
-                                                                <span class="">Sube Imagen</span>
-                                                            </label>
+                                                    <div class="col-12 col-lg-3">
+                                                        <div class="row">
+                                                            <div
+                                                                class="col-12 col-md-6 col-lg-12 text-center mx-auto border vistaFotoCombustibles mb-4">
+                                                                <i><img class="imgVistaCombustible img-fluid mb-2"
+                                                                        src="{{ asset('/img/inventario/horometro.svg') }}"></i>
+                                                                <span class="mi-archivo"> <input class="mb-4 ver "
+                                                                        type="file" name="imgKm" id="mi-archivo"
+                                                                        accept="image/*" multiple></span>
+                                                                <label for="mi-archivo">
+                                                                    <span class="">Sube Imagen</span>
+                                                                </label>
+                                                            </div>
+
+                                                            <div
+                                                                class="col-12 col-md-6 col-lg-12 text-center mx-auto border vistaFotoCombustibles mb-4">
+                                                                <i><img class="imgVistaCombustible img-fluid mb-2"
+                                                                        src="{{ asset('/img/inventario/kilometraje.svg') }}"></i>
+                                                                <span class="mi-archivo2"> <input class="mb-4 ver "
+                                                                        type="file" name="imgHoras" id="mi-archivo2"
+                                                                        accept="image/*" multiple></span>
+                                                                <label for="mi-archivo2">
+                                                                    <span class="">Sube Imagen</span>
+                                                                </label>
+                                                            </div>
                                                         </div>
 
                                                     </div>
-                                                    <div class="col-8">
+                                                    <div class="col-12 col-md-12 col-lg-9">
                                                         <div class="row ">
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/inventario/equipo_1.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -192,7 +197,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/navs/eqiposMenu.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -211,7 +216,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/inventario/despachador.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -230,7 +235,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/navs/personalMenu.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -249,7 +254,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/inventario/litros.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -261,7 +266,7 @@
                                                                         value="{{ old('litros') }}">
                                                                 </div>
                                                             </div>
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/inventario/iconoKm.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -274,7 +279,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class=" col-6 d-flex mb-4">
+                                                            <div class=" col-12 col-md-6 d-flex mb-4">
                                                                 <div class="me-2">
                                                                     <img src="{{ asset('/img/inventario/horometroIcono.svg') }}"
                                                                         alt="" style="width:40px;">
@@ -363,8 +368,8 @@
                                             <div class="btn-group btn-group-toggle float-right d-flex"
                                                 data-toggle="buttons">
                                                 @foreach ($gasolinas as $gasolina)
-                                                    <label class="btn btn-sm btn-primary btn-simple" id="1"
-                                                        aria-controls={{ $gasolina->id }}>
+                                                    <label class="btn btn-sm btn-primary btn-simple botongrafica"
+                                                        id="1" aria-controls={{ $gasolina->id }}>
                                                         <input type="radio" class="d-none d-sm-none" name="options">
                                                         <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block"
                                                             onclick="actualizar({{ $gasolina->id }})">
@@ -393,17 +398,17 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <!-- <div class="card-header bacTituloPrincipal">
-                                                                                                                                                <h4 class="card-title">Carga y descarga de combustible</h4>
+                                                                                                                                                                                        <h4 class="card-title">Carga y descarga de combustible</h4>
 
-                                                                                                                                            </div>-->
+                                                                                                                                                                                    </div>-->
                                 <div class="card-body mb-3">
                                     <div class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
-                                        <button class=" nav-item col-6 BTNbCargaDescarga py-3 border-0 active "
+                                        <button class=" nav-item col-12 col-md-6 BTNbCargaDescarga py-3 border-0 active "
                                             role="presentation" id="home-tab" data-bs-toggle="tab"
                                             data-bs-target="#home-tab-pane" type="button" role="tab"
                                             aria-controls="home-tab-pane" aria-selected="true">Relación Cargas de
                                             Combustible</button>
-                                        <button class="nav-item col-6 BTNbCargaDescarga " role="presentation"
+                                        <button class="nav-item col-12 col-md-6 BTNbCargaDescarga " role="presentation"
                                             id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
                                             type="button" role="tab" aria-controls="profile-tab-pane"
                                             aria-selected="false"> Relación Descargas de Combustible</button>
@@ -420,7 +425,7 @@
                                                                 <table class="table">
                                                                     <thead class="labelTitulo">
                                                                         <th class="fw-bolder">ID</th>
-                                                                        <th class="fw-bold">Equipos</th>
+                                                                        <th class="fw-bolder">Equipos</th>
                                                                         <th class="fw-bolder">Despachador</th>
                                                                         <th class="fw-bolder">Litros</th>
                                                                         <th class="fw-bolder">Precio</th>
@@ -510,7 +515,7 @@
                                                                 <table class="table">
                                                                     <thead class="labelTitulo">
                                                                         <th class="fw-bolder">ID</th>
-                                                                        <th class="fw-bold">Equipo</th>
+                                                                        <th class="fw-bolder">Equipo</th>
                                                                         <th class="fw-bolder">Despachador</th>
                                                                         <th class="fw-bolder">Maquinaria</th>
                                                                         <th class="fw-bolder">Operador</th>
@@ -607,7 +612,7 @@
         </div>
     </div>
 
-    <!------MODALES DE CARGA Y DESCARGA ----- -->
+    <!-- ----MODALES DE CARGA Y DESCARGA ----- -->
 
     <!-- Button trigger modal -->
 
@@ -654,7 +659,6 @@
                             <input type="number" step="0.01" min="0.01" class="form-control" id="cargaLitros"
                                 name="cargaLitros">
                         </div>
-
                         <div class="col-3 my-3">
                             <label for="inputEmail4" class="form-label">Precio</label>
                             <input type="number" step="0.01" min="0.01" class="form-control" id="cargaPrecio"
@@ -685,7 +689,7 @@
     <!-- Modal Descarga-->
     <div class="modal fade" id="descargaCombustible" tabindex="-1" aria-labelledby="descargaCombustibleLabel"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
                     <h1 class="modal-title fs-5" id="descargaCombustibleLabel">Modificar Descarga de Combustible</h1>
@@ -693,9 +697,9 @@
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('inventario.updateDescarga') }}" method="post" class="row"
-                    enctype="multipart/form-data">
-                    @csrf
-                    @method('put')
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('put')
 
                         <input type="hidden" name="descargaId" id="descargaId" value="">
 
@@ -743,7 +747,6 @@
                             </select>
                         </div>
 
-
                         <div class="col-4 my-3">
                             <label for="inputEmail4" class="form-label">Litros</label>
                             <input type="number" step="0.01" min="0.01" class="form-control"
@@ -755,6 +758,10 @@
                             <input type="datetime" class="form-control" id="descargaFecha" name="descargaFecha"
                                 value="">
                         </div>
+                        <div class="col-4 my-3">
+                            <label for="inputEmail4" class="form-label">Hora Carga</label>
+                            <input type="time" class="form-control" id="">
+                        </div>
 
                         <div class="col-4 my-3">
                             <label for="inputEmail4" class="form-label">Hora descarga</label>
@@ -762,39 +769,43 @@
                                 value="">
                         </div>
 
-                        <div class="col-6 my-3">
+                        <div class="col-4 my-3">
                             <label for="inputEmail4" class="form-label">Horómetro</label>
                             <input type="number"step="1" min="1" class="form-control" id="descargaHoras"
                                 name="descargaHoras">
                         </div>
 
-                        <div class="col-6 my-3">
+                        <div class="col-4 my-3">
                             <label for="inputEmail4" class="form-label">Km Mi</label>
                             <input type="number" step="1" min="1" class="form-control" id="descargaKms"
                                 name="descargaKms">
                         </div>
 
-                        <div class="col-6 my-3">
-                            <div class=" mx-auto border vistaFoto mb-4">
-                                <i><img class=" img-fluid mb-5" id="descargaImgKms"></i>
+                        <div class="col my-3">
+                            <div class="row justify-content-evenly ">
+                                <div class="col-5 my-3">
+                                    <div class=" mx-auto border vistaFoto mb-4">
+                                        <i><img class=" img-fluid mb-5"
+                                                src="{{ asset('/img/general/default.jpg') }}"></i>
+                                        <span class="botonGral"> <input class="mb-4 ver" type="file" name="foto"
+                                                id="mi-archivo" accept="image/*"></span>
+                                        <label for="mi-archivo">
+                                            <span class="text-center">Fotografía</span>
+                                        </label>
+                                    </div>
+                                </div>
 
-                                <span class="botonGral"> <input class="mb-4 ver" type="file" name="descargaImagenKms"
-                                        id="mi-archivo" accept="image/*"></span>
-                                <label for="mi-archivo">
-                                    <span>Fotografía</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-6 my-3">
-                            <div class=" mx-auto border vistaFoto mb-4">
-                                <i><img class=" img-fluid mb-5" id="descargaImgHoras"></i>
-
-                                <span class="botonGral"> <input class="mb-4 ver" type="file"
-                                        name="descargaImagenHoras" id="mi-archivo2" accept="image/*"></span>
-                                <label for="mi-archivo2">
-                                    <span>Fotografía</span>
-                                </label>
+                                <div class="col-5  my-3">
+                                    <div class=" mx-auto border vistaFotoModalCarga-Desc mb-4">
+                                        <i><img class=" img-fluid mb-5"
+                                                src="{{ asset('/img/general/default.jpg') }}"></i>
+                                        <span class="botonGral"> <input class="mb-4 ver" type="file" name="foto"
+                                                id="mi-archivo" accept="image/*"></span>
+                                        <label for="mi-archivo">
+                                            <span>logo</span>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -806,6 +817,7 @@
             </div>
         </div>
     </div>
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
