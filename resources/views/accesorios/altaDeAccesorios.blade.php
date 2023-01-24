@@ -1,6 +1,17 @@
 @extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Alta de Accesorios')])
 @section('content')
     <div class="content">
+        @if ($errors->any())
+            <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+            <div class="alert alert-danger">
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-11 align-self-start">
@@ -30,46 +41,50 @@
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Nombre:</label></br>
                                                 <input type="text" class="inputCaja" id="nombre" name="nombre"
-                                                    value="">
+                                                    value="{{ old('nombre') }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Año:</label></br>
                                                 <input type="text" class="inputCaja" id="ano" name="ano"
-                                                    value="">
+                                                    value="{{ old('ano') }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Marca:</label></br>
                                                 <input type="text" class="inputCaja" id="marca" name="marca"
-                                                    value="">
+                                                    value="{{ old('marca') }}">
                                             </div>
 
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Número Serie:</label></br>
                                                 <input type="text" class="inputCaja" id="serie" name="serie"
-                                                    value="">
+                                                    value="{{ old('serie') }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Modelo:</label></br>
                                                 <input type="text" class="inputCaja" id="modelo" name="modelo"
-                                                    value="">
+                                                    value="{{ old('modelo') }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Color:</label></br>
                                                 <input type="text" class="inputCaja" id="color" name="color"
-                                                    value="">
+                                                    value="{{ old('color') }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Maquinaria Asignada:</label></br>
-                                                <select class="form-select" aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
-                                                    <option value="1">Maquinaria 1</option>
-                                                    <option value="2">Maquinaria 2</option>
+                                                <select id="maquinariaId" name="maquinariaId" class="form-select"
+                                                    aria-label="Default select example">
+                                                    <option value="">Seleccione</option>
+                                                    @foreach ($vctMaquinaria as $maquina)
+                                                        <option value="{{ $maquina->id }}" >
+                                                            {{ $maquina->identificador . ' ' . $maquina->nombre }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>

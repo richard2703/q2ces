@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Session;
 use App\Helpers\Validaciones;
 use App\Models\obraMaqPer;
 use App\Models\residente;
+use Illuminate\Support\Facades\DB;
 
 
 class obrasController extends Controller
@@ -128,8 +129,19 @@ class obrasController extends Controller
      */
     public function show(obras $obras)
     {
-        // dd($obras->logo);
-        return view('obra.vistaObra', compact('obras'));
+
+        $vctResidenteAsignado = residente::select("*")->where("obraId", "=", $obras->id)->get();
+
+        $vctMaquinariaAsignada = obraMaqPer::select(
+            "obramaqper.*",
+            db::raw("CONCAT(maquinaria.identificador,' ',maquinaria.nombre) AS maquinaria"),
+        )
+            ->join('maquinaria', 'maquinaria.id', '=', 'obramaqper.maquinariaId')
+            ->where("obraId", "=", $obras->id)->get();
+
+        // dd($vctMaquinariaAsignada);
+
+        return view('obra.vistaObra', compact('obras'), compact('vctResidenteAsignado', 'vctMaquinariaAsignada'));
     }
 
     /**
@@ -221,7 +233,7 @@ class obrasController extends Controller
 
                     if (in_array($intValor, $vctArreglo) == false) {
                         /*** no existe y se debe de eliminar */
-                         residente::destroy($vctRegistrados[$i]);
+                        residente::destroy($vctRegistrados[$i]);
                         // dd('Borrando por que se quito el residente');
                     } else {
                         /*** existe el registro */
@@ -266,7 +278,7 @@ class obrasController extends Controller
             //*** se deben de eliminar todos los registrados */
             if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
                 for ($i = 0; $i < count($vctRegistrados); $i++) {
-                     residente::destroy($vctRegistrados[$i]);
+                    residente::destroy($vctRegistrados[$i]);
                     // dd('Borrando todo residente');
                 }
             }
@@ -286,7 +298,7 @@ class obrasController extends Controller
 
                     if (in_array($intValor, $vctArreglo) == false) {
                         /*** no existe y se debe de eliminar */
-                         obraMaqPer::destroy($vctRegistrados[$i]);
+                        obraMaqPer::destroy($vctRegistrados[$i]);
                         // dd('Borrando por que se quito la maquina');
                     } else {
                         /*** existe el registro */
@@ -327,7 +339,7 @@ class obrasController extends Controller
             //*** se deben de eliminar todos los registrados */
             if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
                 for ($i = 0; $i < count($vctRegistrados); $i++) {
-                     obraMaqPer::destroy($vctRegistrados[$i]);
+                    obraMaqPer::destroy($vctRegistrados[$i]);
                     // dd('Borrando todo obra per maq');
                 }
             }

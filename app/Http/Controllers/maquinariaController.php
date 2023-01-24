@@ -170,9 +170,6 @@ class maquinariaController extends Controller
             }
         }
 
-        // dd('no hay');
-
-
 
         Session::flash('message', 1);
         return redirect()->route('maquinaria.index');
@@ -328,8 +325,18 @@ class maquinariaController extends Controller
         $docu = maqdocs::where("maquinariaId", $maquinaria->id);
         if (isset($docs)) {
             $docu->update($docs);
-            # code...
         }
+
+        if ($request->hasFile("ruta")) {
+            foreach ($request->file('ruta') as $ruta) {
+                $imagen['maquinariaId'] = $maquinaria->id;
+                $imagen['ruta'] = time() . '_' . $ruta->getClientOriginalName();
+                $ruta->storeAs('/public/imgmaquinaria', $imagen['ruta']);
+                maqimagen::create($imagen);
+            }
+        }
+
+
         Session::flash('message', 1);
 
         return redirect()->route('maquinaria.index');
@@ -413,7 +420,7 @@ class maquinariaController extends Controller
                 break;
 
             default:
-            $strCodigo = "DES-" . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
+                $strCodigo = "DES-" . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
                 break;
         }
 

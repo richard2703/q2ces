@@ -427,7 +427,9 @@ input[type="file"] {
 }
 /* -------  Boton de subir archivo  imagenes ------- */
 label[for="mi-archivo"],
-label[for="mi-archivo2"] {
+label[for="mi-archivo2"],
+label[for="mi-archivo3"],
+label[for="mi-archivo4"] {
   font-size: 14px;
   font-weight: 600;
   color: #fff;
