@@ -54,7 +54,6 @@
                                         role="tabpanel" aria-labelledby="balanceUno-tab" tabindex="0">
                                         <form action="{{ route('inventario.cargaCombustible') }}" method="post">
                                             @csrf
-                                            @method('put')
                                             <div class="col-12 my-5 ">
                                                 <div class="row mt-5">
                                                     <div class="col-12">
@@ -145,7 +144,6 @@
                                         <form action="{{ route('inventario.descargaCombustible') }}" method="post"
                                             enctype="multipart/form-data">
                                             @csrf
-                                            @method('put')
                                             <div class="col-12 my-5 ">
                                                 <div class="row mt-5">
                                                     <div class="col-12 col-lg-3">
@@ -398,9 +396,9 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <!-- <div class="card-header bacTituloPrincipal">
-                                                                                                                                                                                                                    <h4 class="card-title">Carga y descarga de combustible</h4>
+                                                                                                                                                                                                                                <h4 class="card-title">Carga y descarga de combustible</h4>
 
-                                                                                                                                                                                                                </div>-->
+                                                                                                                                                                                                                            </div>-->
                                 <div class="card-body mb-3">
                                     <div class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
                                         <button class=" nav-item col-12 col-md-6 BTNbCargaDescarga py-3 border-0 active "
@@ -799,9 +797,9 @@
                                     <div class=" mx-auto border vistaFoto mb-4">
                                         <i><img class=" img-fluid mb-5" id="descargaImgKms"
                                                 src="{{ asset('/img/general/default.jpg') }}"></i>
-                                        <span class="botonGral"> <input class="mb-4 ver" type="file"
-                                                name="descargaFileImgKms" id="mi-archivo" accept="image/*"></span>
-                                        <label for="mi-archivo">
+                                        <span class="mi-archivo3"> <input class="mb-4 ver" type="file"
+                                                name="descargaFileImgKms" id="mi-archivo3" accept="image/*"></span>
+                                        <label for="mi-archivo3">
                                             <span class="text-center">Fotografía</span>
                                         </label>
                                     </div>
@@ -811,12 +809,13 @@
                                     <div class=" mx-auto border vistaFotoModalCarga-Desc mb-4">
                                         <i><img class=" img-fluid mb-5" id="descargaImgHoras"
                                                 src="{{ asset('/img/general/default.jpg') }}"></i>
-                                        <span class="botonGral"> <input class="mb-4 ver" type="file"
-                                                name="descargaFileImgHoras" id="mi-archivo" accept="image/*"></span>
-                                        <label for="mi-archivo">
+                                        <span class="mi-archivo4"> <input class="mb-4 ver" type="file"
+                                                name="descargaFileImgHoras" id="mi-archivo4" accept="image/*"></span>
+                                        <label for="mi-archivo4">
                                             <span>logo</span>
                                         </label>
                                     </div>
+
                                 </div>
                             </div>
                         </div>

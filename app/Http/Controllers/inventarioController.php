@@ -519,7 +519,6 @@ class inventarioController extends Controller
 
     public function updateDescarga(Request $request)
     {
-        dd($request);
 
         $objCalculo = new Calculos();
 
