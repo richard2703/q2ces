@@ -396,9 +396,9 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <!-- <div class="card-header bacTituloPrincipal">
-                                                                                                                                                                                                                                <h4 class="card-title">Carga y descarga de combustible</h4>
+                                                                                                                                                                                                                                        <h4 class="card-title">Carga y descarga de combustible</h4>
 
-                                                                                                                                                                                                                            </div>-->
+                                                                                                                                                                                                                                    </div>-->
                                 <div class="card-body mb-3">
                                     <div class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
                                         <button class=" nav-item col-12 col-md-6 BTNbCargaDescarga py-3 border-0 active "
@@ -557,7 +557,7 @@
                                                                                         data-bs-target="#descargaCombustible"
                                                                                         onclick="loadDescarga('{{ $descarga->id }}','{{ $descarga->maquinariaId }}','{{ $descarga->operadorId }}',
                                                                                         '{{ $descarga->servicioId }}','{{ $descarga->receptorId }}','{{ $descarga->litros }}',
-                                                                                        '{{ $descarga->km }}','{{ $descarga->imgKm }}','{{ $descarga->horas }}','{{ $descarga->imgHoras }}'
+                                                                                        '{{ $descarga->km }}','{{ ($descarga->imgKm ? $descarga->imgKm : '0') }}','{{ $descarga->horas }}','{{ $descarga->imgHoras ? $descarga->imgHoras : '0' }}'
                                                                                         ,'{{ \Carbon\Carbon::parse($descarga->fecha)->format('Y-m-d') }}','{{ \Carbon\Carbon::parse($descarga->fecha)->format('H:m') }}')">
                                                                                         <svg xmlns="http://www.w3.org/2000/svg "
                                                                                             width="28" height="28"
@@ -1090,16 +1090,12 @@
             const dteHora = document.getElementById('descargaHora').value = hora;
 
             const imagen1 = document.getElementById('descargaImgKms');
-            if (imagenKms === null) {
-                imagen1.src = "{{ asset('/img/general/default.jpg') }}";
-            } else {
+            if (imagenKms != 0) {
                 imagen1.src = '/storage/combustibles/' + imagenKms;
             }
 
             const imagen2 = document.getElementById('descargaImgHoras');
-            if (imgHoras === null) {
-                imagen2.src = "{{ asset('/img/general/default.jpg') }}";
-            } else {
+            if (imgHoras != 0) {
                 imagen2.src = '/storage/combustibles/' + imgHoras;
             }
 

@@ -330,7 +330,9 @@ CREATE TABLE accesorios(
   ano varchar(255) NULL,
   serie varchar(255) NULL,
   foto varchar(255)null,
-  PRIMARY KEY (id)
+  maquinariaId bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_accesorios_maquinariaId foreign key (maquinariaId) references maquinaria(id)
  );
 
 CREATE TABLE maqacce(

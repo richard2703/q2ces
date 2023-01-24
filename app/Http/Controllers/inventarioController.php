@@ -520,6 +520,8 @@ class inventarioController extends Controller
     public function updateDescarga(Request $request)
     {
 
+        // dd($request);
+
         $objCalculo = new Calculos();
 
         $request->validate([
@@ -556,15 +558,13 @@ class inventarioController extends Controller
         $descarga->created_at = ($request['descargaFecha'] . " " . $request['descargaHora'] . ":" . $strSegundos);
 
         if ($request->hasFile("descargaFileImgKms")) {
-            dd('Hola imagen de Kms');
-            $descarga['descargaFileImgKms'] = time() . '_' . 'imgKm.' . $request->file('descargaFileImgKms')->getClientOriginalExtension();
-            $request->file('descargaFileImgKms')->storeAs('/public/combustibles', $descarga['descargaFileImgKms']);
+            $descarga->imgKm = time() . '_' . 'imgKm.' . $request->file('descargaFileImgKms')->getClientOriginalExtension();
+            $request->file('descargaFileImgKms')->storeAs('/public/combustibles', $descarga->imgKm);
             // $blnHayImagen = true;
         }
         if ($request->hasFile("descargaFileImgHoras")) {
-            dd('Hola imagen de Horas');
-            $descarga['descargaFileImgHoras'] = time() . '_' . 'imgHoras.' . $request->file('descargaFileImgHoras')->getClientOriginalExtension();
-            $request->file('descargaFileImgHoras')->storeAs('/public/combustibles', $descarga['descargaFileImgHoras']);
+            $descarga->imgHoras = time() . '_' . 'imgHoras.' . $request->file('descargaFileImgHoras')->getClientOriginalExtension();
+            $request->file('descargaFileImgHoras')->storeAs('/public/combustibles', $descarga->imgHoras);
             // $blnHayImagen = true;
         }
 

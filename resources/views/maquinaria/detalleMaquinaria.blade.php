@@ -51,16 +51,18 @@
                                                                         class="img-fluid ">
                                                                 @empty
                                                                 @endforelse
-                                                                
+
 
 
                                                             </div>
-                                                            <span class="mi-archivo"> <input class="mb-4 ver "
-                                                                    type="file" name="ruta[]" id="mi-archivo"
-                                                                    accept="image/*" multiple></span>
-                                                            <label for="mi-archivo">
-                                                                <span class="">sube imagen</span>
-                                                            </label>
+                                                            @if (count($fotos) <= 3)
+                                                                <span class="mi-archivo"> <input class="mb-4 ver "
+                                                                        type="file" name="ruta[]" id="mi-archivo"
+                                                                        accept="image/*" multiple></span>
+                                                                <label for="mi-archivo">
+                                                                    <span class="">sube imagen</span>
+                                                                </label>
+                                                            @endif
                                                         </div>
 
                                                     </div>
@@ -105,15 +107,33 @@
                                                                 <select class="form-select"
                                                                     aria-label="Default select example" id="categoria"
                                                                     name="categoria">
-                                                                    <option value="Accesorios" {{ $maquinaria->categoria == 'Accesorios' ? ' selected' : '' }}>Accesorios</option>
-                                                                    <option value="Campers" {{ $maquinaria->categoria == 'Campers' ? ' selected' : '' }}>Campers</option>
-                                                                    <option value="Cisterna" {{ $maquinaria->categoria == 'Cisterna' ? ' selected' : '' }}>Cisterna</option>
-                                                                    <option value="Maquinaria ligera" {{ $maquinaria->categoria == 'Maquinaria ligera' ? ' selected' : '' }}>Maquinaria ligera</option>
-                                                                    <option value="Maquinaria pesada" {{ $maquinaria->categoria == 'Maquinaria pesada' ? ' selected' : '' }}>Maquinaria pesada</option>
-                                                                    <option value="Retroexcavadoras" {{ $maquinaria->categoria == 'Retroexcavadoras' ? ' selected' : '' }}>Retroexcavadoras</option>
-                                                                    <option value="Tractocamiones" {{ $maquinaria->categoria == 'Tractocamiones' ? ' selected' : '' }}>Tractocamiones</option>
-                                                                    <option value="Otros" {{ $maquinaria->categoria == 'Otros' ? ' selected' : '' }}>Otros</option>
-                                                                    <option value="Utilitarios" {{ $maquinaria->categoria == 'Utilitarios' ? ' selected' : '' }}>Utilitarios</option>
+                                                                    <option value="Accesorios"
+                                                                        {{ $maquinaria->categoria == 'Accesorios' ? ' selected' : '' }}>
+                                                                        Accesorios</option>
+                                                                    <option value="Campers"
+                                                                        {{ $maquinaria->categoria == 'Campers' ? ' selected' : '' }}>
+                                                                        Campers</option>
+                                                                    <option value="Cisterna"
+                                                                        {{ $maquinaria->categoria == 'Cisterna' ? ' selected' : '' }}>
+                                                                        Cisterna</option>
+                                                                    <option value="Maquinaria ligera"
+                                                                        {{ $maquinaria->categoria == 'Maquinaria ligera' ? ' selected' : '' }}>
+                                                                        Maquinaria ligera</option>
+                                                                    <option value="Maquinaria pesada"
+                                                                        {{ $maquinaria->categoria == 'Maquinaria pesada' ? ' selected' : '' }}>
+                                                                        Maquinaria pesada</option>
+                                                                    <option value="Retroexcavadoras"
+                                                                        {{ $maquinaria->categoria == 'Retroexcavadoras' ? ' selected' : '' }}>
+                                                                        Retroexcavadoras</option>
+                                                                    <option value="Tractocamiones"
+                                                                        {{ $maquinaria->categoria == 'Tractocamiones' ? ' selected' : '' }}>
+                                                                        Tractocamiones</option>
+                                                                    <option value="Otros"
+                                                                        {{ $maquinaria->categoria == 'Otros' ? ' selected' : '' }}>
+                                                                        Otros</option>
+                                                                    <option value="Utilitarios"
+                                                                        {{ $maquinaria->categoria == 'Utilitarios' ? ' selected' : '' }}>
+                                                                        Utilitarios</option>
                                                                 </select>
                                                             </div>
 
@@ -147,9 +167,9 @@
                                                                             <option
                                                                                 value="Grua"{{ $maquinaria->tipo == 'Grua' ? ' selected' : '' }}>
                                                                                 Grua</option>
-                                                                                <option
-                                                                                    value="N/A"{{ $maquinaria->tipo == 'no_aplica' ? ' selected' : '' }}>
-                                                                                    N/A</option>
+                                                                            <option
+                                                                                value="N/A"{{ $maquinaria->tipo == 'no_aplica' ? ' selected' : '' }}>
+                                                                                N/A</option>
                                                                         </select>
 
                                                                     </div>
@@ -185,8 +205,9 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Identificador:</label></br>
-                                                                <input type="text" class="inputCaja" id="identificador"
-                                                                    name="identificador" value="{{ $maquinaria->identificador }}"
+                                                                <input type="text" class="inputCaja"
+                                                                    id="identificador" name="identificador"
+                                                                    value="{{ $maquinaria->identificador }}"
                                                                     placeholder="ej: MT-00">
                                                             </div>
 
@@ -216,99 +237,99 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Capacidad en kW:</label></br>
-                                                                <input type="text" class="inputCaja" id="capacidad"
+                                                                <input type="number" class="inputCaja" id="capacidad"  placeholder="Capacidad"
                                                                     name="capacidad" value="{{ $maquinaria->capacidad }}"
                                                                     placeholder="">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Capacidad Tanque:</label></br>
-                                                                <input type="number" class="inputCaja" id="tanque"
+                                                                <input type="number" class="inputCaja" id="tanque" placeholder="En litros"
                                                                     name="tanque" value="{{ $maquinaria->tanque }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Ejes:</label></br>
-                                                                <input type="text" class="inputCaja" id="ejes"
+                                                                <input type="number" class="inputCaja" id="ejes"  placeholder="Cantidad"
                                                                     name="ejes" value="{{ $maquinaria->ejes }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Rin Delantero:</label></br>
-                                                                <input type="text" class="inputCaja" id="rinD"
+                                                                <input type="number" class="inputCaja" id="rinD"  placeholder="Dimensiones"
                                                                     name="rinD" value="{{ $maquinaria->rinD }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Rin Trasero:</label></br>
-                                                                <input type="text" class="inputCaja" id="rinT"
+                                                                <input type="number" class="inputCaja" id="rinT" placeholder="Dimensiones"
                                                                     name="rinT" value="{{ $maquinaria->rinT }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Llanta Delantera:</label></br>
-                                                                <input type="text" class="inputCaja" id="llantaD"
+                                                                <input type="number" class="inputCaja" id="llantaD"  placeholder="Cantidad"
                                                                     name="llantaD" value="{{ $maquinaria->llantaD }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Llanta Trasera:</label></br>
-                                                                <input type="text" class="inputCaja" id="llantaT"
+                                                                <input type="number" class="inputCaja" id="llantaT"  placeholder="Cantidad"
                                                                     name="llantaT" value="{{ $maquinaria->llantaT }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Combustible:</label></br>
                                                                 <input type="text" class="inputCaja" id="combustible"
-                                                                    name="combustible"
+                                                                    name="combustible"  placeholder="Diesel / Gasolina / Especificar"
                                                                     value="{{ $maquinaria->combustible }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Motor:</label></br>
-                                                                <input type="text" class="inputCaja" id="aceitemotor"
+                                                                <input type="number" class="inputCaja" id="aceitemotor"  placeholder="En litros"
                                                                     name="aceitemotor"
                                                                     value="{{ $maquinaria->aceitemotor }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Transmisión:</label></br>
-                                                                <input type="text" class="inputCaja" id="aceitetras"
+                                                                <input type="number" class="inputCaja" id="aceitetras" placeholder="En litros"
                                                                     name="aceitetras"
                                                                     value="{{ $maquinaria->aceitetras }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Dirección:</label></br>
-                                                                <input type="text" class="inputCaja" id="aceitedirec"
+                                                                <input type="number" class="inputCaja" id="aceitedirec"  placeholder="En litros"
                                                                     name="aceitedirec"
                                                                     value="{{ $maquinaria->aceitedirec }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Hidráulico:</label></br>
-                                                                <input type="text" class="inputCaja"
+                                                                <input type="number" class="inputCaja"  placeholder="En litros"
                                                                     name="aceitehidra"
                                                                     value="{{ $maquinaria->aceitehidra }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Filtro Aceite:</label></br>
-                                                                <input type="text" class="inputCaja" id="filtroaceite"
-                                                                    name="filtroaceite"
+                                                                <input type="number" class="inputCaja" id="filtroaceite"
+                                                                    name="filtroaceite"  placeholder="Cantidad"
                                                                     value="{{ $maquinaria->filtroaceite }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Filtro Aire:</label></br>
-                                                                <input type="text" class="inputCaja" id="filtroaire"
-                                                                    name="filtroaire"
+                                                                <input type="number" class="inputCaja" id="filtroaire"
+                                                                    name="filtroaire"  placeholder="Cantidad"
                                                                     value="{{ $maquinaria->filtroaire }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Bujías:</label></br>
-                                                                <input type="text" class="inputCaja" id="bujias"
+                                                                <input type="number" class="inputCaja" id="bujias"  placeholder="Cantidad"
                                                                     name="bujias" value="{{ $maquinaria->bujias }}">
                                                             </div>
 
@@ -322,7 +343,7 @@
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Horómetro Inicial:</label></br>
                                                                 <input type="number" class="inputCaja" id="horometro"
-                                                                    name="horometro"
+                                                                    name="horometro" placeholder="Numérico"
                                                                     value="{{ $maquinaria->horometro }}">
                                                             </div>
 
@@ -332,7 +353,7 @@
                                                                         <label class="labelTitulo">Kilometraje / Millaje
                                                                             Inicial:</label></br>
                                                                         <input type="number" class="inputCaja"
-                                                                            id="kilometraje" name="kilometraje"
+                                                                            id="kilometraje" name="kilometraje" placeholder="Numérico"
                                                                             value="{{ $maquinaria->kilometraje }}">
 
                                                                     </div>
@@ -358,8 +379,12 @@
                                                                 <select class="form-select"
                                                                     aria-label="Default select example" id="cisterna"
                                                                     name="cisterna">
-                                                                    <option value="0" {{ $maquinaria->cisterna == 0 ? ' selected' : '' }}>No</option>
-                                                                    <option value="1" {{ $maquinaria->cisterna == 1 ? ' selected' : '' }}>Sí</option>
+                                                                    <option value="0"
+                                                                        {{ $maquinaria->cisterna == 0 ? ' selected' : '' }}>
+                                                                        No</option>
+                                                                    <option value="1"
+                                                                        {{ $maquinaria->cisterna == 1 ? ' selected' : '' }}>
+                                                                        Sí</option>
                                                                 </select>
                                                             </div>
                                                         </div>

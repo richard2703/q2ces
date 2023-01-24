@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\accesorios;
+use App\Models\maquinaria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -18,7 +20,9 @@ class accesoriosController extends Controller
      */
     public function index()
     {
-        $accesorios = accesorios::paginate(5);
+        $accesorios = accesorios::select("accesorios.*", db::raw("CONCAT(maquinaria.identificador,' ',maquinaria.nombre) AS maquinaria"),)
+            ->join('maquinaria', 'maquinaria.id', '=', 'accesorios.maquinariaId')
+            ->paginate(5);
         return view('accesorios.indexAccesorios', compact('accesorios'));
     }
 
@@ -29,7 +33,8 @@ class accesoriosController extends Controller
      */
     public function create()
     {
-        return view('accesorios.altaDeAccesorios');
+        $vctMaquinaria = maquinaria::all();
+        return view('accesorios.altaDeAccesorios', compact('vctMaquinaria'));
     }
 
     /**
@@ -48,6 +53,7 @@ class accesoriosController extends Controller
             'serie' => 'nullable|max:200',
             'ano' => 'nullable|max:9999|numeric',
             'color' => 'nullable|max:200',
+            'maquinariaId' => 'required',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
@@ -57,6 +63,7 @@ class accesoriosController extends Controller
             'ano.max' => 'El campo serie excede el límite de caracteres permitidos.',
             'ano.min' => 'El campo año requiere de al menos 4 caracteres.',
             'color.max' => 'El campo color excede el límite de caracteres permitidos.',
+            'maquinariaId.required' => 'El campo maquinaría es obligatorio.',
         ]);
         $accesorio = $request->only(
             'nombre',
@@ -65,6 +72,7 @@ class accesoriosController extends Controller
             'color',
             'serie',
             'ano',
+            'maquinariaId',
             'foto'
         );
         $accesorio['serie'] = strtoupper($accesorio['serie']);
@@ -86,7 +94,8 @@ class accesoriosController extends Controller
      */
     public function show(accesorios $accesorios)
     {
-        return view('accesorios.detalleAccesorios', compact('accesorios'));
+        $vctMaquinaria = maquinaria::all();
+        return view('accesorios.detalleAccesorios', compact('accesorios', 'vctMaquinaria'));
     }
 
     /**
@@ -97,7 +106,8 @@ class accesoriosController extends Controller
      */
     public function edit(accesorios $accesorios)
     {
-        return view('accesorios.detalleAccesorios', compact('accesorios'));
+        $vctMaquinaria = maquinaria::all();
+        return view('accesorios.detalleAccesorios', compact('accesorios', 'vctMaquinaria'));
     }
 
     /**
@@ -109,6 +119,7 @@ class accesoriosController extends Controller
      */
     public function update(Request $request, accesorios $accesorios)
     {
+
         $request->validate([
             'nombre' => 'required|max:250',
             'modelo' => 'nullable|max:200',
@@ -116,6 +127,7 @@ class accesoriosController extends Controller
             'serie' => 'nullable|max:200',
             'ano' => 'nullable|max:9999|numeric',
             'color' => 'nullable|max:200',
+            'maquinariaId' => 'required',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
@@ -125,6 +137,7 @@ class accesoriosController extends Controller
             'ano.max' => 'El campo serie excede el límite de caracteres permitidos.',
             'ano.min' => 'El campo año requiere de al menos 4 caracteres.',
             'color.max' => 'El campo color excede el límite de caracteres permitidos.',
+            'maquinariaId.required' => 'El campo maquinaría es obligatorio.',
         ]);
         $data = $request->only(
             'nombre',
@@ -133,7 +146,8 @@ class accesoriosController extends Controller
             'color',
             'serie',
             'ano',
-            'foto'
+            'foto',
+            'maquinariaId'
         );
 
         $data['serie'] = strtoupper($data['serie']);
