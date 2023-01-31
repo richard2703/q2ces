@@ -496,4 +496,43 @@ CREATE TABLE residente(
   CONSTRAINT FK_residente_obraId foreign key (obraId) references obras(id)
  );
 
-alter table obramaqper add combustible int DEFAULT 0;
+CREATE TABLE tareas(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  userId bigint(20) unsigned NOT NULL,
+  responsable bigint(20) unsigned NOT NULL,
+  titulo varchar(255) not null,
+  fechaInicio datetime null,
+  fechaFin datetime null,
+  prioridad varchar(255) null,
+  estado varchar(255) null,
+  fechaInicioR datetime not null,
+  fechaFinR datetime not null,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_tareas_userId foreign key (userId) references users(id),
+  CONSTRAINT FK_tareas_responsable foreign key (responsable) references users(id)
+ );
+
+CREATE TABLE eventos(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  userId bigint(20) unsigned NOT NULL,
+  titulo varchar(255) not null,
+  fechaInicio datetime null,
+  fechaFin datetime null,
+  prioridad varchar(255) not null,
+  comentario text null,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_eventos_userId foreign key (userId) references users(id)
+ );
+
+CREATE TABLE mantenimientos(
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  maquinariaId bigint(20) unsigned NOT NULL,
+  tipo varchar(255) not null,
+  fechaInicio datetime not null,
+  fechaReal datetime null,
+  estado varchar(255) not null,
+  comentario text null,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_mantenimientos_userId foreign key (maquinariaId) references maquinaria(id) 
+ );
+ 
