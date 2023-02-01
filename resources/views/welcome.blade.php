@@ -87,7 +87,7 @@
             /* width: 10%; */
             height: -webkit-fill-available;
             ">
-            <h5 class="text-white m-0">Contruccion Equipment services</h5>
+            <h5 class="text-white m-0">Contruccion Equipment Services</h5>
 
         </a>
         <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
