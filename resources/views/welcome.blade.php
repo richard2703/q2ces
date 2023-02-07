@@ -56,7 +56,7 @@
         <div class="row g-0 d-none d-lg-flex">
             <div class="col-lg-6 ps-5 text-start">
                 <div class="h-100 d-inline-flex align-items-center text-white">
-                    <span>Siguenos en:</span>
+                    <span>Síguenos en:</span>
                     <a class="btn btn-link text-light" href=" https://www.facebook.com/q2ces"><i
                             class="fab fa-facebook-f"></i></a>
                     {{--  <a class="btn btn-link text-light" href=""><i class="fab fa-twitter"></i></a>
@@ -67,7 +67,7 @@
             </div>
             <div class="col-lg-6 text-end">
                 <div class="h-100 topbar-right d-inline-flex align-items-center text-white py-2 px-5">
-                    <span class="fs-5 fw-bold me-2"><i class="fa fa-phone-alt me-2"></i>Llamanos:</span>
+                    <span class="fs-5 fw-bold me-2"><i class="fa fa-phone-alt me-2"></i>Llámanos:</span>
 
                     <span class="fs-5 fw-bold">33 21 83 64 72</span>
                 </div>
@@ -87,7 +87,7 @@
             /* width: 10%; */
             height: -webkit-fill-available;
             ">
-            <h5 class="text-white m-0">Contruccion Equipment Services</h5>
+            <h5 class="text-white m-0">Construction Equipment Services</h5>
 
         </a>
         <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -633,7 +633,7 @@
         <div class="container py-0">
             <div class="row g-5">
                 <div class="col-lg-6 col-md-6">
-                    <h5 class="text-white mb-4">Direccion</h5>
+                    <h5 class="text-white mb-4">Dirección</h5>
                     <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>José María Heredia 2387 Guadalajara,
                         Jal., Méx.</p>
                     <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+52 33 21 83 64 72</p>
@@ -661,7 +661,7 @@
                     <h5 class="text-white mb-4">Horario de Trabajo</h5>
                     <p class="mb-1">Lunes - Viernes</p>
                     <h6 class="text-light">08:00 am - 06:00 pm</h6>
-                    <p class="mb-1">Sabado</p>
+                    <p class="mb-1">Sábado</p>
                     <h6 class="text-light">09:00 am - 12:00 pm</h6>
                     <p class="mb-1">Domingo</p>
                     <h6 class="text-light">Cerrado</h6>
