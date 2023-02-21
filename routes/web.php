@@ -45,13 +45,15 @@ Route::get('/dashboard', function () {
 //     return view('equipos.verEquipos');
 // });
 
-// Route::get('/altaDeAccesorios', function () {
-//     return view('accesorios.altaDeAccesorios');
+// Route::get('/altaDeAccesorios', function () { //Ruta navegador (nombre que yo le quiera poner y es la que se pega en el menu)
+//     return view('accesorios.altaDeAccesorios');//Ruta en donde se encuentra el archivo
 // });
 
-// Route::get('/indexAccesorios', function () {
-//     return view('accesorios.indexAccesorios');
-// });
+
+// calendario
+Route::get('/calendario', function () {
+    return view('calendario.calendario');
+ });
 
 
 //Inventario
