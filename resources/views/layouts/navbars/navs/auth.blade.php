@@ -85,7 +85,7 @@ function volver10(){
 
 //---- NOTIFICACIONES--------
 function cambiar20(){
-  document.getElementById('cambiaBCO20').src="{{ asset('/img/navs/housebco.svg') }}";
+  document.getElementById('cambiaBCO20').src="{{ asset('/img/navs/bellbco.svg') }}";
 }
 function volver20(){
   document.getElementById('cambiaBCO20').src="{{ asset('/img/navs/house.svg') }}";
@@ -93,7 +93,7 @@ function volver20(){
 
 //---- HPERFIL--------
 function cambiar30(){
-  document.getElementById('cambiaBCO30').src="{{ asset('/img/navs/housebco.svg') }}";
+  document.getElementById('cambiaBCO30').src="{{ asset('/img/navs/accountbco.svg') }}";
 }
 function volver30(){
   document.getElementById('cambiaBCO30').src="{{ asset('/img/navs/house.svg') }}";

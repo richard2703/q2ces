@@ -8,8 +8,17 @@
 
     <div class="sidebar-wrapper menu">
         <ul class="nav">
+
+            <!-- Calendario -->
+            <li class="nav-item {{ $activePage == 'inventario' || $activePage == 'user-management' ? ' active' : '' }}">
+                <a href="{{ url('calendario') }}" onmouseover="cambiar3();" onmouseout="volver3();" class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
+                    <i><img id="cambiaBCO3" style="width:25px" src="{{ $activePage == 'inventario' ? ' img/navs/inventariomenubco.svg' : '/img/navs/inventariomenu.svg' }}"></i>
+                    <p> {{ __('calendario') }} </p>
+                    {{--  <b class="caret"></b>  --}}
+                </a>
+            </li>
             
-        <!-- EQUIPOS -->
+            <!-- EQUIPOS -->
             <li class="nav-item {{ $activePage == 'dashboard' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a href="#equipo" onmouseover="cambiar();" onmouseout="volver();" class="nav-link p-2" data-toggle="collapse" aria-expanded="false">
                     <i><img id="cambiaBCO" src="{{ $activePage == 'equipos' ? ' img/navs/eqiposmenubco.svg' : '/img/navs/eqiposmenu.svg' }}"  style="width:25px">  </i> 
