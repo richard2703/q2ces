@@ -45,13 +45,15 @@ Route::get('/dashboard', function () {
 //     return view('equipos.verEquipos');
 // });
 
-// Route::get('/altaDeAccesorios', function () {
-//     return view('accesorios.altaDeAccesorios');
+// Route::get('/altaDeAccesorios', function () { //Ruta navegador (nombre que yo le quiera poner y es la que se pega en el menu)
+//     return view('accesorios.altaDeAccesorios');//Ruta en donde se encuentra el archivo
 // });
 
-// Route::get('/indexAccesorios', function () {
-//     return view('accesorios.indexAccesorios');
-// });
+
+// calendario
+Route::get('/calendario', function () {
+    return view('calendario.calendario');
+ });
 
 
 //Inventario
@@ -155,9 +157,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/inventario/{inventario}', [App\Http\Controllers\inventarioController::class, 'update'])->name('inventario.update');
 
     Route::post('/inventario/combustible', [App\Http\Controllers\inventarioController::class, 'dashCombustible'])->name('inventario.dashCombustible');
-    Route::put('/inventario/combustible/carga', [App\Http\Controllers\inventarioController::class, 'cargaCombustible'])->name('inventario.cargaCombustible');
-    Route::put('/inventario/combustible/descarga', [App\Http\Controllers\inventarioController::class, 'descargaCombustible'])->name('inventario.descargaCombustible');
+    Route::post('/inventario/combustible/carga', [App\Http\Controllers\inventarioController::class, 'cargaCombustible'])->name('inventario.cargaCombustible');
+    Route::post('/inventario/combustible/descarga', [App\Http\Controllers\inventarioController::class, 'descargaCombustible'])->name('inventario.descargaCombustible');
 
     Route::put('/inventario/combustible/carga/edit', [App\Http\Controllers\inventarioController::class, 'updateCarga'])->name('inventario.updateCarga');
     Route::put('/inventario/combustible/descarga/edit', [App\Http\Controllers\inventarioController::class, 'updateDescarga'])->name('inventario.updateDescarga');
+    Route::delete('/inventario/combustible/carga/{carga}', [App\Http\Controllers\inventarioController::class, 'deleteCarga'])->name('inventario.deleteCarga');
+    Route::delete('/inventario/combustible/descarga/{carga}', [App\Http\Controllers\inventarioController::class, 'deleteDescarga'])->name('inventario.deleteDescarga');
 });

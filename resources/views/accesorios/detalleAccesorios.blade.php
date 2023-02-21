@@ -79,11 +79,16 @@
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Maquinaria Asignada:</label></br>
-                                                <select class="form-select" aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
-                                                    <option value="1">Maquinaria 1</option>
-                                                    <option value="2">Maquinaria 2</option>
-                                                </select>
+                                                <select id="maquinariaId" name="maquinariaId"
+                                                class="form-select" aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($vctMaquinaria as $maquina)
+                                                    <option value="{{ $maquina->id }}"
+                                                        {{ $maquina->id == $accesorios->maquinariaId ? ' selected' : '' }}>
+                                                        {{ $maquina->identificador . ' ' . $maquina->nombre }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                             </div>
 
                                         </div>

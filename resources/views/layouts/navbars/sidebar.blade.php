@@ -8,11 +8,20 @@
 
     <div class="sidebar-wrapper menu">
         <ul class="nav">
+
+            <!-- Calendario -->
+            <li class="nav-item {{ $activePage == 'inventario' || $activePage == 'user-management' ? ' active' : '' }}">
+                <a href="{{ url('calendario') }}" onmouseover="cambiar3();" onmouseout="volver3();" class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
+                    <i><img id="cambiaBCO3" style="width:25px" src="{{ $activePage == 'inventario' ? ' img/navs/inventariomenubco.svg' : '/img/navs/inventariomenu.svg' }}"></i>
+                    <p> {{ __('calendario') }} </p>
+                    {{--  <b class="caret"></b>  --}}
+                </a>
+            </li>
             
-        <!-- EQUIPOS -->
+            <!-- EQUIPOS -->
             <li class="nav-item {{ $activePage == 'dashboard' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a href="#equipo" onmouseover="cambiar();" onmouseout="volver();" class="nav-link p-2" data-toggle="collapse" aria-expanded="false">
-                    <i><img id="cambiaBCO" ssrc="{{ $activePage == 'equipos' ? ' img/navs/eqiposmenubco.svg' : '/img/navs/eqiposmenu.svg' }}"  style="width:25px">  </i> 
+                    <i><img id="cambiaBCO" src="{{ $activePage == 'equipos' ? ' img/navs/eqiposmenubco.svg' : '/img/navs/eqiposmenu.svg' }}"  style="width:25px">  </i> 
                     <p>{{ __('Equipos') }}
                         <b class="caret"></b>
                     </p>
@@ -100,7 +109,7 @@
             <!------ OBRA ------>
             <li class="nav-item {{ $activePage == 'obra' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a class="nav-link p-2" onmouseover="cambiar4();" onmouseout="volver4();" data-toggle="collapse" href="#obras" aria-expanded="false">
-                    <i><img id="cambiaBCO4" src="{{ $activePage == 'obra' ? ' img/navs/obrasmenuco.svg' : '/img/navs/obrasmenu.svg' }}" style="width:25px"></i>
+                    <i><img id="cambiaBCO4" src="{{ $activePage == 'obra' ? ' img/navs/obrasmenubco.svg' : '/img/navs/obrasmenu.svg' }}" style="width:25px"></i>
                     <p>{{ __('Obra') }}
                         <b class="caret"></b>
                     </p>
@@ -220,7 +229,7 @@
 //FUNCIONES PARA CAMBIAR BOTONES A BLANCO
 //---equipos-----
 function cambiar(){
-  document.getElementById('cambiaBCO').src="{{ asset('/img/navs/eqiposMenubCO.svg') }}";
+  document.getElementById('cambiaBCO').src="{{ asset('/img/navs/eqiposmenubco.svg') }}";
 }
 function volver(){
   document.getElementById('cambiaBCO').src="{{ asset('/img/navs/eqiposmenu.svg') }}";

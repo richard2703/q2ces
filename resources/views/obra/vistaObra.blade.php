@@ -42,24 +42,36 @@
                                             </a>
                                         </div>
 
-                                        
+
 
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 order-2 order-sm-3 order-lg-3">
                                             <h2 class="fs-5 textTitulo">Residente Responsable:</h2></br>
-                                            <p class="txtVistaObra">(falta agregar bloque)</p>
-                                            <p class="txtVistaObra">(falta agregar bloque)</p>
-                                            <p class="txtVistaObra">(falta agregar bloque)</p>
-                                            <p class="txtVistaObra">(falta agregar bloque)</p>
+                                            <ul>
+                                                @forelse ($vctResidenteAsignado as $residente)
+                                                    <li>
+                                                        <p class="txtVistaObra">{{ $residente->nombre }}</p>
+                                                    </li>
+                                                @empty
+                                                    <li>
+                                                        <p class="txtVistaObra">Sin residente asignado</p>
+                                                    </li>
+                                                @endforelse
+                                            </ul>
                                         </div>
 
 
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 order-3 order-sm-4">
                                             <h2 class="fs-5 textTitulo">Equipos Asignados:</h2></br>
                                             <ul>
-                                                <li class="txtVistaObra">(falta agregar bloque)</li>
-                                                <li class="txtVistaObra">(falta agregar bloque)</li>
-                                                <li class="txtVistaObra">(falta agregar bloque)</li>
-                                                {{--  <li class="txtVistaObra">Bobcat</li>  --}}
+                                                @forelse ($vctMaquinariaAsignada as $maquinaria)
+                                                    <li>
+                                                        <p class="txtVistaObra">{{ $maquinaria->maquinaria }}</p>
+                                                    </li>
+                                                @empty
+                                                    <li>
+                                                        <p class="txtVistaObra">Sin maquinaría y/o equipo asignado</p>
+                                                    </li>
+                                                @endforelse
                                             </ul>
                                         </div>
 

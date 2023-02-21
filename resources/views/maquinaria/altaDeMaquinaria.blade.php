@@ -36,8 +36,11 @@
                                                 <div class="row mt-3">
                                                     <div class="col-12 col-md-4  my-3">
                                                         <div class="text-center mx-auto border contFotoMaquinaria mb-4">
-                                                            <i><img class="imgMaquinaria img-fluid mb-2"  src="{{ asset('/img/general/default.jpg') }}"></i>
-                                                            <span class="mi-archivo"> <input class="mb-4 ver "  type="file" name="ruta[]" id="mi-archivo"  accept="image/*" multiple></span>
+                                                            <i><img class="imgMaquinaria img-fluid mb-2"
+                                                                    src="{{ asset('/img/general/default.jpg') }}"></i>
+                                                            <span class="mi-archivo"> <input class="mb-4 ver "
+                                                                    type="file" name="ruta[]" id="mi-archivo"
+                                                                    accept="image/*" multiple></span>
                                                             <label for="mi-archivo">
                                                                 <span class="">sube imagen</span>
                                                             </label>
@@ -88,9 +91,12 @@
                                                                     <option value="Accesorios">Accesorios</option>
                                                                     <option value="Campers">Campers</option>
                                                                     <option value="Cisterna">Cisterna</option>
-                                                                    <option value="Maquinaria ligera">Maquinaria ligera</option>
-                                                                    <option value="Maquinaria pesada">Maquinaria pesada</option>
-                                                                    <option value="Retroexcavadoras">Retroexcavadoras</option>
+                                                                    <option value="Maquinaria ligera">Maquinaria ligera
+                                                                    </option>
+                                                                    <option value="Maquinaria pesada">Maquinaria pesada
+                                                                    </option>
+                                                                    <option value="Retroexcavadoras">Retroexcavadoras
+                                                                    </option>
                                                                     <option value="Tractocamiones">Tractocamiones</option>
                                                                     <option value="Otros">Otros</option>
                                                                     <option value="Utilitarios">Utilitarios</option>
@@ -160,7 +166,8 @@
                                                                     placeholder="ej: MT-00">
                                                             </div> --}}
 
-                                                            <input type="hidden" id="identificador" name="identificador" value="">
+                                                            <input type="hidden" id="identificador" name="identificador"
+                                                                value="">
 
                                                             <div class=" col-12 col-sm-6  mb-3">
                                                                 <label class="labelTitulo">Motor:</label></br>
@@ -188,94 +195,107 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
                                                                 <label class="labelTitulo">Capacidad en kW:</label></br>
-                                                                <input type="text" class="inputCaja" id="capacidad"
-                                                                    name="capacidad" value="{{ old('capacidad') }}"
-                                                                    placeholder="">
+                                                                <input type="number" class="inputCaja" id="capacidad"
+                                                                    placeholder="Capacidad" name="capacidad"
+                                                                    value="{{ old('capacidad') }}" placeholder="">
                                                             </div>
 
                                                             <div class="col-12 col-sm-6  mb-3">
                                                                 <label class="labelTitulo">Capacidad Tanque:</label></br>
                                                                 <input type="number" class="inputCaja" id="tanque"
-                                                                    name="tanque" value="{{ old('tanque') }}">
+                                                                    placeholder="En litros" name="tanque"
+                                                                    value="{{ old('tanque') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Ejes:</label></br>
-                                                                <input type="text" class="inputCaja" id="ejes"
-                                                                    name="ejes" value="{{ old('ejes') }}">
+                                                                <input type="number" class="inputCaja" id="ejes"
+                                                                    placeholder="Cantidad" name="ejes"
+                                                                    value="{{ old('ejes') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Rin Delantero:</label></br>
-                                                                <input type="text" class="inputCaja" id="rinD"
-                                                                    name="rinD" value="{{ old('rinD') }}">
+                                                                <input type="number" class="inputCaja" id="rinD"
+                                                                    placeholder="Dimensiones" name="rinD"
+                                                                    value="{{ old('rinD') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Rin Trasero:</label></br>
-                                                                <input type="text" class="inputCaja" id="rinT"
+                                                                <input type="number" class="inputCaja"
+                                                                    id="rinT"placeholder="Dimensiones"
                                                                     name="rinT" value="{{ old('rinT') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Llanta Delantera:</label></br>
-                                                                <input type="text" class="inputCaja" id="llantaD"
-                                                                    name="llantaD" value="{{ old('llantaD') }}">
+                                                                <input type="number" class="inputCaja" id="llantaD"
+                                                                    placeholder="Cantidad" name="llantaD"
+                                                                    value="{{ old('llantaD') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Llanta Trasera:</label></br>
-                                                                <input type="text" class="inputCaja" id="llantaT"
-                                                                    name="llantaT" value="{{ old('llantaT') }}">
+                                                                <input type="number" class="inputCaja" id="llantaT"
+                                                                    placeholder="Cantidad" name="llantaT"
+                                                                    value="{{ old('llantaT') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Combustible:</label></br>
                                                                 <input type="text" class="inputCaja" id="combustible"
+                                                                    placeholder="Diesel / Gasolina / Especificar"
                                                                     name="combustible" value="{{ old('combustible') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Motor:</label></br>
-                                                                <input type="text" class="inputCaja" id="aceitemotor"
-                                                                    name="aceitemotor" value="{{ old('aceitemotor') }}">
+                                                                <input type="number" class="inputCaja" id="aceitemotor"
+                                                                    placeholder="En litros" name="aceitemotor"
+                                                                    value="{{ old('aceitemotor') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Transmisión:</label></br>
-                                                                <input type="text" class="inputCaja" id="aceitetras"
-                                                                    name="aceitetras" value="{{ old('aceitetras') }}">
+                                                                <input type="number" class="inputCaja" id="aceitetras"
+                                                                    placeholder="En litros" name="aceitetras"
+                                                                    value="{{ old('aceitetras') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Dirección:</label></br>
-                                                                <input type="text" class="inputCaja" id="aceitedirec"
-                                                                    name="aceitedirec" value="{{ old('aceitedirec') }}">
+                                                                <input type="number" class="inputCaja" id="aceitedirec"
+                                                                    placeholder="En litros" name="aceitedirec"
+                                                                    value="{{ old('aceitedirec') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Hidráulico:</label></br>
-                                                                <input type="text" class="inputCaja"
-                                                                    name="aceitehidra" value="{{ old('aceitehidra') }}">
+                                                                <input type="number" class="inputCaja"
+                                                                    placeholder="En litros" name="aceitehidra"
+                                                                    value="{{ old('aceitehidra') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Filtro Aceite:</label></br>
-                                                                <input type="text" class="inputCaja" id="filtroaceite"
-                                                                    name="filtroaceite"
+                                                                <input type="number" class="inputCaja" id="filtroaceite"
+                                                                    name="filtroaceite" placeholder="Cantidad"
                                                                     value="{{ old('filtroaceite') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Filtro Aire:</label></br>
-                                                                <input type="text" class="inputCaja" id="filtroaire"
-                                                                    name="filtroaire" value="{{ old('filtroaire') }}">
+                                                                <input type="number" class="inputCaja" id="filtroaire"
+                                                                    placeholder="Cantidad" name="filtroaire"
+                                                                    value="{{ old('filtroaire') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Bujías:</label></br>
-                                                                <input type="text" class="inputCaja" id="bujias"
-                                                                    name="bujias" value="{{ old('bujias') }}">
+                                                                <input type="number" class="inputCaja" id="bujias"
+                                                                    placeholder="Cantidad" name="bujias"
+                                                                    value="{{ old('bujias') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -286,7 +306,7 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Horómetro Inicial:</label></br>
-                                                                <input type="number" class="inputCaja" id="horometro"
+                                                                <input type="number" class="inputCaja" id="horometro"  placeholder="Numérico"
                                                                     name="horometro" value="{{ old('horometro') }}">
                                                             </div>
 
@@ -296,7 +316,8 @@
                                                                         <label class="labelTitulo">Kilometraje / Millaje
                                                                             Inicial:</label></br>
                                                                         <input type="number" class="inputCaja"
-                                                                            id="kilometraje" name="kilometraje"
+                                                                            id="kilometraje"
+                                                                            name="kilometraje" placeholder="Numérico"
                                                                             value="{{ old('kilometraje') }}">
 
                                                                     </div>

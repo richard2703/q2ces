@@ -220,7 +220,8 @@ button.botonGral{
 input.inputCaja, select{
   border: #5C7C26 1px solid!important;
   border-radius: .375rem;
-  height: 32px;
+  height: 35px;
+  font-size: 1em!important;
 }
 
 input.inputCaja:focus,
@@ -427,7 +428,9 @@ input[type="file"] {
 }
 /* -------  Boton de subir archivo  imagenes ------- */
 label[for="mi-archivo"],
-label[for="mi-archivo2"] {
+label[for="mi-archivo2"],
+label[for="mi-archivo3"],
+label[for="mi-archivo4"] {
   font-size: 14px;
   font-weight: 600;
   color: #fff;
@@ -620,4 +623,133 @@ p.botonTitulos{
 .botongrafica:focus,
 .botongrafica:active{
   background-color: #F7C90D!important;
+}
+
+/*---------- ESTILOS PARA CALENDARIO ----------*/
+.btnSinFondocALENDARIO{
+  background-color: #fff;
+  border: 1px solid #5C7C26;
+  border-radius: 5px;
+  padding: 8px;
+  color: #5C7C26;
+}
+
+.imgBTNcalendario{
+  width: 30px;
+}
+
+.radioCalendario{
+  background-color: #fff;
+}
+.labelUrgente {
+  padding: 5px;
+  background-color: red;
+  color: #fff !important;
+}
+
+.labelNecesaria {
+  padding: 5px;
+  background-color: orange;
+  color: #fff !important;
+}
+.labelDeseable {
+  padding: 5px;
+  background-color: yellow;
+  color: #333 !important;
+}
+.labelProrrogable {
+  padding: 5px;
+  background-color: orange;
+  color: #333 !important;
+}
+
+/* MODAL REPARACIÓN */
+.tituloCarrouselReparacion{
+  width: 100%;
+  background-color: #5C7C26;
+  color: #ccc;
+}
+
+.carousel-control-prev>span,
+.carousel-control-next>span{
+  background-color: #5C7C26;
+}
+.carousel-control-next{
+right: -18
+}
+.carousel-control-prev{
+  left: -18!important;
+}
+.labelEspera {
+  padding: 5px;
+  background-color: #1B3C58;
+  color: #fff !important;
+}
+.labelRealizado {
+  padding: 5px;
+  background-color: #3C73A4;
+  color: #fff !important;
+}
+.labelTerminado {
+  padding: 5px;
+  background-color: #95C3EB;
+  color: #333 !important;
+}
+
+/* Estilos para Serarch */
+.searchBox {
+  position: absolute;
+
+  left: 50%;
+  transform:  translate(-50%,50%);
+  background: #f7c90d;
+  height: 51px;
+  border-radius: 50px;
+  padding: 5px;
+
+}
+
+.searchBox:hover > .searchInput {
+  width: 240px;
+  padding: 0 6px;
+}
+
+.searchBox:hover > .searchButton {
+background: white;
+color : #5C7C26;
+}
+
+.searchButton {
+  color: white;
+  float: right;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #5C7C26;
+  border-radius: 50%;
+  background: #8caf48;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.4s;
+}
+
+.searchInput {
+  border:none;
+  background: none;
+  outline:none;
+  float:left;
+  padding: 0;
+  color: #333;
+  font-size: 16px;
+  transition: 0.4s;
+  line-height: 40px;
+  width: 0px;
+
+}
+
+@media screen and (max-width: 620px) {
+.searchBox:hover > .searchInput {
+  width: 150px;
+  padding: 0 6px;
+}
 }
