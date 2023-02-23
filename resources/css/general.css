@@ -147,7 +147,7 @@ background-color: #A6CE34;
     background-color: #d7f49f!important;
     color: #727176!important;
     font-size: 1.3em;
-    letter-spacing: .4em;
+    letter-spacing: .2em;
     text-align: center!important;
   }
   
@@ -628,7 +628,7 @@ p.botonTitulos{
   background-color: #fff;
   border: 1px solid #5C7C26;
   border-radius: 5px;
-  padding: 8px;
+  padding: 6px;
   color: #5C7C26;
 }
 
@@ -639,29 +639,42 @@ p.botonTitulos{
 .radioCalendario{
   background-color: #fff;
 }
+
+tr td.labelUrgente,
 .labelUrgente {
   padding: 5px;
   background-color: red;
   color: #fff !important;
 }
 
+tr td.labelNecesaria,
 .labelNecesaria {
   padding: 5px;
   background-color: orange;
   color: #fff !important;
 }
+
+tr td.labelDeseable,
 .labelDeseable {
   padding: 5px;
   background-color: yellow;
   color: #333 !important;
 }
+tr td.labelProrrogable,
 .labelProrrogable {
   padding: 5px;
-  background-color: orange;
+  background-color: #A6CE34;
   color: #333 !important;
 }
 
-/* MODAL REPARACIÓN */
+/*Index Reparación*/
+
+tr td.reparación{
+  color: #3C73A4;
+  font-weight: 700;
+}
+
+/* MODAL Solicitud de REPARACIÓN completo */
 .tituloCarrouselReparacion{
   width: 100%;
   background-color: #5C7C26;
@@ -671,23 +684,28 @@ p.botonTitulos{
 .carousel-control-prev>span,
 .carousel-control-next>span{
   background-color: #5C7C26;
+
 }
-.carousel-control-next{
-right: -18
+
+.carouselBoton{
+width: 40px;
 }
-.carousel-control-prev{
-  left: -18!important;
-}
+tr td.labelEspera,
 .labelEspera {
+ 
   padding: 5px;
-  background-color: #1B3C58;
+  background-color: #1B3C58!important;
   color: #fff !important;
+
 }
+tr td.labelRealizado,
 .labelRealizado {
   padding: 5px;
   background-color: #3C73A4;
   color: #fff !important;
 }
+
+tr td.labelTerminado,
 .labelTerminado {
   padding: 5px;
   background-color: #95C3EB;
