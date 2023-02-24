@@ -50,10 +50,10 @@ Route::get('/dashboard', function () {
 // });
 
 
-// calendario
-Route::get('/calendario', function () {
-    return view('calendario.calendario');
- });
+// // calendario
+// Route::get('/calendario', function () {
+//     return view('calendario.calendario');
+//  });
 
 
 //Inventario
@@ -164,4 +164,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/inventario/combustible/descarga/edit', [App\Http\Controllers\inventarioController::class, 'updateDescarga'])->name('inventario.updateDescarga');
     Route::delete('/inventario/combustible/carga/{carga}', [App\Http\Controllers\inventarioController::class, 'deleteCarga'])->name('inventario.deleteCarga');
     Route::delete('/inventario/combustible/descarga/{carga}', [App\Http\Controllers\inventarioController::class, 'deleteDescarga'])->name('inventario.deleteDescarga');
+
+    //Crud calendario
+    Route::get('/calendario', [App\Http\Controllers\calendarioController::class, 'index'])->name('calendario.index');
+    Route::post('/calendario/tareas/nueva', [App\Http\Controllers\tareasController::class, 'store'])->name('tareas.store');
+    Route::put('/calendario/tareas/edit', [App\Http\Controllers\tareasController::class, 'update'])->name('tareas.update');
+
 });
