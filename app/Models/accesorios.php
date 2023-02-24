@@ -13,6 +13,6 @@ class accesorios extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nombre', 'marca', 'modelo', 'color', 'serie', 'ano', 'foto'
+        'nombre', 'marca', 'modelo', 'color', 'serie', 'ano', 'foto', 'maquinariaId'
     ];
 }
