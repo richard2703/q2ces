@@ -79,7 +79,7 @@
                                                             <div class="row border-bottom justify-content-end">
                                                                 <div class="col-3 mb-3">
 
-                                                                    <button class="btnSinFondocALENDARIO float-end" data-bs-toggle="modal" data-bs-target="#tareaModal">  
+                                                                    <button class="btnSinFondocALENDARIO float-end" data-bs-toggle="modal" data-bs-target="#nuevaTarea">  
                                                                         <img src="img/calendario/tarea.svg" class="imgBTNcalendario">
                                                                         Nueva Tarea
                                                                     </button>
@@ -158,8 +158,7 @@
                                                                         <td class="labelDeseable"> <span >Deseable</span></td>
                                                                         <td class="labelTerminado"> <span >Terminado</span></td>
                                                                         <td class="td-actions justify-content-end">
-                                                                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#editarTarea"
-                                                                                onclick="loadCarga ">
+                                                                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#editarTarea">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg " width="28" height="28" fill="currentColor" class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
                                                                                 <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                                                                 </svg>
@@ -185,8 +184,7 @@
                                                                         <td class="labelDeseable"> <span >Deseable</span></td>
                                                                         <td class="labelTerminado"> <span >Terminado</span></td>
                                                                         <td class="td-actions justify-content-end">
-                                                                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#editarTarea"
-                                                                                onclick="loadCarga ">
+                                                                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#editarTarea">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg " width="28" height="28" fill="currentColor" class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
                                                                                 <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                                                                 </svg>
@@ -211,8 +209,7 @@
                                                                         <td class="labelProrrogable"> <span >Prorrogable</span></td>
                                                                         <td class="labelTerminado"> <span >Terminado</span></td>
                                                                         <td class="td-actions justify-content-end">
-                                                                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#editarTarea"
-                                                                                onclick="loadCarga ">
+                                                                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#editarTarea">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg " width="28" height="28" fill="currentColor" class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
                                                                                 <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                                                                 </svg>
@@ -544,7 +541,7 @@
 
 
 <!-- Modal Nueva Tarea-->
-<div class="modal fade" id="editarTarea" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="nuevaTarea" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header bacTituloPrincipal">
@@ -622,17 +619,17 @@
 </div>
 
 
-<!-- Modal Solicitudes-->
-<div class="modal fade" id="solicitudModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal Editar  Tarea-->
+<div class="modal fade" id="editarTarea" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header bacTituloPrincipal">
-            <img src="img/calendario/solicitudgris.svg" class="imgBTNcalendario">
-          <h1 class="modal-title fs-5" id="exampleModalLabel"> &nbsp Nueva Solicitud</h1>
+            <img src="img/calendario/tareagris.svg" class="imgBTNcalendario">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Lavar Bobcat</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form class="row d-flex justify-content-center">
+            <form class="row d-flex">
                 <div class=" col-12 col-sm-6 mb-3 ">
                     <label class="labelTitulo">Título:</label></br>
                     <input type="text" class="inputCaja" id="apellidoP" name="apellidoP" value="{{ old('apellidoP') }}">
@@ -647,11 +644,86 @@
                       </select>
                     
                 </div>
-                
+                <div class=" col-12 mb-3 " >
+                    <h4 class="labelTitulo mb-2">Prioridad:</h4>
+                    <div class="row ">
+                        <div class=" col-6  col-lg-3 d-flex mb-3" >
+                            <input class="" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <div class=" ms-3" > 
+                                <label class="form-check-label labelUrgente" for="flexRadioDefault1"> Urgente </label>
+                            </div>     
+                        </div>
+
+                        <div class=" col-6 col-lg-3 d-flex mb-3" >
+                            <input class="" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <div class=" ms-3" > 
+                                <label class="form-check-label labelNecesaria" for="flexRadioDefault1"> Necesaria </label>
+                            </div>     
+                        </div>
+                        <div class=" col-6  col-lg-3  d-flex mb-3" >
+                            <input class="" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <div class=" ms-3" > 
+                                <label class="form-check-label labelDeseable" for="flexRadioDefault1"> Deseable </label>
+                            </div>     
+                        </div>
+                        <div class=" col-6  col-lg-3  d-flex mb-3" >
+                            <input class="" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <div class=" ms-3" > 
+                                <label class="form-check-label labelProrrogable" for="flexRadioDefault1"> Prorrogable </label>
+                            </div>     
+                        </div>
+                    </div>
+                </div>
                 <div class=" col-12 col-sm-6 mb-3 ">
-                    <label class="labelTitulo">Fecha Solicitud:</label></br>
+                    <label class="labelTitulo">Fecha Inicio:</label></br>
                     <input type="date" class="inputCaja" id="apellidoP" name="apellidoP" value="{{ old('apellidoP') }}">
                 </div>
+                <div class=" col-12 col-sm-6 mb-3 ">
+                    <label class="labelTitulo">Fecha Fin:</label></br>
+                    <input type="date" class="inputCaja" id="apellidoP" name="apellidoP" value="{{ old('apellidoP') }}">
+                </div>
+                <div class=" col-12  mb-3 ">
+                    <label class="labelTitulo">Comentarios:</label></br>
+                    <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea"></textarea>
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn botonGral">Save changes</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal Solicitudes-->
+<div class="modal fade" id="solicitudModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bacTituloPrincipal">
+            <img src="img/calendario/solicitudgris.svg" class="imgBTNcalendario">
+          <h1 class="modal-title fs-5" id="exampleModalLabel"> &nbsp Nueva Solicitud</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form class="row d-flex justify-content-center">
+                <div class=" col-12 mb-3 ">
+                    <label class="labelTitulo">Título:</label></br>
+                    <input type="text" class="inputCaja" id="apellidoP" name="apellidoP" value="{{ old('apellidoP') }}">
+                </div>
+                <div class=" col-12 col-sm-6 mb-3 ">
+                    <label class="labelTitulo">Responsable:</label></br>
+                    <select class="form-select form-select-lg mb-3 inputCaja" aria-label=".form-select-lg example">
+                    
+                        <option value="1">Responsable 1</option>
+                        <option value="2">Responsable 2</option>
+                        <option value="3">Responsable 3</option>
+                      </select>
+                    
+                </div>
+                
+
                 <div class=" col-12 col-sm-6 mb-3 ">
                     <label class="labelTitulo">Fecha Requerimiento:</label></br>
                     <input type="date" class="inputCaja" id="apellidoP" name="apellidoP" value="{{ old('apellidoP') }}">
@@ -787,7 +859,7 @@
                 <div class=" col-12 col-lg-6  my-4 ">
                     
                     <div class="row">
-                        <h4 class="mb-3">Prioridad</h4>
+                        <h4 class="labelTitulomb-3">Prioridad</h4>
                         <div class=" col-6   d-flex mb-3" >
                             <input class="" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
                             <div class=" ms-3" > 
@@ -815,7 +887,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <h4 class="mt-4 mb-3">Estado</h4>
+                        <h4 class="labelTitulo mt-4 mb-3">Estado</h4>
                         <div class=" col-6   d-flex mb-3" >
                             <input class="" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
                             <div class=" ms-3" > 
@@ -837,6 +909,28 @@
                         </div>
 
                     </div>
+                    <div class="row">
+                        <h4 class="labelTitulo mb-2">Funcionalidad del Equipo</h4>
+                            <div class=" col-6    d-flex mb-3" >
+                                <input class="" type="radio" name="estado" id="estado">
+                                <div class=" ms-3" > 
+                                    <label class="form-check-label labelUrgente" for="estado"> No Funciona </label>
+                                </div>     
+                            </div>
+
+                            <div class=" col-6   d-flex mb-3" >
+                                <input class="" type="radio" name="estado" id="estado">
+                                <div class=" ms-3" > 
+                                        <label class="form-check-label labelDeseable" for="estado"> Funciona Poco </label>
+                                </div>     
+                            </div>
+                            <div class=" col-6    d-flex mb-3" >
+                                <input class="" type="radio" name="estado" id="estado">
+                                <div class=" ms-3" > 
+                                    <label class="form-check-label labelProrrogable" for="estado"> Funciona </label>
+                                </div>     
+                            </div>
+                    </div>
 
                 </div>
 
@@ -849,6 +943,170 @@
                 
 
 
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn botonGral">Save changes</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal Editar Solicitud-->
+<div class="modal fade" id="editarSolicitud" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bacTituloPrincipal">
+            <img src="img/calendario/tareagris.svg" class="imgBTNcalendario">
+          <h1 class="modal-title fs-5" id="exampleModalLabel"> Desarmador de Cruz </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form class="row d-flex">
+
+                <div class=" col-12  mb-2">
+                    <label class="labelTitulo">Nombre de la Solicitud:</label></br>
+                    <input type="text" class="inputCaja" id="apellidoP" name="" value="">
+                </div>
+                <div class=" col-12 col-sm-6 mb-3 ">
+                    <label class="labelTitulo">Responsable:</label></br>
+                    <select class="form-select form-select-lg mb-3 inputCaja" aria-label=".form-select-lg example">
+                        <option value="1">Responsable 1</option>
+                        <option value="2">Responsable 2</option>
+                        <option value="3">Responsable 3</option>
+                    </select>
+                    
+                </div>
+
+                <div class=" col-12 col-sm-6 mb-3 ">
+                    <label class="labelTitulo">Fecha Requerimiento:</label></br>
+                    <input type="date" class="inputCaja" id="apellidoP" name="" value="">
+                </div>
+                <div class=" col-12 col-sm-6 mb-3 ">
+                    <label class="labelTitulo">Herramienta:</label></br>
+                    <select class="form-select form-select-lg mb-3 inputCaja" aria-label=".form-select-lg example">
+                        <option value="1">Responsable 1</option>
+                        <option value="2">Responsable 2</option>
+                        <option value="3">Responsable 3</option>
+                    </select>   
+                </div>
+                <div class=" col-12 col-sm-6 mb-3 ">
+                    <label class="labelTitulo">Refacción</label></br>
+                    <select class="form-select form-select-lg mb-3 inputCaja" aria-label=".form-select-lg example">
+                        <option value="1">Refacción</option>
+                        <option value="2">Refacción</option>
+                        <option value="3">Refacción</option>
+                        <option value="3">Refacción</option>
+                    </select>
+                </div>
+                <div class=" col-12 col-sm-6 mb-3 ">
+                    <label class="labelTitulo">Consumible:</label></br>
+                    <select class="form-select form-select-lg mb-3 inputCaja" aria-label=".form-select-lg example">
+                        <option value="1">Consumible</option>
+                        <option value="2">Consumible</option>
+                        <option value="3">Consumible</option>
+                    </select>    
+                </div>
+                <div class=" col-12 col-sm-6 mb-3 ">
+                    <label class="labelTitulo">cantidad:</label></br>
+                    <input type="text" class="inputCaja" id="apellidoP" name="" value=""> 
+                </div>
+                <div class=" col-12 col-sm-6 mb-3 ">
+                    <label class="labelTitulo">Combustible:</label></br>
+                    <select class="form-select form-select-lg mb-3 inputCaja" aria-label=".form-select-lg example">
+                        <option value="1">Diesel</option>
+                        <option value="2">Gasolina</option>
+
+                    </select>  
+                </div>
+                <div class=" col-12 col-sm-6 mb-3 ">
+                    <label class="labelTitulo">Litros:</label></br>
+                    <input type="text" class="inputCaja" id="apellidoP" name="" value=""> 
+                </div>
+
+                <div class="row ">
+                    <h4 class="labelTitulo mb-2">Prioridad de la solicitud:</h4>
+                    <div class=" col-6  col-lg-3 d-flex mb-3" >
+                        <input class="" type="radio" name="prioridad" id="prioridad">
+                        <div class=" ms-3" > 
+                            <label class="form-check-label labelUrgente" for="prioridad"> Urgente </label>
+                        </div>     
+                    </div>
+
+                    <div class=" col-6 col-lg-3 d-flex mb-3" >
+                        <input class="" type="radio" name="prioridad" id="prioridad">
+                        <div class=" ms-3" > 
+                            <label class="form-check-label labelNecesaria" for="prioridad"> Necesaria </label>
+                        </div>     
+                    </div>
+                    <div class=" col-6  col-lg-3  d-flex mb-3" >
+                        <input class="" type="radio" name="prioridad" id="prioridad">
+                        <div class=" ms-3" > 
+                            <label class="form-check-label labelDeseable" for="prioridad"> Deseable </label>
+                        </div>     
+                    </div>
+                    <div class=" col-6  col-lg-3  d-flex mb-3" >
+                        <input class="" type="radio" name="prioridad" id="prioridad">
+                        <div class=" ms-3" > 
+                            <label class="form-check-label labelProrrogable" for="prioridad"> Prorrogable </label>
+                        </div>     
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <h4 class="labelTitulo mb-2">Estado de la Solicitud</h4>
+                        <div class=" col-6  col-lg-3   d-flex mb-3" >
+                            <input class="" type="radio" name="estado" id="estado">
+                            <div class=" ms-3" > 
+                                <label class="form-check-label labelEspera" for="estado"> En Espera </label>
+                            </div>     
+                        </div>
+
+                        <div class=" col-6  col-lg-3 d-flex mb-3" >
+                            <input class="" type="radio" name="estado" id="estado">
+                            <div class=" ms-3" > 
+                                    <label class="form-check-label labelRealizado" for="estado"> Realizado </label>
+                            </div>     
+                        </div>
+                        <div class=" col-6  col-lg-3   d-flex mb-3" >
+                            <input class="" type="radio" name="estado" id="estado">
+                            <div class=" ms-3" > 
+                                <label class="form-check-label labelTerminado" for="estado"> Terminado </label>
+                            </div>     
+                        </div>
+                </div>
+                <div class="row">
+                    <h4 class="labelTitulo mb-2">Funcionalidad del Equipo</h4>
+                        <div class=" col-6  col-lg-3   d-flex mb-3" >
+                            <input class="" type="radio" name="estado" id="estado">
+                            <div class=" ms-3" > 
+                                <label class="form-check-label labelUrgente" for="estado"> No Funciona </label>
+                            </div>     
+                        </div>
+
+                        <div class=" col-6  col-lg-3 d-flex mb-3" >
+                            <input class="" type="radio" name="estado" id="estado">
+                            <div class=" ms-3" > 
+                                    <label class="form-check-label labelDeseable" for="estado"> Funciona Poco </label>
+                            </div>     
+                        </div>
+                        <div class=" col-6  col-lg-3   d-flex mb-3" >
+                            <input class="" type="radio" name="estado" id="estado">
+                            <div class=" ms-3" > 
+                                <label class="form-check-label labelProrrogable" for="estado"> Funciona </label>
+                            </div>     
+                        </div>
+                </div>
+                
+                <div class=" col-12 col-lg-6 mb-3 ">
+                    <label class="labelTitulo">Comentarios:</label></br>
+                    <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea"></textarea>
+                </div>
+                <div class=" col-12 col-lg-6  mb-3 ">
+                    <label class="labelTitulo">Comentarios Anteriores:</label></br>
+                    <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea"></textarea>
+                </div>
             </form>
         </div>
         <div class="modal-footer">
@@ -882,7 +1140,7 @@
                     </div>
                       
                 </div>
-                <div class=" col-12 col-sm-6 mb-2">
+                <div class=" col-12 mb-2">
                     <label class="labelTitulo">Título:</label></br>
                     <input type="text" class="inputCaja" id="apellidoP" name="apellidoP" value="">
                 </div>
@@ -897,10 +1155,7 @@
                       </select>-->
                     
                 </div>
-                <div class=" col-12 col-sm-6 mb-3 ">
-                    <label class="labelTitulo">Fecha Solicitud:</label></br>
-                    <input type="date" class="inputCaja" id="apellidoP" name="apellidoP" value="{{ old('apellidoP') }}">
-                </div>
+
                 <div class=" col-12 col-sm-6 mb-3 ">
                     <label class="labelTitulo">Tipo:</label></br>
                     <select class="form-select form-select-lg mb-3 inputCaja" aria-label=".form-select-lg example">
@@ -925,6 +1180,67 @@
       </div>
     </div>
 </div>
+
+<!--Modal Editar Mantenimiento-->
+
+<div class="modal fade" id="editarMantenimiento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bacTituloPrincipal">
+            <img src="img/calendario/mantenimientogris.svg" class="imgBTNcalendario">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp CD012 Retroexcavadora</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form class="row d-flex">
+                <div class="col-12 mb-5 pb-5">
+                    <div class="searchBox mb-5">
+                        <input class="searchInput "type="text" name="" placeholder="Buscar">
+                        <button class="searchButton" href="#">
+                            <i class="material-icons">
+                                search
+                            </i>
+                        </button>
+                    </div>
+                      
+                </div>
+                <div class=" col-12  mb-2">
+                    <label class="labelTitulo">Título:</label></br>
+                    <input type="text" class="inputCaja" id="apellidoP" name="apellidoP" value="">
+                </div>
+                <div class=" col-12 col-sm-6 mb-3 ">
+                    <label class="labelTitulo">Estado:</label></br>
+                    <input type="text" class="inputCaja" id="apellidoP" name="apellidoP" value="">
+
+                    
+                </div>
+
+                <div class=" col-12 col-sm-6 mb-3 ">
+                    <label class="labelTitulo">Tipo:</label></br>
+                    <select class="form-select form-select-lg mb-3 inputCaja" aria-label=".form-select-lg example">
+                    
+                        <option value="1">Correctivo</option>
+                        <option value="2">250</option>
+                        <option value="3">500</option>
+                        <option value="3">1000</option>
+                    </select>
+                </div>
+                
+                <div class=" col-12  mb-3 ">
+                    <label class="labelTitulo">Comentarios:</label></br>
+                    <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn botonGral">Save changes</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+
 
 <!-- Modal Alta de Procesos -->
 <div class="modal fade" id="procesosModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1112,215 +1428,6 @@
     </div>
 </div>
 
-<!-- Modal Editar Solicitud-->
-<div class="modal fade" id="editarSolicitud" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header bacTituloPrincipal">
-            <img src="img/calendario/tareagris.svg" class="imgBTNcalendario">
-          <h1 class="modal-title fs-5" id="exampleModalLabel"> Desarmador de Cruz </h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form class="row d-flex">
 
-                <div class=" col-12 col-sm-6 mb-2">
-                    <label class="labelTitulo">Nombre de la Solicitud:</label></br>
-                    <input type="text" class="inputCaja" id="apellidoP" name="" value="">
-                </div>
-                <div class=" col-12 col-sm-6 mb-3 ">
-                    <label class="labelTitulo">Responsable:</label></br>
-                    <select class="form-select form-select-lg mb-3 inputCaja" aria-label=".form-select-lg example">
-                        <option value="1">Responsable 1</option>
-                        <option value="2">Responsable 2</option>
-                        <option value="3">Responsable 3</option>
-                    </select>
-                    
-                </div>
-                <div class=" col-12 col-sm-6 mb-3 ">
-                    <label class="labelTitulo">Fecha Solicitud:</label></br>
-                    <input type="date" class="inputCaja" id="apellidoP" name="" value="">
-                </div>
-                <div class=" col-12 col-sm-6 mb-3 ">
-                    <label class="labelTitulo">Fecha Requerimiento:</label></br>
-                    <input type="date" class="inputCaja" id="apellidoP" name="" value="">
-                </div>
-                <div class=" col-12 col-sm-6 mb-3 ">
-                    <label class="labelTitulo">Herramienta:</label></br>
-                    <select class="form-select form-select-lg mb-3 inputCaja" aria-label=".form-select-lg example">
-                        <option value="1">Responsable 1</option>
-                        <option value="2">Responsable 2</option>
-                        <option value="3">Responsable 3</option>
-                    </select>   
-                </div>
-                <div class=" col-12 col-sm-6 mb-3 ">
-                    <label class="labelTitulo">Refacción</label></br>
-                    <select class="form-select form-select-lg mb-3 inputCaja" aria-label=".form-select-lg example">
-                        <option value="1">Refacción</option>
-                        <option value="2">Refacción</option>
-                        <option value="3">Refacción</option>
-                        <option value="3">Refacción</option>
-                    </select>
-                </div>
-                <div class=" col-12 col-sm-6 mb-3 ">
-                    <label class="labelTitulo">Consumible:</label></br>
-                    <select class="form-select form-select-lg mb-3 inputCaja" aria-label=".form-select-lg example">
-                        <option value="1">Consumible</option>
-                        <option value="2">Consumible</option>
-                        <option value="3">Consumible</option>
-                    </select>    
-                </div>
-                <div class=" col-12 col-sm-6 mb-3 ">
-                    <label class="labelTitulo">cantidad:</label></br>
-                    <input type="text" class="inputCaja" id="apellidoP" name="" value=""> 
-                </div>
-                <div class=" col-12 col-sm-6 mb-3 ">
-                    <label class="labelTitulo">Combustible:</label></br>
-                    <select class="form-select form-select-lg mb-3 inputCaja" aria-label=".form-select-lg example">
-                        <option value="1">Diesel</option>
-                        <option value="2">Gasolina</option>
-
-                    </select>  
-                </div>
-                <div class=" col-12 col-sm-6 mb-3 ">
-                    <label class="labelTitulo">Litros:</label></br>
-                    <input type="text" class="inputCaja" id="apellidoP" name="" value=""> 
-                </div>
-
-                <div class="row ">
-                    <h4 class="labelTitulo mb-2">Prioridad de la solicitud:</h4>
-                    <div class=" col-6  col-lg-3 d-flex mb-3" >
-                        <input class="" type="radio" name="prioridad" id="prioridad">
-                        <div class=" ms-3" > 
-                            <label class="form-check-label labelUrgente" for="prioridad"> Urgente </label>
-                        </div>     
-                    </div>
-
-                    <div class=" col-6 col-lg-3 d-flex mb-3" >
-                        <input class="" type="radio" name="prioridad" id="prioridad">
-                        <div class=" ms-3" > 
-                            <label class="form-check-label labelNecesaria" for="prioridad"> Necesaria </label>
-                        </div>     
-                    </div>
-                    <div class=" col-6  col-lg-3  d-flex mb-3" >
-                        <input class="" type="radio" name="prioridad" id="prioridad">
-                        <div class=" ms-3" > 
-                            <label class="form-check-label labelDeseable" for="prioridad"> Deseable </label>
-                        </div>     
-                    </div>
-                    <div class=" col-6  col-lg-3  d-flex mb-3" >
-                        <input class="" type="radio" name="prioridad" id="prioridad">
-                        <div class=" ms-3" > 
-                            <label class="form-check-label labelProrrogable" for="prioridad"> Prorrogable </label>
-                        </div>     
-                    </div>
-                </div>
-
-                <div class="row mb-4">
-                    <h4 class="labelTitulo mb-2">Estado de la Solicitud</h4>
-                        <div class=" col-6  col-lg-3   d-flex mb-3" >
-                            <input class="" type="radio" name="estado" id="estado">
-                            <div class=" ms-3" > 
-                                <label class="form-check-label labelEspera" for="estado"> En Espera </label>
-                            </div>     
-                        </div>
-
-                        <div class=" col-6  col-lg-3 d-flex mb-3" >
-                            <input class="" type="radio" name="estado" id="estado">
-                            <div class=" ms-3" > 
-                                    <label class="form-check-label labelRealizado" for="estado"> Realizado </label>
-                            </div>     
-                        </div>
-                        <div class=" col-6  col-lg-3   d-flex mb-3" >
-                            <input class="" type="radio" name="estado" id="estado">
-                            <div class=" ms-3" > 
-                                <label class="form-check-label labelTerminado" for="estado"> Terminado </label>
-                            </div>     
-                        </div>
-                </div>
-                
-                <div class=" col-12 col-lg-6 mb-3 ">
-                    <label class="labelTitulo">Comentarios:</label></br>
-                    <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea"></textarea>
-                </div>
-                <div class=" col-12 col-lg-6  mb-3 ">
-                    <label class="labelTitulo">Comentarios Anteriores:</label></br>
-                    <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea"></textarea>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn botonGral">Save changes</button>
-        </div>
-      </div>
-    </div>
-</div>
-<!--Modal Editar Mantenimiento-->
-
-<div class="modal fade" id="editarMantenimiento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header bacTituloPrincipal">
-            <img src="img/calendario/mantenimientogris.svg" class="imgBTNcalendario">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp CD012 Retroexcavadora</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form class="row d-flex">
-                <div class="col-12 mb-5 pb-5">
-                    <div class="searchBox mb-5">
-                        <input class="searchInput "type="text" name="" placeholder="Buscar">
-                        <button class="searchButton" href="#">
-                            <i class="material-icons">
-                                search
-                            </i>
-                        </button>
-                    </div>
-                      
-                </div>
-                <div class=" col-12 col-sm-6 mb-2">
-                    <label class="labelTitulo">Título:</label></br>
-                    <input type="text" class="inputCaja" id="apellidoP" name="apellidoP" value="">
-                </div>
-                <div class=" col-12 col-sm-6 mb-3 ">
-                    <label class="labelTitulo">Estado:</label></br>
-                    <input type="text" class="inputCaja" id="apellidoP" name="apellidoP" value="">
-                    <!--<select class="form-select form-select-lg mb-3 inputCaja" aria-label=".form-select-lg example">
-                    
-                        <option value="1">Responsable 1</option>
-                        <option value="2">Responsable 2</option>
-                        <option value="3">Responsable 3</option>
-                      </select>-->
-                    
-                </div>
-                <div class=" col-12 col-sm-6 mb-3 ">
-                    <label class="labelTitulo">Fecha Solicitud:</label></br>
-                    <input type="date" class="inputCaja" id="apellidoP" name="apellidoP" value="{{ old('apellidoP') }}">
-                </div>
-                <div class=" col-12 col-sm-6 mb-3 ">
-                    <label class="labelTitulo">Tipo:</label></br>
-                    <select class="form-select form-select-lg mb-3 inputCaja" aria-label=".form-select-lg example">
-                    
-                        <option value="1">Correctivo</option>
-                        <option value="2">250</option>
-                        <option value="3">500</option>
-                        <option value="3">1000</option>
-                    </select>
-                </div>
-                
-                <div class=" col-12  mb-3 ">
-                    <label class="labelTitulo">Comentarios:</label></br>
-                    <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea"></textarea>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn botonGral">Save changes</button>
-        </div>
-      </div>
-    </div>
-</div>
 
 @endsection
