@@ -595,6 +595,28 @@
                         </div>
                     </div>
                 </div>
+                <div class="row mb-4">
+                    <h4 class="labelTitulo mb-2">Estado de la Solicitud</h4>
+                        <div class=" col-6  col-lg-3   d-flex mb-3" >
+                            <input class="" type="radio" name="estado" id="estado">
+                            <div class=" ms-3" > 
+                                <label class="form-check-label labelEspera" for="estado"> En Espera </label>
+                            </div>     
+                        </div>
+
+                        <div class=" col-6  col-lg-3 d-flex mb-3" >
+                            <input class="" type="radio" name="estado" id="estado">
+                            <div class=" ms-3" > 
+                                    <label class="form-check-label labelRealizado" for="estado"> Realizado </label>
+                            </div>     
+                        </div>
+                        <div class=" col-6  col-lg-3   d-flex mb-3" >
+                            <input class="" type="radio" name="estado" id="estado">
+                            <div class=" ms-3" > 
+                                <label class="form-check-label labelTerminado" for="estado"> Terminado </label>
+                            </div>     
+                        </div>
+                </div>
                 <div class=" col-12 col-sm-6 mb-3 ">
                     <label class="labelTitulo">Fecha Inicio:</label></br>
                     <input type="date" class="inputCaja" id="apellidoP" name="apellidoP" value="{{ old('apellidoP') }}">
@@ -673,6 +695,28 @@
                             </div>     
                         </div>
                     </div>
+                </div>
+                <div class="row mb-4">
+                    <h4 class="labelTitulo mb-2">Estado de la Solicitud</h4>
+                        <div class=" col-6  col-lg-3   d-flex mb-3" >
+                            <input class="" type="radio" name="estado" id="estado">
+                            <div class=" ms-3" > 
+                                <label class="form-check-label labelEspera" for="estado"> En Espera </label>
+                            </div>     
+                        </div>
+
+                        <div class=" col-6  col-lg-3 d-flex mb-3" >
+                            <input class="" type="radio" name="estado" id="estado">
+                            <div class=" ms-3" > 
+                                    <label class="form-check-label labelRealizado" for="estado"> Realizado </label>
+                            </div>     
+                        </div>
+                        <div class=" col-6  col-lg-3   d-flex mb-3" >
+                            <input class="" type="radio" name="estado" id="estado">
+                            <div class=" ms-3" > 
+                                <label class="form-check-label labelTerminado" for="estado"> Terminado </label>
+                            </div>     
+                        </div>
                 </div>
                 <div class=" col-12 col-sm-6 mb-3 ">
                     <label class="labelTitulo">Fecha Inicio:</label></br>
@@ -1144,16 +1188,30 @@
                     <label class="labelTitulo">Título:</label></br>
                     <input type="text" class="inputCaja" id="apellidoP" name="apellidoP" value="">
                 </div>
+                
                 <div class=" col-12 col-sm-6 mb-3 ">
-                    <label class="labelTitulo">Estado:</label></br>
-                    <input type="text" class="inputCaja" id="apellidoP" name="apellidoP" value="">
-                    <!--<select class="form-select form-select-lg mb-3 inputCaja" aria-label=".form-select-lg example">
-                    
-                        <option value="1">Responsable 1</option>
-                        <option value="2">Responsable 2</option>
-                        <option value="3">Responsable 3</option>
-                      </select>-->
-                    
+                    <div class="row mb-4">
+                        <h4 class="labelTitulo mb-2">Estado de la Solicitud</h4>
+                            <div class=" col-6    d-flex mb-3" >
+                                <input class="" type="radio" name="estado" id="estado">
+                                <div class=" ms-3" > 
+                                    <label class="form-check-label labelEspera" for="estado"> En Espera </label>
+                                </div>     
+                            </div>
+    
+                            <div class=" col-6  d-flex mb-3" >
+                                <input class="" type="radio" name="estado" id="estado">
+                                <div class=" ms-3" > 
+                                        <label class="form-check-label labelRealizado" for="estado"> Realizado </label>
+                                </div>     
+                            </div>
+                            <div class=" col-6    d-flex mb-3" >
+                                <input class="" type="radio" name="estado" id="estado">
+                                <div class=" ms-3" > 
+                                    <label class="form-check-label labelTerminado" for="estado"> Terminado </label>
+                                </div>     
+                            </div>
+                    </div>
                 </div>
 
                 <div class=" col-12 col-sm-6 mb-3 ">
@@ -1209,8 +1267,28 @@
                     <input type="text" class="inputCaja" id="apellidoP" name="apellidoP" value="">
                 </div>
                 <div class=" col-12 col-sm-6 mb-3 ">
-                    <label class="labelTitulo">Estado:</label></br>
-                    <input type="text" class="inputCaja" id="apellidoP" name="apellidoP" value="">
+                    <div class="row mb-4">
+                        <h4 class="labelTitulo mb-2">Estado de la Solicitud</h4>
+                            <div class=" col-6    d-flex mb-3" >
+                                <input class="" type="radio" name="estado" id="estado">
+                                <div class=" ms-3" > 
+                                    <label class="form-check-label labelEspera" for="estado"> En Espera </label>
+                                </div>     
+                            </div>
+    
+                            <div class=" col-6   d-flex mb-3" >
+                                <input class="" type="radio" name="estado" id="estado">
+                                <div class=" ms-3" > 
+                                        <label class="form-check-label labelRealizado" for="estado"> Realizado </label>
+                                </div>     
+                            </div>
+                            <div class=" col-6    d-flex mb-3" >
+                                <input class="" type="radio" name="estado" id="estado">
+                                <div class=" ms-3" > 
+                                    <label class="form-check-label labelTerminado" for="estado"> Terminado </label>
+                                </div>     
+                            </div>
+                    </div>
 
                     
                 </div>
