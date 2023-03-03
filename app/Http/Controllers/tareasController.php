@@ -10,37 +10,36 @@ use Illuminate\Support\Facades\Session;
 use App\Helpers\Validaciones;
 use App\Helpers\Calculos;
 
-class tareasController extends Controller
-{
+class tareasController extends Controller {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        dd('Todas las tareas...');
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
+
+    public function index() {
+        dd( 'Todas las tareas...' );
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        dd('para crear...');
+    * Show the form for creating a new resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
+
+    public function create() {
+        dd( 'para crear...' );
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+
+    public function store( Request $request ) {
+        $request->validate( [
             'titulo' => 'required|max:250',
             'comentarios' => 'nullable|max:500',
             // 'modelo' => 'nullable|max:250',
@@ -61,59 +60,99 @@ class tareasController extends Controller
             // 'valor.numeric' => 'El campo valor debe de ser numérico.',
             // 'reorden.numeric' => 'El campo valor debe de ser numérico.',
             // 'maximo.numeric' => 'El campo valor debe de ser numérico.',
-        ]);
+        ] );
         $tarea = $request->all();
 
-        // dd($tarea);
+        // dd( $tarea );
 
-        tareas::create($tarea);
-        Session::flash('message', 1);
+        tareas::create( $tarea );
+        Session::flash( 'message', 1 );
 
-        return redirect()->route('calendario.index');
+        return redirect()->route( 'calendario.index' );
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        dd('para mostar la tarea ' . $id . '...');
+    * Display the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+
+    public function show( $id ) {
+        dd( 'para mostar la tarea ' . $id . '...' );
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        dd('para actualizar la tarea ' . $id . '...');
+    * Show the form for editing the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+
+    public function edit( $id ) {
+        dd( 'para actualizar la tarea ' . $id . '...' );
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request)
-    {
-        dd('para actualizar la tarea  ...');
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+
+    public function update( Request $request ) {
+        // dd( $request );
+        $request->validate( [
+            'tareaTitulo' => 'required|max:250',
+            'tareaComentario' => 'nullable|max:500',
+        ], [
+            'tareaTitulo.required' => 'El campo nombre es obligatorio.',
+            'tareaTitulo.max' => 'El campo título excede el límite de caracteres permitidos.',
+            'tareaComentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+        ] );
+
+        $data = $request->all();
+
+        $tarea = tareas::where( 'id', $data[ 'tareaId' ] )->first();
+
+        if ( is_null( $tarea ) == false ) {
+
+            $data[ 'titulo' ] =  $data[ 'tareaTitulo' ] ;
+            $data[ 'comentario' ] =  $data[ 'tareaComentario' ] ;
+            $data[ 'responsable' ] =  $data[ 'tareaResponsableId' ] ;
+
+            $data[ 'prioridadId' ] =  $data[ 'tareaPrioridadId' ] ;
+
+            //*** manejo del estatus de la tarea cuando se cambia su estatus inicial*/
+            if ( $tarea->estadoId <= 1 && $tarea->fechaInicioR == '0000-00-00' ) {
+                if ( $data[ 'tareaEstadoId' ] > 1 ) {
+                    $data[ 'fechaInicioR' ] =  date( 'Y-m-d' ) ;
+                }
+            }
+            //*** manejo del estatus de la tarea cuando se cambia su estatus final*/
+            if ( $data[ 'tareaEstadoId' ] == 3 ) {
+                $data[ 'fechaFinR' ] =  date( 'Y-m-d' ) ;
+            }
+
+            $data[ 'estadoId' ] =  $data[ 'tareaEstadoId' ] ;
+
+            // dd( $data );
+            $tarea->update( $data );
+            Session::flash( 'message', 1 );
+        }
+
+        return redirect()->route( 'calendario.index' );
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
+    * Remove the specified resource from storage.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+
+    public function destroy( $id ) {
         //
     }
 }

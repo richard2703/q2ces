@@ -517,6 +517,8 @@ create table reparaciones(
  nombre varchar(200) not null,
  color varchar(8) null,
  comentario text null,
+  created_at datetime NULL,
+  updated_at datetime NULL,
  primary key (id)
 );
 
@@ -531,6 +533,8 @@ CREATE TABLE tareas(
   estadoId bigint(20) unsigned NOT NULL,
   fechaInicioR datetime not null,
   fechaFinR datetime not null,
+  created_at datetime NULL,
+  updated_at datetime NULL,
   PRIMARY KEY (id),
   CONSTRAINT FK_tareas_userId foreign key (userId) references users(id),
   CONSTRAINT FK_tareas_responsable foreign key (responsable) references users(id),
@@ -546,6 +550,8 @@ CREATE TABLE eventos(
   fechaFin datetime null,
   prioridadId bigint(20) unsigned NOT NULL,
   comentario text null,
+  created_at datetime NULL,
+  updated_at datetime NULL,
   PRIMARY KEY (id),
   CONSTRAINT FK_eventos_userId foreign key (userId) references users(id),
   CONSTRAINT FK_eventos_prioridadId foreign key (prioridadId) references prioridades(id)
@@ -559,6 +565,8 @@ CREATE TABLE mantenimientos(
   fechaReal datetime null,
   estadoId bigint(20) unsigned NOT NULL,
   comentario text null,
+  created_at datetime NULL,
+  updated_at datetime NULL,
   PRIMARY KEY (id),
   CONSTRAINT FK_mantenimientos_userId foreign key (maquinariaId) references maquinaria(id),
   CONSTRAINT FK_mantenimientos_estadoId foreign key (estadoId) references estados(id)
@@ -629,4 +637,4 @@ CREATE TABLE historialServicios(
  );
 
 
- 
+

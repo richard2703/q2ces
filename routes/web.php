@@ -167,6 +167,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Crud calendario
     Route::get('/calendario', [App\Http\Controllers\calendarioController::class, 'index'])->name('calendario.index');
+    Route::get('/calendario/{anio}/{mes}', [App\Http\Controllers\calendarioController::class, 'reloadCalendario'] )->name('calendario.reloadCalendario');
+    //Route::put('/coordiseno/detalle/riesgos/{riesgo}/recalcular', [App\Http\Controllers\detalleRiesgoController::class, 'recalcular'])->name('detalleriesgo.recalcular');
+
+    //*** operaciones con tareas */
     Route::post('/calendario/tareas/nueva', [App\Http\Controllers\tareasController::class, 'store'])->name('tareas.store');
     Route::put('/calendario/tareas/edit', [App\Http\Controllers\tareasController::class, 'update'])->name('tareas.update');
 
