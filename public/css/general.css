@@ -1,4 +1,4 @@
- /**, div, col { 
+ /**, div, col {
     border: #212529 1px solid;
 
 }*/
@@ -63,11 +63,11 @@ body{
   color: #5C7C26;
 }
 a.textEquipo{
-color: #727176 !important;     
+color: #727176 !important;
 }
 
 a.textEquipo:hover{
-  color: #F7C90D !important;     
+  color: #F7C90D !important;
 }
 /*------CSS PARA PERSONAL --------*/
 .imgPersonal{
@@ -150,7 +150,7 @@ background-color: #A6CE34;
     letter-spacing: .2em;
     text-align: center!important;
   }
-  
+
 
   button.BTNbCargaDescarga.active,
   button.BTNbCargaDescarga.active:hover,
@@ -159,7 +159,7 @@ background-color: #A6CE34;
     background-color: #8caf48!important;
     color: #fff!important;
     border-color: none!important;
-  
+
     text-align: center!important;
   }
   svg.accionesIconos{
@@ -181,7 +181,7 @@ background-color: #A6CE34;
   width: 20px;
   height: 20px;
   border: none;
-}  
+}
 
 .btnRojo{
   background-image: url('/img/general/dash-circle-fill.svg')!important;
@@ -192,7 +192,7 @@ background-color: #A6CE34;
   width: 20px;
   height: 20px;
   border: none;
-}  
+}
 
 /* ------- CSS PARA TABLERO Alta de OBRA ----------*/
 .altalogo{
@@ -290,21 +290,21 @@ p span{
   /* ------- CSS PARA DETALLE DE EQUIPO ----------*/
 
 #muestra {
-  position: relative; 
-  margin: 1rem auto; 
-  width: 100%; height: 342px; 
-  background-color: #fff; 
-  overflow: hidden; 
+  position: relative;
+  margin: 1rem auto;
+  width: 100%; height: 342px;
+  background-color: #fff;
+  overflow: hidden;
 }
 
 
 #selectores img{
   padding: 3px;
-  margin: none; 
-  cursor: pointer; 
+  margin: none;
+  cursor: pointer;
   background-size: cover;
   border: #F7C90D solid 1px;
-  width: 20%; 
+  width: 20%;
 }
 
 #visor {
@@ -312,7 +312,7 @@ p span{
   background-size: cover;
   object-fit: cover;
 }
-      
+
 #visor img {
   background-size: cover;
   object-fit: cover;
@@ -381,7 +381,7 @@ background-color: #F7C90D!important;
   border-bottom: #F7C90D 2px solid!important;
   color: #727176!important;
   }
-  
+
   .page-item.active .page-link{
     background-color: #F7C90D!important;
     border:#F7C90D!important;
@@ -507,7 +507,7 @@ p.botonTitulos{
 .process-inner i {
   font-size: 40px;
   margin-bottom: 35px;
-  
+
 }
 .process-inner h4 {
   font-size: 16px;
@@ -694,7 +694,7 @@ width: 40px;
 }
 tr td.labelEspera,
 .labelEspera {
- 
+
   padding: 5px;
   background-color: #1B3C58!important;
   color: #fff !important;
@@ -799,4 +799,8 @@ color : #5C7C26;
 
 .fondoGris{
   background-color: #F8F7F2;
+}
+
+.fondoEventos{
+  background-color: #81586C;
 }

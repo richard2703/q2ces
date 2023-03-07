@@ -4,8 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\tareas;
+use App\Models\eventos;
+use App\Models\mantenimientos;
+use App\Models\servicios;
+use App\Models\solicitudes;
+use App\Models\reparaciones;
 use App\Models\maquinaria;
 use App\Models\personal;
+use App\Models\inventario;
 use App\Helpers\Validaciones;
 use App\Helpers\Calendario;
 use App\Helpers\Calculos;
@@ -41,6 +47,7 @@ class calendarioController extends Controller {
 
         // dd($dteMesFin);
 
+        //** tareas del mes en seleccionado */
         $vctTasks =  tareas::select(
             'tareas.*',
             DB::raw( 'tareas.responsable AS responsableId' ),
@@ -51,11 +58,69 @@ class calendarioController extends Controller {
         ->join( 'personal', 'personal.id', '=', 'tareas.responsable' )
         ->join( 'prioridades', 'prioridades.id', '=', 'tareas.prioridadId' )
         ->join( 'estados', 'estados.id', '=', 'tareas.estadoId' )
-        ->where( 'fechaFin', '>=', $dteMesInicio )
-        ->where( 'fechaFin', '<=', $dteMesFin )
-        ->orderBy( 'fechaFin', 'asc' )->get();
+        ->where( 'tareas.fechaFin', '>=', $dteMesInicio )
+        ->where( 'tareas.fechaFin', '<=', $dteMesFin )
+        ->orderBy( 'tareas.fechaFin', 'asc' )->get();
 
-        return view( 'calendario.calendario', compact( 'usuario', 'personal', 'intMes', 'intAnio', 'vctTasks' ) );
+        //** eventos del mes seleccionado */
+        $vctEventos = eventos::select(
+            'eventos.*',
+            DB::raw( 'prioridades.nombre AS prioridad' )
+        )
+        ->join( 'prioridades', 'prioridades.id', '=', 'eventos.prioridadId' )
+        ->where( 'eventos.fechaFin', '>=', $dteMesInicio )
+        ->where( 'eventos.fechaFin', '<=', $dteMesFin )
+        ->orderBy( 'eventos.fechaFin', 'asc' )->get();
+
+
+        //** mantenimientos del mes seleccionado */
+        $vctMantenimientos = mantenimientos::select(
+            'mantenimientos.*',
+            DB::raw( 'estados.nombre AS estado' ),
+            DB::raw( 'maquinaria.nombre AS maquinaria' )
+        )
+        ->join( 'estados', 'estados.id', '=', 'mantenimientos.estadoId' )
+        ->join( 'maquinaria', 'maquinaria.id', '=', 'mantenimientos.maquinariaId' )
+        ->where( 'mantenimientos.fechaInicio', '>=', $dteMesInicio )
+
+        ->where( 'mantenimientos.fechaInicio', '<=', $dteMesFin )
+        ->orderBy( 'mantenimientos.fechaInicio', 'asc' )->get();
+        
+        //** solicitudes del mes seleccionado */
+        $vctSolicitudes = solicitudes::select(
+            'solicitudes.*',
+            DB::raw( "CONCAT(personal.nombres,' ',personal.apellidoP) AS responsable" ),
+            DB::raw( 'estados.nombre AS estado' ),
+            DB::raw( 'prioridades.nombre AS prioridad' ),
+            DB::raw( 'maquinaria.nombre AS maquinaria' ),
+            DB::raw( 'users.name AS usuario' ),
+            DB::raw( 'reparaciones.nombre AS servicio' )
+        )
+        ->join( 'personal', 'personal.id', '=', 'solicitudes.responsable' )
+        ->join( 'reparaciones', 'reparaciones.id', '=', 'solicitudes.servicioId' )
+        ->join( 'estados', 'estados.id', '=', 'solicitudes.estadoId' )
+        ->join( 'maquinaria', 'maquinaria.id', '=', 'solicitudes.maquinariaId' )
+        ->join( 'prioridades', 'prioridades.id', '=', 'solicitudes.prioridadId' )
+        ->join( 'users', 'users.id', '=', 'solicitudes.userId' )
+        ->where( 'solicitudes.fechaRequerimiento', '>=', $dteMesInicio )
+        ->where( 'solicitudes.fechaRequerimiento', '<=', $dteMesFin )
+        ->orderBy( 'solicitudes.fechaRequerimiento', 'asc' )->get();
+
+
+        //** procesos de reparacion registrados */
+        $vctProcesos = reparaciones::select(
+            'reparaciones.*'
+        )
+        ->orderBy( 'reparaciones.nombre', 'asc' )->get();
+ 
+
+        $vctHerramientas =   inventario::where("tipo",'=',  "herramientas")->orderBy('created_at', 'desc')->get();
+        $vctConsumibles =   inventario::where("tipo",'=',  "consumibles")->orderBy('created_at', 'desc')->get();
+        $vctRefacciones =   inventario::where("tipo",'=',  "refacciones")->orderBy('created_at', 'desc')->get();
+        
+        // dd($vctMantenimientos);
+
+        return view( 'calendario.calendario', compact( 'usuario', 'personal', 'intMes', 'intAnio', 'vctTasks','vctEventos','vctMantenimientos','vctSolicitudes','vctProcesos','vctHerramientas','vctConsumibles','vctRefacciones' ) );
     }
 
     /**

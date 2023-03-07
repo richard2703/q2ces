@@ -118,7 +118,7 @@ class inventarioController extends Controller
             return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas', 'gasolinas', 'suma', 'dia', 'despachadores', 'cargas', 'descargas'));
         } else {
             $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(5);
-            return view('inventario.indexInventario', compact('inventarios'));
+            return view('inventario.indexInventario', compact('inventarios','tipo'));
         }
     }
 
@@ -166,7 +166,7 @@ class inventarioController extends Controller
 
         if ($request->hasFile("imagen")) {
             $producto['imagen'] = time() . '_' . 'imagen.' . $request->file('imagen')->getClientOriginalExtension();
-            $request->file('imagen')->storeAs('/public/inventario', $producto['imagen']);
+            $request->file('imagen')->storeAs('/public/inventario/'. $producto['tipo'], $producto['imagen']);
         }
 
         inventario::create($producto);
@@ -251,7 +251,7 @@ class inventarioController extends Controller
 
         if ($request->hasFile("imagen")) {
             $data['imagen'] = time() . '_' . 'imagen.' . $request->file('imagen')->getClientOriginalExtension();
-            $request->file('imagen')->storeAs('/public/inventario', $data['imagen']);
+            $request->file('imagen')->storeAs('/public/inventario/'. $data['tipo'], $data['imagen']);
         }
 
         $inventario->update($data);
