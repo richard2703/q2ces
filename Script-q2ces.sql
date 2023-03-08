@@ -35,7 +35,8 @@ INSERT INTO permissions VALUES
 (12,'user_create','web','2022-07-25 20:54:16','2022-07-25 20:54:16'),
 (13,'user_show','web','2022-07-25 20:54:16','2022-07-25 20:54:16'),
 (14,'user_edit','web','2022-07-25 20:54:16','2022-07-25 20:54:16'),
-(15,'user_destroy','web','2022-07-25 20:54:16','2022-07-25 20:54:16')
+(15,'user_destroy','web','2022-07-25 20:54:16','2022-07-25 20:54:16'),
+(16,'personal_index','web','2022-07-25 20:54:16','2022-07-25 20:54:16')
 ;
 
 CREATE TABLE users (
@@ -250,7 +251,7 @@ CREATE TABLE nomina(
   imssAportacion float(10,2) null,
   imssriesgo float(10,2) null,
   aforeAportacion float(10,2) null,
-  isn float(10,2) null,
+  isr float(10,2) null,
   ispt float(10,2) null,
   aguinaldo float(10,2) null,
   ptu float(10,2) null,
@@ -607,7 +608,7 @@ CREATE TABLE solicitudes(
   comentario text null,
   PRIMARY KEY (id),
   CONSTRAINT FK_solicitudes_userId foreign key (userId) references users(id),
-  CONSTRAINT FK_solicitudes_userId foreign key (maquinariaId) references maquinaria(id),
+  CONSTRAINT FK_solicitudes_maquinariaId foreign key (maquinariaId) references maquinaria(id),
   CONSTRAINT FK_solicitudes_serviciosId foreign key (serviciosId) references solicitudes(id),
   CONSTRAINT FK_solicitudes_prioridadId foreign key (prioridadId) references prioridades(id),
   CONSTRAINT FK_solicitudes_estadoId foreign key (estadoId) references estados(id)
