@@ -515,8 +515,10 @@ create table prioridades(
 create table reparaciones(
  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
  nombre varchar(200) not null,
- color varchar(8) null,
+ codigo varchar(8) null,
  comentario text null,
+ created_at datetime NULL,
+ updated_at datetime NULL,
  primary key (id)
 );
 
@@ -525,12 +527,14 @@ CREATE TABLE tareas(
   userId bigint(20) unsigned NOT NULL,
   responsable bigint(20) unsigned NOT NULL,
   titulo varchar(255) not null,
-  fechaInicio datetime null,
-  fechaFin datetime null,
+  fechaInicio date null,
+  fechaFin date null,
   prioridadId bigint(20) unsigned NOT NULL,
   estadoId bigint(20) unsigned NOT NULL,
-  fechaInicioR datetime not null,
-  fechaFinR datetime not null,
+  fechaInicioR date not null,
+  fechaFinR date not null,
+  created_at datetime NULL,
+  updated_at datetime NULL,
   PRIMARY KEY (id),
   CONSTRAINT FK_tareas_userId foreign key (userId) references users(id),
   CONSTRAINT FK_tareas_responsable foreign key (responsable) references users(id),
@@ -542,10 +546,12 @@ CREATE TABLE eventos(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   userId bigint(20) unsigned NOT NULL,
   titulo varchar(255) not null,
-  fechaInicio datetime null,
-  fechaFin datetime null,
+  fechaInicio date null,
+  fechaFin date null,
   prioridadId bigint(20) unsigned NOT NULL,
   comentario text null,
+  created_at datetime NULL,
+  updated_at datetime NULL,
   PRIMARY KEY (id),
   CONSTRAINT FK_eventos_userId foreign key (userId) references users(id),
   CONSTRAINT FK_eventos_prioridadId foreign key (prioridadId) references prioridades(id)
@@ -555,10 +561,12 @@ CREATE TABLE mantenimientos(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   maquinariaId bigint(20) unsigned NOT NULL,
   tipo varchar(255) not null,
-  fechaInicio datetime not null,
-  fechaReal datetime null,
+  fechaInicio date not null,
+  fechaReal date null,
   estadoId bigint(20) unsigned NOT NULL,
   comentario text null,
+  created_at datetime NULL,
+  updated_at datetime NULL,
   PRIMARY KEY (id),
   CONSTRAINT FK_mantenimientos_userId foreign key (maquinariaId) references maquinaria(id),
   CONSTRAINT FK_mantenimientos_estadoId foreign key (estadoId) references estados(id)
@@ -586,9 +594,12 @@ CREATE TABLE servicios(
 CREATE TABLE solicitudes(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   userId bigint(20) unsigned NOT NULL,
+  responsable bigint(20) unsigned NOT NULL,
   maquinariaId bigint(20) unsigned NOT NULL,
   serviciosId bigint(20) unsigned NOT NULL,
   titulo varchar(255) not null,
+  fechaSolicitud date not null,
+  fechaRequerimiento date not null,
   created_at datetime NULL,
   updated_at datetime NULL,
   prioridadId bigint(20) unsigned NOT NULL,
@@ -629,4 +640,4 @@ CREATE TABLE historialServicios(
  );
 
 
- 
+

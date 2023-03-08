@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Inventario Herramientas')])
+@extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Inventario')])
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -8,7 +8,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Inventario Herramientas</h4>
+                                    <h4 class="card-title">Inventario de {{ $tipo }}</h4>
                                     {{-- <p class="card-category">Usuarios registrados</p> --}}
                                 </div>
                                 <div class="card-body table-responsive">
@@ -34,7 +34,6 @@
                                         </div>
                                     </div>
 
-
                                     <table class="table-responsive">
                                         <thead class="labelTitulo">
                                             <tr class="">
@@ -50,7 +49,7 @@
                                                 <tr class=" border-top border-bottom">
                                                     <th scope="row"><img class="my-4 " style="width: 100px;"
                                                             {{-- src="{{ '/img/general/defaultinventario.jpg' }}"> --}}
-                                                            src="{{ $inventario->imagen == '' ? ' /img/general/default.jpg' : '/storage/inventario/' . $inventario->imagen }}">
+                                                            src="{{ $inventario->imagen == '' ? '/img/general/default.jpg' : asset ('/storage/app/public/inventario/' . $inventario->tipo . '/' . $inventario->imagen) }}">
                                                     </th>
                                                     <td>{{ $inventario->nombre }}</td>
                                                     <td>{{ $inventario->cantidad }}</td>

@@ -50,10 +50,10 @@ Route::get('/dashboard', function () {
 // });
 
 
-// calendario
-Route::get('/calendario', function () {
-    return view('calendario.calendario');
- });
+// // calendario
+// Route::get('/calendario', function () {
+//     return view('calendario.calendario');
+//  });
 
 
 //Inventario
@@ -164,4 +164,22 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/inventario/combustible/descarga/edit', [App\Http\Controllers\inventarioController::class, 'updateDescarga'])->name('inventario.updateDescarga');
     Route::delete('/inventario/combustible/carga/{carga}', [App\Http\Controllers\inventarioController::class, 'deleteCarga'])->name('inventario.deleteCarga');
     Route::delete('/inventario/combustible/descarga/{carga}', [App\Http\Controllers\inventarioController::class, 'deleteDescarga'])->name('inventario.deleteDescarga');
+
+    //Crud calendario
+    Route::get('/calendario', [App\Http\Controllers\calendarioController::class, 'index'])->name('calendario.index');
+    Route::get('/calendario/{anio}/{mes}', [App\Http\Controllers\calendarioController::class, 'reloadCalendario'] )->name('calendario.reloadCalendario');
+    //Route::put('/coordiseno/detalle/riesgos/{riesgo}/recalcular', [App\Http\Controllers\detalleRiesgoController::class, 'recalcular'])->name('detalleriesgo.recalcular');
+
+    //*** operaciones con tareas */
+    Route::post('/calendario/tareas/nueva', [App\Http\Controllers\tareasController::class, 'store'])->name('tareas.store');
+    Route::put('/calendario/tareas/editar', [App\Http\Controllers\tareasController::class, 'update'])->name('tareas.update');
+
+    //*** operaciones con mantenimientos */
+    Route::post('/calendario/mantenimientos/nuevo', [App\Http\Controllers\mantenimientosController::class, 'store'])->name('mantenimientos.store');
+    Route::put('/calendario/mantenimientos/editar', [App\Http\Controllers\mantenimientosController::class, 'update'])->name('mantenimientos.update');
+
+    //*** operaciones con reparaciones */
+    Route::post('/calendario/reparaciones/nuevo', [App\Http\Controllers\reparacionesController::class, 'store'])->name('reparaciones.store');
+    Route::put('/calendario/reparaciones/editar', [App\Http\Controllers\reparacionesController::class, 'update'])->name('reparaciones.update');
+
 });

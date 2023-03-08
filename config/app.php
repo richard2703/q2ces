@@ -233,7 +233,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Helpers' => App\Helpers\Validaciones::class,
-        'Calculos' => App\Helpers\Calculos::class
+        'Calculos' => App\Helpers\Calculos::class,
+        'Calendario' => App\Helpers\Calendario::class
 
     ],
 
