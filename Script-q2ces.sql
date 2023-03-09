@@ -307,7 +307,7 @@ CREATE TABLE maquinaria(
 CREATE TABLE maqdocs(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   maquinariaId bigint(20) unsigned NOT NULL,
-  factura varchar(255) NULL,
+/*  factura varchar(255) NULL,
   circulacion varchar(255) NULL,
   verificacion varchar(255) NULL,
   verificacionEstado varchar(255) NULL,
@@ -316,7 +316,12 @@ CREATE TABLE maqdocs(
   seguro varchar(255) NULL,
   seguroEstatus varchar(255) NULL,
   registro varchar(255) NULL,
-  especial varchar(255) NULL,
+  especial varchar(255) NULL,*/
+  ruta varchar(255) null,
+  tipo varchar(255) null,
+  fechaVencimiento date not null,
+  estatus varchar(255) NULL,
+  comentarios text null,
   PRIMARY KEY (id),
   CONSTRAINT FK_maqdocs_maquinariaId foreign key (maquinariaId) references maquinaria(id)
  );
@@ -533,6 +538,7 @@ CREATE TABLE tareas(
   estadoId bigint(20) unsigned NOT NULL,
   fechaInicioR date not null,
   fechaFinR date not null,
+  comentario text null,
   created_at datetime NULL,
   updated_at datetime NULL,
   PRIMARY KEY (id),
