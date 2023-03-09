@@ -182,4 +182,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/calendario/reparaciones/nuevo', [App\Http\Controllers\reparacionesController::class, 'store'])->name('reparaciones.store');
     Route::put('/calendario/reparaciones/editar', [App\Http\Controllers\reparacionesController::class, 'update'])->name('reparaciones.update');
 
+    //*** operaciones con solicitudes */
+    Route::post('/calendario/solicitudes/nuevo', [App\Http\Controllers\solicitudesController::class, 'store'])->name('solicitudes.store');
+    Route::put('/calendario/solicitudes/editar', [App\Http\Controllers\solicitudesController::class, 'update'])->name('solicitudes.update');
+
 });

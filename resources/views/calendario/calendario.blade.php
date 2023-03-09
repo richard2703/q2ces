@@ -4,10 +4,20 @@ $objCalendar = new Calendario();
 $mesAnterior= $objCalendar->getMesAnterior($intMes,$intAnio);
 $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
 
-
 ?>
 @section('content')
     <div class="content">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row justify-content-center">
 
@@ -472,17 +482,26 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                                                         <!--primera linea-->
                                                                             @forelse ($vctMantenimientos as $mantto )
                                                                             <tr>
-                                                                                <td>CD012 ???</td>
+                                                                                <td>{{ $mantto->maquinariaCodigo }}</td>
                                                                                 <td>{{ $mantto->maquinaria }}</td>
-                                                                                <td>10/05/2023 ???</td>
-                                                                                <td>20/05/2023 ???</td>
+                                                                                <td>{{ $mantto->fechaInicio }}</td>
+                                                                                <td>{{ $mantto->fechaReal }}</td>
                                                                                 <td>{{ $mantto->tipo }}</td>
                                                                                 {{-- <td class="labelUrgente">Urgente</td> --}}
                                                                                 <td class="label{{ $mantto->estado }}">{{ $mantto->estado }}</td>
                                                                                 <td class="td-actions justify-content-end">
                                                                                     <a href="#" class=""
                                                                                         data-bs-toggle="modal"
-                                                                                        data-bs-target="#editarMantenimiento">
+                                                                                        data-bs-target="#editarMantenimiento"
+                                                                                        onclick="loadMantenimiento(
+                                                                                            '{{ $mantto->id }}'
+                                                                                            ,'{{ $mantto->titulo }}' 
+                                                                                            ,'{{ $mantto->estadoId }}'
+                                                                                            ,'{{ $mantto->comentario }}'
+                                                                                            ,'{{ $mantto->tipo }}'
+                                                                                            // ,'{{ \Carbon\Carbon::parse($mantto->fechaInicio)->format('d/m/Y') }}'
+                                                                                            // ,'{{ \Carbon\Carbon::parse($mantto->fechaFin)->format('d/m/Y') }}'
+                                                                                        )"> 
                                                                                         <svg xmlns="http://www.w3.org/2000/svg "
                                                                                             width="28" height="28"
                                                                                             fill="currentColor"
@@ -560,9 +579,9 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                     aria-label=".form-select-lg example" name="responsable" id="responsable">
 
                                     <option value="">Seleccione</option>
-                                    @foreach ($personal as $persona)
-                                        <option value="{{ $persona->id }}">
-                                            {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                    @foreach ($personal as $item)
+                                        <option value="{{ $item->id }}">
+                                            {{ $item->nombres . ' ' . $item->apellidoP }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -608,6 +627,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                     </div>
                                 </div>
                             </div>
+
                             <div class=" col-12 my-3 py-4 fondoVerde">
                                 <h4 class="labelTitulo mb-2">Estado de la Solicitud</h4>
                                 <div class="row">
@@ -644,7 +664,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                             </div>
                             <div class=" col-12  mb-3 ">
                                 <label class="labelTitulo">Comentarios:</label></br>
-                                <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario"></textarea>
+                                <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario" spellcheck="true"></textarea>
                             </div>
 
                             <div class="modal-footer">
@@ -683,9 +703,9 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                 <select class="form-select form-select-lg mb-3 inputCaja" name="tareaResponsableId"
                                     id="tareaResponsableId" aria-label=".form-select-lg example">
                                     <option value="">Seleccione</option>
-                                    @foreach ($personal as $persona)
-                                        <option value="{{ $persona->id }}">
-                                            {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                    @foreach ($personal as $item)
+                                        <option value="{{ $item->id }}">
+                                            {{ $item->nombres . ' ' . $item->apellidoP }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -790,31 +810,47 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form class="row d-flex justify-content-center">
+                        <form class="row d-flex justify-content-center" action="{{ route('solicitudes.store') }}" method="post">
+                                @csrf
+
+                        <input type="hidden" name="fechaSolicitud" id="fechaSolicitud" value="{{ date('Y-m-d') }}">
+                        <input type="hidden" name="userId" id="userId" value="{{  auth()->user()->id }}">
+
                             <div class=" col-12 mb-3 ">
                                 <label class="labelTitulo">Título:</label></br>
-                                <input type="text" class="inputCaja" id="apellidoP" name="apellidoP"
-                                    value="{{ old('apellidoP') }}">
+                                <input type="text" class="inputCaja" id="titulo" name="titulo"
+                                    value="{{ old('titulo') }}">
                             </div>
                             <div class=" col-12 col-sm-6 mb-3 ">
                                 <label class="labelTitulo">Responsable:</label></br>
-                                <select class="form-select form-select-lg mb-3 inputCaja"
+                                <select class="form-select form-select-lg mb-3 inputCaja" name="responsable" id="responsable"
                                     aria-label=".form-select-lg example">
                                     <option value="">Seleccione</option>
                                     @foreach ($personal as $item)
-                                        <option value="{{ $persona->id }}">
+                                        <option value="{{ $item->id }}">
                                             {{ $item->nombres . ' ' . $item->apellidoP }}
                                         </option>
                                     @endforeach
                                 </select>
-
                             </div>
-
 
                             <div class=" col-12 col-sm-6 mb-3 ">
                                 <label class="labelTitulo">Fecha Requerimiento:</label></br>
-                                <input type="date" class="inputCaja" id="apellidoP" name="apellidoP"
-                                    value="{{ old('apellidoP') }}">
+                                <input type="date" class="inputCaja" id="fechaRequerimiento" name="fechaRequerimiento"
+                                    value="{{ old('fechaRequerimiento') }}">
+                            </div>
+
+                            <div class=" col-12 mb-3 ">
+                                <label class="labelTitulo">Maquinaria:</label></br>
+                                <select class="form-select form-select-lg mb-3 inputCaja"  id="maquinariaId" name="maquinariaId"
+                                    aria-label=".form-select-lg example">
+                                    <option value="">Seleccione</option>
+                                    @foreach ($maquinaria as $item)
+                                        <option value="{{ $item->id }}">
+                                            {{ $item->identificador . ' ' . $item->nombre }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <!-- carrousel de solicitudes-->
@@ -828,11 +864,11 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                             </div>
 
                                             <div class="col-10 my-4 mx-auto">
-                                                <select class="form-select form-select-lg mb-3 inputCaja"
+                                                <select class="form-select form-select-lg mb-3 inputCaja"  id="servicioId" name="servicioId"
                                                     aria-label=".form-select-lg example">
                                                     <option value="">Seleccione</option>
                                                     @foreach ($vctProcesos as $item)
-                                                        <option value="{{ $persona->id }}">
+                                                        <option value="{{ $item->id }}">
                                                             {{ $item->codigo . ' ' . $item->nombre }}
                                                         </option>
                                                     @endforeach
@@ -840,7 +876,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                             </div>
                                             <div class="col-10 my-4 mx-auto">
                                                 <label class="labelTitulo">Funcionalidad:</label></br>
-                                                <select class="form-select form-select-lg mb-3 inputCaja"
+                                                <select class="form-select form-select-lg mb-3 inputCaja" id="funcionalidadId" name="funcionalidadId"
                                                     aria-label=".form-select-lg example">
                                                     <option value="1">Atención Inmediata</option>
                                                     <option value="2">Atención Media</option>
@@ -866,11 +902,11 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                             </div>
 
                                             <div class="col-10 my-4 mx-auto">
-                                                <select class="form-select form-select-lg mb-3 inputCaja"
+                                                <select class="form-select form-select-lg mb-3 inputCaja"  id="herramientaId" name="herramientaId"
                                                     aria-label=".form-select-lg example">
                                                     <option value="">Seleccione</option>
                                                     @foreach ($vctHerramientas as $item)
-                                                        <option value="{{ $persona->id }}">
+                                                        <option value="{{ $item->id }}">
                                                             {{ $item->nombre . ' ['. $item->cantidad . ']'  }}
                                                         </option>
                                                     @endforeach
@@ -878,7 +914,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                             </div>
                                             <div class="col-10 my-4 mb-5 mx-auto">
                                                 <label class="labelTitulo">Cantidad:</label></br>
-                                                <input type="number" maxlength="4" step="1" min="0" max="9999" placeholder="ej. 1" class="inputCaja text-right" id="particular" name=""  
+                                                <input type="number" maxlength="4" step="1" min="0" max="9999" placeholder="ej. 1" class="inputCaja text-right" id="herramientaCantidad" name="herramientaCantidad"
                                                     value="">
                                             </div>
                                         </div>
@@ -890,11 +926,11 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                             </div>
 
                                             <div class="col-10 my-4 mx-auto">
-                                                <select class="form-select form-select-lg mb-3 inputCaja"
+                                                <select class="form-select form-select-lg mb-3 inputCaja"  id="refaccionId" name="refaccionId"
                                                     aria-label=".form-select-lg example">
                                                     <option value="">Seleccione</option>
                                                     @foreach ($vctRefacciones as $item)
-                                                        <option value="{{ $persona->id }}">
+                                                        <option value="{{ $item->id }}">
                                                             {{ $item->nombre . ' ['. $item->cantidad . ']'  }}
                                                         </option>
                                                     @endforeach
@@ -902,7 +938,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                             </div>
                                             <div class="col-10 my-4 mb-5 mx-auto">
                                                 <label class="labelTitulo">Cantidad:</label></br>
-                                                <input type="number" maxlength="4" step="1" min="0" max="9999" placeholder="ej. 1" class="inputCaja text-right" id="particular" name=""
+                                                <input type="number" maxlength="4" step="1" min="0" max="9999" placeholder="ej. 1" class="inputCaja text-right" id="refaccionCantidad" name="refaccionCantidad"
                                                     value="">
                                             </div>
                                         </div>
@@ -914,11 +950,11 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                             </div>
 
                                             <div class="col-10 my-4 mx-auto">
-                                                <select class="form-select form-select-lg mb-3 inputCaja"
+                                                <select class="form-select form-select-lg mb-3 inputCaja"  id="consumibleId" name="consumibleId"
                                                     aria-label=".form-select-lg example">
                                                     <option value="">Seleccione</option>
                                                     @foreach ($vctConsumibles as $item)
-                                                        <option value="{{ $persona->id }}">
+                                                        <option value="{{ $item->id }}">
                                                             {{ $item->nombre . ' ['. $item->cantidad . ']'  }}
                                                         </option>
                                                     @endforeach
@@ -926,7 +962,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                             </div>
                                             <div class="col-10 my-4 mb-5 mx-auto">
                                                 <label class="labelTitulo">Cantidad:</label></br>
-                                                <input type="number" maxlength="4" step="1" min="0" max="9999" placeholder="ej. 1" class="inputCaja text-right" id="particular" name=""
+                                                <input type="number" maxlength="4" step="1" min="0" max="9999" placeholder="ej. 1" class="inputCaja text-right" id="consumibleCantidad" name="consumibleCantidad"
                                                     value="">
                                             </div>
                                         </div>
@@ -938,15 +974,19 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                             </div>
 
                                             <div class="col-10 my-4 mx-auto">
-                                                <select class="form-select form-select-lg mb-3 inputCaja"
+                                                <select class="form-select form-select-lg mb-3 inputCaja" id="combustibleId" name="combustibleId"
                                                     aria-label=".form-select-lg example">
-                                                    <option value="1">Diesel</option>
-                                                    <option value="2">Gasolina</option> 
+                                                    <option value="">Seleccione</option>
+                                                    @foreach ($vctCombustibles as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->nombre   }}
+                                                    </option>
+                                                @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-10 my-4 mb-5 mx-auto">
                                                 <label class="labelTitulo">Litros:</label></br>
-                                                <input type="number" maxlength="4" step="1" min="0" max="9999" placeholder="ej. 100" class="inputCaja text-right" id="particular" name=""
+                                                <input type="number" maxlength="4" step="1" min="0" max="9999" placeholder="ej. 100" class="inputCaja text-right" id="combustibleCantidad" name="combustibleCantidad"
                                                     value="">
                                             </div>
                                         </div>
@@ -968,112 +1008,117 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                             </div>
 
 
-                            <div class=" col-12 col-lg-6  my-4 ">
-
+                            <div class=" col-12 my-3 py-2 fondoVerde">
                                 <div class="row">
                                     <h4 class="labelTitulomb-3">Prioridad</h4>
-                                    <div class=" col-6   d-flex mb-3">
-                                        <input class="" type="radio" name="prioridadId" id="flexRadioDefault1">
+                                    <div class=" col-3   d-flex mb-2">
+                                        <input class="" type="radio" name="prioridadId" id="prioridadId1"  value="1">
                                         <div class=" ms-3">
-                                            <label class="form-check-label labelUrgente" for="flexRadioDefault1"> Urgente
+                                            <label class="form-check-label labelUrgente" for="prioridadId1"> Urgente
                                             </label>
                                         </div>
                                     </div>
 
-                                    <div class=" col-6 d-flex mb-3">
-                                        <input class="" type="radio" name="prioridadId" id="flexRadioDefault1">
+                                    <div class=" col-3 d-flex mb-2">
+                                        <input class="" type="radio" name="prioridadId" id="prioridadId2"  value="2">
                                         <div class=" ms-3">
-                                            <label class="form-check-label labelNecesaria" for="flexRadioDefault1">
+                                            <label class="form-check-label labelNecesaria" for="prioridadId2">
                                                 Necesaria
                                             </label>
                                         </div>
                                     </div>
-                                    <div class=" col-6   d-flex mb-3">
-                                        <input class="" type="radio" name="prioridadId" id="flexRadioDefault1">
+                                    <div class=" col-3   d-flex mb-2">
+                                        <input class="" type="radio" name="prioridadId" id="prioridadId3" value="3">
                                         <div class=" ms-3">
-                                            <label class="form-check-label labelDeseable" for="flexRadioDefault1">
+                                            <label class="form-check-label labelDeseable" for="prioridadId3">
                                                 Deseable
                                             </label>
                                         </div>
                                     </div>
-                                    <div class=" col-6   d-flex mb-3">
-                                        <input class="" type="radio" name="prioridadId" id="flexRadioDefault1">
+                                    <div class=" col-3   d-flex mb-2">
+                                        <input class="" type="radio" name="prioridadId" id="prioridadId4" value="4">
                                         <div class=" ms-3">
-                                            <label class="form-check-label labelProrrogable" for="flexRadioDefault1">
+                                            <label class="form-check-label labelProrrogable" for="prioridadId4">
                                                 Prorrogable </label>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class=" col-12 my-3 py-2 fondoVerde">
                                 <div class="row">
                                     <h4 class="labelTitulo mt-4 mb-3">Estado</h4>
-                                    <div class=" col-6   d-flex mb-3">
-                                        <input class="" type="radio" name="prioridadId" id="flexRadioDefault1">
+                                    <div class=" col-4   d-flex mb-2">
+                                        <input class="" type="radio" name="estadoId" id="estadoId1"  value="1">
                                         <div class=" ms-3">
-                                            <label class="form-check-label labelEspera" for="flexRadioDefault1"> En Espera
+                                            <label class="form-check-label labelEspera" for="estadoId1"> En Espera
                                             </label>
                                         </div>
                                     </div>
 
-                                    <div class=" col-6 d-flex mb-3">
-                                        <input class="" type="radio" name="prioridadId" id="flexRadioDefault1">
+                                    <div class=" col-4 d-flex mb-2">
+                                        <input class="" type="radio" name="estadoId" id="estadoId2"  value="2">
                                         <div class=" ms-3">
-                                            <label class="form-check-label labelRealizado" for="flexRadioDefault1">
+                                            <label class="form-check-label labelRealizado" for="estadoId2">
                                                 Realizado
                                             </label>
                                         </div>
                                     </div>
-                                    <div class=" col-6   d-flex mb-3">
-                                        <input class="" type="radio" name="prioridadId" id="flexRadioDefault1">
+                                    <div class=" col-4   d-flex mb-2">
+                                        <input class="" type="radio" name="estadoId" id="estadoId3"  value="3">
                                         <div class=" ms-3">
-                                            <label class="form-check-label labelTerminado" for="flexRadioDefault1">
+                                            <label class="form-check-label labelTerminado" for="estadoId3">
                                                 Terminado
                                             </label>
                                         </div>
                                     </div>
-
                                 </div>
+                            </div>
+
+                            <div class=" col-12 my-3 py-2 fondoVerde">
                                 <div class="row">
                                     <h4 class="labelTitulo mb-2">Funcionalidad del Equipo</h4>
-                                    <div class=" col-6    d-flex mb-3">
-                                        <input class="" type="radio" name="estado" id="estado">
+                                    <div class=" col-4    d-flex mb-4">
+                                        <input class="" type="radio" name="funcionalidad" id="funcionalidad1"  value="1">
                                         <div class=" ms-3">
-                                            <label class="form-check-label labelUrgente" for="estado"> No Funciona
+                                            <label class="form-check-label labelUrgente" for="funcionalidad1"> No Funciona
                                             </label>
                                         </div>
                                     </div>
 
-                                    <div class=" col-6   d-flex mb-3">
-                                        <input class="" type="radio" name="estado" id="estado">
+                                    <div class=" col-4   d-flex mb-4">
+                                        <input class="" type="radio" name="funcionalidad" id="funcionalidad2" value="2">
                                         <div class=" ms-3">
-                                            <label class="form-check-label labelDeseable" for="estado"> Funciona Poco
+                                            <label class="form-check-label labelDeseable" for="funcionalidad2"> Funciona Poco
                                             </label>
                                         </div>
                                     </div>
-                                    <div class=" col-6    d-flex mb-3">
-                                        <input class="" type="radio" name="estado" id="estado">
+                                    <div class=" col-4    d-flex mb-4">
+                                        <input class="" type="radio" name="funcionalidad" id="funcionalidad3" value="3">
                                         <div class=" ms-3">
-                                            <label class="form-check-label labelProrrogable" for="estado"> Funciona
+                                            <label class="form-check-label labelProrrogable" for="funcionalidad3"> Funciona
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
 
-
-                            <div class=" col-12 col-lg-6  my-4 ">
-                                <label class="labelTitulo">Comentarios:</label></br>
-                                <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea"></textarea>
+                            <div class="row">
+                                <div class=" col-12  mb-3 ">
+                                    <label class="labelTitulo">Comentarios:</label></br>
+                                    <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="comentario" name="comentario" spellcheck="true"></textarea>
+                                </div>
                             </div>
 
+                        </div>
 
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn botonGral">Guardar</button>
+                            </div>
 
 
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn botonGral">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -1270,6 +1315,8 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                     <div class="modal-body">
                         <form class="row d-flex" action="{{ route('mantenimientos.store') }}" method="post">
                         @csrf
+                        
+                        <input type="hidden" name="fechaInicio" id="fechaInicio" value="{{ date('Y-m-d') }}">
                             <div class="col-12 mb-5 pb-5">
                                 <div class="searchBox mb-5">
                                     <input class="searchInput "type="text" name="" placeholder="Buscar">
@@ -1285,6 +1332,19 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                 <label class="labelTitulo">Título:</label></br>
                                 <input type="text" class="inputCaja" id="titulo" name="titulo"
                                     value="">
+                            </div>
+
+                            <div class=" col-12 mb-3 ">
+                                <label class="labelTitulo">Maquinaria:</label></br>
+                                <select class="form-select form-select-lg mb-3 inputCaja"  id="maquinariaId" name="maquinariaId"
+                                    aria-label=".form-select-lg example">
+                                    <option value="">Seleccione</option>
+                                    @foreach ($maquinaria as $item)
+                                        <option value="{{ $item->id }}">
+                                            {{ $item->identificador . ' ' . $item->nombre }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class=" col-12 col-sm-6 mb-3 ">
@@ -1318,18 +1378,18 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                             <div class=" col-12 col-sm-6 mb-3 ">
                                 <label class="labelTitulo">Tipo:</label></br>
                                 <select class="form-select form-select-lg mb-3 inputCaja" name="tipo" id="tipo"
-                                    aria-label=".form-select-lg example">
-
-                                    <option value="1">Correctivo</option>
-                                    <option value="2">250</option>
-                                    <option value="3">500</option>
-                                    <option value="3">1000</option>
+                                    aria-label=".form-select-lg example"> 
+                                    <option value="">Seleccione</option>
+                                    <option value="Correctivo">Correctivo</option>
+                                    <option value="250">250</option>
+                                    <option value="500">500</option>
+                                    <option value="1000">1000</option>
                                 </select>
                             </div>
 
                             <div class=" col-12  mb-3 ">
                                 <label class="labelTitulo">Comentarios:</label></br>
-                                <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea" id="comentario" name="comentario"></textarea>
+                                <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea" id="comentario" name="comentario" spellcheck="true"></textarea>
                             </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -1349,12 +1409,15 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                 <div class="modal-content">
                     <div class="modal-header bacTituloPrincipal">
                         <img src="img/calendario/mantenimientogris.svg" class="imgBTNcalendario">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp CD012 Retroexcavadora</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp <label id="manttoLblTitulo"></label></h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form class="row d-flex">
+                        <form class="row d-flex" action="{{ route('mantenimientos.update') }}" method="post">
+                            @csrf
+                            @method('put')
+                            <input type="hidden" name="manttoId" id="manttoId" value=""> 
                             <div class="col-12 mb-5 pb-5">
                                 <div class="searchBox mb-5">
                                     <input class="searchInput "type="text" name="" placeholder="Buscar">
@@ -1368,31 +1431,31 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                             </div>
                             <div class=" col-12  mb-2">
                                 <label class="labelTitulo">Título:</label></br>
-                                <input type="text" class="inputCaja" id="apellidoP" name="apellidoP"
+                                <input type="text" class="inputCaja" id="manttoTitulo" name="manttoTitulo"
                                     value="">
                             </div>
                             <div class=" col-12 col-sm-6 mb-3 ">
                                 <div class="row mb-4">
                                     <h4 class="labelTitulo mb-2">Estado de la Solicitud</h4>
                                     <div class=" col-6    d-flex mb-3">
-                                        <input class="" type="radio" name="estado" id="estado">
+                                        <input class="" type="radio" name="manttoEstadoId" id="manttoEstadoId1" value="1">
                                         <div class=" ms-3">
-                                            <label class="form-check-label labelEspera" for="estado"> En Espera
+                                            <label class="form-check-label labelEspera" for="manttoEstadoId1"> En Espera
                                             </label>
                                         </div>
                                     </div>
 
                                     <div class=" col-6   d-flex mb-3">
-                                        <input class="" type="radio" name="estado" id="estado">
+                                        <input class="" type="radio" name="manttoEstadoId" id="manttoEstadoId2" value="2">
                                         <div class=" ms-3">
-                                            <label class="form-check-label labelRealizado" for="estado"> Realizado
+                                            <label class="form-check-label labelRealizado" for="manttoEstadoId2"> Realizado
                                             </label>
                                         </div>
                                     </div>
                                     <div class=" col-6    d-flex mb-3">
-                                        <input class="" type="radio" name="estado" id="estado">
+                                        <input class="" type="radio" name="manttoEstadoId" id="manttoEstadoId3" value="3">
                                         <div class=" ms-3">
-                                            <label class="form-check-label labelTerminado" for="estado"> Terminado
+                                            <label class="form-check-label labelTerminado" for="manttoEstadoId3"> Terminado
                                             </label>
                                         </div>
                                     </div>
@@ -1403,25 +1466,27 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
 
                             <div class=" col-12 col-sm-6 mb-3 ">
                                 <label class="labelTitulo">Tipo:</label></br>
-                                <select class="form-select form-select-lg mb-3 inputCaja"
+                                <select class="form-select form-select-lg mb-3 inputCaja" name="manttoTipoId"  id="manttoTipoId"
                                     aria-label=".form-select-lg example">
 
-                                    <option value="1">Correctivo</option>
-                                    <option value="2">250</option>
-                                    <option value="3">500</option>
-                                    <option value="3">1000</option>
+                                    <option value="">Seleccione</option>
+                                    <option value="Correctivo">Correctivo</option>
+                                    <option value="250">250</option>
+                                    <option value="500">500</option>
+                                    <option value="1000">1000</option>
                                 </select>
                             </div>
 
                             <div class=" col-12  mb-3 ">
                                 <label class="labelTitulo">Comentarios:</label></br>
-                                <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea"></textarea>
+                                <textarea class="form-control" placeholder="Escribe tu comentario aquí" name="manttoComentario"  id="manttoComentario"></textarea>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" id="btnManttoGuardar" class="btn botonGral">Guardar</button>
                             </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn botonGral">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -1439,7 +1504,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
-                    <div class="modal-body"> 
+                    <div class="modal-body">
                             <form class="row d-flex" action="{{ route('reparaciones.store') }}" method="post">
                                 @csrf
 
@@ -1457,7 +1522,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
 
                             <div class=" col-12 col-lg-12 mb-3 ">
                                 <label class="labelTitulo">Comentarios:</label></br>
-                                <textarea class="form-control" placeholder="Escribe tu comentario aquí" name="comentario" id="comentario"></textarea>
+                                <textarea class="form-control" placeholder="Escribe tu comentario aquí" name="comentario" id="comentario" spellcheck="true"></textarea>
                             </div>
 
                             <div class="modal-footer">
@@ -1686,6 +1751,52 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                 }
             }
         </script>
+
+        
+<script>
+    function loadMantenimiento(id, titulo, estadoId, comentarios, tipoId /*, fechaInicio, fechaFin*/  ) {
+ 
+        const txtId = document.getElementById('manttoId');
+        txtId.value = id;
+
+        const txtTitulo = document.getElementById('manttoTitulo');
+        txtTitulo.value = titulo;
+
+        const lblTitulo = document.getElementById('manttoLblTitulo');
+        lblTitulo.innerText = titulo;
+ 
+        const lstTipo = document.getElementById('manttoTipoId').value = tipoId;
+        const lstTskEstado = document.getElementById('manttoEstadoId' + estadoId).checked = true;
+
+        const txtComentario = document.getElementById('manttoComentario');
+        txtComentario.innerText = comentarios;
+
+        // const dteFechaInicio = document.getElementById('tareaFechaInicio').value = fechaInicio;
+        // const dteFechaFin = document.getElementById('tareaFechaFin').value = fechaFin;
+
+        if(estadoId==3){
+            txtTitulo.disabled = true;
+            txtComentario.disabled = true;
+
+            document.getElementById('manttoTipoId').disabled = true;
+
+        //     document.getElementById('tareaPrioridadId1').disabled = true;
+        //     document.getElementById('tareaPrioridadId2').disabled = true;
+        //     document.getElementById('tareaPrioridadId3').disabled = true;
+        //     document.getElementById('tareaPrioridadId4').disabled = true;
+
+            document.getElementById('manttoEstadoId1').disabled = true;
+            document.getElementById('manttoEstadoId2').disabled = true;
+            document.getElementById('manttoEstadoId3').disabled = true;
+
+        //    document.getElementById('tareaFechaInicio').disabled = true;
+        //    document.getElementById('tareaFechaFin').disabled = true;
+
+            document.getElementById('btnManttoGuardar').disabled = true;
+
+        }
+    }
+</script>
 
         <script type="application/javascript">
         jQuery('input[type=file]').change(function(){

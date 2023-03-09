@@ -560,6 +560,7 @@ CREATE TABLE eventos(
 CREATE TABLE mantenimientos(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   maquinariaId bigint(20) unsigned NOT NULL,
+  titulo varchar(255) not null,
   tipo varchar(255) not null,
   fechaInicio date not null,
   fechaReal date null,

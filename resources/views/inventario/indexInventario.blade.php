@@ -49,7 +49,7 @@
                                                 <tr class=" border-top border-bottom">
                                                     <th scope="row"><img class="my-4 " style="width: 100px;"
                                                             {{-- src="{{ '/img/general/defaultinventario.jpg' }}"> --}}
-                                                            src="{{ $inventario->imagen == '' ? '/img/general/default.jpg' : asset ('/storage/app/public/inventario/' . $inventario->tipo . '/' . $inventario->imagen) }}">
+                                                            src="{{ $inventario->imagen == '' ? '/img/general/default.jpg' : '/storage/inventario/' . $inventario->tipo . '/' . $inventario->imagen }}">
                                                     </th>
                                                     <td>{{ $inventario->nombre }}</td>
                                                     <td>{{ $inventario->cantidad }}</td>
