@@ -31,7 +31,7 @@ class calendarioController extends Controller {
         $objCalendario = new Calendario();
         $usuario = personal::where( 'userId', auth()->user()->id )->first();
         $personal = personal::orderBy( 'nombres', 'asc' )->get();
-        $maquinaria = maquinaria::orderBy('nombre', 'asc')->get();
+        $maquinaria = maquinaria::orderBy( 'nombre', 'asc' )->get();
 
         $data = request()->all();
 
@@ -120,7 +120,7 @@ class calendarioController extends Controller {
 
         // dd( $vctMantenimientos );
 
-        return view( 'calendario.calendario', compact( 'usuario', 'personal', 'maquinaria', 'intMes', 'intAnio', 'vctTasks', 'vctEventos', 'vctMantenimientos', 'vctSolicitudes', 'vctProcesos', 'vctHerramientas', 'vctConsumibles', 'vctRefacciones','vctCombustibles' ) );
+        return view( 'calendario.calendario', compact( 'usuario', 'personal', 'maquinaria', 'intMes', 'intAnio', 'vctTasks', 'vctEventos', 'vctMantenimientos', 'vctSolicitudes', 'vctProcesos', 'vctHerramientas', 'vctConsumibles', 'vctRefacciones', 'vctCombustibles' ) );
     }
 
     /**

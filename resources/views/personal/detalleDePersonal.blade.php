@@ -28,7 +28,7 @@
                                 <div class="col-12 col-md-4  my-3">
                                     <div class="text-center mx-auto border  mb-4">
                                         <i><img class="imgPersonal img-fluid"
-                                                src="{{ $personal->foto == '' ? ' /img/general/default.jpg' : '/storage/personal/' . $personal->foto }}"></i>
+                                                src="{{ $personal->foto == '' ? ' /img/general/default.jpg' : asset ('/storage/personal/'. str_pad( $personal->id, 4, '0', STR_PAD_LEFT ). '/' . $personal->foto) }}"></i>
 
                                         <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"
                                                 id="mi-archivo" accept="image/*"></span>

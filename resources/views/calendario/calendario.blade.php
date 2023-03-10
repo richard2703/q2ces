@@ -95,7 +95,6 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
 
                                         //*** trabajamos las tarea registradas
                                         if($vctTasks->isEmpty()==false){
-
                                             foreach($vctTasks as $tarea){
                                                 if($tarea->fechaFin === $currentDay){
 
@@ -122,8 +121,8 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                                 if($solicitud->fechaRequerimiento === $currentDay){
 
                                                     $content .=  '<a href="#" class="label'. $solicitud->prioridad . ' event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small text-white"  data-bs-toggle="modal" data-bs-target="#editarTarea"
-                                                      title="' . $solicitud->titulo . ': '. ($solicitud->comentario? $solicitud->comentario :"Sin comentarios") . '">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" style="height: 10px;"><defs><style>.cls-1{fill:#fff;}</style></defs><g id="Capa_2" data-name="Capa 2"><g id="Capa_8" data-name="Capa 8"><path id="Trazado_2166" data-name="Trazado 2166" class="cls-1" d="M30,17.76V12.24H25.37a10.75,10.75,0,0,0-1.09-2.62l3.28-3.28-3.9-3.9L20.38,5.72a10.75,10.75,0,0,0-2.62-1.09V0H12.24V4.63A10.75,10.75,0,0,0,9.62,5.72L6.34,2.44l-3.9,3.9L5.72,9.62a10.75,10.75,0,0,0-1.09,2.62H0v5.52H4.63a10.75,10.75,0,0,0,1.09,2.62L2.44,23.66l3.9,3.9,3.28-3.28a10.75,10.75,0,0,0,2.62,1.09V30h5.52V25.37a10.34,10.34,0,0,0,2.62-1.08l3.28,3.28,3.9-3.9-3.28-3.28a10.75,10.75,0,0,0,1.09-2.62ZM15,21.41A6.41,6.41,0,1,1,21.41,15h0A6.41,6.41,0,0,1,15,21.41Z"/></g></g></svg>&nbsp;&nbsp;'
+                                                        title="' . $solicitud->titulo . ': '. ($solicitud->comentario? $solicitud->comentario :"Sin comentarios") . '">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" style="height: 10px;"><defs><style>.cls-1{fill:#fff;}</style></defs><g id="Capa_2" data-name="Capa 2"><g id="Capa_8" data-name="Capa 8"><g id="Grupo_1867" data-name="Grupo 1867"><path id="Trazado_2134" data-name="Trazado 2134" class="cls-1" d="M9,30H0L3.93,14.52,0,0H9L13,15.75Z"/><path id="Trazado_2135" data-name="Trazado 2135" class="cls-1" d="M26.07,30H17L21,14.52,17,0h9L30,15.75Z"/></g></g></g></svg>&nbsp;&nbsp;'
                                                     . $solicitud->titulo .
                                                      '</a>';
                                                     //  dd($content);
@@ -152,9 +151,9 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                             foreach($vctMantenimientos as $mantto){
                                                 if($mantto->fechaInicio === $currentDay){
                                                     $content .=  '<a href="#" class="label'. $mantto->estado . ' event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small text-white"  data-bs-toggle="modal" data-bs-target="#editarEvento"
-                                                       title="' .  ($mantto->comentario? $mantto->comentario :"Sin comentarios") . '">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" style="height: 10px;"><defs><style>.cls-1{fill:#fff;}</style></defs><g id="Capa_2" data-name="Capa 2"><g id="Capa_8" data-name="Capa 8"><path id="Trazado_2166" data-name="Trazado 2166" class="cls-1" d="M30,17.76V12.24H25.37a10.75,10.75,0,0,0-1.09-2.62l3.28-3.28-3.9-3.9L20.38,5.72a10.75,10.75,0,0,0-2.62-1.09V0H12.24V4.63A10.75,10.75,0,0,0,9.62,5.72L6.34,2.44l-3.9,3.9L5.72,9.62a10.75,10.75,0,0,0-1.09,2.62H0v5.52H4.63a10.75,10.75,0,0,0,1.09,2.62L2.44,23.66l3.9,3.9,3.28-3.28a10.75,10.75,0,0,0,2.62,1.09V30h5.52V25.37a10.34,10.34,0,0,0,2.62-1.08l3.28,3.28,3.9-3.9-3.28-3.28a10.75,10.75,0,0,0,1.09-2.62ZM15,21.41A6.41,6.41,0,1,1,21.41,15h0A6.41,6.41,0,0,1,15,21.41Z"/></g></g></svg>&nbsp;&nbsp;'
-                                                    .
+                                                        title="' .  ($mantto->comentario? $mantto->comentario :"Sin comentarios") . '">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" style="height: 10px;"><defs><style>.cls-1{fill:#fff;fill-rule:evenodd;}</style></defs><g id="Capa_2" data-name="Capa 2"><g id="Capa_8" data-name="Capa 8"><g id="Grupo_1868" data-name="Grupo 1868"><path id="Trazado_2131" data-name="Trazado 2131" class="cls-1" d="M30,17.06a2.87,2.87,0,0,0-.44-1.54c0-.13,0-.26-.1-.39l-3.11-6v0c-1-2.52-2.62-4.83-6.55-4.83H16.05a5.16,5.16,0,0,1,.1,1.88H19.8c2.07,0,3.16.9,4.25,3.51l2.24,3.59a7.23,7.23,0,0,0-2.4-.34h-11l0,5.17h4.29c.49,0,.92.3.92.65s-.43.68-.92.68H12.89v3.64h9.68v2.73a1.74,1.74,0,0,0,1.9,1.55h3.67A1.74,1.74,0,0,0,30,25.78V20.27a.87.87,0,0,0-.17-.52,2,2,0,0,0,.17-.81Zm-4.2,2.56h-4c-.82,0-1.42-.47-1.42-1.07s.61-1,1.42-1h4a1.08,1.08,0,1,1,.54,2.09,1,1,0,0,1-.54,0Z"/><path id="Trazado_2132" data-name="Trazado 2132" class="cls-1" d="M14.56,4.72h0c0-2-1.46-3.77-3.66-4.72V4.36L7.31,5.9,3.65,4.36V0C1.46,1,0,2.72,0,4.72s1.64,4,4,4.81V27.46a2.34,2.34,0,0,0,1,1.81A4.28,4.28,0,0,0,7.43,30c1.89,0,3.41-1.13,3.47-2.54l-.06-18c2.26-.91,3.72-2.72,3.72-4.72Z"/></g></g></g></svg>&nbsp;&nbsp;'
+                                                    . $mantto->titulo .
                                                      '</a>';
                                                     //  dd($content);
                                                 }
