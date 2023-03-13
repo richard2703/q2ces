@@ -9,40 +9,39 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use PhpParser\Node\Stmt\Switch_;
 
-class maquinariaController extends Controller
-{
+class maquinariaController extends Controller {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $maquinaria = maquinaria::paginate(5);
-        // dd('test');
-        return view('maquinaria.indexMaquinaria', compact('maquinaria'));
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
+
+    public function index() {
+        $maquinaria = maquinaria::paginate( 5 );
+        // dd( 'test' );
+        return view( 'maquinaria.indexMaquinaria', compact( 'maquinaria' ) );
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('maquinaria.altaDeMaquinaria');
+    * Show the form for creating a new resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
+
+    public function create() {
+        return view( 'maquinaria.altaDeMaquinaria' );
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
 
-        $request->validate([
+    public function store( Request $request ) {
+
+        $request->validate( [
             'nombre' => 'required|max:250',
             // 'identificador' => 'required|max:8',
             'marca' => 'required|max:250',
@@ -111,107 +110,107 @@ class maquinariaController extends Controller
             'filtroaire.numeric' => 'El campo filtro de aire debe ser numérico.',
             'bujias.numeric' => 'El campo bujias trasera debe ser numérico.',
             'tipobujia.max' => 'El campo tipo de bujía excede el límite de caracteres permitidos.',
-        ]);
-
+        ] );
 
         $maquinaria = $request->all();
 
         //** Generamos el identificador de la maquinaria */
-        $maquinaria['identificador'] = $this->generaCodigoIdentificacion($maquinaria['categoria']);
-        // dd($maquinaria['identificador']);
+        $maquinaria[ 'identificador' ] = $this->generaCodigoIdentificacion( $maquinaria[ 'categoria' ] );
+        // dd( $maquinaria[ 'identificador' ] );
 
-        $maquinaria['placas'] = strtoupper($maquinaria['placas']);
-        $maquinaria['nummotor'] = strtoupper($maquinaria['nummotor']);
-        $maquinaria['numserie'] = strtoupper($maquinaria['numserie']);
+        /*** directorio contenedor de su información */
+        $pathMaquinaria = str_pad( $maquinaria[ 'identificador' ], 4, '0', STR_PAD_LEFT );
 
+        $maquinaria[ 'placas' ] = strtoupper( $maquinaria[ 'placas' ] );
+        $maquinaria[ 'nummotor' ] = strtoupper( $maquinaria[ 'nummotor' ] );
+        $maquinaria[ 'numserie' ] = strtoupper( $maquinaria[ 'numserie' ] );
 
-        $maquinaria = maquinaria::create($maquinaria);
-        if ($request->hasFile("factura")) {
-            $docs['factura'] = time() . '_' . $request->file('factura')->getClientOriginalName();
-            $request->file('factura')->storeAs('/public/docmaquinaria', $docs['factura']);
+        $maquinaria = maquinaria::create( $maquinaria );
+        if ( $request->hasFile( 'factura' ) ) {
+            $docs[ 'factura' ] = time() . '_' . $request->file( 'factura' )->getClientOriginalName();
+            $request->file( 'factura' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'factura' ] );
         }
-        if ($request->hasFile("circulacion")) {
-            $docs['circulacion'] = time() . '_' . $request->file('circulacion')->getClientOriginalName();
-            $request->file('circulacion')->storeAs('/public/docmaquinaria', $docs['circulacion']);
+        if ( $request->hasFile( 'circulacion' ) ) {
+            $docs[ 'circulacion' ] = time() . '_' . $request->file( 'circulacion' )->getClientOriginalName();
+            $request->file( 'circulacion' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'circulacion' ] );
         }
-        if ($request->hasFile("verificacion")) {
-            $docs['verificacion'] = time() . '_' . $request->file('verificacion')->getClientOriginalName();
-            $request->file('verificacion')->storeAs('/public/docmaquinaria', $docs['verificacion']);
+        if ( $request->hasFile( 'verificacion' ) ) {
+            $docs[ 'verificacion' ] = time() . '_' . $request->file( 'verificacion' )->getClientOriginalName();
+            $request->file( 'verificacion' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'verificacion' ] );
         }
-        if ($request->hasFile("ficha")) {
-            $docs['ficha'] = time() . '_' . $request->file('ficha')->getClientOriginalName();
-            $request->file('ficha')->storeAs('/public/docmaquinaria', $docs['ficha']);
+        if ( $request->hasFile( 'ficha' ) ) {
+            $docs[ 'ficha' ] = time() . '_' . $request->file( 'ficha' )->getClientOriginalName();
+            $request->file( 'ficha' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'ficha' ] );
         }
-        if ($request->hasFile("manual")) {
-            $docs['manual'] = time() . '_' . $request->file('manual')->getClientOriginalName();
-            $request->file('manual')->storeAs('/public/docmaquinaria', $docs['manual']);
+        if ( $request->hasFile( 'manual' ) ) {
+            $docs[ 'manual' ] = time() . '_' . $request->file( 'manual' )->getClientOriginalName();
+            $request->file( 'manual' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'manual' ] );
         }
-        if ($request->hasFile("seguro")) {
-            $docs['seguro'] = time() . '_' . $request->file('seguro')->getClientOriginalName();
-            $request->file('seguro')->storeAs('/public/docmaquinaria', $docs['seguro']);
+        if ( $request->hasFile( 'seguro' ) ) {
+            $docs[ 'seguro' ] = time() . '_' . $request->file( 'seguro' )->getClientOriginalName();
+            $request->file( 'seguro' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'seguro' ] );
         }
-        if ($request->hasFile("registro")) {
-            $docs['registro'] = time() . '_' . $request->file('registro')->getClientOriginalName();
-            $request->file('registro')->storeAs('/public/docmaquinaria', $docs['registro']);
+        if ( $request->hasFile( 'registro' ) ) {
+            $docs[ 'registro' ] = time() . '_' . $request->file( 'registro' )->getClientOriginalName();
+            $request->file( 'registro' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'registro' ] );
         }
-        if ($request->hasFile("especial")) {
-            $docs['especial'] = time() . '_' . $request->file('especial')->getClientOriginalName();
-            $request->file('registro')->storeAs('/public/docmaquinaria', $docs['especial']);
+        if ( $request->hasFile( 'especial' ) ) {
+            $docs[ 'especial' ] = time() . '_' . $request->file( 'especial' )->getClientOriginalName();
+            $request->file( 'registro' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'especial' ] );
         }
-        $docs['maquinariaId'] = $maquinaria->id;
-        $docs = maqdocs::create($docs);
+        $docs[ 'maquinariaId' ] = $maquinaria->id;
+        $docs = maqdocs::create( $docs );
 
-        if ($request->hasFile("ruta")) {
-            foreach ($request->file('ruta') as $ruta) {
-                $imagen['maquinariaId'] = $maquinaria->id;
-                $imagen['ruta'] = time() . '_' . $ruta->getClientOriginalName();
-                $ruta->storeAs('/public/imgmaquinaria', $imagen['ruta']);
-                maqimagen::create($imagen);
+        if ( $request->hasFile( 'ruta' ) ) {
+            foreach ( $request->file( 'ruta' ) as $ruta ) {
+                $imagen[ 'maquinariaId' ] = $maquinaria->id;
+                $imagen[ 'ruta' ] = time() . '_' . $ruta->getClientOriginalName();
+                $ruta->storeAs( '/public/maquinaria/'. $pathMaquinaria, $imagen[ 'ruta' ] );
+                maqimagen::create( $imagen );
             }
         }
 
-
-        Session::flash('message', 1);
-        return redirect()->route('maquinaria.index');
+        Session::flash( 'message', 1 );
+        return redirect()->route( 'maquinaria.index' );
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\maquinaria  $maquinaria
-     * @return \Illuminate\Http\Response
-     */
-    public function show(maquinaria $maquinaria)
-    {
-        $docs = maqdocs::where("maquinariaId", $maquinaria->id)->first();
-        $fotos = maqimagen::where("maquinariaId", $maquinaria->id)->get();
-        // dd($fotos);
-        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'docs', 'fotos'));
+    * Display the specified resource.
+    *
+    * @param  \App\Models\maquinaria  $maquinaria
+    * @return \Illuminate\Http\Response
+    */
+
+    public function show( maquinaria $maquinaria ) {
+        $docs = maqdocs::where( 'maquinariaId', $maquinaria->id )->first();
+        $fotos = maqimagen::where( 'maquinariaId', $maquinaria->id )->get();
+        // dd( $fotos );
+        return view( 'maquinaria.detalleMaquinaria', compact( 'maquinaria', 'docs', 'fotos' ) );
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\maquinaria  $maquinaria
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(maquinaria $maquinaria)
-    {
-        dd($maquinaria);
-        // $docs = maqdocs::where("maquinariaId", $maquinaria->id)->first();
-        // return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'docs'));
+    * Show the form for editing the specified resource.
+    *
+    * @param  \App\Models\maquinaria  $maquinaria
+    * @return \Illuminate\Http\Response
+    */
+
+    public function edit( maquinaria $maquinaria ) {
+        dd( $maquinaria );
+        // $docs = maqdocs::where( 'maquinariaId', $maquinaria->id )->first();
+        // return view( 'maquinaria.detalleMaquinaria', compact( 'maquinaria', 'docs' ) );
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\maquinaria  $maquinaria
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, maquinaria $maquinaria)
-    {
-        $request->validate([
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Models\maquinaria  $maquinaria
+    * @return \Illuminate\Http\Response
+    */
+
+    public function update( Request $request, maquinaria $maquinaria ) {
+        $request->validate( [
             'nombre' => 'required|max:250',
             'identificador' => 'required|max:8',
             'marca' => 'required|max:250',
@@ -280,148 +279,155 @@ class maquinariaController extends Controller
             'filtroaire.numeric' => 'El campo filtro de aire debe ser numérico.',
             'bujias.numeric' => 'El campo bujias trasera debe ser numérico.',
             'tipobujia.max' => 'El campo tipo de bujía excede el límite de caracteres permitidos.',
-        ]);
+        ] );
 
         $data = $request->all();
 
-        $data['identificador'] = strtoupper($data['identificador']);
-        $data['placas'] = strtoupper($data['placas']);
-        $data['nummotor'] = strtoupper($data['nummotor']);
-        $data['numserie'] = strtoupper($data['numserie']);
+        $data[ 'identificador' ] = strtoupper( $data[ 'identificador' ] );
+        $data[ 'placas' ] = strtoupper( $data[ 'placas' ] );
+        $data[ 'nummotor' ] = strtoupper( $data[ 'nummotor' ] );
+        $data[ 'numserie' ] = strtoupper( $data[ 'numserie' ] );
 
-        $maquinaria->update($data);
-        if ($request->hasFile("factura")) {
-            $docs['factura'] = time() . '_' . $request->file('factura')->getClientOriginalName();
-            $request->file('factura')->storeAs('/public/docmaquinaria', $docs['factura']);
+        /*** directorio contenedor de su información */
+        $pathMaquinaria = str_pad( $data[ 'identificador' ], 4, '0', STR_PAD_LEFT );
+
+        $maquinaria->update( $data );
+        if ( $request->hasFile( 'factura' ) ) {
+            $docs[ 'factura' ] = time() . '_' . $request->file( 'factura' )->getClientOriginalName();
+            $request->file( 'factura' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'factura' ] );
         }
-        if ($request->hasFile("circulacion")) {
-            $docs['circulacion'] = time() . '_' . $request->file('circulacion')->getClientOriginalName();
-            $request->file('circulacion')->storeAs('/public/docmaquinaria', $docs['circulacion']);
+        if ( $request->hasFile( 'circulacion' ) ) {
+            $docs[ 'circulacion' ] = time() . '_' . $request->file( 'circulacion' )->getClientOriginalName();
+            $request->file( 'circulacion' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'circulacion' ] );
         }
-        if ($request->hasFile("verificacion")) {
-            $docs['verificacion'] = time() . '_' . $request->file('verificacion')->getClientOriginalName();
-            $request->file('verificacion')->storeAs('/public/docmaquinaria', $docs['verificacion']);
+        if ( $request->hasFile( 'verificacion' ) ) {
+            $docs[ 'verificacion' ] = time() . '_' . $request->file( 'verificacion' )->getClientOriginalName();
+            $request->file( 'verificacion' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'verificacion' ] );
         }
-        if ($request->hasFile("ficha")) {
-            $docs['ficha'] = time() . '_' . $request->file('ficha')->getClientOriginalName();
-            $request->file('ficha')->storeAs('/public/docmaquinaria', $docs['ficha']);
+        if ( $request->hasFile( 'ficha' ) ) {
+            $docs[ 'ficha' ] = time() . '_' . $request->file( 'ficha' )->getClientOriginalName();
+            $request->file( 'ficha' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'ficha' ] );
         }
-        if ($request->hasFile("manual")) {
-            $docs['manual'] = time() . '_' . $request->file('manual')->getClientOriginalName();
-            $request->file('manual')->storeAs('/public/docmaquinaria', $docs['manual']);
+        if ( $request->hasFile( 'manual' ) ) {
+            $docs[ 'manual' ] = time() . '_' . $request->file( 'manual' )->getClientOriginalName();
+            $request->file( 'manual' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'manual' ] );
         }
-        if ($request->hasFile("seguro")) {
-            $docs['seguro'] = time() . '_' . $request->file('seguro')->getClientOriginalName();
-            $request->file('seguro')->storeAs('/public/docmaquinaria', $docs['seguro']);
+        if ( $request->hasFile( 'seguro' ) ) {
+            $docs[ 'seguro' ] = time() . '_' . $request->file( 'seguro' )->getClientOriginalName();
+            $request->file( 'seguro' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'seguro' ] );
         }
-        if ($request->hasFile("registro")) {
-            $docs['registro'] = time() . '_' . $request->file('registro')->getClientOriginalName();
-            $request->file('registro')->storeAs('/public/docmaquinaria', $docs['registro']);
+        if ( $request->hasFile( 'registro' ) ) {
+            $docs[ 'registro' ] = time() . '_' . $request->file( 'registro' )->getClientOriginalName();
+            $request->file( 'registro' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'registro' ] );
         }
-        if ($request->hasFile("especial")) {
-            $docs['especial'] = time() . '_' . $request->file('especial')->getClientOriginalName();
-            $request->file('especial')->storeAs('/public/docmaquinaria', $docs['especial']);
+        if ( $request->hasFile( 'especial' ) ) {
+            $docs[ 'especial' ] = time() . '_' . $request->file( 'especial' )->getClientOriginalName();
+            $request->file( 'especial' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'especial' ] );
         }
-        $docu = maqdocs::where("maquinariaId", $maquinaria->id);
-        if (isset($docs)) {
-            $docu->update($docs);
+        $docu = maqdocs::where( 'maquinariaId', $maquinaria->id );
+        if ( isset( $docs ) ) {
+            $docu->update( $docs );
         }
 
-        if ($request->hasFile("ruta")) {
-            foreach ($request->file('ruta') as $ruta) {
-                $imagen['maquinariaId'] = $maquinaria->id;
-                $imagen['ruta'] = time() . '_' . $ruta->getClientOriginalName();
-                $ruta->storeAs('/public/imgmaquinaria', $imagen['ruta']);
-                maqimagen::create($imagen);
+        if ( $request->hasFile( 'ruta' ) ) {
+            foreach ( $request->file( 'ruta' ) as $ruta ) {
+                $imagen[ 'maquinariaId' ] = $maquinaria->id;
+                $imagen[ 'ruta' ] = time() . '_' . $ruta->getClientOriginalName();
+                $ruta->storeAs( '/public/maquinaria/'. $pathMaquinaria, $imagen[ 'ruta' ] );
+                maqimagen::create( $imagen );
             }
         }
 
+        Session::flash( 'message', 1 );
 
-        Session::flash('message', 1);
-
-        return redirect()->route('maquinaria.index');
+        return redirect()->route( 'maquinaria.index' );
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\maquinaria  $maquinaria
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(maquinaria $maquinaria)
-    {
-        return redirect()->back()->with('failed', 'No se puede eliminar');
+    * Remove the specified resource from storage.
+    *
+    * @param  \App\Models\maquinaria  $maquinaria
+    * @return \Illuminate\Http\Response
+    */
+
+    public function destroy( maquinaria $maquinaria ) {
+        return redirect()->back()->with( 'failed', 'No se puede eliminar' );
     }
 
-    public function download($id, $doc)
-    {
-        $book = maqdocs::where('id', $id)->firstOrFail();
+    public function download( $id, $doc ) {
+        $book = maqdocs::where('id', $id )->firstOrFail();
 
-        if (empty($book) === false) {
-            $pathToFile = storage_path("app/public/docmaquinaria/" . $book->$doc);
-            if (file_exists($pathToFile) === true &&  is_file($pathToFile) === true) {
-                // return response()->download($pathToFile);
-                return response()->file($pathToFile);
+        if ( empty( $book ) === false ) {
+
+            $objMaq = maquinaria::where('id',"=",$book->maquinariaId)->firstOrFail();
+
+            /*** directorio contenedor de su información */
+            $pathMaquinaria = str_pad( $objMaq->identificador, 4, '0', STR_PAD_LEFT );
+
+            $pathToFile = storage_path( 'app/public/maquinaria/' . $pathMaquinaria .'/' . $book->$doc );
+
+            if ( file_exists( $pathToFile ) === true &&  is_file( $pathToFile ) === true ) {
+                // return response()->download( $pathToFile );
+                return response()->file( $pathToFile );
             } else {
-                return redirect('404');
+                return redirect( '404' );
             }
         }
     }
 
-    public function generaCodigoIdentificacion($categoria)
-    {
+    public function generaCodigoIdentificacion( $categoria ) {
         $strCodigo = null;
         $intEquipos = 0;
         //*** obtenemos el numero de elementos existentes */
-        switch (strtolower($categoria)) {
+        switch ( strtolower( $categoria ) ) {
             case 'otros':
             case 'cisterna':
             case 'utilitarios':
-                $intEquipos = (int) maquinaria::where('categoria', 'otros')->get()->count();
-                $intEquipos +=  (int)  maquinaria::where('categoria', 'cisterna')->get()->count();
-                $intEquipos += (int)   maquinaria::where('categoria', 'utilitarios')->get()->count();
-                break;
+            $intEquipos = ( int ) maquinaria::where( 'categoria', 'otros' )->get()->count();
+            $intEquipos +=  ( int )  maquinaria::where( 'categoria', 'cisterna' )->get()->count();
+            $intEquipos += ( int )   maquinaria::where( 'categoria', 'utilitarios' )->get()->count();
+            break;
 
             default:
-                $intEquipos = maquinaria::where('categoria', $categoria)->get()->count();
-                break;
+            $intEquipos = maquinaria::where( 'categoria', $categoria )->get()->count();
+            break;
         }
 
         /*** buscamos el tipo para crear el tipo */
-        switch (strtolower($categoria)) {
+        switch ( strtolower( $categoria ) ) {
             case 'campers':
-                $strCodigo = "CAM-" . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
-                break;
+            $strCodigo = 'CAM-' . str_pad( $intEquipos + 1, 2, 0, STR_PAD_LEFT );
+            break;
 
             case 'retroexcavadoras':
-                $strCodigo = "RET-" . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
-                break;
+            $strCodigo = 'RET-' . str_pad( $intEquipos + 1, 2, 0, STR_PAD_LEFT );
+            break;
 
             case 'maquinaria pesada':
-                $strCodigo = "MP-" . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
-                break;
+            $strCodigo = 'MP-' . str_pad( $intEquipos + 1, 2, 0, STR_PAD_LEFT );
+            break;
 
             case 'maquinaria ligera':
-                $strCodigo = "ML-" . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
-                break;
+            $strCodigo = 'ML-' . str_pad( $intEquipos + 1, 2, 0, STR_PAD_LEFT );
+            break;
 
             case 'tractocamiones':
-                $strCodigo = "TRA-" . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
-                break;
+            $strCodigo = 'TRA-' . str_pad( $intEquipos + 1, 2, 0, STR_PAD_LEFT );
+            break;
 
             case 'accesorios':
-                $strCodigo = "ACC-" . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
-                break;
+            $strCodigo = 'ACC-' . str_pad( $intEquipos + 1, 2, 0, STR_PAD_LEFT );
+            break;
 
             case 'otros':
             case 'cisterna':
             case 'utilitarios':
-                $strCodigo = "Q2S-" . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
-                break;
+            $strCodigo = 'Q2S-' . str_pad( $intEquipos + 1, 2, 0, STR_PAD_LEFT );
+            break;
 
             default:
-                $strCodigo = "DES-" . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
-                break;
+            $strCodigo = 'DES-' . str_pad( $intEquipos + 1, 2, 0, STR_PAD_LEFT );
+            break;
         }
 
         return $strCodigo;
