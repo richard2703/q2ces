@@ -20,6 +20,7 @@
                             <form class="row alertaGuardar" action="{{ route('personal.store') }}" method="post"
                                 enctype="multipart/form-data">
                                 @csrf
+                                <input type="hidden" name="estatusId" id="estatusId" value="1">
                                 <div class="accordion my-3" id="accordionExample">
                                     {{--  Datos Personales  --}}
 
@@ -146,7 +147,7 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Hijos:</label></br>
-                                                                <input type="number" class="inputCaja" id="hijos"
+                                                                <input type="number" class="inputCaja text-right" id="hijos"
                                                                     name="hijos" value="{{ old('hijos') }}">
                                                             </div>
 
@@ -653,13 +654,13 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Sueldo Diario:</label></br>
-                                                                <input type="number" class="inputCaja" id=""
+                                                                <input type="number" class="inputCaja text-right" id=""
                                                                     name="diario" value="{{ old('diario') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">ISR:</label></br>
-                                                                <input type="number" class="inputCaja" id=""
+                                                                <input type="number" class="inputCaja text-right" id=""
                                                                     name="isr" step='0.01'
                                                                     value="{{ old('isr') }}">
                                                             </div>

@@ -10,6 +10,7 @@ use App\Models\equipo;
 use App\Models\User;
 use App\Models\userdocs;
 use App\Models\fiscal;
+use App\Models\userEstatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -23,7 +24,7 @@ class personalController extends Controller {
     */
 
     public function index() {
-        $personal = personal::orderBy( 'created_at', 'desc' )->paginate( 5 );
+        $personal = personal::orderBy( 'created_at', 'desc' )->paginate( 15 );
         // dd( $personal );
         return view( 'personal.indexPersonal', compact( 'personal' ) );
     }
@@ -221,7 +222,8 @@ class personalController extends Controller {
             'foto',
             'aler',
             'profe',
-            'interior'
+            'interior',
+            'estatusId'
         );
         // conversion a mayuscula de algunos campos
         $personal[ 'curp' ] = strtoupper( $personal[ 'curp' ] );
@@ -370,6 +372,7 @@ class personalController extends Controller {
         $newnomina->jefeId = $request->jefeId;
         $newnomina->neto = $request->neto;
         $newnomina->isr = $request->isr;
+        $newnomina->fechaPagoPrimaVac = $request->fechaPagoPrimaVac;
         $newnomina->save();
 
         $newequipo = new equipo();
@@ -437,6 +440,7 @@ class personalController extends Controller {
         $equipo = equipo::where( 'personalId', $personal->id )->first();
         $docs = userdocs::where( 'personalId', $personal->id )->first();
         $fiscal = fiscal::where( 'personalId', $personal->id )->first();
+        $vctEstatus = userEstatus::all();
         $vctPersonal = personal::all();
 
         $nomina->decSalarioDiario = ( $nomina->diario );
@@ -455,7 +459,7 @@ class personalController extends Controller {
         $nomina->decAfore + $nomina->decInfonavit + $nomina->decVacaciones + $nomina->decPrimaVacacional + $nomina->decAguinaldo + $nomina->isr, 2 );
 
         // dd( $nomina );
-        return view( 'personal.detalleDePersonal', compact( 'personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal', 'vctPersonal' ) );
+        return view( 'personal.detalleDePersonal', compact( 'personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal', 'vctPersonal', 'vctEstatus' ) );
     }
 
     /**
@@ -650,7 +654,8 @@ class personalController extends Controller {
             'foto',
             'aler',
             'profe',
-            'interior'
+            'interior',
+            'estatusId'
         );
 
         /*** directorio contenedor de su información */
@@ -692,7 +697,6 @@ class personalController extends Controller {
         $beneficiario->save();
 
         $nomina = nomina::where( 'personalId', "$id" )->first();
-        ;
         $nomina->nomina = $request->nomina;
         $nomina->imss = $request->imss;
         $nomina->clinica = $request->clinica;
@@ -708,6 +712,7 @@ class personalController extends Controller {
         $nomina->neto = $request->neto;
         $nomina->diario = $request->diario;
         $nomina->isr = $request->isr;
+        $nomina->fechaPagoPrimaVac = $request->fechaPagoPrimaVac;
         $nomina->save();
 
         $equipo = equipo::where( 'personalId', "$id" )->first();
@@ -811,8 +816,11 @@ class personalController extends Controller {
             $docu->update( $docs );
             # code...
         }
+
         Session::flash( 'message', 1 );
         //dd( $request );
+
+        $this->cambiaEstatusUsuario( $personal->id, $personal->estatusId );
 
         return redirect()->route( 'personal.index' );
     }
@@ -824,8 +832,66 @@ class personalController extends Controller {
     * @return \Illuminate\Http\Response
     */
 
-    public function destroy( personal $personal ) {
-        return redirect()->back()->with( 'failed', 'No se puede eliminar' );
+    public function destroy( $id, $estatusId ) {
+
+        $this->cambiaEstatusUsuario( $id, $estatusId );
+
+    }
+
+    public function cambiaEstatusUsuario( $id, $estatusId ) {
+        $objPersona = personal::where( 'id', '=', $id )->firstOrFail();
+
+        $vctEstatus = userEstatus::select( 'userEstatus.nombre' )->get()->toArray();
+        $aEstatus = array();
+        foreach ( $vctEstatus as   $value ) {
+            $aEstatus[] = strtolower( $value[ 'nombre' ] .'_' );
+        }
+
+        if ( empty( $objPersona ) === false ) {
+            $strPrefijo = '';
+            $objEstatus = userEstatus::where( 'id', $estatusId )->firstOrFail();
+
+            $objUser = User::where( 'id', $objPersona->userId )->firstOrFail();
+
+            if ( empty( $objUser ) === false ) {
+                //** si el estatus es mayor de 1 se debe de realizar ajustes */
+                if ( empty( $objEstatus ) === false && $objEstatus->id > 1 ) {
+                    //** para todos los estatus */
+                    $strPrefijo = $objEstatus->nombre . '_';
+
+                    $strUserEmail = $strPrefijo .  str_replace( $aEstatus, '', $objUser->email );
+                    $strUserPwd =  bcrypt( $strPrefijo . $objUser->email . now()->toString() );
+
+                    $objUser->email = strtolower($strUserEmail);
+                    $objUser->password = $strUserPwd;
+                    $objUser->update();
+
+                    $strPersonalEmail = $strPrefijo . str_replace( $aEstatus, '', $objPersona->mailEmpresarial );
+
+                    $objPersona->mailEmpresarial = strtolower($strPersonalEmail );
+                    $objPersona->estatusId = $estatusId ;
+                    $objPersona->update();
+
+                    // dd( $objPersona );
+                } else {
+                    /** es activacion */
+                    $strUserEmail =  str_replace( $aEstatus, '', $objUser->email );
+                    $strUserPwd =  bcrypt( '12345678' );
+
+                    $objUser->email = $strUserEmail;
+                    $objUser->password = $strUserPwd;
+                    $objUser->update();
+
+                    $strPersonalEmail =  str_replace( $aEstatus, '', $objPersona->mailEmpresarial );
+
+                    $objPersona->mailEmpresarial = $strPersonalEmail ;
+                    $objPersona->estatusId = $estatusId ;
+                    $objPersona->update();
+                }
+            }
+
+        }
+
     }
 
     public function download( $id, $doc ) {
@@ -836,7 +902,7 @@ class personalController extends Controller {
             /*** directorio contenedor de su información */
             $pathPesonal = str_pad( $book->personalId, 4, '0', STR_PAD_LEFT );
             $pathToFile = storage_path( 'app/public/personal/'. $pathPesonal .'/' . $book->$doc );
-            // dd($pathToFile);
+            // dd( $pathToFile );
             if ( file_exists( $pathToFile ) === true &&  is_file( $pathToFile ) === true ) {
                 // return response()->download( $pathToFile );
                 return response()->file( $pathToFile );

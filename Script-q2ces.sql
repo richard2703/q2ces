@@ -112,6 +112,7 @@ UNIQUE KEY failed_jobs_uuid_unique (uuid)
 CREATE TABLE personal(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   userId bigint(20) unsigned  NULL,
+  estatusId bigint(20) unsigned  NULL,
   nombres varchar(255) NULL,
   apellidoP varchar(255) NULL,
   apellidoM varchar(255) NULL,
@@ -145,7 +146,8 @@ CREATE TABLE personal(
   created_at timestamp NULL DEFAULT NULL,
   updated_at timestamp NULL DEFAULT NULL,
   PRIMARY KEY (id),
-  CONSTRAINT FK_personal_userId foreign key (userId) references users(id)
+  CONSTRAINT FK_personal_userId foreign key (userId) references users(id),
+  CONSTRAINT FK_personal_userEstatusId foreign key (estatusId) references userEstatus(id)
  );
 
 
@@ -239,6 +241,7 @@ CREATE TABLE nomina(
   vactomadas int null,
   primavactotal  float(10,2) null,
   primavactomadas  float(10,2) null,
+  fechaPagoPrimaVac date null,
   laborables int null,
   horario varchar(255) NULL,
   jefeId bigint(20) unsigned NULL,
@@ -250,7 +253,7 @@ CREATE TABLE nomina(
   imssAportacion float(10,2) null,
   imssriesgo float(10,2) null,
   aforeAportacion float(10,2) null,
-  isn float(10,2) null,
+  isr float(10,2) null,
   ispt float(10,2) null,
   aguinaldo float(10,2) null,
   ptu float(10,2) null,
@@ -646,5 +649,19 @@ CREATE TABLE historialServicios(
   CONSTRAINT FK_historialServicios_estadoId foreign key (estadoId) references estados(id)
  );
 
+
+create table userEstatus(
+ id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+ nombre varchar(200) not null,
+ color varchar(8) null,
+ comentario text null,
+ primary key (id)
+);
+
+INSERT INTO userEstatus VALUES
+(1,'Activo','green','Usuario activo'),
+(2,'Inactivo','yellow','2022-07-25 20:54:15','El usuario esta inactivo'),
+(3,'Baja','orange','2022-07-25 20:54:15','El usuario fue dado de baja'),
+(4,'Borrado','red','2022-07-25 20:54:16','El usario fue borrado de forma definitiva');
 
 
