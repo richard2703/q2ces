@@ -37,8 +37,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    {{--  <link rel="stylesheet" href="{{ asset('css/reset.css') }}">  --}}
+    <link rel="stylesheet" href="{{ asset('css/reset.css') }}"> 
     <link rel="stylesheet" href="{{ asset('css/generalFront.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/general.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
 </head>
 
 <body>
@@ -78,16 +80,11 @@
 
 
     <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top py-0 pe-5">
-        <a href="#" class="navbar-brand ps-5 me-0">
-            {{--  <h1 class="text-white m-0">Industro</h1>  --}}
-            {{--  <img class="w-100" src="{{ asset('/img/front/logo.png') }}" alt="Image">  --}}
-            <img class="" src="{{ asset('/img/front/logo1.png') }}" alt="Image"
-                style="
-            /* width: 10%; */
-            height: -webkit-fill-available;
-            ">
-            <h5 class="text-white m-0">Construction Equipment Services</h5>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top py-0 pe-5 navA">
+        <a href="#" class="navbar-brand ps-0 me-0">
+           
+            <img class="logoQ2Bco" src="{{ asset('/img/front/logo1.png') }}" alt="Image" style=" height: -webkit-fill-available;">
+            <p class="textUno fs-6">Construction Equipment Services</p>
 
         </a>
         <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -629,14 +626,18 @@
 
 
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark footer mt-5 py-0 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container-fluid bg-dark footer mt-5 py-0 wow fadeIn pb-5" data-wow-delay="0.1s">
         <div class="container py-0">
             <div class="row g-5">
-                <div class="col-lg-6 col-md-6">
+                <div class="col-lg-6 col-md-6 ">
                     <h5 class="text-white mb-4">Dirección</h5>
                     <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>José María Heredia 2387 Guadalajara,
                         Jal., Méx.</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+52 33 21 83 64 72</p>
+                        <div class="d-flex">
+                        <i class="fa fa-phone-alt me-3"></i><p class="mb-2 textTels">+52 33 21 83 64 72</br>
+                        +52 33 36 40 22 90</p>
+                    </div>
+
                     <p class="mb-2"><i class="fa fa-envelope me-3"></i>contacto@q2ces.com</p>
                     <div class="d-flex pt-3">
                         <a class="btn btn-square btn-primary rounded-circle me-2 btnF"
@@ -662,9 +663,9 @@
                     <p class="mb-1">Lunes - Viernes</p>
                     <h6 class="text-light">08:00 am - 06:00 pm</h6>
                     <p class="mb-1">Sábado</p>
-                    <h6 class="text-light">09:00 am - 12:00 pm</h6>
-                    <p class="mb-1">Domingo</p>
-                    <h6 class="text-light">Cerrado</h6>
+                    <h6 class="text-light">08:00 am - 13:00 pm</h6>
+                    <!--<p class="mb-1">Domingo</p>-->
+                    
                 </div>
                 {{--  <div class="col-lg-3 col-md-6">
                     <h5 class="text-white mb-4">Newsletter</h5>

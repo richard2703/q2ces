@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Inventario Herramientas')])
+@extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Inventario')])
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -8,7 +8,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Inventario Herramientas</h4>
+                                    <h4 class="card-title">Inventario de {{ $tipo }}</h4>
                                     {{-- <p class="card-category">Usuarios registrados</p> --}}
                                 </div>
                                 <div class="card-body table-responsive">
@@ -26,14 +26,14 @@
                                         <div class="col-12 text-end mb-5">
                                             {{-- @can('user_create') --}}
                                             <a href="{{ route('inventario.create') }}">
-                                                <button type="button" class="botonSinFondo "><img style="width: 30px;"src="{{ '/img/inventario/nuevo.svg' }}"></button>
+                                                <button type="button" class="botonSinFondo "><img
+                                                        style="width: 30px;"src="{{ '/img/inventario/nuevo.svg' }}"></button>
                                             </a>
                                             <p>Nuevo</p>
 
                                             {{-- @endcan --}}
                                         </div>
                                     </div>
-
 
                                     <table class="table-responsive">
                                         <thead class="labelTitulo">
@@ -48,16 +48,16 @@
                                         <tbody>
                                             @forelse ($inventarios as $inventario)
                                                 <tr class=" border-top border-bottom">
-                                                    <th scope="row"><img class="my-4 " style="width: 100px;"
+                                                    <td scope="row"><img class="my-4 " style="width: 100px;"
                                                             {{-- src="{{ '/img/general/defaultinventario.jpg' }}"> --}}
-                                                            src="{{ $inventario->imagen == '' ? ' /img/general/default.jpg' : '/storage/inventario/' . $inventario->imagen }}">
-                                                    </th>
+                                                            src="{{ ($inventario->imagen == '' ? '/img/general/default.jpg' : '/storage/inventario/' . $inventario->tipo . '/' . $inventario->imagen) }}">
+                                                    </td>
                                                     <td>{{ $inventario->nombre }}</td>
                                                     <td>{{ $inventario->cantidad }}</td>
                                                     <td>{{ $inventario->maximo }}</td>
                                                     <td class="td-actions justify-content-end d-flex">
                                                         {{-- @can('user_show') --}}
-                                                        <div >
+                                                        <div>
                                                             <button type="button"
                                                                 class="botonSinFondo mx-2"title="Resurtir"
                                                                 data-bs-toggle="modal" data-bs-target="#modal-cliente"
@@ -68,7 +68,7 @@
 
                                                         {{-- @endcan --}}
                                                         {{-- @can('user_edit') --}}
-                                                        <div >
+                                                        <div>
                                                             <a href="{{ route('inventario.show', $inventario->id) }}"
                                                                 <button type="button"
                                                                 class="botonSinFondo mx-2"title="Detalle"><img
@@ -84,8 +84,8 @@
                                                             @csrf
                                                             @method('DELETE')
                                                             <!--<button class="btn btn-danger" type="submit" rel="tooltip">
-                                                                                                                <i class="material-icons">close</i>
-                                                                                                            </button>-->
+                                                                                                                    <i class="material-icons">close</i>
+                                                                                                                </button>-->
                                                         </form>
                                                         {{-- @endcan --}}
                                                     </td>
