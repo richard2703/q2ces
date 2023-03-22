@@ -646,5 +646,21 @@ CREATE TABLE historialServicios(
   CONSTRAINT FK_historialServicios_estadoId foreign key (estadoId) references estados(id)
  );
 
+create table tipoAsistencia(
+ id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+ nombre varchar(200) not null,
+ comentario text null,
+ primary key (id)
+);
 
+create table asistencia(
+ id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+ personalId bigint(20) unsigned NOT NULL,
+ asistenciaId bigint(20) unsigned NOT NULL,
+ fecha date not null,
+ horasExtra int null,
+ primary key (id),
+ CONSTRAINT FK_asistencia_personalId foreign key (personalId) references personal(id),
+ CONSTRAINT FK_asistencia_asistenciaId foreign key (asistenciaId) references tipoAsistencia(id)
+);
 
