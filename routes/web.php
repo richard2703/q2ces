@@ -169,7 +169,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Crud calendario
     Route::get('/calendario', [App\Http\Controllers\calendarioController::class, 'index'])->name('calendario.index');
-    Route::get('/calendario/{anio}/{mes}', [App\Http\Controllers\calendarioController::class, 'reloadCalendario'] )->name('calendario.reloadCalendario');
+    Route::get('/calendario/{anio}/{mes}', [App\Http\Controllers\calendarioController::class, 'reloadCalendario'])->name('calendario.reloadCalendario');
     //Route::put('/coordiseno/detalle/riesgos/{riesgo}/recalcular', [App\Http\Controllers\detalleRiesgoController::class, 'recalcular'])->name('detalleriesgo.recalcular');
 
     //*** operaciones con tareas */
@@ -188,4 +188,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/calendario/solicitudes/nuevo', [App\Http\Controllers\solicitudesController::class, 'store'])->name('solicitudes.store');
     Route::put('/calendario/solicitudes/editar', [App\Http\Controllers\solicitudesController::class, 'update'])->name('solicitudes.update');
 
+    //Crud personal
+    Route::get('/asistencia', [App\Http\Controllers\asistenciaController::class, 'index'])->name('asistencia.index');
+    Route::get('/asistencia/diaria', [App\Http\Controllers\asistenciaController::class, 'create'])->name('asistencia.create');
+    Route::post('/asistencia/diaria', [App\Http\Controllers\asistenciaController::class, 'store'])->name('asistencia.store');
+    Route::get('/asistencia/horasExtra', [App\Http\Controllers\asistenciaController::class, 'horasExtra'])->name('asistencia.horasExtra');
+    Route::post('/asistencia/horasExtra', [App\Http\Controllers\asistenciaController::class, 'HEstore'])->name('asistencia.HEstore');
+    Route::get('/asistencia/personal', [App\Http\Controllers\asistenciaController::class, 'show'])->name('asistencia.show');
+    // Route::post('/asistencia', [App\Http\Controllers\personalController::class, 'store'])->name('personal.store');
+    // Route::get('/asistencia', [App\Http\Controllers\personalController::class, 'index'])->name('personal.indexPersonal');
+    // Route::get('/asistencia/{personal}', [App\Http\Controllers\personalController::class, 'show'])->name('personal.show');
+    // Route::put('/asistencia/{personal}', [App\Http\Controllers\personalController::class, 'update'])->name('personal.update');
+    // Route::get('asistencia/{id}/{doc}', [App\Http\Controllers\personalController::class, 'download'])->name('personal.download');
+    // Route::delete('/asistencia/{personal}', [App\Http\Controllers\UserController::class, 'destroy'])->name('personal.delete');
 });
