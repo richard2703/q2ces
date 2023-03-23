@@ -832,7 +832,7 @@ class personalController extends Controller {
     * @return \Illuminate\Http\Response
     */
 
-    public function destroy( $id, $estatusId ) {
+    public function destroy( $id, $estatusId = 2 ) {
 
         $this->cambiaEstatusUsuario( $id, $estatusId );
 
@@ -862,13 +862,13 @@ class personalController extends Controller {
                     $strUserEmail = $strPrefijo .  str_replace( $aEstatus, '', $objUser->email );
                     $strUserPwd =  bcrypt( $strPrefijo . $objUser->email . now()->toString() );
 
-                    $objUser->email = strtolower($strUserEmail);
+                    $objUser->email = strtolower( $strUserEmail );
                     $objUser->password = $strUserPwd;
                     $objUser->update();
 
                     $strPersonalEmail = $strPrefijo . str_replace( $aEstatus, '', $objPersona->mailEmpresarial );
 
-                    $objPersona->mailEmpresarial = strtolower($strPersonalEmail );
+                    $objPersona->mailEmpresarial = strtolower( $strPersonalEmail );
                     $objPersona->estatusId = $estatusId ;
                     $objPersona->update();
 

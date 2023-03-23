@@ -132,7 +132,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/maquinaria', [App\Http\Controllers\maquinariaController::class, 'index'])->name('maquinaria.index');
     Route::get('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'show'])->name('maquinaria.show');
     Route::put('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'update'])->name('maquinaria.update');
-    Route::get('maquinaria/{id}/{doc}', [App\Http\Controllers\maquinariaController::class, 'download'])->name('maquinaria.download');
+    Route::put('/maquinaria/documento/update', [App\Http\Controllers\maquinariaController::class, 'updateDocumento'])->name('maquinaria.updateDocumento');
+    Route::get('maquinaria/{id}/{doc}/download', [App\Http\Controllers\maquinariaController::class, 'download'])->name('maquinaria.download');
+    Route::post('maquinaria/upload', [App\Http\Controllers\maquinariaController::class, 'upload'])->name('maquinaria.upload');
     Route::get('/maquinaria/{maquinaria}/edit', [App\Http\Controllers\maquinariaController::class, 'edit'])->name('maquinaria.edit');
     Route::delete('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'destroy'])->name('maquinaria.delete');
 

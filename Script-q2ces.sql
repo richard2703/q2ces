@@ -264,8 +264,9 @@ CREATE TABLE nomina(
 
 CREATE TABLE maquinaria(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  estatusId bigint(20) unsigned  NULL,
   nombre varchar(255) NULL,
-  identificador varchar(8) NULL,
+  identificador varchar(32) NULL,
   tipo varchar(255) NULL,
   categoria varchar(255) NULL,
   marca varchar(255) NULL,
@@ -304,27 +305,22 @@ CREATE TABLE maquinaria(
   foto4 varchar(255) NULL,
   cisterna int(1) NULL,
   cisternaNivel float(10,2) NULL,
-  PRIMARY KEY (id)
+  created_at datetime NULL,
+  updated_at datetime NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_maquinaria_maquinariaEstatusId foreign key (estatusId) references maquinariaEstatus(id)
  );
 
 CREATE TABLE maqdocs(
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   maquinariaId bigint(20) unsigned NOT NULL,
-/*  factura varchar(255) NULL,
-  circulacion varchar(255) NULL,
-  verificacion varchar(255) NULL,
-  verificacionEstado varchar(255) NULL,
-  ficha varchar(255) NULL,
-  manual varchar(255) NULL,
-  seguro varchar(255) NULL,
-  seguroEstatus varchar(255) NULL,
-  registro varchar(255) NULL,
-  especial varchar(255) NULL,*/
   ruta varchar(255) null,
   tipo varchar(255) null,
   fechaVencimiento date not null,
   estatus varchar(255) NULL,
   comentarios text null,
+  created_at datetime NULL,
+  updated_at datetime NULL,
   PRIMARY KEY (id),
   CONSTRAINT FK_maqdocs_maquinariaId foreign key (maquinariaId) references maquinaria(id)
  );
@@ -660,8 +656,40 @@ create table userEstatus(
 
 INSERT INTO userEstatus VALUES
 (1,'Activo','green','Usuario activo'),
-(2,'Inactivo','yellow','2022-07-25 20:54:15','El usuario esta inactivo'),
-(3,'Baja','orange','2022-07-25 20:54:15','El usuario fue dado de baja'),
-(4,'Borrado','red','2022-07-25 20:54:16','El usario fue borrado de forma definitiva');
+(2,'Inactivo','yellow','El usuario esta inactivo'),
+(3,'Baja','orange','El usuario fue dado de baja'),
+(4,'Borrado','red','El usario fue borrado de forma definitiva');
 
 
+create table maquinariaEstatus(
+ id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+ nombre varchar(200) not null,
+ color varchar(8) null,
+ comentario text null,
+ primary key (id)
+);
+
+INSERT INTO maquinariaEstatus VALUES
+(1,'Activo','green','Maquinaría activa'),
+(2,'Inactivo','yellow','La maquinaría esta inactiva'),
+(3,'Baja','orange','La maquinaría esta fue dada de baja'),
+(4,'Borrado','red','La maquinaría fue borrada de forma definitiva');
+
+
+ create table tipoAsistencia(
+ id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+ nombre varchar(200) not null,
+ comentario text null,
+ primary key (id)
+);
+
+create table asistencia(
+ id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+ personalId bigint(20) unsigned NOT NULL,
+ asistenciaId bigint(20) unsigned NOT NULL,
+ fecha date not null,
+ horasExtra int null,
+ primary key (id),
+ CONSTRAINT FK_asistencia_personalId foreign key (personalId) references personal(id),
+ CONSTRAINT FK_asistencia_asistenciaId foreign key (asistenciaId) references tipoAsistencia(id)
+);

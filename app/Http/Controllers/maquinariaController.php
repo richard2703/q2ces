@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\maquinaria;
 use App\Models\maqdocs;
 use App\Models\maqimagen;
+use App\Models\maquinariaEstatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use PhpParser\Node\Stmt\Switch_;
@@ -17,7 +18,7 @@ class maquinariaController extends Controller {
     */
 
     public function index() {
-        $maquinaria = maquinaria::paginate( 5 );
+        $maquinaria = maquinaria::paginate( 15 );
         // dd( 'test' );
         return view( 'maquinaria.indexMaquinaria', compact( 'maquinaria' ) );
     }
@@ -40,7 +41,7 @@ class maquinariaController extends Controller {
     */
 
     public function store( Request $request ) {
-
+        // dd( $request );
         $request->validate( [
             'nombre' => 'required|max:250',
             // 'identificador' => 'required|max:8',
@@ -116,6 +117,7 @@ class maquinariaController extends Controller {
 
         //** Generamos el identificador de la maquinaria */
         $maquinaria[ 'identificador' ] = $this->generaCodigoIdentificacion( $maquinaria[ 'categoria' ] );
+        $maquinaria[ 'estatusId' ] = 1;
         // dd( $maquinaria[ 'identificador' ] );
 
         /*** directorio contenedor de su información */
@@ -125,42 +127,95 @@ class maquinariaController extends Controller {
         $maquinaria[ 'nummotor' ] = strtoupper( $maquinaria[ 'nummotor' ] );
         $maquinaria[ 'numserie' ] = strtoupper( $maquinaria[ 'numserie' ] );
 
+        //*** se guarda la maquinaria */
         $maquinaria = maquinaria::create( $maquinaria );
-        if ( $request->hasFile( 'factura' ) ) {
-            $docs[ 'factura' ] = time() . '_' . $request->file( 'factura' )->getClientOriginalName();
-            $request->file( 'factura' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'factura' ] );
-        }
-        if ( $request->hasFile( 'circulacion' ) ) {
-            $docs[ 'circulacion' ] = time() . '_' . $request->file( 'circulacion' )->getClientOriginalName();
-            $request->file( 'circulacion' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'circulacion' ] );
-        }
-        if ( $request->hasFile( 'verificacion' ) ) {
-            $docs[ 'verificacion' ] = time() . '_' . $request->file( 'verificacion' )->getClientOriginalName();
-            $request->file( 'verificacion' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'verificacion' ] );
-        }
-        if ( $request->hasFile( 'ficha' ) ) {
-            $docs[ 'ficha' ] = time() . '_' . $request->file( 'ficha' )->getClientOriginalName();
-            $request->file( 'ficha' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'ficha' ] );
-        }
-        if ( $request->hasFile( 'manual' ) ) {
-            $docs[ 'manual' ] = time() . '_' . $request->file( 'manual' )->getClientOriginalName();
-            $request->file( 'manual' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'manual' ] );
-        }
-        if ( $request->hasFile( 'seguro' ) ) {
-            $docs[ 'seguro' ] = time() . '_' . $request->file( 'seguro' )->getClientOriginalName();
-            $request->file( 'seguro' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'seguro' ] );
-        }
-        if ( $request->hasFile( 'registro' ) ) {
-            $docs[ 'registro' ] = time() . '_' . $request->file( 'registro' )->getClientOriginalName();
-            $request->file( 'registro' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'registro' ] );
-        }
-        if ( $request->hasFile( 'especial' ) ) {
-            $docs[ 'especial' ] = time() . '_' . $request->file( 'especial' )->getClientOriginalName();
-            $request->file( 'registro' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'especial' ] );
-        }
-        $docs[ 'maquinariaId' ] = $maquinaria->id;
-        $docs = maqdocs::create( $docs );
 
+        if ( $request->hasFile( 'factura_ruta' ) ) {
+            $objFactura = new maqdocs() ;
+
+            $objFactura->ruta = time() . '_' . $request->file( 'factura_ruta' )->getClientOriginalName();
+            $objFactura->tipo =  $request[ 'factura_tipo' ];
+            $objFactura->maquinariaId = $maquinaria->id;
+            $objFactura->save();
+            $request->file( 'factura_ruta' )->storeAs( '/public/maquinaria/'. $pathMaquinaria . '/documentos/'.  $objFactura->tipo, $objFactura->ruta );
+        }
+
+        if ( $request->hasFile( 'manual_ruta' ) ) {
+            $objManual = new maqdocs() ;
+
+            $objManual->ruta = time() . '_' . $request->file( 'manual_ruta' )->getClientOriginalName();
+            $objManual->tipo =  $request[ 'manual_tipo' ];
+            $objManual->maquinariaId = $maquinaria->id;
+            $objManual->save();
+            $request->file( 'manual_ruta' )->storeAs( '/public/maquinaria/'. $pathMaquinaria . '/documentos/'.  $objManual->tipo, $objManual->ruta );
+        }
+
+        if ( $request->hasFile( 'registro_ruta' ) ) {
+            $objRegistro = new maqdocs() ;
+
+            $objRegistro->ruta = time() . '_' . $request->file( 'registro_ruta' )->getClientOriginalName();
+            $objRegistro->tipo =  $request[ 'registro_tipo' ];
+            $objRegistro->maquinariaId = $maquinaria->id;
+            $objRegistro->save();
+            $request->file( 'registro_ruta' )->storeAs( '/public/maquinaria/'. $pathMaquinaria . '/documentos/'.  $objRegistro->tipo, $objRegistro->ruta );
+        }
+
+        if ( $request->hasFile( 'ficha_ruta' ) ) {
+            $objFicha = new maqdocs() ;
+
+            $objFicha->ruta = time() . '_' . $request->file( 'ficha_ruta' )->getClientOriginalName();
+            $objFicha->tipo =  $request[ 'ficha_tipo' ];
+            $objFicha->maquinariaId = $maquinaria->id;
+            $objFicha->save();
+            $request->file( 'ficha_ruta' )->storeAs( '/public/maquinaria/'. $pathMaquinaria . '/documentos/'.  $objFicha->tipo, $objFicha->ruta );
+        }
+
+        //*** documentos con fecha */
+        if ( $request->hasFile( 'verificacion_ruta' ) ) {
+            $objVerificacion = new maqdocs() ;
+
+            $objVerificacion->ruta = time() . '_' . $request->file( 'verificacion_ruta' )->getClientOriginalName();
+            $objVerificacion->tipo =  $request[ 'verificacion_tipo' ];
+            $objVerificacion->fechaVencimiento =  $request[ 'verificacion_fechaVencimiento' ];
+            $objVerificacion->maquinariaId = $maquinaria->id;
+            $objVerificacion->save();
+            $request->file( 'verificacion_ruta' )->storeAs( '/public/maquinaria/'. $pathMaquinaria . '/documentos/'.  $objVerificacion->tipo, $objVerificacion->ruta );
+        }
+
+        if ( $request->hasFile( 'tarjeta_ruta' ) ) {
+            $objTarjeta = new maqdocs() ;
+
+            $objTarjeta->ruta = time() . '_' . $request->file( 'tarjeta_ruta' )->getClientOriginalName();
+            $objTarjeta->tipo =  $request[ 'tarjeta_tipo' ];
+            $objTarjeta->fechaVencimiento =  $request[ 'tarjeta_fechaVencimiento' ];
+            $objTarjeta->maquinariaId = $maquinaria->id;
+            $objTarjeta->save();
+            $request->file( 'tarjeta_ruta' )->storeAs( '/public/maquinaria/'. $pathMaquinaria . '/documentos/'.  $objTarjeta->tipo, $objTarjeta->ruta );
+        }
+
+        if ( $request->hasFile( 'seguros_ruta' ) ) {
+            $objSeguros = new maqdocs() ;
+
+            $objSeguros->ruta = time() . '_' . $request->file( 'seguros_ruta' )->getClientOriginalName();
+            $objSeguros->tipo =  $request[ 'seguros_tipo' ];
+            $objSeguros->fechaVencimiento =  $request[ 'seguros_fechaVencimiento' ];
+            $objSeguros->maquinariaId = $maquinaria->id;
+            $objSeguros->save();
+            $request->file( 'seguros_ruta' )->storeAs( '/public/maquinaria/'. $pathMaquinaria . '/documentos/'.  $objSeguros->tipo, $objSeguros->ruta );
+        }
+
+        if ( $request->hasFile( 'especiales_ruta' ) ) {
+            $objEspeciales = new maqdocs() ;
+
+            $objEspeciales->ruta = time() . '_' . $request->file( 'especiales_ruta' )->getClientOriginalName();
+            $objEspeciales->tipo =  $request[ 'especiales_tipo' ];
+            $objEspeciales->fechaVencimiento =  $request[ 'especiales_fechaVencimiento' ];
+            $objEspeciales->maquinariaId = $maquinaria->id;
+            $objEspeciales->save();
+            $request->file( 'especiales_ruta' )->storeAs( '/public/maquinaria/'. $pathMaquinaria . '/documentos/'.  $objEspeciales->tipo, $objEspeciales->ruta );
+        }
+
+        //**Imagenes de la maquinaria */
         if ( $request->hasFile( 'ruta' ) ) {
             foreach ( $request->file( 'ruta' ) as $ruta ) {
                 $imagen[ 'maquinariaId' ] = $maquinaria->id;
@@ -182,10 +237,11 @@ class maquinariaController extends Controller {
     */
 
     public function show( maquinaria $maquinaria ) {
-        $docs = maqdocs::where( 'maquinariaId', $maquinaria->id )->first();
+        $docs = maqdocs::where( 'maquinariaId', $maquinaria->id )->get();
         $fotos = maqimagen::where( 'maquinariaId', $maquinaria->id )->get();
-        // dd( $fotos );
-        return view( 'maquinaria.detalleMaquinaria', compact( 'maquinaria', 'docs', 'fotos' ) );
+        $vctEstatus = maquinariaEstatus::all();
+        // dd( $docs );
+        return view( 'maquinaria.detalleMaquinaria', compact( 'maquinaria', 'docs', 'fotos', 'vctEstatus' ) );
     }
 
     /**
@@ -210,9 +266,10 @@ class maquinariaController extends Controller {
     */
 
     public function update( Request $request, maquinaria $maquinaria ) {
+        // dd( $request );
         $request->validate( [
             'nombre' => 'required|max:250',
-            'identificador' => 'required|max:8',
+            // 'identificador' => 'required|max:8',
             'marca' => 'required|max:250',
             'modelo' => 'required|max:250',
             'horometro' => 'nullable|numeric',
@@ -245,8 +302,8 @@ class maquinariaController extends Controller {
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
-            'identificador.required' => 'El campo identificador es obligatorio.',
-            'identificador.max' => 'El campo identificador excede el límite de caracteres permitidos.',
+            // 'identificador.required' => 'El campo identificador es obligatorio.',
+            // 'identificador.max' => 'El campo identificador excede el límite de caracteres permitidos.',
             'marca.required' => 'El campo marca es obligatorio.',
             'marca.max' => 'El campo marca excede el límite de caracteres permitidos.',
             'modelo.required' => 'El campo modelo es obligatorio.',
@@ -294,35 +351,35 @@ class maquinariaController extends Controller {
         $maquinaria->update( $data );
         if ( $request->hasFile( 'factura' ) ) {
             $docs[ 'factura' ] = time() . '_' . $request->file( 'factura' )->getClientOriginalName();
-            $request->file( 'factura' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'factura' ] );
+            $request->file( 'factura' )->storeAs( '/public/maquinaria/'. $pathMaquinaria .'/documentos', $docs[ 'factura' ] );
         }
         if ( $request->hasFile( 'circulacion' ) ) {
             $docs[ 'circulacion' ] = time() . '_' . $request->file( 'circulacion' )->getClientOriginalName();
-            $request->file( 'circulacion' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'circulacion' ] );
+            $request->file( 'circulacion' )->storeAs( '/public/maquinaria/'. $pathMaquinaria.'/documentos', $docs[ 'circulacion' ] );
         }
         if ( $request->hasFile( 'verificacion' ) ) {
             $docs[ 'verificacion' ] = time() . '_' . $request->file( 'verificacion' )->getClientOriginalName();
-            $request->file( 'verificacion' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'verificacion' ] );
+            $request->file( 'verificacion' )->storeAs( '/public/maquinaria/'. $pathMaquinaria.'/documentos', $docs[ 'verificacion' ] );
         }
         if ( $request->hasFile( 'ficha' ) ) {
             $docs[ 'ficha' ] = time() . '_' . $request->file( 'ficha' )->getClientOriginalName();
-            $request->file( 'ficha' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'ficha' ] );
+            $request->file( 'ficha' )->storeAs( '/public/maquinaria/'. $pathMaquinaria.'/documentos', $docs[ 'ficha' ] );
         }
         if ( $request->hasFile( 'manual' ) ) {
             $docs[ 'manual' ] = time() . '_' . $request->file( 'manual' )->getClientOriginalName();
-            $request->file( 'manual' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'manual' ] );
+            $request->file( 'manual' )->storeAs( '/public/maquinaria/'. $pathMaquinaria.'/documentos', $docs[ 'manual' ] );
         }
         if ( $request->hasFile( 'seguro' ) ) {
             $docs[ 'seguro' ] = time() . '_' . $request->file( 'seguro' )->getClientOriginalName();
-            $request->file( 'seguro' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'seguro' ] );
+            $request->file( 'seguro' )->storeAs( '/public/maquinaria/'. $pathMaquinaria.'/documentos', $docs[ 'seguro' ] );
         }
         if ( $request->hasFile( 'registro' ) ) {
             $docs[ 'registro' ] = time() . '_' . $request->file( 'registro' )->getClientOriginalName();
-            $request->file( 'registro' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'registro' ] );
+            $request->file( 'registro' )->storeAs( '/public/maquinaria/'. $pathMaquinaria.'/documentos', $docs[ 'registro' ] );
         }
         if ( $request->hasFile( 'especial' ) ) {
             $docs[ 'especial' ] = time() . '_' . $request->file( 'especial' )->getClientOriginalName();
-            $request->file( 'especial' )->storeAs( '/public/maquinaria/'. $pathMaquinaria, $docs[ 'especial' ] );
+            $request->file( 'especial' )->storeAs( '/public/maquinaria/'. $pathMaquinaria.'/documentos', $docs[ 'especial' ] );
         }
         $docu = maqdocs::where( 'maquinariaId', $maquinaria->id );
         if ( isset( $docs ) ) {
@@ -340,7 +397,15 @@ class maquinariaController extends Controller {
 
         Session::flash( 'message', 1 );
 
+        $this->cambiaEstatusMaquinaria( $maquinaria->id, $maquinaria->estatusId );
+
         return redirect()->route( 'maquinaria.index' );
+    }
+
+    public function updateDocumento( Request $request ) {
+
+        dd( $request );
+
     }
 
     /**
@@ -350,21 +415,89 @@ class maquinariaController extends Controller {
     * @return \Illuminate\Http\Response
     */
 
-    public function destroy( maquinaria $maquinaria ) {
-        return redirect()->back()->with( 'failed', 'No se puede eliminar' );
+    public function destroy( $id, $estatusId = 1 ) {
+
+        $this->cambiaEstatusMaquinaria( $id, $estatusId );
+
+    }
+
+    public function cambiaEstatusMaquinaria( $id, $estatusId ) {
+        $objMaquinaria = maquinaria::where( 'id', '=', $id )->firstOrFail();
+
+        $vctEstatus = maquinariaEstatus::select( 'maquinariaEstatus.nombre' )->get()->toArray();
+        $aEstatus = array();
+        foreach ( $vctEstatus as   $value ) {
+            $aEstatus[] = strtoupper( $value[ 'nombre' ] .'_' );
+        }
+
+        if ( empty( $objMaquinaria ) === false ) {
+            $strPrefijo = '';
+            $objEstatus = maquinariaEstatus::where( 'id', $estatusId )->firstOrFail();
+
+            //** si el estatus es mayor de 1 se debe de realizar ajustes */
+            if ( empty( $objEstatus ) === false && $objEstatus->id > 1 ) {
+                //** para todos los estatus */
+                $strPrefijo = $objEstatus->nombre . '_';
+
+                $strMaquinariaId = $strPrefijo .  str_replace( $aEstatus, '', $objMaquinaria->identificador );
+
+                $objMaquinaria->identificador = strtoupper( $strMaquinariaId );
+                $objMaquinaria->update();
+
+            } else {
+                /** es activacion */
+                $strMaquinariaId =  str_replace( $aEstatus, '', $objMaquinaria->identificador );
+
+                $objMaquinaria->identificador = strtoupper( $strMaquinariaId );
+                $objMaquinaria->update();
+
+            }
+
+        }
+
+    }
+
+    public function upload( Request $request ) {
+        // dd( $request );
+        $objMaquinaria = maquinaria::where( 'id', '=', $request[ 'maquinariaId' ] )->firstOrFail();
+
+        if ( $objMaquinaria ) {
+            /*** directorio contenedor de su información */
+            $pathMaquinaria = str_pad( $objMaquinaria->identificador, 4, '0', STR_PAD_LEFT );
+
+            if ( $request->hasFile( 'ruta' ) ) {
+                $objMaquinaria = new maqdocs() ;
+
+                $objMaquinaria->ruta = time() . '_' . $request->file( 'ruta' )->getClientOriginalName();
+                $objMaquinaria->tipo =  $request[ 'tipo' ];
+                $objMaquinaria->maquinariaId = $request[ 'maquinariaId' ];
+                $objMaquinaria->comentarios = $request[ 'comentarios' ];
+                $objMaquinaria->fechaVencimiento = $request[ 'fechaVencimiento' ];
+                $objMaquinaria->save();
+
+                $request->file( 'ruta' )->storeAs( '/public/maquinaria/'. $pathMaquinaria . '/documentos/'.  $objMaquinaria->tipo, $objMaquinaria->ruta );
+
+                Session::flash( 'message', 1 );
+
+            } else {
+                Session::flash( 'message', 0 );
+            }
+        }
+
+        return redirect()->route( 'maquinaria.show', $request[ 'maquinariaId' ] );
     }
 
     public function download( $id, $doc ) {
-        $book = maqdocs::where('id', $id )->firstOrFail();
+        $book = maqdocs::where( 'id', $id )->firstOrFail();
 
         if ( empty( $book ) === false ) {
 
-            $objMaq = maquinaria::where('id',"=",$book->maquinariaId)->firstOrFail();
+            $objMaq = maquinaria::where( 'id', '=', $book->maquinariaId )->firstOrFail();
 
             /*** directorio contenedor de su información */
             $pathMaquinaria = str_pad( $objMaq->identificador, 4, '0', STR_PAD_LEFT );
 
-            $pathToFile = storage_path( 'app/public/maquinaria/' . $pathMaquinaria .'/' . $book->$doc );
+            $pathToFile = storage_path( 'app/public/maquinaria/' . $pathMaquinaria .'/documentos/' . $book->tipo . '/'. $book->ruta );
 
             if ( file_exists( $pathToFile ) === true &&  is_file( $pathToFile ) === true ) {
                 // return response()->download( $pathToFile );

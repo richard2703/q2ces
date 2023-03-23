@@ -10,12 +10,12 @@ class maquinaria extends Model
     use HasFactory;
     protected $table = "maquinaria";
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'nombre','identificador', 'tipo', 'categoria', 'marca', 'submarca', 'modelo', 'uso', 'color', 'placas', 'motor',
         'nummotor', 'numserie', 'vin', 'capacidad', 'tanque', 'ejes', 'rinD', 'rinT', 'llantaD', 'llantaT', 'aceitemotor',
         'aceitetras', 'aceitehidra', 'filtroaceite', 'filtroaire', 'bujias', 'tipobujia', 'horometro', 'kilometraje', 'kom', 'foto',
-        'ano', 'aceitedirec', 'combustible','cisterna','cisternaNivel'
+        'ano', 'aceitedirec', 'combustible','cisterna','cisternaNivel','estatusId'
     ];
 }
