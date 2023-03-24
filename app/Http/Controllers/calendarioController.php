@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+
 use App\Models\tareas;
 use App\Models\eventos;
 use App\Models\mantenimientos;
@@ -15,10 +20,6 @@ use App\Models\inventario;
 use App\Helpers\Validaciones;
 use App\Helpers\Calendario;
 use App\Helpers\Calculos;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\DB;
 
 class calendarioController extends Controller {
     /**

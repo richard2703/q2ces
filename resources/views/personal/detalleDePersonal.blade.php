@@ -664,8 +664,18 @@
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Puesto:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="puesto" value="{{ $nomina->puesto }}">
+                                                    {{-- <input type="text" class="inputCaja" id=""
+                                                        name="puesto" value="{{ $nomina->puesto }}"> --}}
+                                                    <select id="puestoId" name="puestoId" required
+                                                        class="form-select"
+                                                        aria-label="Default select example">
+                                                        <option value="">Seleccione</option>
+                                                        @foreach ($vctPuestos as $item)
+                                                            <option value="{{ $item->id }}" {{ $nomina->puestoId == $item->id ? ' selected' : '' }}>
+                                                                {{ $item->nombre }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -771,6 +781,19 @@
                                                     <input type="number" class="inputCaja text-right" id=""
                                                         name="" value="{{ $nomina->decTotal }}" disabled>
                                                 </div>
+
+                                                {{-- <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                    <label class="labelTitulo">Registra Asistencia:</label></br>
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        id="asistencia" name="asistencia">
+                                                        <option value="0"
+                                                            {{ $nomina->asistencia == '0' ? ' selected' : '' }}>
+                                                            No</option>
+                                                        <option value="1"
+                                                            {{ $nomina->asistencia == '1' ? ' selected' : '' }}>Sí
+                                                        </option>
+                                                    </select>
+                                                </div> --}}
 
                                             </div>
                                         </div>

@@ -3,6 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+
+use App\Models\asistencia;
+use App\Models\personal;
+
+use App\Helpers\Validaciones;
+use App\Helpers\Calendario;
+use App\Helpers\Calculos;
+
 
 class asistenciaController extends Controller
 {
@@ -12,9 +23,25 @@ class asistenciaController extends Controller
         return view("asistencias.indexAsistencias");
     }
 
-    public function create()
-    {
-        return view("asistencias.asistenciaDiaria");
+    public function create( $intAnio = null, $intMes = null, $intDia = null ) {
+        $objCalendario = new Calendario();
+        $usuario = personal::where( 'userId', auth()->user()->id )->first();
+        $personal = personal::orderBy( 'nombres', 'asc' )->get();
+
+        $data = request()->all();
+        if ( is_array( $data ) == true && count( $data )>0 ) {
+            $intMes = $data[ 'intMes' ] ;
+            $intAnio = $data[ 'intAnio' ] ;
+        } else {
+            $intMes = date( 'm' );
+            $intAnio = date( 'Y' );
+        }
+
+        $dteMesInicio = $intAnio .'-' .$intMes . '-01';
+        $dteMesFin = $intAnio .'-' .$intMes .'-'. $objCalendario->getTotalDaysInMonth( $intMes, $intAnio );
+
+
+        return view("asistencias.asistenciaDiaria",compact( 'usuario', 'personal', 'intDia', 'intMes', 'intAnio'));
     }
 
     public function store(Request $request)

@@ -1,4 +1,10 @@
 @extends('layouts.main', ['activePage' => 'asistencias', 'titlePage' => __('Asistencia Diaria')])
+<?php
+$objCalendar = new Calendario();
+$diaAnterior= $objCalendar->getMesAnterior($intMes,$intAnio);
+$diaSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
+
+?>
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -8,8 +14,21 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title"><i class="bi bi-arrow-left-square"></i> Martes 21 <i
-                                            class="bi bi-arrow-right-square"></i></h4>
+                                    <h4 class="card-title">
+                                        <i class="bi bi-arrow-left-square">
+                                            <a href="{{ url('calendario/'.$diaAnterior['year'].'/'.$diaAnterior['month']) }}" class="" title="Ir al mes anterior">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-caret-left-fill"
+                                                        viewBox="0 0 16 16">
+                                                        <path
+                                                            d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+                                                    </svg>
+
+                                                </a>
+                                        </i>
+                                        Martes 21
+                                        <i class="bi bi-arrow-right-square"></i>
+                                        </h4>
                                     {{-- <p class="card-category">Usuarios registrados</p> --}}
                                 </div>
                                 <div class="card-body">

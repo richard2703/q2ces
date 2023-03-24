@@ -37,7 +37,7 @@
                                                 <th class="labelTitulo">ID</th>
                                                 <th class="labelTitulo">Nombre</th>
                                                 <th class="labelTitulo">Apellido</th>
-                                                <th class="labelTitulo">Profesión </th>
+                                                <th class="labelTitulo">Puesto </th>
                                                 <th class="labelTitulo">Teléfono</th>
                                                 <th class="labelTitulo">Mail</th>
                                                 <th class="labelTitulo text-right">Acciones</th>
@@ -48,7 +48,7 @@
                                                         <td>{{ $persona->id }}</td>
                                                         <td>{{ $persona->nombres }}</td>
                                                         <td>{{ $persona->apellidoP }}</td>
-                                                        <td>{{ $persona->profe }}</td>
+                                                        <td>{{ $persona->puesto }}</td>
                                                         <td>{{ $persona->celular }}</td>
                                                         <td>{{ $persona->mailEmpresarial }}</td>
 

@@ -1,6 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\personal;
 use App\Models\contactos;
@@ -11,10 +17,8 @@ use App\Models\User;
 use App\Models\userdocs;
 use App\Models\fiscal;
 use App\Models\userEstatus;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Session;
+use App\Models\puesto;
+use App\Models\puestoNivel;
 
 class personalController extends Controller {
     /**
@@ -24,7 +28,11 @@ class personalController extends Controller {
     */
 
     public function index() {
-        $personal = personal::orderBy( 'created_at', 'desc' )->paginate( 15 );
+        $personal = personal::select( 'personal.*',
+        DB::raw( 'puesto.nombre AS puesto' ) )
+        ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
+        ->leftJoin( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
+        ->orderBy( 'created_at', 'desc' )->paginate( 15 );
         // dd( $personal );
         return view( 'personal.indexPersonal', compact( 'personal' ) );
     }
@@ -38,7 +46,9 @@ class personalController extends Controller {
     public function create() {
 
         $vctPersonal = personal::all();
-        return view( 'personal.altaDePersonal' )->with( 'personal', $vctPersonal );
+        $vctPuestos = puesto::orderBy( 'nombre', 'asc' )->get();
+
+        return view( 'personal.altaDePersonal', compact('vctPersonal','vctPuestos') )->with( 'personal', $vctPersonal, $vctPuestos );
     }
 
     /**
@@ -223,7 +233,9 @@ class personalController extends Controller {
             'aler',
             'profe',
             'interior',
-            'estatusId'
+            'estatusId',
+            'puestoId',
+            'asistencia'
         );
         // conversion a mayuscula de algunos campos
         $personal[ 'curp' ] = strtoupper( $personal[ 'curp' ] );
@@ -373,6 +385,8 @@ class personalController extends Controller {
         $newnomina->neto = $request->neto;
         $newnomina->isr = $request->isr;
         $newnomina->fechaPagoPrimaVac = $request->fechaPagoPrimaVac;
+        $newnomina->puestoId = $request->puestoId;
+        $newnomina->asistencia = 0;//$request->asistencia;
         $newnomina->save();
 
         $newequipo = new equipo();
@@ -440,6 +454,7 @@ class personalController extends Controller {
         $equipo = equipo::where( 'personalId', $personal->id )->first();
         $docs = userdocs::where( 'personalId', $personal->id )->first();
         $fiscal = fiscal::where( 'personalId', $personal->id )->first();
+        $vctPuestos = puesto::orderBy( 'nombre', 'asc' )->get();
         $vctEstatus = userEstatus::all();
         $vctPersonal = personal::all();
 
@@ -459,7 +474,7 @@ class personalController extends Controller {
         $nomina->decAfore + $nomina->decInfonavit + $nomina->decVacaciones + $nomina->decPrimaVacacional + $nomina->decAguinaldo + $nomina->isr, 2 );
 
         // dd( $nomina );
-        return view( 'personal.detalleDePersonal', compact( 'personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal', 'vctPersonal', 'vctEstatus' ) );
+        return view( 'personal.detalleDePersonal', compact( 'personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal', 'vctPersonal', 'vctEstatus','vctPuestos' ) );
     }
 
     /**
@@ -655,7 +670,9 @@ class personalController extends Controller {
             'aler',
             'profe',
             'interior',
-            'estatusId'
+            'estatusId',
+            'puestoId',
+            'asistencia'
         );
 
         /*** directorio contenedor de su información */
@@ -713,6 +730,8 @@ class personalController extends Controller {
         $nomina->diario = $request->diario;
         $nomina->isr = $request->isr;
         $nomina->fechaPagoPrimaVac = $request->fechaPagoPrimaVac;
+        $nomina->puestoId = $request->puestoId;
+        $nomina->asistencia = 0; //$request->asistencia;
         $nomina->save();
 
         $equipo = equipo::where( 'personalId', "$id" )->first();
