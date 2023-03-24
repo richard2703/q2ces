@@ -377,11 +377,13 @@ CREATE TABLE personal(
     mailEmpresarial varchar(255) NULL,
     casa varchar(255) NULL,
     foto varchar(255) NULL,
+    puestoNivelId bigint(20) unsigned NULL,
     created_at timestamp NULL DEFAULT NULL,
     updated_at timestamp NULL DEFAULT NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_personal_userId foreign key (userId) references users(id),
     CONSTRAINT FK_personal_userEstatusId foreign key (estatusId) references userEstatus(id),
+    CONSTRAINT FK_personal_puestoNivelId foreign key (puestoNivelId) references puestoNivel(id)
 );
 
 CREATE TABLE equipo(

@@ -304,6 +304,20 @@
                                                 <input type="text" class="inputCaja" id="mailEmpresarial"
                                                     name="mailEmpresarial" value="">
                                             </div>  --}}
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                <label class="labelTitulo">Nivel de puesto:</label></br>
+                                                <select id="puestoNivelId" name="puestoNivelId"
+                                                    class="form-select" required
+                                                    aria-label="Default select example">
+                                                    <option value="">Seleccione</option>
+                                                    @foreach ($vctNiveles as $item)
+                                                        <option value="{{ $item->id }}"  {{ $personal->puestoNivelId == $item->id ? ' selected' : '' }}>
+                                                            {{ $item->nombre }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                             </div>
                                         </div>
                                     </div>

@@ -213,6 +213,19 @@
                                                                     id="mailEmpresarial" name="mailEmpresarial"
                                                                     value="{{ old('mailEmpresarial') }}">
                                                             </div>
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                                <label class="labelTitulo">Nivel de puesto:</label></br>
+                                                                <select id="puestoNivelId" name="puestoNivelId"
+                                                                    class="form-select" required
+                                                                    aria-label="Default select example">
+                                                                    <option value="">Seleccione</option>
+                                                                    @foreach ($vctNiveles as $item)
+                                                                        <option value="{{ $item->id }}">
+                                                                            {{ $item->nombre }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

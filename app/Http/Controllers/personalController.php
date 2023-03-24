@@ -47,8 +47,9 @@ class personalController extends Controller {
 
         $vctPersonal = personal::all();
         $vctPuestos = puesto::orderBy( 'nombre', 'asc' )->get();
+        $vctNiveles = puestoNivel::orderBy( 'nombre', 'asc' )->get();
 
-        return view( 'personal.altaDePersonal', compact('vctPersonal','vctPuestos') )->with( 'personal', $vctPersonal, $vctPuestos );
+        return view( 'personal.altaDePersonal', compact( 'vctPersonal', 'vctPuestos', 'vctNiveles' ) )->with( 'personal', $vctPersonal, $vctPuestos );
     }
 
     /**
@@ -235,7 +236,8 @@ class personalController extends Controller {
             'interior',
             'estatusId',
             'puestoId',
-            'asistencia'
+            'asistencia',
+            'puestoNivelId'
         );
         // conversion a mayuscula de algunos campos
         $personal[ 'curp' ] = strtoupper( $personal[ 'curp' ] );
@@ -386,7 +388,8 @@ class personalController extends Controller {
         $newnomina->isr = $request->isr;
         $newnomina->fechaPagoPrimaVac = $request->fechaPagoPrimaVac;
         $newnomina->puestoId = $request->puestoId;
-        $newnomina->asistencia = 0;//$request->asistencia;
+        $newnomina->asistencia = 0;
+        //$request->asistencia;
         $newnomina->save();
 
         $newequipo = new equipo();
@@ -455,6 +458,7 @@ class personalController extends Controller {
         $docs = userdocs::where( 'personalId', $personal->id )->first();
         $fiscal = fiscal::where( 'personalId', $personal->id )->first();
         $vctPuestos = puesto::orderBy( 'nombre', 'asc' )->get();
+        $vctNiveles = puestoNivel::orderBy( 'nombre', 'asc' )->get();
         $vctEstatus = userEstatus::all();
         $vctPersonal = personal::all();
 
@@ -474,7 +478,7 @@ class personalController extends Controller {
         $nomina->decAfore + $nomina->decInfonavit + $nomina->decVacaciones + $nomina->decPrimaVacacional + $nomina->decAguinaldo + $nomina->isr, 2 );
 
         // dd( $nomina );
-        return view( 'personal.detalleDePersonal', compact( 'personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal', 'vctPersonal', 'vctEstatus','vctPuestos' ) );
+        return view( 'personal.detalleDePersonal', compact( 'personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal', 'vctPersonal', 'vctEstatus', 'vctPuestos', 'vctNiveles' ) );
     }
 
     /**
@@ -672,7 +676,8 @@ class personalController extends Controller {
             'interior',
             'estatusId',
             'puestoId',
-            'asistencia'
+            'asistencia',
+            'puestoNivelId'
         );
 
         /*** directorio contenedor de su información */
@@ -731,7 +736,8 @@ class personalController extends Controller {
         $nomina->isr = $request->isr;
         $nomina->fechaPagoPrimaVac = $request->fechaPagoPrimaVac;
         $nomina->puestoId = $request->puestoId;
-        $nomina->asistencia = 0; //$request->asistencia;
+        $nomina->asistencia = 0;
+        //$request->asistencia;
         $nomina->save();
 
         $equipo = equipo::where( 'personalId', "$id" )->first();
