@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\puestoNivel;
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 
-class puestoNivelController extends Controller {
+use App\Models\puesto;
+use App\Models\puestoNivel;
+
+class catalogosController extends Controller {
     /**
     * Display a listing of the resource.
     *
@@ -17,9 +20,21 @@ class puestoNivelController extends Controller {
     */
 
     public function index() {
+        //
+    }
+
+    public function indexPuestos() {
+
+        $puestos = puesto::orderBy( 'nombre', 'asc' )->paginate( 15 );
+        // dd( $puestos );
+        return view( 'catalogos.puestos', compact( 'puestos' ) );
+    }
+
+    public function indexPuestosNivel() {
 
         $puestos = puestoNivel::orderBy( 'nombre', 'asc' )->paginate( 15 );
-        return view( 'catalogo.indexPuestosNivel', compact( 'puestos' ) );
+        // dd( $puestos );
+        return view( 'catalogos.puestosNivel', compact( 'puestos' ) );
     }
 
     /**
@@ -40,21 +55,7 @@ class puestoNivelController extends Controller {
     */
 
     public function store( Request $request ) {
-        // dd( $request );
-        $request->validate( [
-            'nombre' => 'required|max:250',
-            'comentarios' => 'nullable|max:500',
-        ], [
-            'nombre.required' => 'El campo nombre es obligatorio.',
-            'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
-            'comentarios.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
-        ] );
-        $puesto = $request->all();
-
-        puestoNivel::create( $puesto );
-        Session::flash( 'message', 1 );
-
-        return redirect()->route( 'catalogoPuestosNivel.index' );
+        //
     }
 
     /**
@@ -88,27 +89,7 @@ class puestoNivelController extends Controller {
     */
 
     public function update( Request $request, $id ) {
-         // dd( $request );
-
-         $request->validate( [
-            'nombre' => 'required|max:250',
-            'comentarios' => 'nullable|max:500',
-        ], [
-            'nombre.required' => 'El campo nombre es obligatorio.',
-            'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
-            'comentarios.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
-        ] );
-        $data = $request->all();
-
-        $puesto = puestoNivel::where( 'id', $data[ 'puestoId' ] )->first();
-
-        if ( is_null( $puesto ) == false ) {
-            // dd( $data );
-            $puesto->update( $data );
-            Session::flash( 'message', 1 );
-        }
-
-        return redirect()->route( 'catalogoPuestosNivel.index' );
+        //
     }
 
     /**
