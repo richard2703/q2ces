@@ -61,14 +61,14 @@
                                                             </div>  --}}
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Nombre(s):</label></br>
-                                                                <input type="text" class="inputCaja" id="nombres"
+                                                                <label class="labelTitulo">Nombre(s): <span>*</span></label></br>
+                                                                <input type="text" class="inputCaja" id="nombres" required
                                                                     name="nombres" value="{{ old('nombres') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Apellido Paterno:</label></br>
-                                                                <input type="text" class="inputCaja" id="apellidoP"
+                                                                <label class="labelTitulo">Apellido Paterno: <span>*</span></label></br>
+                                                                <input type="text" class="inputCaja" id="apellidoP" required
                                                                     name="apellidoP" value="{{ old('apellidoP') }}">
                                                             </div>
 

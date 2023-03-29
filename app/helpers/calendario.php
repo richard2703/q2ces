@@ -27,42 +27,92 @@ class Calendario {
         return $dates_month;
     }
 
+    public function getMesAnterior( $month, $year ) {
+        $date =  array();
+        if ( $month == 1 ) {
+            $date[ 'month' ] = ( int )12;
+            $date[ 'year' ] = ( int )$year-1;
 
-    public function getMesAnterior( $month, $year){
-        $date=  array();
-        if($month == 1){
-            $date['month']=(int)12;
-            $date['year']=(int)$year-1;
-            
-        }else{$date['month']=(int)$month-1;
-            $date['year']=(int)$year;
+        } else {
+            $date[ 'month' ] = ( int )$month-1;
+            $date[ 'year' ] = ( int )$year;
 
         }
         return $date;
 
     }
-    public function getMesSiguiente( $month, $year){
-        $date=  array();
-        if($month == 12){
-            $date['month']=(int)1;
-            $date['year']=(int)$year+1;
-            
-        }else{$date['month']=(int)$month+1;
-            $date['year']=(int)$year;
+
+    public function getDiaAnterior( $fecha ) {
+
+        $date =  date_create( date( 'Y-m-d', strtotime( $fecha.'- 1 days' ) ) );
+
+        return $date;
+
+    }
+
+    public function getDiaSiguiente( $fecha ) {
+
+        $date =   date_create( date( 'Y-m-d', strtotime( $fecha.'+ 1 days' ) ) );
+
+        return $date;
+
+    }
+
+    public function getMesSiguiente( $month, $year ) {
+        $date =  array();
+        if ( $month == 12 ) {
+            $date[ 'month' ] = ( int )1;
+            $date[ 'year' ] = ( int )$year+1;
+
+        } else {
+            $date[ 'month' ] = ( int )$month+1;
+            $date[ 'year' ] = ( int )$year;
 
         }
         return $date;
     }
 
     /**
-     * Obtiene el numero de de dias del mes del año enviados
-     *
-     * @param int $month El mes
-     * @param int $year El año
-     * @return void
-     */
+    * Obtiene el numero de de dias del mes del año enviados
+    *
+    * @param int $month El mes
+    * @param int $year El año
+    * @return void
+    */
+
     public function getTotalDaysInMonth( $month, $year ) {
         return count( $this->getDaysInMonth( $month, $year ) );
+    }
+
+    function getNameDay( $intDay ) {
+        switch ( ( int )$intDay ) {
+            case 1:
+            $strDia = 'Lunes';
+            break;
+            case 2:
+            $strDia = 'Martes';
+            break;
+            case 3:
+            $strDia = 'Miércoles';
+            break;
+            case 4:
+            $strDia = 'Jueves';
+            break;
+            case 5:
+            $strDia = 'Viernes';
+            break;
+            case 6:
+            $strDia = 'Sábado';
+            break;
+            case 7:
+            $strDia = 'Domingo';
+            break;
+
+            default:
+            # code...
+            break;
+        }
+        return $strDia;
     }
 
     function getNameMonth( $intMonth ) {

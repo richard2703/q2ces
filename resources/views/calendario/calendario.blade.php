@@ -40,7 +40,8 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                                 <span><img src="/img/calendario/solicitud.svg" alt="Solicitud" title="Solicitud" width="48px" class="botonIconoPrincipal"> Solicitud</span>
                                                 <span><img src="/img/calendario/mantenimiento.svg" alt="Mantenimiento" title="Mantenimiento" width="48px" class="botonIconoPrincipal"> Mantenimiento</span>
 
-                                                 <!-- Un mes atras del cargado --><span>
+                                                 <!-- Un mes atras del cargado -->
+                                                 <span>
                                                 <a href="{{ url('calendario/'.$mesAnterior['year'].'/'.$mesAnterior['month']) }}" class="" title="Ir al mes anterior">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                             fill="currentColor" class="bi bi-caret-left-fill"
@@ -49,7 +50,8 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                                                 d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
                                                         </svg>
 
-                                                    </a>   <!-- Para el mes en curso -->
+                                                    </a>
+                                                    <!-- Para el mes en curso -->
                                                 </span>
                                                 <span>
                                                     <a href="{{ url('calendario/') }}" class="display-4 mb-4 text-center" title="Ir al mes en curso"><b>Hoy es {{ date('d M Y') }}</b>
@@ -494,13 +496,13 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                                                                         data-bs-target="#editarMantenimiento"
                                                                                         onclick="loadMantenimiento(
                                                                                             '{{ $mantto->id }}'
-                                                                                            ,'{{ $mantto->titulo }}' 
+                                                                                            ,'{{ $mantto->titulo }}'
                                                                                             ,'{{ $mantto->estadoId }}'
                                                                                             ,'{{ $mantto->comentario }}'
                                                                                             ,'{{ $mantto->tipo }}'
                                                                                             // ,'{{ \Carbon\Carbon::parse($mantto->fechaInicio)->format('d/m/Y') }}'
                                                                                             // ,'{{ \Carbon\Carbon::parse($mantto->fechaFin)->format('d/m/Y') }}'
-                                                                                        )"> 
+                                                                                        )">
                                                                                         <svg xmlns="http://www.w3.org/2000/svg "
                                                                                             width="28" height="28"
                                                                                             fill="currentColor"
@@ -1314,7 +1316,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                     <div class="modal-body">
                         <form class="row d-flex" action="{{ route('mantenimientos.store') }}" method="post">
                         @csrf
-                        
+
                         <input type="hidden" name="fechaInicio" id="fechaInicio" value="{{ date('Y-m-d') }}">
                             <div class="col-12 mb-5 pb-5">
                                 <div class="searchBox mb-5">
@@ -1377,7 +1379,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                             <div class=" col-12 col-sm-6 mb-3 ">
                                 <label class="labelTitulo">Tipo:</label></br>
                                 <select class="form-select form-select-lg mb-3 inputCaja" name="tipo" id="tipo"
-                                    aria-label=".form-select-lg example"> 
+                                    aria-label=".form-select-lg example">
                                     <option value="">Seleccione</option>
                                     <option value="Correctivo">Correctivo</option>
                                     <option value="250">250</option>
@@ -1416,7 +1418,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                         <form class="row d-flex" action="{{ route('mantenimientos.update') }}" method="post">
                             @csrf
                             @method('put')
-                            <input type="hidden" name="manttoId" id="manttoId" value=""> 
+                            <input type="hidden" name="manttoId" id="manttoId" value="">
                             <div class="col-12 mb-5 pb-5">
                                 <div class="searchBox mb-5">
                                     <input class="searchInput "type="text" name="" placeholder="Buscar">
@@ -1751,10 +1753,10 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
             }
         </script>
 
-        
+
 <script>
     function loadMantenimiento(id, titulo, estadoId, comentarios, tipoId /*, fechaInicio, fechaFin*/  ) {
- 
+
         const txtId = document.getElementById('manttoId');
         txtId.value = id;
 
@@ -1763,7 +1765,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
 
         const lblTitulo = document.getElementById('manttoLblTitulo');
         lblTitulo.innerText = titulo;
- 
+
         const lstTipo = document.getElementById('manttoTipoId').value = tipoId;
         const lstTskEstado = document.getElementById('manttoEstadoId' + estadoId).checked = true;
 

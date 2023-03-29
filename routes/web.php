@@ -208,6 +208,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/asistencia/horasExtra', [App\Http\Controllers\asistenciaController::class, 'horasExtra'])->name('asistencia.horasExtra');
     Route::post('/asistencia/horasExtra', [App\Http\Controllers\asistenciaController::class, 'HEstore'])->name('asistencia.HEstore');
     Route::get('/asistencia/personal', [App\Http\Controllers\asistenciaController::class, 'show'])->name('asistencia.show');
+    Route::get('/asistencia/{anio}/{mes}', [App\Http\Controllers\asistenciaController::class, 'reloadAsistencia'])->name('asistencia.reloadAsistencia');
+    Route::get('/asistencia/diaria/{anio}/{mes}/{dia}', [App\Http\Controllers\asistenciaController::class, 'reloadLista'])->name('asistencia.reloadLista');
     // Route::post('/asistencia', [App\Http\Controllers\personalController::class, 'store'])->name('personal.store');
     // Route::get('/asistencia', [App\Http\Controllers\personalController::class, 'index'])->name('personal.indexPersonal');
     // Route::get('/asistencia/{personal}', [App\Http\Controllers\personalController::class, 'show'])->name('personal.show');

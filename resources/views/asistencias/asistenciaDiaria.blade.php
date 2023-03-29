@@ -1,12 +1,41 @@
 @extends('layouts.main', ['activePage' => 'asistencias', 'titlePage' => __('Asistencia Diaria')])
 <?php
 $objCalendar = new Calendario();
-$diaAnterior= $objCalendar->getMesAnterior($intMes,$intAnio);
-$diaSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
+
+// dd( $intAnio, $intMes, $intDia );
+$diaAnterior = date_format($objCalendar->getDiaAnterior("$intAnio-$intMes-$intDia"), 'd');
+$mesAnterior = date_format($objCalendar->getDiaAnterior("$intAnio-$intMes-$intDia"), 'm');
+$anioAnterior = date_format($objCalendar->getDiaAnterior("$intAnio-$intMes-$intDia"), 'Y');
+
+$diaSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$intDia"), 'd');
+$mesSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$intDia"), 'm');
+$anioSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$intDia"), 'Y');
+$fechaSeleccionada = date_create(date('Y-m-d', strtotime("$intAnio-$intMes-$intDia")));
+$diaSeleccionado = $objCalendar->getNameDay(date_format($fechaSeleccionada, 'N'));
+$mesSeleccionado = $objCalendar->getNameMonth(date_format($fechaSeleccionada, 'm'));
+
+$dtToday = date('Ymd');
+$dtTrabajar = date('Ymd', strtotime("$intAnio-$intMes-$intDia"));
+
+//*** bloqueamos fecha mayor al dia actual
+$blnBloquearRegistro = ($dtTrabajar <= $dtToday && $asistencias->isEmpty() == true)   ? false : true;
+
+// dd($asistencias, $diaAnterior, $diaSiguiente, $fechaSeleccionada, $diaSeleccionado, $dtToday, $dtTrabajar);
 
 ?>
 @section('content')
     <div class="content">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -15,20 +44,26 @@ $diaSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
                                     <h4 class="card-title">
-                                        <i class="bi bi-arrow-left-square">
-                                            <a href="{{ url('calendario/'.$diaAnterior['year'].'/'.$diaAnterior['month']) }}" class="" title="Ir al mes anterior">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                        fill="currentColor" class="bi bi-caret-left-fill"
-                                                        viewBox="0 0 16 16">
-                                                        <path
-                                                            d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
-                                                    </svg>
-
-                                                </a>
-                                        </i>
-                                        Martes 21
-                                        <i class="bi bi-arrow-right-square"></i>
-                                        </h4>
+                                        <!-- Un dia atras del cargado -->
+                                        <span>
+                                            <a href="{{ url('asistencia/diaria/' . $anioAnterior . '/' . $mesAnterior . '/' . $diaAnterior) }}"
+                                                class="" title="Ir al día anterior">
+                                                <i class="bi bi-arrow-left-square"></i>
+                                            </a>
+                                            <!-- Para el mes en curso -->
+                                        </span>
+                                        &nbsp;&nbsp;&nbsp;
+                                        {{ $diaSeleccionado }} {{ $intDia }} de {{ $mesSeleccionado }} de
+                                        {{ $intAnio }}
+                                        &nbsp;&nbsp;&nbsp;
+                                        <!-- Un dia adelante del cargado -->
+                                        <span>
+                                            <a href="{{ url('asistencia/diaria/' . $anioSiguiente . '/' . $mesSiguiente . '/' . $diaSiguiente) }}"
+                                                class="" title="Ir al día siguiente">
+                                                <i class="bi bi-arrow-right-square"></i>
+                                            </a>
+                                        </span>
+                                    </h4>
                                     {{-- <p class="card-category">Usuarios registrados</p> --}}
                                 </div>
                                 <div class="card-body">
@@ -43,50 +78,85 @@ $diaSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                         </div>
                                     @endif
                                     <div class="row">
-                                        {{--  <div class="col-12 text-right">
-                                            <a href="{{ route('personal.create') }}">
-                                                <button type="button" class="btn botonGral">Asistencia</button>
-                                            </a>
-                                            <a href="{{ route('personal.create') }}">
-                                                <button type="button" class="btn botonGral">Horas Extra</button>
-                                            </a>
-                                        </div>  --}}
-                                    </div>
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <thead class="labelTitulo text-center">
-                                                <th class="labelTitulo">Codigo</th>
-                                                <th class="labelTitulo">Nombre</th>
-                                                <th class="labelTitulo">Asistencia</th>
-                                                <th class="labelTitulo">Faltas</th>
-                                                <th class="labelTitulo">Incapacidadades</th>
-                                                <th class="labelTitulo">Vacaciones</th>
-                                                <th class="labelTitulo">Descansos</th>
-                                            </thead>
-                                            <tbody class="text-center">
-                                                <tr>
-                                                    <td>1542</td>
-                                                    <td>Ricardo Rios</td>
-                                                    <td><input type="radio" name="Asistensia1542" value="1"></td>
-                                                    <td><input type="radio" name="Asistensia1542" value="2"></td>
-                                                    <td><input type="radio" name="Asistensia1542" value="3"></td>
-                                                    <td><input type="radio" name="Asistensia1542" value="4"></td>
-                                                    <td><input type="radio" name="Asistensia1542" value="5"></td>
-                                                </tr>
 
-                                            </tbody>
-                                        </table>
+                                        <span>
+                                            <a href="{{ route('asistencia.create') }}" class="display-8 mb-8 text-center"
+                                                title="Ir al mes en curso"><b>Hoy es {{ date('d M Y') }}</b></a>
+                                        </span>
                                     </div>
-                                </div>
-                                <div class="card-footer mr-auto">
 
-                                    <a href="{{ route('asistencia.index') }}">
-                                        <button type="button" class="btn btn-danger">Cancelar</button>
-                                    </a>
-                                    <a href="#">
-                                        <button type="button" class="btn botonGral">Guardar</button>
-                                    </a>
-                                    {{--  {{ $personal->links() }}  --}}
+                                    <form class="row alertaGuardar" action="{{ route('asistencia.store') }}" method="post"
+                                        enctype="multipart/form-data">
+                                        @csrf
+
+                                        <input type="hidden" name="intAnio" value="{{ $intAnio }}">
+                                        <input type="hidden" name="intMes" value="{{ $intMes }}">
+                                        <input type="hidden" name="intDia" value="{{ $intDia }}">
+                                        <input type="hidden" name="fecha"
+                                            value="{{ date_format($fechaSeleccionada, 'Y-m-d') }}">
+                                        <input type="hidden" name="horasExtra" value="0">
+
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead class="labelTitulo text-center">
+                                                    <th class="labelTitulo">Codigo</th>
+                                                    <th class="labelTitulo">Nombre</th>
+                                                    <th class="labelTitulo">Asistencia</th>
+                                                    <th class="labelTitulo">Faltas</th>
+                                                    <th class="labelTitulo">Incapacidadades</th>
+                                                    <th class="labelTitulo">Vacaciones</th>
+                                                    <th class="labelTitulo">Descansos</th>
+                                                </thead>
+                                                <tbody class="text-center">
+
+                                                    @forelse ($personal as $item)
+                                                        <tr>
+                                                            <td class="">{{ $item->id }}
+                                                                <input type="hidden" name="asistenciaId[]"
+                                                                    value="{{ $item->asistenciaId }}">
+                                                                <input type="hidden" name="personalId[]"
+                                                                    value="{{ $item->id }}">
+                                                            </td>
+                                                            <td class="text-left">{{ $item->getFullLastNameAttribute() }}
+
+                                                            </td>
+                                                            <td><input type="radio" name="{{ $item->id }}[]"
+                                                                    id="Asistencia_{{ $item->id }}" value="1"
+                                                                    checked></td>
+                                                            <td><input type="radio" name="{{ $item->id }}[]"
+                                                                    id="Asistencia_{{ $item->id }}" value="2">
+                                                            </td>
+                                                            <td><input type="radio" name="{{ $item->id }}[]"
+                                                                    id="Asistencia_{{ $item->id }}" value="3">
+                                                            </td>
+                                                            <td><input type="radio" name="{{ $item->id }}[]"
+                                                                    id="Asistencia_{{ $item->id }}" value="4">
+                                                            </td>
+                                                            <td><input type="radio" name="{{ $item->id }}[]"
+                                                                    id="Asistencia_{{ $item->id }}" value="5">
+                                                            </td>
+                                                        </tr>
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="2">Sin registros.</td>
+                                                        </tr>
+                                                    @endforelse
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="card-footer mr-auto">
+                                            <?php if( $blnBloquearRegistro == false){  ?>
+                                            <a href="{{ route('asistencia.index') }}">
+                                                <button type="button" class="btn btn-danger">Cancelar</button>
+                                            </a>
+                                            <a href="#">
+                                                <button type="submit" class="btn botonGral">Guardar</button>
+                                            </a>
+                                            {{--  {{ $personal->links() }}  --}}
+                                            <?php } ?>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

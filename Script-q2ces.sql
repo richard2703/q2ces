@@ -946,6 +946,31 @@ create table tipoAsistencia(
     primary key (id)
 );
 
+INSERT INTO
+    tipoasistencia
+VALUES
+    (1, 'Asistencia',   'Asistio a trabajar'),
+    (
+        2,
+        'Falta',
+        'No se presento a trabajar'
+    ),
+    (
+        3,
+        'Incapacidad',
+        'Se encuentra con incapacidad'
+    ),
+    (
+        4,
+        'Vacaciones',
+        'Con permiso de vacaciones'
+    ),
+    (
+        5,
+        'Descanso',
+        'Con permiso de descanso o feriado'
+    );
+
 create table asistencia(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     personalId bigint(20) unsigned NOT NULL,

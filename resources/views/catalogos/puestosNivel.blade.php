@@ -67,7 +67,7 @@
                                                         <a href="#" class=""
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#editarItem"
-                                                        onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->comentario }}')">
+                                                        onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->requiereAsistencia }}','{{ $item->comentario }}')">
                                                         <svg xmlns="http://www.w3.org/2000/svg "
                                                             width="28" height="28"
                                                             fill="currentColor"
@@ -137,6 +137,17 @@
                                 <input type="text" class="inputCaja" id="nombre" name="nombre"
                                     value="{{ old('nombre') }}" required placeholder="Especifique...">
                             </div>
+
+                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                <label class="labelTitulo">Requiere asistencia:</label></br>
+                                <select class="form-select"
+                                    aria-label="Default select example" id="requiereAsistencia"
+                                    name="requiereAsistencia">
+                                    <option value=0>No</option>
+                                    <option value=1>Sí</option>
+                                </select>
+                            </div>
+
                             <div class=" col-12  mb-3 ">
                                 <label class="labelTitulo">Comentarios:</label></br>
                                 <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario" spellcheck="true"></textarea>
@@ -173,6 +184,15 @@
                                     value="">
                             </div>
 
+                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                <label class="labelTitulo">Requiere asistencia:</label></br>
+                                <select class="form-select"
+                                    aria-label="Default select example" id="puestoRequiereAsistencia"
+                                    name="requiereAsistencia">
+                                    <option value=0>No</option>
+                                    <option value=1>Sí</option>
+                                </select>
+                            </div>
 
                             <div class=" col-12  mb-3 ">
                                 <label class="labelTitulo">Comentarios:</label></br>
@@ -230,13 +250,16 @@
     </script>
 
     <script>
-        function cargaItem(id,nombre, comentarios) {
+        function cargaItem(id,nombre, asistencia, comentarios) {
 
             const txtId = document.getElementById('puestoId');
             txtId.value = id;
 
             const txtNombre = document.getElementById('puestoNombre');
             txtNombre.value = nombre;
+
+            const lstAsistencia = document.getElementById('puestoRequiereAsistencia').value = asistencia;
+
 
             const txtComentarios = document.getElementById('puestoComentarios');
             txtComentarios.value = comentarios;
