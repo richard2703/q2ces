@@ -2,12 +2,14 @@
 
 namespace App\Helpers;
 
+use App\Helpers\date;
+use Illuminate\Support\Facades\DB;
+use DateTime;
+
 use App\Models\tareas;
 use App\Models\carga;
 use App\Models\descarga;
 use App\Models\maquinaria;
-use Illuminate\Support\Facades\DB;
-use DateTime;
 
 class Calendario {
     /**
@@ -44,7 +46,7 @@ class Calendario {
 
     public function getDiaAnterior( $fecha ) {
 
-        $date =  date_create( date( 'Y-m-d', strtotime( $fecha.'- 1 days' ) ) );
+        $date =  date_create( date( 'Y-m-d', strtotime( $fecha .'- 1 days' ) ) );
 
         return $date;
 
@@ -52,7 +54,7 @@ class Calendario {
 
     public function getDiaSiguiente( $fecha ) {
 
-        $date =   date_create( date( 'Y-m-d', strtotime( $fecha.'+ 1 days' ) ) );
+        $date =   date_create( date( 'Y-m-d', strtotime( $fecha .'+ 1 days' ) ) );
 
         return $date;
 
@@ -238,5 +240,54 @@ class Calendario {
                 return '<a class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" title="Test Event 1">Test Event 1</a>';
             }
         }
+    }
+
+    /**
+    * Obtiene el periodo de la semana de trabajo
+    *
+    * @param date $dtFecha La fecha sobre la que se calcula la semana de trabajo
+    * @param integer $intDiaInicial El día en que empieza la semana ( por defecto lunes )
+    * @param integer $intDiaFinal El día en que termina la semana ( por defecto domingo )
+    * @return array Arreglo con la el periodo de fechas de la semana de trabajo
+    */
+
+    function getSemanaTrabajo( $dtFecha, $intDiaInicial = 1 ) {
+
+        //** obtenemos el numero de dia de la fecha */
+        $intDiaFecha =   $dtFecha->format( 'N' );
+
+        $intDiaInicialPeriodo = null;
+        $intDiaFinalPeriodo = null;
+
+        if ( $intDiaFecha >  $intDiaInicial ) {
+            //*** el día seleccionado es mayor que el día de inicio y se le resta al dia seleccionado */
+            $intDiaInicialPeriodo = $intDiaFecha -$intDiaInicial;
+        } else {
+            //*** el día inicial es mayor que el día en curso y se le resta al dia en curso */
+            $intDiaInicialPeriodo = $intDiaInicial - $intDiaFecha ;
+        }
+
+        $dtFechaInicialPeriodo =   date_create( date( 'Y-m-d', strtotime( $dtFecha->format( 'Y-m-d' )  .'- '. abs ( $intDiaInicialPeriodo ) .' days' ) ) );
+        $dtFechaFinalPeriodo =   date_create( date( 'Y-m-d', strtotime( $dtFechaInicialPeriodo->format( 'Y-m-d' ) .'+ 6 days' ) ) );
+
+        // dd( 'Fecha seleccionada: '. $dtFecha->format( 'Y-m-d' ),
+        // 'Dia inicial solicitado: ' . $intDiaFecha,
+        // 'Dia inicial del periodo: '. $intDiaInicialPeriodo,
+        // 'Dia final del periodo: '. $intDiaFinalPeriodo,
+        // $dtFechaInicialPeriodo,  $dtFechaFinalPeriodo );
+
+        return array( $dtFechaInicialPeriodo, $dtFechaFinalPeriodo );
+
+    }
+
+    function getFechaFormateada( $dtFecha ) {
+
+        $objCalendar = new Calendario();
+        $intDia =  date_format( $dtFecha, 'd'  );
+        $intDiaNombre = $objCalendar->getNameDay( date_format( $dtFecha, 'N' ) );
+        $intMes = $objCalendar->getNameMonth( date_format( $dtFecha, 'm' ) );
+        $intAnio =  date_format( $dtFecha, 'Y'  );
+
+        return "$intDiaNombre $intDia de $intMes de $intAnio.";
     }
 }

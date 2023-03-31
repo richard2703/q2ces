@@ -53,8 +53,7 @@ $blnBloquearRegistro = ($dtTrabajar <= $dtToday && $asistencias->isEmpty() == tr
                                             <!-- Para el mes en curso -->
                                         </span>
                                         &nbsp;&nbsp;&nbsp;
-                                        {{ $diaSeleccionado }} {{ $intDia }} de {{ $mesSeleccionado }} de
-                                        {{ $intAnio }}
+                                        {{  $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}
                                         &nbsp;&nbsp;&nbsp;
                                         <!-- Un dia adelante del cargado -->
                                         <span>
@@ -81,7 +80,7 @@ $blnBloquearRegistro = ($dtTrabajar <= $dtToday && $asistencias->isEmpty() == tr
 
                                         <span>
                                             <a href="{{ route('asistencia.create') }}" class="display-8 mb-8 text-center"
-                                                title="Ir al mes en curso"><b>Hoy es {{ date('d M Y') }}</b></a>
+                                                title="Ir al mes en curso"><b>Hoy es {{  $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
                                         </span>
                                     </div>
 
@@ -111,14 +110,15 @@ $blnBloquearRegistro = ($dtTrabajar <= $dtToday && $asistencias->isEmpty() == tr
 
                                                     @forelse ($personal as $item)
                                                         <tr>
-                                                            <td class="">{{ $item->id }}
+                                                            <td class="">
+                                                                {{ $item->id }}
                                                                 <input type="hidden" name="asistenciaId[]"
                                                                     value="{{ $item->asistenciaId }}">
                                                                 <input type="hidden" name="personalId[]"
                                                                     value="{{ $item->id }}">
                                                             </td>
-                                                            <td class="text-left">{{ $item->getFullLastNameAttribute() }}
-
+                                                            <td class="text-left">
+                                                                {{ $item->getFullLastNameAttribute() }}
                                                             </td>
                                                             <td><input type="radio" name="{{ $item->id }}[]"
                                                                     id="Asistencia_{{ $item->id }}" value="1"

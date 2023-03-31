@@ -59,7 +59,7 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                     <div class="row">
                                         <span>
                                             <a href="{{ route('asistencia.index') }}" class="display-8 mb-8 text-center"
-                                                title="Ir al mes en curso"><b>Hoy es {{ date('d M Y') }}</b>
+                                                title="Ir al mes en curso"><b>Hoy es {{  $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b>
                                             </a>
                                         </span>
                                         <div class="col-12 text-right">
@@ -94,7 +94,7 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                                         <td>{{ $item->extras }}</td>
                                                         <td class="td-actions">
                                                             {{-- @can('user_show') --}}
-                                                            <a href="{{ route('asistencia.show') }}" class="">
+                                                            <a href="{{ route('asistencia.show', $item->id) }}" class="">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                     height="28" fill="currentColor"
                                                                     class="bi bi-card-text accionesIconos"
