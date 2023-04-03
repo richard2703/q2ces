@@ -246,35 +246,53 @@ class Calendario {
     * Obtiene el periodo de la semana de trabajo
     *
     * @param date $dtFecha La fecha sobre la que se calcula la semana de trabajo
-    * @param integer $intDiaInicial El día en que empieza la semana ( por defecto lunes )
-    * @param integer $intDiaFinal El día en que termina la semana ( por defecto domingo )
+    * @param integer $intSemanaDiaInicial El día en que empieza la semana ( por defecto 1 = lunes )
     * @return array Arreglo con la el periodo de fechas de la semana de trabajo
     */
 
-    function getSemanaTrabajo( $dtFecha, $intDiaInicial = 1 ) {
+    function getSemanaTrabajo( $dtFecha, $intSemanaDiaInicial = 1 ) {
 
         //** obtenemos el numero de dia de la fecha */
-        $intDiaFecha =   $dtFecha->format( 'N' );
+        $intDiaFecha =  ( int ) $dtFecha->format( 'N' );
 
         $intDiaInicialPeriodo = null;
         $intDiaFinalPeriodo = null;
+        $dtFechaInicialPeriodo = null;
+        $dtFechaFinalPeriodo = null;
+        $intDiferencia = null;
+        $strMensaje = null;
 
-        if ( $intDiaFecha >  $intDiaInicial ) {
+        if ( $intDiaFecha >  $intSemanaDiaInicial ) {
             //*** el día seleccionado es mayor que el día de inicio y se le resta al dia seleccionado */
-            $intDiaInicialPeriodo = $intDiaFecha -$intDiaInicial;
+            $intDiaInicialPeriodo =  $intDiaFecha - $intSemanaDiaInicial;
+            $strMensaje = '1.- El dia de hoy es menor al día de inicio de la semana';
         } else {
             //*** el día inicial es mayor que el día en curso y se le resta al dia en curso */
-            $intDiaInicialPeriodo = $intDiaInicial - $intDiaFecha ;
+            $intDiferencia = ( int )$intSemanaDiaInicial - $intDiaFecha ;
+
+            if ( ( $intSemanaDiaInicial - $intDiaFecha ) == 2 ) {
+                $intDiaInicialPeriodo = $intSemanaDiaInicial + $intDiferencia ;
+                $strMensaje = '2.- El dia de hoy es mayor al día de inicio de la semana, hay diferencia en 2';
+            } elseif ( ( $intSemanaDiaInicial - $intDiaFecha ) == 1 ) {
+                $intDiaInicialPeriodo = 6 ;
+                $strMensaje = '2.- El dia de hoy es mayor al día de inicio de la semana, hay diferencia en 1';
+            } else {
+                $intDiaInicialPeriodo = $intSemanaDiaInicial - $intDiaFecha ;
+                $strMensaje = '2.- El dia de hoy es mayor al día de inicio de la semana';
+            }
         }
 
         $dtFechaInicialPeriodo =   date_create( date( 'Y-m-d', strtotime( $dtFecha->format( 'Y-m-d' )  .'- '. abs ( $intDiaInicialPeriodo ) .' days' ) ) );
         $dtFechaFinalPeriodo =   date_create( date( 'Y-m-d', strtotime( $dtFechaInicialPeriodo->format( 'Y-m-d' ) .'+ 6 days' ) ) );
 
-        // dd( 'Fecha seleccionada: '. $dtFecha->format( 'Y-m-d' ),
-        // 'Dia inicial solicitado: ' . $intDiaFecha,
-        // 'Dia inicial del periodo: '. $intDiaInicialPeriodo,
-        // 'Dia final del periodo: '. $intDiaFinalPeriodo,
-        // $dtFechaInicialPeriodo,  $dtFechaFinalPeriodo );
+        // dd( 'Fecha recibida dtFecha: '. $dtFecha->format( 'Y-m-d' ),
+        // 'Dia Fecha recibida intDiaFecha: ' . $intDiaFecha,
+        // 'Dia inicio de semana intSemanaDiaInicial: ' . $intSemanaDiaInicial,
+        // 'Diferencia intDiferencia: ' . $intDiferencia,
+        // 'Dia inicial del periodo intDiaInicialPeriodo: '. $intDiaInicialPeriodo,
+        // 'Dia final del periodo intDiaFinalPeriodo: '. $intDiaFinalPeriodo,
+        // $dtFechaInicialPeriodo,  $dtFechaFinalPeriodo,
+        // 'Debug: '. $strMensaje );
 
         return array( $dtFechaInicialPeriodo, $dtFechaFinalPeriodo );
 
@@ -283,10 +301,10 @@ class Calendario {
     function getFechaFormateada( $dtFecha ) {
 
         $objCalendar = new Calendario();
-        $intDia =  date_format( $dtFecha, 'd'  );
+        $intDia =  date_format( $dtFecha, 'd' );
         $intDiaNombre = $objCalendar->getNameDay( date_format( $dtFecha, 'N' ) );
         $intMes = $objCalendar->getNameMonth( date_format( $dtFecha, 'm' ) );
-        $intAnio =  date_format( $dtFecha, 'Y'  );
+        $intAnio =  date_format( $dtFecha, 'Y' );
 
         return "$intDiaNombre $intDia de $intMes de $intAnio.";
     }

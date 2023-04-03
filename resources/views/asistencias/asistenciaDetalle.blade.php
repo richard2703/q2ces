@@ -6,18 +6,16 @@ $dtToday = date('Ymd');
 $fechaSeleccionada = date_create(date('Y-m-d', strtotime("$intAnio-$intMes-$intDia")));
 $diaSeleccionado = $objCalendar->getNameDay(date_format($fechaSeleccionada, 'N'));
 $mesSeleccionado = $objCalendar->getNameMonth(date_format($fechaSeleccionada, 'm'));
-$vctFechas = $objCalendar->getSemanaTrabajo($fechaSeleccionada, 3);
 
-
-$semanaAnterior =   ( date( 'Y-m-d', strtotime( $vctFechas[0]->format('Y-m-d') .'- 6 days' ) ) );
+$semanaAnterior =   ( date( 'Y-m-d', strtotime( $strFechaInioPeriodo .'- 6 days' ) ) );
 // dd( $intAnio, $intMes, $intDia );
 $diaAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'd');
 $mesAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'm');
 $anioAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'Y');
 
-$diaSiguiente = date_format($objCalendar->getDiaSiguiente($vctFechas[1]->format('Y-m-d')), 'd');
-$mesSiguiente = date_format($objCalendar->getDiaSiguiente($vctFechas[1]->format('Y-m-d')), 'm');
-$anioSiguiente = date_format($objCalendar->getDiaSiguiente($vctFechas[1]->format('Y-m-d')), 'Y');
+$diaSiguiente = date_format($objCalendar->getDiaSiguiente($strFechaFinPeriodo), 'd');
+$mesSiguiente = date_format($objCalendar->getDiaSiguiente($strFechaFinPeriodo), 'm');
+$anioSiguiente = date_format($objCalendar->getDiaSiguiente($strFechaFinPeriodo), 'Y');
 
 $dtTrabajar = date('Ymd', strtotime("$intAnio-$intMes-$intDia"));
 // dd($vctFechas);
@@ -57,7 +55,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             <!-- Para el mes en curso -->
                                         </span>
                                         &nbsp;&nbsp;&nbsp; Semana del
-                                        {{ $vctFechas[0]->format('Y-m-d') }} al {{ $vctFechas[1]->format('Y-m-d') }}
+                                        {{ $strFechaInioPeriodo }} al {{ $strFechaFinPeriodo }}
                                         &nbsp;&nbsp;&nbsp;
                                         <!-- Un dia adelante del cargado -->
                                         <span>

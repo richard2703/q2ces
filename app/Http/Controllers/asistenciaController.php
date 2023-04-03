@@ -243,6 +243,8 @@ class asistenciaController extends Controller {
 
         $strDate = $intAnio.'-'.$intMes.'-'.$intDia;
         $vctFechas =  $objCalendario->getSemanaTrabajo( date_create( $strDate ), 3 );
+        $strFechaInioPeriodo = $vctFechas[ 0 ]->format( 'Y-m-d' );
+        $strFechaFinPeriodo = $vctFechas[ 1 ]->format( 'Y-m-d' );
 
         $usuario = personal::where( 'userId', auth()->user()->id )->first();
         $personal = personal::where( 'id', $personalId )->first();
@@ -259,19 +261,19 @@ class asistenciaController extends Controller {
         ->join( 'asistencia', 'asistencia.personalId', '=', 'personal.id' )
         ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
         ->where( 'asistencia.personalId', '=', $personal->id )
-        ->whereBetween( 'asistencia.fecha',   [ $vctFechas[ 0 ]->format( 'Y-m-d' ), $vctFechas[ 1 ]->format( 'Y-m-d' ) ] )
+        ->whereBetween( 'asistencia.fecha',   [$strFechaInioPeriodo, $strFechaFinPeriodo ] )
         ->orderBy( 'asistencia.fecha', 'asc' )->get();
 
         $dteMesInicio = $intAnio .'-' .$intMes . '-01';
         $dteMesFin = $intAnio .'-' .$intMes .'-'. $objCalendario->getTotalDaysInMonth( $intMes, $intAnio );
 
-        // dd( $asistencias );
+        // dd( $asistencias, $intAnio, $intMes, $intDia, $strDate, $vctFechas[0], $vctFechas[1] );
 
-        return view( 'asistencias.asistenciaDetalle',  compact( 'usuario', 'personal', 'asistencias', 'intDia', 'intMes', 'intAnio' ) );
+        return view( 'asistencias.asistenciaDetalle',  compact( 'usuario', 'personal', 'asistencias', 'intDia', 'intMes', 'intAnio','strFechaInioPeriodo','strFechaFinPeriodo' ) );
     }
 
     public function reloadDetalle( $personalId, $intAnio, $intMes, $intDia ) {
-        // dd( $intAnio, $intMes, $intDia );
+        // dd( $personalId, $intAnio, $intMes, $intDia );
         return redirect()->action( [ asistenciaController::class, 'show' ], [ 'personalId'=>$personalId, 'intAnio'=>$intAnio, 'intMes'=>$intMes, 'intDia'=>$intDia ] );
     }
 
