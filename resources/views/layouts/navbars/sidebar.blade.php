@@ -8,38 +8,6 @@
 
     <div class="sidebar-wrapper menu">
         <ul class="nav">
-            @can('user_index')
-                <!-- Calendario -->
-                <li class="nav-item {{ $activePage == 'inventario' || $activePage == 'user-management' ? ' active' : '' }}">
-                    <a href="{{ url('calendario') }}" onmouseover="cambiar3();" onmouseout="volver3();"
-                        class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
-                        <i><img id="cambiaBCO3" style="width:25px"
-                                src="{{ $activePage == 'inventario' ? ' img/navs/inventariomenubco.svg' : '/img/navs/inventariomenu.svg' }}"></i>
-                        <p> {{ __('calendario') }} </p>
-                        {{--  <b class="caret"></b>  --}}
-                    </a>
-                </li>
-            @endcan
-            @can('user_index')
-                <!-- EQUIPOS -->
-                <li class="nav-item {{ $activePage == 'dashboard' || $activePage == 'user-management' ? ' active' : '' }}">
-                    <a href="#equipo" onmouseover="cambiar();" onmouseout="volver();" class="nav-link p-2"
-                        data-toggle="collapse" aria-expanded="false">
-                        <i><img id="cambiaBCO"
-                                src="{{ $activePage == 'equipos' ? ' img/navs/eqiposmenubco.svg' : '/img/navs/eqiposmenu.svg' }}"
-                                style="width:25px"> </i>
-                        <p>{{ __('Equipos') }}
-                            <b class="caret"></b>
-                        </p>
-                    </a>
-                    <div class="collapse " id="equipo">
-                        <ul class="nav">
-                            <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                                <a
-                                    href="{{ route('maquinaria.index') }}"class="nav-link nav-item{{ $activePage == 'equipos' ? ' active' : '' }} ">
-                                    <span class="py-2 ps-5 sidebar-normal">{{ __('Ver Equipo') }} </span>
-                                </a>
-                            </li>
 
             <!-- Calendario -->
             <li class="nav-item {{ $activePage == 'inventario' || $activePage == 'user-management' ? ' active' : '' }}">
@@ -82,44 +50,31 @@
                             </a>
                         </li>
 
-                            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                                <a
-                                    href="{{ route('accesorios.index') }}"class="nav-link nav-item{{ $activePage == 'equipos' ? ' active' : '' }} ">
-                                    <span class="sidebar-normal py-2 ps-5"> {{ __('Ver Accesorios') }} </span>
-                                </a>
-                            </li>
+                        <!--no colapsable>-->
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a
+                                href="{{ route('maquinaria.create') }}"class="nav-link nav-item{{ $activePage == 'equipos' ? ' active' : '' }} ">
+                                <span class="sidebar-normal py-2 ps-5"> {{ __('Alta de Equipo') }} </span>
+                            </a>
+                        </li>
 
-                            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                                <a
-                                    href="{{ route('accesorios.create') }}"class="nav-link nav-item{{ $activePage == 'equipos' ? ' active' : '' }} ">
-                                    <span class="sidebar-normal py-2 ps-5"> {{ __('Alta de Accesorios') }} </span>
-                                </a>
-                            </li>
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a
+                                href="{{ route('accesorios.index') }}"class="nav-link nav-item{{ $activePage == 'equipos' ? ' active' : '' }} ">
+                                <span class="sidebar-normal py-2 ps-5"> {{ __('Ver Accesorios') }} </span>
+                            </a>
+                        </li>
 
-                        </ul>
-                    </div>
-                </li>
-            @endcan
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a
+                                href="{{ route('accesorios.create') }}"class="nav-link nav-item{{ $activePage == 'equipos' ? ' active' : '' }} ">
+                                <span class="sidebar-normal py-2 ps-5"> {{ __('Alta de Accesorios') }} </span>
+                            </a>
+                        </li>
 
-            @can('personal_index')
-                <!------ PERSONAL ------>
-                <li class="nav-item {{ $activePage == 'personal' || $activePage == 'user-management' ? ' active' : '' }}">
-                    <a class="nav-link p-2 " onmouseover="cambiar2();" onmouseout="volver2();" data-toggle="collapse"
-                        href="#personal" aria-expanded="false">
-                        <i><img id="cambiaBCO2" style="width:25px"
-                                src="{{ $activePage == 'personal' ? ' img/navs/personalmenubco.svg' : '/img/navs/personalmenu.svg' }}"></i>
-                        <p>{{ __('Personal') }}
-                            <b class="caret"></b>
-                        </p>
-                    </a>
-                    <div class="collapse " id="personal">
-                        <ul class="nav">
-                            <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                                <a
-                                    href="{{ route('personal.index') }}"class="nav-link -item{{ $activePage == 'personal' ? ' active' : '' }} ">
-                                    <span class="sidebar-normal py-2 ps-5">{{ __('Ver Personal') }} </span>
-                                </a>
-                            </li>
+                    </ul>
+                </div>
+            </li>
 
             <!------ PERSONAL ------>
             <li class="nav-item {{ $activePage == 'personal' || $activePage == 'user-management' ? ' active' : '' }}">
@@ -140,29 +95,24 @@
                             </a>
                         </li>
 
-                                    <span class="sidebar-normal"> {{ __('Contraseña') }} </span>
-                                </a>
-                            </li>
+                        <!--no colapsable>-->
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a
+                                href="{{ route('personal.create') }}"class="nav-link -item{{ $activePage == 'personal' ? ' active' : '' }} ">
+                                <span class="sidebar-normal py-2 ps-5"> {{ __('Alta de Personal') }} </span>
+                            </a>
+                        </li>
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+
+                                <span class="sidebar-normal"> {{ __('Contraseña') }} </span>
+                            </a>
+                        </li>
 
 
-                        </ul>
-                    </div>
-                </li>
-            @endcan
-
-            @can('user_index')
-                <!------ INVENTARIO ------>
-                <li
-                    class="nav-item {{ $activePage == 'inventario' || $activePage == 'user-management' ? ' active' : '' }}">
-                    <a href="{{ route('inventario.dash') }}" onmouseover="cambiar3();" onmouseout="volver3();"
-                        class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
-                        <i><img id="cambiaBCO3" style="width:25px"
-                                src="{{ $activePage == 'inventario' ? ' img/navs/inventariomenubco.svg' : '/img/navs/inventariomenu.svg' }}"></i>
-                        <p> {{ __('inventario') }} </p>
-                        {{--  <b class="caret"></b>  --}}
-                    </a>
-                </li>
-            @endcan
+                    </ul>
+                </div>
+            </li>
 
             <!------ INVENTARIO ------>
             <li
@@ -196,15 +146,13 @@
                             </a>
                         </li>
 
-                            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                                <a class="nav-link py-2 ps-5" href="#">
-                                    <span class="sidebar-normal py-2 ps-5"> {{ __('Asignación de Obra') }} </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            @endcan
+                        <!--no colapsable>-->
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a
+                                href="{{ route('obras.create') }}"class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
+                                <span class="sidebar-normal py-2 ps-5"> {{ __('Alta de Obra') }} </span>
+                            </a>
+                        </li>
 
                         <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
                             <a class="nav-link py-2 ps-5" href="#">
@@ -234,18 +182,18 @@
                             </a>
                         </li>
 
-                            <!--no colapsable>-->
-                            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                                <a class="nav-link py-2 ps-5" href="#">
-                                    <span class="sidebar-normal"> {{ __('Ver Obra') }} </span>
-                                </a>
-                            </li>
+                        <!--no colapsable>-->
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                <span class="sidebar-normal"> {{ __('Ver Obra') }} </span>
+                            </a>
+                        </li>
 
-                            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                                <a class="nav-link py-2 ps-5" href="#">
-                                    <span class="sidebar-normal"> {{ __('Alta de Obra') }} </span>
-                                </a>
-                            </li>
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                <span class="sidebar-normal"> {{ __('Alta de Obra') }} </span>
+                            </a>
+                        </li>
 
                         <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
                             <a class="nav-link py-2 ps-5" href="#">
@@ -274,49 +222,27 @@
                             </a>
                         </li>
 
-            @can('user_index')
-                <!------ FORMATOS ------>
-                <li class="nav-item {{ $activePage == 'formatos' || $activePage == 'user-management' ? ' active' : '' }}">
-                    <a class="nav-link p-2" onmouseover="cambiar6();" onmouseout="volver6();" data-toggle="collapse"
-                        href="#formatoss" aria-expanded="false">
-                        <i><img id="cambiaBCO6"
-                                src="{{ $activePage == 'formatos' ? ' img/navs/formatosmenubco.svg' : '/img/navs/formatosmenu.svg' }}"
-                                style="width:25px"></i>
-                        <p>{{ __('Formatos') }}
-                            <b class="caret"></b>
-                        </p>
-                    </a>
-                    <div class="collapse " id="formatos">
-                        <ul class="nav">
-                            <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                                <a class="nav-link py-2 ps-5" href="#">
-                                    <span class="sidebar-normal">{{ __('Obra') }} </span>
-                                </a>
-                            </li>
+                        <!--no colapsable>-->
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                <span class="sidebar-normal"> {{ __('Ver Obra') }} </span>
+                            </a>
+                        </li>
 
-                            <!--no colapsable>-->
-                            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                                <a class="nav-link py-2 ps-5" href="#">
-                                    <span class="sidebar-normal"> {{ __('Ver Obra') }} </span>
-                                </a>
-                            </li>
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                <span class="sidebar-normal "> {{ __('Alta de Obra') }} </span>
+                            </a>
+                        </li>
 
-                            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                                <a class="nav-link py-2 ps-5" href="#">
-                                    <span class="sidebar-normal "> {{ __('Alta de Obra') }} </span>
-                                </a>
-                            </li>
-
-                            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                                <a class="nav-link py-2 ps-5" href="#">
-                                    <span class="sidebar-normal py-2 ps-5"> {{ __('Asignación de Obra') }} </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            @endcan
-
+                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <a class="nav-link py-2 ps-5" href="#">
+                                <span class="sidebar-normal py-2 ps-5"> {{ __('Asignación de Obra') }} </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
 
         </ul>
     </div>
