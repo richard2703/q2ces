@@ -1063,8 +1063,7 @@
     </script>
 
     <script>
-        function loadDescarga(id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms, horas, imgHoras,
-            fecha, hora) {
+        function loadDescarga(id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms, horas, imgHoras, fecha, hora) {
 
             const txtId = document.getElementById('descargaId');
             txtId.value = id;

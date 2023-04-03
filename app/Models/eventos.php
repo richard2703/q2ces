@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class maqdocs extends Model
+class eventos extends Model
 {
     use HasFactory;
-    protected $table = "maqdocs";
-
+    protected $table = 'eventos';
     public $timestamps = true;
 
     protected $fillable = [
-        'maquinariaId', 'ruta', 'tipo', 'fechaVencimiento' ,'estatus', 'comentarios'
+        'userId', 'titulo', 'fechaInicio', 'fechaFin', 'prioridadId', 'comentario'
     ];
+
 }

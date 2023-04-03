@@ -16,7 +16,7 @@ class nomina extends Model
         'userId', 'nomina', 'imss', 'clinica', 'infonavit', 'afore', 'pago', 'tarjeta', 'banco', 'puesto',
         'ingreso', 'vactotales', 'vactomadas', 'primavactotal', 'primavactomadas', 'laborables', 'horario',
         'jefeId', 'neto', 'bruto', 'diario', 'diariointegro', 'mensualintegro',
-        'imssAportacion', 'imssriesgo', 'aforeAportacion', 'isn', 'ispt', 'aguinaldo', 'ptu','personal'
+        'imssAportacion', 'imssriesgo', 'aforeAportacion', 'isn', 'ispt', 'aguinaldo', 'ptu','personal','fechaPagoPrimaVac','asistencia','puestoId'
     ];
 
 
