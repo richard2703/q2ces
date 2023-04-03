@@ -15,7 +15,8 @@ class personal extends Model
     protected $fillable = [
         'userId', 'nombres', 'apellidoP', 'apellidoM', 'fechaNacimiento', 'lugarNacimiento', 'curp', 'fine', 'rfc', 'licencia',
         'cpf', 'cpe', 'sexo', 'civil', 'hijos', 'sangre', 'calle', 'numero', 'colonia', 'estado', 'ciudad', 'cp', 'particular',
-        'celular', 'mailpersonal', 'mailEmpresarial', 'casa', 'foto', 'aler', 'profe', 'interior',
+        'celular', 'mailpersonal', 'mailEmpresarial', 'casa', 'foto', 'aler', 'profe', 'interior', 'estatusId','personalId',
+        'puestoNivelId'
     ];
 
     /**
@@ -28,5 +29,10 @@ class personal extends Model
     public function getFullnameAttribute()
     {
         return "{$this->nombres} {$this->apellidoP} {$this->apellidoM}";
+    }
+
+    public function getFullLastNameAttribute()
+    {
+        return "{$this->apellidoP} {$this->apellidoM}, {$this->nombres}";
     }
 }

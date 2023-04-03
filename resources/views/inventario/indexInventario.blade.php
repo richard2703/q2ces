@@ -48,10 +48,10 @@
                                         <tbody>
                                             @forelse ($inventarios as $inventario)
                                                 <tr class=" border-top border-bottom">
-                                                    <th scope="row"><img class="my-4 " style="width: 100px;"
+                                                    <td scope="row"><img class="my-4 " style="width: 100px;"
                                                             {{-- src="{{ '/img/general/defaultinventario.jpg' }}"> --}}
-                                                            src="{{ $inventario->imagen == '' ? '/img/general/default.jpg' : '/storage/inventario/' . $inventario->tipo . '/' . $inventario->imagen }}">
-                                                    </th>
+                                                            src="{{ ($inventario->imagen == '' ? '/img/general/default.jpg' : '/storage/inventario/' . $inventario->tipo . '/' . $inventario->imagen) }}">
+                                                    </td>
                                                     <td>{{ $inventario->nombre }}</td>
                                                     <td>{{ $inventario->cantidad }}</td>
                                                     <td>{{ $inventario->maximo }}</td>
@@ -83,7 +83,9 @@
                                                             onsubmit="return confirm('Seguro?')">
                                                             @csrf
                                                             @method('DELETE')
-
+                                                            <!--<button class="btn btn-danger" type="submit" rel="tooltip">
+                                                                                                                    <i class="material-icons">close</i>
+                                                                                                                </button>-->
                                                         </form>
                                                         {{-- @endcan --}}
                                                     </td>

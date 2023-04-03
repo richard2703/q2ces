@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+
 use App\Models\tareas;
 use App\Models\eventos;
 use App\Models\mantenimientos;
@@ -15,10 +20,6 @@ use App\Models\inventario;
 use App\Helpers\Validaciones;
 use App\Helpers\Calendario;
 use App\Helpers\Calculos;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\DB;
 
 class calendarioController extends Controller {
     /**
@@ -31,6 +32,7 @@ class calendarioController extends Controller {
         $objCalendario = new Calendario();
         $usuario = personal::where( 'userId', auth()->user()->id )->first();
         $personal = personal::orderBy( 'nombres', 'asc' )->get();
+        $maquinaria = maquinaria::orderBy( 'nombre', 'asc' )->get();
 
         $data = request()->all();
 
@@ -45,7 +47,7 @@ class calendarioController extends Controller {
         $dteMesInicio = $intAnio .'-' .$intMes . '-01';
         $dteMesFin = $intAnio .'-' .$intMes .'-'. $objCalendario->getTotalDaysInMonth( $intMes, $intAnio );
 
-        // dd($dteMesFin);
+        // dd( $dteMesFin );
 
         //** tareas del mes en seleccionado */
         $vctTasks =  tareas::select(
@@ -72,12 +74,12 @@ class calendarioController extends Controller {
         ->where( 'eventos.fechaFin', '<=', $dteMesFin )
         ->orderBy( 'eventos.fechaFin', 'asc' )->get();
 
-
         //** mantenimientos del mes seleccionado */
         $vctMantenimientos = mantenimientos::select(
             'mantenimientos.*',
             DB::raw( 'estados.nombre AS estado' ),
-            DB::raw( 'maquinaria.nombre AS maquinaria' )
+            DB::raw( 'maquinaria.nombre AS maquinaria' ),
+            DB::raw( 'maquinaria.identificador AS maquinariaCodigo' )
         )
         ->join( 'estados', 'estados.id', '=', 'mantenimientos.estadoId' )
         ->join( 'maquinaria', 'maquinaria.id', '=', 'mantenimientos.maquinariaId' )
@@ -85,7 +87,7 @@ class calendarioController extends Controller {
 
         ->where( 'mantenimientos.fechaInicio', '<=', $dteMesFin )
         ->orderBy( 'mantenimientos.fechaInicio', 'asc' )->get();
-        
+
         //** solicitudes del mes seleccionado */
         $vctSolicitudes = solicitudes::select(
             'solicitudes.*',
@@ -106,21 +108,20 @@ class calendarioController extends Controller {
         ->where( 'solicitudes.fechaRequerimiento', '<=', $dteMesFin )
         ->orderBy( 'solicitudes.fechaRequerimiento', 'asc' )->get();
 
-
         //** procesos de reparacion registrados */
         $vctProcesos = reparaciones::select(
             'reparaciones.*'
         )
         ->orderBy( 'reparaciones.nombre', 'asc' )->get();
- 
 
-        $vctHerramientas =   inventario::where("tipo",'=',  "herramientas")->orderBy('created_at', 'desc')->get();
-        $vctConsumibles =   inventario::where("tipo",'=',  "consumibles")->orderBy('created_at', 'desc')->get();
-        $vctRefacciones =   inventario::where("tipo",'=',  "refacciones")->orderBy('created_at', 'desc')->get();
-        
-        // dd($vctMantenimientos);
+        $vctHerramientas =   inventario::where( 'tipo', '=',  'herramientas' )->orderBy( 'created_at', 'desc' )->get();
+        $vctConsumibles =   inventario::where( 'tipo', '=',  'consumibles' )->orderBy( 'created_at', 'desc' )->get();
+        $vctRefacciones =   inventario::where( 'tipo', '=',  'refacciones' )->orderBy( 'created_at', 'desc' )->get();
+        $vctCombustibles =   inventario::where( 'tipo', '=',  'combustibles' )->orderBy( 'created_at', 'desc' )->get();
 
-        return view( 'calendario.calendario', compact( 'usuario', 'personal', 'intMes', 'intAnio', 'vctTasks','vctEventos','vctMantenimientos','vctSolicitudes','vctProcesos','vctHerramientas','vctConsumibles','vctRefacciones' ) );
+        // dd( $vctMantenimientos );
+
+        return view( 'calendario.calendario', compact( 'usuario', 'personal', 'maquinaria', 'intMes', 'intAnio', 'vctTasks', 'vctEventos', 'vctMantenimientos', 'vctSolicitudes', 'vctProcesos', 'vctHerramientas', 'vctConsumibles', 'vctRefacciones', 'vctCombustibles' ) );
     }
 
     /**

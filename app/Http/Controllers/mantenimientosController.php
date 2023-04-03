@@ -44,10 +44,12 @@ class mantenimientosController extends Controller
     {
         $request->validate( [
             'titulo' => 'required|max:250',
+            'maquinariaId' => 'required',
             'comentarios' => 'nullable|max:500',
             
         ], [
             'titulo.required' => 'El campo nombre es obligatorio.',
+            'maquinariaId.required' => 'El campo maquinaria es obligatorio.',
             'titulo.max' => 'El campo título excede el límite de caracteres permitidos.',
             'comentarios.max' => 'El campo comentarios excede el límite de caracteres permitidos.', 
         ] );
@@ -92,9 +94,49 @@ class mantenimientosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        //  dd( $request );
+         $request->validate( [
+            'manttoTitulo' => 'required|max:250',
+            'manttoComentario' => 'nullable|max:500',
+        ], [
+            'manttoTitulo.required' => 'El campo nombre es obligatorio.',
+            'manttoTitulo.max' => 'El campo título excede el límite de caracteres permitidos.',
+            'manttoComentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+        ] );
+
+        $data = $request->all();
+
+        $mantto = mantenimientos::where( 'id', $data[ 'manttoId' ] )->first();
+
+        if ( is_null( $mantto ) == false ) {
+
+            $data[ 'titulo' ] =  $data[ 'manttoTitulo' ] ;
+            $data[ 'comentario' ] =  $data[ 'manttoComentario' ] ;
+            $data[ 'tipo' ] =  $data[ 'manttoTipoId' ] ;
+
+            // $data[ 'prioridadId' ] =  $data[ 'manttoPrioridadId' ] ;
+
+            //*** manejo del estatus de la tarea cuando se cambia su estatus inicial*/
+            // if ( $mantto->estadoId <= 1 && $mantto->fechaReal == '0000-00-00' ) {
+            //     if ( $data[ 'manttoEstadoId' ] > 1 ) {
+            //         $data[ 'fechaReal' ] =  date( 'Y-m-d' ) ;
+            //     }
+            // }
+            //*** manejo del estatus de la tarea cuando se cambia su estatus final*/
+            if ( $data[ 'manttoEstadoId' ] == 3 ) {
+                $data[ 'fechaReal' ] =  date( 'Y-m-d' ) ;
+            }
+
+            $data[ 'estadoId' ] =  $data[ 'manttoEstadoId' ] ;
+
+            // dd( $data );
+            $mantto->update( $data );
+            Session::flash( 'message', 1 );
+        }
+
+        return redirect()->route( 'calendario.index' );
     }
 
     /**

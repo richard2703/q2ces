@@ -41,8 +41,8 @@ class tareasController extends Controller {
     public function store( Request $request ) {
         $request->validate( [
             'titulo' => 'required|max:250',
+            'responsable' => 'required',
             'comentarios' => 'nullable|max:500',
-            // 'modelo' => 'nullable|max:250',
             // 'proveedor' => 'nullable|max:200',
             // 'numparte' => 'nullable|max:250',
             // 'cantidad' => 'required|numeric',
@@ -52,6 +52,7 @@ class tareasController extends Controller {
         ], [
             'titulo.required' => 'El campo nombre es obligatorio.',
             'titulo.max' => 'El campo título excede el límite de caracteres permitidos.',
+            'responsable.required' => 'El campo nombre es obligatorio.',
             'comentarios.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
             // 'marca.max' => 'El campo marca excede el límite de caracteres permitidos.',
             // 'modelo.max' => 'El campo modelo excede el límite de caracteres permitidos.',

@@ -124,7 +124,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/personal/{personal}', [App\Http\Controllers\personalController::class, 'show'])->name('personal.show');
     Route::put('/personal/{personal}', [App\Http\Controllers\personalController::class, 'update'])->name('personal.update');
     Route::get('personal/{id}/{doc}', [App\Http\Controllers\personalController::class, 'download'])->name('personal.download');
-    Route::delete('/personal/{personal}', [App\Http\Controllers\UserController::class, 'destroy'])->name('personal.delete');
+    Route::delete('/personal/{personal}', [App\Http\Controllers\personalController::class, 'destroy'])->name('personal.delete');
+
+    //*** catalogos */
+    Route::get('/catalogos/puestos', [App\Http\Controllers\catalogosController::class, 'indexPuestos'])->name('catalogoPuestos.index');
+    Route::get('/catalogos/puestos/nuevo', [App\Http\Controllers\puestoController::class, 'create'])->name('puesto.create');
+    Route::post('/catalogos/puestos', [App\Http\Controllers\puestoController::class, 'store'])->name('puesto.store');
+    Route::put('/catalogos/puestos/{puesto}', [App\Http\Controllers\puestoController::class, 'update'])->name('puesto.update');
+    Route::delete('/catalogos/puestos/{puesto}', [App\Http\Controllers\puestoController::class, 'destroy'])->name('puesto.delete');
+
+    Route::get('/catalogos/puestosNivel', [App\Http\Controllers\catalogosController::class, 'indexPuestosNivel'])->name('catalogoPuestosNivel.index');
+    Route::get('/catalogos/puestosNivel/nuevo', [App\Http\Controllers\puestoNivelController::class, 'create'])->name('puestoNivel.create');
+    Route::post('/catalogos/puestosNivel', [App\Http\Controllers\puestoNivelController::class, 'store'])->name('puestoNivel.store');
+    Route::put('/catalogos/puestosNivel/{puesto}', [App\Http\Controllers\puestoNivelController::class, 'update'])->name('puestoNivel.update');
+    Route::delete('/catalogos/puestosNivel/{puesto}', [App\Http\Controllers\puestoNivelController::class, 'destroy'])->name('puestoNivel.delete');
 
     //Crud maquinaria
     Route::get('/maquinaria/nuevo', [App\Http\Controllers\maquinariaController::class, 'create'])->name('maquinaria.create');
@@ -132,7 +145,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/maquinaria', [App\Http\Controllers\maquinariaController::class, 'index'])->name('maquinaria.index');
     Route::get('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'show'])->name('maquinaria.show');
     Route::put('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'update'])->name('maquinaria.update');
-    Route::get('maquinaria/{id}/{doc}', [App\Http\Controllers\maquinariaController::class, 'download'])->name('maquinaria.download');
+    Route::put('/maquinaria/documento/update', [App\Http\Controllers\maquinariaController::class, 'updateDocumento'])->name('maquinaria.updateDocumento');
+    Route::get('maquinaria/{id}/{doc}/download', [App\Http\Controllers\maquinariaController::class, 'download'])->name('maquinaria.download');
+    Route::post('maquinaria/upload', [App\Http\Controllers\maquinariaController::class, 'upload'])->name('maquinaria.upload');
     Route::get('/maquinaria/{maquinaria}/edit', [App\Http\Controllers\maquinariaController::class, 'edit'])->name('maquinaria.edit');
     Route::delete('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'destroy'])->name('maquinaria.delete');
 
@@ -167,7 +182,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Crud calendario
     Route::get('/calendario', [App\Http\Controllers\calendarioController::class, 'index'])->name('calendario.index');
-    Route::get('/calendario/{anio}/{mes}', [App\Http\Controllers\calendarioController::class, 'reloadCalendario'] )->name('calendario.reloadCalendario');
+    Route::get('/calendario/{anio}/{mes}', [App\Http\Controllers\calendarioController::class, 'reloadCalendario'])->name('calendario.reloadCalendario');
     //Route::put('/coordiseno/detalle/riesgos/{riesgo}/recalcular', [App\Http\Controllers\detalleRiesgoController::class, 'recalcular'])->name('detalleriesgo.recalcular');
 
     //*** operaciones con tareas */
@@ -182,4 +197,27 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/calendario/reparaciones/nuevo', [App\Http\Controllers\reparacionesController::class, 'store'])->name('reparaciones.store');
     Route::put('/calendario/reparaciones/editar', [App\Http\Controllers\reparacionesController::class, 'update'])->name('reparaciones.update');
 
+    //*** operaciones con solicitudes */
+    Route::post('/calendario/solicitudes/nuevo', [App\Http\Controllers\solicitudesController::class, 'store'])->name('solicitudes.store');
+    Route::put('/calendario/solicitudes/editar', [App\Http\Controllers\solicitudesController::class, 'update'])->name('solicitudes.update');
+
+    //Crud personal
+    Route::get('/asistencia', [App\Http\Controllers\asistenciaController::class, 'index'])->name('asistencia.index');
+    Route::get('/asistencia/diaria', [App\Http\Controllers\asistenciaController::class, 'create'])->name('asistencia.create');
+    Route::post('/asistencia/diaria', [App\Http\Controllers\asistenciaController::class, 'store'])->name('asistencia.store');
+    Route::get('/asistencia/horasExtra', [App\Http\Controllers\asistenciaController::class, 'horasExtra'])->name('asistencia.horasExtra');
+    Route::post('/asistencia/horasExtra', [App\Http\Controllers\asistenciaController::class, 'HEstore'])->name('asistencia.HEstore');
+    Route::get('/asistencia/personal/{personalId}', [App\Http\Controllers\asistenciaController::class, 'show'])->name('asistencia.show');
+    Route::put('/asistencia/personal/{personalId}', [App\Http\Controllers\asistenciaController::class, 'update'])->name('asistencia.update');
+
+    Route::get('/asistencia/{anio}/{mes}', [App\Http\Controllers\asistenciaController::class, 'reloadAsistencia'])->name('asistencia.reloadAsistencia');
+    Route::get('/asistencia/diaria/{anio}/{mes}/{dia}', [App\Http\Controllers\asistenciaController::class, 'reloadLista'])->name('asistencia.reloadLista');
+    Route::get('/asistencia/horasExtra/{anio}/{mes}/{dia}', [App\Http\Controllers\asistenciaController::class, 'reloadHorasExtra'])->name('asistencia.reloadHorasExtra');
+    Route::get('/asistencia/personal/{personalId}/{anio}/{mes}/{dia}', [App\Http\Controllers\asistenciaController::class, 'reloadDetalle'])->name('asistencia.reloadDetalle');
+    // Route::post('/asistencia', [App\Http\Controllers\personalController::class, 'store'])->name('personal.store');
+    // Route::get('/asistencia', [App\Http\Controllers\personalController::class, 'index'])->name('personal.indexPersonal');
+    // Route::get('/asistencia/{personal}', [App\Http\Controllers\personalController::class, 'show'])->name('personal.show');
+    // Route::put('/asistencia/{personal}', [App\Http\Controllers\personalController::class, 'update'])->name('personal.update');
+    // Route::get('asistencia/{id}/{doc}', [App\Http\Controllers\personalController::class, 'download'])->name('personal.download');
+    // Route::delete('/asistencia/{personal}', [App\Http\Controllers\UserController::class, 'destroy'])->name('personal.delete');
 });
