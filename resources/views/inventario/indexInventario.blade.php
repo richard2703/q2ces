@@ -147,8 +147,8 @@
                                     </div>
                                     <div class="col-12 col-lg-6">
                                         <label class="labelTitulo" for="">Cantidad:</label></br>
-                                        <input class="inputCaja" type="number" step="0.01" min="0.01"
-                                            id="cantidad" name="cantidad" value="" required></br>
+                                        <input class="inputCaja" type="number" step="0.01" min="0.01" id="cantidad"
+                                            name="cantidad" value="" required></br>
                                     </div>
                                     <div class="col-12 col-lg-6">
                                         <label class="labelTitulo" for="">Costo unitario:</label></br>
