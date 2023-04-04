@@ -39,39 +39,39 @@
                                     <div class="col-12 col-md-8 ">
                                         <div class="row">
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                <label class="labelTitulo">Nombre:</label></br>
-                                                <input type="text" class="inputCaja" id="nombre" name="nombre"
+                                                <label class="labelTitulo">Nombre: <span>*</span></label></br>
+                                                <input type="text" class="inputCaja" id="nombre" name="nombre" placeholder="Especifique..." required
                                                     value="{{ old('nombre') }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Año:</label></br>
-                                                <input type="text" class="inputCaja" id="ano" name="ano"
-                                                    value="{{ old('ano') }}">
+                                                <input type="number" class="inputCaja" id="ano" maxlength="4"
+                                                    placeholder="Ej. 2000" name="ano" value="{{ old('ano') }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Marca:</label></br>
-                                                <input type="text" class="inputCaja" id="marca" name="marca"
+                                                <input type="text" class="inputCaja" id="marca" name="marca" placeholder="Especifique..."
                                                     value="{{ old('marca') }}">
                                             </div>
 
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Número Serie:</label></br>
-                                                <input type="text" class="inputCaja" id="serie" name="serie"
+                                                <input type="text" class="inputCaja" id="serie" name="serie" placeholder="Especifique..."
                                                     value="{{ old('serie') }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Modelo:</label></br>
-                                                <input type="text" class="inputCaja" id="modelo" name="modelo"
+                                                <input type="text" class="inputCaja" id="modelo" name="modelo" placeholder="Especifique..."
                                                     value="{{ old('modelo') }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Color:</label></br>
-                                                <input type="text" class="inputCaja" id="color" name="color"
+                                                <input type="text" class="inputCaja" id="color" name="color" placeholder="Especifique..."
                                                     value="{{ old('color') }}">
                                             </div>
 
@@ -81,7 +81,7 @@
                                                     aria-label="Default select example">
                                                     <option value="">Seleccione</option>
                                                     @foreach ($vctMaquinaria as $maquina)
-                                                        <option value="{{ $maquina->id }}" >
+                                                        <option value="{{ $maquina->id }}">
                                                             {{ $maquina->identificador . ' ' . $maquina->nombre }}
                                                         </option>
                                                     @endforeach

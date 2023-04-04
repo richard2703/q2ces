@@ -25,7 +25,8 @@
                                 <div class="col-12 col-md-4  my-3 align-self-center">
                                     <div class="text-center mx-auto mb-2 border vistaFoto ">
                                         <i><img class="imgVista"
-                                                src="{{ $obras->foto == '' ? ' /img/general/default.jpg' : '/storage/obras/' . $obras->foto }}"></i>
+                                                src="{{ $obras->foto == '' ? '/img/general/default.jpg' : asset('/storage/obras/' . str_pad($obras->id, 4, '0', STR_PAD_LEFT) . '/' .  $obras->foto) }}"
+                                                ></i>
                                     </div>
                                 </div>
 
@@ -85,7 +86,7 @@
                                 </div>
 
                                 <div class="col-12 text-end mb-3 ">
-                                    <i><img src="{{ $obras->logo == '' ? ' /img/general/default.jpg' : '/storage/obras/' . $obras->logo }}"
+                                    <i><img  src="{{ $obras->logo == '' ? '/img/general/default.jpg' : asset('/storage/obras/' . str_pad($obras->id, 4, '0', STR_PAD_LEFT) . '/' .  $obras->logo) }}"
                                             class="vistaLogo"></i>
                                 </div>
 
