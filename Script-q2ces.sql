@@ -995,6 +995,8 @@ create table asistencia(
     asistenciaId bigint(20) unsigned NOT NULL,
     fecha date not null,
     horasExtra int null,
+    tipoHoraExtra int null,
+    comentario text null,
     created_at datetime NULL,
     updated_at datetime NULL,
     primary key (id),

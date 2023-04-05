@@ -254,27 +254,78 @@ class asistenciaController extends Controller {
             'personal.nombres', 'personal.apellidoP', 'personal.apellidoM',
             DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
             DB::raw( 'puestoNivel.nombre AS puesto' ),
-            DB::raw( 'asistencia.id AS id' ), 'asistencia.horasExtra', 'asistencia.fecha', 'asistencia.asistenciaId'
+            DB::raw( 'asistencia.id AS id' ), 'asistencia.horasExtra', 'asistencia.fecha', 'asistencia.asistenciaId', 'asistencia.comentario'
         )
         ->join( 'puestoNivel', 'puestoNivel.id', '=', 'personal.puestoNivelId' )
         ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
         ->join( 'asistencia', 'asistencia.personalId', '=', 'personal.id' )
         ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
         ->where( 'asistencia.personalId', '=', $personal->id )
-        ->whereBetween( 'asistencia.fecha',   [$strFechaInioPeriodo, $strFechaFinPeriodo ] )
+        ->whereBetween( 'asistencia.fecha',   [ $strFechaInioPeriodo, $strFechaFinPeriodo ] )
         ->orderBy( 'asistencia.fecha', 'asc' )->get();
 
         $dteMesInicio = $intAnio .'-' .$intMes . '-01';
         $dteMesFin = $intAnio .'-' .$intMes .'-'. $objCalendario->getTotalDaysInMonth( $intMes, $intAnio );
 
-        // dd( $asistencias, $intAnio, $intMes, $intDia, $strDate, $vctFechas[0], $vctFechas[1] );
+        // dd( $asistencias, $intAnio, $intMes, $intDia, $strDate, $vctFechas[ 0 ], $vctFechas[ 1 ] );
 
-        return view( 'asistencias.asistenciaDetalle',  compact( 'usuario', 'personal', 'asistencias', 'intDia', 'intMes', 'intAnio','strFechaInioPeriodo','strFechaFinPeriodo' ) );
+        return view( 'asistencias.asistenciaDetalle',  compact( 'usuario', 'personal', 'asistencias', 'intDia', 'intMes', 'intAnio', 'strFechaInioPeriodo', 'strFechaFinPeriodo' ) );
     }
 
     public function reloadDetalle( $personalId, $intAnio, $intMes, $intDia ) {
         // dd( $personalId, $intAnio, $intMes, $intDia );
         return redirect()->action( [ asistenciaController::class, 'show' ], [ 'personalId'=>$personalId, 'intAnio'=>$intAnio, 'intMes'=>$intMes, 'intDia'=>$intDia ] );
+    }
+
+    public function corteSemanal( $intAnio = null, $intMes = null, $intDia = null ) {
+
+        $objCalendario = new Calendario();
+
+        $data = request()->all();
+        if ( is_array( $data ) == true && count( $data )>0 ) {
+            $intMes = $data[ 'intMes' ] ;
+            $intAnio = $data[ 'intAnio' ] ;
+            $intDia = $data[ 'intDia' ] ;
+        } else {
+            $intMes = date( 'm' );
+            $intAnio = date( 'Y' );
+            $intDia = date( 'd' );
+        }
+
+        $strDate = $intAnio.'-'.$intMes.'-'.$intDia;
+        $vctFechas =  $objCalendario->getSemanaTrabajo( date_create( $strDate ), 3 );
+        $strFechaInioPeriodo = $vctFechas[ 0 ]->format( 'Y-m-d' );
+        $strFechaFinPeriodo = $vctFechas[ 1 ]->format( 'Y-m-d' );
+
+        $usuario = personal::where( 'userId', auth()->user()->id )->first();
+        // $personal = personal::where( 'id', $personalId )->first();
+
+        $asistencias = personal::select(
+            DB::raw( 'personal.id AS personalId' ),
+            'personal.nombres', 'personal.apellidoP', 'personal.apellidoM',
+            DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
+            DB::raw( 'puestoNivel.nombre AS puesto' ),
+            DB::raw( 'asistencia.id AS id' ), 'asistencia.horasExtra', 'asistencia.fecha', 'asistencia.asistenciaId'
+        )
+        ->join( 'puestoNivel', 'puestoNivel.id', '=', 'personal.puestoNivelId' )
+        ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
+        ->join( 'asistencia', 'asistencia.personalId', '=', 'personal.id' )
+        ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
+        // ->where( 'asistencia.personalId', '=', $personal->id )
+        ->whereBetween( 'asistencia.fecha',   [ $strFechaInioPeriodo, $strFechaFinPeriodo ] )
+        ->orderBy( 'asistencia.fecha', 'asc' )->get();
+
+        $dteMesInicio = $intAnio .'-' .$intMes . '-01';
+        $dteMesFin = $intAnio .'-' .$intMes .'-'. $objCalendario->getTotalDaysInMonth( $intMes, $intAnio );
+
+        // dd( $asistencias, $intAnio, $intMes, $intDia, $strDate, $vctFechas[ 0 ], $vctFechas[ 1 ] );
+
+        return view( 'asistencias.corteSemanal',  compact( 'usuario',   'asistencias', 'intDia', 'intMes', 'intAnio', 'strFechaInioPeriodo', 'strFechaFinPeriodo' ) );
+    }
+
+    public function reloadCorteSemanal( $intAnio, $intMes, $intDia ) {
+        // dd( $personalId, $intAnio, $intMes, $intDia );
+        return redirect()->action( [ asistenciaController::class, 'corteSemanal' ], [ 'intAnio'=>$intAnio, 'intMes'=>$intMes, 'intDia'=>$intDia ] );
     }
 
     /**
@@ -309,6 +360,7 @@ class asistenciaController extends Controller {
                 $objAsistencia->asistenciaId = $request->$value[ 0 ];
                 // $objAsistencia->fecha = $request[ 'fecha' ];
                 $objAsistencia->horasExtra = $request[ 'horasExtra' ][ $i ];
+                $objAsistencia->comentario = $request[ 'comentario' ][ $i ];
                 $objAsistencia->save();
                 // dd( $objAsistencia );
             }

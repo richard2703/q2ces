@@ -6,8 +6,9 @@ $dtToday = date('Ymd');
 $fechaSeleccionada = date_create(date('Y-m-d', strtotime("$intAnio-$intMes-$intDia")));
 $diaSeleccionado = $objCalendar->getNameDay(date_format($fechaSeleccionada, 'N'));
 $mesSeleccionado = $objCalendar->getNameMonth(date_format($fechaSeleccionada, 'm'));
+$semanaSeleccionada = date_format($fechaSeleccionada, 'W');
 
-$semanaAnterior =   ( date( 'Y-m-d', strtotime( $strFechaInioPeriodo .'- 6 days' ) ) );
+$semanaAnterior = date('Y-m-d', strtotime($strFechaInioPeriodo . '- 6 days'));
 // dd( $intAnio, $intMes, $intDia );
 $diaAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'd');
 $mesAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'm');
@@ -54,7 +55,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             </a>
                                             <!-- Para el mes en curso -->
                                         </span>
-                                        &nbsp;&nbsp;&nbsp; Semana del
+                                        &nbsp;&nbsp;&nbsp; Semana {{ $semanaSeleccionada }} del
                                         {{ $strFechaInioPeriodo }} al {{ $strFechaFinPeriodo }}
                                         &nbsp;&nbsp;&nbsp;
                                         <!-- Un dia adelante del cargado -->
@@ -83,7 +84,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                         <span>
                                             <a href="{{ route('asistencia.show', $personal->id) }}"
                                                 class="display-8 mb-8 text-center" title="Ir al periodo en curso"><b>Hoy es
-                                                    {{  $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
+                                                    {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
                                         </span>
                                         <h4 class="card-title">
                                             {{ $personal->nombres }} {{ $personal->apellidoP }}
@@ -111,6 +112,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                     <th class="labelTitulo">Incapacidadades</th>
                                                     <th class="labelTitulo">Vacaciones</th>
                                                     <th class="labelTitulo">Descansos</th>
+                                                    <th class="labelTitulo">Observaciones</th>
                                                 </thead>
                                                 <tbody class="text-center">
                                                     @forelse ($asistencias as $item)
@@ -144,6 +146,10 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                                     id="Asistencia_{{ $item->id }}" value="5"
                                                                     {{ $item->asistenciaId == 5 ? ' checked' : '' }}>
                                                             </td>
+                                                            <td><input type="text" class="inputCaja text-left"
+                                                                    name="comentario[]" id="comentario"
+                                                                    value="{{ $item->comentario }}" maxlength="500" placeholder="Especifique si se requiere..."
+                                                                    ></td>
                                                         </tr>
                                                     @empty
                                                         <tr>

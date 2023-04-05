@@ -1,23 +1,25 @@
-@extends('layouts.main', ['activePage' => 'asistencias', 'titlePage' => __('Asistencia Diaria')])
+@extends('layouts.main', ['activePage' => 'asistencias', 'titlePage' => __('Corte Semanal de Nomina')])
 <?php
 $objCalendar = new Calendario();
 
-// dd( $intAnio, $intMes, $intDia );
-$diaAnterior = date_format($objCalendar->getDiaAnterior("$intAnio-$intMes-$intDia"), 'd');
-$mesAnterior = date_format($objCalendar->getDiaAnterior("$intAnio-$intMes-$intDia"), 'm');
-$anioAnterior = date_format($objCalendar->getDiaAnterior("$intAnio-$intMes-$intDia"), 'Y');
-
-$diaSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$intDia"), 'd');
-$mesSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$intDia"), 'm');
-$anioSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$intDia"), 'Y');
+$dtToday = date('Ymd');
 $fechaSeleccionada = date_create(date('Y-m-d', strtotime("$intAnio-$intMes-$intDia")));
-$intDiaSeleccionado = date_format($fechaSeleccionada, 'N');
 $diaSeleccionado = $objCalendar->getNameDay(date_format($fechaSeleccionada, 'N'));
 $mesSeleccionado = $objCalendar->getNameMonth(date_format($fechaSeleccionada, 'm'));
+$semanaSeleccionada = date_format($fechaSeleccionada, 'W');
 
-$dtToday = date('Ymd');
+$semanaAnterior = date('Y-m-d', strtotime($strFechaInioPeriodo . '- 6 days'));
+// dd( $intAnio, $intMes, $intDia );
+$diaAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'd');
+$mesAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'm');
+$anioAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'Y');
+
+$diaSiguiente = date_format($objCalendar->getDiaSiguiente($strFechaFinPeriodo), 'd');
+$mesSiguiente = date_format($objCalendar->getDiaSiguiente($strFechaFinPeriodo), 'm');
+$anioSiguiente = date_format($objCalendar->getDiaSiguiente($strFechaFinPeriodo), 'Y');
+
 $dtTrabajar = date('Ymd', strtotime("$intAnio-$intMes-$intDia"));
-
+// dd($vctFechas);
 //*** bloqueamos fecha mayor al dia actual
 $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? false : true;
 
@@ -47,19 +49,19 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                     <h4 class="card-title">
                                         <!-- Un dia atras del cargado -->
                                         <span>
-                                            <a href="{{ url('asistencia/diaria/' . $anioAnterior . '/' . $mesAnterior . '/' . $diaAnterior) }}"
-                                                class="" title="Ir al día anterior">
+                                            <a href="{{ url('asistencia/corteSemanal/' . $anioAnterior . '/' . $mesAnterior . '/' . $diaAnterior) }}"
+                                                class="" title="Ir al día periodo anterior">
                                                 <i class="bi bi-arrow-left-square"></i>
                                             </a>
                                             <!-- Para el mes en curso -->
                                         </span>
-                                        &nbsp;&nbsp;&nbsp;
-                                        {{ $objCalendar->getFechaFormateada($fechaSeleccionada) }}
+                                        &nbsp;&nbsp;&nbsp; Semana {{ $semanaSeleccionada }} del
+                                        {{ $strFechaInioPeriodo }} al {{ $strFechaFinPeriodo }}
                                         &nbsp;&nbsp;&nbsp;
                                         <!-- Un dia adelante del cargado -->
                                         <span>
-                                            <a href="{{ url('asistencia/diaria/' . $anioSiguiente . '/' . $mesSiguiente . '/' . $diaSiguiente) }}"
-                                                class="" title="Ir al día siguiente">
+                                            <a href="{{ url('asistencia/corteSemanal/' . $anioSiguiente . '/' . $mesSiguiente . '/' . $diaSiguiente) }}"
+                                                class="" title="Ir al día periodo siguiente">
                                                 <i class="bi bi-arrow-right-square"></i>
                                             </a>
                                         </span>
@@ -67,6 +69,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                     {{-- <p class="card-category">Usuarios registrados</p> --}}
                                 </div>
                                 <div class="card-body">
+
                                     @if (session('success'))
                                         <div class="alert alert-success" role="success">
                                             {{ session('success') }}
@@ -78,30 +81,32 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                         </div>
                                     @endif
                                     <div class="row">
-
                                         <span>
-                                            <a href="{{ route('asistencia.create') }}" class="display-8 mb-8 text-center"
-                                                title="Ir al mes en curso"><b>Hoy es
+                                            <a href="{{ route('asistencia.corteSemanal') }}"
+                                                class="display-8 mb-8 text-center" title="Ir al periodo en curso"><b>Hoy es
                                                     {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
                                         </span>
+                                        {{-- <h4 class="card-title">
+                                            {{ $personal->nombres }} {{ $personal->apellidoP }}
+                                            {{ $personal->apellidoM }}</h4> --}}
                                     </div>
 
-                                    <form class="row alertaGuardar" action="{{ route('asistencia.store') }}" method="post"
+                                    <form class="row alertaGuardar"
+                                        action="{{ route('asistencia.update', 1) }}" method="post"
                                         enctype="multipart/form-data">
                                         @csrf
-
+                                        @method('put')
                                         <input type="hidden" name="intAnio" value="{{ $intAnio }}">
                                         <input type="hidden" name="intMes" value="{{ $intMes }}">
                                         <input type="hidden" name="intDia" value="{{ $intDia }}">
-                                        <input type="hidden" name="fecha"
-                                            value="{{ date_format($fechaSeleccionada, 'Y-m-d') }}">
-                                        <input type="hidden" name="horasExtra" value="0">
+                                        {{-- <input type="hidden" name="personalId" value="{{ $personal->id }}"> --}}
+
 
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead class="labelTitulo text-center">
-                                                    <th class="labelTitulo">Codigo</th>
-                                                    <th class="labelTitulo">Nombre</th>
+                                                    <th class="labelTitulo">Dia</th>
+                                                    <th class="labelTitulo">Horas Extra</th>
                                                     <th class="labelTitulo">Asistencia</th>
                                                     <th class="labelTitulo">Faltas</th>
                                                     <th class="labelTitulo">Incapacidadades</th>
@@ -109,39 +114,43 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                     <th class="labelTitulo">Descansos</th>
                                                 </thead>
                                                 <tbody class="text-center">
-
-                                                    @forelse ($personal as $item)
+                                                    @forelse ($asistencias as $item)
                                                         <tr>
-                                                            <td class="">
-                                                                {{ $item->id }}
-                                                                <input type="hidden" name="asistenciaId[]"
-                                                                    value="{{ $item->asistenciaId }}">
-                                                                <input type="hidden" name="personalId[]"
+                                                            <td>{{ $objCalendar->getFechaFormateada(date_create($item->fecha)) }}
+                                                                <input type="hidden" name="fecha[]"
+                                                                    value="{{ $item->fecha }}">
+                                                                <input type="hidden" name="recordId[]"
                                                                     value="{{ $item->id }}">
                                                             </td>
-                                                            <td class="text-left">
-                                                                {{ $item->getFullLastNameAttribute() }}
-                                                            </td>
+                                                            <td><input type="number" class="inputCaja text-right" required
+                                                                    name="horasExtra[]" id="horasExtra"
+                                                                    value="{{ $item->horasExtra }}" maxlength="2"
+                                                                    step="1" min="0" max="16"></td>
                                                             <td><input type="radio" name="{{ $item->id }}[]"
                                                                     id="Asistencia_{{ $item->id }}" value="1"
-                                                                    {{ $intDiaSeleccionado != 7 ? 'checked' : '' }}></td>
+                                                                    {{ $item->asistenciaId == 1 ? ' checked' : '' }}></td>
                                                             <td><input type="radio" name="{{ $item->id }}[]"
-                                                                    id="Asistencia_{{ $item->id }}" value="2">
+                                                                    id="Asistencia_{{ $item->id }}" value="2"
+                                                                    {{ $item->asistenciaId == 2 ? ' checked' : '' }}>
                                                             </td>
                                                             <td><input type="radio" name="{{ $item->id }}[]"
-                                                                    id="Asistencia_{{ $item->id }}" value="3">
+                                                                    id="Asistencia_{{ $item->id }}" value="3"
+                                                                    {{ $item->asistenciaId == 3 ? ' checked' : '' }}>
                                                             </td>
                                                             <td><input type="radio" name="{{ $item->id }}[]"
-                                                                    id="Asistencia_{{ $item->id }}" value="4">
+                                                                    id="Asistencia_{{ $item->id }}" value="4"
+                                                                    {{ $item->asistenciaId == 4 ? ' checked' : '' }}>
                                                             </td>
                                                             <td><input type="radio" name="{{ $item->id }}[]"
                                                                     id="Asistencia_{{ $item->id }}" value="5"
-                                                                    {{ $intDiaSeleccionado == 7 ? 'checked' : '' }}>
+                                                                    {{ $item->asistenciaId == 5 ? ' checked' : '' }}>
                                                             </td>
                                                         </tr>
                                                     @empty
                                                         <tr>
-                                                            <td colspan="2">Sin registros.</td>
+                                                            <td colspan="2">Sin registros.<br><br> <b>Es necesario
+                                                                    registrar primero la asistencia del personal antes de
+                                                                    poder realizar las acciones de esta semana.</b></td>
                                                         </tr>
                                                     @endforelse
                                                 </tbody>
@@ -149,7 +158,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                         </div>
 
                                         <div class="card-footer mr-auto">
-                                            <?php if( $blnBloquearRegistro == false){  ?>
+
                                             <a href="{{ route('asistencia.index') }}">
                                                 <button type="button" class="btn btn-danger">Cancelar</button>
                                             </a>
@@ -157,7 +166,6 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                 <button type="submit" class="btn botonGral">Guardar</button>
                                             </a>
                                             {{--  {{ $personal->links() }}  --}}
-                                            <?php } ?>
                                         </div>
                                     </form>
                                 </div>
