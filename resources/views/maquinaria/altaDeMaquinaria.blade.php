@@ -51,27 +51,27 @@
 
                                                         <div class="row alin">
                                                             <div class=" col-12 col-sm-6  mb-3 ">
-                                                                <label class="labelTitulo">Nombre:</label></br>
-                                                                <input type="text" class="inputCaja" id="nombre"
+                                                                <label class="labelTitulo">Nombre: <span>*</span></label></br>
+                                                                <input type="text" class="inputCaja" id="nombre" placeholder="Especifique..." required
                                                                     name="nombre" value="{{ old('nombre') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Marca:</label></br>
-                                                                <input type="text" class="inputCaja" id="marca"
+                                                                <input type="text" class="inputCaja" id="marca"  placeholder="Especifique..."
                                                                     name="marca" value="{{ old('marca') }}">
                                                             </div>
 
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Modelo:</label></br>
-                                                                <input type="text" class="inputCaja" id="modelo"
+                                                                <input type="text" class="inputCaja" id="modelo"  placeholder="Especifique..."
                                                                     name="modelo" value="{{ old('modelo') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Sub Marca:</label></br>
-                                                                <input type="text" class="inputCaja" id="submarca"
+                                                                <input type="text" class="inputCaja" id="submarca"  placeholder="Especifique..."
                                                                     name="submarca" value="{{ old('submarca') }}">
                                                             </div>
 
@@ -83,9 +83,9 @@
                                                             </div> --}}
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Categoría:</label></br>
+                                                                <label class="labelTitulo">Categoría:</label><span>*</span></br>
                                                                 <select class="form-select"
-                                                                    aria-label="Default select example" id="categoria"
+                                                                    aria-label="Default select example" id="categoria" required
                                                                     name="categoria">
                                                                     <option value="">Seleccione</option>
                                                                     <option value="Accesorios">Accesorios</option>
@@ -127,36 +127,27 @@
                                                                         </select>
 
                                                                     </div>
-                                                                    <div class="col-3">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            fill="currentColor"
-                                                                            class="bi bi-plus-circle-fill btnMas"
-                                                                            viewBox="0 0 16 16">
-                                                                            <path
-                                                                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-                                                                        </svg>
-                                                                    </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Año:</label></br>
-                                                                <input type="number" class="inputCaja" id="ano"
+                                                                <input type="number" class="inputCaja" id="ano" maxlength="4" placeholder="Ej. 2000"
                                                                     name="ano" value="{{ old('ano') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Color:</label></br>
-                                                                <input type="text" class="inputCaja" id="color"
+                                                                <input type="text" class="inputCaja" id="color" placeholder="Ej. Amarillo"
                                                                     name="color" value="{{ old('color') }}"
-                                                                    placeholder="amarillo">
+                                                                    >
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Placas:</label></br>
-                                                                <input type="text" class="inputCaja" id="placas"
+                                                                <input type="text" class="inputCaja" id="placas" placeholder="Ej. JAL-0000"
                                                                     name="placas" value="{{ old('placas') }}"
-                                                                    placeholder="MW88888">
+                                                                     >
                                                             </div>
 
                                                             {{-- <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -171,25 +162,25 @@
 
                                                             <div class=" col-12 col-sm-6  mb-3">
                                                                 <label class="labelTitulo">Motor:</label></br>
-                                                                <input type="text" class="inputCaja" id="motor"
+                                                                <input type="text" class="inputCaja" id="motor" placeholder="Especifique..."
                                                                     name="motor" value="{{ old('motor') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Número Motor:</label></br>
-                                                                <input type="text" class="inputCaja" id="nummotor"
+                                                                <input type="text" class="inputCaja" id="nummotor" placeholder="Ej. NUM0123ABCD"
                                                                     name="nummotor" value="{{ old('nummotor') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Número Serie:</label></br>
-                                                                <input type="text" class="inputCaja" id="numserie"
+                                                                <input type="text" class="inputCaja" id="numserie" placeholder="Ej. NS01234ABCD"
                                                                     name="numserie" value="{{ old('numserie') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Número VIN:</label></br>
-                                                                <input type="text" class="inputCaja" id="vin"
+                                                                <input type="text" class="inputCaja" id="vin" placeholder="Ej. 123456"
                                                                     name="vin" value="{{ old('vin') }}">
                                                             </div>
 
@@ -300,7 +291,7 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Tipo de Bujías:</label></br>
-                                                                <input type="text" class="inputCaja" id="tipobujia"
+                                                                <input type="text" class="inputCaja" id="tipobujia" placeholder="Especifique..."
                                                                     name="tipobujia" value="{{ old('tipobujia') }}">
                                                             </div>
 
@@ -378,12 +369,11 @@
                                                                         Factura
                                                                     </label>
                                                                 </div>
-                                                                <div
-                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
-
+                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
+                                                                    <input type="hidden" id="factura_tipo" name="factura_tipo" value="Factura">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="factura" id="foto" accept=".pdf">
+                                                                            name="factura_ruta" id="factura_ruta" accept=".pdf">
                                                                         <lord-icon
                                                                             src="https://cdn.lordicon.com/koyivthb.json"
                                                                             trigger="hover"
@@ -392,62 +382,7 @@
                                                                         </lord-icon>
                                                                     </label>
 
-                                                                    <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65" style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </label>
-
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-12 col-md-4 col-lg-3">
-                                                        <div class="card contDocumentos">
-                                                            <div class="card-body m-2">
-
-                                                                <div>
-                                                                    <label
-                                                                        class="form-check-label text-start fs-5 textTitulo text-break  mb-2"
-                                                                        for="flexCheckDefault">
-                                                                        <i class="fa fa-user semaforo2"></i>
-                                                                        Verificación
-                                                                    </label>
-
-                                                                </div>
-                                                                <div
-                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
-                                                                    <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="verificacion" id="foto"
-                                                                            accept=".pdf">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/koyivthb.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65" style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </label>
-
-                                                                    <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65" style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </label>
-                                                                </div>
-
-
                                                             </div>
                                                         </div>
                                                     </div>
@@ -465,24 +400,13 @@
                                                                     </label>
 
                                                                 </div>
-                                                                <div
-                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                    <input type="hidden" id="manual_tipo" name="manual_tipo" value="Manual_de_Uso">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="manual" id="foto" accept=".pdf">
+                                                                            name="manual_ruta" id="manual_ruta" accept=".pdf">
                                                                         <lord-icon
                                                                             src="https://cdn.lordicon.com/koyivthb.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65" style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </label>
-
-                                                                    <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
                                                                             trigger="hover"
                                                                             colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
@@ -508,11 +432,12 @@
                                                                     </label>
 
                                                                 </div>
-                                                                <div
-                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                    <input type="hidden" id="registro_tipo" name="registro_tipo" value="Registro">
+
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="registro" id="foto"
+                                                                            name="registro_ruta" id="registro_ruta"
                                                                             accept=".pdf">
                                                                         <lord-icon
                                                                             src="https://cdn.lordicon.com/koyivthb.json"
@@ -521,61 +446,7 @@
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </label>
-
-                                                                    <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65" style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </label>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-12 col-md-4 col-lg-3">
-                                                        <div class="card contDocumentos">
-                                                            <div class="card-body m-2">
-
-                                                                <div>
-                                                                    <label
-                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                        for="flexCheckDefault">
-                                                                        <i class="fa fa-user semaforo2"></i>
-                                                                        Tarjeta de Circulación
-                                                                    </label>
-                                                                </div>
-                                                                <div
-                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
-                                                                    <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="circulacion" id="foto"
-                                                                            accept=".pdf">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/koyivthb.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65" style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </label>
-
-                                                                    <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65" style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </label>
-                                                                </div>
-
-
                                                             </div>
                                                         </div>
                                                     </div>
@@ -592,11 +463,43 @@
                                                                         Ficha Técnica del Proveedor
                                                                     </label>
                                                                 </div>
-                                                                <div
-                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                    <input type="hidden" id="ficha_tipo" name="ficha_tipo" value="Ficha_Tecnica_del_Proveedor">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="ficha" id="foto" accept=".pdf">
+                                                                            name="ficha_ruta" id="ficha_ruta" accept=".pdf">
+                                                                        <lord-icon
+                                                                            src="https://cdn.lordicon.com/koyivthb.json"
+                                                                            trigger="hover"
+                                                                            colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-12 col-md-4 col-lg-3">
+                                                        <div class="card contDocumentos">
+                                                            <div class="card-body m-2">
+
+                                                                <div>
+                                                                    <label
+                                                                        class="form-check-label text-start fs-5 textTitulo text-break  mb-2"
+                                                                        for="flexCheckDefault">
+                                                                        <i class="fa fa-user semaforo2"></i>
+                                                                        Verificación
+                                                                    </label>
+
+                                                                </div>
+                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                    <input type="hidden" id="verificacion_tipo" name="verificacion_tipo" value="Verificacion">
+                                                                    <label class="custom-file-upload">
+                                                                        <input class="mb-4" type="file"
+                                                                            name="verificacion_ruta" id="verificacion_ruta"
+                                                                            accept=".pdf">
                                                                         <lord-icon
                                                                             src="https://cdn.lordicon.com/koyivthb.json"
                                                                             trigger="hover"
@@ -605,16 +508,42 @@
                                                                         </lord-icon>
                                                                     </label>
 
+                                                                    <label class="labelTitulo">Fecha de vencimiento:</label></br>
+                                                                    <input type="date" class="inputCaja" id="verificacion_fechaVencimiento" name="verificacion_fechaVencimiento"
+                                                                        value="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-4 col-lg-3">
+                                                        <div class="card contDocumentos">
+                                                            <div class="card-body m-2">
+                                                                <div>
+                                                                    <label
+                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                        for="flexCheckDefault">
+                                                                        <i class="fa fa-user semaforo2"></i>
+                                                                        Tarjeta de Circulación
+                                                                    </label>
+                                                                </div>
+                                                                <div  class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                    <input type="hidden" id="tarjeta_tipo" name="tarjeta_tipo" value="Tarjeta_Circulacion">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
+                                                                            name="tarjeta_ruta" id="tarjeta_ruta"
+                                                                            accept=".pdf">
                                                                         <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
+                                                                            src="https://cdn.lordicon.com/koyivthb.json"
                                                                             trigger="hover"
                                                                             colors="primary:#86c716,secondary:#e8e230"
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </label>
+
+                                                                    <label class="labelTitulo">Fecha de vencimiento:</label></br>
+                                                                    <input type="date" class="inputCaja" id="tarjeta_fechaVencimiento" name="tarjeta_fechaVencimiento"
+                                                                        value="">
                                                                 </div>
 
 
@@ -635,11 +564,11 @@
                                                                     </label>
 
                                                                 </div>
-                                                                <div
-                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                <div  class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                    <input type="hidden" id="seguros_tipo" name="seguros_tipo" value="Seguros">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="seguro" id="foto" accept=".pdf">
+                                                                            name="seguros_ruta" id="seguros_ruta" accept=".pdf">
                                                                         <lord-icon
                                                                             src="https://cdn.lordicon.com/koyivthb.json"
                                                                             trigger="hover"
@@ -648,16 +577,9 @@
                                                                         </lord-icon>
                                                                     </label>
 
-                                                                    <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65" style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </label>
+                                                                    <label class="labelTitulo">Fecha de vencimiento:</label></br>
+                                                                    <input type="date" class="inputCaja" id="seguros_fechaVencimiento" name="seguros_fechaVencimiento"
+                                                                        value="">
                                                                 </div>
 
 
@@ -678,11 +600,11 @@
                                                                     </label>
 
                                                                 </div>
-                                                                <div
-                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                <div  class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                    <input type="hidden" id="especiales_tipo" name="especiales_tipo" value="Permisos_Especiales">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="especial" id="foto"
+                                                                            name="especiales_ruta" id="especiales_ruta"
                                                                             accept=".pdf">
                                                                         <lord-icon
                                                                             src="https://cdn.lordicon.com/koyivthb.json"
@@ -692,119 +614,18 @@
                                                                         </lord-icon>
                                                                     </label>
 
-                                                                    <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="foto" id="foto">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65" style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </label>
+                                                                    <label class="labelTitulo">Fecha de vencimiento:</label></br>
+                                                                    <input type="date" class="inputCaja" id="especiales_fechaVencimiento" name="especiales_fechaVencimiento"
+                                                                        value="">
+
                                                                 </div>
 
 
                                                             </div>
                                                         </div>
                                                     </div>
-
 
                                                 </div>
-                                                {{--  <div class="row mt-3">
-                                                    <div class="col-12 ">
-                                                        <div class="row alin">
-
-                                                            <div class="col-12 col-sm-6 col-lg-4 card contDocumentos">
-                                                                <div class="row">
-                                                                    <div class="col-8 mb-1 mt-1"> <label
-                                                                            class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                            for="flexCheckDefault">
-                                                                            Factura
-                                                                        </label></div>
-                                                                    <div class="col-4 mb-1 mt-1"><i
-                                                                            class="fa fa-user semaforo2"></i>
-                                                                    </div>
-                                                                    <div class="col-6 mb-1 mt-1 "> <input class="mb-4"
-                                                                            type="file" name="foto" id="foto">
-                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65" style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </div>
-                                                                    <br>
-                                                                    <div class="col-6 mb-1 mt-1"> <input class="mb-4"
-                                                                            type="file" name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}">
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-
-                                                            <div class="col-12 col-sm-6 col-lg-4 card contDocumentos">
-                                                                <div class="row">
-                                                                    <div class="col-8 mb-1 mt-1"> <label
-                                                                            class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                            for="flexCheckDefault">
-                                                                            Factura
-                                                                        </label></div>
-                                                                    <div class="col-4 mb-1 mt-1"><i
-                                                                            class="fa fa-user semaforo2"></i>
-                                                                    </div>
-                                                                    <div class="col-6 mb-1 mt-1 "> <input class="mb-4"
-                                                                            type="file" name="foto" id="foto">
-                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65" style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </div>
-                                                                    <br>
-                                                                    <div class="col-6 mb-1 mt-1"> <input class="mb-4"
-                                                                            type="file" name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}">
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-
-                                                            <div class="col-12 col-sm-6 col-lg-4 card contDocumentos">
-                                                                <div class="row">
-                                                                    <div class="col-8 mb-1 mt-1"> <label
-                                                                            class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                            for="flexCheckDefault">
-                                                                            Factura
-                                                                        </label></div>
-                                                                    <div class="col-4 mb-1 mt-1"><i
-                                                                            class="fa fa-user semaforo2"></i>
-                                                                    </div>
-                                                                    <div class="col-6 mb-1 mt-1 "> <input class="mb-4"
-                                                                            type="file" name="foto" id="foto">
-                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"  colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65" style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </div>
-                                                                    <br>
-                                                                    <div class="col-6 mb-1 mt-1"> <input class="mb-4"
-                                                                            type="file" name="foto" id="foto">
-                                                                        <img class="mx-2" style="height:23px"
-                                                                            src="{{ asset('/img/general/guardarVerde.svg') }}">
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-
-
-                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Modelo:</label></br>
-                                                                <input type="text" class="inputCaja" id="modelo"
-                                                                    name="modelo" value="">
-                                                            </div>
-
-                                                        </div>
-
-
-                                                    </div>
-                                                </div>  --}}
 
                                             </div>
                                         </div>

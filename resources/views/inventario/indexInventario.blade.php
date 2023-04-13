@@ -61,7 +61,8 @@
                                                             <button type="button"
                                                                 class="botonSinFondo mx-2"title="Resurtir"
                                                                 data-bs-toggle="modal" data-bs-target="#modal-cliente"
-                                                                onclick="cargar('{{ $inventario->nombre }}','{{ $inventario->imagen }}','{{ $inventario->id }}')"><img
+                                                                onclick="cargar('{{ $inventario->nombre }}','{{ $inventario->imagen }}','{{ $inventario->tipo }}','{{ $inventario->id }}')">
+                                                                <img
                                                                     style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}"></button>
                                                             <p class="botonTitulos mt-2">Resurtir</p>
                                                         </div>
@@ -147,8 +148,8 @@
                                     </div>
                                     <div class="col-12 col-lg-6">
                                         <label class="labelTitulo" for="">Cantidad:</label></br>
-                                        <input class="inputCaja" type="number" step="0.01" min="0.01"
-                                            id="cantidad" name="cantidad" value="" required></br>
+                                        <input class="inputCaja" type="number" step="0.01" min="0.01" id="cantidad"
+                                            name="cantidad" value="" required></br>
                                     </div>
                                     <div class="col-12 col-lg-6">
                                         <label class="labelTitulo" for="">Costo unitario:</label></br>
@@ -211,9 +212,10 @@
     </script>
 
     <script>
-        function cargar(nombre, img, id) {
+        function cargar(nombre, img, tipo, id) {
+
             const imagen = document.getElementById('imagenM');
-            imagen.src = '/storage/inventario/' + img;
+            imagen.src = '/storage/inventario/' + tipo + '/'+ img;
             const p = document.getElementById('nombreM');
             p.innerText = nombre;
             const productoid = document.getElementById('productoid');

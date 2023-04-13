@@ -20,6 +20,7 @@
                             <form class="row alertaGuardar" action="{{ route('personal.store') }}" method="post"
                                 enctype="multipart/form-data">
                                 @csrf
+                                <input type="hidden" name="estatusId" id="estatusId" value="1">
                                 <div class="accordion my-3" id="accordionExample">
                                     {{--  Datos Personales  --}}
 
@@ -60,15 +61,18 @@
                                                             </div>  --}}
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Nombre(s):</label></br>
+                                                                <label class="labelTitulo">Nombre(s):
+                                                                    <span>*</span></label></br>
                                                                 <input type="text" class="inputCaja" id="nombres"
-                                                                    name="nombres" value="{{ old('nombres') }}">
+                                                                    required name="nombres" value="{{ old('nombres') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Apellido Paterno:</label></br>
+                                                                <label class="labelTitulo">Apellido Paterno:
+                                                                    <span>*</span></label></br>
                                                                 <input type="text" class="inputCaja" id="apellidoP"
-                                                                    name="apellidoP" value="{{ old('apellidoP') }}">
+                                                                    required name="apellidoP"
+                                                                    value="{{ old('apellidoP') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -146,8 +150,9 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Hijos:</label></br>
-                                                                <input type="number" class="inputCaja" id="hijos"
-                                                                    name="hijos" value="{{ old('hijos') }}">
+                                                                <input type="number" class="inputCaja text-right"
+                                                                    id="hijos" name="hijos"
+                                                                    value="{{ old('hijos') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -210,6 +215,19 @@
                                                                 <input type="email" class="inputCaja"
                                                                     id="mailEmpresarial" name="mailEmpresarial"
                                                                     value="{{ old('mailEmpresarial') }}">
+                                                            </div>
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                                <label class="labelTitulo">Nivel de puesto:</label></br>
+                                                                <select id="puestoNivelId" name="puestoNivelId"
+                                                                    class="form-select" required
+                                                                    aria-label="Default select example">
+                                                                    <option value="">Seleccione</option>
+                                                                    @foreach ($vctNiveles as $item)
+                                                                        <option value="{{ $item->id }}">
+                                                                            {{ $item->nombre }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -565,8 +583,18 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Puesto:</label></br>
-                                                                <input type="text" class="inputCaja" id=""
-                                                                    name="puesto" value="{{ old('puesto') }}">
+                                                                {{-- <input type="text" class="inputCaja" id=""
+                                                                    name="puesto" value="{{ old('puesto') }}"> --}}
+                                                                <select id="puestoId" name="puestoId"
+                                                                    class="form-select" required
+                                                                    aria-label="Default select example">
+                                                                    <option value="">Seleccione</option>
+                                                                    @foreach ($vctPuestos as $item)
+                                                                        <option value="{{ $item->id }}">
+                                                                            {{ $item->nombre }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
                                                             </div>
 
                                                             {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
@@ -633,13 +661,14 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Jefe Inmediato:</label></br>
-                                                                <select id="jefeId" name="jefeId"
-                                                                    class="form-select" aria-label="Default select example">
+                                                                <select id="jefeId" name="jefeId" class="form-select"
+                                                                    aria-label="Default select example">
 
                                                                     <option value="">Seleccione</option>
                                                                     @foreach ($personal as $persona)
                                                                         <option value="{{ $persona->id }}">
-                                                                            {{ $persona->nombres . ' ' . $persona->apellidoP }}</option>
+                                                                            {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                                                        </option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -653,17 +682,28 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Sueldo Diario:</label></br>
-                                                                <input type="number" class="inputCaja" id=""
+                                                                <input type="number" maxlength="5" step="0.1"
+                                                                    min="00000" max="99999" placeholder="ej. 1000"
+                                                                    class="inputCaja text-right" id="diario"
                                                                     name="diario" value="{{ old('diario') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">ISR:</label></br>
-                                                                <input type="number" class="inputCaja" id=""
-                                                                    name="isr" step='0.01'
+                                                                <input type="number" class="inputCaja text-right"
+                                                                    id="" name="isr" step='0.01'
                                                                     value="{{ old('isr') }}">
                                                             </div>
 
+                                                            {{-- <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                                <label class="labelTitulo">Registra Asistencia:</label></br>
+                                                                <select class="form-select"
+                                                                    aria-label="Default select example" id="asistencia"
+                                                                    name="asistencia">
+                                                                    <option value="0">No</option>
+                                                                    <option value="1">Sí</option>
+                                                                </select>
+                                                            </div> --}}
                                                         </div>
                                                     </div>
                                                 </div>

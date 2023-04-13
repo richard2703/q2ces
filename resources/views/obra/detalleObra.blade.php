@@ -32,7 +32,7 @@
                                         <div class="col-12 col-sm-6 ">
                                             <div class="text-center mx-auto border vistaFoto mb-4">
                                                 <i><img class="imgVista img-fluid mb-5"
-                                                        src="{{ $obras->foto == '' ? ' /img/general/default.jpg' : '/storage/obras/' . $obras->foto }}"></i>
+                                                        src="{{ $obras->foto == '' ? '/img/general/default.jpg' : asset('/storage/obras/' . str_pad($obras->id, 4, '0', STR_PAD_LEFT) . '/' . $obras->foto) }}"></i>
                                                 <span class="mi-archivo"> <input class="mb-4 ver" type="file"
                                                         name="foto" id="mi-archivo" accept="image/*"></span>
                                                 <label for="mi-archivo">
@@ -45,7 +45,7 @@
                                         <div class="col-12 col-sm-6 ">
                                             <div class="text-center mx-auto border vistaFoto mb-4">
                                                 <i><img class="imgVista img-fluid mb-5"
-                                                        src="{{ $obras->logo == '' ? ' /img/general/default.jpg' : '/storage/obras/' . $obras->logo }}"></i>
+                                                        src="{{ $obras->logo == '' ? '/img/general/default.jpg' : asset('/storage/obras/' . str_pad($obras->id, 4, '0', STR_PAD_LEFT) . '/' . $obras->logo) }}"></i>
                                                 <span class="mi-archivo"> <input class="mb-4 ver" type="file"
                                                         name="logo" id="mi-archivo2" accept="image/*"></span>
                                                 <label for="mi-archivo2">
@@ -61,14 +61,14 @@
                                 <div class="col-12   ">
                                     <div class="row">
                                         <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Nombre de la Obra:</label></br>
-                                            <input type="text" class="inputCaja" id="nombre" name="nombre"
-                                                value="{{ $obras->nombre }}">
+                                            <label class="labelTitulo">Nombre de la Obra: <span>*</span></label></br>
+                                            <input type="text" class="inputCaja" id="nombre" name="nombre" required
+                                                placeholder="Especifique..." value="{{ $obras->nombre }}">
                                         </div>
                                         <div class="col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Tipo:</label></br>
+                                            <label class="labelTitulo">Tipo: <span>*</span></label></br>
                                             <select class="form-select" aria-label="Default select example" id="tipo"
-                                                name="tipo">
+                                                required name="tipo">
                                                 <option value="Seleccione"
                                                     {{ $obras->tipo == 'Seleccione' ? ' selected' : '' }}>Seleccione
                                                 </option>
@@ -81,9 +81,9 @@
                                             </select>
                                         </div>
                                         <div class="col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Calle:</label></br>
-                                            <input type="text" class="inputCaja" id="calle" name="calle"
-                                                value="{{ $obras->calle }}">
+                                            <label class="labelTitulo">Calle: <span>*</span></label></br>
+                                            <input type="text" class="inputCaja" id="calle" name="calle" required
+                                                placeholder="Especifique..." value="{{ $obras->calle }}">
                                         </div>
                                         <div class="col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Número:</label></br>
@@ -91,24 +91,25 @@
                                                 value="{{ $obras->numero }}">
                                         </div>
                                         <div class="col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Colonia:</label></br>
-                                            <input type="text" class="inputCaja" id="colonia" name="colonia"
-                                                value="{{ $obras->colonia }}">
+                                            <label class="labelTitulo">Colonia: <span>*</span></label></br>
+                                            <input type="text" class="inputCaja" id="colonia" name="colonia" required
+                                                placeholder="Especifique..." value="{{ $obras->colonia }}">
                                         </div>
                                         <div class="col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Código Postal:</label></br>
-                                            <input type="text" class="inputCaja" id="cp" name="cp"
-                                                value="{{ $obras->cp }}">
+                                            <input type="number" maxlength="5" step="1" min="00000"
+                                                max="99999" placeholder="ej. 44100" class="inputCaja" id="cp"
+                                                name="cp" value="{{ $obras->cp }}">
                                         </div>
                                         <div class="col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Localidad:</label></br>
-                                            <input type="text" class="inputCaja" id="ciudad" name="ciudad"
-                                                value="{{ $obras->ciudad }}">
+                                            <label class="labelTitulo">Localidad: <span>*</span></label></br>
+                                            <input type="text" class="inputCaja" id="ciudad" name="ciudad" required
+                                                placeholder="Especifique..." value="{{ $obras->ciudad }}">
                                         </div>
                                         <div class="col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Estado:</label></br>
+                                            <label class="labelTitulo">Estado: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="estado" name="estado"
-                                                value="{{ $obras->estado }}">
+                                                required placeholder="Especifique..." value="{{ $obras->estado }}">
                                         </div>
                                     </div>
                                 </div>
@@ -131,39 +132,46 @@
                                                         value="{{ $residentes->id }}">
 
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                        <label class="labelTitulo">Nombre:</label></br>
-                                                        <input type="text" class="inputCaja" id="rnombre"
-                                                            name="rnombre[]" value="{{ $residentes->nombre }}">
+                                                        <label class="labelTitulo">Nombre: <span>*</span></label></br>
+                                                        <input type="text" class="inputCaja" id="rnombre" required
+                                                            placeholder="Especifique..." required name="rnombre[]"
+                                                            value="{{ $residentes->nombre }}">
                                                     </div>
 
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
                                                         <label class="labelTitulo">Empresa:</label></br>
                                                         <input type="text" class="inputCaja" id="rempresa"
-                                                            name="rempresa[]" value="{{ $residentes->empresa }}">
+                                                            placeholder="Especifique..." name="rempresa[]"
+                                                            value="{{ $residentes->empresa }}">
                                                     </div>
 
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
                                                         <label class="labelTitulo">Puesto:</label></br>
                                                         <input type="text" class="inputCaja" id="rpuesto"
-                                                            name="rpuesto[]" value="{{ $residentes->puesto }}">
+                                                            placeholder="Especifique..." name="rpuesto[]"
+                                                            value="{{ $residentes->puesto }}">
                                                     </div>
 
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
                                                         <label class="labelTitulo">Teléfono:</label></br>
-                                                        <input type="text" class="inputCaja" id="rtelefono"
-                                                            name="rtelefono[]" value="{{ $residentes->telefono }}">
+                                                        <input type="tel" pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}"
+                                                            placeholder="ej. 00-0000-0000" class="inputCaja"
+                                                            id="rtelefono"
+                                                            name="rtelefono[]"value="{{ $residentes->telefono }}">
                                                     </div>
 
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                        <label class="labelTitulo">Email:</label></br>
-                                                        <input type="email" class="inputCaja" id="remail"
+                                                        <label class="labelTitulo">Email: <span>*</span></label></br>
+                                                        <input type="email" class="inputCaja" id="remail" required
+                                                            placeholder="ej. elcorreo@delresponsable.com" min="6"
                                                             name="remail[]" value="{{ $residentes->email }}">
                                                     </div>
 
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
                                                         <label class="labelTitulo">Código de Confirmación:</label></br>
                                                         <input type="password" class="inputCaja" id="rfirma"
-                                                            name="rfirma[]" value="{{ $residentes->firma }}">
+                                                            placeholder="Especifique..." name="rfirma[]"
+                                                            value="{{ $residentes->firma }}">
                                                     </div>
 
                                                 </div>
@@ -184,33 +192,43 @@
                                                     <input type="hidden" name="idResidente[]" value="">
 
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                        <label class="labelTitulo">Nombre:</label></br>
-                                                        <input type="text" class="inputCaja" id="rnombre"
-                                                            name="rnombre[]" value="">
+                                                        <label class="labelTitulo">Nombre: <span>*</span></label></br>
+                                                        <input type="text" class="inputCaja" id="rnombre" required
+                                                            placeholder="Especifique..." name="rnombre[]" value="">
                                                     </div>
 
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
                                                         <label class="labelTitulo">Empresa:</label></br>
                                                         <input type="text" class="inputCaja" id="rempresa"
-                                                            name="rempresa[]" value="">
+                                                            placeholder="Especifique..." name="rempresa[]"
+                                                            value="">
                                                     </div>
 
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
                                                         <label class="labelTitulo">Puesto:</label></br>
                                                         <input type="text" class="inputCaja" id="rpuesto"
-                                                            name="rpuesto[]" value="">
+                                                            placeholder="Especifique..." name="rpuesto[]" value="">
                                                     </div>
 
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
                                                         <label class="labelTitulo">Teléfono:</label></br>
-                                                        <input type="text" class="inputCaja" id="rtelefono"
-                                                            name="rtelefono[]" value="">
+
+                                                        <input type="tel" pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}"
+                                                            placeholder="ej. 00-0000-0000" class="inputCaja"
+                                                            id="rtelefono" name="rtelefono[]"value="">
+                                                    </div>
+
+                                                    <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                        <label class="labelTitulo">E-mail: <span>*</span></label></br>
+                                                        <input type="email" class="inputCaja" id="remail" required
+                                                            placeholder="ej. elcorreo@delresponsable.com" min="6"
+                                                            name="remail[]" value="">
                                                     </div>
 
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
                                                         <label class="labelTitulo">Código de Confirmación:</label></br>
                                                         <input type="text" class="inputCaja" id="rfirma"
-                                                            name="rfirma[]" value="">
+                                                            placeholder="Especifique..." name="rfirma[]" value="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -353,15 +371,13 @@
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
                                                         <label class="labelTitulo">Fecha de Inicio:</label></br>
                                                         <input type="date" class="inputCaja" id="inicio"
-                                                            name="inicio[]"
-                                                            value="">
+                                                            name="inicio[]" value="">
                                                     </div>
 
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
                                                         <label class="labelTitulo">Fecha de Término:</label></br>
                                                         <input type="date" class="inputCaja" id="fin"
-                                                            name="fin[]"
-                                                            value="">
+                                                            name="fin[]" value="">
                                                     </div>
 
                                                 </div>
