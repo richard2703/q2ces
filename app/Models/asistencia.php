@@ -13,7 +13,7 @@ class asistencia extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'personalId', 'asistenciaId', 'fecha', 'horasExtra',  'tipoHoraExtra','comentario'
+        'personalId', 'asistenciaId', 'fecha', 'horasExtra',  'tipoHoraExtraId','comentario','esAsistencia'
     ];
 
 }

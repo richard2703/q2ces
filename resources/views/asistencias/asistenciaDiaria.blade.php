@@ -53,9 +53,15 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             </a>
                                             <!-- Para el mes en curso -->
                                         </span>
-                                        &nbsp;&nbsp;&nbsp;
+                                        <span>
+                                            <a href="{{ route('asistencia.create') }}" class="display-8 mb-8 text-center"
+                                                title="Ir al día en curso"><b>Hoy
+                                                    {{-- {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }} --}}
+                                                </b></a>
+                                        </span>
+                                        {{-- &nbsp;&nbsp;&nbsp;
                                         {{ $objCalendar->getFechaFormateada($fechaSeleccionada) }}
-                                        &nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp; --}}
                                         <!-- Un dia adelante del cargado -->
                                         <span>
                                             <a href="{{ url('asistencia/diaria/' . $anioSiguiente . '/' . $mesSiguiente . '/' . $diaSiguiente) }}"
@@ -64,7 +70,6 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             </a>
                                         </span>
                                     </h4>
-                                    {{-- <p class="card-category">Usuarios registrados</p> --}}
                                 </div>
                                 <div class="card-body">
                                     @if (session('success'))
@@ -77,13 +82,28 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             {{ session('faild') }}
                                         </div>
                                     @endif
-                                    <div class="row">
 
-                                        <span>
-                                            <a href="{{ route('asistencia.create') }}" class="display-8 mb-8 text-center"
-                                                title="Ir al mes en curso"><b>Hoy es
-                                                    {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
-                                        </span>
+                                    <div class="row">
+                                        <div class="col-6 ">
+                                            <span>
+                                                {{-- <a href="{{ route('asistencia.create') }}"
+                                                    class="display-8 mb-8 text-center" title="Ir al día en curso"><b>Hoy es
+                                                        {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
+                                                         --}}
+                                                &nbsp;&nbsp;&nbsp;
+                                                {{ $objCalendar->getFechaFormateada($fechaSeleccionada) }}
+                                                &nbsp;&nbsp;&nbsp;
+                                            </span>
+                                        </div>
+                                        <div class="col-6 ">
+                                            <button type="button"
+                                                class="botonSinFondo mx-2"title="Clic para marcar la asistencia en otro día."
+                                                data-bs-toggle="modal" data-bs-target="#modal-cliente">
+                                                <img style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}">
+                                                <p class="botonTitulos mt-2">Otro día</p>
+                                            </button>
+
+                                        </div>
                                     </div>
 
                                     <form class="row alertaGuardar" action="{{ route('asistencia.store') }}" method="post"
@@ -163,6 +183,46 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- //Modales --}}
+    <div class="modal fade" id="modal-cliente" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-cliente"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="col-12">
+                    <div class="card ">
+                        <form action="{{ url('asistencia/otrodia/') }}" method="post">
+                            @csrf
+                            <div class="card-header bacTituloPrincipal ">
+                                <div class="nav-tabs-navigation">
+                                    <div class="nav-tabs-wrapper">
+                                        <span class="nav-tabs-title">
+                                            <h2 class="titulos">Seleccionar otro día para asistencia</h2>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row  card-body">
+                                <div class="row card-body" style=" text-align: center;">
+                                    <input type="hidden" name="productoid" id="productoid" value="">
+
+                                    <div class="col-12 col-lg-6">
+                                        <input type="date" class="inputCaja" id="fechaAsistencia"
+                                            name="fechaAsistencia"
+                                            value="{{ $fechaSeleccionada->format('Y-m-d') }}"></br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12  mb-3 d-flex  justify-content-center align-self-end">
+                                <button type="submit" class="btn botonGral ">Ir</button>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
             </div>

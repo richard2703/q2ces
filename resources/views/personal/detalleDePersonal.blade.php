@@ -726,7 +726,7 @@
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Sueldo Diario:</label></br>
-                                                        <input type="number" maxlength="5" step="0.1"
+                                                        <input type="number" maxlength="5" step="0.01"
                                                         min="00000" max="99999" placeholder="ej. 1000"
                                                         class="inputCaja text-right" id="diario"
                                                         name="diario" value="{{ $nomina->diario }}">

@@ -960,7 +960,9 @@ VALUES
 create table tipoAsistencia(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     nombre varchar(200) not null,
-    comentario text null,
+    comentario text null,,
+    color varchar(200) not null,
+    esAsistencia int null,
     primary key (id)
 );
 
@@ -989,17 +991,27 @@ VALUES
         'Con permiso de descanso o feriado'
     );
 
+create table tipoHoraExtra(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) not null,
+    valor int null,
+    comentario text null,
+    color varchar(200) not null,
+    primary key (id)
+);
+
 create table asistencia(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     personalId bigint(20) unsigned NOT NULL,
     asistenciaId bigint(20) unsigned NOT NULL,
     fecha date not null,
     horasExtra int null,
-    tipoHoraExtra int null,
+    tipoHoraExtraId int null,
     comentario text null,
     created_at datetime NULL,
     updated_at datetime NULL,
     primary key (id),
     CONSTRAINT FK_asistencia_personalId foreign key (personalId) references personal(id),
-    CONSTRAINT FK_asistencia_asistenciaId foreign key (asistenciaId) references tipoAsistencia(id)
+    CONSTRAINT FK_asistencia_asistenciaId foreign key (asistenciaId) references tipoAsistencia(id),
+    CONSTRAINT FK_asistencia_tipoHoraExtraId foreign key (tipoHoraExtraId) references tipoHoraExtra(id)
 );

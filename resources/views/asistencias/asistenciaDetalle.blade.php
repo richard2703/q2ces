@@ -127,6 +127,18 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                                     name="horasExtra[]" id="horasExtra"
                                                                     value="{{ $item->horasExtra }}" maxlength="2"
                                                                     step="1" min="0" max="16"></td>
+                                                            <td>
+                                                                <select id="tipoHoraExtraId" name="tipoHoraExtraId[]"
+                                                                    class="form-select" aria-label="Default select example">
+
+                                                                    @foreach ($vctTiposHoras as $tipo)
+                                                                        <option value="{{ $tipo->id }}"
+                                                                            {{ $item->tipoHoraExtraId == $tipo->id ? ' selected' : '' }}>
+                                                                            {{ $tipo->nombre }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
                                                             <td><input type="radio" name="{{ $item->id }}[]"
                                                                     id="Asistencia_{{ $item->id }}" value="1"
                                                                     {{ $item->asistenciaId == 1 ? ' checked' : '' }}></td>
@@ -148,8 +160,8 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                             </td>
                                                             <td><input type="text" class="inputCaja text-left"
                                                                     name="comentario[]" id="comentario"
-                                                                    value="{{ $item->comentario }}" maxlength="500" placeholder="Especifique si se requiere..."
-                                                                    ></td>
+                                                                    value="{{ $item->comentario }}" maxlength="500"
+                                                                    placeholder="Especifique..."></td>
                                                         </tr>
                                                     @empty
                                                         <tr>
