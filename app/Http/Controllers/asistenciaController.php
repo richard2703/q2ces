@@ -80,6 +80,16 @@ class asistenciaController extends Controller {
 
     }
 
+    public function cambioDiaExtras( Request $request ) {
+
+        $data = request()->all();
+        if ( $data[ 'fechaAsistencia' ] != '' ) {
+            $dtFecha = date_create(date('Y-m-d', strtotime($data[ 'fechaAsistencia' ])));
+            return redirect()->action( [ asistenciaController::class, 'horasExtra' ], [ 'intAnio'=>$dtFecha->format('Y'), 'intMes'=>$dtFecha->format('m'), 'intDia'=>$dtFecha->format('d') ] );
+        }
+
+    }
+
     public function create( $intAnio = null, $intMes = null, $intDia = null ) {
 
         $objCalendario = new Calendario();
