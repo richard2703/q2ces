@@ -1,4 +1,4 @@
- /**, div, col {
+/**, div, col {
     border: #212529 1px solid;
 
 }*/
@@ -624,8 +624,64 @@ p.botonTitulos{
 .botongrafica:active{
   background-color: #F7C90D!important;
 }
+/*------ calendario chiquito --------*/
+.calendario{
+  width:85%;
+  margin:50px auto ; 
+}
 
 /*---------- ESTILOS PARA CALENDARIO ----------*/
+
+.diaFecha{
+  margin: 50px
+}
+.colCalendario{
+  width: 14.2%;
+}
+h2.diasSemana{
+  font-size: .8em;
+}
+.numeroCalendario{
+  font-size: .8em;
+}
+.celda{
+  height: 10px;
+}
+
+
+
+
+.flechita{
+  color: #F7C90D;
+}
+.textMes{
+  font-size: 2em;
+  font-weight: 400;
+
+  margin-bottom: 10px;
+  color: #5C7C26;
+}
+.calendarioDia{
+  font-size: .7em;
+  font-weight: 500;
+ 
+  color:#5C7C26;
+}
+
+.textAno{
+  font-size: 1.2em;
+  text-align: center!important;
+  letter-spacing: .5em;
+  color: #727176;
+}
+.nombreTarea{
+  font-size: 1em;
+  color: #333;
+}
+.textMesCurso:hover{
+  font-size: 1.2em;
+  color: #8caf48;
+}
 .btnSinFondocALENDARIO{
   background-color: #fff;
   border: 1px solid #5C7C26;
@@ -662,11 +718,19 @@ tr td.labelDeseable,
   background-color: yellow;
   color: #333 !important;
 }
+
 tr td.labelProrrogable,
 .labelProrrogable {
   padding: 5px;
   background-color: #A6CE34;
   color: #333 !important;
+  border:none;
+}
+/* --------Estos dos estilos son para el color en el head del pannel colapsable------*/
+.acordionDos:hover,
+.accordion-button:not(.collapsed){
+  background-color: #A6CE34;
+  box-shadow: 2px 2px 10px 2px #F7C90D!important;
 }
 
 /*Index Reparación*/
@@ -686,7 +750,6 @@ tr td.reparación{
 .carousel-control-prev>span,
 .carousel-control-next>span{
   background-color: #5C7C26;
-
 }
 
 .carouselBoton{
@@ -773,9 +836,14 @@ color : #5C7C26;
 }
 
 /* Cuadricula de calendario*/
+
+.cabeceraDias{
+  background: #F7C90D;
+  color:#333;
+}
 @media (max-width:575px) {
   .display-4 {
-      font-size: 1.5rem;
+      font-size: 2rem;
   }
   .day h5 {
       background-color: #f8f9fa;
@@ -789,7 +857,7 @@ color : #5C7C26;
 
 @media (min-width: 576px) {
   .day {
-      height: 14.2857vw;
+      height: 40px;
   }
 }
 

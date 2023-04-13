@@ -166,13 +166,13 @@ class Calendario {
 
     function getDaysWeekCalendar() {
         $days = null;
-        $aDays = [ 'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado' ];
+        $aDays = [ 'Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab' ];
 
         foreach ( $aDays as $value ) {
             $days .= '<h5 class="col-sm p-1 text-center">' . $value . '</h5>';
         }
 
-        return '<div class="row d-none d-sm-flex p-1 bg-dark text-white">' . $days . '</div>';
+        return '<div class="row d-none d-sm-flex p-1 cabeceraDias">' . $days . '</div>';
     }
 
     function getDayOnWeek( $day ) {
@@ -189,12 +189,12 @@ class Calendario {
         if ( $iWeek > 0 ) {
             for ( $index = 0; $index < ( $iWeek );
             $index++ ) {
-                $cols .= '<div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">';
-                $cols .= '   <h5 class="row align-items-center">';
+                $cols .= '<div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted celda">';
+                $cols .= '   <p class="row align-items-center celda">';
                 $cols .= '       <span class="date col-1"></span>';
                 $cols .= '       <small class="col d-sm-none text-center text-muted">Saturday</small>';
                 $cols .= '       <span class="col-1"></span>';
-                $cols .= '   </h5>';
+                $cols .= '   </p>';
                 $cols .= '   <p class="d-sm-none"></p>';
                 $cols .= '</div>';
             }
