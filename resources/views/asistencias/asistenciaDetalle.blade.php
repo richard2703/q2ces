@@ -107,6 +107,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                 <thead class="labelTitulo text-center">
                                                     <th class="labelTitulo">Dia</th>
                                                     <th class="labelTitulo">Horas Extra</th>
+                                                    <th class="labelTitulo">Tipo</th>
                                                     <th class="labelTitulo">Asistencia</th>
                                                     <th class="labelTitulo">Faltas</th>
                                                     <th class="labelTitulo">Incapacidadades</th>

@@ -319,7 +319,7 @@ class asistenciaController extends Controller {
         ->join( 'tipoasistencia', 'tipoasistencia.id', '=', 'asistencia.asistenciaId' )
         ->join( 'tipohoraextra', 'tipohoraextra.id', '=', 'asistencia.tipohoraextraId' )
         ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
-        // ->where( 'asistencia.personalId', '=', 24 )
+        // ->where( 'asistencia.personalId', '=', 23 )
         ->whereBetween( 'asistencia.fecha',   [ $strFechaInioPeriodo, $strFechaFinPeriodo ] )
         ->orderBy( 'personal.apellidoP', 'asc' )
         ->orderBy( 'asistencia.personalId', 'asc' )
