@@ -81,7 +81,8 @@ $blnBloquearRegistro = $asistencias->isEmpty() == true ? true : false;
 
                                         <span>
                                             <a href="{{ route('asistencia.HEstore') }}" class="display-8 mb-8 text-center"
-                                                title="Ir al mes en curso"><b>Hoy es {{  $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
+                                                title="Ir al mes en curso"><b>Hoy es
+                                                    {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
                                         </span>
 
                                     </div>
@@ -121,9 +122,20 @@ $blnBloquearRegistro = $asistencias->isEmpty() == true ? true : false;
                                                                 {{ $item->getFullLastNameAttribute() }}
                                                             </td>
                                                             <td><input type="number" class="inputCaja text-right" required
-                                                                    name="horasExtra[]" id="horasExtra" value="{{ $item->horasExtra }}"
-                                                                    maxlength="2" step="1" min="0"
-                                                                    max="16"></td>
+                                                                    name="horasExtra[]" id="horasExtra"
+                                                                    value="{{ $item->horasExtra }}" maxlength="2"
+                                                                    step="1" min="0" max="16"></td>
+                                                            <td>
+                                                                <select id="tipoHoraExtraId" name="tipoHoraExtraId[]"
+                                                                    class="form-select" aria-label="Default select example">
+
+                                                                    @foreach ($vctTiposHoras as $tipo)
+                                                                        <option value="{{ $tipo->id }}" {{ $item->tipoHoraExtraId == $tipo->id ? ' selected' : '' }}>
+                                                                            {{ $tipo->nombre }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
                                                             {{--  <td><input type="radio" name="Asistensia1542" value="2"></td>
                                                     <td><input type="radio" name="Asistensia1542" value="3"></td>
                                                     <td><input type="radio" name="Asistensia1542" value="4"></td>

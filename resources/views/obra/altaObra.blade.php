@@ -58,48 +58,49 @@
                                 <div class="col-12 my-4">
                                     <div class="row">
                                         <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Nombre de la Obra:</label></br>
-                                            <input type="text" class="inputCaja" id="nombre" name="nombre"
-                                                value="{{ old('nombre') }}">
+                                            <label class="labelTitulo">Nombre de la Obra: <span>*</span></label></br>
+                                            <input type="text" class="inputCaja" id="nombre" name="nombre" required
+                                                placeholder="Especifique..." value="{{ old('nombre') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Tipo:</label></br>
+                                            <label class="labelTitulo">Tipo: <span>*</span></label></br>
                                             <select class="form-select" aria-label="Default select example" id="tipo"
-                                                name="tipo">
+                                                required name="tipo">
                                                 <option selected>Seleccione</option>
                                                 <option value="Q2Ces">Q2Ces</option>
                                                 <option value="Externa">Externa</option>
                                             </select>
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Calle:</label></br>
-                                            <input type="text" class="inputCaja" id="calle" name="calle"
-                                                value="{{ old('calle') }}">
+                                            <label class="labelTitulo">Calle: <span>*</span></label></br>
+                                            <input type="text" class="inputCaja" id="calle" name="calle" required
+                                                placeholder="Especifique..." value="{{ old('calle') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Número:</label></br>
+                                            <label class="labelTitulo">Número: </label></br>
                                             <input type="number" class="inputCaja" id="numero" name="numero"
-                                                value="{{ old('numero') }}">
+                                                placeholder="Especifique..." value="{{ old('numero') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Colonia:</label></br>
-                                            <input type="text" class="inputCaja" id="colonia" name="colonia"
-                                                value="{{ old('colonia') }}">
+                                            <label class="labelTitulo">Colonia: <span>*</span></label></br>
+                                            <input type="text" class="inputCaja" id="colonia" name="colonia" required
+                                                placeholder="Especifique..." value="{{ old('colonia') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Código Postal:</label></br>
-                                            <input type="number" class="inputCaja" id="cp" name="cp"
+                                            <label class="labelTitulo">Código Postal:</label></br><input type="number"
+                                                maxlength="5" step="1" min="00000" max="99999"
+                                                placeholder="ej. 44100" class="inputCaja" id="cp" name="cp"
                                                 value="{{ old('cp') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Localidad:</label></br>
-                                            <input type="text" class="inputCaja" id="ciudad" name="ciudad"
-                                                value="{{ old('ciudad') }}">
+                                            <label class="labelTitulo">Localidad: <span>*</span></label></br>
+                                            <input type="text" class="inputCaja" id="ciudad" name="ciudad" required
+                                                placeholder="Especifique..." value="{{ old('ciudad') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Estado:</label></br>
+                                            <label class="labelTitulo">Estado: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="estado" name="estado"
-                                                value="{{ old('estado') }}">
+                                                required placeholder="Especifique..." value="{{ old('estado') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -118,43 +119,41 @@
                                             </div>
                                             <div class="row">
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Nombre:</label></br>
-                                                    <input type="text" class="inputCaja" id="rnombre"
-                                                        name="rnombre[]" value="">
+                                                    <label class="labelTitulo">Nombre: <span>*</span></label></br>
+                                                    <input type="text" class="inputCaja" id="rnombre" required
+                                                        placeholder="Especifique..." name="rnombre[]" value="">
                                                 </div>
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Empresa:</label></br>
                                                     <input type="text" class="inputCaja" id="rempresa"
-                                                        name="rempresa[]" value="">
+                                                        placeholder="Especifique..." name="rempresa[]" value="">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Puesto:</label></br>
                                                     <input type="text" class="inputCaja" id="rpuesto"
-                                                        name="rpuesto[]" value="">
+                                                        placeholder="Especifique..." name="rpuesto[]" value="">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Teléfono:</label></br>
-                                                    <input type="text" class="inputCaja" id="rtelefono"
-                                                        name="rtelefono[]" value="">
+                                                    <input type="tel" pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}"
+                                                        placeholder="ej. 00-0000-0000" class="inputCaja" id="rtelefono"
+                                                        name="rtelefono[]"value="">
+
                                                 </div>
 
-                                                <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Email:</label></br>
-                                                    <input type="email" class="inputCaja" id="remail"
-                                                        name="remail[]" value="">
+                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">E-mail</label></br>
+                                                    <input type="email" class="inputCaja" id="remail" required
+                                                        placeholder="ej. elcorreo@delresponsable.com" min="6"
+                                                        name="remail[]" value="{{ old('remail') }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Código de Confirmación:</label></br>
                                                     <input type="text" class="inputCaja" id="rfirma"
-                                                        name="rfirma[]" value="">
-                                                </div>
-                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">E-mail</label></br>
-                                                    <input type="email" class="inputCaja" id="nombre" name="nombre"
-                                                        value="{{ old('nombre') }}">
+                                                        placeholder="Especifique..." name="rfirma[]" value="">
                                                 </div>
                                             </div>
                                         </div>

@@ -389,6 +389,7 @@ class personalController extends Controller {
         $newnomina->fechaPagoPrimaVac = $request->fechaPagoPrimaVac;
         $newnomina->puestoId = $request->puestoId;
         $newnomina->asistencia = 0;
+        $newnomina->diario = $request->diario;
         //$request->asistencia;
         $newnomina->save();
 
