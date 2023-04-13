@@ -29,7 +29,9 @@
                                     <div class="col-12 col-md-4  my-3">
                                         <div class="text-center mx-auto border vistaFoto mb-4">
                                             <i><img class="imgVista img-fluid mb-2"
-                                                    src="{{ $accesorios->foto == '' ? ' /img/general/default.jpg' : '/storage/accesorio/' . $accesorios->foto }}"></i>
+                                                    src="{{  $accesorios->foto == '' ? '/img/general/default.jpg' : asset('/storage/maquinaria/accesorios/' . str_pad($accesorios->id, 4, '0', STR_PAD_LEFT) . '/' . $accesorios->foto ) }}"
+                                                    {{-- src="'/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $fotos[0]->ruta) " --}}
+                                                    ></i>
                                             <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"
                                                     id="mi-archivo" accept="image/*"></span>
                                             <label for="mi-archivo">
@@ -41,54 +43,54 @@
                                     <div class="col-12 col-md-8 ">
                                         <div class="row">
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                <label class="labelTitulo">Nombre:</label></br>
+                                                <label class="labelTitulo">Nombre: <span>*</span></label></br>
                                                 <input type="text" class="inputCaja" id="nombre" name="nombre"
-                                                    value="{{ $accesorios->nombre }}">
+                                                    placeholder="Especifique..." required value="{{ $accesorios->nombre }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Año:</label></br>
-                                                <input type="text" class="inputCaja" id="ano" name="ano"
-                                                    value="{{ $accesorios->ano }}">
+                                                <input type="number" class="inputCaja" id="ano" maxlength="4"
+                                                    placeholder="Ej. 2000" name="ano" value="{{ $accesorios->ano }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Marca:</label></br>
                                                 <input type="text" class="inputCaja" id="marca" name="marca"
-                                                    value="{{ $accesorios->marca }}">
+                                                    placeholder="Especifique..." value="{{ $accesorios->marca }}">
                                             </div>
 
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Número Serie:</label></br>
                                                 <input type="text" class="inputCaja" id="serie" name="serie"
-                                                    value="{{ $accesorios->serie }}">
+                                                    placeholder="Especifique..." value="{{ $accesorios->serie }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Modelo:</label></br>
                                                 <input type="text" class="inputCaja" id="modelo" name="modelo"
-                                                    value="{{ $accesorios->modelo }}">
+                                                    placeholder="Especifique..." value="{{ $accesorios->modelo }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Color:</label></br>
                                                 <input type="text" class="inputCaja" id="color" name="color"
-                                                    value="{{ $accesorios->color }}">
+                                                    placeholder="Especifique..." value="{{ $accesorios->color }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Maquinaria Asignada:</label></br>
-                                                <select id="maquinariaId" name="maquinariaId"
-                                                class="form-select" aria-label="Default select example">
-                                                <option value="">Seleccione</option>
-                                                @foreach ($vctMaquinaria as $maquina)
-                                                    <option value="{{ $maquina->id }}"
-                                                        {{ $maquina->id == $accesorios->maquinariaId ? ' selected' : '' }}>
-                                                        {{ $maquina->identificador . ' ' . $maquina->nombre }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                                <select id="maquinariaId" name="maquinariaId" class="form-select"
+                                                    aria-label="Default select example">
+                                                    <option value="">Seleccione</option>
+                                                    @foreach ($vctMaquinaria as $maquina)
+                                                        <option value="{{ $maquina->id }}"
+                                                            {{ $maquina->id == $accesorios->maquinariaId ? ' selected' : '' }}>
+                                                            {{ $maquina->identificador . ' ' . $maquina->nombre }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
 
                                         </div>

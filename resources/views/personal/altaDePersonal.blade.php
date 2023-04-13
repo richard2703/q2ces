@@ -61,15 +61,18 @@
                                                             </div>  --}}
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Nombre(s): <span>*</span></label></br>
-                                                                <input type="text" class="inputCaja" id="nombres" required
-                                                                    name="nombres" value="{{ old('nombres') }}">
+                                                                <label class="labelTitulo">Nombre(s):
+                                                                    <span>*</span></label></br>
+                                                                <input type="text" class="inputCaja" id="nombres"
+                                                                    required name="nombres" value="{{ old('nombres') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Apellido Paterno: <span>*</span></label></br>
-                                                                <input type="text" class="inputCaja" id="apellidoP" required
-                                                                    name="apellidoP" value="{{ old('apellidoP') }}">
+                                                                <label class="labelTitulo">Apellido Paterno:
+                                                                    <span>*</span></label></br>
+                                                                <input type="text" class="inputCaja" id="apellidoP"
+                                                                    required name="apellidoP"
+                                                                    value="{{ old('apellidoP') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -679,9 +682,10 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Sueldo Diario:</label></br>
-                                                                <input type="number" class="inputCaja text-right"
-                                                                    id="" name="diario"
-                                                                    value="{{ old('diario') }}">
+                                                                <input type="number" maxlength="5" step="0.1"
+                                                                    min="00000" max="99999" placeholder="ej. 1000"
+                                                                    class="inputCaja text-right" id="diario"
+                                                                    name="diario" value="{{ old('diario') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
