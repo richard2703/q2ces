@@ -22,7 +22,6 @@ $dtTrabajar = date('Ymd', strtotime("$intAnio-$intMes-$intDia"));
 
 //*** Arreglo para los dias del periodo **/
 $vctDiasSemana = [];
-
 for ($i = 0; $i < 7; $i++) {
     $vctDiasSemana[] = date_create(date('Y-m-d', strtotime($strFechaInioPeriodo . '+' . $i . ' days')));
 }
@@ -121,7 +120,8 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                        ?>
                                                     <th class="labelTitulo" colspan="2">
                                                         {{ $objCalendar->getNameDay($vctDiasSemana[$i]->format('N')) }}
-                                                        {{ $vctDiasSemana[$i]->format('d') }} </th>
+                                                        <strong>{{ $vctDiasSemana[$i]->format('d') }}</strong>
+                                                    </th>
                                                     <?php
                                                     }
                                                     ?>
@@ -203,10 +203,11 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                                 ?>
                                                             </td>
                                                             <td class="text-right">
-                                                                $ {{ number_format($intTotalCostoHorasExtras + $item->sueldo * $intDiasAsistidos, 2) }}
+                                                                $
+                                                                {{ number_format($intTotalCostoHorasExtras + $item->sueldo * $intDiasAsistidos, 2) }}
                                                                 <?php
                                                                 //*** sumamos al total general el sueldo del personal
-                                                                $intTotalGeneralSueldo += $intTotalCostoHorasExtras + ($item->sueldo * $intDiasAsistidos);
+                                                                $intTotalGeneralSueldo += $intTotalCostoHorasExtras + $item->sueldo * $intDiasAsistidos;
                                                                 ?>
                                                             </td>
                                                         </tr>
@@ -231,12 +232,12 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
 
                                         <div class="card-footer mr-auto">
 
-                                            <a href="{{ route('asistencia.index') }}">
+                                            {{-- <a href="{{ route('asistencia.index') }}">
                                                 <button type="button" class="btn btn-danger">Cancelar</button>
                                             </a>
                                             <a href="#">
                                                 <button type="submit" class="btn botonGral">Guardar</button>
-                                            </a>
+                                            </a> --}}
                                             {{--  {{ $personal->links() }}  --}}
                                         </div>
                                     </form>

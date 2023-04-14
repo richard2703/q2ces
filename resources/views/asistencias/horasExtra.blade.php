@@ -17,8 +17,21 @@ $mesSeleccionado = $objCalendar->getNameMonth(date_format($fechaSeleccionada, 'm
 $dtToday = date('Ymd');
 $dtTrabajar = date('Ymd', strtotime("$intAnio-$intMes-$intDia"));
 
-//*** bloqueamos fecha mayor al dia actual
-$blnBloquearRegistro = $asistencias->isEmpty() == true ? true : false;
+//*** Arreglo para los dias del periodo **/
+$vctDiasSemanaActual = $objCalendar->getSemanaTrabajo(date_create(date('Y-m-d')), 3);
+
+//*** bloqueamos si no hay registros
+if ($asistencias->isEmpty() == true) {
+    $blnBloquearRegistro = true;
+} else {
+    //*** preguntamos si esta en la semana en curso para permitir el registro de horas extras ***//
+    if ($fechaSeleccionada->format('Ymd') >= $vctDiasSemanaActual[0]->format('Ymd')) {
+    //*** la fecha seleccionada es mayor o igual que el día inicial del periodo
+        $blnBloquearRegistro = false;
+    } else {
+        $blnBloquearRegistro = true;
+    }
+}
 
 // dd($asistencias, $diaAnterior, $diaSiguiente, $fechaSeleccionada, $diaSeleccionado, $dtToday, $dtTrabajar);
 
