@@ -20,9 +20,23 @@ $anioSiguiente = date_format($objCalendar->getDiaSiguiente($strFechaFinPeriodo),
 
 $dtTrabajar = date('Ymd', strtotime("$intAnio-$intMes-$intDia"));
 // dd($vctFechas);
-//*** bloqueamos fecha mayor al dia actual
-$blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? false : true;
 
+//*** Arreglo para los dias del periodo **/
+$vctDiasSemanaActual = $objCalendar->getSemanaTrabajo(date_create(date('Y-m-d')), 3);
+
+//*** bloqueamos si no hay registros
+if ($asistencias->isEmpty() == true) {
+    $blnBloquearRegistro = true;
+} else {
+    //*** preguntamos si esta en la semana en curso para permitir el registro de horas extras ***//
+    if ($fechaSeleccionada->format('Ymd') >= $vctDiasSemanaActual[0]->format('Ymd')) {
+    //*** la fecha seleccionada es mayor o igual que el día inicial del periodo
+        $blnBloquearRegistro = false;
+    } else {
+        $blnBloquearRegistro = true;
+    }
+
+}
 // dd($asistencias, $diaAnterior, $diaSiguiente, $fechaSeleccionada, $diaSeleccionado, $dtToday, $dtTrabajar);
 
 ?>
@@ -107,6 +121,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                 <thead class="labelTitulo text-center">
                                                     <th class="labelTitulo">Dia</th>
                                                     <th class="labelTitulo">Horas Extra</th>
+                                                    <th class="labelTitulo">Tipo</th>
                                                     <th class="labelTitulo">Asistencia</th>
                                                     <th class="labelTitulo">Faltas</th>
                                                     <th class="labelTitulo">Incapacidadades</th>
@@ -175,13 +190,14 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                         </div>
 
                                         <div class="card-footer mr-auto">
-
+                                            <?php if( $blnBloquearRegistro == false){  ?>
                                             <a href="{{ route('asistencia.index') }}">
                                                 <button type="button" class="btn btn-danger">Cancelar</button>
                                             </a>
                                             <a href="#">
                                                 <button type="submit" class="btn botonGral">Guardar</button>
                                             </a>
+                                            <?php } ?>
                                             {{--  {{ $personal->links() }}  --}}
                                         </div>
                                     </form>

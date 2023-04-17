@@ -217,7 +217,7 @@
                                                                     value="{{ old('mailEmpresarial') }}">
                                                             </div>
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Nivel de puesto:</label></br>
+                                                                <label class="labelTitulo">Nivel de puesto: <span>*</span></label></br>
                                                                 <select id="puestoNivelId" name="puestoNivelId"
                                                                     class="form-select" required
                                                                     aria-label="Default select example">
@@ -582,7 +582,7 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Puesto:</label></br>
+                                                                <label class="labelTitulo">Puesto: <span>*</span></label></br>
                                                                 {{-- <input type="text" class="inputCaja" id=""
                                                                     name="puesto" value="{{ old('puesto') }}"> --}}
                                                                 <select id="puestoId" name="puestoId"
@@ -607,8 +607,8 @@
                                                             </div>  --}}
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Fecha de Ingreso:</label></br>
-                                                                <input type="date" class="inputCaja" id=""
+                                                                <label class="labelTitulo">Fecha de Ingreso: <span>*</span></label></br>
+                                                                <input type="date" class="inputCaja" id="" required
                                                                     name="ingreso" value="{{ old('ingreso') }}">
                                                             </div>
 
@@ -681,8 +681,8 @@
                                                             </div>  --}}
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Sueldo Diario:</label></br>
-                                                                <input type="number" maxlength="5" step="0.1"
+                                                                <label class="labelTitulo">Sueldo Diario: <span>*</span></label></br>
+                                                                <input type="number" maxlength="5" step="0.01" required
                                                                     min="00000" max="99999" placeholder="ej. 1000"
                                                                     class="inputCaja text-right" id="diario"
                                                                     name="diario" value="{{ old('diario') }}">

@@ -80,6 +80,16 @@ class asistenciaController extends Controller {
 
     }
 
+    public function cambioDiaExtras( Request $request ) {
+
+        $data = request()->all();
+        if ( $data[ 'fechaAsistencia' ] != '' ) {
+            $dtFecha = date_create(date('Y-m-d', strtotime($data[ 'fechaAsistencia' ])));
+            return redirect()->action( [ asistenciaController::class, 'horasExtra' ], [ 'intAnio'=>$dtFecha->format('Y'), 'intMes'=>$dtFecha->format('m'), 'intDia'=>$dtFecha->format('d') ] );
+        }
+
+    }
+
     public function create( $intAnio = null, $intMes = null, $intDia = null ) {
 
         $objCalendario = new Calendario();
@@ -319,7 +329,7 @@ class asistenciaController extends Controller {
         ->join( 'tipoasistencia', 'tipoasistencia.id', '=', 'asistencia.asistenciaId' )
         ->join( 'tipohoraextra', 'tipohoraextra.id', '=', 'asistencia.tipohoraextraId' )
         ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
-        // ->where( 'asistencia.personalId', '=', 24 )
+        // ->where( 'asistencia.personalId', '=', 23 )
         ->whereBetween( 'asistencia.fecha',   [ $strFechaInioPeriodo, $strFechaFinPeriodo ] )
         ->orderBy( 'personal.apellidoP', 'asc' )
         ->orderBy( 'asistencia.personalId', 'asc' )
