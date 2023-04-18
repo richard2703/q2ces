@@ -39,7 +39,8 @@
                                                 <th class="labelTitulo">Apellido</th>
                                                 <th class="labelTitulo">Puesto </th>
                                                 <th class="labelTitulo">Teléfono</th>
-                                                <th class="labelTitulo">Mail</th>
+                                                <th class="labelTitulo">Correo electrónico</th>
+                                                <th class="labelTitulo">Estatus</th>
                                                 <th class="labelTitulo text-right">Acciones</th>
                                             </thead>
                                             <tbody>
@@ -51,6 +52,7 @@
                                                         <td>{{ $persona->puesto }}</td>
                                                         <td>{{ $persona->celular }}</td>
                                                         <td>{{ $persona->mailEmpresarial }}</td>
+                                                        <td>{{ $persona->estatus }}</td>
 
                                                         <td class="td-actions text-right">
                                                             {{-- @can('user_show') --}}

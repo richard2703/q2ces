@@ -146,7 +146,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                         ?>
                                                         <tr>
                                                             <td>{{ $item->puesto }}</td>
-                                                            <td>{{ $item->numEmpleado }}</td>
+                                                            <td style="color: {{ $item->estatusColor }};"><strong>{{ $item->numEmpleado }}</strong></td>
                                                             <td class="text-left">{{ $item->empleado }}</td>
                                                             <?php
                                                                 //*** recorremos el arreglo de los dias de la semana de trabajo ***************//
