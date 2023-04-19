@@ -29,8 +29,10 @@ class personalController extends Controller {
 
     public function index() {
         $personal = personal::select( 'personal.*',
-        DB::raw( 'puesto.nombre AS puesto' ) )
+        DB::raw( 'puesto.nombre AS puesto' ),
+        DB::raw( 'userEstatus.nombre AS estatus' ) )
         ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
+        ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
         ->leftJoin( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
         ->orderBy( 'created_at', 'desc' )->paginate( 15 );
         // dd( $personal );
