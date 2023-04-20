@@ -117,7 +117,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                                 }
                                             }
                                         }
-                                         //*** trabajamos las solicitud registradas
+                                         //*** trabajamos las solicitudes registradas
                                         if($vctSolicitudes->isEmpty()==false){
                                             foreach($vctSolicitudes as $solicitud){
                                                 if($solicitud->fechaRequerimiento === $currentDay){
@@ -137,8 +137,11 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                         if($vctEventos->isEmpty()==false){
                                             foreach($vctEventos as $evento){
                                                 if($evento->fechaFin === $currentDay){
-                                                    $content .=  '<a href="#" class="label'. $evento->prioridad . ' event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small text-white"  data-bs-toggle="modal" data-bs-target="#editarEvento"
-                                                       title="' . $evento->titulo . ': '. ($evento->comentario? $evento->comentario :"Sin comentarios") . '">
+                                                    $content .=  '<a href="#" class="label'. $evento->prioridad . ' event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small text-white"  data-bs-toggle="modal" data-bs-target="#verEvento"
+                                                        onclick="loadEvento(\'' . $evento->id .
+                                                    '\',\'' . $evento->titulo .
+                                                    '\',\'' . $evento->comentario .
+                                                    '\')"title="' . $evento->titulo . ': '. ($evento->comentario? $evento->comentario :"Sin comentarios") . '">
                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" style="height: 10px;"><defs><style>.cls-1{fill:#fff;fill-rule:evenodd;}</style></defs><g id="Capa_2" data-name="Capa 2"><g id="Capa_8" data-name="Capa 8"><path id="Trazado_2136" data-name="Trazado 2136" class="cls-1" d="M.53,7.29A1.34,1.34,0,0,1,.28,5.41a1.18,1.18,0,0,1,.25-.25A1.83,1.83,0,0,1,3,5.16l4,3.34a1.35,1.35,0,0,1,.23,1.9,1.25,1.25,0,0,1-.23.23,1.68,1.68,0,0,1-1.39.61,1.58,1.58,0,0,1-1.21-.61Z"/><path id="Trazado_2137" data-name="Trazado 2137" class="cls-1" d="M23.24,10.93a1.49,1.49,0,0,1-.15-2.12.75.75,0,0,1,.15-.16l3.82-3.34a1.83,1.83,0,0,1,2.42,0,1.51,1.51,0,0,1,.15,2.13l-.15.15-3.81,3.34a2,2,0,0,1-1.22.46A1.64,1.64,0,0,1,23.24,10.93Z"/><path id="Trazado_2138" data-name="Trazado 2138" class="cls-1" d="M13.36,6.23V1.52a1.75,1.75,0,0,1,3.46,0V6.23a1.73,1.73,0,0,1-3.46,0Z"/><path id="Trazado_2139" data-name="Trazado 2139" class="cls-1" d="M4.16,30H26V20.35H22a6.15,6.15,0,0,0,.87-3V16.7c0-3.8-3.64-6.83-7.8-6.83-4.34,0-8,3-8,6.83v.61a6.26,6.26,0,0,0,.87,3H4.16Z"/></g></g></svg>&nbsp;&nbsp;'
                                                     . $evento->titulo .
                                                      '</a>';
@@ -148,7 +151,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                             }
                                         }
 
-                                        //*** trabajamos los eventos registrados
+                                        //*** trabajamos los mantenimientos registrados
                                         if($vctMantenimientos->isEmpty()==false){
                                             foreach($vctMantenimientos as $mantto){
                                                 if($mantto->fechaInicio === $currentDay){
@@ -1706,7 +1709,43 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
             </div>
         </div>
 
+        <!-- Modal Ver Evento -->
+        <div class="modal fade" id="verEvento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bacTituloPrincipal">
+                        <img src="img/calendario/tareagris.svg" class="imgBTNcalendario">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp <label id="eventoLblTitulo"></label>
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="row d-flex" action=" " method="post">
+                            @csrf
+                            @method('put')
+                            <input type="hidden" name="eventoId" id="eventoId" value="">
+                            <div class=" col-12 col-sm-12 mb-3 ">
+                                <label class="labelTitulo">Título:</label></br>
+                                <input type="text" class="inputCaja" id="eventoTitulo" name="eventoTitulo" readonly="true"
+                                    value="">
+                            </div>
 
+
+                            <div class=" col-12  mb-3 ">
+                                <label class="labelTitulo">Comentarios:</label></br>
+                                <textarea class="form-control" placeholder="Comentario..." id="eventoComentario" id="eventoComentario" readonly="true"
+                                    name="eventoComentario"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Carga tarea en modal -->
         <script>
             function loadTarea(id, titulo, responsableId, prioridadId , estadoId, comentarios, fechaInicio, fechaFin  ) {
 
@@ -1752,7 +1791,24 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                 }
             }
         </script>
+        <!-- Carga evento en modal -->
+    <script>
+        function loadEvento(id, titulo, comentarios  ) {
 
+            const txtId = document.getElementById('eventoId');
+            txtId.value = id;
+
+            const txtTitulo = document.getElementById('eventoTitulo');
+            txtTitulo.value = titulo;
+
+            const lblTitulo = document.getElementById('eventoLblTitulo');
+            lblTitulo.innerText = titulo; 
+
+            const txtComentario = document.getElementById('eventoComentario');
+            txtComentario.innerText = comentarios;
+ 
+        }
+    </script>
 
 <script>
     function loadMantenimiento(id, titulo, estadoId, comentarios, tipoId /*, fechaInicio, fechaFin*/  ) {

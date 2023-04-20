@@ -182,6 +182,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Crud calendario
     Route::get('/calendario', [App\Http\Controllers\calendarioController::class, 'index'])->name('calendario.index');
+    Route::get('/calendario2', [App\Http\Controllers\calendarioController::class, 'index2'])->name('calendario.index2');
     Route::get('/calendario/{anio}/{mes}', [App\Http\Controllers\calendarioController::class, 'reloadCalendario'])->name('calendario.reloadCalendario');
     //Route::put('/coordiseno/detalle/riesgos/{riesgo}/recalcular', [App\Http\Controllers\detalleRiesgoController::class, 'recalcular'])->name('detalleriesgo.recalcular');
 
