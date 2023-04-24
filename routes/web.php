@@ -33,6 +33,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
+// Route::get('users/export/', [UserController::class, 'export']);
+Route::get('/usuarios/export', [App\Http\Controllers\UserController::class, 'export'])->name('users.export');
+Route::get('/asistencia/export', [App\Http\Controllers\asistenciaController::class, 'export'])->name('asistencia.export');
+
+
 // Route::get('/altaDeEquipos', function () {
 //     return view('equipos.altaDeEquipos');
 // });
