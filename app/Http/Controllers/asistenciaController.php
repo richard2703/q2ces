@@ -348,8 +348,8 @@ class asistenciaController extends Controller {
             DB::raw( 'nomina.nomina AS numeroNomina' ),
             DB::raw( 'tipoasistencia.color AS tipoAsistenciaColor' ),
             DB::raw( 'tipoasistencia.esAsistencia AS esAsistencia' ),
-            DB::raw( 'tipohoraextra.color AS horaExtraColor' ),
-            DB::raw( 'tipohoraextra.valor AS horaExtraCosto' ),
+            DB::raw( 'tipoHoraExtra.color AS horaExtraColor' ),
+            DB::raw( 'tipoHoraExtra.valor AS horaExtraCosto' ),
             DB::raw( 'userEstatus.nombre AS estatus' ),
             DB::raw( 'userEstatus.color AS estatusColor' ),
         )
@@ -357,7 +357,7 @@ class asistenciaController extends Controller {
         ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
         ->join( 'asistencia', 'asistencia.personalId', '=', 'personal.id' )
         ->join( 'tipoasistencia', 'tipoasistencia.id', '=', 'asistencia.asistenciaId' )
-        ->join( 'tipohoraextra', 'tipohoraextra.id', '=', 'asistencia.tipohoraextraId' )
+        ->join( 'tipoHoraExtra', 'tipoHoraExtra.id', '=', 'asistencia.tipoHoraExtraId' )
         ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
         ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
         // ->where( 'asistencia.personalId', '=', 23 )
