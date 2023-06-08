@@ -1015,3 +1015,88 @@ create table asistencia(
     CONSTRAINT FK_asistencia_asistenciaId foreign key (asistenciaId) references tipoAsistencia(id),
     CONSTRAINT FK_asistencia_tipoHoraExtraId foreign key (tipoHoraExtraId) references tipoHoraExtra(id)
 );
+
+create table bmantenimiento(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    personalId bigint(20) unsigned NOT NULL,
+    maquinariaId bigint(20) unsigned NOT NULL,
+    fecha date not null,
+    adscripcion varchar(200) null,
+    horometro int null,
+    km int null,
+    subtotal float(10,2) null,
+    iva float(10,2) null,
+    costo float(10,2) null,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id),
+    CONSTRAINT FK_bmantenimiento_personalId foreign key (personalId) references personal(id),
+    CONSTRAINT FK_bmantenimiento_userId foreign key (maquinariaId) references maquinaria(id)
+);
+
+create table gastosmantenimiento(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    bmantenimientoId bigint(20) unsigned NOT NULL,
+    inventarioId bigint(20) unsigned NOT NULL,
+    cantidad int not null,
+    costo float(10,2) null,
+    total float(10,2) null,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id),
+    CONSTRAINT FK_gastosmantenimiento_personalId foreign key (bmantenimientoId) references bmantenimiento(id),
+    CONSTRAINT FK_gastosmantenimiento_producto foreign key (inventarioId) references inventario(id)
+);
+
+create table cajachica(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    dia int not null,
+    concepto float(10,2) null,
+    comprobante float(10,2) null,
+    ncomprobante int not null,
+    cliente varchar(200)L,
+    obra bigint(20) unsigned NOT NULL
+    equipo bigint(20) unsigned NOT NULL
+    personal bigint(20) unsigned NOT NULL
+    tipo varchar(200) null,
+    cantidad int not null,
+    comentario text null,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id),
+    CONSTRAINT FK_cajachica_obra foreign key (obras) references obras(id),
+    CONSTRAINT FK_cajachica_equipo key (equipo) references maquinaria(id),
+    CONSTRAINT FK_cajachica_personal key (personal) references personal(id)
+);
+
+create table tareas(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    categoria varchar(200) null,
+    nombre varchar(200) null,
+    ubicacion varchar(200) null,
+    tipo varchar(200) null,
+    comentario text null,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id)
+);
+
+create table bitacoras(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) null,
+    comentario text null,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id)
+);
+
+create table grupo(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    bitacoraId bigint(20) unsigned NOT NULL,
+    tareaID bigint(20) unsigned NOT NULL,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id),
+    CONSTRAINT FK_grupo_bitacora foreign key (bitacoraId) references bitacoras(id),
+    CONSTRAINT FK_grupo_tarea foreign key (tareaID) references tareas(id)
+);
