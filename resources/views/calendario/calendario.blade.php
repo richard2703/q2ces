@@ -3,304 +3,79 @@
 $objCalendar = new Calendario();
 $mesAnterior= $objCalendar->getMesAnterior($intMes,$intAnio);
 $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
-$fecha_actual = new DateTime();
-$cadena_fecha_actual = $fecha_actual->format("d/m/Y");
+
 ?>
 @section('content')
-    <div class="content container-fluid">
+    <div class="content">
         @if ($errors->any())
-        <div class="alert alert-danger">
-            <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
-            <p>Listado de errores a corregir</p>
-            <ul>
-                @foreach ($errors->all() as $item)
-                <li>{{ $item }}</li>
+            <div class="alert alert-danger">
+                <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
                     @endforeach
-            </ul>
-        </div>
+                </ul>
+            </div>
         @endif
-       
-        <div class="row justify-content-center">
-            <div class="col-11 align-self-center">
-                <div class="card">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+
+                <div class="col-md-10 align-self-center">
+                    <div class="card">
                         <div class="card-body contCart">
                             <div class="p-1 align-self-start bacTituloPrincipal">
                                 <h2 class="my-3 ms-3 texticonos "> Calendario de Actividades</h2>
                             </div>
                             <!-- Esta es la parte para el calendario-->
-                            <div class="col-11  mx-auto d-block my-4">
+                            <div class="col-10  mx-auto d-block my-4">
                                 <div class="row d-flex ">
-                                    <!--espacio para día-->   
-                                        
-                                    
-                                    <!--espacio para iconos-->        
-                                    <div class=" col-12 d-flex mt-5">
-                                        
-                                            <div class""><img src="/img/calendario/tarea.svg" alt="Tarea" title="Tarea" width="15px" class="botonIconoPrincipal"> <span>Tarea</span></div>
-                                            <div class="mx-5"><img src="/img/calendario/solicitud.svg" alt="Solicitud" title="Solicitud" width="15px" class="botonIconoPrincipal"> <span>Solicitud</span></div>
-                                            <div class=""><img src="/img/calendario/mantenimiento.svg" alt="Mantenimiento" title="Mantenimiento" width="15px" class="botonIconoPrincipal"> <span>Mantenimiento</span></div>
-                                        
-                                                <!-- Un mes atras del cargado -->
-                                                
-                                    </div>
+
+                                    <div class="container-fluid">
+                                        <header>
+                                            <h4 class="display-4 mb-4 text-center">{{ $objCalendar->getNameMonth($intMes) }}
+                                                {{ $intAnio }}</h4>
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <span><img src="/img/calendario/tarea.svg" alt="Tarea" title="Tarea" width="48px" class="botonIconoPrincipal"> Tarea</span>
+                                                <span><img src="/img/calendario/solicitud.svg" alt="Solicitud" title="Solicitud" width="48px" class="botonIconoPrincipal"> Solicitud</span>
+                                                <span><img src="/img/calendario/mantenimiento.svg" alt="Mantenimiento" title="Mantenimiento" width="48px" class="botonIconoPrincipal"> Mantenimiento</span>
+
+                                                 <!-- Un mes atras del cargado -->
+                                                 <span>
+                                                <a href="{{ url('calendario/'.$mesAnterior['year'].'/'.$mesAnterior['month']) }}" class="" title="Ir al mes anterior">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-caret-left-fill"
+                                                            viewBox="0 0 16 16">
+                                                            <path
+                                                                d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+                                                        </svg>
+
+                                                    </a>
+                                                    <!-- Para el mes en curso -->
+                                                </span>
+                                                <span>
+                                                    <a href="{{ url('calendario/') }}" class="display-4 mb-4 text-center" title="Ir al mes en curso"><b>Hoy es {{ date('d M Y') }}</b>
+                                                </span>
+
+                                                 <!-- Un mes adelante del cargado -->
+                                                <a href="{{ url('calendario/'.$mesSiguiente['year'].'/'.$mesSiguiente['month']) }}" class="" title="Ir al mes siguiente">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-caret-right-fill"
+                                                        viewBox="0 0 16 16">
+                                                        <path
+                                                            d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+                                                    </svg>
+                                                </a>
+
+                                            </div>
                                             <?php
 
                                             $iCw = 1;
                                             $aDays = $objCalendar->getDaysInMonth($intMes, $intAnio);
                                             $iDaysMonth = count($aDays);
-                                            ?>   
-                                </div>
-                                    <!--espacio para el nuevo diseño de calendario-->
-                                    
-                                <div class="row d-flex"> 
-                                    <!--Espacio para el día y las tareas-->
-                                    <div class="col-12 col-md-6 order-2">
-                                        <div class="diaFecha border">   
-                                            <div class="border">
-                                                <a href="{{ url('calendario/') }}" class="display-4 mb-4 " title="Ir al mes en curso">
-                                                    
-                                                    <p class="calendarioDia  p-3">  <i class="bi bi-calendar4"></i>  {{ $objCalendar->getNameDay(date_format( $fecha_actual,'N')) }} 
-                                                    {{ $fecha_actual->format('d') }} </p>
-                                                </a>
-                                            </div>
-                                            <div class="accordion " id="accordionExample">
-                                                <div class="accordion-item">
-                                                    <h2 class="accordion-header ">
-                                                        <button class="accordion-button collapsed labelProrrogable acordionDos" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" style="height: 20px;"><defs><style>.cls-1{fill:#fff;fill-rule:evenodd;}</style></defs><g id="Capa_2" data-name="Capa 2"><g id="Capa_8" data-name="Capa 8">
-                                                                <path id="Trazado_2136" data-name="Trazado 2136" class="cls-1" d="M.53,7.29A1.34,1.34,0,0,1,.28,5.41a1.18,1.18,0,0,1,.25-.25A1.83,1.83,0,0,1,3,5.16l4,3.34a1.35,1.35,0,0,1,.23,1.9,1.25,1.25,0,0,1-.23.23,1.68,1.68,0,0,1-1.39.61,1.58,1.58,0,0,1-1.21-.61Z"></path>
-                                                                <path id="Trazado_2137" data-name="Trazado 2137" class="cls-1" d="M23.24,10.93a1.49,1.49,0,0,1-.15-2.12.75.75,0,0,1,.15-.16l3.82-3.34a1.83,1.83,0,0,1,2.42,0,1.51,1.51,0,0,1,.15,2.13l-.15.15-3.81,3.34a2,2,0,0,1-1.22.46A1.64,1.64,0,0,1,23.24,10.93Z"></path>
-                                                                <path id="Trazado_2138" data-name="Trazado 2138" class="cls-1" d="M13.36,6.23V1.52a1.75,1.75,0,0,1,3.46,0V6.23a1.73,1.73,0,0,1-3.46,0Z"></path><path id="Trazado_2139" data-name="Trazado 2139" class="cls-1" d="M4.16,30H26V20.35H22a6.15,6.15,0,0,0,.87-3V16.7c0-3.8-3.64-6.83-7.8-6.83-4.34,0-8,3-8,6.83v.61a6.26,6.26,0,0,0,.87,3H4.16Z"></path></g></g>
-                                                            </svg>&nbsp;&nbsp;<span class="nombreTarea">Día de la Constitución Mexicana </span>
-                                                        </button>
-                                                        
-                                                  </h2>
-                                                  <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                                                    <div class="accordion-body">
-                                                      <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                                <div class="accordion-item">
-                                                  <h2 class="accordion-header">
-                                                    <button class="accordion-button collapsed labelProrrogable" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" style="height: 20px;"><defs><style>.cls-1{fill:#fff;fill-rule:evenodd;}</style></defs><g id="Capa_2" data-name="Capa 2"><g id="Capa_8" data-name="Capa 8">
-                                                            <path id="Trazado_2136" data-name="Trazado 2136" class="cls-1" d="M.53,7.29A1.34,1.34,0,0,1,.28,5.41a1.18,1.18,0,0,1,.25-.25A1.83,1.83,0,0,1,3,5.16l4,3.34a1.35,1.35,0,0,1,.23,1.9,1.25,1.25,0,0,1-.23.23,1.68,1.68,0,0,1-1.39.61,1.58,1.58,0,0,1-1.21-.61Z"></path>
-                                                            <path id="Trazado_2137" data-name="Trazado 2137" class="cls-1" d="M23.24,10.93a1.49,1.49,0,0,1-.15-2.12.75.75,0,0,1,.15-.16l3.82-3.34a1.83,1.83,0,0,1,2.42,0,1.51,1.51,0,0,1,.15,2.13l-.15.15-3.81,3.34a2,2,0,0,1-1.22.46A1.64,1.64,0,0,1,23.24,10.93Z"></path>
-                                                            <path id="Trazado_2138" data-name="Trazado 2138" class="cls-1" d="M13.36,6.23V1.52a1.75,1.75,0,0,1,3.46,0V6.23a1.73,1.73,0,0,1-3.46,0Z"></path><path id="Trazado_2139" data-name="Trazado 2139" class="cls-1" d="M4.16,30H26V20.35H22a6.15,6.15,0,0,0,.87-3V16.7c0-3.8-3.64-6.83-7.8-6.83-4.34,0-8,3-8,6.83v.61a6.26,6.26,0,0,0,.87,3H4.16Z"></path></g></g>
-                                                        </svg>&nbsp;&nbsp;<span class="nombreTarea">Día de la Constitución Mexicana </span>
-                                                    </button>
-                                                  </h2>
-                                                  <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                                                    <div class="accordion-body">
-                                                      <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                                <div class="accordion-item">
-                                                  <h2 class="accordion-header">
-                                                    <button class="accordion-button collapsed labelProrrogable" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" style="height: 20px;"><defs><style>.cls-1{fill:#fff;fill-rule:evenodd;}</style></defs><g id="Capa_2" data-name="Capa 2"><g id="Capa_8" data-name="Capa 8">
-                                                            <path id="Trazado_2136" data-name="Trazado 2136" class="cls-1" d="M.53,7.29A1.34,1.34,0,0,1,.28,5.41a1.18,1.18,0,0,1,.25-.25A1.83,1.83,0,0,1,3,5.16l4,3.34a1.35,1.35,0,0,1,.23,1.9,1.25,1.25,0,0,1-.23.23,1.68,1.68,0,0,1-1.39.61,1.58,1.58,0,0,1-1.21-.61Z"></path>
-                                                            <path id="Trazado_2137" data-name="Trazado 2137" class="cls-1" d="M23.24,10.93a1.49,1.49,0,0,1-.15-2.12.75.75,0,0,1,.15-.16l3.82-3.34a1.83,1.83,0,0,1,2.42,0,1.51,1.51,0,0,1,.15,2.13l-.15.15-3.81,3.34a2,2,0,0,1-1.22.46A1.64,1.64,0,0,1,23.24,10.93Z"></path>
-                                                            <path id="Trazado_2138" data-name="Trazado 2138" class="cls-1" d="M13.36,6.23V1.52a1.75,1.75,0,0,1,3.46,0V6.23a1.73,1.73,0,0,1-3.46,0Z"></path><path id="Trazado_2139" data-name="Trazado 2139" class="cls-1" d="M4.16,30H26V20.35H22a6.15,6.15,0,0,0,.87-3V16.7c0-3.8-3.64-6.83-7.8-6.83-4.34,0-8,3-8,6.83v.61a6.26,6.26,0,0,0,.87,3H4.16Z"></path></g></g>
-                                                        </svg>&nbsp;&nbsp;<span class="nombreTarea">Día de la Constitución Mexicana </span>
-                                                    </button>
-                                                  </h2>
-                                                  <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                                                    <div class="accordion-body">
-                                                      <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                              </div>
-
-
-                                          
-
-                                        </div>
+                                            ?>
+                                        </header>
                                     </div>
-                                    <!--Espacio para la tabla del calendario-->
-                                    <div class="col-12 col-md-6 order-1  ">
-                                        <div class="text-center calendario border">
-                                            <div class="d-inline-flex align-items-center m-3">
-                                                    <a href="{{ url('calendario/'.$mesAnterior['year'].'/'.$mesAnterior['month']) }}" class="" title="Ir al mes anterior ">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"  fill="currentColor" class="bi bi-caret-left-fill flechita mx-3"viewBox="0 0 16 16">
-                                                    <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
-                                                    </svg>
-                                                    </a>
-                                                    <!-- Para el mes en curso -->
-                                                    <div class="align-self-center">   
-                                                        <p class="textMes text-center">{{ $objCalendar->getNameMonth($intMes) }}</p>
-                                                        <p class="textAno text-center">{{ $intAnio }}</p>
-                                                    </div>
-                                                    <!-- Un mes adelante del cargado -->
-                                                    <a href="{{ url('calendario/'.$mesSiguiente['year'].'/'.$mesSiguiente['month']) }}" class="" title="Ir al mes siguiente">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill flechita mx-3" viewBox="0 0 16 16">
-                                                        <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
-                                                        </svg>
-                                                    </a>   
-                                            </div>
-                                            <div class="d-flex">
-                                                <hr>
-                                                <?php
-            
-                                                $sRow = '';
-                                                $sTable = '';
-                                                $dteToday = date('Y-m-d');
-            
-            
-                                                $sTable .= '<div class="container-fluid">';
-                                                $sTable .= $objCalendar->getDaysWeekCalendar(); //*** cabecera de los días de la semana
-                                                foreach ($aDays as $iDay => $currentDay) {
-                                                    $content = '';
-                                                    $strEstiloHoy = ($dteToday == $currentDay ? 'style="box-shadow: 2px 2px 10px 2px #F7C90D;"':"");
-                                                    // $sResult = "<h2 class="diasSemana">$iDay</h2>";
-                                                    // $sResult .= "<div style='float: right;'>";
-                                                    // $sResult .= $content;
-                                                    // $sResult .= '</div>';
-                                                    // dd($vctEventos);
-            
-                                                    //*** trabajamos las tarea registradas
-                                                    if($vctTasks->isEmpty()==false){
-                                                        foreach($vctTasks as $tarea){
-                                                            if($tarea->fechaFin === $currentDay){
-            
-                                                                $content .=  '<a href="#" class="label'. $tarea->prioridad . ' event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small text-white"  data-bs-toggle="modal" data-bs-target="#editarTarea"
-                                                                onclick="loadTarea(\'' . $tarea->id .
-                                                                '\',\'' . $tarea->titulo .
-                                                                '\',\'' . $tarea->responsableId .
-                                                                '\',\'' . $tarea->prioridadId .
-                                                                '\',\'' . $tarea->estadoId .
-                                                                '\',\'' . $tarea->comentario .
-                                                                '\',\'' .  \Carbon\Carbon::parse($tarea->fechaInicio)->format('d/m/Y') .
-                                                                '\',\'' . \Carbon\Carbon::parse($tarea->fechaFin)->format('d/m/Y') .
-                                                                '\')"  title="' . $tarea->titulo . ': '. ($tarea->comentario? $tarea->comentario :"Sin comentarios") . '">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" style="height: 10px;"><defs><style>.cls-1{fill:#fff;}</style></defs><g id="Capa_2" data-name="Capa 2"><g id="Capa_8" data-name="Capa 8"><path id="Trazado_2166" data-name="Trazado 2166" class="cls-1" d="M30,17.76V12.24H25.37a10.75,10.75,0,0,0-1.09-2.62l3.28-3.28-3.9-3.9L20.38,5.72a10.75,10.75,0,0,0-2.62-1.09V0H12.24V4.63A10.75,10.75,0,0,0,9.62,5.72L6.34,2.44l-3.9,3.9L5.72,9.62a10.75,10.75,0,0,0-1.09,2.62H0v5.52H4.63a10.75,10.75,0,0,0,1.09,2.62L2.44,23.66l3.9,3.9,3.28-3.28a10.75,10.75,0,0,0,2.62,1.09V30h5.52V25.37a10.34,10.34,0,0,0,2.62-1.08l3.28,3.28,3.9-3.9-3.28-3.28a10.75,10.75,0,0,0,1.09-2.62ZM15,21.41A6.41,6.41,0,1,1,21.41,15h0A6.41,6.41,0,0,1,15,21.41Z"/></g></g></svg>&nbsp;&nbsp;'
-                                                                . $tarea->titulo .
-                                                                 '</a>';
-                                                                //  dd($content);
-                                                            }
-                                                        }
-                                                    }
-                                                     //*** trabajamos las solicitud registradas
-                                                    if($vctSolicitudes->isEmpty()==false){
-                                                        foreach($vctSolicitudes as $solicitud){
-                                                            if($solicitud->fechaRequerimiento === $currentDay){
-            
-                                                                $content .=  '<a href="#" class="label'. $solicitud->prioridad . ' event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small text-white"  data-bs-toggle="modal" data-bs-target="#editarTarea"
-                                                                    title="' . $solicitud->titulo . ': '. ($solicitud->comentario? $solicitud->comentario :"Sin comentarios") . '">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" style="height: 10px;"><defs><style>.cls-1{fill:#fff;}</style></defs><g id="Capa_2" data-name="Capa 2"><g id="Capa_8" data-name="Capa 8"><g id="Grupo_1867" data-name="Grupo 1867"><path id="Trazado_2134" data-name="Trazado 2134" class="cls-1" d="M9,30H0L3.93,14.52,0,0H9L13,15.75Z"/><path id="Trazado_2135" data-name="Trazado 2135" class="cls-1" d="M26.07,30H17L21,14.52,17,0h9L30,15.75Z"/></g></g></g></svg>&nbsp;&nbsp;'
-                                                                . $solicitud->titulo .
-                                                                 '</a>';
-                                                                //  dd($content);
-                                                            }
-                                                        }
-                                                    }
-            
-            
-                                                    //*** trabajamos los eventos registrados
-                                                    if($vctEventos->isEmpty()==false){
-                                                        foreach($vctEventos as $evento){
-                                                            if($evento->fechaFin === $currentDay){
-                                                                $content .=  '<a href="#" class="label'. $evento->prioridad . ' event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small text-white"  data-bs-toggle="modal" data-bs-target="#editarEvento"
-                                                                   title="' . $evento->titulo . ': '. ($evento->comentario? $evento->comentario :"Sin comentarios") . '">
-                                                                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" style="height: 10px;"><defs><style>.cls-1{fill:#fff;fill-rule:evenodd;}</style></defs><g id="Capa_2" data-name="Capa 2"><g id="Capa_8" data-name="Capa 8"><path id="Trazado_2136" data-name="Trazado 2136" class="cls-1" d="M.53,7.29A1.34,1.34,0,0,1,.28,5.41a1.18,1.18,0,0,1,.25-.25A1.83,1.83,0,0,1,3,5.16l4,3.34a1.35,1.35,0,0,1,.23,1.9,1.25,1.25,0,0,1-.23.23,1.68,1.68,0,0,1-1.39.61,1.58,1.58,0,0,1-1.21-.61Z"/><path id="Trazado_2137" data-name="Trazado 2137" class="cls-1" d="M23.24,10.93a1.49,1.49,0,0,1-.15-2.12.75.75,0,0,1,.15-.16l3.82-3.34a1.83,1.83,0,0,1,2.42,0,1.51,1.51,0,0,1,.15,2.13l-.15.15-3.81,3.34a2,2,0,0,1-1.22.46A1.64,1.64,0,0,1,23.24,10.93Z"/><path id="Trazado_2138" data-name="Trazado 2138" class="cls-1" d="M13.36,6.23V1.52a1.75,1.75,0,0,1,3.46,0V6.23a1.73,1.73,0,0,1-3.46,0Z"/><path id="Trazado_2139" data-name="Trazado 2139" class="cls-1" d="M4.16,30H26V20.35H22a6.15,6.15,0,0,0,.87-3V16.7c0-3.8-3.64-6.83-7.8-6.83-4.34,0-8,3-8,6.83v.61a6.26,6.26,0,0,0,.87,3H4.16Z"/></g></g></svg>&nbsp;&nbsp;'
-                                                                . $evento->titulo .
-                                                                 '</a>';
-                                                                //  dd($content);
-                                                            }
-            
-                                                        }
-                                                    }
-            
-                                                    //*** trabajamos los eventos registrados
-                                                    if($vctMantenimientos->isEmpty()==false){
-                                                        foreach($vctMantenimientos as $mantto){
-                                                            if($mantto->fechaInicio === $currentDay){
-                                                                $content .=  '<a href="#" class="label'. $mantto->estado . ' event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small text-white"  data-bs-toggle="modal" data-bs-target="#editarEvento"
-                                                                    title="' .  ($mantto->comentario? $mantto->comentario :"Sin comentarios") . '">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" style="height: 10px;"><defs><style>.cls-1{fill:#fff;fill-rule:evenodd;}</style></defs><g id="Capa_2" data-name="Capa 2"><g id="Capa_8" data-name="Capa 8"><g id="Grupo_1868" data-name="Grupo 1868"><path id="Trazado_2131" data-name="Trazado 2131" class="cls-1" d="M30,17.06a2.87,2.87,0,0,0-.44-1.54c0-.13,0-.26-.1-.39l-3.11-6v0c-1-2.52-2.62-4.83-6.55-4.83H16.05a5.16,5.16,0,0,1,.1,1.88H19.8c2.07,0,3.16.9,4.25,3.51l2.24,3.59a7.23,7.23,0,0,0-2.4-.34h-11l0,5.17h4.29c.49,0,.92.3.92.65s-.43.68-.92.68H12.89v3.64h9.68v2.73a1.74,1.74,0,0,0,1.9,1.55h3.67A1.74,1.74,0,0,0,30,25.78V20.27a.87.87,0,0,0-.17-.52,2,2,0,0,0,.17-.81Zm-4.2,2.56h-4c-.82,0-1.42-.47-1.42-1.07s.61-1,1.42-1h4a1.08,1.08,0,1,1,.54,2.09,1,1,0,0,1-.54,0Z"/><path id="Trazado_2132" data-name="Trazado 2132" class="cls-1" d="M14.56,4.72h0c0-2-1.46-3.77-3.66-4.72V4.36L7.31,5.9,3.65,4.36V0C1.46,1,0,2.72,0,4.72s1.64,4,4,4.81V27.46a2.34,2.34,0,0,0,1,1.81A4.28,4.28,0,0,0,7.43,30c1.89,0,3.41-1.13,3.47-2.54l-.06-18c2.26-.91,3.72-2.72,3.72-4.72Z"/></g></g></g></svg>&nbsp;&nbsp;'
-                                                                . $mantto->titulo .
-                                                                 '</a>';
-                                                                //  dd($content);
-                                                            }
-            
-                                                        }
-                                                    }
-            
-                                           
-                                                    $sResult = ' <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate" '. $strEstiloHoy .'>';
-                                                    $sResult .= '   <h5 class="row align-items-center">';
-                                                    $sResult .= '       <span class="date col-1 numeroCalendario">' . $iDay . '  </span>';
-                                                    $sResult .= '       <small class="col d-sm-none text-center text-muted">Friday</small>';
-                                                    $sResult .= '       <span class="col-1"></span>';
-                                                    $sResult .= '   </h5>';
-                                                    /* $sResult .= '    ' . $content . ' ';*/
-                                                    $sResult .= '</div>';
-            
-                                                    // dd($sResult);
-            
-                                                    if ($iCw == 1) {
-                                                        $sRow .= '<div class="row border border-right-0 border-bottom-0">';
-                                                    }
-            
-                                                    if ($iDay == 1) {
-                                                        $sRow .= $objCalendar->getStartWeek($currentDay);
-                                                        $iCw += $objCalendar->getDayOnWeek($currentDay);
-                                                        $sRow .=  $sResult ;
-                                                    } elseif ($iDay == $iDaysMonth) {
-                                                        $sRow .=  $sResult;
-                                                        $sRow .= $objCalendar->getEndWeek($currentDay);
-                                                    } else {
-                                                        $sRow .=  $sResult ;
-                                                    }
-            
-                                                    if ($iCw == 7) {
-                                                        $iCw = 1;
-                                                        $sRow .= '</div>';
-                                                    } else {
-                                                        $iCw += 1;
-                                                    }
-                                                }
-            
-                                                $sTable .= $sRow;
-                                                $sTable .= '</div>';
-            
-                                                echo $sTable;
-                                                ?>
-                                                
-                                        </div>
-                                    </div>
-                                    
-
-                                    
-                                </div>
-
-
-                                
-                                   <!-- <div class="col-6">
-                                        <div class="calendar">
-                                            <div class="header">
-                                                <a data-action="prev-month" href="javascript:void(0)" title="Previous Month"><i>xdgdy</i></a>
-                                                <div class="text" data-render="month-year">{{ $objCalendar->getNameMonth($intMes) }} </div>
-                                                <a data-action="next-month" href="javascript:void(0)" title="Next Month"><i></i></a>
-                                                
-                                            </div>
-                                            <div class="months" data-flow="left">
-                                                <div class="month month-a">
-                                                    <div class="render render-a"></div>
-                                                </div>
-                                                <div class="month month-b"> 
-                                                    <div class="render render-b"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>-->
-                                </div>
-
-
-                                <!--<div class"row">  
                                     <hr>
                                     <?php
 
@@ -342,7 +117,7 @@ $cadena_fecha_actual = $fecha_actual->format("d/m/Y");
                                                 }
                                             }
                                         }
-                                         //*** trabajamos las solicitud registradas
+                                         //*** trabajamos las solicitudes registradas
                                         if($vctSolicitudes->isEmpty()==false){
                                             foreach($vctSolicitudes as $solicitud){
                                                 if($solicitud->fechaRequerimiento === $currentDay){
@@ -362,8 +137,11 @@ $cadena_fecha_actual = $fecha_actual->format("d/m/Y");
                                         if($vctEventos->isEmpty()==false){
                                             foreach($vctEventos as $evento){
                                                 if($evento->fechaFin === $currentDay){
-                                                    $content .=  '<a href="#" class="label'. $evento->prioridad . ' event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small text-white"  data-bs-toggle="modal" data-bs-target="#editarEvento"
-                                                       title="' . $evento->titulo . ': '. ($evento->comentario? $evento->comentario :"Sin comentarios") . '">
+                                                    $content .=  '<a href="#" class="label'. $evento->prioridad . ' event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small text-white"  data-bs-toggle="modal" data-bs-target="#verEvento"
+                                                        onclick="loadEvento(\'' . $evento->id .
+                                                    '\',\'' . $evento->titulo .
+                                                    '\',\'' . $evento->comentario .
+                                                    '\')"title="' . $evento->titulo . ': '. ($evento->comentario? $evento->comentario :"Sin comentarios") . '">
                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" style="height: 10px;"><defs><style>.cls-1{fill:#fff;fill-rule:evenodd;}</style></defs><g id="Capa_2" data-name="Capa 2"><g id="Capa_8" data-name="Capa 8"><path id="Trazado_2136" data-name="Trazado 2136" class="cls-1" d="M.53,7.29A1.34,1.34,0,0,1,.28,5.41a1.18,1.18,0,0,1,.25-.25A1.83,1.83,0,0,1,3,5.16l4,3.34a1.35,1.35,0,0,1,.23,1.9,1.25,1.25,0,0,1-.23.23,1.68,1.68,0,0,1-1.39.61,1.58,1.58,0,0,1-1.21-.61Z"/><path id="Trazado_2137" data-name="Trazado 2137" class="cls-1" d="M23.24,10.93a1.49,1.49,0,0,1-.15-2.12.75.75,0,0,1,.15-.16l3.82-3.34a1.83,1.83,0,0,1,2.42,0,1.51,1.51,0,0,1,.15,2.13l-.15.15-3.81,3.34a2,2,0,0,1-1.22.46A1.64,1.64,0,0,1,23.24,10.93Z"/><path id="Trazado_2138" data-name="Trazado 2138" class="cls-1" d="M13.36,6.23V1.52a1.75,1.75,0,0,1,3.46,0V6.23a1.73,1.73,0,0,1-3.46,0Z"/><path id="Trazado_2139" data-name="Trazado 2139" class="cls-1" d="M4.16,30H26V20.35H22a6.15,6.15,0,0,0,.87-3V16.7c0-3.8-3.64-6.83-7.8-6.83-4.34,0-8,3-8,6.83v.61a6.26,6.26,0,0,0,.87,3H4.16Z"/></g></g></svg>&nbsp;&nbsp;'
                                                     . $evento->titulo .
                                                      '</a>';
@@ -373,7 +151,7 @@ $cadena_fecha_actual = $fecha_actual->format("d/m/Y");
                                             }
                                         }
 
-                                        //*** trabajamos los eventos registrados
+                                        //*** trabajamos los mantenimientos registrados
                                         if($vctMantenimientos->isEmpty()==false){
                                             foreach($vctMantenimientos as $mantto){
                                                 if($mantto->fechaInicio === $currentDay){
@@ -427,279 +205,345 @@ $cadena_fecha_actual = $fecha_actual->format("d/m/Y");
                                     $sTable .= '</div>';
 
                                     echo $sTable;
-                                    ?>-->
+                                    ?>
 
-                               
-                            
+                                    </>
+                                </div>
                             </div>
-                </div>
-            </div>
-            
-        </div>   
-
-        <!--Espacio para index Tareas Solicitudes y Mantenimientos-->      
-        <div class="row justify-content-center">
-            <div class="col ">
-                <div class="card">
-                    <!-- <div class="card-header bacTituloPrincipal">                                                                                                                                                    </div>-->
-                    <div class="card-body mb-3">
-                        <div class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
-
-                            <button class=" nav-item col-12 col-md-4 BTNbCargaDescarga py-3 border-0 active "
-                                role="presentation" id="tareas-tab" data-bs-toggle="tab"
-                                data-bs-target="#tareas-tab-pane" type="button" role="tab"
-                                aria-controls="tareas-tab-pane" aria-selected="true">
-                                Tareas
-                            </button>
-                            <button class="nav-item col-12 col-md-4 BTNbCargaDescarga " role="presentation"
-                                id="solicitud-tab" data-bs-toggle="tab" data-bs-target="#solicitud-tab-pane"
-                                type="button" role="tab" aria-controls="solicitud-tab-pane"
-                                aria-selected="false">
-                                Solicitudes
-                            </button>
-                            <button class="nav-item col-12 col-md-4 BTNbCargaDescarga " role="presentation"
-                                id="profile-tab" data-bs-toggle="tab" data-bs-target="#mantenimiento-tab-pane"
-                                type="button" role="tab" aria-controls="mantenimiento-tab-pane"
-                                aria-selected="false">
-                                Mantenimientos
-                            </button>
                         </div>
+                    </div>
 
-                        <div class="tab-content contentCargas" id="myTabContent">
-                            <!-- Tareas-->
-                            <div class="tab-pane fade show active" id="tareas-tab-pane"
-                                role="tabpanel"aria-labelledby="home-tab" tabindex="0">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="table-responsive">
-                                                    <div class="row border-bottom justify-content-end">
-                                                        <div class="col-3 mb-3">
-                                                            <button class="btnSinFondocALENDARIO float-end"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#nuevaTarea">
-                                                                <img src="img/calendario/tarea.svg"class="imgBTNcalendario">
-                                                            Nueva Tarea
-                                                            </button>
+                    <!--Espacio para index Tareas Solicitudes y Mantenimientos-->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <!-- <div class="card-header bacTituloPrincipal">                                                                                                                                                    </div>-->
+                                <div class="card-body mb-3">
+                                    <div class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
 
-                                                        </div>
-                                                    </div>
-                                                    <table class="table">
-                                                        <thead class="labelTitulo">
-                                                            <th class="fw-semibold">Tarea</th>
-                                                            <th class="fw-semibold">Responsable</th>
-                                                            <th class="fw-semibold">Fecha Inicio</th>
-                                                            <th class="fw-semibold">Fecha Fin</th>
-                                                            <th class="fw-semibold">Prioridad</th>
-                                                            <th class="fw-semibold">Estado</th>
-                                                            <th class="fw-semibold text-right">Acciones</th>
-                                                        </thead>
-                                                        <tbody>
-                                                            @forelse ($vctTasks as $tarea)
-                                                            <tr>
-                                                                <td>{{ $tarea->titulo }}</td>
-                                                                <td>{{ $tarea->responsable }}</td>
-                                                                <td>{{ \Carbon\Carbon::parse($tarea->fechaInicio)->format('Y-m-d') }}
-                                                                </td>
-                                                                <td>{{ \Carbon\Carbon::parse($tarea->fechaFin)->format('Y-m-d') }}
-                                                                </td>
-                                                                <td class="label{{ $tarea->prioridad }}">
-                                                                    <span>{{ $tarea->prioridad }}</span>
-                                                                </td>
-                                                                <td class="label{{ $tarea->estado }}">
-                                                                    <span>{{ $tarea->estado }}</span>
-                                                                </td>
-                                                                <td class="td-actions justify-content-end">
-                                                                    <a href="#" class="" data-bs-toggle="modal" data-bs-target="#editarTarea"
-                                                                        onclick="loadTarea(
-                                                                            '{{ $tarea->id }}'
-                                                                            ,'{{ $tarea->titulo }}'
-                                                                            ,'{{ $tarea->responsableId }}'
-                                                                            ,'{{ $tarea->prioridadId }}'
-                                                                            ,'{{ $tarea->estadoId }}'
-                                                                            ,'{{ $tarea->comentario }}'
-                                                                            ,'{{ \Carbon\Carbon::parse($tarea->fechaInicio)->format('d/m/Y') }}'
-                                                                            ,'{{ \Carbon\Carbon::parse($tarea->fechaFin)->format('d/m/Y') }}' )">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg "width="28" height="28" fill="currentColor" class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
-                                                                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                                                        </svg>
-                                                                    </a>
+                                        <button class=" nav-item col-12 col-md-4 BTNbCargaDescarga py-3 border-0 active "
+                                            role="presentation" id="tareas-tab" data-bs-toggle="tab"
+                                            data-bs-target="#tareas-tab-pane" type="button" role="tab"
+                                            aria-controls="tareas-tab-pane" aria-selected="true">
+                                            Tareas
+                                        </button>
+                                        <button class="nav-item col-12 col-md-4 BTNbCargaDescarga " role="presentation"
+                                            id="solicitud-tab" data-bs-toggle="tab" data-bs-target="#solicitud-tab-pane"
+                                            type="button" role="tab" aria-controls="solicitud-tab-pane"
+                                            aria-selected="false">
+                                            Solicitudes
+                                        </button>
+                                        <button class="nav-item col-12 col-md-4 BTNbCargaDescarga " role="presentation"
+                                            id="profile-tab" data-bs-toggle="tab" data-bs-target="#mantenimiento-tab-pane"
+                                            type="button" role="tab" aria-controls="mantenimiento-tab-pane"
+                                            aria-selected="false">
+                                            Mantenimientos
+                                        </button>
+                                    </div>
 
-                                                                    <form action="">
-                                                                        <button class=" btnSinFondo"  type="submit" rel="tooltip">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"width="28" height="28"fill="currentColor" class="bi bi-x-circle"viewBox="0 0 16 16">
-                                                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                                <pathd="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                                            </svg>
+                                    <div class="tab-content contentCargas" id="myTabContent">
+                                        <!-- Tareas-->
+                                        <div class="tab-pane fade show active" id="tareas-tab-pane"
+                                            role="tabpanel"aria-labelledby="home-tab" tabindex="0">
+                                            <div class="row">
+
+                                                <div class="col-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="table-responsive">
+                                                                <div class="row border-bottom justify-content-end">
+                                                                    <div class="col-3 mb-3">
+
+                                                                        <button class="btnSinFondocALENDARIO float-end"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#nuevaTarea">
+                                                                            <img src="img/calendario/tarea.svg"
+                                                                                class="imgBTNcalendario">
+                                                                            Nueva Tarea
                                                                         </button>
-                                                                    </form>
-                                                                </td>
-                                                             </tr>
-                                                                 @empty
-                                                            <tr>
-                                                                <td colspan="7">
-                                                                    Sin tareas registradas
-                                                                </td>
-                                                            </tr>
-                                                                @endforelse
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Solicitudes -->
-                            <div class="tab-pane fade" id="solicitud-tab-pane" role="tabpanel"aria-labelledby="profile-tab" tabindex="0">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="table-responsive">
-                                                    <div class="row border-bottom justify-content-end">
-                                                        <div class="col-3 mb-3">
-                                                            <button class="btnSinFondocALENDARIO float-end" data-bs-toggle="modal" data-bs-target="#procesosModal">
-                                                                <img src="img/calendario/procesosverde.svg" class="imgBTNcalendario">
-                                                                    Alta de Procesos
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-3 mb-3">
-                                                            <button class="btnSinFondocALENDARIO float-end" data-bs-toggle="modal" data-bs-target="#solicitudModal">
-                                                                <img src="img/calendario/tarea.svg"  class="imgBTNcalendario">
-                                                                    Nueva Solicitud
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <table class="table">
-                                                        <thead class="labelTitulo">
-                                                            <th class="fw-semibold">Título</th>
-                                                                {{-- <th class="fw-semibold">Cantidad</th> --}}
-                                                            <th class="fw-semibold">Solicitante</th>
-                                                            <th class="fw-semibold">Fecha Solicitud</th>
-                                                            <th class="fw-semibold">Fecha Requerimiento</th>
-                                                            <th class="fw-semibold">Tipo</th>
-                                                            <th class="fw-semibold">Prioridad</th>
-                                                            <th class="fw-semibold">Estado</th>
-                                                            <th class="fw-semibold text-right">Acciones</th>
-                                                        </thead>
-                                                        <tbody>
-                                                        <!--primera linea-->
-                                                        @forelse($vctSolicitudes as $solicitud)
-                                                            <tr>
-                                                                <td>{{ $solicitud->servicio }}</td>
-                                                                    {{-- <td>1</td> --}}
-                                                                <td>{{ $solicitud->usuario }}</td>
-                                                                <td>{{ $solicitud->fechaSolicitud }}</td>
-                                                                <td>{{ $solicitud->fechaRequerimiento }}</td>
-                                                                <td class="reparación">Reparación</td>
-                                                                <td class="label{{ $solicitud->prioridad }}"><span>{{ $solicitud->prioridad }}</span>
-                                                            </td>
-                                                            <td class="label{{ $solicitud->estado }}"><span>{{ $solicitud->estado }}</span>
-                                                            </td>
-                                                            <td class="td-actions justify-content-end">
-                                                                <a href="#" class=""  data-bs-toggle="modal"  data-bs-target="#editarReparacion">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg "  width="28" height="28" fill="currentColor" class="bi bi-pencil accionesIconos"  viewBox="0 0 16 16">
-                                                                        <pathd="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                                                    </svg>
-                                                                </a>
-                                                                <form action="">
-                                                                    <button class=" btnSinFondo"  type="submit" rel="tooltip">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"  width="28" height="28"  fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
-                                                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                                        </svg>
-                                                                    </button>
-                                                                </form>
-                                                            </td>
-                                                            </tr>
-                                                             @empty
-                                                            <tr>
-                                                                <td colspan="7">
-                                                                 Sin solicitudes registradas
-                                                                </td>
-                                                            </tr>
-                                                             @endforelse
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Mantenimientos-->
-                            <div class="tab-pane fade" id="mantenimiento-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="table-responsive">
-                                                    <div class="row border-bottom justify-content-end">
-                                                        <div class="col-3 mb-3">
-                                                            <button class="btnSinFondocALENDARIO float-end" data-bs-toggle="modal" data-bs-target="#mantenimientoModal">
-                                                                <img src="img/calendario/tarea.svg" class="imgBTNcalendario">
-                                                                Nuevo Mantenimiento
-                                                            </button>
 
+                                                                    </div>
+                                                                </div>
+                                                                <table class="table">
+                                                                    <thead class="labelTitulo">
+                                                                        <th class="fw-semibold">Tarea</th>
+                                                                        <th class="fw-semibold">Responsable</th>
+                                                                        <th class="fw-semibold">Fecha Inicio</th>
+                                                                        <th class="fw-semibold">Fecha Fin</th>
+                                                                        <th class="fw-semibold">Prioridad</th>
+                                                                        <th class="fw-semibold">Estado</th>
+                                                                        <th class="fw-semibold text-right">Acciones</th>
+                                                                    </thead>
+                                                                    <tbody>
+
+                                                                        @forelse ($vctTasks as $tarea)
+                                                                            <tr>
+                                                                                <td>{{ $tarea->titulo }}</td>
+                                                                                <td>{{ $tarea->responsable }}</td>
+                                                                                <td>{{ \Carbon\Carbon::parse($tarea->fechaInicio)->format('Y-m-d') }}
+                                                                                </td>
+                                                                                <td>{{ \Carbon\Carbon::parse($tarea->fechaFin)->format('Y-m-d') }}
+                                                                                </td>
+                                                                                <td class="label{{ $tarea->prioridad }}">
+                                                                                    <span>{{ $tarea->prioridad }}</span>
+                                                                                </td>
+                                                                                <td class="label{{ $tarea->estado }}">
+                                                                                    <span>{{ $tarea->estado }}</span>
+                                                                                </td>
+                                                                                <td class="td-actions justify-content-end">
+                                                                                    <a href="#" class=""
+                                                                                        data-bs-toggle="modal"
+                                                                                        data-bs-target="#editarTarea"
+                                                                                        onclick="loadTarea(
+                                                                                                    '{{ $tarea->id }}'
+                                                                                                    ,'{{ $tarea->titulo }}'
+                                                                                                    ,'{{ $tarea->responsableId }}'
+                                                                                                    ,'{{ $tarea->prioridadId }}'
+                                                                                                    ,'{{ $tarea->estadoId }}'
+                                                                                                    ,'{{ $tarea->comentario }}'
+                                                                                                    ,'{{ \Carbon\Carbon::parse($tarea->fechaInicio)->format('d/m/Y') }}'
+                                                                                                    ,'{{ \Carbon\Carbon::parse($tarea->fechaFin)->format('d/m/Y') }}'
+                                                                                                )">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg "
+                                                                                            width="28" height="28"
+                                                                                            fill="currentColor"
+                                                                                            class="bi bi-pencil accionesIconos"
+                                                                                            viewBox="0 0 16 16">
+                                                                                            <path
+                                                                                                d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                                        </svg>
+                                                                                    </a>
+
+                                                                                    <form action="">
+                                                                                        <button class=" btnSinFondo"
+                                                                                            type="submit" rel="tooltip">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                width="28"
+                                                                                                height="28"
+                                                                                                fill="currentColor"
+                                                                                                class="bi bi-x-circle"
+                                                                                                viewBox="0 0 16 16">
+                                                                                                <path
+                                                                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                                                <path
+                                                                                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                    </form>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @empty
+                                                                            <tr>
+                                                                                <td colspan="7">
+                                                                                    Sin tareas registradas
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforelse
+
+
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <table class="table">
-                                                    <thead class="labelTitulo">
-                                                        <th class="fw-semibold">ID</th>
-                                                        <th class="fw-semibold">Equipo</th>
-                                                        <th class="fw-semibold">Último Mantenimiento</th>
-                                                        <th class="fw-semibold">Próximo Mantenimiento</th>
-                                                        <th class="fw-semibold">Tipo</th>
-                                                            {{-- <th class="fw-semibold">Prioridad</th> --}}
-                                                        <th class="fw-semibold">Estado</th>
-                                                        <th class="fw-semibold text-right">Acciones</th>
-                                                    </thead>
-                                                    <tbody>
-                                                    <!--primera linea-->
-                                                     @forelse ($vctMantenimientos as $mantto )
-                                                        <tr>
-                                                            <td>{{ $mantto->maquinariaCodigo }}</td>
-                                                            <td>{{ $mantto->maquinaria }}</td>
-                                                            <td>{{ $mantto->fechaInicio }}</td>
-                                                            <td>{{ $mantto->fechaReal }}</td>
-                                                            <td>{{ $mantto->tipo }}</td>
-                                                            {{-- <td class="labelUrgente">Urgente</td> --}}
-                                                            <td class="label{{ $mantto->estado }}">{{ $mantto->estado }}</td>
-                                                            <td class="td-actions justify-content-end">
-                                                                <a href="#" class="" data-bs-toggle="modal" data-bs-target="#editarMantenimiento"
-                                                                    onclick="loadMantenimiento(
-                                                                    '{{ $mantto->id }}'
-                                                                    ,'{{ $mantto->titulo }}'
-                                                                    ,'{{ $mantto->estadoId }}'
-                                                                    ,'{{ $mantto->comentario }}'
-                                                                    ,'{{ $mantto->tipo }}'
-                                                                    // ,'{{ \Carbon\Carbon::parse($mantto->fechaInicio)->format('d/m/Y') }}'
-                                                                    // ,'{{ \Carbon\Carbon::parse($mantto->fechaFin)->format('d/m/Y') }}'  )">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg "  width="28" height="28" fill="currentColor"  class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
-                                                                        <pathd="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                                                    </svg>
-                                                                </a>
-                                                                <form action="">
-                                                                    <button class=" btnSinFondo" type="submit" rel="tooltip">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"  width="28" height="28" fill="currentColor" class="bi bi-x-circle"  viewBox="0 0 16 16">
-                                                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                                        </svg>
-                                                                    </button>
-                                                                </form>
-                                                            </td>
-                                                        </tr>
-                                                        @empty
-                                                        <tr>
-                                                            <td colspan="7">
-                                                            Sin mantenimientos registrados
-                                                            </td>
-                                                        </tr>
-                                                            @endforelse
-                                                    </tbody>
-                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Solicitudes -->
+                                        <div class="tab-pane fade" id="solicitud-tab-pane" role="tabpanel"
+                                            aria-labelledby="profile-tab" tabindex="0">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="table-responsive">
+                                                                <div class="row border-bottom justify-content-end">
+                                                                    <div class="col-3 mb-3">
+                                                                        <button class="btnSinFondocALENDARIO float-end"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#procesosModal">
+                                                                            <img src="img/calendario/procesosverde.svg"
+                                                                                class="imgBTNcalendario">
+                                                                            Alta de Procesos
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="col-3 mb-3">
+                                                                        <button class="btnSinFondocALENDARIO float-end"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#solicitudModal">
+                                                                            <img src="img/calendario/tarea.svg"
+                                                                                class="imgBTNcalendario">
+                                                                            Nueva Solicitud
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                                <table class="table">
+                                                                    <thead class="labelTitulo">
+                                                                        <th class="fw-semibold">Título</th>
+                                                                        {{-- <th class="fw-semibold">Cantidad</th> --}}
+                                                                        <th class="fw-semibold">Solicitante</th>
+                                                                        <th class="fw-semibold">Fecha Solicitud</th>
+                                                                        <th class="fw-semibold">Fecha Requerimiento</th>
+                                                                        <th class="fw-semibold">Tipo</th>
+                                                                        <th class="fw-semibold">Prioridad</th>
+                                                                        <th class="fw-semibold">Estado</th>
+                                                                        <th class="fw-semibold text-right">Acciones</th>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <!--primera linea-->
+                                                                        @forelse($vctSolicitudes as $solicitud)
+                                                                        <tr>
+                                                                            <td>{{ $solicitud->servicio }}</td>
+                                                                            {{-- <td>1</td> --}}
+                                                                            <td>{{ $solicitud->usuario }}</td>
+                                                                            <td>{{ $solicitud->fechaSolicitud }}</td>
+                                                                            <td>{{ $solicitud->fechaRequerimiento }}</td>
+                                                                            <td class="reparación">Reparación</td>
+                                                                            <td class="label{{ $solicitud->prioridad }}"><span>{{ $solicitud->prioridad }}</span>
+                                                                            </td>
+                                                                            <td class="label{{ $solicitud->estado }}"><span>{{ $solicitud->estado }}</span>
+                                                                            </td>
+                                                                            <td class="td-actions justify-content-end">
+                                                                                <a href="#" class=""
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#editarReparacion">
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg "
+                                                                                        width="28" height="28"
+                                                                                        fill="currentColor"
+                                                                                        class="bi bi-pencil accionesIconos"
+                                                                                        viewBox="0 0 16 16">
+                                                                                        <path
+                                                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                                    </svg>
+                                                                                </a>
+                                                                                <form action="">
+
+                                                                                    <button class=" btnSinFondo"
+                                                                                        type="submit" rel="tooltip">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                            width="28" height="28"
+                                                                                            fill="currentColor"
+                                                                                            class="bi bi-x-circle"
+                                                                                            viewBox="0 0 16 16">
+                                                                                            <path
+                                                                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                                            <path
+                                                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                        </svg>
+                                                                                    </button>
+                                                                                </form>
+                                                                            </td>
+                                                                        </tr>
+                                                                        @empty
+                                                                        <tr>
+                                                                            <td colspan="7">
+                                                                                Sin solicitudes registradas
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endforelse
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Mantenimientos-->
+                                        <div class="tab-pane fade" id="mantenimiento-tab-pane" role="tabpanel"
+                                            aria-labelledby="profile-tab" tabindex="0">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="table-responsive">
+                                                                <div class="row border-bottom justify-content-end">
+                                                                    <div class="col-3 mb-3">
+
+                                                                        <button class="btnSinFondocALENDARIO float-end"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#mantenimientoModal">
+                                                                            <img src="img/calendario/tarea.svg"
+                                                                                class="imgBTNcalendario">
+                                                                            Nuevo Mantenimiento
+                                                                        </button>
+
+                                                                    </div>
+                                                                </div>
+                                                                <table class="table">
+                                                                    <thead class="labelTitulo">
+                                                                        <th class="fw-semibold">ID</th>
+                                                                        <th class="fw-semibold">Equipo</th>
+                                                                        <th class="fw-semibold">Último Mantenimiento</th>
+                                                                        <th class="fw-semibold">Próximo Mantenimiento</th>
+                                                                        <th class="fw-semibold">Tipo</th>
+                                                                        {{-- <th class="fw-semibold">Prioridad</th> --}}
+                                                                        <th class="fw-semibold">Estado</th>
+                                                                        <th class="fw-semibold text-right">Acciones</th>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <!--primera linea-->
+                                                                            @forelse ($vctMantenimientos as $mantto )
+                                                                            <tr>
+                                                                                <td>{{ $mantto->maquinariaCodigo }}</td>
+                                                                                <td>{{ $mantto->maquinaria }}</td>
+                                                                                <td>{{ $mantto->fechaInicio }}</td>
+                                                                                <td>{{ $mantto->fechaReal }}</td>
+                                                                                <td>{{ $mantto->tipo }}</td>
+                                                                                {{-- <td class="labelUrgente">Urgente</td> --}}
+                                                                                <td class="label{{ $mantto->estado }}">{{ $mantto->estado }}</td>
+                                                                                <td class="td-actions justify-content-end">
+                                                                                    <a href="#" class=""
+                                                                                        data-bs-toggle="modal"
+                                                                                        data-bs-target="#editarMantenimiento"
+                                                                                        onclick="loadMantenimiento(
+                                                                                            '{{ $mantto->id }}'
+                                                                                            ,'{{ $mantto->titulo }}'
+                                                                                            ,'{{ $mantto->estadoId }}'
+                                                                                            ,'{{ $mantto->comentario }}'
+                                                                                            ,'{{ $mantto->tipo }}'
+                                                                                            // ,'{{ \Carbon\Carbon::parse($mantto->fechaInicio)->format('d/m/Y') }}'
+                                                                                            // ,'{{ \Carbon\Carbon::parse($mantto->fechaFin)->format('d/m/Y') }}'
+                                                                                        )">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg "
+                                                                                            width="28" height="28"
+                                                                                            fill="currentColor"
+                                                                                            class="bi bi-pencil accionesIconos"
+                                                                                            viewBox="0 0 16 16">
+                                                                                            <path
+                                                                                                d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                                        </svg>
+                                                                                    </a>
+                                                                                    <form action="">
+                                                                                        <button class=" btnSinFondo"
+                                                                                            type="submit" rel="tooltip">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                width="28" height="28"
+                                                                                                fill="currentColor"
+                                                                                                class="bi bi-x-circle"
+                                                                                                viewBox="0 0 16 16">
+                                                                                                <path
+                                                                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                                                <path
+                                                                                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                    </form>
+                                                                                </td>
+                                                                            </tr>
+                                                                            @empty
+                                                                            <tr>
+                                                                                <td colspan="7">
+                                                                                    Sin mantenimientos registrados
+                                                                                </td>
+                                                                            </tr>
+                                                                            @endforelse
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -709,10 +553,11 @@ $cadena_fecha_actual = $fecha_actual->format("d/m/Y");
                         </div>
                     </div>
                 </div>
-            </div>    
-        </div>     
-            
-       
+            </div>
+        </div>
+
+
+
 
         <!-- Modal Nueva Tarea-->
         <div class="modal fade" id="nuevaTarea" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1864,7 +1709,43 @@ $cadena_fecha_actual = $fecha_actual->format("d/m/Y");
             </div>
         </div>
 
+        <!-- Modal Ver Evento -->
+        <div class="modal fade" id="verEvento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bacTituloPrincipal">
+                        <img src="img/calendario/tareagris.svg" class="imgBTNcalendario">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp <label id="eventoLblTitulo"></label>
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="row d-flex" action=" " method="post">
+                            @csrf
+                            @method('put')
+                            <input type="hidden" name="eventoId" id="eventoId" value="">
+                            <div class=" col-12 col-sm-12 mb-3 ">
+                                <label class="labelTitulo">Título:</label></br>
+                                <input type="text" class="inputCaja" id="eventoTitulo" name="eventoTitulo" readonly="true"
+                                    value="">
+                            </div>
 
+
+                            <div class=" col-12  mb-3 ">
+                                <label class="labelTitulo">Comentarios:</label></br>
+                                <textarea class="form-control" placeholder="Comentario..." id="eventoComentario" id="eventoComentario" readonly="true"
+                                    name="eventoComentario"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Carga tarea en modal -->
         <script>
             function loadTarea(id, titulo, responsableId, prioridadId , estadoId, comentarios, fechaInicio, fechaFin  ) {
 
@@ -1910,7 +1791,24 @@ $cadena_fecha_actual = $fecha_actual->format("d/m/Y");
                 }
             }
         </script>
+        <!-- Carga evento en modal -->
+    <script>
+        function loadEvento(id, titulo, comentarios  ) {
 
+            const txtId = document.getElementById('eventoId');
+            txtId.value = id;
+
+            const txtTitulo = document.getElementById('eventoTitulo');
+            txtTitulo.value = titulo;
+
+            const lblTitulo = document.getElementById('eventoLblTitulo');
+            lblTitulo.innerText = titulo; 
+
+            const txtComentario = document.getElementById('eventoComentario');
+            txtComentario.innerText = comentarios;
+ 
+        }
+    </script>
 
 <script>
     function loadMantenimiento(id, titulo, estadoId, comentarios, tipoId /*, fechaInicio, fechaFin*/  ) {
@@ -1957,7 +1855,7 @@ $cadena_fecha_actual = $fecha_actual->format("d/m/Y");
     }
 </script>
 
-<script type="application/javascript">
+        <script type="application/javascript">
         jQuery('input[type=file]').change(function(){
          var filename = jQuery(this).val().split('\\').pop();
          var idname = jQuery(this).attr('id');
@@ -1966,73 +1864,5 @@ $cadena_fecha_actual = $fecha_actual->format("d/m/Y");
          console.log(idname);
          jQuery('span.'+idname).next().find('span').html(filename);
         });
-</script>
-
-<!--Scrip para el nuevo calendario-->
-<script type="application/javascript">
-var Calendar = function(t) {
-    this.divId = t.RenderID ? t.RenderID : '[data-render="calendar"]', this.DaysOfWeek = t.DaysOfWeek ? t.DaysOfWeek : ["Dom", "Lun", "Mar", "Mier", "Jue", "Vier", "Sab"], this.Months = t.Months ? t.Months : ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-    var e = new Date;
-    this.CurrentMonth = e.getMonth(), this.CurrentYear = e.getFullYear();
-    var r = t.Format;
-    this.f = "string" == typeof r ? r.charAt(0).toUpperCase() : "M"
-};
-Calendar.prototype.nextMonth = function() {
-    11 == this.CurrentMonth ? (this.CurrentMonth = 0, this.CurrentYear = this.CurrentYear + 1) : this.CurrentMonth = this.CurrentMonth + 1, this.divId = '[data-active="false"] .render', this.showCurrent()
-}, Calendar.prototype.prevMonth = function() {
-    0 == this.CurrentMonth ? (this.CurrentMonth = 11, this.CurrentYear = this.CurrentYear - 1) : this.CurrentMonth = this.CurrentMonth - 1, this.divId = '[data-active="false"] .render', this.showCurrent()
-}, Calendar.prototype.previousYear = function() {
-    this.CurrentYear = this.CurrentYear - 1, this.showCurrent()
-}, Calendar.prototype.nextYear = function() {
-    this.CurrentYear = this.CurrentYear + 1, this.showCurrent()
-}, Calendar.prototype.showCurrent = function() {
-    this.Calendar(this.CurrentYear, this.CurrentMonth)
-}, Calendar.prototype.checkActive = function() {
-    1 == document.querySelector(".months").getAttribute("class").includes("active") ? document.querySelector(".months").setAttribute("class", "months") : document.querySelector(".months").setAttribute("class", "months active"), "true" == document.querySelector(".month-a").getAttribute("data-active") ? (document.querySelector(".month-a").setAttribute("data-active", !1), document.querySelector(".month-b").setAttribute("data-active", !0)) : (document.querySelector(".month-a").setAttribute("data-active", !0), document.querySelector(".month-b").setAttribute("data-active", !1)), setTimeout(function() {
-        document.querySelector(".calendar .header").setAttribute("class", "header active")
-    }, 200), document.querySelector("body").setAttribute("data-theme", this.Months[document.querySelector('[data-active="true"] .render').getAttribute("data-month")].toLowerCase())
-}, Calendar.prototype.Calendar = function(t, e) {
-    "number" == typeof t && (this.CurrentYear = t), "number" == typeof t && (this.CurrentMonth = e);
-    var r = (new Date).getDate(),
-        n = (new Date).getMonth(),
-        a = (new Date).getFullYear(),
-        o = new Date(t, e, 1).getDay(),
-        i = new Date(t, e + 1, 0).getDate(),
-        u = 0 == e ? new Date(t - 1, 11, 0).getDate() : new Date(t, e, 0).getDate(),
-        s = "<span>" + this.Months[e] + " &nbsp; " + t + "</span>",
-        d = '<div class="table">';
-    d += '<div class="row head">';
-    for (var c = 0; c < 7; c++) d += '<div class="cell">' + this.DaysOfWeek[c] + "</div>";
-    d += "</div>";
-    for (var h, l = dm = "M" == this.f ? 1 : 0 == o ? -5 : 2, v = (c = 0, 0); v < 6; v++) {
-        d += '<div class="row">';
-        for (var m = 0; m < 7; m++) {
-            if ((h = c + dm - o) < 1) d += '<div class="cell disable">' + (u - o + l++) + "</div>";
-            else if (h > i) d += '<div class="cell disable">' + l++ + "</div>";
-            else {
-                d += '<div class="cell' + (r == h && this.CurrentMonth == n && this.CurrentYear == a ? " active" : "") + '"><span>' + h + "</span></div>", l = 1
-            }
-            c % 7 == 6 && h >= i && (v = 10), c++
-        }
-        d += "</div>"
-    }
-    d += "</div>", document.querySelector('[data-render="month-year"]').innerHTML = s, document.querySelector(this.divId).innerHTML = d, document.querySelector(this.divId).setAttribute("data-date", this.Months[e] + " - " + t), document.querySelector(this.divId).setAttribute("data-month", e)
-}, window.onload = function() {
-    var t = new Calendar({
-        RenderID: ".render-a",
-        Format: "M"
-    });
-    t.showCurrent(), t.checkActive();
-    var e = document.querySelectorAll(".header [data-action]");
-    for (i = 0; i < e.length; i++) e[i].onclick = function() {
-        if (document.querySelector(".calendar .header").setAttribute("class", "header"), "true" == document.querySelector(".months").getAttribute("data-loading")) return document.querySelector(".calendar .header").setAttribute("class", "header active"), !1;
-        var e;
-        document.querySelector(".months").setAttribute("data-loading", "true"), this.getAttribute("data-action").includes("prev") ? (t.prevMonth(), e = "left") : (t.nextMonth(), e = "right"), t.checkActive(), document.querySelector(".months").setAttribute("data-flow", e), document.querySelector('.month[data-active="true"]').addEventListener("webkitTransitionEnd", function() {
-            document.querySelector(".months").removeAttribute("data-loading")
-        }), document.querySelector('.month[data-active="true"]').addEventListener("transitionend", function() {
-            document.querySelector(".months").removeAttribute("data-loading")
-        })
-    }
-};
-</script>
+        </script>
     @endsection
