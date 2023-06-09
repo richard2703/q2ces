@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'asistencias', 'titlePage' => __('Lista de asistencia')])
+@extends('layouts.main', ['activePage' => 'asistencias', 'titlePage' => __('Lista de Asistencia Mensual Acumulada')])
 <?php
 $objCalendar = new Calendario();
 $mesAnterior = $objCalendar->getMesAnterior($intMes, $intAnio);

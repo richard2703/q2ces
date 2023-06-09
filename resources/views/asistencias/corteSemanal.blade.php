@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'asistencias', 'titlePage' => __('Corte Semanal de Nomina')])
+@extends('layouts.main', ['activePage' => 'asistencias', 'titlePage' => __('Corte Semanal de Nómina')])
 <?php
 $objCalendar = new Calendario();
 

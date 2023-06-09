@@ -177,6 +177,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -234,8 +235,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Validaciones' => App\Helpers\Validaciones::class,
         'Calculos' => App\Helpers\Calculos::class,
-        'Calendario' => App\Helpers\Calendario::class
-
+        'Calendario' => App\Helpers\Calendario::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];
