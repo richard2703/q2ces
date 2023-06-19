@@ -33,6 +33,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
+// Route::get('users/export/', [UserController::class, 'export']);
+Route::get('/usuarios/export', [App\Http\Controllers\UserController::class, 'export'])->name('users.export');
+Route::get('/asistencia/export', [App\Http\Controllers\asistenciaController::class, 'export'])->name('asistencia.export');
+
+
 // Route::get('/altaDeEquipos', function () {
 //     return view('equipos.altaDeEquipos');
 // });
@@ -182,6 +187,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Crud calendario
     Route::get('/calendario', [App\Http\Controllers\calendarioController::class, 'index'])->name('calendario.index');
+    Route::get('/calendario2', [App\Http\Controllers\calendarioController::class, 'index2'])->name('calendario.index2');
     Route::get('/calendario/{anio}/{mes}', [App\Http\Controllers\calendarioController::class, 'reloadCalendario'])->name('calendario.reloadCalendario');
     //Route::put('/coordiseno/detalle/riesgos/{riesgo}/recalcular', [App\Http\Controllers\detalleRiesgoController::class, 'recalcular'])->name('detalleriesgo.recalcular');
 
@@ -206,6 +212,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/asistencia/diaria', [App\Http\Controllers\asistenciaController::class, 'create'])->name('asistencia.create');
     Route::post('/asistencia/diaria', [App\Http\Controllers\asistenciaController::class, 'store'])->name('asistencia.store');
     Route::post('/asistencia/otrodia', [App\Http\Controllers\asistenciaController::class, 'cambioDiaAsistencia'])->name('asistencia.cambioDiaAsistencia');
+    Route::post('/asistencia/otrodiaextras', [App\Http\Controllers\asistenciaController::class, 'cambioDiaExtras'])->name('asistencia.cambioDiaExtras');
     Route::get('/asistencia/horasExtra', [App\Http\Controllers\asistenciaController::class, 'horasExtra'])->name('asistencia.horasExtra');
     Route::post('/asistencia/horasExtra', [App\Http\Controllers\asistenciaController::class, 'HEstore'])->name('asistencia.HEstore');
     Route::get('/asistencia/personal/{personalId}', [App\Http\Controllers\asistenciaController::class, 'show'])->name('asistencia.show');
@@ -223,4 +230,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::put('/asistencia/{personal}', [App\Http\Controllers\personalController::class, 'update'])->name('personal.update');
     // Route::get('asistencia/{id}/{doc}', [App\Http\Controllers\personalController::class, 'download'])->name('personal.download');
     // Route::delete('/asistencia/{personal}', [App\Http\Controllers\UserController::class, 'destroy'])->name('personal.delete');
+
+    // Caja Chica
+    Route::resource('cajachica', App\Http\Controllers\cajachicaController::class);
+    // Conceptos
+    Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
 });

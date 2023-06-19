@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'asistencias', 'titlePage' => __('Lista de asistencia')])
+@extends('layouts.main', ['activePage' => 'asistencias', 'titlePage' => __('Lista de Asistencia Mensual Acumulada')])
 <?php
 $objCalendar = new Calendario();
 $mesAnterior = $objCalendar->getMesAnterior($intMes, $intAnio);
@@ -92,7 +92,7 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
 
                                                 @forelse ($personal as $item)
                                                     <tr>
-                                                        <td>{{ $item->numNomina }}</td>
+                                                        <td style="color: {{ $item->estatusColor }};"><strong>{{ $item->numNomina }}</strong></td>
                                                         <td class="text-left">{{ $item->apellidoP }}
                                                             {{ $item->apellidoM }}, {{ $item->nombres }}</td>
                                                         <td>{{ $item->asistencias }}</td>

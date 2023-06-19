@@ -47,14 +47,14 @@
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Nombre(s):</label></br>
-                                            <input type="text" class="inputCaja" id="nombres" name="nombres"
+                                            <label class="labelTitulo">Nombre(s): <span>*</span></label></br>
+                                            <input type="text" class="inputCaja" id="nombres" name="nombres" required
                                                 value="{{ $personal->nombres }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Apellido Paterno:</label></br>
-                                            <input type="text" class="inputCaja" id="apellidoP" name="apellidoP"
+                                            <label class="labelTitulo">Apellido Paterno: <span>*</span></label></br>
+                                            <input type="text" class="inputCaja" id="apellidoP" name="apellidoP" required
                                                 value="{{ $personal->apellidoP }}">
                                         </div>
 
@@ -306,7 +306,7 @@
                                             </div>  --}}
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                <label class="labelTitulo">Nivel de puesto:</label></br>
+                                                <label class="labelTitulo">Nivel de puesto: <span>*</span></label></br>
                                                 <select id="puestoNivelId" name="puestoNivelId"
                                                     class="form-select" required
                                                     aria-label="Default select example">
@@ -677,7 +677,7 @@
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                    <label class="labelTitulo">Puesto:</label></br>
+                                                    <label class="labelTitulo">Puesto: <span>*</span></label></br>
                                                     {{-- <input type="text" class="inputCaja" id=""
                                                         name="puesto" value="{{ $nomina->puesto }}"> --}}
                                                     <select id="puestoId" name="puestoId" required
@@ -693,8 +693,8 @@
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                    <label class="labelTitulo">Fecha de Ingreso:</label></br>
-                                                    <input type="date" class="inputCaja" id=""
+                                                    <label class="labelTitulo">Fecha de Ingreso: <span>*</span></label></br>
+                                                    <input type="date" class="inputCaja" id="" required
                                                         name="ingreso"
                                                         value="{{ ($nomina->ingreso ? \Carbon\Carbon::parse($nomina->ingreso)->format('Y-m-d'):"") }}">
                                                 </div>
@@ -725,9 +725,9 @@
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                    <label class="labelTitulo">Sueldo Diario:</label></br>
+                                                    <label class="labelTitulo">Sueldo Diario: <span>*</span></label></br>
                                                         <input type="number" maxlength="5" step="0.01"
-                                                        min="00000" max="99999" placeholder="ej. 1000"
+                                                        min="00000" max="99999" placeholder="ej. 1000" required
                                                         class="inputCaja text-right" id="diario"
                                                         name="diario" value="{{ $nomina->diario }}">
                                                 </div>

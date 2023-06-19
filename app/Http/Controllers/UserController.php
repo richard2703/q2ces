@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UserExport;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Role;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -83,5 +85,11 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->back()->with('success', 'Usuario Eliminado correctamente');;
+    }
+
+    public function export()
+    {
+        return Excel::download(new UserExport, 'users.xlsx');
+
     }
 }

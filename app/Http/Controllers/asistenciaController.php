@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CorteSemanalExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 use App\Models\asistencia;
 use App\Models\personal;
@@ -40,6 +42,8 @@ class asistenciaController extends Controller {
             DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
             DB::raw( 'puestoNivel.nombre AS puesto' ),
             DB::raw( 'nomina.nomina AS numNomina' ),
+            DB::raw( 'userEstatus.nombre AS estatus' ),
+            DB::raw( 'userEstatus.color AS estatusColor' ),
             DB::raw( 'COUNT( if ( asistencia.asistenciaId = 1, 1, null ) ) as asistencias' ),
             DB::raw( 'COUNT( if ( asistencia.asistenciaId = 2, 1, null ) ) as faltas' ),
             DB::raw( 'COUNT( if ( asistencia.asistenciaId = 3, 1, null ) ) as incapacidades' ),
@@ -51,6 +55,7 @@ class asistenciaController extends Controller {
         ->join( 'puestoNivel', 'puestoNivel.id', '=', 'personal.puestoNivelId' )
         ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
         ->join( 'asistencia', 'asistencia.personalId', '=', 'personal.id' )
+        ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
         ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
         ->whereBetween( 'asistencia.fecha',   [ $dteMesInicio, $dteMesFin ] )
         ->groupBy( 'asistencia.personalId' )
@@ -80,6 +85,24 @@ class asistenciaController extends Controller {
 
     }
 
+    public function cambioDiaExtras( Request $request ) {
+
+        $data = request()->all();
+        if ( $data[ 'fechaAsistencia' ] != '' ) {
+            $dtFecha = date_create(date('Y-m-d', strtotime($data[ 'fechaAsistencia' ])));
+            return redirect()->action( [ asistenciaController::class, 'horasExtra' ], [ 'intAnio'=>$dtFecha->format('Y'), 'intMes'=>$dtFecha->format('m'), 'intDia'=>$dtFecha->format('d') ] );
+        }
+
+    }
+
+    /**
+     * Carga del personal para asistencia diaria
+     *
+     * @param [type] $intAnio
+     * @param [type] $intMes
+     * @param [type] $intDia
+     * @return void
+     */
     public function create( $intAnio = null, $intMes = null, $intDia = null ) {
 
         $objCalendario = new Calendario();
@@ -99,10 +122,15 @@ class asistenciaController extends Controller {
 
         $usuario = personal::where( 'userId', auth()->user()->id )->first();
         $personal = personal::select( 'personal.*',
-        DB::raw( 'puestoNivel.nombre AS puesto' ) )
+        DB::raw( 'puestoNivel.nombre AS puesto' ),
+        DB::raw( 'userEstatus.nombre AS estatus' ),
+        DB::raw( 'userEstatus.color AS estatusColor' ),
+         )
         ->join( 'puestoNivel', 'puestoNivel.id', '=', 'personal.puestoNivelId' )
         ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
+        ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
         ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
+        ->where( 'userEstatus.id', '=', '1' )
         ->where( 'nomina.ingreso', '<=', $strDate )
         ->orderBy( 'personal.apellidoP', 'asc' )->get();
 
@@ -147,6 +175,12 @@ class asistenciaController extends Controller {
 
     }
 
+    /**
+    * Registra las horas extras del día
+    *
+    * @param Request $request
+    * @return void
+    */
     public function horasExtra() {
 
         $objCalendario = new Calendario();
@@ -170,13 +204,17 @@ class asistenciaController extends Controller {
             'personal.id', 'personal.nombres', 'personal.apellidoP', 'personal.apellidoM',
             DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
             DB::raw( 'puestoNivel.nombre AS puesto' ),
-            DB::raw( 'asistencia.id AS asistenciaId' ), 'asistencia.horasExtra', 'asistencia.tipoHoraExtraId'
+            DB::raw( 'asistencia.id AS asistenciaId' ), 'asistencia.horasExtra', 'asistencia.tipoHoraExtraId',
+            DB::raw( 'userEstatus.nombre AS estatus' ),
+            DB::raw( 'userEstatus.color AS estatusColor' ),
         )
         ->join( 'puestoNivel', 'puestoNivel.id', '=', 'personal.puestoNivelId' )
         ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
         ->join( 'asistencia', 'asistencia.personalId', '=', 'personal.id' )
+        ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
         ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
         ->where( 'asistencia.asistenciaId', '=', '1' )
+        ->where( 'userEstatus.id', '=', '1' )
         ->where( 'asistencia.fecha', '=', $strDate )
         ->orderBy( 'personal.apellidoP', 'asc' )->get();
 
@@ -310,16 +348,19 @@ class asistenciaController extends Controller {
             DB::raw( 'nomina.nomina AS numeroNomina' ),
             DB::raw( 'tipoasistencia.color AS tipoAsistenciaColor' ),
             DB::raw( 'tipoasistencia.esAsistencia AS esAsistencia' ),
-            DB::raw( 'tipohoraextra.color AS horaExtraColor' ),
-            DB::raw( 'tipohoraextra.valor AS horaExtraCosto' ),
+            DB::raw( 'tipoHoraExtra.color AS horaExtraColor' ),
+            DB::raw( 'tipoHoraExtra.valor AS horaExtraCosto' ),
+            DB::raw( 'userEstatus.nombre AS estatus' ),
+            DB::raw( 'userEstatus.color AS estatusColor' ),
         )
         ->join( 'puestoNivel', 'puestoNivel.id', '=', 'personal.puestoNivelId' )
         ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
         ->join( 'asistencia', 'asistencia.personalId', '=', 'personal.id' )
         ->join( 'tipoasistencia', 'tipoasistencia.id', '=', 'asistencia.asistenciaId' )
-        ->join( 'tipohoraextra', 'tipohoraextra.id', '=', 'asistencia.tipohoraextraId' )
+        ->join( 'tipoHoraExtra', 'tipoHoraExtra.id', '=', 'asistencia.tipoHoraExtraId' )
+        ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
         ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
-        // ->where( 'asistencia.personalId', '=', 24 )
+        // ->where( 'asistencia.personalId', '=', 23 )
         ->whereBetween( 'asistencia.fecha',   [ $strFechaInioPeriodo, $strFechaFinPeriodo ] )
         ->orderBy( 'personal.apellidoP', 'asc' )
         ->orderBy( 'asistencia.personalId', 'asc' )
@@ -353,6 +394,8 @@ class asistenciaController extends Controller {
                 $objDia->empleado = $item->personal;
                 $objDia->puesto = $item->puesto;
                 $objDia->sueldo = $item->sueldo;
+                $objDia->estatus = $item->estatus;
+                $objDia->estatusColor = $item->estatusColor;
 
                 $objPagos = new stdClass;
                 $objPagos->fecha = $item->fecha;
@@ -412,6 +455,8 @@ class asistenciaController extends Controller {
                 $objDia->empleado = $item->personal;
                 $objDia->puesto = $item->puesto;
                 $objDia->sueldo = $item->sueldo;
+                $objDia->estatus = $item->estatus;
+                $objDia->estatusColor = $item->estatusColor;
 
                 $objPagos = new stdClass;
                 $objPagos->fecha = $item->fecha;
@@ -492,5 +537,11 @@ class asistenciaController extends Controller {
 
     public function destroy( $id ) {
         //
+    }
+
+    public function export()
+    {
+        return Excel::download(new CorteSemanalExport, 'corteSemanal.xlsx');
+
     }
 }
