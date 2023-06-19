@@ -230,4 +230,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::put('/asistencia/{personal}', [App\Http\Controllers\personalController::class, 'update'])->name('personal.update');
     // Route::get('asistencia/{id}/{doc}', [App\Http\Controllers\personalController::class, 'download'])->name('personal.download');
     // Route::delete('/asistencia/{personal}', [App\Http\Controllers\UserController::class, 'destroy'])->name('personal.delete');
+
+    // Caja Chica
+    Route::resource('cajachica', App\Http\Controllers\cajachicaController::class);
+    // Conceptos
+    Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
 });
