@@ -1,0 +1,27 @@
+:root
+{
+	--verdesider: #8EB322;
+}
+
+.tablaCenter{
+	text-align: center;
+}
+
+.negritas{
+	font-weight: bold;
+}
+
+.green {
+	color: green;
+	font-weight: bold;
+  }
+  
+  .red {
+	font-weight: bold;
+	color: red;
+  }
+  
+  .blue {
+	font-weight: bold;
+	color: blue;
+  }

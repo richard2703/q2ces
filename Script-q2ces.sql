@@ -1047,26 +1047,35 @@ create table gastosmantenimiento(
     CONSTRAINT FK_gastosmantenimiento_personalId foreign key (bmantenimientoId) references bmantenimiento(id),
     CONSTRAINT FK_gastosmantenimiento_producto foreign key (inventarioId) references inventario(id)
 );
+create table conceptos(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    codigo varchar(200) not null,
+    nombre varchar(200) not null,   
+    comentario text null,
+    primary key (id)
+);
 
 create table cajachica(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    dia int not null,
-    concepto float(10,2) null,
+    dia date not null,
+    concepto bigint(20) unsigned NOT null,
     comprobante float(10,2) null,
     ncomprobante int not null,
-    cliente varchar(200)L,
-    obra bigint(20) unsigned NOT NULL
-    equipo bigint(20) unsigned NOT NULL
-    personal bigint(20) unsigned NOT NULL
+    cliente varchar(200),
+    obra bigint(20) unsigned NOT null,
+    equipo bigint(20) unsigned NOT null,
+    personal bigint(20) unsigned NOT null,
     tipo varchar(200) null,
     cantidad int not null,
+    total float(10, 2) null,
     comentario text null,
     created_at datetime NULL,
     updated_at datetime NULL,
     primary key (id),
-    CONSTRAINT FK_cajachica_obra foreign key (obras) references obras(id),
-    CONSTRAINT FK_cajachica_equipo key (equipo) references maquinaria(id),
-    CONSTRAINT FK_cajachica_personal key (personal) references personal(id)
+    CONSTRAINT FK_cajachica_concepto foreign key (concepto) references conceptos(id),
+    CONSTRAINT FK_cajachica_obra foreign key (obra) references obras(id),
+    CONSTRAINT FK_cajachica_equipo foreign key (equipo) references maquinaria(id),
+    CONSTRAINT FK_cajachica_personal foreign key (personal) references personal(id)
 );
 
 create table tareas(

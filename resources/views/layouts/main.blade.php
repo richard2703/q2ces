@@ -35,6 +35,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/general.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/menuDerecho.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/equipos.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/sider.css') }}">
+
 
 
 

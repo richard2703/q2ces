@@ -7,7 +7,7 @@
     </div>
 
     <div class="sidebar-wrapper menu">
-        <ul class="nav">
+        <ul class="nav sidebar-nav">
 
             <!-- Calendario -->
             <li class="nav-item {{ $activePage == 'inventario' || $activePage == 'user-management' ? ' active' : '' }}">
@@ -204,44 +204,57 @@
                 </div>
             </li>
             <!------ FORMATOS ------>
-            <li class="nav-item {{ $activePage == 'formatos' || $activePage == 'user-management' ? ' active' : '' }}">
-                <a class="nav-link p-2" onmouseover="cambiar6();" onmouseout="volver6();" data-toggle="collapse"
-                    href="#formatoss" aria-expanded="false">
-                    <i><img id="cambiaBCO6"
-                            src="{{ $activePage == 'formatos' ? '/img/navs/formatosmenubco.svg' : '/img/navs/formatosmenu.svg' }}"
-                            style="width:25px"></i>
-                    <p>{{ __('Formatos') }}
-                        <b class="caret"></b>
-                    </p>
+            @can('permmisp')
+                <li class="nav-item {{ $activePage == 'formatos' || $activePage == 'user-management' ? ' active' : '' }}">
+                    <a class="nav-link p-2" onmouseover="cambiar6();" onmouseout="volver6();" data-toggle="collapse"
+                        href="#formatoss" aria-expanded="false">
+                        <i><img id="cambiaBCO6"
+                                src="{{ $activePage == 'formatos' ? '/img/navs/formatosmenubco.svg' : '/img/navs/formatosmenu.svg' }}"
+                                style="width:25px"></i>
+                        <p>{{ __('Formatos') }}
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse " id="formatos">
+                        <ul class="nav">
+                            <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                                <a class="nav-link py-2 ps-5" href="#">
+                                    <span class="sidebar-normal">{{ __('Obra') }} </span>
+                                </a>
+                            </li>
+
+                            <!--no colapsable>-->
+                            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                                <a class="nav-link py-2 ps-5" href="#">
+                                    <span class="sidebar-normal"> {{ __('Ver Obra') }} </span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                                <a class="nav-link py-2 ps-5" href="#">
+                                    <span class="sidebar-normal "> {{ __('Alta de Obra') }} </span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                                <a class="nav-link py-2 ps-5" href="#">
+                                    <span class="sidebar-normal py-2 ps-5"> {{ __('Asignación de Obra') }} </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endcan
+
+            <!------ Caja Chica ------>
+            <li
+                class="nav-item {{ $activePage == 'cajachica' || $activePage == 'user-management' ? ' active' : '' }}">
+                <a class="nav-link" href="{{ route('cajachica.index') }}">
+                    <i><img id="cambiaBCO3" style="width:25px"
+                            src="{{ $activePage == 'inventario' ? '/img/navs/inventariomenubco.svg' : '/img/navs/inventariomenu.svg' }}"></i>
+                    <p> {{ __('Caja chica') }} </p>
+                    {{--  <b class="caret"></b>  --}}
                 </a>
-                <div class="collapse " id="formatos">
-                    <ul class="nav">
-                        <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                            <a class="nav-link py-2 ps-5" href="#">
-                                <span class="sidebar-normal">{{ __('Obra') }} </span>
-                            </a>
-                        </li>
-
-                        <!--no colapsable>-->
-                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                            <a class="nav-link py-2 ps-5" href="#">
-                                <span class="sidebar-normal"> {{ __('Ver Obra') }} </span>
-                            </a>
-                        </li>
-
-                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                            <a class="nav-link py-2 ps-5" href="#">
-                                <span class="sidebar-normal "> {{ __('Alta de Obra') }} </span>
-                            </a>
-                        </li>
-
-                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                            <a class="nav-link py-2 ps-5" href="#">
-                                <span class="sidebar-normal py-2 ps-5"> {{ __('Asignación de Obra') }} </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
             </li>
 
         </ul>
