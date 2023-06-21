@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\reparaciones;
 use App\Helpers\Validaciones;
 use App\Helpers\Calculos;
+use Illuminate\Support\Facades\Gate;
 
 class reparacionesController extends Controller
 {
@@ -40,27 +41,29 @@ class reparacionesController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(Gate::denies('puest_create'), 403);
+
         // dd( 'Todas las tareas...' );
-        
-        $request->validate( [
+
+        $request->validate([
             'nombre' => 'required|max:200',
             'codigo' => 'required|max:8',
-            'comentario' => 'nullable|max:500', 
+            'comentario' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
             'codigo.required' => 'El campo nombre es obligatorio.',
             'codigo.max' => 'El campo nombre excede el límite de caracteres permitidos.',
-            'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.', 
-        ] );
+            'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+        ]);
         $reparacion = $request->all();
 
         // dd( $tarea );
 
-        reparaciones::create( $reparacion );
-        Session::flash( 'message', 1 );
+        reparaciones::create($reparacion);
+        Session::flash('message', 1);
 
-        return redirect()->route( 'calendario.index' );
+        return redirect()->route('calendario.index');
     }
 
     /**

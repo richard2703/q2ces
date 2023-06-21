@@ -11,6 +11,7 @@ use App\Models\solicitudeslistas;
 use App\Models\inventario;
 use App\Helpers\Validaciones;
 use App\Helpers\Calculos;
+use Illuminate\Support\Facades\Gate;
 
 class solicitudesController extends Controller
 {
@@ -42,8 +43,10 @@ class solicitudesController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(Gate::denies('calendario_index'), 403);
+
         // dd($request);
-        $request->validate( [
+        $request->validate([
             'titulo' => 'required|max:250',
             'responsable' => 'required',
             'maquinariaId' => 'required',
@@ -63,47 +66,47 @@ class solicitudesController extends Controller
             'funcionalidadId.required' => 'El campo funcionalidad es obligatorio.',
             'servicioId.required' => 'El campo servicio de reparación es obligatorio.',
             'comentarios.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
-        ] );
+        ]);
         $solicitud = $request->all();
 
         // dd( $tarea );
-        $solicitud = solicitudes::create( $solicitud );
+        $solicitud = solicitudes::create($solicitud);
 
         //*** validamos si agregamos herramientas */
-        if($request['herramientaId']!="" && (int)$request['herramientaCantidad']>0){
-                $refaccion = new solicitudeslistas();
-                $refaccion->inventarioId = $request['herramientaId'];
-                $refaccion->solicitudId = $solicitud->id;
-                $refaccion->cantidad = $request['herramientaCantidad'];
-                $refaccion->save();
+        if ($request['herramientaId'] != "" && (int)$request['herramientaCantidad'] > 0) {
+            $refaccion = new solicitudeslistas();
+            $refaccion->inventarioId = $request['herramientaId'];
+            $refaccion->solicitudId = $solicitud->id;
+            $refaccion->cantidad = $request['herramientaCantidad'];
+            $refaccion->save();
         }
         //*** validamos si agregamos refacciones */
-        if($request['refaccionId']!="" && (int)$request['refaccionCantidad']>0){
-                $refaccion = new solicitudeslistas();
-                $refaccion->inventarioId = $request['refaccionId'];
-                $refaccion->solicitudId = $solicitud->id;
-                $refaccion->cantidad = $request['refaccionCantidad'];
-                $refaccion->save();
+        if ($request['refaccionId'] != "" && (int)$request['refaccionCantidad'] > 0) {
+            $refaccion = new solicitudeslistas();
+            $refaccion->inventarioId = $request['refaccionId'];
+            $refaccion->solicitudId = $solicitud->id;
+            $refaccion->cantidad = $request['refaccionCantidad'];
+            $refaccion->save();
         }
         //*** validamos si agregamos consumibles */
-        if($request['consumibleId']!="" && (int)$request['consumibleCantidad']>0){
-                $refaccion = new solicitudeslistas();
-                $refaccion->inventarioId = $request['consumibleId'];
-                $refaccion->solicitudId = $solicitud->id;
-                $refaccion->cantidad = $request['consumibleCantidad'];
-                $refaccion->save();
+        if ($request['consumibleId'] != "" && (int)$request['consumibleCantidad'] > 0) {
+            $refaccion = new solicitudeslistas();
+            $refaccion->inventarioId = $request['consumibleId'];
+            $refaccion->solicitudId = $solicitud->id;
+            $refaccion->cantidad = $request['consumibleCantidad'];
+            $refaccion->save();
         }
         //*** validamos si agregamos combustible */
-        if($request['combustibleId']!="" && (int)$request['combustibleCantidad']>0){
-                $refaccion = new solicitudeslistas();
-                $refaccion->inventarioId = $request['combustibleId'];
-                $refaccion->solicitudId = $solicitud->id;
-                $refaccion->cantidad = $request['combustibleCantidad'];
-                $refaccion->save();
+        if ($request['combustibleId'] != "" && (int)$request['combustibleCantidad'] > 0) {
+            $refaccion = new solicitudeslistas();
+            $refaccion->inventarioId = $request['combustibleId'];
+            $refaccion->solicitudId = $solicitud->id;
+            $refaccion->cantidad = $request['combustibleCantidad'];
+            $refaccion->save();
         }
 
-        Session::flash( 'message', 1 );
-        return redirect()->route( 'calendario.index' );
+        Session::flash('message', 1);
+        return redirect()->route('calendario.index');
     }
 
     /**

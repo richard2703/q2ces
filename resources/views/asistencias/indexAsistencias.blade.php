@@ -64,17 +64,26 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                             </a>
                                         </span>
                                         <div class="col-4 text-left">
-                                            <a href="{{ route('asistencia.corteSemanal') }}">
-                                                <button type="button" class="btn botonGral">Corte Semanal</button>
-                                            </a>
+                                            @can('asistencia_cortesemanal')
+                                                <a href="{{ route('asistencia.corteSemanal') }}">
+                                                    <button type="button" class="btn botonGral">Corte Semanal</button>
+                                                </a>
+                                            @endcan
                                         </div>
+
                                         <div class="col-8 text-right">
-                                            <a href="{{ route('asistencia.horasExtra') }}">
-                                                <button type="button" class="btn botonGral">Horas Extra</button>
-                                            </a>
-                                            <a href="{{ route('asistencia.create') }}">
-                                                <button type="button" class="btn botonGral">Asistencia</button>
-                                            </a>
+                                            @can('asistencia_horasextra')
+                                                <a href="{{ route('asistencia.horasExtra') }}">
+                                                    <button type="button" class="btn botonGral">Horas Extra</button>
+                                                </a>
+                                            @endcan
+                                            @can('asistencia_create')
+                                                <a href="{{ route('asistencia.create') }}">
+                                                    <button type="button" class="btn botonGral">Asistencia</button>
+                                                </a>
+                                            @endcan
+
+
                                         </div>
                                     </div>
                                     <div class="table-responsive">
@@ -92,7 +101,9 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
 
                                                 @forelse ($personal as $item)
                                                     <tr>
-                                                        <td style="color: {{ $item->estatusColor }};"><strong>{{ $item->numNomina }}</strong></td>
+                                                        <td style="color: {{ $item->estatusColor }};">
+                                                            <strong>{{ $item->numNomina }}</strong>
+                                                        </td>
                                                         <td class="text-left">{{ $item->apellidoP }}
                                                             {{ $item->apellidoM }}, {{ $item->nombres }}</td>
                                                         <td>{{ $item->asistencias }}</td>
@@ -101,18 +112,19 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                                         </td>
                                                         <td>{{ $item->extras }}</td>
                                                         <td class="td-actions">
-                                                            {{-- @can('user_show') --}}
-                                                            <a href="{{ route('asistencia.show', $item->id) }}"
-                                                                class="">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="28"
-                                                                    height="28" fill="currentColor"
-                                                                    class="bi bi-card-text accionesIconos"
-                                                                    viewBox="0 0 16 16">
-                                                                    <path
-                                                                        d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                                                                    <path
-                                                                        d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
-                                                                </svg> </a>
+                                                            @can('asistencia_show')
+                                                                <a href="{{ route('asistencia.show', $item->id) }}"
+                                                                    class="">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28"
+                                                                        height="28" fill="currentColor"
+                                                                        class="bi bi-card-text accionesIconos"
+                                                                        viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                                                        <path
+                                                                            d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
+                                                                    </svg> </a>
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                 @empty

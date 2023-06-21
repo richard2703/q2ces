@@ -24,14 +24,13 @@
                                     @endif
                                     <div class="row justify-content-end">
                                         <div class="col-12 text-end mb-5">
-                                            {{-- @can('user_create') --}}
-                                            <a href="{{ route('inventario.create') }}">
-                                                <button type="button" class="botonSinFondo "><img
-                                                        style="width: 30px;"src="{{ '/img/inventario/nuevo.svg' }}"></button>
-                                            </a>
-                                            <p>Nuevo</p>
-
-                                            {{-- @endcan --}}
+                                            @can('inventario_create')
+                                                <a href="{{ route('inventario.create') }}">
+                                                    <button type="button" class="botonSinFondo "><img
+                                                            style="width: 30px;"src="{{ '/img/inventario/nuevo.svg' }}"></button>
+                                                </a>
+                                                <p>Nuevo</p>
+                                            @endcan
                                         </div>
                                     </div>
 
@@ -50,45 +49,43 @@
                                                 <tr class=" border-top border-bottom">
                                                     <td scope="row"><img class="my-4 " style="width: 100px;"
                                                             {{-- src="{{ '/img/general/defaultinventario.jpg' }}"> --}}
-                                                            src="{{ ($inventario->imagen == '' ? '/img/general/default.jpg' : '/storage/inventario/' . $inventario->tipo . '/' . $inventario->imagen) }}">
+                                                            src="{{ $inventario->imagen == '' ? '/img/general/default.jpg' : '/storage/inventario/' . $inventario->tipo . '/' . $inventario->imagen }}">
                                                     </td>
                                                     <td>{{ $inventario->nombre }}</td>
                                                     <td>{{ $inventario->cantidad }}</td>
                                                     <td>{{ $inventario->maximo }}</td>
                                                     <td class="td-actions justify-content-end d-flex">
-                                                        {{-- @can('user_show') --}}
-                                                        <div>
-                                                            <button type="button"
-                                                                class="botonSinFondo mx-2"title="Resurtir"
-                                                                data-bs-toggle="modal" data-bs-target="#modal-cliente"
-                                                                onclick="cargar('{{ $inventario->nombre }}','{{ $inventario->imagen }}','{{ $inventario->tipo }}','{{ $inventario->id }}')">
-                                                                <img
-                                                                    style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}"></button>
-                                                            <p class="botonTitulos mt-2">Resurtir</p>
-                                                        </div>
-
-                                                        {{-- @endcan --}}
-                                                        {{-- @can('user_edit') --}}
-                                                        <div>
-                                                            <a href="{{ route('inventario.show', $inventario->id) }}"
+                                                        @can('inventario_restock')
+                                                            <div>
                                                                 <button type="button"
-                                                                class="botonSinFondo mx-2"title="Detalle"><img
-                                                                    style="width: 30px;"src="{{ '/img/inventario/detalle.svg' }}">
-                                                                </button>
-                                                                <p class="botonTitulos mt-2">Detalle</p>
-                                                        </div>
-                                                        {{-- @endcan --}}
-                                                        {{-- @endcan --}}
-                                                        {{-- @can('user_destroy') --}}
-                                                        <form action="#" method="POST" style="display: inline-block;"
-                                                            onsubmit="return confirm('Seguro?')">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <!--<button class="btn btn-danger" type="submit" rel="tooltip">
-                                                                                                                    <i class="material-icons">close</i>
-                                                                                                                </button>-->
-                                                        </form>
-                                                        {{-- @endcan --}}
+                                                                    class="botonSinFondo mx-2"title="Resurtir"
+                                                                    data-bs-toggle="modal" data-bs-target="#modal-cliente"
+                                                                    onclick="cargar('{{ $inventario->nombre }}','{{ $inventario->imagen }}','{{ $inventario->tipo }}','{{ $inventario->id }}')">
+                                                                    <img
+                                                                        style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}"></button>
+                                                                <p class="botonTitulos mt-2">Resurtir</p>
+                                                            </div>
+                                                        @endcan
+                                                        @can('inventario_edit')
+                                                            <div>
+                                                                <a href="{{ route('inventario.show', $inventario->id) }}"
+                                                                    <button type="button"
+                                                                    class="botonSinFondo mx-2"title="Detalle"><img
+                                                                        style="width: 30px;"src="{{ '/img/inventario/detalle.svg' }}">
+                                                                    </button>
+                                                                    <p class="botonTitulos mt-2">Detalle</p>
+                                                            </div>
+                                                        @endcan
+                                                        @can('inventario_destroy')
+                                                            <form action="#" method="POST" style="display: inline-block;"
+                                                                onsubmit="return confirm('Seguro?')">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <!--<button class="btn btn-danger" type="submit" rel="tooltip">
+                                                                                                                                            <i class="material-icons">close</i>
+                                                                                                                                        </button>-->
+                                                            </form>
+                                                        @endcan
                                                     </td>
 
 
@@ -148,8 +145,8 @@
                                     </div>
                                     <div class="col-12 col-lg-6">
                                         <label class="labelTitulo" for="">Cantidad:</label></br>
-                                        <input class="inputCaja" type="number" step="0.01" min="0.01" id="cantidad"
-                                            name="cantidad" value="" required></br>
+                                        <input class="inputCaja" type="number" step="0.01" min="0.01"
+                                            id="cantidad" name="cantidad" value="" required></br>
                                     </div>
                                     <div class="col-12 col-lg-6">
                                         <label class="labelTitulo" for="">Costo unitario:</label></br>
@@ -215,7 +212,7 @@
         function cargar(nombre, img, tipo, id) {
 
             const imagen = document.getElementById('imagenM');
-            imagen.src = '/storage/inventario/' + tipo + '/'+ img;
+            imagen.src = '/storage/inventario/' + tipo + '/' + img;
             const p = document.getElementById('nombreM');
             p.innerText = nombre;
             const productoid = document.getElementById('productoid');
