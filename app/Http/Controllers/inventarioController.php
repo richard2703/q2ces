@@ -16,12 +16,14 @@ use App\Helpers\Validaciones;
 use App\Helpers\Calculos;
 use App\Models\maquinaria;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Gate;
 
 class inventarioController extends Controller
 {
     public function dash()
     {
+        abort_if(Gate::denies('inventario_index'), 403);
+
         return view('inventario.dashInventario');
     }
 
@@ -32,6 +34,7 @@ class inventarioController extends Controller
      */
     public function index($tipo)
     {
+        abort_if(Gate::denies('inventario_index'), 403);
         if ($tipo == 'combustible') {
 
             $despachador = personal::where("userId", auth()->user()->id)->get();
@@ -118,7 +121,7 @@ class inventarioController extends Controller
             return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas', 'gasolinas', 'suma', 'dia', 'despachadores', 'cargas', 'descargas'));
         } else {
             $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(5);
-            return view('inventario.indexInventario', compact('inventarios','tipo'));
+            return view('inventario.indexInventario', compact('inventarios', 'tipo'));
         }
     }
 
@@ -129,6 +132,8 @@ class inventarioController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('inventario_create'), 403);
+
         return view('inventario.inventarioNuevo');
     }
 
@@ -140,6 +145,8 @@ class inventarioController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(Gate::denies('inventario_create'), 403);
+
         $request->validate([
             'nombre' => 'required|max:250',
             'marca' => 'nullable|max:250',
@@ -166,7 +173,7 @@ class inventarioController extends Controller
 
         if ($request->hasFile("imagen")) {
             $producto['imagen'] = time() . '_' . 'imagen.' . $request->file('imagen')->getClientOriginalExtension();
-            $request->file('imagen')->storeAs('/public/inventario/'. $producto['tipo'], $producto['imagen']);
+            $request->file('imagen')->storeAs('/public/inventario/' . $producto['tipo'], $producto['imagen']);
         }
 
         inventario::create($producto);
@@ -183,6 +190,8 @@ class inventarioController extends Controller
      */
     public function show(inventario $inventario)
     {
+        abort_if(Gate::denies('inventario_show'), 403);
+
         $vctDesde = maquinaria::all();
         $vctHasta = maquinaria::all();
         // dd($vctDesde);
@@ -198,6 +207,8 @@ class inventarioController extends Controller
      */
     public function edit(inventario $inventario)
     {
+        abort_if(Gate::denies('inventario_edit'), 403);
+
         $inventario = inventario::where("id", $inventario->id)->first();
         // dd($inventario);
         return view('inventario.detalleInventario', compact('inventario'));
@@ -212,6 +223,7 @@ class inventarioController extends Controller
      */
     public function update(Request $request, inventario $inventario)
     {
+        abort_if(Gate::denies('inventario_edit'), 403);
         // dd($request);
 
         $request->validate([
@@ -251,7 +263,7 @@ class inventarioController extends Controller
 
         if ($request->hasFile("imagen")) {
             $data['imagen'] = time() . '_' . 'imagen.' . $request->file('imagen')->getClientOriginalExtension();
-            $request->file('imagen')->storeAs('/public/inventario/'. $data['tipo'], $data['imagen']);
+            $request->file('imagen')->storeAs('/public/inventario/' . $data['tipo'], $data['imagen']);
         }
 
         $inventario->update($data);
@@ -269,6 +281,8 @@ class inventarioController extends Controller
      */
     public function destroy(inventario $inventario)
     {
+        abort_if(Gate::denies('inventario_destroy'), 403);
+
         return redirect()->back()->with('failed', 'No se puede eliminar');
     }
 
@@ -280,6 +294,7 @@ class inventarioController extends Controller
      */
     public function restock(Request $request)
     {
+        abort_if(Gate::denies('inventario_restock'), 403);
         // dd($request);
         $restock = $request->only(
             'productoid',
@@ -312,6 +327,7 @@ class inventarioController extends Controller
      */
     public function mover(Request $request)
     {
+        abort_if(Gate::denies('inventario_mover'), 403);
         $invconsu = $request->only(
             'productoId',
             'cantidad',
@@ -349,6 +365,7 @@ class inventarioController extends Controller
      */
     public function dashCombustible(Request $request)
     {
+        abort_if(Gate::denies('combustible_index'), 403);
         // return "hola";
         $date = Carbon::now();
         $endDate = $date->subMonth();
@@ -377,6 +394,8 @@ class inventarioController extends Controller
      */
     public function cargaCombustible(Request $request)
     {
+        abort_if(Gate::denies('combustible_create'), 403);
+
         $request->validate([
             'litros' => 'required|numeric',
             'precio' => 'required|numeric|max:30|min:10',
@@ -416,6 +435,8 @@ class inventarioController extends Controller
      */
     public function descargaCombustible(Request $request)
     {
+        abort_if(Gate::denies('combustible_create'), 403);
+
         $blnHayImagen = false;
         $request->validate([
             'litros' => 'required|numeric',
@@ -474,6 +495,8 @@ class inventarioController extends Controller
 
     public function updateCarga(Request $request)
     {
+        abort_if(Gate::denies('combustible_edit'), 403);
+
         $objCalculo = new Calculos();
 
         $request->validate([
@@ -519,6 +542,7 @@ class inventarioController extends Controller
 
     public function updateDescarga(Request $request)
     {
+        abort_if(Gate::denies('combustible_edit'), 403);
 
         // dd($request);
 
@@ -593,6 +617,8 @@ class inventarioController extends Controller
 
     public function deleteCarga($cargaId)
     {
+        abort_if(Gate::denies('combustible_destroy'), 403);
+
         $objCalculo = new Calculos();
         //*** obtenemos el registro */
         $carga = carga::select("*")->where('id', '=', $cargaId)->first();
@@ -618,6 +644,8 @@ class inventarioController extends Controller
 
     public function deleteDescarga($descargaId)
     {
+        abort_if(Gate::denies('combustible_destroy'), 403);
+
         $objCalculo = new Calculos();
         //*** obtenemos el registro */
         $descarga = descarga::select("*")->where('id', '=', $descargaId)->first();
