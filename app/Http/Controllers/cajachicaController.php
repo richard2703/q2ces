@@ -21,7 +21,7 @@ class cajachicaController extends Controller
      */
     public function index()
     {
-        // abort_if(Gate::denies('cajachica_index'), 403);
+        abort_if(Gate::denies('cajachica_index'), 403);
 
         // $registros = cajaChica::get();
         $registros = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
@@ -65,6 +65,8 @@ class cajachicaController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('cajachica_create'), 403);
+
         $conceptos = conceptos::get();
         $personal = personal::get();
         $obras = obras::get();
@@ -81,6 +83,8 @@ class cajachicaController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(Gate::denies('cajachica_create'), 403);
+
         $last = cajaChica::orderby('dia', 'desc')->orderby('id', 'desc')->first();
 
 
@@ -108,7 +112,7 @@ class cajachicaController extends Controller
      */
     public function show(cajachica $cajachica)
     {
-        //
+        abort_if(Gate::denies('cajachica_show'), 403);
     }
 
     /**
@@ -119,6 +123,8 @@ class cajachicaController extends Controller
      */
     public function edit(cajachica $cajachica)
     {
+        abort_if(Gate::denies('cajachica_edit'), 403);
+
         // dd($cajachica);
 
         $conceptos = conceptos::get();
@@ -139,6 +145,8 @@ class cajachicaController extends Controller
      */
     public function update(Request $request, cajachica $cajachica)
     {
+        abort_if(Gate::denies('cajachica_edit'), 403);
+
         $cajachica->update($request->only('dia', 'concepto', 'comprobante', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario', 'total'));
         Session::flash('message', 1);
         return redirect()->action([cajachicaController::class, 'index']);
@@ -153,6 +161,8 @@ class cajachicaController extends Controller
      */
     public function destroy(cajachica $cajachica)
     {
+        abort_if(Gate::denies('cajachica_destroy'), 403);
+
         dd("destroy");
     }
 }

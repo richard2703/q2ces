@@ -7,35 +7,43 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row d-flex ">
-                                <div class="col-12 col-md-6 text-center my-4">
-                                    <a href="{{ route('inventario.index', 'herramientas') }}" class="">
-                                        <img src="/img/inventario/herramientas.svg" alt="equipos" title="Herramientas"
-                                            width="30%" class="botonIconoPrincipal">
-                                        <p class="mt-4 texticonos">Herramientas</p>
-                                    </a>
-                                </div>
-                                <div class="col-12 col-md-6 text-center my-4">
-                                    <a href="{{ route('inventario.index', 'refacciones') }}" class="">
-                                        <img src="/img/inventario/refacciones.svg" alt="personal" title="Refacciones"
-                                            width="30%" class="botonIconoPrincipal">
-                                        <p class="mt-4 texticonos">Refacciones</p>
-                                    </a>
-                                </div>
-                                <div class="col-12 col-md-6 text-center my-4">
-                                    <a href="{{ route('inventario.index', 'consumibles') }}" class="">
-                                        <img src="/img/inventario/consumible.svg" alt="inventario" title="Consumibles"
-                                            width="30%" class="botonIconoPrincipal">
-                                        <p class="mt-4 texticonos">Consumibles</p>
-                                    </a>
-                                </div>
-                                <div class="col-12 col-md-6 text-center my-4">
 
-                                    <a href="{{ route('inventario.index','combustible') }}" class="">
-                                        <img src="/img/inventario/combustible.svg" alt="obras" title="Combustibles"
-                                            width="30%" class="botonIconoPrincipal">
-                                        <p class="mt-4 texticonos">Combustibles</p>
-                                    </a>
-                                </div>
+                                @can('inventario_show')
+                                    <div class="col-12 col-md-6 text-center my-4">
+                                        <a href="{{ route('inventario.index', 'herramientas') }}" class="">
+                                            <img src="/img/inventario/herramientas.svg" alt="equipos" title="Herramientas"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Herramientas</p>
+                                        </a>
+                                    </div>
+                                    <div class="col-12 col-md-6 text-center my-4">
+                                        <a href="{{ route('inventario.index', 'refacciones') }}" class="">
+                                            <img src="/img/inventario/refacciones.svg" alt="personal" title="Refacciones"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Refacciones</p>
+                                        </a>
+                                    </div>
+                                    <div class="col-12 col-md-6 text-center my-4">
+                                        <a href="{{ route('inventario.index', 'consumibles') }}" class="">
+                                            <img src="/img/inventario/consumible.svg" alt="inventario" title="Consumibles"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Consumibles</p>
+                                        </a>
+                                    </div>
+                                @endcan
+
+
+                                @can('combustible_show')
+                                    <div class="col-12 col-md-6 text-center my-4">
+
+                                        <a href="{{ route('inventario.index', 'combustible') }}" class="">
+                                            <img src="/img/inventario/combustible.svg" alt="obras" title="Combustibles"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Combustibles</p>
+                                        </a>
+                                    </div>
+                                @endcan
+
 
                             </div>
                         </div>

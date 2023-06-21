@@ -16,607 +16,637 @@
             <div class="row justify-content-center">
                 <div class="col-md-11 align-self-center">
                     <div class="card">
-                        <div class="card-body contCart">
-                            <div class="p-1 align-self-start bacTituloPrincipal">
-                                <h2 class="my-3 ms-3 texticonos ">Carga y Descarga</h2>
+                        @can('combustible_create')
+                            <div class="card-body contCart">
+                                <div class="p-1 align-self-start bacTituloPrincipal">
+                                    <h2 class="my-3 ms-3 texticonos ">Carga y Descarga</h2>
+                                </div>
+
+                                <div class="col-11  mx-auto d-block my-4 border-bottom">
+
+                                    <nav class=" ">
+                                        <div class="nav nav-tabs navMenuBalance justify-content-evenly" id="nav-tab"
+                                            role="tablist">
+                                            <button class="nav-link active combustiblePestaña  col-6" id="balanceUno-tab"
+                                                data-bs-toggle="tab" data-bs-target="#balanceUno" type="button" role="tab"
+                                                aria-controls="balanceUno" aria-selected="true">
+
+
+                                                <img id="myImage" onclick="changeImage()"
+                                                    src="{{ asset('img/inventario/cargaVerde.svg') }}"
+                                                    class="mx-auto d-block imgCargaDescarga">
+                                                <p class="text-center mt-2">CARGA</p>
+                                            </button>
+                                            <button class="nav-link  combustiblePestaña col-5" id="balanceDos-tab"
+                                                data-bs-toggle="tab" data-bs-target="#balanceDos" type="button" role="tab"
+                                                aria-controls="balanceDos" aria-selected="false">
+
+
+                                                <img id="myImage1" onclick="changeImage1()"
+                                                    src="{{ asset('img/inventario/descargaGris.svg') }}"
+                                                    class="mx-auto d-block imgCargaDescarga">
+                                                <p class="text-center mt-2">DESCARGA</p>
+                                            </button>
+                                        </div>
+                                    </nav>
+                                    <div class="tab-content" id="nav-tabContent ">
+
+                                        <div class="tab-pane fade show active conteDivCArgaDescarga " id="balanceUno"
+                                            role="tabpanel" aria-labelledby="balanceUno-tab" tabindex="0">
+                                            <form action="{{ route('inventario.cargaCombustible') }}" method="post">
+                                                @csrf
+                                                <div class="col-12 my-5 ">
+                                                    <div class="row mt-5">
+                                                        <div class="col-12">
+                                                            <div class="row ">
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/equipo_1.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label class="labelTitulo">Equipo:</label></br>
+                                                                        <select id="maquinariaId" name="maquinariaId"
+                                                                            class="form-select"
+                                                                            aria-label="Default select example">
+                                                                            @foreach ($cisternas as $maquina)
+                                                                                <option value="{{ $maquina->id }}">
+                                                                                    {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/despachador.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label class="labelTitulo">Despachador:</label></br>
+                                                                        <select id="operadorId" name="operadorId"
+                                                                            class="form-select"
+                                                                            aria-label="Default select example">
+                                                                            @foreach ($despachador as $persona)
+                                                                                <option value="{{ $persona->id }}">
+                                                                                    {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label class="labelTitulo">Litros:</label></br>
+                                                                        <input type="number" step="0.01" min="0.01"
+                                                                            class="inputCaja" id="litros" name="litros"
+                                                                            value="{{ old('litros') }}">
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/precio.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label class="labelTitulo">Precio:</label></br>
+                                                                        <input type="number" step="0.01" min="0.01"
+                                                                            class="inputCaja" id="precio" name="precio"
+                                                                            value="{{ old('precio') }}">
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 text-center mb-3 ">
+                                                    <button type="submit" class="btn botonGral"
+                                                        onclick="test()">Guardar</button>
+                                                </div>
+
+                                            </form>
+
+                                        </div>
+
+                                        <div class="tab-pane fade conteDivCArgaDescarga" id="balanceDos" role="tabpanel"
+                                            aria-labelledby="balanceDos-tab" tabindex="0">
+                                            <form action="{{ route('inventario.descargaCombustible') }}" method="post"
+                                                enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="col-12 my-5 ">
+                                                    <div class="row mt-5">
+                                                        <div class="col-12 col-lg-3">
+                                                            <div class="row">
+                                                                <div
+                                                                    class="col-12 col-md-6 col-lg-12 text-center mx-auto border vistaFotoCombustibles mb-4">
+                                                                    <i><img class="imgVistaCombustible img-fluid mb-2"
+                                                                            src="{{ asset('/img/inventario/horometro.svg') }}"></i>
+                                                                    <span class="mi-archivo"> <input class="mb-4 ver "
+                                                                            type="file" name="imgKm" id="mi-archivo"
+                                                                            accept="image/*" multiple></span>
+                                                                    <label for="mi-archivo">
+                                                                        <span class="">Sube Imagen</span>
+                                                                    </label>
+                                                                </div>
+
+                                                                <div
+                                                                    class="col-12 col-md-6 col-lg-12 text-center mx-auto border vistaFotoCombustibles mb-4">
+                                                                    <i><img class="imgVistaCombustible img-fluid mb-2"
+                                                                            src="{{ asset('/img/inventario/kilometraje.svg') }}"></i>
+                                                                    <span class="mi-archivo2"> <input class="mb-4 ver "
+                                                                            type="file" name="imgHoras" id="mi-archivo2"
+                                                                            accept="image/*" multiple></span>
+                                                                    <label for="mi-archivo2">
+                                                                        <span class="">Sube Imagen</span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-12 col-md-12 col-lg-9">
+                                                            <div class="row ">
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/equipo_1.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label class="labelTitulo">Equipo:</label></br>
+                                                                        <select id="maquinariaId" name="maquinariaId"
+                                                                            class="form-select"
+                                                                            aria-label="Default select example">
+                                                                            @foreach ($cisternas as $maquina)
+                                                                                <option value="{{ $maquina->id }}">
+                                                                                    {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/navs/eqiposMenu.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label class="labelTitulo">Maquinaria:</label></br>
+                                                                        <select id="servicioId" name="servicioId"
+                                                                            class="form-select"
+                                                                            aria-label="Default select example">
+                                                                            @foreach ($maquinaria as $maquina)
+                                                                                <option value="{{ $maquina->id }}">
+                                                                                    {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/despachador.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label class="labelTitulo">Despachador:</label></br>
+                                                                        <select id="operadorId" name="operadorId"
+                                                                            class="form-select"
+                                                                            aria-label="Default select example">
+                                                                            @foreach ($despachador as $persona)
+                                                                                <option value="{{ $persona->id }}">
+                                                                                    {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/navs/personalMenu.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label class="labelTitulo">Operador:</label></br>
+                                                                        <select id="receptorId" name="receptorId"
+                                                                            class="form-select"
+                                                                            aria-label="Default select example">
+                                                                            @foreach ($personal as $persona)
+                                                                                <option value="{{ $persona->id }}">
+                                                                                    {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label class="labelTitulo">Litros:</label></br>
+                                                                        <input type="number" step="0.01" min="0.01"
+                                                                            class="inputCaja" id="litros" name="litros"
+                                                                            value="{{ old('litros') }}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/iconoKm.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label class="labelTitulo">Km/Mi:</label></br>
+                                                                        <input type="number" step="0.01" min="0.01"
+                                                                            class="inputCaja" id="km" name="km"
+                                                                            value="{{ old('km') }}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/horometroIcono.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div>
+                                                                        <label class="labelTitulo">Horómetro:</label></br>
+                                                                        <input type="number" step="0.01" min="0.01"
+                                                                            class="inputCaja" id="horas" name="horas"
+                                                                            value="{{ old('horas') }}">
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 text-center mb-3 ">
+                                                    <button type="submit" class="btn botonGral"
+                                                        onclick="test()">Guardar</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="col-11  mx-auto d-block my-4 border-bottom">
-
-                                <nav class=" ">
-                                    <div class="nav nav-tabs navMenuBalance justify-content-evenly" id="nav-tab"
-                                        role="tablist">
-                                        <button class="nav-link active combustiblePestaña  col-6" id="balanceUno-tab"
-                                            data-bs-toggle="tab" data-bs-target="#balanceUno" type="button" role="tab"
-                                            aria-controls="balanceUno" aria-selected="true">
+                        @endcan
 
 
-                                            <img id="myImage" onclick="changeImage()"
-                                                src="{{ asset('img/inventario/cargaVerde.svg') }}"
-                                                class="mx-auto d-block imgCargaDescarga">
-                                            <p class="text-center mt-2">CARGA</p>
-                                        </button>
-                                        <button class="nav-link  combustiblePestaña col-5" id="balanceDos-tab"
-                                            data-bs-toggle="tab" data-bs-target="#balanceDos" type="button" role="tab"
-                                            aria-controls="balanceDos" aria-selected="false">
+                        <!--Espacio para los tres camiones-->
+                        <div class="row">
 
-
-                                            <img id="myImage1" onclick="changeImage1()"
-                                                src="{{ asset('img/inventario/descargaGris.svg') }}"
-                                                class="mx-auto d-block imgCargaDescarga">
-                                            <p class="text-center mt-2">DESCARGA</p>
-                                        </button>
-                                    </div>
-                                </nav>
-                                <div class="tab-content" id="nav-tabContent ">
-
-                                    <div class="tab-pane fade show active conteDivCArgaDescarga " id="balanceUno"
-                                        role="tabpanel" aria-labelledby="balanceUno-tab" tabindex="0">
-                                        <form action="{{ route('inventario.cargaCombustible') }}" method="post">
-                                            @csrf
-                                            <div class="col-12 my-5 ">
-                                                <div class="row mt-5">
-                                                    <div class="col-12">
-                                                        <div class="row ">
-                                                            <div class=" col-12 col-md-6 d-flex mb-4">
-                                                                <div class="me-2">
-                                                                    <img src="{{ asset('/img/inventario/equipo_1.svg') }}"
-                                                                        alt="" style="width:40px;">
-                                                                </div>
-                                                                <div>
-                                                                    <label class="labelTitulo">Equipo:</label></br>
-                                                                    <select id="maquinariaId" name="maquinariaId"
-                                                                        class="form-select"
-                                                                        aria-label="Default select example">
-                                                                        @foreach ($cisternas as $maquina)
-                                                                            <option value="{{ $maquina->id }}">
-                                                                                {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class=" col-12 col-md-6 d-flex mb-4">
-                                                                <div class="me-2">
-                                                                    <img src="{{ asset('/img/inventario/despachador.svg') }}"
-                                                                        alt="" style="width:40px;">
-                                                                </div>
-                                                                <div>
-                                                                    <label class="labelTitulo">Despachador:</label></br>
-                                                                    <select id="operadorId" name="operadorId"
-                                                                        class="form-select"
-                                                                        aria-label="Default select example">
-                                                                        @foreach ($despachador as $persona)
-                                                                            <option value="{{ $persona->id }}">
-                                                                                {{ $persona->nombres . ' ' . $persona->apellidoP }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class=" col-12 col-md-6 d-flex mb-4">
-                                                                <div class="me-2">
-                                                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
-                                                                        alt="" style="width:40px;">
-                                                                </div>
-                                                                <div>
-                                                                    <label class="labelTitulo">Litros:</label></br>
-                                                                    <input type="number" step="0.01" min="0.01"
-                                                                        class="inputCaja" id="litros" name="litros"
-                                                                        value="{{ old('litros') }}">
-                                                                </div>
-                                                            </div>
-
-
-                                                            <div class=" col-12 col-md-6 d-flex mb-4">
-                                                                <div class="me-2">
-                                                                    <img src="{{ asset('/img/inventario/precio.svg') }}"
-                                                                        alt="" style="width:40px;">
-                                                                </div>
-                                                                <div>
-                                                                    <label class="labelTitulo">Precio:</label></br>
-                                                                    <input type="number" step="0.01" min="0.01"
-                                                                        class="inputCaja" id="precio" name="precio"
-                                                                        value="{{ old('precio') }}">
-                                                                </div>
-                                                            </div>
-
+                            @foreach ($gasolinas as $gasolina)
+                                <div class="col-sm-4">
+                                    <div class="card">
+                                        <div class="card-body combustibleBorde">
+                                            <div class="bordeTitulo mb-3">
+                                                <h2 class="combustibleTitulo fw-semibold  my-3"> {{ $gasolina->nombre }}
+                                                </h2>
+                                            </div>
+                                            <div class="row ">
+                                                <div class="col-12 mb-5">
+                                                    <p class="text-end">Reserva</p>
+                                                    <p class="combustibleLitros fw-semibold text-end">
+                                                        {{ $gasolina->cisternaNivel }} lts.</p>
+                                                </div>
+                                                <div class="col mb-3">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <p class=" ">Útima carga</p>
+                                                            <p class="combustiblefecha fw-semibold mb-3">
+                                                                {{ \Carbon\Carbon::parse($gasolina->created_at)->format('Y-m-d') }}
+                                                            </p>
+                                                            <p class="">$ por litro</p>
+                                                            <p class="combustibleLitros fw-semibold">$
+                                                                {{ $gasolina->precio }}
+                                                            </p>
                                                         </div>
-
+                                                        <div class="col-6">
+                                                            <p class=" text-end">Litros Cargados</p>
+                                                            <p class="combustibleLitros fw-semibold text-end">
+                                                                {{ $gasolina->litros }} lts.</p>
+                                                        </div>
                                                     </div>
 
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+
+                        </div>
+                        {{--  GRAFICO CARGAS  --}}
+                        <div class="row">
+                            <div class="col-12">
+
+                                <div class="card card-chart">
+                                    <div class="card-header ">
+                                        <div class="row">
+                                            <div class="col-sm-6 text-left">
+                                                <h5 class="card-category">Total de cargas</h5>
+                                                <h2 class="card-title">Ultimos 30 Dias</h2>
+                                            </div>
+                                            <div class="col-sm-6 ">
+                                                <div class="btn-group btn-group-toggle float-right d-flex"
+                                                    data-toggle="buttons">
+                                                    @foreach ($gasolinas as $gasolina)
+                                                        <label class="btn btn-sm btn-primary btn-simple botongrafica"
+                                                            id="1" aria-controls={{ $gasolina->id }}>
+                                                            <input type="radio" class="d-none d-sm-none"
+                                                                name="options">
+                                                            <span
+                                                                class="d-none d-sm-block d-md-block d-lg-block d-xl-block"
+                                                                onclick="actualizar({{ $gasolina->id }})">
+                                                                {{ $gasolina->nombre }}
+                                                                <span class="d-block d-sm-none">
+                                                                    <i class="tim-icons icon-gift-2"></i>
+                                                                </span>
+                                                        </label>
+                                                    @endforeach
 
                                                 </div>
                                             </div>
-                                            <div class="col-12 text-center mb-3 ">
-                                                <button type="submit" class="btn botonGral"
-                                                    onclick="test()">Guardar</button>
-                                            </div>
-
-                                        </form>
-
+                                        </div>
                                     </div>
-
-                                    <div class="tab-pane fade conteDivCArgaDescarga" id="balanceDos" role="tabpanel"
-                                        aria-labelledby="balanceDos-tab" tabindex="0">
-                                        <form action="{{ route('inventario.descargaCombustible') }}" method="post"
-                                            enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="col-12 my-5 ">
-                                                <div class="row mt-5">
-                                                    <div class="col-12 col-lg-3">
-                                                        <div class="row">
-                                                            <div
-                                                                class="col-12 col-md-6 col-lg-12 text-center mx-auto border vistaFotoCombustibles mb-4">
-                                                                <i><img class="imgVistaCombustible img-fluid mb-2"
-                                                                        src="{{ asset('/img/inventario/horometro.svg') }}"></i>
-                                                                <span class="mi-archivo"> <input class="mb-4 ver "
-                                                                        type="file" name="imgKm" id="mi-archivo"
-                                                                        accept="image/*" multiple></span>
-                                                                <label for="mi-archivo">
-                                                                    <span class="">Sube Imagen</span>
-                                                                </label>
-                                                            </div>
-
-                                                            <div
-                                                                class="col-12 col-md-6 col-lg-12 text-center mx-auto border vistaFotoCombustibles mb-4">
-                                                                <i><img class="imgVistaCombustible img-fluid mb-2"
-                                                                        src="{{ asset('/img/inventario/kilometraje.svg') }}"></i>
-                                                                <span class="mi-archivo2"> <input class="mb-4 ver "
-                                                                        type="file" name="imgHoras" id="mi-archivo2"
-                                                                        accept="image/*" multiple></span>
-                                                                <label for="mi-archivo2">
-                                                                    <span class="">Sube Imagen</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="col-12 col-md-12 col-lg-9">
-                                                        <div class="row ">
-                                                            <div class=" col-12 col-md-6 d-flex mb-4">
-                                                                <div class="me-2">
-                                                                    <img src="{{ asset('/img/inventario/equipo_1.svg') }}"
-                                                                        alt="" style="width:40px;">
-                                                                </div>
-                                                                <div>
-                                                                    <label class="labelTitulo">Equipo:</label></br>
-                                                                    <select id="maquinariaId" name="maquinariaId"
-                                                                        class="form-select"
-                                                                        aria-label="Default select example">
-                                                                        @foreach ($cisternas as $maquina)
-                                                                            <option value="{{ $maquina->id }}">
-                                                                                {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class=" col-12 col-md-6 d-flex mb-4">
-                                                                <div class="me-2">
-                                                                    <img src="{{ asset('/img/navs/eqiposMenu.svg') }}"
-                                                                        alt="" style="width:40px;">
-                                                                </div>
-                                                                <div>
-                                                                    <label class="labelTitulo">Maquinaria:</label></br>
-                                                                    <select id="servicioId" name="servicioId"
-                                                                        class="form-select"
-                                                                        aria-label="Default select example">
-                                                                        @foreach ($maquinaria as $maquina)
-                                                                            <option value="{{ $maquina->id }}">
-                                                                                {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class=" col-12 col-md-6 d-flex mb-4">
-                                                                <div class="me-2">
-                                                                    <img src="{{ asset('/img/inventario/despachador.svg') }}"
-                                                                        alt="" style="width:40px;">
-                                                                </div>
-                                                                <div>
-                                                                    <label class="labelTitulo">Despachador:</label></br>
-                                                                    <select id="operadorId" name="operadorId"
-                                                                        class="form-select"
-                                                                        aria-label="Default select example">
-                                                                        @foreach ($despachador as $persona)
-                                                                            <option value="{{ $persona->id }}">
-                                                                                {{ $persona->nombres . ' ' . $persona->apellidoP }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class=" col-12 col-md-6 d-flex mb-4">
-                                                                <div class="me-2">
-                                                                    <img src="{{ asset('/img/navs/personalMenu.svg') }}"
-                                                                        alt="" style="width:40px;">
-                                                                </div>
-                                                                <div>
-                                                                    <label class="labelTitulo">Operador:</label></br>
-                                                                    <select id="receptorId" name="receptorId"
-                                                                        class="form-select"
-                                                                        aria-label="Default select example">
-                                                                        @foreach ($personal as $persona)
-                                                                            <option value="{{ $persona->id }}">
-                                                                                {{ $persona->nombres . ' ' . $persona->apellidoP }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class=" col-12 col-md-6 d-flex mb-4">
-                                                                <div class="me-2">
-                                                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
-                                                                        alt="" style="width:40px;">
-                                                                </div>
-                                                                <div>
-                                                                    <label class="labelTitulo">Litros:</label></br>
-                                                                    <input type="number" step="0.01" min="0.01"
-                                                                        class="inputCaja" id="litros" name="litros"
-                                                                        value="{{ old('litros') }}">
-                                                                </div>
-                                                            </div>
-                                                            <div class=" col-12 col-md-6 d-flex mb-4">
-                                                                <div class="me-2">
-                                                                    <img src="{{ asset('/img/inventario/iconoKm.svg') }}"
-                                                                        alt="" style="width:40px;">
-                                                                </div>
-                                                                <div>
-                                                                    <label class="labelTitulo">Km/Mi:</label></br>
-                                                                    <input type="number" step="0.01" min="0.01"
-                                                                        class="inputCaja" id="km" name="km"
-                                                                        value="{{ old('km') }}">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class=" col-12 col-md-6 d-flex mb-4">
-                                                                <div class="me-2">
-                                                                    <img src="{{ asset('/img/inventario/horometroIcono.svg') }}"
-                                                                        alt="" style="width:40px;">
-                                                                </div>
-                                                                <div>
-                                                                    <label class="labelTitulo">Horómetro:</label></br>
-                                                                    <input type="number" step="0.01" min="0.01"
-                                                                        class="inputCaja" id="horas" name="horas"
-                                                                        value="{{ old('horas') }}">
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
-
-
-                                                </div>
-                                            </div>
-                                            <div class="col-12 text-center mb-3 ">
-                                                <button type="submit" class="btn botonGral"
-                                                    onclick="test()">Guardar</button>
-                                            </div>
-                                        </form>
+                                    <div class="card-body">
+                                        <div class="chart-area">
+                                            <canvas id="chartBig1"></canvas>
+                                        </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!--Espacio para los tres camiones-->
-                    <div class="row">
 
-                        @foreach ($gasolinas as $gasolina)
-                            <div class="col-sm-4">
+                        <!--Espacio para index carga y descarga-->
+                        <div class="row">
+                            <div class="col-md-12">
                                 <div class="card">
-                                    <div class="card-body combustibleBorde">
-                                        <div class="bordeTitulo mb-3">
-                                            <h2 class="combustibleTitulo fw-semibold  my-3"> {{ $gasolina->nombre }}</h2>
+                                    <!-- <div class="card-header bacTituloPrincipal">
+                                                                                                                                                                                                                                                                    <h4 class="card-title">Carga y descarga de combustible</h4>
+
+                                                                                                                                                                                                                                                                </div>-->
+                                    <div class="card-body mb-3">
+                                        <div class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
+                                            <button
+                                                class=" nav-item col-12 col-md-6 BTNbCargaDescarga py-3 border-0 active "
+                                                role="presentation" id="home-tab" data-bs-toggle="tab"
+                                                data-bs-target="#home-tab-pane" type="button" role="tab"
+                                                aria-controls="home-tab-pane" aria-selected="true">Relación Cargas de
+                                                Combustible</button>
+                                            <button class="nav-item col-12 col-md-6 BTNbCargaDescarga "
+                                                role="presentation" id="profile-tab" data-bs-toggle="tab"
+                                                data-bs-target="#profile-tab-pane" type="button" role="tab"
+                                                aria-controls="profile-tab-pane" aria-selected="false"> Relación Descargas
+                                                de Combustible</button>
                                         </div>
-                                        <div class="row ">
-                                            <div class="col-12 mb-5">
-                                                <p class="text-end">Reserva</p>
-                                                <p class="combustibleLitros fw-semibold text-end">
-                                                    {{ $gasolina->cisternaNivel }} lts.</p>
-                                            </div>
-                                            <div class="col mb-3">
+
+                                        <div class="tab-content contentCargas" id="myTabContent">
+                                            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
+                                                aria-labelledby="home-tab" tabindex="0">
                                                 <div class="row">
-                                                    <div class="col-6">
-                                                        <p class=" ">Útima carga</p>
-                                                        <p class="combustiblefecha fw-semibold mb-3">
-                                                            {{ \Carbon\Carbon::parse($gasolina->created_at)->format('Y-m-d') }}
-                                                        </p>
-                                                        <p class="">$ por litro</p>
-                                                        <p class="combustibleLitros fw-semibold">$ {{ $gasolina->precio }}
-                                                        </p>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <p class=" text-end">Litros Cargados</p>
-                                                        <p class="combustibleLitros fw-semibold text-end">
-                                                            {{ $gasolina->litros }} lts.</p>
-                                                    </div>
-                                                </div>
+                                                    <div class="col-md-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="table-responsive">
+                                                                    <table class="table">
+                                                                        <thead class="labelTitulo">
+                                                                            <th class="fw-bolder">ID</th>
+                                                                            <th class="fw-bolder">Equipos</th>
+                                                                            <th class="fw-bolder">Despachador</th>
+                                                                            <th class="fw-bolder">Litros</th>
+                                                                            <th class="fw-bolder">Precio</th>
+                                                                            <th class="fw-bolder">fecha</th>
+                                                                            <th class="fw-bolder">hora</th>
+                                                                            <th class="fw-bolder text-right">Acciones</th>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            @forelse ($cargas as $carga)
+                                                                                <tr>
+                                                                                    <td>{{ $carga->id }}</td>
+                                                                                    <td>{{ $carga->equipo }}</td>
+                                                                                    <td>{{ $carga->operador }} </td>
+                                                                                    <td>
+                                                                                        {{ number_format($carga->litros, 2, '.', ',') }}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        $
+                                                                                        {{ number_format($carga->precio, 2, '.', ',') }}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{ \Carbon\Carbon::parse($carga->fecha)->format('Y-m-d') }}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{ \Carbon\Carbon::parse($carga->fecha)->format('H:m') }}
+                                                                                    </td>
 
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-
-                    </div>
-                    {{--  GRAFICO CARGAS  --}}
-                    <div class="row">
-                        <div class="col-12">
-
-                            <div class="card card-chart">
-                                <div class="card-header ">
-                                    <div class="row">
-                                        <div class="col-sm-6 text-left">
-                                            <h5 class="card-category">Total de cargas</h5>
-                                            <h2 class="card-title">Ultimos 30 Dias</h2>
-                                        </div>
-                                        <div class="col-sm-6 ">
-                                            <div class="btn-group btn-group-toggle float-right d-flex"
-                                                data-toggle="buttons">
-                                                @foreach ($gasolinas as $gasolina)
-                                                    <label class="btn btn-sm btn-primary btn-simple botongrafica"
-                                                        id="1" aria-controls={{ $gasolina->id }}>
-                                                        <input type="radio" class="d-none d-sm-none" name="options">
-                                                        <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block"
-                                                            onclick="actualizar({{ $gasolina->id }})">
-                                                            {{ $gasolina->nombre }}
-                                                            <span class="d-block d-sm-none">
-                                                                <i class="tim-icons icon-gift-2"></i>
-                                                            </span>
-                                                    </label>
-                                                @endforeach
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="chartBig1"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--Espacio para index carga y descarga-->
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <!-- <div class="card-header bacTituloPrincipal">
-                                                                                                                                                                                                                                        <h4 class="card-title">Carga y descarga de combustible</h4>
-
-                                                                                                                                                                                                                                    </div>-->
-                                <div class="card-body mb-3">
-                                    <div class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
-                                        <button class=" nav-item col-12 col-md-6 BTNbCargaDescarga py-3 border-0 active "
-                                            role="presentation" id="home-tab" data-bs-toggle="tab"
-                                            data-bs-target="#home-tab-pane" type="button" role="tab"
-                                            aria-controls="home-tab-pane" aria-selected="true">Relación Cargas de
-                                            Combustible</button>
-                                        <button class="nav-item col-12 col-md-6 BTNbCargaDescarga " role="presentation"
-                                            id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
-                                            type="button" role="tab" aria-controls="profile-tab-pane"
-                                            aria-selected="false"> Relación Descargas de Combustible</button>
-                                    </div>
-
-                                    <div class="tab-content contentCargas" id="myTabContent">
-                                        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
-                                            aria-labelledby="home-tab" tabindex="0">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <div class="table-responsive">
-                                                                <table class="table">
-                                                                    <thead class="labelTitulo">
-                                                                        <th class="fw-bolder">ID</th>
-                                                                        <th class="fw-bolder">Equipos</th>
-                                                                        <th class="fw-bolder">Despachador</th>
-                                                                        <th class="fw-bolder">Litros</th>
-                                                                        <th class="fw-bolder">Precio</th>
-                                                                        <th class="fw-bolder">fecha</th>
-                                                                        <th class="fw-bolder">hora</th>
-                                                                        <th class="fw-bolder text-right">Acciones</th>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        @forelse ($cargas as $carga)
-                                                                            <tr>
-                                                                                <td>{{ $carga->id }}</td>
-                                                                                <td>{{ $carga->equipo }}</td>
-                                                                                <td>{{ $carga->operador }} </td>
-                                                                                <td>
-                                                                                    {{ number_format($carga->litros, 2, '.', ',') }}
-                                                                                </td>
-                                                                                <td>
-                                                                                    $
-                                                                                    {{ number_format($carga->precio, 2, '.', ',') }}
-                                                                                </td>
-                                                                                <td>
-                                                                                    {{ \Carbon\Carbon::parse($carga->fecha)->format('Y-m-d') }}
-                                                                                </td>
-                                                                                <td>
-                                                                                    {{ \Carbon\Carbon::parse($carga->fecha)->format('H:m') }}
-                                                                                </td>
-
-                                                                                <td class="td-actions justify-content-end">
-                                                                                    <a href="#" class=""
-                                                                                        data-bs-toggle="modal"
-                                                                                        data-bs-target="#cargaCombustible"
-                                                                                        onclick="loadCarga('{{ $carga->id }}','{{ $carga->maquinariaid }}','{{ $carga->operadorid }}'
+                                                                                    <td
+                                                                                        class="td-actions justify-content-end">
+                                                                                        @can('combustible_edit')
+                                                                                            <a href="#" class=""
+                                                                                                data-bs-toggle="modal"
+                                                                                                data-bs-target="#cargaCombustible"
+                                                                                                onclick="loadCarga('{{ $carga->id }}','{{ $carga->maquinariaid }}','{{ $carga->operadorid }}'
                                                                                         ,'{{ $carga->litros }}','{{ $carga->precio }}'
                                                                                         ,'{{ \Carbon\Carbon::parse($carga->fecha)->format('Y-m-d') }}','{{ \Carbon\Carbon::parse($carga->fecha)->format('H:m') }}')">
-                                                                                        <svg xmlns="http://www.w3.org/2000/svg "
-                                                                                            width="28" height="28"
-                                                                                            fill="currentColor"
-                                                                                            class="bi bi-pencil accionesIconos"
-                                                                                            viewBox="0 0 16 16">
-                                                                                            <path
-                                                                                                d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                                                                        </svg>
-                                                                                    </a>
+                                                                                                <svg xmlns="http://www.w3.org/2000/svg "
+                                                                                                    width="28"
+                                                                                                    height="28"
+                                                                                                    fill="currentColor"
+                                                                                                    class="bi bi-pencil accionesIconos"
+                                                                                                    viewBox="0 0 16 16">
+                                                                                                    <path
+                                                                                                        d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                                                </svg>
+                                                                                            </a>
+                                                                                        @endcan
 
-                                                                                    <form
-                                                                                        action="{{ route('inventario.deleteCarga', $carga->id) }}"
-                                                                                        method="POST"
-                                                                                        style="display: inline-block;"
-                                                                                        onsubmit="return confirm('¿Estás seguro?')">
-                                                                                        @csrf
-                                                                                        @method('DELETE')
-                                                                                        <button class=" btnSinFondo"
-                                                                                            type="submit" rel="tooltip">
-                                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                                width="28"
-                                                                                                height="28"
-                                                                                                fill="currentColor"
-                                                                                                class="bi bi-x-circle"
-                                                                                                viewBox="0 0 16 16">
-                                                                                                <path
-                                                                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                                                <path
-                                                                                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                                                            </svg>
-                                                                                        </button>
-                                                                                    </form>
-                                                                                </td>
-                                                                            </tr>
-                                                                        @empty
-                                                                            <tr>
-                                                                                <td colspan="7" class="text-center">Sin
-                                                                                    información registrada.</td>
-                                                                            </tr>
-                                                                        @endforelse
+                                                                                        <form
+                                                                                            action="{{ route('inventario.deleteCarga', $carga->id) }}"
+                                                                                            method="POST"
+                                                                                            style="display: inline-block;"
+                                                                                            onsubmit="return confirm('¿Estás seguro?')">
+                                                                                            @csrf
+                                                                                            @method('DELETE')
+
+                                                                                            @can('combustible_destroy')
+                                                                                                <button class=" btnSinFondo"
+                                                                                                    type="submit"
+                                                                                                    rel="tooltip">
+                                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                        width="28"
+                                                                                                        height="28"
+                                                                                                        fill="currentColor"
+                                                                                                        class="bi bi-x-circle"
+                                                                                                        viewBox="0 0 16 16">
+                                                                                                        <path
+                                                                                                            d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                                                        <path
+                                                                                                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                                    </svg>
+                                                                                                </button>
+                                                                                            @endcan
 
 
-                                                                    </tbody>
-                                                                </table>
+                                                                                        </form>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @empty
+                                                                                <tr>
+                                                                                    <td colspan="7"
+                                                                                        class="text-center">Sin
+                                                                                        información registrada.</td>
+                                                                                </tr>
+                                                                            @endforelse
+
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
                                                             </div>
-                                                        </div>
 
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel"
-                                            aria-labelledby="profile-tab" tabindex="0">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <div class="table-responsive">
-                                                                <table class="table">
-                                                                    <thead class="labelTitulo">
-                                                                        <th class="fw-bolder">ID</th>
-                                                                        <th class="fw-bolder">Equipo</th>
-                                                                        <th class="fw-bolder">Despachador</th>
-                                                                        <th class="fw-bolder">Maquinaria</th>
-                                                                        <th class="fw-bolder">Operador</th>
-                                                                        <th class="fw-bolder">Kms</th>
-                                                                        <th class="fw-bolder">Horas</th>
-                                                                        <th class="fw-bolder">Litros</th>
-                                                                        <th class="fw-bolder">fecha</th>
-                                                                        <th class="fw-bolder">hora</th>
-                                                                        <th class="fw-bolder text-right">Acciones</th>
-                                                                    </thead>
-                                                                    <tbody>
+                                            <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel"
+                                                aria-labelledby="profile-tab" tabindex="0">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="table-responsive">
+                                                                    <table class="table">
+                                                                        <thead class="labelTitulo">
+                                                                            <th class="fw-bolder">ID</th>
+                                                                            <th class="fw-bolder">Equipo</th>
+                                                                            <th class="fw-bolder">Despachador</th>
+                                                                            <th class="fw-bolder">Maquinaria</th>
+                                                                            <th class="fw-bolder">Operador</th>
+                                                                            <th class="fw-bolder">Kms</th>
+                                                                            <th class="fw-bolder">Horas</th>
+                                                                            <th class="fw-bolder">Litros</th>
+                                                                            <th class="fw-bolder">fecha</th>
+                                                                            <th class="fw-bolder">hora</th>
+                                                                            <th class="fw-bolder text-right">Acciones</th>
+                                                                        </thead>
+                                                                        <tbody>
 
-                                                                        @forelse ($descargas as $descarga)
-                                                                            <tr>
-                                                                                <td>{{ $descarga->id }}</td>
-                                                                                <td>{{ $descarga->maquinaria }}</td>
-                                                                                <td>{{ $descarga->operador }}</td>
-                                                                                <td>{{ $descarga->servicio }}</td>
-                                                                                <td>{{ $descarga->receptor }}</td>
-                                                                                <td>{{ $descarga->km }}</td>
-                                                                                <td>{{ $descarga->horas }}</td>
-                                                                                <td>
-                                                                                    {{ number_format($descarga->litros, 2, '.', ',') }}
-                                                                                </td>
-                                                                                <td>
-                                                                                    {{ \Carbon\Carbon::parse($descarga->fecha)->format('Y-m-d') }}
-                                                                                </td>
-                                                                                <td>
-                                                                                    {{ \Carbon\Carbon::parse($descarga->fecha)->format('H:m') }}
-                                                                                </td>
+                                                                            @forelse ($descargas as $descarga)
+                                                                                <tr>
+                                                                                    <td>{{ $descarga->id }}</td>
+                                                                                    <td>{{ $descarga->maquinaria }}</td>
+                                                                                    <td>{{ $descarga->operador }}</td>
+                                                                                    <td>{{ $descarga->servicio }}</td>
+                                                                                    <td>{{ $descarga->receptor }}</td>
+                                                                                    <td>{{ $descarga->km }}</td>
+                                                                                    <td>{{ $descarga->horas }}</td>
+                                                                                    <td>
+                                                                                        {{ number_format($descarga->litros, 2, '.', ',') }}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{ \Carbon\Carbon::parse($descarga->fecha)->format('Y-m-d') }}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{ \Carbon\Carbon::parse($descarga->fecha)->format('H:m') }}
+                                                                                    </td>
 
-                                                                                <td class="td-actions justify-content-end">
-                                                                                    <a href="#" class=""
-                                                                                        data-bs-toggle="modal"
-                                                                                        data-bs-target="#descargaCombustible"
-                                                                                        onclick="loadDescarga('{{ $descarga->id }}','{{ $descarga->maquinariaId }}','{{ $descarga->operadorId }}',
+                                                                                    <td
+                                                                                        class="td-actions justify-content-end">
+                                                                                        @can('combustible_edit')
+                                                                                            <a href="#" class=""
+                                                                                                data-bs-toggle="modal"
+                                                                                                data-bs-target="#descargaCombustible"
+                                                                                                onclick="loadDescarga('{{ $descarga->id }}','{{ $descarga->maquinariaId }}','{{ $descarga->operadorId }}',
                                                                                         '{{ $descarga->servicioId }}','{{ $descarga->receptorId }}','{{ $descarga->litros }}',
-                                                                                        '{{ $descarga->km }}','{{ ($descarga->imgKm ? $descarga->imgKm : '0') }}','{{ $descarga->horas }}','{{ $descarga->imgHoras ? $descarga->imgHoras : '0' }}'
+                                                                                        '{{ $descarga->km }}','{{ $descarga->imgKm ? $descarga->imgKm : '0' }}','{{ $descarga->horas }}','{{ $descarga->imgHoras ? $descarga->imgHoras : '0' }}'
                                                                                         ,'{{ \Carbon\Carbon::parse($descarga->fecha)->format('Y-m-d') }}','{{ \Carbon\Carbon::parse($descarga->fecha)->format('H:m') }}')">
-                                                                                        <svg xmlns="http://www.w3.org/2000/svg "
-                                                                                            width="28" height="28"
-                                                                                            fill="currentColor"
-                                                                                            class="bi bi-pencil accionesIconos"
-                                                                                            viewBox="0 0 16 16">
-                                                                                            <path
-                                                                                                d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                                                                        </svg>
-                                                                                    </a>
-                                                                                    {{-- id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms, horas, imgHoras, fecha --}}
-                                                                                    <form
-                                                                                        action="{{ route('inventario.deleteDescarga', $descarga->id) }}"
-                                                                                        method="POST"
-                                                                                        style="display: inline-block;"
-                                                                                        onsubmit="return confirm('¿Estás seguro?')">
-                                                                                        @csrf
-                                                                                        @method('DELETE')
-                                                                                        <button class=" btnSinFondo"
-                                                                                            type="submit" rel="tooltip">
-                                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                                width="28"
-                                                                                                height="28"
-                                                                                                fill="currentColor"
-                                                                                                class="bi bi-x-circle"
-                                                                                                viewBox="0 0 16 16">
-                                                                                                <path
-                                                                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                                                <path
-                                                                                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                                                            </svg>
-                                                                                        </button>
-                                                                                    </form>
-                                                                                </td>
-                                                                            </tr>
-                                                                        @empty
-                                                                            <tr>
-                                                                                <td colspan="9" class="text-center">Sin
-                                                                                    información registrada.</td>
-                                                                            </tr>
-                                                                        @endforelse
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
+                                                                                                <svg xmlns="http://www.w3.org/2000/svg "
+                                                                                                    width="28"
+                                                                                                    height="28"
+                                                                                                    fill="currentColor"
+                                                                                                    class="bi bi-pencil accionesIconos"
+                                                                                                    viewBox="0 0 16 16">
+                                                                                                    <path
+                                                                                                        d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                                                </svg>
+                                                                                            </a>
+                                                                                        @endcan
 
+                                                                                        {{-- id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms, horas, imgHoras, fecha --}}
+                                                                                        <form
+                                                                                            action="{{ route('inventario.deleteDescarga', $descarga->id) }}"
+                                                                                            method="POST"
+                                                                                            style="display: inline-block;"
+                                                                                            onsubmit="return confirm('¿Estás seguro?')">
+                                                                                            @csrf
+                                                                                            @method('DELETE')
+                                                                                            @can('combustible_destroy')
+                                                                                                <button class=" btnSinFondo"
+                                                                                                    type="submit"
+                                                                                                    rel="tooltip">
+                                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                        width="28"
+                                                                                                        height="28"
+                                                                                                        fill="currentColor"
+                                                                                                        class="bi bi-x-circle"
+                                                                                                        viewBox="0 0 16 16">
+                                                                                                        <path
+                                                                                                            d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                                                        <path
+                                                                                                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                                    </svg>
+                                                                                                </button>
+                                                                                            @endcan
+
+                                                                                        </form>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @empty
+                                                                                <tr>
+                                                                                    <td colspan="9"
+                                                                                        class="text-center">Sin
+                                                                                        información registrada.</td>
+                                                                                </tr>
+                                                                            @endforelse
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
 
                                     </div>
 
                                 </div>
-
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -1063,7 +1093,8 @@
     </script>
 
     <script>
-        function loadDescarga(id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms, horas, imgHoras, fecha, hora) {
+        function loadDescarga(id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms, horas, imgHoras,
+            fecha, hora) {
 
             const txtId = document.getElementById('descargaId');
             txtId.value = id;
