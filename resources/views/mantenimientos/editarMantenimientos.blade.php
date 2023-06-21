@@ -184,6 +184,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-12 text-center mb-3 ">
+                                    <button type="submit" class="btn botonGral" >Guardar</button>
+                                </div>
                                 
                             </div>
                         </div>
