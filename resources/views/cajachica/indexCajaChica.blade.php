@@ -1,6 +1,17 @@
 @extends('layouts.main', ['activePage' => 'cajachica', 'titlePage' => __('Caja Chica')])
 @section('content')
     <div class="content">
+        @if ($errors->any())
+            <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+            <div class="alert alert-danger">
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -26,7 +37,7 @@
 
                                         <div class="col-6 ">
                                             <span class="h3">
-                                                Caja Chica: <strong class="negritas">${{ $last->total }}</strong>
+                                                Caja Chica: <strong class="negritas">$ {{ $lastTotal }}</strong>
                                             </span>
 
                                         </div>

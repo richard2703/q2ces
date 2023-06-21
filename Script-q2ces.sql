@@ -1050,7 +1050,7 @@ create table gastosmantenimiento(
 create table conceptos(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     codigo varchar(200) not null,
-    nombre varchar(200) not null,   
+    nombre varchar(200) not null,
     comentario text null,
     primary key (id)
 );
@@ -1078,7 +1078,7 @@ create table cajachica(
     CONSTRAINT FK_cajachica_personal foreign key (personal) references personal(id)
 );
 
-create table tareas(
+create table tarea(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     categoria varchar(200) null,
     nombre varchar(200) null,
@@ -1107,5 +1107,5 @@ create table grupo(
     updated_at datetime NULL,
     primary key (id),
     CONSTRAINT FK_grupo_bitacora foreign key (bitacoraId) references bitacoras(id),
-    CONSTRAINT FK_grupo_tarea foreign key (tareaID) references tareas(id)
+    CONSTRAINT FK_grupo_tarea foreign key (tareaID) references tarea(id)
 );
