@@ -101,7 +101,7 @@ Route::get('/detalleHerramienta', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/usuarios/nuevo', [App\Http\Controllers\userController::class, 'create'])->name('users.create');
+    Route::get('/usuarios/nuevo', [App\Http\Controllers\UserController::class, 'create'])->name('users.create');
     Route::post('/usuarios', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
     Route::get('/usuarios', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
     Route::get('/usuarios/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('users.show');
