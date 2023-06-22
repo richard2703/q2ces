@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Helpers\Validaciones;
 use App\Helpers\Calculos;
 use App\Models\mantenimientos;
+use Illuminate\Support\Facades\Gate;
 
 class mantenimientosController extends Controller
 {
@@ -19,8 +20,8 @@ class mantenimientosController extends Controller
      */
     public function index()
     {
-        
-        dd( 'Todas las tareas...' );
+
+        dd('Todas las tareas...');
     }
 
     /**
@@ -30,8 +31,8 @@ class mantenimientosController extends Controller
      */
     public function create()
     {
-        
-        dd( 'Todas las tareas...' );
+
+        dd('Todas las tareas...');
     }
 
     /**
@@ -42,25 +43,27 @@ class mantenimientosController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate( [
+        abort_if(Gate::denies('calendario_create'), 403);
+
+        $request->validate([
             'titulo' => 'required|max:250',
             'maquinariaId' => 'required',
             'comentarios' => 'nullable|max:500',
-            
+
         ], [
             'titulo.required' => 'El campo nombre es obligatorio.',
             'maquinariaId.required' => 'El campo maquinaria es obligatorio.',
             'titulo.max' => 'El campo título excede el límite de caracteres permitidos.',
-            'comentarios.max' => 'El campo comentarios excede el límite de caracteres permitidos.', 
-        ] );
+            'comentarios.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+        ]);
         $mantenimiento = $request->all();
 
         // dd( $mantenimiento );
 
-        mantenimientos::create( $mantenimiento );
-        Session::flash( 'message', 1 );
+        mantenimientos::create($mantenimiento);
+        Session::flash('message', 1);
 
-        return redirect()->route( 'calendario.index' );
+        return redirect()->route('calendario.index');
     }
 
     /**
@@ -71,8 +74,8 @@ class mantenimientosController extends Controller
      */
     public function show($id)
     {
-        
-        dd( 'Todas las tareas...' );
+
+        dd('Todas las tareas...');
     }
 
     /**
@@ -83,8 +86,8 @@ class mantenimientosController extends Controller
      */
     public function edit($id)
     {
-        
-        dd( 'Todas las tareas...' );
+
+        dd('Todas las tareas...');
     }
 
     /**
@@ -96,25 +99,27 @@ class mantenimientosController extends Controller
      */
     public function update(Request $request)
     {
+        abort_if(Gate::denies('calendario_edit'), 403);
+
         //  dd( $request );
-         $request->validate( [
+        $request->validate([
             'manttoTitulo' => 'required|max:250',
             'manttoComentario' => 'nullable|max:500',
         ], [
             'manttoTitulo.required' => 'El campo nombre es obligatorio.',
             'manttoTitulo.max' => 'El campo título excede el límite de caracteres permitidos.',
             'manttoComentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
-        ] );
+        ]);
 
         $data = $request->all();
 
-        $mantto = mantenimientos::where( 'id', $data[ 'manttoId' ] )->first();
+        $mantto = mantenimientos::where('id', $data['manttoId'])->first();
 
-        if ( is_null( $mantto ) == false ) {
+        if (is_null($mantto) == false) {
 
-            $data[ 'titulo' ] =  $data[ 'manttoTitulo' ] ;
-            $data[ 'comentario' ] =  $data[ 'manttoComentario' ] ;
-            $data[ 'tipo' ] =  $data[ 'manttoTipoId' ] ;
+            $data['titulo'] =  $data['manttoTitulo'];
+            $data['comentario'] =  $data['manttoComentario'];
+            $data['tipo'] =  $data['manttoTipoId'];
 
             // $data[ 'prioridadId' ] =  $data[ 'manttoPrioridadId' ] ;
 
@@ -125,18 +130,18 @@ class mantenimientosController extends Controller
             //     }
             // }
             //*** manejo del estatus de la tarea cuando se cambia su estatus final*/
-            if ( $data[ 'manttoEstadoId' ] == 3 ) {
-                $data[ 'fechaReal' ] =  date( 'Y-m-d' ) ;
+            if ($data['manttoEstadoId'] == 3) {
+                $data['fechaReal'] =  date('Y-m-d');
             }
 
-            $data[ 'estadoId' ] =  $data[ 'manttoEstadoId' ] ;
+            $data['estadoId'] =  $data['manttoEstadoId'];
 
             // dd( $data );
-            $mantto->update( $data );
-            Session::flash( 'message', 1 );
+            $mantto->update($data);
+            Session::flash('message', 1);
         }
 
-        return redirect()->route( 'calendario.index' );
+        return redirect()->route('calendario.index');
     }
 
     /**

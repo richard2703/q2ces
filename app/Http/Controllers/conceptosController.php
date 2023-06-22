@@ -6,6 +6,7 @@ use App\Models\conceptos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Gate;
 
 class conceptosController extends Controller
 {
@@ -38,6 +39,8 @@ class conceptosController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(Gate::denies('cajachica_create'), 403);
+
         conceptos::create($request->only('codigo', 'nombre', 'comentario'));
         Session::flash('message', 1);
         return redirect()->action([cajachicaController::class, 'create']);

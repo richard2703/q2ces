@@ -9,37 +9,44 @@ use Illuminate\Http\Request;
 use App\Models\tareas;
 use App\Helpers\Validaciones;
 use App\Helpers\Calculos;
+use Illuminate\Support\Facades\Gate;
 
-class tareasController extends Controller {
+class tareasController extends Controller
+{
     /**
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
-    public function index() {
-        dd( 'Todas las tareas...' );
+    public function index()
+    {
+        dd('Todas las tareas...');
     }
 
     /**
-    * Show the form for creating a new resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
-    public function create() {
-        dd( 'para crear...' );
+    public function create()
+    {
+        dd('para crear...');
     }
 
     /**
-    * Store a newly created resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
-    */
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
 
-    public function store( Request $request ) {
-        $request->validate( [
+    public function store(Request $request)
+    {
+        abort_if(Gate::denies('calendario_create'), 403);
+
+        $request->validate([
             'titulo' => 'required|max:250',
             'responsable' => 'required',
             'comentarios' => 'nullable|max:500',
@@ -61,99 +68,105 @@ class tareasController extends Controller {
             // 'valor.numeric' => 'El campo valor debe de ser numérico.',
             // 'reorden.numeric' => 'El campo valor debe de ser numérico.',
             // 'maximo.numeric' => 'El campo valor debe de ser numérico.',
-        ] );
+        ]);
         $tarea = $request->all();
 
         // dd( $tarea );
 
-        tareas::create( $tarea );
-        Session::flash( 'message', 1 );
+        tareas::create($tarea);
+        Session::flash('message', 1);
 
-        return redirect()->route( 'calendario.index' );
+        return redirect()->route('calendario.index');
     }
 
     /**
-    * Display the specified resource.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 
-    public function show( $id ) {
-        dd( 'para mostar la tarea ' . $id . '...' );
+    public function show($id)
+    {
+        dd('para mostar la tarea ' . $id . '...');
     }
 
     /**
-    * Show the form for editing the specified resource.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 
-    public function edit( $id ) {
-        dd( 'para actualizar la tarea ' . $id . '...' );
+    public function edit($id)
+    {
+        dd('para actualizar la tarea ' . $id . '...');
     }
 
     /**
-    * Update the specified resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 
-    public function update( Request $request ) {
+    public function update(Request $request)
+    {
+        abort_if(Gate::denies('calendario_edit'), 403);
+
         // dd( $request );
-        $request->validate( [
+        $request->validate([
             'tareaTitulo' => 'required|max:250',
             'tareaComentario' => 'nullable|max:500',
         ], [
             'tareaTitulo.required' => 'El campo nombre es obligatorio.',
             'tareaTitulo.max' => 'El campo título excede el límite de caracteres permitidos.',
             'tareaComentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
-        ] );
+        ]);
 
         $data = $request->all();
 
-        $tarea = tareas::where( 'id', $data[ 'tareaId' ] )->first();
+        $tarea = tareas::where('id', $data['tareaId'])->first();
 
-        if ( is_null( $tarea ) == false ) {
+        if (is_null($tarea) == false) {
 
-            $data[ 'titulo' ] =  $data[ 'tareaTitulo' ] ;
-            $data[ 'comentario' ] =  $data[ 'tareaComentario' ] ;
-            $data[ 'responsable' ] =  $data[ 'tareaResponsableId' ] ;
+            $data['titulo'] =  $data['tareaTitulo'];
+            $data['comentario'] =  $data['tareaComentario'];
+            $data['responsable'] =  $data['tareaResponsableId'];
 
-            $data[ 'prioridadId' ] =  $data[ 'tareaPrioridadId' ] ;
+            $data['prioridadId'] =  $data['tareaPrioridadId'];
 
             //*** manejo del estatus de la tarea cuando se cambia su estatus inicial*/
-            if ( $tarea->estadoId <= 1 && $tarea->fechaInicioR == '0000-00-00' ) {
-                if ( $data[ 'tareaEstadoId' ] > 1 ) {
-                    $data[ 'fechaInicioR' ] =  date( 'Y-m-d' ) ;
+            if ($tarea->estadoId <= 1 && $tarea->fechaInicioR == '0000-00-00') {
+                if ($data['tareaEstadoId'] > 1) {
+                    $data['fechaInicioR'] =  date('Y-m-d');
                 }
             }
             //*** manejo del estatus de la tarea cuando se cambia su estatus final*/
-            if ( $data[ 'tareaEstadoId' ] == 3 ) {
-                $data[ 'fechaFinR' ] =  date( 'Y-m-d' ) ;
+            if ($data['tareaEstadoId'] == 3) {
+                $data['fechaFinR'] =  date('Y-m-d');
             }
 
-            $data[ 'estadoId' ] =  $data[ 'tareaEstadoId' ] ;
+            $data['estadoId'] =  $data['tareaEstadoId'];
 
             // dd( $data );
-            $tarea->update( $data );
-            Session::flash( 'message', 1 );
+            $tarea->update($data);
+            Session::flash('message', 1);
         }
 
-        return redirect()->route( 'calendario.index' );
+        return redirect()->route('calendario.index');
     }
 
     /**
-    * Remove the specified resource from storage.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 
-    public function destroy( $id ) {
+    public function destroy($id)
+    {
         //
     }
 }
