@@ -315,6 +315,75 @@
                 </li>
             @endcan
 
+            <!------ Mantenimientos ------>
+            <li class="nav-item {{ $activePage == 'mantenimientos' || $activePage == 'user-management' ? ' active' : '' }}">
+                <a class="nav-link p-2 " onmouseover="cambiar2();" onmouseout="volver2();" data-toggle="collapse"
+                    href="#mantenimientos" aria-expanded="false">
+                    <i><img id="cambiaBCO2" style="width:25px"
+                            src="{{ $activePage == 'mantenimientos' ? '/img/navs/personalmenubco.svg' : '/img/navs/personalmenu.svg' }}"></i>
+                    <p>{{ __('Mantenimientos') }}
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <!--no colapsable>-->
+                <div class="collapse " id="mantenimientos">
+                    <ul class="nav">
+                        <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                            <a href="{{ url('/mantenimientos') }}"class="nav-link -item{{ $activePage == 'mantenimientos' ? ' active' : '' }} ">
+                                <span class="sidebar-normal py-2 ps-5">{{ __('Ver Mantenimiento') }} </span>
+                            </a>
+                        </li>
+
+                        
+                        <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                            <a  href="{{ url('/nuevoMantenimiento') }}" class="nav-link -item{{ $activePage == 'nuevoMantenimiento' ? ' active' : '' }} ">
+                                <span class="sidebar-normal py-2 ps-5"> {{ __('Nuevo Mantemiento') }} </span>
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+           
+
+            <!------ Inspecciones ------>
+            <li class="nav-item {{ $activePage == 'inspecciones' || $activePage == 'user-management' ? ' active' : '' }}">
+                <a class="nav-link" href="#">
+                    <i><img id="cambiaBCO3" style="width:25px"
+                            src="{{ $activePage == 'inventario' ? '/img/navs/inventariomenubco.svg' : '/img/navs/inventariomenu.svg' }}"></i>
+                    <p> {{ __('Inspecciones') }} </p>
+                    {{--  <b class="caret"></b>  --}}
+                </a>
+            </li>
+
+            <!------ Caja Chica ------>
+            <li class="nav-item {{ $activePage == 'cajachica' || $activePage == 'user-management' ? ' active' : '' }}">
+                <a class="nav-link" href="{{ route('cajachica.index') }}">
+                    <i><img id="cambiaBCO3" style="width:25px"
+                            src="{{ $activePage == 'inventario' ? '/img/navs/inventariomenubco.svg' : '/img/navs/inventariomenu.svg' }}"></i>
+                    <p> {{ __('Caja chica') }} </p>
+                    {{--  <b class="caret"></b>  --}}
+                </a>
+            </li>
 
         </ul>
     </div>
