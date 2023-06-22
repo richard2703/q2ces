@@ -35,8 +35,8 @@ CREATE TABLE permissions (
     PRIMARY KEY (id),
     UNIQUE KEY permissions_name_guard_name_unique (name, guard_name)
 );
-INSERT INTO suappico_q2ces.permissions (name,guard_name,created_at,updated_at) VALUES
-	 ('permission_indexx','web','2022-07-25 19:54:15','2022-07-25 19:54:15'),
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('permission_index','web','2022-07-25 19:54:15','2022-07-25 19:54:15'),
 	 ('permission_create','web','2022-07-25 19:54:15','2022-07-25 19:54:15'),
 	 ('permission_show','web','2022-07-25 19:54:15','2022-07-25 19:54:15'),
 	 ('permission_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -46,7 +46,7 @@ INSERT INTO suappico_q2ces.permissions (name,guard_name,created_at,updated_at) V
 	 ('role_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('role_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('role_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
-INSERT INTO suappico_q2ces.permissions (name,guard_name,created_at,updated_at) VALUES
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('user_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('user_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('user_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -57,7 +57,7 @@ INSERT INTO suappico_q2ces.permissions (name,guard_name,created_at,updated_at) V
 	 ('asistencia_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('asistencia_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('asistencia_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
-INSERT INTO suappico_q2ces.permissions (name,guard_name,created_at,updated_at) VALUES
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('personal_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('personal_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('personal_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -68,7 +68,7 @@ INSERT INTO suappico_q2ces.permissions (name,guard_name,created_at,updated_at) V
 	 ('cajachica_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('cajachica_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('cajachica_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
-INSERT INTO suappico_q2ces.permissions (name,guard_name,created_at,updated_at) VALUES
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('maquinaria_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('maquinaria_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('maquinaria_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -79,7 +79,7 @@ INSERT INTO suappico_q2ces.permissions (name,guard_name,created_at,updated_at) V
 	 ('calendario_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('calendario_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('calendario_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
-INSERT INTO suappico_q2ces.permissions (name,guard_name,created_at,updated_at) VALUES
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('combustible_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('combustible_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('combustible_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -90,7 +90,7 @@ INSERT INTO suappico_q2ces.permissions (name,guard_name,created_at,updated_at) V
 	 ('inventario_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('inventario_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('inventario_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
-INSERT INTO suappico_q2ces.permissions (name,guard_name,created_at,updated_at) VALUES
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('obra_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('obra_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('obra_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -101,7 +101,7 @@ INSERT INTO suappico_q2ces.permissions (name,guard_name,created_at,updated_at) V
 	 ('puesto_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('puesto_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('puesto_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
-INSERT INTO suappico_q2ces.permissions (name,guard_name,created_at,updated_at) VALUES
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('inventario_restock','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('inventario_mover','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('asistencia_cortesemanal','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -994,7 +994,7 @@ create table gastosmantenimiento(
 create table conceptos(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     codigo varchar(200) not null,
-    nombre varchar(200) not null,   
+    nombre varchar(200) not null,
     comentario text null,
     primary key (id)
 );
@@ -1022,7 +1022,7 @@ create table cajachica(
     CONSTRAINT FK_cajachica_personal foreign key (personal) references personal(id)
 );
 
-create table tareas(
+create table tarea(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     categoria varchar(200) null,
     nombre varchar(200) null,
@@ -1051,5 +1051,5 @@ create table grupo(
     updated_at datetime NULL,
     primary key (id),
     CONSTRAINT FK_grupo_bitacora foreign key (bitacoraId) references bitacoras(id),
-    CONSTRAINT FK_grupo_tarea foreign key (tareaID) references tareas(id)
+    CONSTRAINT FK_grupo_tarea foreign key (tareaID) references tarea(id)
 );

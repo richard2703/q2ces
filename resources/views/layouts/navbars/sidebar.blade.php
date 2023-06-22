@@ -280,6 +280,41 @@
                 </li>
             @endcan
 
+            <!------ Usuarios ------>
+            @can('user_show')
+                <li class="nav-item {{ $activePage == 'obra' || $activePage == 'user-management' ? ' active' : '' }}">
+                    <a class="nav-link p-2" onmouseover="cambiar4();" onmouseout="volver4();" data-toggle="collapse"
+                        href="#usuarios" aria-expanded="false">
+                        <i><img id="cambiaBCO4"
+                                src="{{ $activePage == 'obra' ? '/img/navs/obrasmenubco.svg' : '/img/navs/obrasmenu.svg' }}"
+                                style="width:25px"></i>
+                        <p>{{ __('usuarios y permisos') }}
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse " id="usuarios">
+                        <ul class="nav">
+                            <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                                <a
+                                    href="{{ route('users.index') }}"class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
+                                    <span class="sidebar-normal py-2 ps-5">{{ __('Ver usuarios') }} </span>
+                                </a>
+                            </li>
+
+                            <!--no colapsable>-->
+                            @can('permission_create')
+                                <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                                    <a
+                                        href="{{ route('roles.index') }}"class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
+                                        <span class="sidebar-normal py-2 ps-5"> {{ __('ver roles') }} </span>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </div>
+                </li>
+            @endcan
+
 
         </ul>
     </div>

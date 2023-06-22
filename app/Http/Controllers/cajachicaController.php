@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
+use App\Helpers\Calculos;
+
 class cajachicaController extends Controller
 {
     /**
@@ -19,6 +21,7 @@ class cajachicaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         abort_if(Gate::denies('cajachica_index'), 403);
@@ -47,15 +50,24 @@ class cajachicaController extends Controller
             )->orderby('dia', 'desc')->orderby('id', 'desc')
             ->paginate(15);
 
-        $last = cajaChica::orderby('dia', 'desc')->orderby('id', 'desc')->first();
+        $vctTipos = [1, 2];
 
-        // dd($registros);
-        // tomas::join('examenes', 'tomas.examenes_id', 'examenes.id')
-        // ->select('examenes.id', 'examenes.nombre', 'tomas.estatus', 'tomas.id as toma')
-        // ->where('tomas.tickets_id', $ticket->id)
-        // ->paginate(10);
+        $last = cajaChica::whereIn('cajachica.tipo',   $vctTipos)
+            ->orderby('dia', 'desc')
+            ->orderby('id', 'desc')->first();
+
+        $lastTotal = 0;
+        if ($last) {
+            $lastTotal = $last->total;
+        }
+
+        // dd( $last );
+        // tomas::join( 'examenes', 'tomas.examenes_id', 'examenes.id' )
+        // ->select( 'examenes.id', 'examenes.nombre', 'tomas.estatus', 'tomas.id as toma' )
+        // ->where( 'tomas.tickets_id', $ticket->id )
+        // ->paginate( 10 );
         // Dia, concepto, comprabante, numero de comprobante, cliente, obra, equipo, personal, cantidad, tipo
-        return view('cajachica.indexcajachica', compact('registros', 'last'));
+        return view('cajachica.indexcajachica', compact('registros', 'lastTotal'));
     }
 
     /**
@@ -63,6 +75,7 @@ class cajachicaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
         abort_if(Gate::denies('cajachica_create'), 403);
@@ -71,7 +84,7 @@ class cajachicaController extends Controller
         $personal = personal::get();
         $obras = obras::get();
         $maquinaria = maquinaria::get();
-        // dd($maquinaria);
+        // dd( $maquinaria );
         return view('cajachica.nuevoMovimiento', compact('conceptos', 'personal', 'obras', 'maquinaria'));
     }
 
@@ -81,24 +94,34 @@ class cajachicaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
         abort_if(Gate::denies('cajachica_create'), 403);
 
+        // dd( $request );
+
         $last = cajaChica::orderby('dia', 'desc')->orderby('id', 'desc')->first();
 
+        if ($last) {
+            $decTotal = $last->total;
+        } else {
+            $decTotal = 0;
+        }
 
         if ($request->tipo == 1 || $request->tipo == 2) {
+            //*** para ingreso o egreso */
             if ($request->tipo == 1) {
-                $total = $last->total + $request->cantidad;
-                // dd('uno');
+                $total = $decTotal + $request->cantidad;
             } else {
-                $total = $last->total - $request->cantidad;
+                $total = $decTotal - $request->cantidad;
             }
         } else {
-            // dd('3');
+            //*** todos los demas */
+            $total = 0;
         }
-        // dd($last);
+        // dd( $decTotal, $total );
+
         $ultimo = cajachica::create($request->only('dia', 'concepto', 'comprobante', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario',) + ['total' => $total]);
         Session::flash('message', 1);
         return redirect()->action([cajachicaController::class, 'index']);
@@ -110,9 +133,10 @@ class cajachicaController extends Controller
      * @param  \App\Models\cajachica  $cajachica
      * @return \Illuminate\Http\Response
      */
+
     public function show(cajachica $cajachica)
     {
-        abort_if(Gate::denies('cajachica_show'), 403);
+        //
     }
 
     /**
@@ -121,11 +145,12 @@ class cajachicaController extends Controller
      * @param  \App\Models\cajachica  $cajachica
      * @return \Illuminate\Http\Response
      */
+
     public function edit(cajachica $cajachica)
     {
         abort_if(Gate::denies('cajachica_edit'), 403);
 
-        // dd($cajachica);
+        // dd( $cajachica );
 
         $conceptos = conceptos::get();
         $personal = personal::get();
@@ -133,7 +158,10 @@ class cajachicaController extends Controller
         $maquinaria = maquinaria::get();
         return view('cajachica.editMovimiento', compact('conceptos', 'personal', 'obras', 'maquinaria', 'cajachica'));
 
-        // {{ \Carbon\Carbon::parse($tarea->fechaInicio)->format('d/m/Y') }}
+        // {
+        // {
+        //     \Carbon\Carbon::parse( $tarea->fechaInicio )->format( 'd/m/Y' ) }
+        // }
     }
 
     /**
@@ -143,14 +171,21 @@ class cajachicaController extends Controller
      * @param  \App\Models\cajachica  $cajachica
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, cajachica $cajachica)
     {
         abort_if(Gate::denies('cajachica_edit'), 403);
 
         $cajachica->update($request->only('dia', 'concepto', 'comprobante', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario', 'total'));
+
+        //*** ejecutamos el recalculo general */
+        $objCalculos = new Calculos;
+
+        $objCalculos->RecalcularCajaChica($cajachica->id);
+
         Session::flash('message', 1);
         return redirect()->action([cajachicaController::class, 'index']);
-        dd("update");
+        dd('update');
     }
 
     /**
@@ -159,10 +194,11 @@ class cajachicaController extends Controller
      * @param  \App\Models\cajachica  $cajachica
      * @return \Illuminate\Http\Response
      */
+
     public function destroy(cajachica $cajachica)
     {
         abort_if(Gate::denies('cajachica_destroy'), 403);
 
-        dd("destroy");
+        dd('destroy');
     }
 }
