@@ -34,12 +34,13 @@
                                         </div>
                                     @endif
                                     <div class="row">
+                                        <div class="col-6">
+                                            <p>Semana del</br> <span class="combustibleLitros">28 de mayo al 4 de junio</span></p>
+                                        </div>
 
-                                        <div class="col-6 ">
-                                            <span class="h3">
-                                                Caja Chica: <strong class="negritas">$ {{ $lastTotal }}</strong>
-                                            </span>
-
+                                        <div class="col-6 align-self-end">
+                                        <p class="text-end">Caja Chica</p>
+                                        <p class="combustibleLitros fw-semibold text-end">$ {{ $lastTotal }}</p>     
                                         </div>
                                         <div class="col-12 text-right pt-3">
                                             @can('cajachica_create')
