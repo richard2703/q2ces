@@ -44,13 +44,13 @@ class cajachicaController extends Controller {
             'maquinaria.nombre as maquinaria',
             'cantidad',
             'cajaChica.tipo',
-            'cajachica.total'
+            'cajaChica.total'
         )->orderby( 'dia', 'desc' )->orderby( 'id', 'desc' )
         ->paginate( 15 );
 
         $vctTipos = [ 1, 2 ];
 
-        $last = cajaChica::whereIn( 'cajachica.tipo',   $vctTipos )
+        $last = cajaChica::whereIn( 'cajaChica.tipo',   $vctTipos )
         ->orderby( 'dia', 'desc' )
         ->orderby( 'id', 'desc' )->first();
 
@@ -65,7 +65,7 @@ class cajachicaController extends Controller {
         // ->where( 'tomas.tickets_id', $ticket->id )
         // ->paginate( 10 );
         // Dia, concepto, comprabante, numero de comprobante, cliente, obra, equipo, personal, cantidad, tipo
-        return view( 'cajachica.indexcajachica', compact( 'registros', 'lastTotal' ) );
+        return view( 'cajaChica.indexcajachica', compact( 'registros', 'lastTotal' ) );
     }
 
     /**
@@ -82,7 +82,7 @@ class cajachicaController extends Controller {
         $obras = obras::get();
         $maquinaria = maquinaria::get();
         // dd( $maquinaria );
-        return view( 'cajachica.nuevoMovimiento', compact( 'conceptos', 'personal', 'obras', 'maquinaria' ) );
+        return view( 'cajaChica.nuevoMovimiento', compact( 'conceptos', 'personal', 'obras', 'maquinaria' ) );
     }
 
     /**
@@ -118,7 +118,7 @@ class cajachicaController extends Controller {
         }
         // dd( $decTotal, $total );
 
-        $ultimo = cajachica::create( $request->only( 'dia', 'concepto', 'comprobante', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario', ) + [ 'total' => $total ] );
+        $ultimo = cajaChica::create( $request->only( 'dia', 'concepto', 'comprobante', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario', ) + [ 'total' => $total ] );
         Session::flash( 'message', 1 );
         return redirect()->action( [ cajachicaController::class, 'index' ] );
     }
@@ -126,31 +126,31 @@ class cajachicaController extends Controller {
     /**
     * Display the specified resource.
     *
-    * @param  \App\Models\cajachica  $cajachica
+    * @param  \App\Models\cajaChica  $cajaChica
     * @return \Illuminate\Http\Response
     */
 
-    public function show( cajachica $cajachica ) {
+    public function show( cajaChica $cajaChica ) {
         //
     }
 
     /**
     * Show the form for editing the specified resource.
     *
-    * @param  \App\Models\cajachica  $cajachica
+    * @param  \App\Models\cajaChica  $cajaChica
     * @return \Illuminate\Http\Response
     */
 
-    public function edit( cajachica $cajachica ) {
+    public function edit( cajaChica $cajaChica ) {
         abort_if ( Gate::denies( 'cajachica_edit' ), 403 );
 
-        // dd( $cajachica );
+        // dd( $cajaChica );
 
         $conceptos = conceptos::get();
         $personal = personal::get();
         $obras = obras::get();
         $maquinaria = maquinaria::get();
-        return view( 'cajachica.editMovimiento', compact( 'conceptos', 'personal', 'obras', 'maquinaria', 'cajachica' ) );
+        return view( 'cajaChica.editMovimiento', compact( 'conceptos', 'personal', 'obras', 'maquinaria', 'cajaChica' ) );
 
         // {
         // {
@@ -162,11 +162,11 @@ class cajachicaController extends Controller {
     * Update the specified resource in storage.
     *
     * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\cajachica  $cajachica
+    * @param  \App\Models\cajaChica  $cajaChica
     * @return \Illuminate\Http\Response
     */
 
-    public function update( Request $request, cajachica $cajachica ) {
+    public function update( Request $request, cajaChica $cajaChica ) {
         abort_if ( Gate::denies( 'cajachica_edit' ), 403 );
 
         //*** Arreglo para buscar ingresos y egresos */
@@ -175,36 +175,36 @@ class cajachicaController extends Controller {
         $objCalculos = new Calculos();
 
         //*** obtenemos la informacion del registro antes de modificar  */
-        $objRecord = cajachica::select( '*' )->where( 'id', '=',  $cajachica->id )->first();
+        $objRecord = cajaChica::select( '*' )->where( 'id', '=',  $cajaChica->id )->first();
 
         if ( $objRecord->tipo <= 2 &&  $request[ 'tipo' ] > 2 ) {
             //*** se dio un cambio de tipo  */
             $blnCrearPivote = true;
         }
 
-        // dd( $objRecord->tipo. ' = '. $cajachica->tipo );
+        // dd( $objRecord->tipo. ' = '. $cajaChica->tipo );
 
-        $cajachica->update( $request->only( 'dia', 'concepto', 'comprobante', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario', 'total' ) );
+        $cajaChica->update( $request->only( 'dia', 'concepto', 'comprobante', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario', 'total' ) );
 
         if ( $request[ 'tipo' ] == 1 || $request[ 'tipo' ] == 2 ) {
             //*** ejecutamos el recalculo general */
-            $objCalculos->RecalcularCajaChica( $cajachica->id );
+            $objCalculos->RecalcularCajaChica( $cajaChica->id );
 
         } else {
-            $cajachica->total = 0;
-            $cajachica->update();
+            $cajaChica->total = 0;
+            $cajaChica->update();
 
             //*** se realiza el recalculo con pivote */
             if ( $blnCrearPivote == true ) {
 
                 //*** preguntamos por el movimiento anterior a este tipo */
                 //*** buscamos el registro anterior inmediato */
-                $objAnterior = cajachica::select( '*' )
-                ->where( 'cajachica.dia', '<=', $objRecord->dia )
-                ->where( 'id', '!=', $cajachica->id )
-                ->where( 'id', '<', $cajachica->id )
-                ->whereIn( 'cajachica.tipo',   $vctTipos )
-                ->orderBy( 'cajachica.id', 'desc' )->first();
+                $objAnterior = cajaChica::select( '*' )
+                ->where( 'cajaChica.dia', '<=', $objRecord->dia )
+                ->where( 'id', '!=', $cajaChica->id )
+                ->where( 'id', '<', $cajaChica->id )
+                ->whereIn( 'cajaChica.tipo',   $vctTipos )
+                ->orderBy( 'cajaChica.id', 'desc' )->first();
 
                 $intPivote = 0;
 
@@ -213,12 +213,12 @@ class cajachicaController extends Controller {
                     $intPivote = $objAnterior->id;
                 } else {
                     //** no hay anterior */
-                    $objSiguiente = cajachica::select( '*' )
-                    ->where( 'cajachica.dia', '>=', $objRecord->dia )
-                    ->where( 'id', '!=', $cajachica->id )
-                    ->where( 'id', '>', $cajachica->id )
-                    ->whereIn( 'cajachica.tipo',   $vctTipos )
-                    ->orderBy( 'cajachica.id', 'asc' )->first();
+                    $objSiguiente = cajaChica::select( '*' )
+                    ->where( 'cajaChica.dia', '>=', $objRecord->dia )
+                    ->where( 'id', '!=', $cajaChica->id )
+                    ->where( 'id', '>', $cajaChica->id )
+                    ->whereIn( 'cajaChica.tipo',   $vctTipos )
+                    ->orderBy( 'cajaChica.id', 'asc' )->first();
 
                     $intPivote = $objSiguiente->id;
 
@@ -248,11 +248,11 @@ class cajachicaController extends Controller {
     /**
     * Remove the specified resource from storage.
     *
-    * @param  \App\Models\cajachica  $cajachica
+    * @param  \App\Models\cajaChica  $cajaChica
     * @return \Illuminate\Http\Response
     */
 
-    public function destroy( cajachica $cajachica ) {
+    public function destroy( cajaChica $cajaChica ) {
         abort_if ( Gate::denies( 'cajachica_destroy' ), 403 );
 
         dd( 'destroy' );

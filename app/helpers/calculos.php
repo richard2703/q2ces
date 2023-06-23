@@ -5,7 +5,7 @@ namespace App\Helpers;
 use App\Models\carga;
 use App\Models\descarga;
 use App\Models\maquinaria;
-use App\Models\cajachica;
+use App\Models\cajaChica;
 use Illuminate\Support\Facades\DB;
 
 class Calculos {
@@ -116,15 +116,15 @@ class Calculos {
         $vctTipos = [ 1, 2 ];
 
         //*** obtenemos la informacion del registro pivote  */
-        $objRecord = cajachica::select( '*' )->where( 'id', '=', $registroId )->first();
+        $objRecord = cajaChica::select( '*' )->where( 'id', '=', $registroId )->first();
 
         //*** buscamos el registro anterior inmediato */
-        $objAnterior = cajachica::select( '*' )
-        ->where( 'cajachica.dia', '<=', $objRecord->dia )
+        $objAnterior = cajaChica::select( '*' )
+        ->where( 'cajaChica.dia', '<=', $objRecord->dia )
         ->where( 'id', '!=', $registroId )
         ->where( 'id', '<', $registroId )
-        ->whereIn( 'cajachica.tipo',   $vctTipos )
-        ->orderBy( 'cajachica.id', 'desc' )->first();
+        ->whereIn( 'cajaChica.tipo',   $vctTipos )
+        ->orderBy( 'cajaChica.id', 'desc' )->first();
 
         $registroAnteriorId = 0;
         $decTotalAnterior = 0;
@@ -151,13 +151,13 @@ class Calculos {
         }
 
         //*** buscamos los registros posteriores al pivote */
-        $vctRegistros = cajachica::select( 'cajachica.*' )
-        // ->where( 'cajachica.id', '!=', $registroId )
-        ->where( 'cajachica.id', '>', $registroId )
-        ->where( 'cajachica.dia', '>=', $objRecord->dia )
-        ->whereIn( 'cajachica.tipo',   $vctTipos )
-        ->orderBy( 'cajachica.id', 'asc' )
-        ->orderBy( 'cajachica.dia', 'asc' )
+        $vctRegistros = cajaChica::select( 'cajaChica.*' )
+        // ->where( 'cajaChica.id', '!=', $registroId )
+        ->where( 'cajaChica.id', '>', $registroId )
+        ->where( 'cajaChica.dia', '>=', $objRecord->dia )
+        ->whereIn( 'cajaChica.tipo',   $vctTipos )
+        ->orderBy( 'cajaChica.id', 'asc' )
+        ->orderBy( 'cajaChica.dia', 'asc' )
         ->get();
 
         $intCont = 0;
