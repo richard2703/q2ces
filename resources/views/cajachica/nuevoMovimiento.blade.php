@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'cajachica', 'titlePage' => __('Caja Chica - Nuevo Movimiento')])
+@extends('layouts.main', ['activePage' => 'cajaChica', 'titlePage' => __('Caja Chica - Nuevo Movimiento')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -22,7 +22,7 @@
                                     <h4 class="card-title">Movimientos de Caja Chica</h4>
                                     {{-- <p class="card-category">Usuarios registrados</p> --}}
                                 </div>
-                                <form class="row alertaGuardar" action="{{ route('cajachica.store') }}" method="post"
+                                <form class="row alertaGuardar" action="{{ route('cajaChica.store') }}" method="post"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="card-body">

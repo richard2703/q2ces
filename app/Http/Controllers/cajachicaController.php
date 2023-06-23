@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Session;
 
 use App\Helpers\Calculos;
 
-class cajachicaController extends Controller {
+class cajaChicaController extends Controller {
     /**
     * Display a listing of the resource.
     *
@@ -65,7 +65,7 @@ class cajachicaController extends Controller {
         // ->where( 'tomas.tickets_id', $ticket->id )
         // ->paginate( 10 );
         // Dia, concepto, comprabante, numero de comprobante, cliente, obra, equipo, personal, cantidad, tipo
-        return view( 'cajaChica.indexcajachica', compact( 'registros', 'lastTotal' ) );
+        return view( 'cajaChica.indexCajaChica', compact( 'registros', 'lastTotal' ) );
     }
 
     /**

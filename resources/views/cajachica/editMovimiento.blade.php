@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'cajachica', 'titlePage' => __('Caja Chica - Nuevo Movimiento')])
+@extends('layouts.main', ['activePage' => 'cajaChica', 'titlePage' => __('Caja Chica - Nuevo Movimiento')])
 @section('content')
     @inject('carbon', 'Carbon\Carbon')
     <div class="content">
@@ -12,7 +12,7 @@
                                     <h4 class="card-title">Movimientos de Caja Chica</h4>
                                     {{-- <p class="card-category">Usuarios registrados</p> --}}
                                 </div>
-                                <form class="row alertaGuardar" action="{{ route('cajachica.update', $cajachica->id) }}"
+                                <form class="row alertaGuardar" action="{{ route('cajaChica.update', $cajaChica->id) }}"
                                     method="post" enctype="multipart/form-data">
                                     @csrf
                                     @method('put')
@@ -32,7 +32,7 @@
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Dia:</label></br>
                                                 <input type="date" class="inputCaja" id="dia" name="dia"
-                                                    value={{ $cajachica->dia }}>
+                                                    value={{ $cajaChica->dia }}>
 
                                             </div>
 
@@ -43,7 +43,7 @@
                                                     <option selected>Seleccione</option>
                                                     @forelse ($conceptos as $concepto)
                                                         <option value="{{ $concepto->id }}"
-                                                            {{ $cajachica->concepto == $concepto->id ? 'selected' : '' }}>
+                                                            {{ $cajaChica->concepto == $concepto->id ? 'selected' : '' }}>
                                                             {{ $concepto->codigo }} -
                                                             {{ $concepto->nombre }}
                                                         </option>
@@ -60,7 +60,7 @@
                                                     <option selected>Seleccione</option>
                                                     @forelse ($personal as $persona)
                                                         <option value="{{ $persona->id }}"
-                                                            {{ $cajachica->personal == $persona->id ? 'selected' : '' }}>
+                                                            {{ $cajaChica->personal == $persona->id ? 'selected' : '' }}>
                                                             {{ $persona->nombres }}
                                                             {{ $persona->apellidoP }}
                                                         </option>
@@ -75,19 +75,19 @@
                                                     aria-label="Default select example">
                                                     <option selected>Seleccione</option>
                                                     <option value="1"
-                                                        {{ $cajachica->comprobante == 1 ? 'selected' : '' }}>
+                                                        {{ $cajaChica->comprobante == 1 ? 'selected' : '' }}>
                                                         Factura
                                                     </option>
                                                     <option value="2"
-                                                        {{ $cajachica->comprobante == 2 ? 'selected' : '' }}>
+                                                        {{ $cajaChica->comprobante == 2 ? 'selected' : '' }}>
                                                         Vale Q2Ces
                                                     </option>
                                                     <option value="3"
-                                                        {{ $cajachica->comprobante == 3 ? 'selected' : '' }}>
+                                                        {{ $cajaChica->comprobante == 3 ? 'selected' : '' }}>
                                                         Nota
                                                     </option>
                                                     <option value="4"
-                                                        {{ $cajachica->comprobante == 4 ? 'selected' : '' }}>
+                                                        {{ $cajaChica->comprobante == 4 ? 'selected' : '' }}>
                                                         Remision
                                                     </option>
                                                 </select>
@@ -96,7 +96,7 @@
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Numero de comprobante:</label></br>
                                                 <input type="text" class="inputCaja" id="ncomprobante"
-                                                    name="ncomprobante" value={{ $cajachica->ncomprobante }}>
+                                                    name="ncomprobante" value={{ $cajaChica->ncomprobante }}>
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
@@ -106,7 +106,7 @@
                                                     <option selected>Seleccione</option>
                                                     @forelse ($obras as $obra)
                                                         <option value="{{ $obra->id }}"
-                                                            {{ $cajachica->obra == $obra->id ? 'selected' : '' }}>
+                                                            {{ $cajaChica->obra == $obra->id ? 'selected' : '' }}>
                                                             {{ $obra->nombre }} </option>
                                                     @empty
                                                     @endforelse
@@ -130,7 +130,7 @@
                                                     <option selected>Seleccione</option>
                                                     @forelse ($maquinaria as $maquina)
                                                         <option value="{{ $maquina->id }}"
-                                                            {{ $cajachica->equipo == $maquina->id ? 'selected' : '' }}>
+                                                            {{ $cajaChica->equipo == $maquina->id ? 'selected' : '' }}>
                                                             {{ $maquina->identificador }}
                                                             - {{ $maquina->nombre }}
                                                         </option>
@@ -150,15 +150,15 @@
                                                 <select id="tipo" name="tipo" class="form-select"
                                                     aria-label="Default select example">
                                                     <option selected>Seleccione</option>
-                                                    <option value="1" {{ $cajachica->tipo == 1 ? 'selected' : '' }}>
+                                                    <option value="1" {{ $cajaChica->tipo == 1 ? 'selected' : '' }}>
                                                         Ingreso </option>
-                                                    <option value="2" {{ $cajachica->tipo == 2 ? 'selected' : '' }}>
+                                                    <option value="2" {{ $cajaChica->tipo == 2 ? 'selected' : '' }}>
                                                         Egreso
                                                     </option>
-                                                    <option value="3" {{ $cajachica->tipo == 3 ? 'selected' : '' }}>
+                                                    <option value="3" {{ $cajaChica->tipo == 3 ? 'selected' : '' }}>
                                                         Ingreso Servicios
                                                     </option>
-                                                    <option value="4" {{ $cajachica->tipo == 4 ? 'selected' : '' }}>
+                                                    <option value="4" {{ $cajaChica->tipo == 4 ? 'selected' : '' }}>
                                                         Pendiente de cobro y/o factura
                                                     </option>
 
@@ -174,12 +174,12 @@
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Cantidad:</label></br>
                                                 <input type="number" class="inputCaja" id="cantidad" name="cantidad"
-                                                    value={{ $cajachica->cantidad }}>
+                                                    value={{ $cajaChica->cantidad }}>
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Comentario:</label></br>
-                                                <textarea id="comentario" class="inputCaja" name="comentario" rows="5" cols="20">{{ $cajachica->comentario }}</textarea>
+                                                <textarea id="comentario" class="inputCaja" name="comentario" rows="5" cols="20">{{ $cajaChica->comentario }}</textarea>
 
                                             </div>
 
