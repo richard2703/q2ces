@@ -120,7 +120,7 @@ class cajaChicaController extends Controller {
 
         $ultimo = cajaChica::create( $request->only( 'dia', 'concepto', 'comprobante', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario', ) + [ 'total' => $total ] );
         Session::flash( 'message', 1 );
-        return redirect()->action( [ cajachicaController::class, 'index' ] );
+        return redirect()->action( [ cajaChicaController::class, 'index' ] );
     }
 
     /**
@@ -241,7 +241,7 @@ class cajaChicaController extends Controller {
         }
 
         Session::flash( 'message', 1 );
-        return redirect()->action( [ cajachicaController::class, 'index' ] );
+        return redirect()->action( [ cajaChicaController::class, 'index' ] );
         dd( 'update' );
     }
 

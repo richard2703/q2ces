@@ -38,7 +38,7 @@
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Concepto:</label></br>
-                                                <select id="concepto" name="concepto" class="form-select"
+                                                <select id="concepto" name="concepto" class="form-select" required
                                                     aria-label="Default select example">
                                                     <option selected>Seleccione</option>
                                                     @forelse ($conceptos as $concepto)
@@ -173,7 +173,7 @@
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Cantidad:</label></br>
-                                                <input type="number" class="inputCaja" id="cantidad" name="cantidad"
+                                                <input type="number" class="inputCaja text-right" id="cantidad" name="cantidad"  maxlength="100000" step="1" min="1" max="99999" placeholder="ej. 100"
                                                     value={{ $cajaChica->cantidad }}>
                                             </div>
 

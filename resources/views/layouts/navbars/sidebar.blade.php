@@ -270,8 +270,8 @@
             <!------ Caja Chica ------>
             @can('cajachica_show')
                 <li
-                    class="nav-item {{ $activePage == 'cajachica' || $activePage == 'user-management' ? ' active' : '' }}">
-                    <a class="nav-link" href="{{ route('cajachica.index') }}">
+                    class="nav-item {{ $activePage == 'cajaChica' || $activePage == 'user-management' ? ' active' : '' }}">
+                    <a class="nav-link" href="{{ route('cajaChica.index') }}">
                         <i><img id="cambiaBCO3" style="width:25px"
                                 src="{{ $activePage == 'inventario' ? '/img/navs/inventariomenubco.svg' : '/img/navs/inventariomenu.svg' }}"></i>
                         <p> {{ __('Caja chica') }} </p>

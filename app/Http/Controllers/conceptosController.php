@@ -43,7 +43,7 @@ class conceptosController extends Controller
 
         conceptos::create($request->only('codigo', 'nombre', 'comentario'));
         Session::flash('message', 1);
-        return redirect()->action([cajachicaController::class, 'create']);
+        return redirect()->action([cajaChicaController::class, 'create']);
     }
 
     /**
