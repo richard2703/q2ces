@@ -39,14 +39,14 @@ Route::get('/asistencia/export', [App\Http\Controllers\asistenciaController::cla
 
 
 //Mantenimiento
- Route::get('/mantenimientos', function () {
-     return view('mantenimientos.mantenimientos');
- });
+Route::get('/mantenimientos', function () {
+    return view('mantenimientos.mantenimientos');
+});
 
- Route::get('/nuevoMantenimiento', function () {
-     return view('mantenimientos.nuevoMantenimiento');
- });
- Route::get('/editarMantenimientos', function () {
+Route::get('/nuevoMantenimiento', function () {
+    return view('mantenimientos.nuevoMantenimiento');
+});
+Route::get('/editarMantenimientos', function () {
     return view('mantenimientos.editarMantenimientos');
 });
 
