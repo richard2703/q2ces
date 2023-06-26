@@ -39,14 +39,14 @@ Route::get('/asistencia/export', [App\Http\Controllers\asistenciaController::cla
 
 
 //Mantenimiento
- Route::get('/mantenimientos', function () {
-     return view('mantenimientos.mantenimientos');
- });
+Route::get('/mantenimientos', function () {
+    return view('mantenimientos.mantenimientos');
+});
 
- Route::get('/nuevoMantenimiento', function () {
-     return view('mantenimientos.nuevoMantenimiento');
- });
- Route::get('/editarMantenimientos', function () {
+Route::get('/nuevoMantenimiento', function () {
+    return view('mantenimientos.nuevoMantenimiento');
+});
+Route::get('/editarMantenimientos', function () {
     return view('mantenimientos.editarMantenimientos');
 });
 
@@ -236,7 +236,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::delete('/asistencia/{personal}', [App\Http\Controllers\UserController::class, 'destroy'])->name('personal.delete');
 
     // Caja Chica
-    Route::resource('cajachica', App\Http\Controllers\cajachicaController::class);
+    Route::resource('cajaChica', App\Http\Controllers\cajaChicaController::class);
     // Conceptos
     Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
 });

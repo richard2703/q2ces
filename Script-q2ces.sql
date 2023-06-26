@@ -960,7 +960,7 @@ create table asistencia(
     CONSTRAINT FK_asistencia_tipoHoraExtraId foreign key (tipoHoraExtraId) references tipoHoraExtra(id)
 );
 
-create table bmantenimiento(
+create table bMantenimiento(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     personalId bigint(20) unsigned NOT NULL,
     maquinariaId bigint(20) unsigned NOT NULL,
@@ -978,7 +978,7 @@ create table bmantenimiento(
     CONSTRAINT FK_bmantenimiento_userId foreign key (maquinariaId) references maquinaria(id)
 );
 
-create table gastosmantenimiento(
+create table gastosMantenimiento(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     bmantenimientoId bigint(20) unsigned NOT NULL,
     inventarioId bigint(20) unsigned NOT NULL,
@@ -999,7 +999,7 @@ create table conceptos(
     primary key (id)
 );
 
-create table cajachica(
+create table cajaChica(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     dia date not null,
     concepto bigint(20) unsigned NOT null,

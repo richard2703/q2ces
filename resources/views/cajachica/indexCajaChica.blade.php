@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'cajachica', 'titlePage' => __('Caja Chica')])
+@extends('layouts.main', ['activePage' => 'cajaChica', 'titlePage' => __('Caja Chica')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -44,7 +44,7 @@
                                         </div>
                                         <div class="col-12 text-right pt-3">
                                             @can('cajachica_create')
-                                                <a href="{{ route('cajachica.create') }}">
+                                                <a href="{{ route('cajaChica.create') }}">
                                                     <button type="button" class="btn botonGral">Nuevo movimiento</button>
                                                 </a>
                                             @endcan
@@ -152,7 +152,7 @@
                                                                 </a>
                                                             @endcan
                                                             @can('cajachica_edit')
-                                                                <a href="{{ route('cajachica.edit', $registro->id) }}"
+                                                                <a href="{{ route('cajaChica.edit', $registro->id) }}"
                                                                     class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                         height="28" fill="currentColor"
