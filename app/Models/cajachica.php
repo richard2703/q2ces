@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class cajachica extends Model
+class cajaChica extends Model
 {
     use HasFactory;
-    protected $table = "cajachica";
+    protected $table = "cajaChica";
 
     public $timestamps = true;
 
