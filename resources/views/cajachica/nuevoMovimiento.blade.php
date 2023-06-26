@@ -38,9 +38,7 @@
                                         @endif
                                         <div class="row">
                                             <div class="col-6 ">
-                                                <span>
-                                                    Semana del 5 de junio al 11 de junio
-                                                </span>
+                                            <p>Semana del</br> <span class="combustibleLitros">28 de mayo al 4 de junio</span></p>
 
                                             </div>
                                             <div class="col-6 text-right">

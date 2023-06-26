@@ -51,28 +51,33 @@
 
                                                         <div class="row alin">
                                                             <div class=" col-12 col-sm-6  mb-3 ">
-                                                                <label class="labelTitulo">Nombre: <span>*</span></label></br>
-                                                                <input type="text" class="inputCaja" id="nombre" placeholder="Especifique..." required
-                                                                    name="nombre" value="{{ old('nombre') }}">
+                                                                <label class="labelTitulo">Nombre:
+                                                                    <span>*</span></label></br>
+                                                                <input type="text" class="inputCaja" id="nombre"
+                                                                    placeholder="Especifique..." required name="nombre"
+                                                                    value="{{ old('nombre') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Marca:</label></br>
-                                                                <input type="text" class="inputCaja" id="marca"  placeholder="Especifique..."
-                                                                    name="marca" value="{{ old('marca') }}">
+                                                                <input type="text" class="inputCaja" id="marca"
+                                                                    placeholder="Especifique..." name="marca"
+                                                                    value="{{ old('marca') }}">
                                                             </div>
 
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Modelo:</label></br>
-                                                                <input type="text" class="inputCaja" id="modelo"  placeholder="Especifique..."
-                                                                    name="modelo" value="{{ old('modelo') }}">
+                                                                <input type="text" class="inputCaja" id="modelo"
+                                                                    placeholder="Especifique..." name="modelo"
+                                                                    value="{{ old('modelo') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Sub Marca:</label></br>
-                                                                <input type="text" class="inputCaja" id="submarca"  placeholder="Especifique..."
-                                                                    name="submarca" value="{{ old('submarca') }}">
+                                                                <input type="text" class="inputCaja" id="submarca"
+                                                                    placeholder="Especifique..." name="submarca"
+                                                                    value="{{ old('submarca') }}">
                                                             </div>
 
                                                             {{-- <div class=" col-12 col-sm-6 col-lg-4  mb-3 ">
@@ -83,10 +88,11 @@
                                                             </div> --}}
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Categoría:</label><span>*</span></br>
+                                                                <label
+                                                                    class="labelTitulo">Categoría:</label><span>*</span></br>
                                                                 <select class="form-select"
-                                                                    aria-label="Default select example" id="categoria" required
-                                                                    name="categoria">
+                                                                    aria-label="Default select example" id="categoria"
+                                                                    required name="categoria">
                                                                     <option value="">Seleccione</option>
                                                                     <option value="Accesorios">Accesorios</option>
                                                                     <option value="Campers">Campers</option>
@@ -114,8 +120,7 @@
                                                             </div>
 
                                                             <div class="col-12 col-sm-6 col-lg-4 mb-3">
-                                                                <div class="row align-items-end g-0">
-                                                                    <div class="col-9">
+                                                             
                                                                         <label class="labelTitulo">Tipo:</label></br>
                                                                         <select class="form-select"
                                                                             aria-label="Default select example"
@@ -126,62 +131,71 @@
                                                                             <option value="no_aplica">N/A</option>
                                                                         </select>
 
-                                                                    </div>
-                                                                </div>
+                                                                   
                                                             </div>
 
                                                             <div class="col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Año:</label></br>
-                                                                <input type="number" class="inputCaja" id="ano" maxlength="4" placeholder="Ej. 2000"
-                                                                    name="ano" value="{{ old('ano') }}">
+                                                                <input type="number" class="inputCaja" id="ano"
+                                                                    maxlength="4" placeholder="Ej. 2000" name="ano"
+                                                                    value="{{ old('ano') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Color:</label></br>
-                                                                <input type="text" class="inputCaja" id="color" placeholder="Ej. Amarillo"
-                                                                    name="color" value="{{ old('color') }}"
-                                                                    >
+                                                                <input type="text" class="inputCaja" id="color"
+                                                                    placeholder="Ej. Amarillo" name="color"
+                                                                    value="{{ old('color') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Placas:</label></br>
-                                                                <input type="text" class="inputCaja" id="placas" placeholder="Ej. JAL-0000"
-                                                                    name="placas" value="{{ old('placas') }}"
-                                                                     >
+                                                                <input type="text" class="inputCaja" id="placas"
+                                                                    placeholder="Ej. JAL-0000" name="placas"
+                                                                    value="{{ old('placas') }}">
                                                             </div>
 
-                                                            {{-- <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Identificador:</label></br>
-                                                                <input type="text" class="inputCaja" id="identificador"
-                                                                    name="identificador" value="{{ old('identificador') }}"
+                                                                <input type="text" class="inputCaja"
+                                                                    id="identificador" name="identificador"
+                                                                    value="{{ old('identificador') }}"
                                                                     placeholder="ej: MT-00">
-                                                            </div> --}}
+                                                            </div>
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                                <label class="labelTitulo">Código de maquinaria:</label></br>
+                                                                <input type="text" class="inputCaja" >
+                                                            </div> 
 
-                                                            <input type="hidden" id="identificador" name="identificador"
-                                                                value="">
+                                                            {{--  <input type="hidden" id="identificador" name="identificador"
+                                                                value="">  --}}
 
                                                             <div class=" col-12 col-sm-6  mb-3">
                                                                 <label class="labelTitulo">Motor:</label></br>
-                                                                <input type="text" class="inputCaja" id="motor" placeholder="Especifique..."
-                                                                    name="motor" value="{{ old('motor') }}">
+                                                                <input type="text" class="inputCaja" id="motor"
+                                                                    placeholder="Especifique..." name="motor"
+                                                                    value="{{ old('motor') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Número Motor:</label></br>
-                                                                <input type="text" class="inputCaja" id="nummotor" placeholder="Ej. NUM0123ABCD"
-                                                                    name="nummotor" value="{{ old('nummotor') }}">
+                                                                <input type="text" class="inputCaja" id="nummotor"
+                                                                    placeholder="Ej. NUM0123ABCD" name="nummotor"
+                                                                    value="{{ old('nummotor') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Número Serie:</label></br>
-                                                                <input type="text" class="inputCaja" id="numserie" placeholder="Ej. NS01234ABCD"
-                                                                    name="numserie" value="{{ old('numserie') }}">
+                                                                <input type="text" class="inputCaja" id="numserie"
+                                                                    placeholder="Ej. NS01234ABCD" name="numserie"
+                                                                    value="{{ old('numserie') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Número VIN:</label></br>
-                                                                <input type="text" class="inputCaja" id="vin" placeholder="Ej. 123456"
-                                                                    name="vin" value="{{ old('vin') }}">
+                                                                <input type="text" class="inputCaja" id="vin"
+                                                                    placeholder="Ej. 123456" name="vin"
+                                                                    value="{{ old('vin') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
@@ -291,14 +305,16 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Tipo de Bujías:</label></br>
-                                                                <input type="text" class="inputCaja" id="tipobujia" placeholder="Especifique..."
-                                                                    name="tipobujia" value="{{ old('tipobujia') }}">
+                                                                <input type="text" class="inputCaja" id="tipobujia"
+                                                                    placeholder="Especifique..." name="tipobujia"
+                                                                    value="{{ old('tipobujia') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Horómetro Inicial:</label></br>
-                                                                <input type="number" class="inputCaja" id="horometro"  placeholder="Numérico"
-                                                                    name="horometro" value="{{ old('horometro') }}">
+                                                                <input type="number" class="inputCaja" id="horometro"
+                                                                    placeholder="Numérico" name="horometro"
+                                                                    value="{{ old('horometro') }}">
                                                             </div>
 
                                                             <div class=" col-8   mb-3 ">
@@ -307,8 +323,8 @@
                                                                         <label class="labelTitulo">Kilometraje / Millaje
                                                                             Inicial:</label></br>
                                                                         <input type="number" class="inputCaja"
-                                                                            id="kilometraje"
-                                                                            name="kilometraje" placeholder="Numérico"
+                                                                            id="kilometraje" name="kilometraje"
+                                                                            placeholder="Numérico"
                                                                             value="{{ old('kilometraje') }}">
 
                                                                     </div>
@@ -369,11 +385,14 @@
                                                                         Factura
                                                                     </label>
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
-                                                                    <input type="hidden" id="factura_tipo" name="factura_tipo" value="Factura">
+                                                                <div
+                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
+                                                                    <input type="hidden" id="factura_tipo"
+                                                                        name="factura_tipo" value="Factura">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="factura_ruta" id="factura_ruta" accept=".pdf">
+                                                                            name="factura_ruta" id="factura_ruta"
+                                                                            accept=".pdf">
                                                                         <lord-icon
                                                                             src="https://cdn.lordicon.com/koyivthb.json"
                                                                             trigger="hover"
@@ -400,11 +419,14 @@
                                                                     </label>
 
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
-                                                                    <input type="hidden" id="manual_tipo" name="manual_tipo" value="Manual_de_Uso">
+                                                                <div
+                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                    <input type="hidden" id="manual_tipo"
+                                                                        name="manual_tipo" value="Manual_de_Uso">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="manual_ruta" id="manual_ruta" accept=".pdf">
+                                                                            name="manual_ruta" id="manual_ruta"
+                                                                            accept=".pdf">
                                                                         <lord-icon
                                                                             src="https://cdn.lordicon.com/koyivthb.json"
                                                                             trigger="hover"
@@ -432,8 +454,10 @@
                                                                     </label>
 
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
-                                                                    <input type="hidden" id="registro_tipo" name="registro_tipo" value="Registro">
+                                                                <div
+                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                    <input type="hidden" id="registro_tipo"
+                                                                        name="registro_tipo" value="Registro">
 
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
@@ -463,11 +487,15 @@
                                                                         Ficha Técnica del Proveedor
                                                                     </label>
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
-                                                                    <input type="hidden" id="ficha_tipo" name="ficha_tipo" value="Ficha_Tecnica_del_Proveedor">
+                                                                <div
+                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                    <input type="hidden" id="ficha_tipo"
+                                                                        name="ficha_tipo"
+                                                                        value="Ficha_Tecnica_del_Proveedor">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="ficha_ruta" id="ficha_ruta" accept=".pdf">
+                                                                            name="ficha_ruta" id="ficha_ruta"
+                                                                            accept=".pdf">
                                                                         <lord-icon
                                                                             src="https://cdn.lordicon.com/koyivthb.json"
                                                                             trigger="hover"
@@ -494,12 +522,14 @@
                                                                     </label>
 
                                                                 </div>
-                                                                <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
-                                                                    <input type="hidden" id="verificacion_tipo" name="verificacion_tipo" value="Verificacion">
+                                                                <div
+                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                    <input type="hidden" id="verificacion_tipo"
+                                                                        name="verificacion_tipo" value="Verificacion">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="verificacion_ruta" id="verificacion_ruta"
-                                                                            accept=".pdf">
+                                                                            name="verificacion_ruta"
+                                                                            id="verificacion_ruta" accept=".pdf">
                                                                         <lord-icon
                                                                             src="https://cdn.lordicon.com/koyivthb.json"
                                                                             trigger="hover"
@@ -508,8 +538,11 @@
                                                                         </lord-icon>
                                                                     </label>
 
-                                                                    <label class="labelTitulo">Fecha de vencimiento:</label></br>
-                                                                    <input type="date" class="inputCaja" id="verificacion_fechaVencimiento" name="verificacion_fechaVencimiento"
+                                                                    <label class="labelTitulo">Fecha de
+                                                                        vencimiento:</label></br>
+                                                                    <input type="date" class="inputCaja"
+                                                                        id="verificacion_fechaVencimiento"
+                                                                        name="verificacion_fechaVencimiento"
                                                                         value="">
                                                                 </div>
                                                             </div>
@@ -527,8 +560,10 @@
                                                                         Tarjeta de Circulación
                                                                     </label>
                                                                 </div>
-                                                                <div  class="contIconosDocumentos d-flex flex-wrap align-items-end">
-                                                                    <input type="hidden" id="tarjeta_tipo" name="tarjeta_tipo" value="Tarjeta_Circulacion">
+                                                                <div
+                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                    <input type="hidden" id="tarjeta_tipo"
+                                                                        name="tarjeta_tipo" value="Tarjeta_Circulacion">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="tarjeta_ruta" id="tarjeta_ruta"
@@ -541,9 +576,11 @@
                                                                         </lord-icon>
                                                                     </label>
 
-                                                                    <label class="labelTitulo">Fecha de vencimiento:</label></br>
-                                                                    <input type="date" class="inputCaja" id="tarjeta_fechaVencimiento" name="tarjeta_fechaVencimiento"
-                                                                        value="">
+                                                                    <label class="labelTitulo">Fecha de
+                                                                        vencimiento:</label></br>
+                                                                    <input type="date" class="inputCaja"
+                                                                        id="tarjeta_fechaVencimiento"
+                                                                        name="tarjeta_fechaVencimiento" value="">
                                                                 </div>
 
 
@@ -564,11 +601,14 @@
                                                                     </label>
 
                                                                 </div>
-                                                                <div  class="contIconosDocumentos d-flex flex-wrap align-items-end">
-                                                                    <input type="hidden" id="seguros_tipo" name="seguros_tipo" value="Seguros">
+                                                                <div
+                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                    <input type="hidden" id="seguros_tipo"
+                                                                        name="seguros_tipo" value="Seguros">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
-                                                                            name="seguros_ruta" id="seguros_ruta" accept=".pdf">
+                                                                            name="seguros_ruta" id="seguros_ruta"
+                                                                            accept=".pdf">
                                                                         <lord-icon
                                                                             src="https://cdn.lordicon.com/koyivthb.json"
                                                                             trigger="hover"
@@ -577,9 +617,11 @@
                                                                         </lord-icon>
                                                                     </label>
 
-                                                                    <label class="labelTitulo">Fecha de vencimiento:</label></br>
-                                                                    <input type="date" class="inputCaja" id="seguros_fechaVencimiento" name="seguros_fechaVencimiento"
-                                                                        value="">
+                                                                    <label class="labelTitulo">Fecha de
+                                                                        vencimiento:</label></br>
+                                                                    <input type="date" class="inputCaja"
+                                                                        id="seguros_fechaVencimiento"
+                                                                        name="seguros_fechaVencimiento" value="">
                                                                 </div>
 
 
@@ -600,8 +642,11 @@
                                                                     </label>
 
                                                                 </div>
-                                                                <div  class="contIconosDocumentos d-flex flex-wrap align-items-end">
-                                                                    <input type="hidden" id="especiales_tipo" name="especiales_tipo" value="Permisos_Especiales">
+                                                                <div
+                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                    <input type="hidden" id="especiales_tipo"
+                                                                        name="especiales_tipo"
+                                                                        value="Permisos_Especiales">
                                                                     <label class="custom-file-upload">
                                                                         <input class="mb-4" type="file"
                                                                             name="especiales_ruta" id="especiales_ruta"
@@ -614,9 +659,11 @@
                                                                         </lord-icon>
                                                                     </label>
 
-                                                                    <label class="labelTitulo">Fecha de vencimiento:</label></br>
-                                                                    <input type="date" class="inputCaja" id="especiales_fechaVencimiento" name="especiales_fechaVencimiento"
-                                                                        value="">
+                                                                    <label class="labelTitulo">Fecha de
+                                                                        vencimiento:</label></br>
+                                                                    <input type="date" class="inputCaja"
+                                                                        id="especiales_fechaVencimiento"
+                                                                        name="especiales_fechaVencimiento" value="">
 
                                                                 </div>
 

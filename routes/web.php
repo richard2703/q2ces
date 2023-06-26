@@ -38,13 +38,17 @@ Route::get('/usuarios/export', [App\Http\Controllers\UserController::class, 'exp
 Route::get('/asistencia/export', [App\Http\Controllers\asistenciaController::class, 'export'])->name('asistencia.export');
 
 
-// Route::get('/altaDeEquipos', function () {
-//     return view('equipos.altaDeEquipos');
-// });
+//Mantenimiento
+Route::get('/mantenimientos', function () {
+    return view('mantenimientos.mantenimientos');
+});
 
-// Route::get('/detalleEquipo', function () {
-//     return view('equipos.detalleEquipo');
-// });
+Route::get('/nuevoMantenimiento', function () {
+    return view('mantenimientos.nuevoMantenimiento');
+});
+Route::get('/editarMantenimientos', function () {
+    return view('mantenimientos.editarMantenimientos');
+});
 
 // Route::get('/verEquipos', function () {
 //     return view('equipos.verEquipos');
