@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'cajachica', 'titlePage' => __('Caja Chica - Nuevo Movimiento')])
+@extends('layouts.main', ['activePage' => 'cajaChica', 'titlePage' => __('Caja Chica - Nuevo Movimiento')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -22,7 +22,7 @@
                                     <h4 class="card-title">Movimientos de Caja Chica</h4>
                                     {{-- <p class="card-category">Usuarios registrados</p> --}}
                                 </div>
-                                <form class="row alertaGuardar" action="{{ route('cajachica.store') }}" method="post"
+                                <form class="row alertaGuardar" action="{{ route('cajaChica.store') }}" method="post"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="card-body">
@@ -38,14 +38,12 @@
                                         @endif
                                         <div class="row">
                                             <div class="col-6 ">
-                                                <span>
-                                                    Semana del 5 de junio al 11 de junio
-                                                </span>
+                                            <p>Semana del</br> <span class="combustibleLitros">28 de mayo al 4 de junio</span></p>
 
                                             </div>
                                             <div class="col-6 text-right">
                                                 <span class="h3">
-                                                    Caja Chica: <strong class="negritas">$7500</strong>
+                                                    Caja Chica: <strong class="negritas">$ </strong>
                                                 </span>
 
                                             </div>
@@ -58,15 +56,15 @@
                                         </div>
                                         <div class="row">
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Dia:</label></br>
-                                                <input type="date" class="inputCaja" id="dia" name="dia"
+                                                <label class="labelTitulo">Dia: <span>*</span></label></br>
+                                                <input type="date" class="inputCaja" id="dia" name="dia" required
                                                     value="{{ old('dia') }}">
 
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Concepto:</label></br>
-                                                <select id="concepto" name="concepto" class="form-select"
+                                                <label class="labelTitulo">Concepto: <span>*</span></label></br>
+                                                <select id="concepto" name="concepto" class="form-select" required
                                                     aria-label="Default select example">
                                                     <option selected>Seleccione</option>
                                                     @forelse ($conceptos as $concepto)
@@ -80,8 +78,8 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Personal:</label></br>
-                                                <select id="personal" name="personal" class="form-select"
+                                                <label class="labelTitulo">Personal: <span>*</span></label></br>
+                                                <select id="personal" name="personal" class="form-select" required
                                                     aria-label="Default select example">
                                                     <option selected>Seleccione</option>
                                                     @forelse ($personal as $persona)
@@ -94,8 +92,8 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Comprobante:</label></br>
-                                                <select id="compribante" name="comprobante" class="form-select"
+                                                <label class="labelTitulo">Comprobante: <span>*</span></label></br>
+                                                <select id="compribante" name="comprobante" class="form-select" required
                                                     aria-label="Default select example">
                                                     <option selected>Seleccione</option>
                                                     <option value="1">
@@ -120,8 +118,8 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Obra:</label></br>
-                                                <select id="obra" name="obra" class="form-select"
+                                                <label class="labelTitulo">Obra: <span>*</span></label></br>
+                                                <select id="obra" name="obra" class="form-select" required
                                                     aria-label="Default select example">
                                                     <option selected>Seleccione</option>
                                                     @forelse ($obras as $obra)
@@ -142,8 +140,8 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Equipo:</label></br>
-                                                <select id="equipo" name="equipo" class="form-select"
+                                                <label class="labelTitulo">Equipo: <span>*</span></label></br>
+                                                <select id="equipo" name="equipo" class="form-select" required
                                                     aria-label="Default select example">
                                                     <option selected>Seleccione</option>
                                                     @forelse ($maquinaria as $maquina)
@@ -162,8 +160,8 @@
                                                 </select>
                                             </div>
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Movimiento:</label></br>
-                                                <select id="tipo" name="tipo" class="form-select"
+                                                <label class="labelTitulo">Movimiento: <span>*</span></label></br>
+                                                <select id="tipo" name="tipo" class="form-select" required
                                                     aria-label="Default select example">
                                                     <option selected>Seleccione</option>
                                                     <option value="1">
@@ -188,8 +186,8 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Cantidad:</label></br>
-                                                <input type="number" class="inputCaja" id="cantidad" name="cantidad"
+                                                <label class="labelTitulo">Cantidad: <span>*</span></label></br>
+                                                <input type="number" class="inputCaja text-right" id="cantidad" required name="cantidad"  maxlength="100000" step="1" min="1" max="99999" placeholder="ej. 100"
                                                     value="{{ old('calle') }}">
                                             </div>
 

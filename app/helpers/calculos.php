@@ -5,7 +5,7 @@ namespace App\Helpers;
 use App\Models\carga;
 use App\Models\descarga;
 use App\Models\maquinaria;
-use App\Models\cajachica;
+use App\Models\cajaChica;
 use Illuminate\Support\Facades\DB;
 
 class Calculos {
@@ -104,32 +104,99 @@ class Calculos {
     }
 
     /**
-    * Recalcula el acumulado de la caja chica
+    * Recalcula el acumulado de la caja chica tomando en cuenta solo movimientos de entradas y salidas de ingresos
     *
     * @param int $registro Sobre el cual se realiza el pibote para el calculo
     * @return void
     */
 
     public function RecalcularCajaChica( $registroId ) {
+        $blnExito = true;
+        //*** Arreglo para buscar ingresos y egresos */
+        $vctTipos = [ 1, 2 ];
 
-        //*** obtenemos la informacion del registro */
-        $objRecord = cajachica::select( '*' )->where( 'id', '=', $registroId )->first();
+        //*** obtenemos la informacion del registro pivote  */
+        $objRecord = cajaChica::select( '*' )->where( 'id', '=', $registroId )->first();
 
-        $objAnterior = cajachica::select( '*' )->where( 'id', '!=', $registroId )->orderBy( 'cajachica.dia', 'desc' )->first();
-        $vctTipos = [1, 2];
-        $vctRegistros = cajachica::select( 'cajachica.*' )
-        ->where( 'cajachica.id', '!=', $registroId )
-        ->where( 'cajachica.dia', '>=', $objRecord->dia )
-        ->whereIn( 'cajachica.tipo',   $vctTipos )
-        ->orderBy( 'cajachica.dia', 'asc' )
-        ->orderBy( 'cajachica.id', 'asc' )
+        //*** buscamos el registro anterior inmediato */
+        $objAnterior = cajaChica::select( '*' )
+        ->where( 'cajaChica.dia', '<=', $objRecord->dia )
+        ->where( 'id', '!=', $registroId )
+        ->where( 'id', '<', $registroId )
+        ->whereIn( 'cajaChica.tipo',   $vctTipos )
+        ->orderBy( 'cajaChica.id', 'desc' )->first();
+
+        $registroAnteriorId = 0;
+        $decTotalAnterior = 0;
+        $decRegistroTotalActualizado = 0;
+        $decRegistroTotalAnterior = $objRecord->total;
+
+        if ( $objAnterior ) {
+            $registroAnteriorId = $objAnterior->id;
+            //*** Existe anterior y ajustamos el total */
+            $decTotalAnterior = $objAnterior->total;
+
+            $decRegistroTotalActualizado =  ( $objRecord->tipo == 1 ? ( $decTotalAnterior + $objRecord->cantidad )  : ( $decTotalAnterior - $objRecord->cantidad ) );
+
+            $objRecord->total =  $decRegistroTotalActualizado;
+            $objRecord->save();
+
+        } else {
+            //*** no hay anterior */
+            $decRegistroTotalActualizado = ( $objRecord->tipo == 1 ? ( $decTotalAnterior + $objRecord->cantidad )  : ( $decTotalAnterior - $objRecord->cantidad ) );
+            $objAnterior = null;
+            //*** nois aseguramos de que el inicial quede iniciado correctamente */
+            $objRecord->total = $decRegistroTotalActualizado;
+            $objRecord->save();
+        }
+
+        //*** buscamos los registros posteriores al pivote */
+        $vctRegistros = cajaChica::select( 'cajaChica.*' )
+        // ->where( 'cajaChica.id', '!=', $registroId )
+        ->where( 'cajaChica.id', '>', $registroId )
+        ->where( 'cajaChica.dia', '>=', $objRecord->dia )
+        ->whereIn( 'cajaChica.tipo',   $vctTipos )
+        ->orderBy( 'cajaChica.id', 'asc' )
+        ->orderBy( 'cajaChica.dia', 'asc' )
         ->get();
 
-        dd(
-            $objRecord,
-            $objAnterior,
-            $vctRegistros
-        );
+        $intCont = 0;
+        $decTotal = $decRegistroTotalActualizado;
+        //*** para el control del ciclo */
+        if ( $vctRegistros->count() > 0 ) {
+            //*** actualizamos los registros posteriores */
+            foreach ( $vctRegistros as $key => $objItem ) {
+
+                //*** preguntamos por el tipo de movimiento */
+                if ( $objItem->tipo == 1 ) {
+                    //*** ingreso Suma */
+                    $decTotal  +=  ( $objItem->cantidad );
+
+                } else {
+                    //*** egreso Resta */
+                    $decTotal -=  ( $objItem->cantidad );
+
+                }
+
+                $objItem->total = $decTotal;
+                $objItem->save();
+
+            }
+
+        } else {
+            //*** no hay registros siguientes */
+
+        }
+
+        // dd(
+        //     'Registro: ' . $registroId . ', total actualizado: ' .  $decRegistroTotalActualizado . ', total anterior: ' . $decRegistroTotalAnterior,
+        //     $objRecord,
+        //     'Registro anterior: ' . $registroAnteriorId . ', total anterior: ' . $decTotalAnterior,
+        //     $objAnterior,
+        //     'Registros posteriores: ' . $vctRegistros->count() . ', total actualizado: ' . $decTotal,
+        //     $vctRegistros
+        // );
+        return $blnExito;
 
     }
 

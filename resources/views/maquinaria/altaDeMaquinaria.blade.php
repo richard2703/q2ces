@@ -120,8 +120,7 @@
                                                             </div>
 
                                                             <div class="col-12 col-sm-6 col-lg-4 mb-3">
-                                                                <div class="row align-items-end g-0">
-                                                                    <div class="col-9">
+                                                             
                                                                         <label class="labelTitulo">Tipo:</label></br>
                                                                         <select class="form-select"
                                                                             aria-label="Default select example"
@@ -132,8 +131,7 @@
                                                                             <option value="no_aplica">N/A</option>
                                                                         </select>
 
-                                                                    </div>
-                                                                </div>
+                                                                   
                                                             </div>
 
                                                             <div class="col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -164,6 +162,10 @@
                                                                     value="{{ old('identificador') }}"
                                                                     placeholder="ej: MT-00">
                                                             </div>
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                                <label class="labelTitulo">Código de maquinaria:</label></br>
+                                                                <input type="text" class="inputCaja" >
+                                                            </div> 
 
                                                             {{--  <input type="hidden" id="identificador" name="identificador"
                                                                 value="">  --}}

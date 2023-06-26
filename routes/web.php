@@ -38,13 +38,17 @@ Route::get('/usuarios/export', [App\Http\Controllers\UserController::class, 'exp
 Route::get('/asistencia/export', [App\Http\Controllers\asistenciaController::class, 'export'])->name('asistencia.export');
 
 
-// Route::get('/altaDeEquipos', function () {
-//     return view('equipos.altaDeEquipos');
-// });
+//Mantenimiento
+Route::get('/mantenimientos', function () {
+    return view('mantenimientos.mantenimientos');
+});
 
-// Route::get('/detalleEquipo', function () {
-//     return view('equipos.detalleEquipo');
-// });
+Route::get('/nuevoMantenimiento', function () {
+    return view('mantenimientos.nuevoMantenimiento');
+});
+Route::get('/editarMantenimientos', function () {
+    return view('mantenimientos.editarMantenimientos');
+});
 
 // Route::get('/verEquipos', function () {
 //     return view('equipos.verEquipos');
@@ -232,7 +236,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::delete('/asistencia/{personal}', [App\Http\Controllers\UserController::class, 'destroy'])->name('personal.delete');
 
     // Caja Chica
-    Route::resource('cajachica', App\Http\Controllers\cajachicaController::class);
+    Route::resource('cajaChica', App\Http\Controllers\cajaChicaController::class);
     // Conceptos
     Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
 });
