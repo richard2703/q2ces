@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Session;
 
 use App\Helpers\Calculos;
 
-class cajachicaController extends Controller
+class cajaChicaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -46,13 +46,13 @@ class cajachicaController extends Controller
                 'maquinaria.nombre as maquinaria',
                 'cantidad',
                 'cajaChica.tipo',
-                'cajachica.total'
+                'cajaChica.total'
             )->orderby('dia', 'desc')->orderby('id', 'desc')
             ->paginate(15);
 
         $vctTipos = [1, 2];
 
-        $last = cajaChica::whereIn('cajachica.tipo',   $vctTipos)
+        $last = cajaChica::whereIn('cajaChica.tipo',   $vctTipos)
             ->orderby('dia', 'desc')
             ->orderby('id', 'desc')->first();
 
@@ -67,7 +67,7 @@ class cajachicaController extends Controller
         // ->where( 'tomas.tickets_id', $ticket->id )
         // ->paginate( 10 );
         // Dia, concepto, comprabante, numero de comprobante, cliente, obra, equipo, personal, cantidad, tipo
-        return view('cajachica.indexcajachica', compact('registros', 'lastTotal'));
+        return view('cajaChica.indexcajaChica', compact('registros', 'lastTotal'));
     }
 
     /**
@@ -122,7 +122,7 @@ class cajachicaController extends Controller
         }
         // dd( $decTotal, $total );
 
-        $ultimo = cajachica::create($request->only('dia', 'concepto', 'comprobante', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario',) + ['total' => $total]);
+        $ultimo = cajaChica::create($request->only('dia', 'concepto', 'comprobante', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario',) + ['total' => $total]);
         Session::flash('message', 1);
         return redirect()->action([cajaChicaController::class, 'index']);
     }
@@ -130,11 +130,11 @@ class cajachicaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\cajachica  $cajachica
+     * @param  \App\Models\cajaChica  $cajaChica
      * @return \Illuminate\Http\Response
      */
 
-    public function show(cajachica $cajachica)
+    public function show(cajaChica $cajaChica)
     {
         //
     }
@@ -142,21 +142,21 @@ class cajachicaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\cajachica  $cajachica
+     * @param  \App\Models\cajaChica  $cajaChica
      * @return \Illuminate\Http\Response
      */
 
-    public function edit(cajachica $cajachica)
+    public function edit(cajaChica $cajaChica)
     {
         abort_if(Gate::denies('cajachica_edit'), 403);
 
-        // dd( $cajachica );
+        // dd( $cajaChica );
 
         $conceptos = conceptos::get();
         $personal = personal::get();
         $obras = obras::get();
         $maquinaria = maquinaria::get();
-        return view('cajaChica.editMovimiento', compact('conceptos', 'personal', 'obras', 'maquinaria', 'cajachica'));
+        return view('cajaChica.editMovimiento', compact('conceptos', 'personal', 'obras', 'maquinaria', 'cajaChica'));
 
         // {
         // {
@@ -168,20 +168,20 @@ class cajachicaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\cajachica  $cajachica
+     * @param  \App\Models\cajaChica  $cajaChica
      * @return \Illuminate\Http\Response
      */
 
-    public function update(Request $request, cajachica $cajachica)
+    public function update(Request $request, cajaChica $cajaChica)
     {
         abort_if(Gate::denies('cajachica_edit'), 403);
 
-        $cajachica->update($request->only('dia', 'concepto', 'comprobante', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario', 'total'));
+        $cajaChica->update($request->only('dia', 'concepto', 'comprobante', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario', 'total'));
 
         //*** ejecutamos el recalculo general */
         $objCalculos = new Calculos;
 
-        $objCalculos->RecalcularCajaChica($cajachica->id);
+        $objCalculos->RecalcularCajaChica($cajaChica->id);
 
         Session::flash('message', 1);
         return redirect()->action([cajaChicaController::class, 'index']);
@@ -191,11 +191,11 @@ class cajachicaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\cajachica  $cajachica
+     * @param  \App\Models\cajaChica  $cajaChica
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy(cajachica $cajachica)
+    public function destroy(cajaChica $cajaChica)
     {
         abort_if(Gate::denies('cajachica_destroy'), 403);
 
