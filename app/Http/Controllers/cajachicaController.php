@@ -85,7 +85,7 @@ class cajachicaController extends Controller
         $obras = obras::get();
         $maquinaria = maquinaria::get();
         // dd( $maquinaria );
-        return view('cajachica.nuevoMovimiento', compact('conceptos', 'personal', 'obras', 'maquinaria'));
+        return view('cajaChica.nuevoMovimiento', compact('conceptos', 'personal', 'obras', 'maquinaria'));
     }
 
     /**
@@ -124,7 +124,7 @@ class cajachicaController extends Controller
 
         $ultimo = cajachica::create($request->only('dia', 'concepto', 'comprobante', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario',) + ['total' => $total]);
         Session::flash('message', 1);
-        return redirect()->action([cajachicaController::class, 'index']);
+        return redirect()->action([cajaChicaController::class, 'index']);
     }
 
     /**
@@ -156,7 +156,7 @@ class cajachicaController extends Controller
         $personal = personal::get();
         $obras = obras::get();
         $maquinaria = maquinaria::get();
-        return view('cajachica.editMovimiento', compact('conceptos', 'personal', 'obras', 'maquinaria', 'cajachica'));
+        return view('cajaChica.editMovimiento', compact('conceptos', 'personal', 'obras', 'maquinaria', 'cajachica'));
 
         // {
         // {
@@ -184,7 +184,7 @@ class cajachicaController extends Controller
         $objCalculos->RecalcularCajaChica($cajachica->id);
 
         Session::flash('message', 1);
-        return redirect()->action([cajachicaController::class, 'index']);
+        return redirect()->action([cajaChicaController::class, 'index']);
         dd('update');
     }
 
