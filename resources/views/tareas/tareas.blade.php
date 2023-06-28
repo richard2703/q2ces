@@ -109,6 +109,15 @@
                 <input type="text" class="inputCaja" id="" required="" name="" value="">    
             </div>
             <div class="mb-3">
+                <label for="recipient-name" class="labelTitulo">Ubicación:</label>
+                <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                    <option selected>Selecciona una opción</option>
+                    <option value="1">Ubicación Uno</option>
+                    <option value="2">Ubicación Dos</option>
+                    <option value="3">Ubicación Tres</option>
+                </select>
+            </div>
+            <div class="mb-3">
                 <label for="recipient-name" class="labelTitulo">Tipo:</label>
                 <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
                     <option selected>Selecciona una opción</option>
@@ -135,7 +144,7 @@
 
 
     <!--Editar Tarea -->
-    <div class="modal fade" id="editarTarea" tabindex="-1" aria-labelledby="editarTarealLabel" aria-hidden="true">
+<div class="modal fade" id="editarTarea" tabindex="-1" aria-labelledby="editarTarealLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
@@ -156,6 +165,15 @@
             <div class="mb-3">
                 <label for="message-text" class="labelTitulo">Nombre:</label>
                 <input type="text" class="inputCaja" id="" required="" name="" value="">    
+            </div>
+            <div class="mb-3">
+                <label for="recipient-name" class="labelTitulo">Ubicación:</label>
+                <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                    <option selected>Selecciona una opción</option>
+                    <option value="1">Ubicación Uno</option>
+                    <option value="2">Ubicación Dos</option>
+                    <option value="3">Ubicación Tres</option>
+                </select>
             </div>
             <div class="mb-3">
                 <label for="recipient-name" class="labelTitulo">Tipo:</label>
