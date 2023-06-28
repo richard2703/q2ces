@@ -189,7 +189,7 @@ class Calendario {
         if ( $iWeek > 0 ) {
             for ( $index = 0; $index < ( $iWeek );
             $index++ ) {
-                $cols .= '<div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted celda">';
+                $cols .= '<div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted celda" style="height: 110px;">';
                 $cols .= '   <p class="row align-items-center celda">';
                 $cols .= '       <span class="date col-1"></span>';
                 $cols .= '       <small class="col d-sm-none text-center text-muted">Saturday</small>';
@@ -211,7 +211,7 @@ class Calendario {
 
         if ( $iWeek < 6 ) {
             for ( $index = $iWeek; $index < 6; $index++ ) {
-                $cols .= '<div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">';
+                $cols .= '<div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted" style="height: 110px;">';
                 $cols .= '   <h5 class="row align-items-center">';
                 $cols .= '       <span class="date col-1"></span>';
                 $cols .= '       <small class="col d-sm-none text-center text-muted">Saturday</small>';
