@@ -44,6 +44,7 @@
                                                 <th class="labelTitulo">Id</th>
                                                 <th class="labelTitulo">Nombre</th>
                                                 <th class="labelTitulo">Comentario</th>
+                                                <th class="labelTitulo">Nivel de puesto</th>
                                                 <th class="labelTitulo text-right">Acciones</th>
                                             </tr>
                                         </thead>
@@ -51,8 +52,9 @@
                                             @forelse ($puestos as $item)
                                                 <tr>
                                                     <td>{{ $item->id }}</td>
-                                                    <td>{{ $item->nombre }}</td>
-                                                    <td>{{ $item->comentario }}</td>
+                                                    <td class="text-left">{{ $item->nombre }}</td>
+                                                    <td class="text-left">{{ $item->comentario }}</td>
+                                                    <td class="text-left">{{ $item->puestoNivel }}</td>
 
                                                     <td class="td-actions text-right">
                                                         {{-- @can('user_show') --}}
@@ -67,7 +69,7 @@
                                                         <a href="#" class=""
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#editarItem"
-                                                        onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->comentario }}')">
+                                                        onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->puestoNivelId }}','{{ $item->comentario }}')">
                                                         <svg xmlns="http://www.w3.org/2000/svg "
                                                             width="28" height="28"
                                                             fill="currentColor"
@@ -137,6 +139,22 @@
                                 <input type="text" class="inputCaja" id="nombre" name="nombre"
                                     value="{{ old('nombre') }}" required placeholder="Especifique...">
                             </div>
+
+                            <div class=" col-12 col-sm-6 mb-3 ">
+                                <label class="labelTitulo">Nivel de puesto:
+                                    <span>*</span></label></br>
+                                <select id="puestoNivelId" name="puestoNivelId"
+                                    class="form-select" required
+                                    aria-label="Default select example">
+                                    <option value="">Seleccione</option>
+                                    @foreach ($vctNiveles as $item)
+                                        <option value="{{ $item->id }}">
+                                            {{ $item->nombre }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             <div class=" col-12  mb-3 ">
                                 <label class="labelTitulo">Comentarios:</label></br>
                                 <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario" spellcheck="true"></textarea>
@@ -173,6 +191,18 @@
                                     value="">
                             </div>
 
+                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                <label class="labelTitulo">Nivel de puesto: <span>*</span></label></br>
+                                <select id="editPuestoNivelId" name="puestoNivelId" class="form-select"
+                                    required aria-label="Default select example">
+                                    <option value="">Seleccione</option>
+                                    @foreach ($vctNiveles as $item)
+                                        <option value="{{ $item->id }}"                                            >
+                                            {{ $item->nombre }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
 
                             <div class=" col-12  mb-3 ">
                                 <label class="labelTitulo">Comentarios:</label></br>
@@ -230,13 +260,15 @@
     </script>
 
     <script>
-        function cargaItem(id,nombre, comentarios) {
+        function cargaItem(id,nombre, nivel, comentarios) {
 
             const txtId = document.getElementById('puestoId');
             txtId.value = id;
 
             const txtNombre = document.getElementById('puestoNombre');
             txtNombre.value = nombre;
+
+            const lstNivel = document.getElementById('editPuestoNivelId').value = nivel;
 
             const txtComentarios = document.getElementById('puestoComentarios');
             txtComentarios.value = comentarios;

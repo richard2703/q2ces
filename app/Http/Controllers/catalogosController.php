@@ -30,9 +30,13 @@ class catalogosController extends Controller
         abort_if(Gate::denies('puesto_index'), 403);
 
 
-        $puestos = puesto::orderBy('nombre', 'asc')->paginate(15);
+        $puestos = puesto::select('puesto.*','puestoNivel.nombre as puestoNivel')
+        ->leftJoin('puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId')
+        ->orderBy('nombre', 'asc')->paginate(15);
+
+        $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->get();
         // dd( $puestos );
-        return view('catalogos.puestos', compact('puestos'));
+        return view('catalogos.puestos', compact('puestos','vctNiveles'));
     }
 
     public function indexPuestosNivel()

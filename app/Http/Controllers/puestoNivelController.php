@@ -23,6 +23,7 @@ class puestoNivelController extends Controller
         abort_if(Gate::denies('puesto_index'), 403);
 
         $puestos = puestoNivel::orderBy('nombre', 'asc')->paginate(15);
+
         return view('catalogo.indexPuestosNivel', compact('puestos'));
     }
 

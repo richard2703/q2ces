@@ -21,61 +21,58 @@ use App\Models\userEstatus;
 use App\Models\puesto;
 use App\Models\puestoNivel;
 
-class personalController extends Controller
-{
+class personalController extends Controller {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
 
-    public function index()
-    {
-        abort_if(Gate::denies('personal_index'), 403);
+    public function index() {
+        abort_if ( Gate::denies( 'personal_index' ), 403 );
 
         $personal = personal::select(
             'personal.*',
-            DB::raw('puesto.nombre AS puesto'),
-            DB::raw('userEstatus.nombre AS estatus')
+            DB::raw( 'puesto.nombre AS puesto' ),
+            DB::raw( 'userEstatus.nombre AS estatus' )
         )
-            ->join('nomina', 'nomina.personalId', '=', 'personal.id')
-            ->join('userEstatus', 'userEstatus.id', '=', 'personal.estatusId')
-            ->leftJoin('puesto', 'puesto.id', '=', 'nomina.puestoId')
-            ->orderBy('created_at', 'desc')->paginate(15);
+        ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
+        ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
+        ->leftJoin( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
+        ->orderBy( 'created_at', 'desc' )->paginate( 15 );
         // dd( $personal );
-        return view('personal.indexPersonal', compact('personal'));
+        return view( 'personal.indexPersonal', compact( 'personal' ) );
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Show the form for creating a new resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
 
-    public function create()
-    {
-        abort_if(Gate::denies('personal_create'), 403);
+    public function create() {
+        abort_if ( Gate::denies( 'personal_create' ), 403 );
 
         $vctPersonal = personal::all();
-        $vctPuestos = puesto::orderBy('nombre', 'asc')->get();
-        $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->get();
+        $vctPuestos = puesto::orderBy( 'nombre', 'asc' )->get();
+        $vctNiveles = puestoNivel::orderBy( 'nombre', 'asc' )->get();
 
-        return view('personal.altaDePersonal', compact('vctPersonal', 'vctPuestos', 'vctNiveles'))->with('personal', $vctPersonal, $vctPuestos);
+        // dd( $vctPersonal );
+        return view( 'personal.altaDePersonal', compact( 'vctPersonal', 'vctPuestos', 'vctNiveles' ) )->with( 'personal', $vctPersonal, $vctPuestos );
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
 
-    public function store(Request $request)
-    {
-        abort_if(Gate::denies('personal_create'), 403);
+    public function store( Request $request ) {
+        abort_if ( Gate::denies( 'personal_create' ), 403 );
 
         // dd( $request );
-        $request->validate([
+        $request->validate( [
             'nombres' => 'required|max:150',
             'apellidoP' => 'required|max:150',
             'apellidoM' => 'nullable|max:150',
@@ -223,7 +220,7 @@ class personalController extends Controller
             'radioSerial.numeric' => 'El campo serial de radio debe de ser númerico.',
             'cargadorSerial.max' => 'El campo serial de cargador excede el límite de caracteres permitidos.',
             'cargadorSerial.numeric' => 'El campo serial del cargador debe de ser númerico.',
-        ]);
+        ] );
 
         $personal = $request->only(
             'userId',
@@ -259,119 +256,119 @@ class personalController extends Controller
             'interior',
             'estatusId',
             'puestoId',
-            'asistencia',
+            'usaCajaChica',
             'puestoNivelId'
         );
         // conversion a mayuscula de algunos campos
-        $personal['curp'] = strtoupper($personal['curp']);
-        $personal['ine'] = strtoupper($personal['ine']);
-        $personal['rfc'] = strtoupper($personal['rfc']);
-        $personal['licencia'] = strtoupper($personal['licencia']);
-        $personal['cpf'] = strtoupper($personal['cpf']);
+        $personal[ 'curp' ] = strtoupper( $personal[ 'curp' ] );
+        $personal[ 'ine' ] = strtoupper( $personal[ 'ine' ] );
+        $personal[ 'rfc' ] = strtoupper( $personal[ 'rfc' ] );
+        $personal[ 'licencia' ] = strtoupper( $personal[ 'licencia' ] );
+        $personal[ 'cpf' ] = strtoupper( $personal[ 'cpf' ] );
         // conversion a minuscula de algunos campos
-        $personal['mailpersonal'] = strtolower($personal['mailpersonal']);
+        $personal[ 'mailpersonal' ] = strtolower( $personal[ 'mailpersonal' ] );
         /* Generación del email empresarial */
-        $personal['mailEmpresarial'] =  strtolower($this->generarCorreoEmpresarial($personal['nombres'], $personal['apellidoP'], $personal['apellidoM']));
+        $personal[ 'mailEmpresarial' ] =  strtolower( $this->generarCorreoEmpresarial( $personal[ 'nombres' ], $personal[ 'apellidoP' ], $personal[ 'apellidoM' ] ) );
 
-        $existeUsuario = User::where('email', $personal['mailEmpresarial'])->get();
+        $existeUsuario = User::where( 'email', $personal[ 'mailEmpresarial' ] )->get();
 
-        if ($existeUsuario->isEmpty() == true) {
+        if ( $existeUsuario->isEmpty() == true ) {
 
             $roles[] = 2;
 
             $newuser = new User();
-            $newuser->name = Str::substr($personal['nombres'], 0, 1) . ' ' . str_replace(' ', '', $personal['apellidoP']) . ' ' . str_replace(' ', '', $personal['apellidoM']);
+            $newuser->name = Str::substr( $personal[ 'nombres' ], 0, 1 ) . ' ' . str_replace( ' ', '', $personal[ 'apellidoP' ] ) . ' ' . str_replace( ' ', '', $personal[ 'apellidoM' ] );
             // $newuser->username =  Str::substr( $personal[ 'nombres' ], 0, 1 ) . $personal[ 'apellidoP' ];
-            $newuser->email =  $personal['mailEmpresarial'];
-            $newuser->password = bcrypt('12345678');
-            $newuser->syncRoles($roles);
+            $newuser->email =  $personal[ 'mailEmpresarial' ];
+            $newuser->password = bcrypt( '12345678' );
+            $newuser->syncRoles( $roles );
             $newuser->save();
 
             //** guardamos el id de usuario para el registro de personal */
-            $personal['userId'] = $newuser->id;
+            $personal[ 'userId' ] = $newuser->id;
         }
 
-        $personal = personal::create($personal);
+        $personal = personal::create( $personal );
 
         /*** directorio contenedor de su información */
-        $pathPesonal = str_pad($personal->id, 4, '0', STR_PAD_LEFT);
+        $pathPesonal = str_pad( $personal->id, 4, '0', STR_PAD_LEFT );
 
-        if ($request->hasFile('foto')) {
-            $personal->foto  = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
-            $request->file('foto')->storeAs('/public/personal/' . $pathPesonal,  $personal->foto);
+        if ( $request->hasFile( 'foto' ) ) {
+            $personal->foto  = time() . '_' . 'foto.' . $request->file( 'foto' )->getClientOriginalExtension();
+            $request->file( 'foto' )->storeAs( '/public/personal/' . $pathPesonal,  $personal->foto );
             $personal->save();
         }
 
-        if ($request->hasFile('dvitae')) {
-            $docs['dvitae'] = time() . '_' . $request->file('dvitae')->getClientOriginalName();
-            $request->file('dvitae')->storeAs('/public/personal/' . $pathPesonal, $docs['dvitae']);
+        if ( $request->hasFile( 'dvitae' ) ) {
+            $docs[ 'dvitae' ] = time() . '_' . $request->file( 'dvitae' )->getClientOriginalName();
+            $request->file( 'dvitae' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dvitae' ] );
         }
-        if ($request->hasFile('dnacimiento')) {
-            $docs['dnacimiento'] = time() . '_' . $request->file('dnacimiento')->getClientOriginalName();
-            $request->file('dnacimiento')->storeAs('/public/personal/' . $pathPesonal, $docs['dnacimiento']);
+        if ( $request->hasFile( 'dnacimiento' ) ) {
+            $docs[ 'dnacimiento' ] = time() . '_' . $request->file( 'dnacimiento' )->getClientOriginalName();
+            $request->file( 'dnacimiento' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dnacimiento' ] );
         }
-        if ($request->hasFile('dine')) {
-            $docs['dine'] = time() . '_' . $request->file('dine')->getClientOriginalName();
-            $request->file('dine')->storeAs('/public/personal/' . $pathPesonal, $docs['dine']);
+        if ( $request->hasFile( 'dine' ) ) {
+            $docs[ 'dine' ] = time() . '_' . $request->file( 'dine' )->getClientOriginalName();
+            $request->file( 'dine' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dine' ] );
         }
-        if ($request->hasFile('dcurp')) {
-            $docs['dcurp'] = time() . '_' . $request->file('dcurp')->getClientOriginalName();
-            $request->file('dcurp')->storeAs('/public/personal/' . $pathPesonal, $docs['dcurp']);
+        if ( $request->hasFile( 'dcurp' ) ) {
+            $docs[ 'dcurp' ] = time() . '_' . $request->file( 'dcurp' )->getClientOriginalName();
+            $request->file( 'dcurp' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dcurp' ] );
         }
-        if ($request->hasFile('dlicencia')) {
-            $docs['dlicencia'] = time() . '_' . $request->file('dlicencia')->getClientOriginalName();
-            $request->file('dlicencia')->storeAs('/public/personal/' . $pathPesonal, $docs['dlicencia']);
+        if ( $request->hasFile( 'dlicencia' ) ) {
+            $docs[ 'dlicencia' ] = time() . '_' . $request->file( 'dlicencia' )->getClientOriginalName();
+            $request->file( 'dlicencia' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dlicencia' ] );
         }
-        if ($request->hasFile('dcedula')) {
-            $docs['dcedula'] = time() . '_' . $request->file('dcedula')->getClientOriginalName();
-            $request->file('dcedula')->storeAs('/public/personal/' . $pathPesonal, $docs['dcedula']);
+        if ( $request->hasFile( 'dcedula' ) ) {
+            $docs[ 'dcedula' ] = time() . '_' . $request->file( 'dcedula' )->getClientOriginalName();
+            $request->file( 'dcedula' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dcedula' ] );
         }
-        if ($request->hasFile('dfiscal')) {
-            $docs['dfiscal'] = time() . '_' . $request->file('dfiscal')->getClientOriginalName();
-            $request->file('dfiscal')->storeAs('/public/personal/' . $pathPesonal, $docs['dfiscal']);
+        if ( $request->hasFile( 'dfiscal' ) ) {
+            $docs[ 'dfiscal' ] = time() . '_' . $request->file( 'dfiscal' )->getClientOriginalName();
+            $request->file( 'dfiscal' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dfiscal' ] );
         }
-        if ($request->hasFile('dpenales')) {
-            $docs['dpenales'] = time() . '_' . $request->file('dpenales')->getClientOriginalName();
-            $request->file('dpenales')->storeAs('/public/personal/' . $pathPesonal, $docs['dpenales']);
+        if ( $request->hasFile( 'dpenales' ) ) {
+            $docs[ 'dpenales' ] = time() . '_' . $request->file( 'dpenales' )->getClientOriginalName();
+            $request->file( 'dpenales' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dpenales' ] );
         }
-        if ($request->hasFile('drecomendacion')) {
-            $docs['drecomendacion'] = time() . '_' . $request->file('drecomendacion')->getClientOriginalName();
-            $request->file('drecomendacion')->storeAs('/public/personal/' . $pathPesonal, $docs['drecomendacion']);
+        if ( $request->hasFile( 'drecomendacion' ) ) {
+            $docs[ 'drecomendacion' ] = time() . '_' . $request->file( 'drecomendacion' )->getClientOriginalName();
+            $request->file( 'drecomendacion' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'drecomendacion' ] );
         }
-        if ($request->hasFile('ddc3')) {
-            $docs['ddc3'] = time() . '_' . $request->file('ddc3')->getClientOriginalName();
-            $request->file('ddc3')->storeAs('/public/personal/' . $pathPesonal, $docs['ddc3']);
+        if ( $request->hasFile( 'ddc3' ) ) {
+            $docs[ 'ddc3' ] = time() . '_' . $request->file( 'ddc3' )->getClientOriginalName();
+            $request->file( 'ddc3' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'ddc3' ] );
         }
-        if ($request->hasFile('dmedico')) {
-            $docs['dmedico'] = time() . '_' . $request->file('dmedico')->getClientOriginalName();
-            $request->file('dmedico')->storeAs('/public/personal/' . $pathPesonal, $docs['dmedico']);
+        if ( $request->hasFile( 'dmedico' ) ) {
+            $docs[ 'dmedico' ] = time() . '_' . $request->file( 'dmedico' )->getClientOriginalName();
+            $request->file( 'dmedico' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dmedico' ] );
         }
-        if ($request->hasFile('ddoping')) {
-            $docs['ddoping'] = time() . '_' . $request->file('ddoping')->getClientOriginalName();
-            $request->file('ddoping')->storeAs('/public/personal/' . $pathPesonal, $docs['ddoping']);
+        if ( $request->hasFile( 'ddoping' ) ) {
+            $docs[ 'ddoping' ] = time() . '_' . $request->file( 'ddoping' )->getClientOriginalName();
+            $request->file( 'ddoping' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'ddoping' ] );
         }
-        if ($request->hasFile('destudios')) {
-            $docs['destudios'] = time() . '_' . $request->file('destudios')->getClientOriginalName();
-            $request->file('destudios')->storeAs('/public/personal/' . $pathPesonal, $docs['destudios']);
+        if ( $request->hasFile( 'destudios' ) ) {
+            $docs[ 'destudios' ] = time() . '_' . $request->file( 'destudios' )->getClientOriginalName();
+            $request->file( 'destudios' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'destudios' ] );
         }
-        if ($request->hasFile('dnss')) {
-            $docs['dnss'] = time() . '_' . $request->file('dnss')->getClientOriginalName();
-            $request->file('dnss')->storeAs('/public/personal/' . $pathPesonal, $docs['dnss']);
+        if ( $request->hasFile( 'dnss' ) ) {
+            $docs[ 'dnss' ] = time() . '_' . $request->file( 'dnss' )->getClientOriginalName();
+            $request->file( 'dnss' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dnss' ] );
         }
-        if ($request->hasFile('dari')) {
-            $docs['dari'] = time() . '_' . $request->file('dari')->getClientOriginalName();
-            $request->file('dari')->storeAs('/public/personal/' . $pathPesonal, $docs['dari']);
+        if ( $request->hasFile( 'dari' ) ) {
+            $docs[ 'dari' ] = time() . '_' . $request->file( 'dari' )->getClientOriginalName();
+            $request->file( 'dari' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dari' ] );
         }
-        if ($request->hasFile('dpuesto')) {
-            $docs['dpuesto'] = time() . '_' . $request->file('dpuesto')->getClientOriginalName();
-            $request->file('dpuesto')->storeAs('/public/personal/' . $pathPesonal, $docs['dpuesto']);
+        if ( $request->hasFile( 'dpuesto' ) ) {
+            $docs[ 'dpuesto' ] = time() . '_' . $request->file( 'dpuesto' )->getClientOriginalName();
+            $request->file( 'dpuesto' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dpuesto' ] );
         }
-        if ($request->hasFile('dcontrato')) {
-            $docs['dcontrato'] = time() . '_' . $request->file('dcontrato')->getClientOriginalName();
-            $request->file('dcontrato')->storeAs('/public/personal/' . $pathPesonal, $docs['dcontrato']);
+        if ( $request->hasFile( 'dcontrato' ) ) {
+            $docs[ 'dcontrato' ] = time() . '_' . $request->file( 'dcontrato' )->getClientOriginalName();
+            $request->file( 'dcontrato' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dcontrato' ] );
         }
-        $docs['personalId'] = $personal->id;
-        $docs = userdocs::create($docs);
+        $docs[ 'personalId' ] = $personal->id;
+        $docs = userdocs::create( $docs );
 
         $newcontacto = new contactos();
         $newcontacto->personalId = $personal->id;
@@ -411,9 +408,9 @@ class personalController extends Controller
         $newnomina->isr = $request->isr;
         $newnomina->fechaPagoPrimaVac = $request->fechaPagoPrimaVac;
         $newnomina->puestoId = $request->puestoId;
-        $newnomina->asistencia = 0;
+        $newnomina->asistencia =  $request->asistencia;
         $newnomina->diario = $request->diario;
-        //$request->asistencia;
+        ;
         $newnomina->save();
 
         $newequipo = new equipo();
@@ -432,7 +429,7 @@ class personalController extends Controller
         $newequipo->cargadorSerial = $request->cargadorSerial;
         $newequipo->save();
 
-        if ($request->cp != '') {
+        if ( $request->cp != '' ) {
             $newfiscal =  new fiscal();
             $newfiscal->personalId = $personal->id;
             $newfiscal->calle = $request->calle;
@@ -462,77 +459,74 @@ class personalController extends Controller
             $newfiscal->save();
         }
 
-        Session::flash('message', 1);
-        return redirect()->route('personal.index');
+        Session::flash( 'message', 1 );
+        return redirect()->route( 'personal.index' );
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\personal  $personal
-     * @return \Illuminate\Http\Response
-     */
+    * Display the specified resource.
+    *
+    * @param  \App\Models\personal  $personal
+    * @return \Illuminate\Http\Response
+    */
 
-    public function show(personal $personal)
-    {
-        abort_if(Gate::denies('personal_show'), 403);
+    public function show( personal $personal ) {
+        abort_if ( Gate::denies( 'personal_show' ), 403 );
 
-        // dd( $personal->id );
-        $contacto = contactos::where('personalId', $personal->id)->first();
-        $beneficiario = beneficiario::where('personalId', $personal->id)->first();
-        $nomina = nomina::where('personalId', $personal->id)->first();
-        $equipo = equipo::where('personalId', $personal->id)->first();
-        $docs = userdocs::where('personalId', $personal->id)->first();
-        $fiscal = fiscal::where('personalId', $personal->id)->first();
-        $vctPuestos = puesto::orderBy('nombre', 'asc')->get();
-        $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->get();
+        // dd( $personal );
+        $contacto = contactos::where( 'personalId', $personal->id )->first();
+        $beneficiario = beneficiario::where( 'personalId', $personal->id )->first();
+        $nomina = nomina::where( 'personalId', $personal->id )->first();
+        $equipo = equipo::where( 'personalId', $personal->id )->first();
+        $docs = userdocs::where( 'personalId', $personal->id )->first();
+        $fiscal = fiscal::where( 'personalId', $personal->id )->first();
+        $vctPuestos = puesto::orderBy( 'nombre', 'asc' )->get();
+        $vctNiveles = puestoNivel::orderBy( 'nombre', 'asc' )->get();
         $vctEstatus = userEstatus::all();
         $vctPersonal = personal::all();
 
-        $nomina->decSalarioDiario = ($nomina->diario);
-        $nomina->decSalarioDiarioIntegrado = round($nomina->decSalarioDiario * 1.05137, 2);
-        $nomina->decSalarioMensual = round($nomina->decSalarioDiario * 30, 2);
-        $nomina->decSalarioMensualIntegrado = round($nomina->decSalarioDiarioIntegrado * 30, 2);
-        $nomina->decEstado = round($nomina->decSalarioMensual * 0.025, 2);
-        $nomina->decImss = round($nomina->decSalarioMensualIntegrado  * 0.0938, 2);
-        $nomina->decImssRiesgo = round($nomina->decSalarioMensualIntegrado * 0.0658875, 2);
-        $nomina->decAfore = round($nomina->decSalarioMensualIntegrado * 0.0628, 2);
-        $nomina->decInfonavit = round($nomina->decSalarioMensualIntegrado * 0.05, 2);
-        $nomina->decVacaciones = round($nomina->decSalarioDiario * 6, 2);
-        $nomina->decPrimaVacacional = round($nomina->decVacaciones * 0.25, 2);
-        $nomina->decAguinaldo = round($nomina->decSalarioDiario * 15, 2);
-        $nomina->decTotal = round($nomina->decSalarioMensual + $nomina->decEstado + $nomina->decImss + $nomina->decImssRiesgo +
-            $nomina->decAfore + $nomina->decInfonavit + $nomina->decVacaciones + $nomina->decPrimaVacacional + $nomina->decAguinaldo + $nomina->isr, 2);
+        $nomina->decSalarioDiario = ( $nomina->diario );
+        $nomina->decSalarioDiarioIntegrado = round( $nomina->decSalarioDiario * 1.05137, 2 );
+        $nomina->decSalarioMensual = round( $nomina->decSalarioDiario * 30, 2 );
+        $nomina->decSalarioMensualIntegrado = round( $nomina->decSalarioDiarioIntegrado * 30, 2 );
+        $nomina->decEstado = round( $nomina->decSalarioMensual * 0.025, 2 );
+        $nomina->decImss = round( $nomina->decSalarioMensualIntegrado  * 0.0938, 2 );
+        $nomina->decImssRiesgo = round( $nomina->decSalarioMensualIntegrado * 0.0658875, 2 );
+        $nomina->decAfore = round( $nomina->decSalarioMensualIntegrado * 0.0628, 2 );
+        $nomina->decInfonavit = round( $nomina->decSalarioMensualIntegrado * 0.05, 2 );
+        $nomina->decVacaciones = round( $nomina->decSalarioDiario * 6, 2 );
+        $nomina->decPrimaVacacional = round( $nomina->decVacaciones * 0.25, 2 );
+        $nomina->decAguinaldo = round( $nomina->decSalarioDiario * 15, 2 );
+        $nomina->decTotal = round( $nomina->decSalarioMensual + $nomina->decEstado + $nomina->decImss + $nomina->decImssRiesgo +
+        $nomina->decAfore + $nomina->decInfonavit + $nomina->decVacaciones + $nomina->decPrimaVacacional + $nomina->decAguinaldo + $nomina->isr, 2 );
 
         // dd( $nomina );
-        return view('personal.detalleDePersonal', compact('personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal', 'vctPersonal', 'vctEstatus', 'vctPuestos', 'vctNiveles'));
+        return view( 'personal.detalleDePersonal', compact( 'personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal', 'vctPersonal', 'vctEstatus', 'vctPuestos', 'vctNiveles' ) );
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\personal  $personal
-     * @return \Illuminate\Http\Response
-     */
+    * Show the form for editing the specified resource.
+    *
+    * @param  \App\Models\personal  $personal
+    * @return \Illuminate\Http\Response
+    */
 
-    public function edit(personal $personal)
-    {
+    public function edit( personal $personal ) {
         return 'Usar show para editar';
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\personal  $personal
-     * @return \Illuminate\Http\Response
-     */
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Models\personal  $personal
+    * @return \Illuminate\Http\Response
+    */
 
-    public function update(Request $request, personal $personal)
-    {
-        abort_if(Gate::denies('personal_edit'), 403);
-
-        $request->validate([
+    public function update( Request $request, personal $personal ) {
+        abort_if ( Gate::denies( 'personal_edit' ), 403 );
+        // dd( $request );
+        $request->validate( [
             'nombres' => 'required|max:150',
             'apellidoP' => 'required|max:150',
             'apellidoM' => 'nullable|max:150',
@@ -678,7 +672,7 @@ class personalController extends Controller
             'radioSerial.numeric' => 'El campo serial de radio debe de ser númerico.',
             'cargadorSerial.max' => 'El campo serial de cargador excede el límite de caracteres permitidos.',
             'cargadorSerial.numeric' => 'El campo serial del cargador debe de ser númerico.',
-        ]);
+        ] );
 
         $id = $personal->id;
         $data = $request->only(
@@ -715,31 +709,31 @@ class personalController extends Controller
             'interior',
             'estatusId',
             'puestoId',
-            'asistencia',
+            'usaCajaChica',
             'puestoNivelId'
         );
 
         /*** directorio contenedor de su información */
-        $pathPesonal = str_pad($personal->id, 4, '0', STR_PAD_LEFT);
+        $pathPesonal = str_pad( $personal->id, 4, '0', STR_PAD_LEFT );
 
-        if ($request->hasFile('foto')) {
-            $data['foto'] = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
-            $request->file('foto')->storeAs('/public/personal/' . $pathPesonal, $data['foto']);
+        if ( $request->hasFile( 'foto' ) ) {
+            $data[ 'foto' ] = time() . '_' . 'foto.' . $request->file( 'foto' )->getClientOriginalExtension();
+            $request->file( 'foto' )->storeAs( '/public/personal/' . $pathPesonal, $data[ 'foto' ] );
         }
 
         // conversion a mayuscula de algunos campos
-        $data['curp'] = strtoupper($data['curp']);
-        $data['ine'] = strtoupper($data['ine']);
-        $data['rfc'] = strtoupper($data['rfc']);
-        $data['licencia'] = strtoupper($data['licencia']);
-        $data['cpf'] = strtoupper($data['cpf']);
+        $data[ 'curp' ] = strtoupper( $data[ 'curp' ] );
+        $data[ 'ine' ] = strtoupper( $data[ 'ine' ] );
+        $data[ 'rfc' ] = strtoupper( $data[ 'rfc' ] );
+        $data[ 'licencia' ] = strtoupper( $data[ 'licencia' ] );
+        $data[ 'cpf' ] = strtoupper( $data[ 'cpf' ] );
         // conversion a minuscula de algunos campos
-        $data['mailEmpresarial'] = strtolower($data['mailEmpresarial']);
-        $data['mailpersonal'] = strtolower($data['mailpersonal']);
+        $data[ 'mailEmpresarial' ] = strtolower( $data[ 'mailEmpresarial' ] );
+        $data[ 'mailpersonal' ] = strtolower( $data[ 'mailpersonal' ] );
 
-        $personal->update($data);
+        $personal->update( $data );
 
-        $contacto = contactos::where('personalId', "$id")->first();
+        $contacto = contactos::where( 'personalId', "$id" )->first();
         $contacto->nombre = $request->nombreE;
         $contacto->particular = $request->particularE;
         $contacto->celular = $request->celularE;
@@ -748,7 +742,7 @@ class personalController extends Controller
         $contacto->nombreM = $request->nombreM;
         $contacto->save();
 
-        $beneficiario = beneficiario::where('personalId', "$id")->first();
+        $beneficiario = beneficiario::where( 'personalId', "$id" )->first();
         $beneficiario->nombres = $request->nombreB;
         $beneficiario->apellidoP = $request->apellidoPB;
         $beneficiario->apellidoM = $request->apellidoMB;
@@ -757,7 +751,7 @@ class personalController extends Controller
         $beneficiario->nacimiento = $request->nacimientoB;
         $beneficiario->save();
 
-        $nomina = nomina::where('personalId', "$id")->first();
+        $nomina = nomina::where( 'personalId', "$id" )->first();
         $nomina->nomina = $request->nomina;
         $nomina->imss = $request->imss;
         $nomina->clinica = $request->clinica;
@@ -775,11 +769,10 @@ class personalController extends Controller
         $nomina->isr = $request->isr;
         $nomina->fechaPagoPrimaVac = $request->fechaPagoPrimaVac;
         $nomina->puestoId = $request->puestoId;
-        $nomina->asistencia = 0;
-        //$request->asistencia;
+        $nomina->asistencia = $request->asistencia;
         $nomina->save();
 
-        $equipo = equipo::where('personalId', "$id")->first();
+        $equipo = equipo::where( 'personalId', "$id" )->first();
         $equipo->chaleco = $request->chaleco;
         $equipo->camisa = $request->camisa;
         $equipo->botas = $request->botas;
@@ -794,7 +787,7 @@ class personalController extends Controller
         $equipo->cargadorSerial = $request->cargadorSerial;
         $equipo->save();
 
-        $newfiscal =   fiscal::where('personalId', "$id")->first();
+        $newfiscal =   fiscal::where( 'personalId', "$id" )->first();
         $newfiscal->calle = $request->callef;
         $newfiscal->numero = $request->numerof;
         $newfiscal->interior = $request->interiorf;
@@ -807,148 +800,146 @@ class personalController extends Controller
         $newfiscal->tipo = $request->tipof;
         $newfiscal->save();
 
-        if ($request->hasFile('dvitae')) {
-            $docs['dvitae'] = time() . '_' . $request->file('dvitae')->getClientOriginalName();
-            $request->file('dvitae')->storeAs('/public/personal/' . $pathPesonal, $docs['dvitae']);
+        if ( $request->hasFile( 'dvitae' ) ) {
+            $docs[ 'dvitae' ] = time() . '_' . $request->file( 'dvitae' )->getClientOriginalName();
+            $request->file( 'dvitae' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dvitae' ] );
         }
-        if ($request->hasFile('dnacimiento')) {
-            $docs['dnacimiento'] = time() . '_' . $request->file('dnacimiento')->getClientOriginalName();
-            $request->file('dnacimiento')->storeAs('/public/personal/' . $pathPesonal, $docs['dnacimiento']);
+        if ( $request->hasFile( 'dnacimiento' ) ) {
+            $docs[ 'dnacimiento' ] = time() . '_' . $request->file( 'dnacimiento' )->getClientOriginalName();
+            $request->file( 'dnacimiento' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dnacimiento' ] );
         }
-        if ($request->hasFile('dine')) {
-            $docs['dine'] = time() . '_' . $request->file('dine')->getClientOriginalName();
-            $request->file('dine')->storeAs('/public/personal/' . $pathPesonal, $docs['dine']);
+        if ( $request->hasFile( 'dine' ) ) {
+            $docs[ 'dine' ] = time() . '_' . $request->file( 'dine' )->getClientOriginalName();
+            $request->file( 'dine' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dine' ] );
         }
-        if ($request->hasFile('dcurp')) {
-            $docs['dcurp'] = time() . '_' . $request->file('dcurp')->getClientOriginalName();
-            $request->file('dcurp')->storeAs('/public/personal/' . $pathPesonal, $docs['dcurp']);
+        if ( $request->hasFile( 'dcurp' ) ) {
+            $docs[ 'dcurp' ] = time() . '_' . $request->file( 'dcurp' )->getClientOriginalName();
+            $request->file( 'dcurp' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dcurp' ] );
         }
-        if ($request->hasFile('dlicencia')) {
-            $docs['dlicencia'] = time() . '_' . $request->file('dlicencia')->getClientOriginalName();
-            $request->file('dlicencia')->storeAs('/public/personal/' . $pathPesonal, $docs['dlicencia']);
+        if ( $request->hasFile( 'dlicencia' ) ) {
+            $docs[ 'dlicencia' ] = time() . '_' . $request->file( 'dlicencia' )->getClientOriginalName();
+            $request->file( 'dlicencia' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dlicencia' ] );
         }
-        if ($request->hasFile('dcedula')) {
-            $docs['dcedula'] = time() . '_' . $request->file('dcedula')->getClientOriginalName();
-            $request->file('dcedula')->storeAs('/public/personal/' . $pathPesonal, $docs['dcedula']);
+        if ( $request->hasFile( 'dcedula' ) ) {
+            $docs[ 'dcedula' ] = time() . '_' . $request->file( 'dcedula' )->getClientOriginalName();
+            $request->file( 'dcedula' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dcedula' ] );
         }
-        if ($request->hasFile('dfiscal')) {
-            $docs['dfiscal'] = time() . '_' . $request->file('dfiscal')->getClientOriginalName();
-            $request->file('dfiscal')->storeAs('/public/personal/' . $pathPesonal, $docs['dfiscal']);
+        if ( $request->hasFile( 'dfiscal' ) ) {
+            $docs[ 'dfiscal' ] = time() . '_' . $request->file( 'dfiscal' )->getClientOriginalName();
+            $request->file( 'dfiscal' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dfiscal' ] );
         }
-        if ($request->hasFile('dpenales')) {
-            $docs['dpenales'] = time() . '_' . $request->file('dpenales')->getClientOriginalName();
-            $request->file('dpenales')->storeAs('/public/personal/' . $pathPesonal, $docs['dpenales']);
+        if ( $request->hasFile( 'dpenales' ) ) {
+            $docs[ 'dpenales' ] = time() . '_' . $request->file( 'dpenales' )->getClientOriginalName();
+            $request->file( 'dpenales' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dpenales' ] );
         }
-        if ($request->hasFile('drecomendacion')) {
-            $docs['drecomendacion'] = time() . '_' . $request->file('drecomendacion')->getClientOriginalName();
-            $request->file('drecomendacion')->storeAs('/public/personal/' . $pathPesonal, $docs['drecomendacion']);
+        if ( $request->hasFile( 'drecomendacion' ) ) {
+            $docs[ 'drecomendacion' ] = time() . '_' . $request->file( 'drecomendacion' )->getClientOriginalName();
+            $request->file( 'drecomendacion' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'drecomendacion' ] );
         }
-        if ($request->hasFile('ddc3')) {
-            $docs['ddc3'] = time() . '_' . $request->file('ddc3')->getClientOriginalName();
-            $request->file('ddc3')->storeAs('/public/personal/' . $pathPesonal, $docs['ddc3']);
+        if ( $request->hasFile( 'ddc3' ) ) {
+            $docs[ 'ddc3' ] = time() . '_' . $request->file( 'ddc3' )->getClientOriginalName();
+            $request->file( 'ddc3' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'ddc3' ] );
         }
-        if ($request->hasFile('dmedico')) {
-            $docs['dmedico'] = time() . '_' . $request->file('dmedico')->getClientOriginalName();
-            $request->file('dmedico')->storeAs('/public/personal/' . $pathPesonal, $docs['dmedico']);
+        if ( $request->hasFile( 'dmedico' ) ) {
+            $docs[ 'dmedico' ] = time() . '_' . $request->file( 'dmedico' )->getClientOriginalName();
+            $request->file( 'dmedico' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dmedico' ] );
         }
-        if ($request->hasFile('ddoping')) {
-            $docs['ddoping'] = time() . '_' . $request->file('ddoping')->getClientOriginalName();
-            $request->file('ddoping')->storeAs('/public/personal/' . $pathPesonal, $docs['ddoping']);
+        if ( $request->hasFile( 'ddoping' ) ) {
+            $docs[ 'ddoping' ] = time() . '_' . $request->file( 'ddoping' )->getClientOriginalName();
+            $request->file( 'ddoping' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'ddoping' ] );
         }
-        if ($request->hasFile('destudios')) {
-            $docs['destudios'] = time() . '_' . $request->file('destudios')->getClientOriginalName();
-            $request->file('destudios')->storeAs('/public/personal/' . $pathPesonal, $docs['destudios']);
+        if ( $request->hasFile( 'destudios' ) ) {
+            $docs[ 'destudios' ] = time() . '_' . $request->file( 'destudios' )->getClientOriginalName();
+            $request->file( 'destudios' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'destudios' ] );
         }
-        if ($request->hasFile('dnss')) {
-            $docs['dnss'] = time() . '_' . $request->file('dnss')->getClientOriginalName();
-            $request->file('dnss')->storeAs('/public/personal/' . $pathPesonal, $docs['dnss']);
+        if ( $request->hasFile( 'dnss' ) ) {
+            $docs[ 'dnss' ] = time() . '_' . $request->file( 'dnss' )->getClientOriginalName();
+            $request->file( 'dnss' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dnss' ] );
         }
-        if ($request->hasFile('dari')) {
-            $docs['dari'] = time() . '_' . $request->file('dari')->getClientOriginalName();
-            $request->file('dari')->storeAs('/public/personal/' . $pathPesonal, $docs['dari']);
+        if ( $request->hasFile( 'dari' ) ) {
+            $docs[ 'dari' ] = time() . '_' . $request->file( 'dari' )->getClientOriginalName();
+            $request->file( 'dari' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dari' ] );
         }
-        if ($request->hasFile('dpuesto')) {
-            $docs['dpuesto'] = time() . '_' . $request->file('dpuesto')->getClientOriginalName();
-            $request->file('dpuesto')->storeAs('/public/personal/' . $pathPesonal, $docs['dpuesto']);
+        if ( $request->hasFile( 'dpuesto' ) ) {
+            $docs[ 'dpuesto' ] = time() . '_' . $request->file( 'dpuesto' )->getClientOriginalName();
+            $request->file( 'dpuesto' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dpuesto' ] );
         }
-        if ($request->hasFile('dcontrato')) {
-            $docs['dcontrato'] = time() . '_' . $request->file('dcontrato')->getClientOriginalName();
-            $request->file('dcontrato')->storeAs('/public/personal/' . $pathPesonal, $docs['dcontrato']);
+        if ( $request->hasFile( 'dcontrato' ) ) {
+            $docs[ 'dcontrato' ] = time() . '_' . $request->file( 'dcontrato' )->getClientOriginalName();
+            $request->file( 'dcontrato' )->storeAs( '/public/personal/' . $pathPesonal, $docs[ 'dcontrato' ] );
         }
-        $docu = userdocs::where('personalId', $id);
-        if (isset($docs)) {
-            $docu->update($docs);
+        $docu = userdocs::where( 'personalId', $id );
+        if ( isset( $docs ) ) {
+            $docu->update( $docs );
             # code...
         }
 
-        Session::flash('message', 1);
+        Session::flash( 'message', 1 );
         //dd( $request );
 
-        $this->cambiaEstatusUsuario($personal->id, $personal->estatusId);
+        $this->cambiaEstatusUsuario( $personal->id, $personal->estatusId );
 
-        return redirect()->route('personal.index');
+        return redirect()->route( 'personal.index' );
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\personal  $personal
-     * @return \Illuminate\Http\Response
-     */
+    * Remove the specified resource from storage.
+    *
+    * @param  \App\Models\personal  $personal
+    * @return \Illuminate\Http\Response
+    */
 
-    public function destroy($id, $estatusId = 2)
-    {
-        abort_if(Gate::denies('personal_destroy'), 403);
+    public function destroy( $id, $estatusId = 2 ) {
+        abort_if ( Gate::denies( 'personal_destroy' ), 403 );
 
-        $this->cambiaEstatusUsuario($id, $estatusId);
+        $this->cambiaEstatusUsuario( $id, $estatusId );
     }
 
-    public function cambiaEstatusUsuario($id, $estatusId)
-    {
-        $objPersona = personal::where('id', '=', $id)->firstOrFail();
+    public function cambiaEstatusUsuario( $id, $estatusId ) {
+        $objPersona = personal::where( 'id', '=', $id )->firstOrFail();
 
-        $vctEstatus = userEstatus::select('userEstatus.nombre')->get()->toArray();
+        $vctEstatus = userEstatus::select( 'userEstatus.nombre' )->get()->toArray();
         $aEstatus = array();
-        foreach ($vctEstatus as   $value) {
-            $aEstatus[] = strtolower($value['nombre'] . '_');
+        foreach ( $vctEstatus as   $value ) {
+            $aEstatus[] = strtolower( $value[ 'nombre' ] . '_' );
         }
 
-        if (empty($objPersona) === false) {
+        if ( empty( $objPersona ) === false ) {
             $strPrefijo = '';
-            $objEstatus = userEstatus::where('id', $estatusId)->firstOrFail();
+            $objEstatus = userEstatus::where( 'id', $estatusId )->firstOrFail();
 
-            $objUser = User::where('id', $objPersona->userId)->firstOrFail();
+            $objUser = User::where( 'id', $objPersona->userId )->firstOrFail();
 
-            if (empty($objUser) === false) {
+            if ( empty( $objUser ) === false ) {
                 //** si el estatus es mayor de 1 se debe de realizar ajustes */
-                if (empty($objEstatus) === false && $objEstatus->id > 1) {
+                if ( empty( $objEstatus ) === false && $objEstatus->id > 1 ) {
                     //** para todos los estatus */
                     $strPrefijo = $objEstatus->nombre . '_';
 
-                    $strUserEmail = $strPrefijo .  str_replace($aEstatus, '', $objUser->email);
-                    $strUserPwd =  bcrypt($strPrefijo . $objUser->email . now()->toString());
+                    $strUserEmail = $strPrefijo .  str_replace( $aEstatus, '', $objUser->email );
+                    $strUserPwd =  bcrypt( $strPrefijo . $objUser->email . now()->toString() );
 
-                    $objUser->email = strtolower($strUserEmail);
+                    $objUser->email = strtolower( $strUserEmail );
                     $objUser->password = $strUserPwd;
                     $objUser->update();
 
-                    $strPersonalEmail = $strPrefijo . str_replace($aEstatus, '', $objPersona->mailEmpresarial);
+                    $strPersonalEmail = $strPrefijo . str_replace( $aEstatus, '', $objPersona->mailEmpresarial );
 
-                    $objPersona->mailEmpresarial = strtolower($strPersonalEmail);
+                    $objPersona->mailEmpresarial = strtolower( $strPersonalEmail );
                     $objPersona->estatusId = $estatusId;
                     $objPersona->update();
 
                     // dd( $objPersona );
                 } else {
                     /** es activacion */
-                    $strUserEmail =  str_replace($aEstatus, '', $objUser->email);
-                    $strUserPwd =  bcrypt('12345678');
+                    $strUserEmail =  str_replace( $aEstatus, '', $objUser->email );
+                    $strUserPwd =  bcrypt( '12345678' );
 
                     $objUser->email = $strUserEmail;
                     $objUser->password = $strUserPwd;
                     $objUser->update();
 
-                    $strPersonalEmail =  str_replace($aEstatus, '', $objPersona->mailEmpresarial);
+                    $strPersonalEmail =  str_replace( $aEstatus, '', $objPersona->mailEmpresarial );
 
                     $objPersona->mailEmpresarial = $strPersonalEmail;
                     $objPersona->estatusId = $estatusId;
@@ -958,68 +949,65 @@ class personalController extends Controller
         }
     }
 
-    public function download($id, $doc)
-    {
-        $book = userdocs::where('id', $id)->firstOrFail();
+    public function download( $id, $doc ) {
+        $book = userdocs::where( 'id', $id )->firstOrFail();
 
-        if (empty($book) === false) {
+        if ( empty( $book ) === false ) {
 
             /*** directorio contenedor de su información */
-            $pathPesonal = str_pad($book->personalId, 4, '0', STR_PAD_LEFT);
-            $pathToFile = storage_path('app/public/personal/' . $pathPesonal . '/' . $book->$doc);
+            $pathPesonal = str_pad( $book->personalId, 4, '0', STR_PAD_LEFT );
+            $pathToFile = storage_path( 'app/public/personal/' . $pathPesonal . '/' . $book->$doc );
             // dd( $pathToFile );
-            if (file_exists($pathToFile) === true &&  is_file($pathToFile) === true) {
+            if ( file_exists( $pathToFile ) === true &&  is_file( $pathToFile ) === true ) {
                 // return response()->download( $pathToFile );
-                return response()->file($pathToFile);
+                return response()->file( $pathToFile );
             } else {
-                return redirect('404');
+                return redirect( '404' );
             }
         }
     }
 
     /**
-     * Limpieza de caracteres invalidos de un email
-     *
-     * @param string $strEmail Correo a sanitizar
-     * @return void
-     */
+    * Limpieza de caracteres invalidos de un email
+    *
+    * @param string $strEmail Correo a sanitizar
+    * @return void
+    */
 
-    public function sanitizaEmail($strEmail)
-    {
+    public function sanitizaEmail( $strEmail ) {
         return  str_replace(
-            array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª', 'É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê', 'Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î', 'Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô', 'Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û', 'Ñ', 'ñ', 'Ç', 'ç'),
-            array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a', 'E', 'E', 'E', 'E', 'e', 'e', 'e', 'e', 'I', 'I', 'I', 'I', 'i', 'i', 'i', 'i', 'O', 'O', 'O', 'O', 'o', 'o', 'o', 'o', 'U', 'U', 'U', 'U', 'u', 'u', 'u', 'u', 'N', 'n', 'C', 'c'),
+            array( 'Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª', 'É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê', 'Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î', 'Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô', 'Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û', 'Ñ', 'ñ', 'Ç', 'ç' ),
+            array( 'A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a', 'E', 'E', 'E', 'E', 'e', 'e', 'e', 'e', 'I', 'I', 'I', 'I', 'i', 'i', 'i', 'i', 'O', 'O', 'O', 'O', 'o', 'o', 'o', 'o', 'U', 'U', 'U', 'U', 'u', 'u', 'u', 'u', 'N', 'n', 'C', 'c' ),
             $strEmail
         );
     }
 
     /**
-     * Genera el correo empresarial del usuario
-     *
-     * @param [ type ] $strNombre
-     * @param [ type ] $strPaterno
-     * @param [ type ] $strMaterno
-     * @return string email
-     */
+    * Genera el correo empresarial del usuario
+    *
+    * @param [ type ] $strNombre
+    * @param [ type ] $strPaterno
+    * @param [ type ] $strMaterno
+    * @return string email
+    */
 
-    public function generarCorreoEmpresarial($strNombre, $strPaterno, $strMaterno = null)
-    {
-        $strEmail =  $this->sanitizaEmail(mb_strtolower(Str::substr($strNombre, 0, 1) . str_replace(' ', '', $strPaterno) . '@q2ces.com', 'UTF-8'));
+    public function generarCorreoEmpresarial( $strNombre, $strPaterno, $strMaterno = null ) {
+        $strEmail =  $this->sanitizaEmail( mb_strtolower( Str::substr( $strNombre, 0, 1 ) . str_replace( ' ', '', $strPaterno ) . '@q2ces.com', 'UTF-8' ) );
 
         // existe el correo
-        $objCorreo = personal::where('mailEmpresarial', $strEmail)->first();
+        $objCorreo = personal::where( 'mailEmpresarial', $strEmail )->first();
 
-        if ($objCorreo) {
-            if ($strMaterno != '') {
+        if ( $objCorreo ) {
+            if ( $strMaterno != '' ) {
                 $strEmail2 =  $this->sanitizaEmail(
-                    mb_strtolower(Str::substr($strNombre, 0, 1) . str_replace(' ', '', $strPaterno) . str_replace(' ', '', $strMaterno) . '@q2ces.com', 'UTF-8')
+                    mb_strtolower( Str::substr( $strNombre, 0, 1 ) . str_replace( ' ', '', $strPaterno ) . str_replace( ' ', '', $strMaterno ) . '@q2ces.com', 'UTF-8' )
                 );
 
-                $objCorreo = personal::where('mailEmpresarial', $strEmail2)->first();
-                if ($objCorreo) {
+                $objCorreo = personal::where( 'mailEmpresarial', $strEmail2 )->first();
+                if ( $objCorreo ) {
                     // existe y se regresa con el dia
                     $strEmail3 =  $this->sanitizaEmail(
-                        mb_strtolower(Str::substr($strNombre, 0, 1) . str_replace(' ', '', $strPaterno) . str_replace(' ', '', $strMaterno) . date('d') . '@q2ces.com', 'UTF-8')
+                        mb_strtolower( Str::substr( $strNombre, 0, 1 ) . str_replace( ' ', '', $strPaterno ) . str_replace( ' ', '', $strMaterno ) . date( 'd' ) . '@q2ces.com', 'UTF-8' )
                     );
                     return $strEmail3;
                 } else {
@@ -1029,7 +1017,7 @@ class personalController extends Controller
             } else {
                 // no existe segundo apellido y se pone el dia
                 $strEmail3 =  $this->sanitizaEmail(
-                    mb_strtolower(Str::substr($strNombre, 0, 1) .  str_replace(' ', '', $strPaterno)  . date('d') . '@q2ces.com', 'UTF-8')
+                    mb_strtolower( Str::substr( $strNombre, 0, 1 ) .  str_replace( ' ', '', $strPaterno )  . date( 'd' ) . '@q2ces.com', 'UTF-8' )
                 );
                 return $strEmail3;
             }

@@ -169,7 +169,7 @@
                                                     <label class="labelTitulo">Fecha de Nacimiento: </label></br>
                                                     <input type="date" class="inputCaja" id="fechaNacimiento"
                                                         name="fechaNacimiento"
-                                                        value="{{ ($personal->fechaNacimiento ? \Carbon\Carbon::parse($personal->fechaNacimiento)->format('Y-m-d') :"")}}">
+                                                        value="{{ $personal->fechaNacimiento ? \Carbon\Carbon::parse($personal->fechaNacimiento)->format('Y-m-d') : '' }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -305,19 +305,6 @@
                                                     name="mailEmpresarial" value="">
                                             </div>  --}}
 
-                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                <label class="labelTitulo">Nivel de puesto: <span>*</span></label></br>
-                                                <select id="puestoNivelId" name="puestoNivelId"
-                                                    class="form-select" required
-                                                    aria-label="Default select example">
-                                                    <option value="">Seleccione</option>
-                                                    @foreach ($vctNiveles as $item)
-                                                        <option value="{{ $item->id }}"  {{ $personal->puestoNivelId == $item->id ? ' selected' : '' }}>
-                                                            {{ $item->nombre }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
                                             </div>
                                         </div>
                                     </div>
@@ -575,7 +562,7 @@
                                                     <label class="labelTitulo">Fecha de
                                                         Nacimiento:</label></br>
                                                     <input type="date" class="inputCaja" id="nacimiento"
-                                                        name="nacimientoB"value="{{ ($beneficiario->nacimiento ? \Carbon\Carbon::parse($beneficiario->nacimiento)->format('Y-m-d'):"") }}">
+                                                        name="nacimientoB"value="{{ $beneficiario->nacimiento ? \Carbon\Carbon::parse($beneficiario->nacimiento)->format('Y-m-d') : '' }}">
                                                 </div>
 
                                             </div>
@@ -680,12 +667,12 @@
                                                     <label class="labelTitulo">Puesto: <span>*</span></label></br>
                                                     {{-- <input type="text" class="inputCaja" id=""
                                                         name="puesto" value="{{ $nomina->puesto }}"> --}}
-                                                    <select id="puestoId" name="puestoId" required
-                                                        class="form-select"
+                                                    <select id="puestoId" name="puestoId" required class="form-select"
                                                         aria-label="Default select example">
                                                         <option value="">Seleccione</option>
                                                         @foreach ($vctPuestos as $item)
-                                                            <option value="{{ $item->id }}" {{ $nomina->puestoId == $item->id ? ' selected' : '' }}>
+                                                            <option value="{{ $item->id }}"
+                                                                {{ $nomina->puestoId == $item->id ? ' selected' : '' }}>
                                                                 {{ $item->nombre }}
                                                             </option>
                                                         @endforeach
@@ -693,10 +680,11 @@
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                    <label class="labelTitulo">Fecha de Ingreso: <span>*</span></label></br>
+                                                    <label class="labelTitulo">Fecha de Ingreso:
+                                                        <span>*</span></label></br>
                                                     <input type="date" class="inputCaja" id="" required
                                                         name="ingreso"
-                                                        value="{{ ($nomina->ingreso ? \Carbon\Carbon::parse($nomina->ingreso)->format('Y-m-d'):"") }}">
+                                                        value="{{ $nomina->ingreso ? \Carbon\Carbon::parse($nomina->ingreso)->format('Y-m-d') : '' }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -726,17 +714,16 @@
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Sueldo Diario: <span>*</span></label></br>
-                                                        <input type="number" maxlength="5" step="0.01"
-                                                        min="00000" max="99999" placeholder="ej. 1000" required
-                                                        class="inputCaja text-right" id="diario"
-                                                        name="diario" value="{{ $nomina->diario }}">
+                                                    <input type="number" maxlength="5" step="0.01" min="00000"
+                                                        max="99999" placeholder="ej. 1000" required
+                                                        class="inputCaja text-right" id="diario" name="diario"
+                                                        value="{{ $nomina->diario }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Salario diario integrado:</label></br>
                                                     <input type="number" class="inputCaja text-right" id=""
-                                                        name="" value="{{ $nomina->decSalarioDiarioIntegrado }}"
-                                                         >
+                                                        name="" value="{{ $nomina->decSalarioDiarioIntegrado }}">
                                                 </div>
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Salario Mensual:</label></br>
@@ -803,10 +790,10 @@
                                                     <select class="form-select" aria-label="Default select example"
                                                         id="asistencia" name="asistencia">
                                                         <option value="0"
-                                                            {{ $nomina->asistencia == '0' ? ' selected' : '' }}>
+                                                            {{ $nomina->asistencia == 0 ? ' selected' : '' }}>
                                                             No</option>
                                                         <option value="1"
-                                                            {{ $nomina->asistencia == '1' ? ' selected' : '' }}>Sí
+                                                            {{ $nomina->asistencia == 1 ? ' selected' : '' }}>Sí
                                                         </option>
                                                     </select>
                                                 </div> --}}
@@ -1753,7 +1740,7 @@
                                 <button class="accordion-button bacTituloPrincipal" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#estatus" aria-expanded="true"
                                     aria-controls="collapseOne">
-                                    Estatus
+                                    Sistema
                                 </button>
                             </h2>
                             <div id="estatus" class="accordion-collapse collapse" aria-labelledby="headingThree"
@@ -1773,6 +1760,33 @@
                                                 @endforeach
                                             </select>
                                         </div>
+
+                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <label class="labelTitulo">Nivel de puesto: <span>*</span></label></br>
+                                            <select id="puestoNivelId" name="puestoNivelId" class="form-select"
+                                                required aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($vctNiveles as $item)
+                                                    <option value="{{ $item->id }}"
+                                                        {{ $personal->puestoNivelId == $item->id ? ' selected' : '' }}>
+                                                        {{ $item->nombre }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        {{-- <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <label class="labelTitulo">Usa caja chica:</label></br>
+                                            <select class="form-select" aria-label="Default select example"
+                                                id="usaCajaChica" name="usaCajaChica">
+                                                <option value="0"
+                                                    {{ $personal->usaCajaChica == 0 ? ' selected' : '' }}>
+                                                    No</option>
+                                                <option value="1"
+                                                    {{ $personal->usaCajaChica == 1 ? ' selected' : '' }}>Sí
+                                                </option>
+                                            </select>
+                                        </div> --}}
 
                                     </div>
                                 </div>

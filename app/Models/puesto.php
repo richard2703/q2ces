@@ -13,6 +13,6 @@ class puesto extends Model
     public $timestamps = false;
 
     protected $fillable = [
-          'nombre', 'comentario',
+          'nombre', 'comentario','puestoNivelId'
     ];
 }
