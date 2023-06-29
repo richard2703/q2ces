@@ -21,51 +21,61 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
         <div class="container-fluid">
             <div class="row justify-content-center">
 
-                <div class="col-md-10 align-self-center">
+                <div class="col-12 align-self-center">
                     <div class="card">
                         <div class="card-body contCart">
                             <div class="p-1 align-self-start bacTituloPrincipal">
                                 <h2 class="my-3 ms-3 texticonos "> Calendario de Actividades</h2>
                             </div>
                             <!-- Esta es la parte para el calendario-->
-                            <div class="col-10  mx-auto d-block my-4">
+                            <div class="col-11  mx-auto d-block my-4">
                                 <div class="row d-flex ">
 
                                     <div class="container-fluid">
                                         <header>
-                                            <h4 class="display-4 mb-4 text-center">{{ $objCalendar->getNameMonth($intMes) }}
-                                                {{ $intAnio }}</h4>
-                                            <div class="d-flex justify-content-center align-items-center">
-                                                <span><img src="/img/calendario/tarea.svg" alt="Tarea" title="Tarea" width="48px" class="botonIconoPrincipal"> Tarea</span>
-                                                <span><img src="/img/calendario/solicitud.svg" alt="Solicitud" title="Solicitud" width="48px" class="botonIconoPrincipal"> Solicitud</span>
-                                                <span><img src="/img/calendario/mantenimiento.svg" alt="Mantenimiento" title="Mantenimiento" width="48px" class="botonIconoPrincipal"> Mantenimiento</span>
+                                            <h4 class="display-4 mb-4 text-center">{{ $objCalendar->getNameMonth($intMes) }}  {{ $intAnio }}</h4>
+                                            <div class="row d-flex  d-flex align-items-start">
+                                                <div class="col-12 col-md-6 d-flex">
+                                                    <div class="mx-3"><img src="/img/calendario/tarea.svg" alt="Tarea" title="Tarea" width="25px" class="botonIconoPrincipal"> Tarea</div>
+                                                    <div class="mx-3"><img src="/img/calendario/solicitud.svg" alt="Solicitud" title="Solicitud" width="25px" class="botonIconoPrincipal"> Solicitud</div>
+                                                    <div class="mx-3"><img src="/img/calendario/mantenimiento.svg" alt="Mantenimiento" title="Mantenimiento" width="25px" class="botonIconoPrincipal"> Mantenimiento</div>
+                                                </div>
+
 
                                                  <!-- Un mes atras del cargado -->
-                                                 <span>
-                                                <a href="{{ url('calendario/'.$mesAnterior['year'].'/'.$mesAnterior['month']) }}" class="" title="Ir al mes anterior">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                            fill="currentColor" class="bi bi-caret-left-fill"
-                                                            viewBox="0 0 16 16">
-                                                            <path
-                                                                d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
-                                                        </svg>
+                                                 <div class="col-12 col-lg-6 d-flex align-items-center justify-content-end ">
+                                                    <div class="">
+                                                        <span>
+                                                            <a href="{{ url('calendario/'.$mesAnterior['year'].'/'.$mesAnterior['month']) }}" class="" title="Ir al mes anterior">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                                        fill="currentColor" class="bi bi-caret-left-fill"
+                                                                        viewBox="0 0 16 16">
+                                                                        <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+                                                                </svg>
 
-                                                    </a>
-                                                    <!-- Para el mes en curso -->
-                                                </span>
-                                                <span>
-                                                    <a href="{{ url('calendario/') }}" class="display-4 mb-4 text-center" title="Ir al mes en curso"><b>Hoy es {{ date('d M Y') }}</b>
-                                                </span>
+                                                            </a>
+                                                                <!-- Para el mes en curso -->
+                                                        </span>
+                                                        <span>
+                                                                <a href="{{ url('calendario/') }}" class="display-4 mb-4 text-end fs-4" title="Ir al mes en curso"><b>Hoy es {{ date('d M Y') }}</b>
+                                                        </span>
 
-                                                 <!-- Un mes adelante del cargado -->
-                                                <a href="{{ url('calendario/'.$mesSiguiente['year'].'/'.$mesSiguiente['month']) }}" class="" title="Ir al mes siguiente">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                        fill="currentColor" class="bi bi-caret-right-fill"
-                                                        viewBox="0 0 16 16">
-                                                        <path
-                                                            d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
-                                                    </svg>
-                                                </a>
+                                                            <!-- Un mes adelante del cargado -->
+                                                        <a href="{{ url('calendario/'.$mesSiguiente['year'].'/'.$mesSiguiente['month']) }}" class=" " title="Ir al mes siguiente">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                                                                <path  d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+                                                            </svg>
+                                                        </a>
+                                                        
+                                                    </div>
+                                                    <div class="ms-4 ">
+                                                        <button type="button" class="botonSinFondo mx-2"title="Clic para marcar la asistencia en otro día."
+                                                            data-bs-toggle="modal" data-bs-target="#modal-cliente">
+                                                            <img style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}">
+                                                            <p class="botonTitulos mt-2">Otro día</p>
+                                                        </button>
+                                                    </div>
+                                                </div>
 
                                             </div>
                                             <?php
@@ -88,9 +98,9 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                     $sTable .= $objCalendar->getDaysWeekCalendar(); //*** cabecera de los días de la semana
                                     foreach ($aDays as $iDay => $currentDay) {
                                         $content = '';
-                                        $strEstiloHoy = ($dteToday == $currentDay ? 'style="box-shadow: 2px 2px 10px 2px #F7C90D;"':"");
+                                        $strEstiloHoy = ($dteToday == $currentDay ? 'style="box-shadow: 2px 2px 10px 2px #F7C90D; "':"");
                                         // $sResult = "<h2>$iDay</h2>";
-                                        // $sResult .= "<div style='float: right;'>";
+                                        // $sResult .= "<div style='float: right;'> ";
                                         // $sResult .= $content;
                                         // $sResult .= '</div>';
                                         // dd($vctEventos);
@@ -167,7 +177,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                         }
 
 
-                                        $sResult = ' <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate" '. $strEstiloHoy .'>';
+                                        $sResult = ' <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate" '. $strEstiloHoy .' style="height: 110px;">';
                                         $sResult .= '   <h5 class="row align-items-center">';
                                         $sResult .= '       <span class="date col-1">' . $iDay . '  </span>';
                                         $sResult .= '       <small class="col d-sm-none text-center text-muted">Friday</small>';
@@ -179,7 +189,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                         // dd($sResult);
 
                                         if ($iCw == 1) {
-                                            $sRow .= '<div class="row border border-right-0 border-bottom-0">';
+                                            $sRow .= '<div class="row border border-right-0 border-bottom-0" >';
                                         }
 
                                         if ($iDay == 1) {
@@ -1745,6 +1755,46 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="modal-cliente" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-cliente"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="col-12">
+                    <div class="card ">
+                        <form action="{{ url('asistencia/otrodia/') }}" method="post">
+                           
+                            <div class="card-header bacTituloPrincipal ">
+                                <div class="nav-tabs-navigation">
+                                    <div class="nav-tabs-wrapper">
+                                        <span class="nav-tabs-title">
+                                            <h2 class="titulos">Seleccionar otro día</h2>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row  card-body">
+                                <div class="row card-body" style=" text-align: center;">
+                                    <input type="hidden" name="productoid" id="productoid" value="">
+
+                                    <div class="col-12 col-lg-6">
+                                        <input type="date" class="inputCaja" id="fechaAsistencia"
+                                            name="fechaAsistencia"
+                                            value=""></br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12  mb-3 d-flex  justify-content-center align-self-end">
+                                <button  class="btn botonGral ">Ir</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
         <!-- Carga tarea en modal -->
         <script>
             function loadTarea(id, titulo, responsableId, prioridadId , estadoId, comentarios, fechaInicio, fechaFin  ) {

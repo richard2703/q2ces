@@ -8,7 +8,7 @@
                         <div class="col-md-12">
                         <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Editar Mantenimiento</h4>   
+                                    <h4 class="card-title">Registro Nuevo Mantenimiento</h4>   
                                 </div>
                                 <div class="card-body ">   
 
@@ -234,7 +234,8 @@
                                                 </li>
                                             </ul>
                                         </div> 
-                                
+                                    
+                                    
                                     <div class="col-12 text-center mt-5 pt-5">
                                         <button type="submit" class="btn botonGral" >Guardar</button>
                                     </div>
