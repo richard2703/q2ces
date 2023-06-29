@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => ' editarMantenimiento', 'titlePage' => __('Editar Bitácoras')])
+@extends('layouts.main', ['activePage' => ' bitacoras', 'titlePage' => __('Editar Bitácoras')])
 @section('content')
 <div class="content">
         <div class="container-fluid">
