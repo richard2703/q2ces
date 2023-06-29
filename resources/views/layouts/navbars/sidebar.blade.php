@@ -11,13 +11,13 @@
 
             <!-- Calendario -->
             @can('calendario_show')
-                <li class="nav-item {{ $activePage == 'inventario' || $activePage == 'user-management' ? ' active' : '' }}">
-                    <a href="{{ url('calendario') }}" onmouseover="cambiar3();" onmouseout="volver3();"
-                        class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
-                        <i><img id="cambiaBCO3" style="width:25px"
-                                src="{{ $activePage == 'inventario' ? ' /img/navs/inventariomenubco.svg' : '/img/navs/inventariomenu.svg' }}"></i>
+                <li class="nav-item {{ $activePage == 'calendario' || $activePage == 'user-management' ? ' active' : '' }}">
+                    <a href="{{ url('calendario') }}" onmouseover="cambiar7();" onmouseout="volver7();"
+                        class="nav-link -item{{ $activePage == 'calendario' ? ' active' : '' }} ">
+                        <i><img id="cambiaBCO7" style="width:25px"
+                                src="{{ $activePage == 'calendario' ? ' /img/navs/calendarioBco.svg' : '/img/navs/calendario.svg' }}"></i>
                         <p> {{ __('calendario') }} </p>
-                        {{--  <b class="caret"></b>  --}}
+                        
                     </a>
                 </li>
             @endcan
@@ -25,11 +25,14 @@
             <!-- Asistencia -->
             @can('asistencia_show')
                 <li class="nav-item {{ $activePage == 'asistencia' || $activePage == 'user-management' ? ' active' : '' }}">
-                    <a href="{{ route('asistencia.index') }}" onmouseover="cambiar3();" onmouseout="volver3();"
-                        class="nav-link -item{{ $activePage == 'obra' ? ' active' : '' }} ">
-                        <i class="bi bi-calendar-check" style="color: #3C4858;"></i>
-                        <p> Asistencia </p>
-                        {{--  <b class="caret"></b>  --}}
+                    <a href="{{ route('asistencia.index') }}" onmouseover="cambiar8();" onmouseout="volver8();"
+                        class="nav-link -item{{ $activePage == 'asistencia' ? ' active' : '' }} ">
+                        <i><img id="cambiaBCO8"
+                                src="{{ $activePage == 'asistencia' ? '/img/navs/asistenciaBco.svg' : '/img/navs/asistencia.svg' }}"
+                                style="width:25px"></i>
+                        <p>{{ __('Asistencia') }}
+                            <!--<b class="caret"></b>-->
+                        </p>
                     </a>
                 </li>
             @endcan
@@ -273,7 +276,7 @@
                     <a class="nav-link p-2" onmouseover="cambiar4();" onmouseout="volver4();" data-toggle="collapse"
                         href="#usuarios" aria-expanded="false">
                         <i><img id="cambiaBCO4"
-                                src="{{ $activePage == 'obra' ? '/img/navs/obrasmenubco.svg' : '/img/navs/obrasmenu.svg' }}"
+                                src="{{ $activePage == 'usuarios' ? '/img/navs/usuariosBco.svg' : '/img/navs/usuarios.svg' }}"
                                 style="width:25px"></i>
                         <p>{{ __('usuarios y permisos') }}
                             <b class="caret"></b>
@@ -375,6 +378,38 @@
                     {{--  <b class="caret"></b>  --}}
                 </a>
             </li>
+
+
+             <!------ Grupos------>
+            
+             <li class="nav-item {{ $activePage == 'grupos' || $activePage == 'user-management' ? ' active' : '' }}">
+                            <a class="nav-link p-2 " onmouseover="cambiar2();" onmouseout="volver2();" data-toggle="collapse"
+                                href="#grupos" aria-expanded="false">
+                                <i><img id="cambiaBCO2" style="width:25px"
+                                        src="{{ $activePage == 'grupos' ? '/img/navs/personalmenubco.svg' : '/img/navs/personalmenu.svg' }}"></i>
+                                <p>{{ __('Grupos') }}
+                                    <b class="caret"></b>
+                                </p>
+                            </a>
+                            <!--no colapsable>-->
+                            <div class="collapse " id="grupos">
+                                <ul class="nav">
+                                    <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                                        <a href="{{ url('/indexGrupos') }}" class="nav-link -item{{ $activePage == 'grupos' ? ' active' : '' }} ">
+                                            <span class="sidebar-normal py-2 ps-5">{{ __('Ver Grupos') }} </span>
+                                        </a>
+                                    </li>
+            
+                                    
+                                    <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                                        <a  href="{{ url('/nuevoGrupo') }}" class="nav-link -item{{ $activePage == 'nuevoGrupo' ? ' active' : '' }} ">
+                                            <span class="sidebar-normal py-2 ps-5"> {{ __('Nuevo Grupo') }} </span>
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+            </li>
            
             <!------ Inspecciones ------>
             <!--<li class="nav-item {{ $activePage == 'inspecciones' || $activePage == 'user-management' ? ' active' : '' }}">
@@ -401,13 +436,32 @@
     });
 
     //FUNCIONES PARA CAMBIAR BOTONES A BLANCO
+//---calendario-----
+    function cambiar7() {
+        document.getElementById('cambiaBCO7').src = "{{ asset('/img/navs/calendarioBco.svg') }}";
+    }
+
+    function volver7() {
+        document.getElementById('cambiaBCO7').src = "{{ asset('/img/navs/calendario.svg') }}";
+    }
+
+//---asistencia-----
+    function cambiar8() {
+        document.getElementById('cambiaBCO8').src = "{{ asset('/img/navs/asistenciaBco.svg') }}";
+    }
+
+    function volver8() {
+        document.getElementById('cambiaBCO8').src = "{{ asset('/img/navs/asistencia.svg') }}";
+    }
+
+
     //---equipos-----
     function cambiar() {
-        document.getElementById('cambiaBCO').src = "{{ asset('/img/navs/eqiposmenubco.svg') }}";
+        document.getElementById('cambiaBCO2').src = "{{ asset('/img/navs/eqiposmenubco.svg') }}";
     }
 
     function volver() {
-        document.getElementById('cambiaBCO').src = "{{ asset('/img/navs/eqiposmenu.svg') }}";
+        document.getElementById('cambiaBCO2').src = "{{ asset('/img/navs/eqiposmenu.svg') }}";
     }
 
     //---personal-----

@@ -111,6 +111,18 @@ Route::get('/tareas', function () {
     return view('tareas.tareas');
 });
 
+Route::get('/indexGrupos', function () {
+    return view('grupos.indexGrupos');
+});
+
+Route::get('/nuevoGrupo', function () {
+    return view('grupos.nuevoGrupo');
+});
+
+Route::get('/editarGupo', function () {
+    return view('grupos.editarGupo');
+});
+
 
 
 // Route::get('/vistaObra', function () {
