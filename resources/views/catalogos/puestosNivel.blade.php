@@ -28,11 +28,10 @@
                                             {{-- <a href="{{ route('puesto.create') }}">
                                                 <button type="button" class="btn botonGral">Añadir Puesto</button>
                                             </a> --}}
-                                            <button class="btn botonGral float-end"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#nuevoItem">
+                                            <button class="btn botonGral float-end" data-bs-toggle="modal"
+                                                data-bs-target="#nuevoItem">
                                                 Añadir Nivel de Puesto
-                                        </button>
+                                            </button>
                                             {{-- @endcan --}}
                                         </div>
                                     </div>
@@ -44,6 +43,8 @@
                                                 <th class="labelTitulo">Id</th>
                                                 <th class="labelTitulo">Nombre</th>
                                                 <th class="labelTitulo">Comentario</th>
+                                                <th class="labelTitulo">Asistencia</th>
+                                                <th class="labelTitulo">Caja Chica</th>
                                                 <th class="labelTitulo text-right">Acciones</th>
                                             </tr>
                                         </thead>
@@ -51,8 +52,10 @@
                                             @forelse ($puestos as $item)
                                                 <tr>
                                                     <td>{{ $item->id }}</td>
-                                                    <td>{{ $item->nombre }}</td>
-                                                    <td>{{ $item->comentario }}</td>
+                                                    <td class="text-left">{{ $item->nombre }}</td>
+                                                    <td class="text-left">{{ $item->comentario }}</td>
+                                                    <td>{{ $item->requiereAsistencia === 1 ? 'Sí' : 'No' }}</td>
+                                                    <td>{{ $item->usaCajaChica === 1 ? 'Sí' : 'No' }}</td>
 
                                                     <td class="td-actions text-right">
                                                         {{-- @can('user_show') --}}
@@ -64,19 +67,16 @@
                                                             </a>--> --}}
                                                         {{-- @endcan --}}
                                                         {{-- @can('user_edit') --}}
-                                                        <a href="#" class=""
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#editarItem"
-                                                        onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->requiereAsistencia }}','{{ $item->comentario }}')">
-                                                        <svg xmlns="http://www.w3.org/2000/svg "
-                                                            width="28" height="28"
-                                                            fill="currentColor"
-                                                            class="bi bi-pencil accionesIconos"
-                                                            viewBox="0 0 16 16">
-                                                            <path
-                                                                d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                                        </svg>
-                                                    </a>
+                                                        <a href="#" class="" data-bs-toggle="modal"
+                                                            data-bs-target="#editarItem"
+                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->requiereAsistencia }}','{{ $item->usaCajaChica }}','{{ $item->comentario }}')">
+                                                            <svg xmlns="http://www.w3.org/2000/svg " width="28"
+                                                                height="28" fill="currentColor"
+                                                                class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
+                                                                <path
+                                                                    d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                            </svg>
+                                                        </a>
                                                         {{-- @endcan --}}
                                                         {{-- @can('user_destroy') --}}
                                                         {{-- <form action="{{ route('puestos.delete', $item->id) }}"
@@ -120,95 +120,110 @@
         </div>
     </div>
 
-        <!-- Modal Nueva Tarea-->
-        <div class="modal fade" id="nuevoItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header bacTituloPrincipal">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nuevo Nivel Puesto</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form class="row d-flex" action="{{ route('puestoNivel.store') }}" method="post">
-                            @csrf
-                            {{-- <input type="hidden" name="userId" id="userId" value="{{ $usuario->id }}"> --}}
-                            <div class=" col-12 col-sm-6 mb-3 ">
-                                <label class="labelTitulo">Nombre:<span>*</span></label></br>
-                                <input type="text" class="inputCaja" id="nombre" name="nombre"
-                                    value="{{ old('nombre') }}" required placeholder="Especifique...">
-                            </div>
+    <!-- Modal Nueva Tarea-->
+    <div class="modal fade" id="nuevoItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bacTituloPrincipal">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nuevo Nivel Puesto</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row d-flex" action="{{ route('puestoNivel.store') }}" method="post">
+                        @csrf
+                        {{-- <input type="hidden" name="userId" id="userId" value="{{ $usuario->id }}"> --}}
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Nombre:<span>*</span></label></br>
+                            <input type="text" class="inputCaja" id="nombre" name="nombre"
+                                value="{{ old('nombre') }}" required placeholder="Especifique...">
+                        </div>
 
-                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                <label class="labelTitulo">Requiere asistencia:</label></br>
-                                <select class="form-select"
-                                    aria-label="Default select example" id="requiereAsistencia"
-                                    name="requiereAsistencia">
-                                    <option value=0>No</option>
-                                    <option value=1>Sí</option>
-                                </select>
-                            </div>
+                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                            <label class="labelTitulo">Requiere asistencia:</label></br>
+                            <select class="form-select" aria-label="Default select example" id="requiereAsistencia"
+                                name="requiereAsistencia">
+                                <option value=0>No</option>
+                                <option value=1>Sí</option>
+                            </select>
+                        </div>
 
-                            <div class=" col-12  mb-3 ">
-                                <label class="labelTitulo">Comentarios:</label></br>
-                                <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario" spellcheck="true"></textarea>
-                            </div>
+                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                            <label class="labelTitulo">Requiere uso caja chica:</label></br>
+                            <select class="form-select" aria-label="Default select example" id="usaCajaChica"
+                                name="usaCajaChica">
+                                <option value=0>No</option>
+                                <option value=1>Sí</option>
+                            </select>
+                        </div>
 
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn botonGral">Guardar</button>
-                            </div>
-                        </form>
-                    </div>
+                        <div class=" col-12  mb-3 ">
+                            <label class="labelTitulo">Comentarios:</label></br>
+                            <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario"
+                                spellcheck="true"></textarea>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn botonGral">Guardar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Modal Editar  Tarea-->
-        <div class="modal fade" id="editarItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header bacTituloPrincipal">
+    <!-- Modal Editar  Tarea-->
+    <div class="modal fade" id="editarItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bacTituloPrincipal">
 
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Nivel de Puesto</label>
-                        </h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form class="row d-flex" action="{{ route('puestoNivel.update', 0) }}" method="post">
-                            @csrf
-                            @method('put')
-                            <input type="hidden" name="puestoId" id="puestoId" value="">
-                            <div class=" col-12 col-sm-6 mb-3 ">
-                                <label class="labelTitulo">Nombre:</label></br>
-                                <input type="text" class="inputCaja" id="puestoNombre" name="nombre"
-                                    value="">
-                            </div>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Nivel de Puesto</label>
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row d-flex" action="{{ route('puestoNivel.update', 0) }}" method="post">
+                        @csrf
+                        @method('put')
+                        <input type="hidden" name="puestoId" id="puestoId" value="">
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Nombre:</label></br>
+                            <input type="text" class="inputCaja" id="puestoNombre" name="nombre" value="">
+                        </div>
 
-                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                <label class="labelTitulo">Requiere asistencia:</label></br>
-                                <select class="form-select"
-                                    aria-label="Default select example" id="puestoRequiereAsistencia"
-                                    name="requiereAsistencia">
-                                    <option value=0>No</option>
-                                    <option value=1>Sí</option>
-                                </select>
-                            </div>
+                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                            <label class="labelTitulo">Requiere asistencia:</label></br>
+                            <select class="form-select" aria-label="Default select example" id="puestoRequiereAsistencia"
+                                name="requiereAsistencia">
+                                <option value=0>No</option>
+                                <option value=1>Sí</option>
+                            </select>
+                        </div>
 
-                            <div class=" col-12  mb-3 ">
-                                <label class="labelTitulo">Comentarios:</label></br>
-                                <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="puestoComentarios"
-                                    name="comentario"></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn botonGral" id="btnTareaGuardar">Guardar cambios</button>
-                            </div>
+                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                            <label class="labelTitulo">Requiere asistencia:</label></br>
+                            <select class="form-select" aria-label="Default select example" id="puestoUsaCajaChica"
+                                name="usaCajaChica">
+                                <option value=0>No</option>
+                                <option value=1>Sí</option>
+                            </select>
+                        </div>
 
-                        </form>
-                    </div>
+                        <div class=" col-12  mb-3 ">
+                            <label class="labelTitulo">Comentarios:</label></br>
+                            <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="puestoComentarios" name="comentario"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn botonGral" id="btnTareaGuardar">Guardar cambios</button>
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 
     <script src="{{ asset('js/alertas.js') }}"></script>
     <script type="application/javascript">
@@ -250,7 +265,7 @@
     </script>
 
     <script>
-        function cargaItem(id,nombre, asistencia, comentarios) {
+        function cargaItem(id, nombre, asistencia, caja, comentarios) {
 
             const txtId = document.getElementById('puestoId');
             txtId.value = id;
@@ -259,6 +274,7 @@
             txtNombre.value = nombre;
 
             const lstAsistencia = document.getElementById('puestoRequiereAsistencia').value = asistencia;
+            const lstCaja = document.getElementById('puestoUsaCajaChica').value = caja;
 
 
             const txtComentarios = document.getElementById('puestoComentarios');

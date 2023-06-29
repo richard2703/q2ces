@@ -67,7 +67,7 @@ class cajaChicaController extends Controller
         // ->where( 'tomas.tickets_id', $ticket->id )
         // ->paginate( 10 );
         // Dia, concepto, comprabante, numero de comprobante, cliente, obra, equipo, personal, cantidad, tipo
-        return view('cajaChica.indexcajaChica', compact('registros', 'lastTotal'));
+        return view('cajaChica.indexCajaChica', compact('registros', 'lastTotal'));
     }
 
     /**
