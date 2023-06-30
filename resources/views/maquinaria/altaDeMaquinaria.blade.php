@@ -14,7 +14,7 @@
         @endif
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-11 align-self-center">
+                <div class="col-12 align-self-center">
                     <div class="card col-12">
                         <div class="card-body contCart">
                             <form class="row alertaGuardar" action="{{ route('maquinaria.store') }}" method="post"
@@ -353,7 +353,7 @@
                                             <div class="accordion-body">
                                                 <div class="row mt-3">
 
-                                                    <div class="col-12 col-md-4 col-lg-3">
+                                                    <div class="card-group col-12 col-md-6 col-lg-4 ">
                                                         <div class="card contDocumentos">
                                                             <div class="card-body m-2">
 
@@ -377,13 +377,16 @@
                                                                             stroke="65" style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </label>
-
+     
                                                                 </div>
+                                                                <button class="btnSinFondo float-end" type="submit" rel="tooltip">
+                                                                    <P class="fs-5 "> Omitir</P>
+                                                                    </button>
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-12 col-md-4 col-lg-3">
+                                                    <div class="col-12 col-md-6 col-lg-4">
                                                         <div class="card contDocumentos">
                                                             <div class="card-body m-2">
 
@@ -409,13 +412,15 @@
                                                                         </lord-icon>
                                                                     </label>
                                                                 </div>
-
+                                                                <button class="btnSinFondo float-end" type="submit" rel="tooltip">
+                                                                    <P class="fs-5 "> Omitir</P>
+                                                                    </button>
 
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-12 col-md-4 col-lg-3">
+                                                    <div class="col-12 col-md-6 col-lg-4">
                                                         <div class="card contDocumentos">
                                                             <div class="card-body m-2">
 
@@ -443,11 +448,14 @@
                                                                         </lord-icon>
                                                                     </label>
                                                                 </div>
+                                                                <button class="btnSinFondo float-end" type="submit" rel="tooltip">
+                                                                    <P class="fs-5 "> Omitir</P>
+                                                                    </button>
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-12 col-md-4 col-lg-3">
+                                                    <div class="col-12 col-md-6 col-lg-4">
                                                         <div class="card contDocumentos">
                                                             <div class="card-body m-2">
 
@@ -472,12 +480,15 @@
                                                                         </lord-icon>
                                                                     </label>
                                                                 </div>
+                                                                <button class="btnSinFondo float-end" type="submit" rel="tooltip">
+                                                                    <P class="fs-5 "> Omitir</P>
+                                                                    </button>
                                                             </div>
                                                         </div>
                                                     </div>
 
 
-                                                    <div class="col-12 col-md-4 col-lg-3">
+                                                    <div class="col-12 col-md-6 col-lg-4">
                                                         <div class="card contDocumentos">
                                                             <div class="card-body m-2">
 
@@ -508,11 +519,14 @@
                                                                     <input type="date" class="inputCaja" id="verificacion_fechaVencimiento" name="verificacion_fechaVencimiento"
                                                                         value="">
                                                                 </div>
+                                                                <button class="btnSinFondo float-end" type="submit" rel="tooltip">
+                                                                    <P class="fs-5 "> Omitir</P>
+                                                                    </button>
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-12 col-md-4 col-lg-3">
+                                                    <div class="col-12 col-md-6 col-lg-4">
                                                         <div class="card contDocumentos">
                                                             <div class="card-body m-2">
                                                                 <div>
@@ -541,13 +555,15 @@
                                                                     <input type="date" class="inputCaja" id="tarjeta_fechaVencimiento" name="tarjeta_fechaVencimiento"
                                                                         value="">
                                                                 </div>
-
+                                                                <button class="btnSinFondo float-end" type="submit" rel="tooltip">
+                                                                    <P class="fs-5 "> Omitir</P>
+                                                                    </button>
 
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-12 col-md-4 col-lg-3">
+                                                    <div class="col-12 col-md-6 col-lg-4">
                                                         <div class="card contDocumentos">
                                                             <div class="card-body m-2">
 
@@ -578,12 +594,15 @@
                                                                         value="">
                                                                 </div>
 
+                                                                <button class="btnSinFondo float-end" type="submit" rel="tooltip">
+                                                                    <P class="fs-5 "> Omitir</P>
+                                                                    </button>
 
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-12 col-md-4 col-lg-3">
+                                                    <div class="col-12 col-md-6 col-lg-4">
                                                         <div class="card contDocumentos">
                                                             <div class="card-body m-2">
 
@@ -615,10 +634,13 @@
                                                                         value="">
 
                                                                 </div>
-
+                                                                <button class="btnSinFondo float-end" type="submit" rel="tooltip">
+                                                                    <P class="fs-5 "> Omitir</P>
+                                                                </button>
 
                                                             </div>
                                                         </div>
+
                                                     </div>
 
                                                 </div>
