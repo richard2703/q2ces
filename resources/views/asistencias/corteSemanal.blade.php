@@ -90,7 +90,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                     @endif
                                     <div class="row">
 
-                                    <div class="col-12 my-4 pb-4 d-flex align-items-center divBorder">
+                                    <div class="col-12 my-4 pb-4 d-flex align-items-center divBorder justify-content-evenly">
                                         <div>
                                             <button type="button" class="botonSinFondo mx-2"title="Clic para marcar la asistencia en otro día."
                                                 data-bs-toggle="modal" data-bs-target="#modal-cliente">
@@ -104,6 +104,9 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                         {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b>
                                             </a>
                                         </div>
+                                        <div class="">
+                                        <button type="submit" class="btn botonGral " >Descargar a Exel</button>
+                                    </div>
                                     </div>
 
 
