@@ -69,7 +69,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/alertas.js') }}"></script>
 
-
++
 
     @stack('js')
 </body>

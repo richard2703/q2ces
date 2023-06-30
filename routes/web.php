@@ -260,6 +260,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Caja Chica
     Route::resource('cajaChica', App\Http\Controllers\cajaChicaController::class);
+
     // Conceptos
     Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
+
+
+    Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');
+    Route::get('search/materialMantenimiento', [App\Http\Controllers\searchController::class, 'materialMantenimiento'])->name('search.materialMantenimiento');
+
 });
