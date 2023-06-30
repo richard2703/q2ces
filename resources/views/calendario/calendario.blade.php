@@ -1756,7 +1756,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
             </div>
         </div>
 
-        <div class="modal fade" id="modal-cliente" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-cliente"
+    <div class="modal fade" id="modal-cliente" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-cliente"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

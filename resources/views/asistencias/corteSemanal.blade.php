@@ -89,14 +89,38 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                         </div>
                                     @endif
                                     <div class="row">
-                                        <span>
+
+                                    <div class="col-12 my-4 pb-4 d-flex align-items-center divBorder">
+                                        <div>
+                                            <button type="button" class="botonSinFondo mx-2"title="Clic para marcar la asistencia en otro día."
+                                                data-bs-toggle="modal" data-bs-target="#modal-cliente">
+                                                <img style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}">
+                                                <p class="botonTitulos mt-2">Otro día</p>
+                                            </button>
+                                        </div>
+                                        <div class="">
+                                            <a href="{{ route('asistencia.corteSemanal') }}" class="combustibleLitros fw-semibold text-end"
+                                                title="Ir al mes en curso"><b>Hoy es
+                                                        {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b>
+                                            </a>
+                                        </div>
+                                    </div>
+
+
+
+                                        <!--<span>
                                             <a href="{{ route('asistencia.corteSemanal') }}"
                                                 class="display-8 mb-8 text-center" title="Ir al periodo en curso"><b>Hoy es
                                                     {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
-                                        </span>
+                                        </span>-->
                                         {{-- <h4 class="card-title">
                                             {{ $personal->nombres }} {{ $personal->apellidoP }}
                                             {{ $personal->apellidoM }}</h4> --}}
+
+
+
+
+
                                     </div>
 
                                     <form class="row alertaGuardar" action="{{ route('asistencia.update', 1) }}"
