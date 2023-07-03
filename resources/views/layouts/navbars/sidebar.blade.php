@@ -17,17 +17,16 @@
                         <i><img id="cambiaBCO1" style="width:25px"
                                 src="{{ $activePage == 'calendario' ? ' /img/navs/calendarioBco.svg' : '/img/navs/calendario.svg' }}"></i>
                         <p> {{ __('calendario') }} </p>
-                        
+
                     </a>
                 </li>
             @endcan
 
             <!------ 2 Caja Chica ------>
             @can('cajachica_show')
-                <li
-                    class="nav-item {{ $activePage == 'cajachica' || $activePage == 'user-management' ? ' active' : '' }}">
-                    <a class="nav-link" href="{{ route('cajachica.index') }}" onmouseover="cambiar2();" onmouseout="volver2();"
-                        class="nav-link -item{{ $activePage == 'cajachica' ? ' active' : '' }} ">
+                <li class="nav-item {{ $activePage == 'cajachica' || $activePage == 'user-management' ? ' active' : '' }}">
+                    <a class="nav-link" href="{{ route('cajaChica.index') }}" onmouseover="cambiar2();"
+                        onmouseout="volver2();" class="nav-link -item{{ $activePage == 'cajachica' ? ' active' : '' }} ">
                         <i><img id="cambiaBCO2" style="width:25px"
                                 src="{{ $activePage == 'cajachica' ? '/img/navs/cajaChicaBco.svg' : '/img/navs/cajaChica.svg' }}"></i>
                         <p> {{ __('Caja chica') }} </p>
@@ -38,7 +37,8 @@
 
             <!-- 3 Asistencia -->
             @can('asistencia_show')
-                <li class="nav-item {{ $activePage == 'asistencia' || $activePage == 'user-management' ? ' active' : '' }}">
+                <li
+                    class="nav-item {{ $activePage == 'asistencia' || $activePage == 'user-management' ? ' active' : '' }}">
                     <a href="{{ route('asistencia.index') }}" onmouseover="cambiar3();" onmouseout="volver3();"
                         class="nav-link -item{{ $activePage == 'asistencia' ? ' active' : '' }} ">
                         <i><img id="cambiaBCO3"
@@ -53,8 +53,8 @@
 
             <!------ 4 Tareas ------>
             <li class="nav-item {{ $activePage == 'tareas' || $activePage == 'user-management' ? ' active' : '' }}">
-                <a class="nav-link py-2 ps-5" href="{{ url('/tareas') }}" onmouseover="cambiar4();" onmouseout="volver4();"
-                        class="nav-link -item{{ $activePage == 'tareas' ? ' active' : '' }} ">
+                <a class="nav-link py-2 ps-5" href="{{ url('/tareas') }}" onmouseover="cambiar4();"
+                    onmouseout="volver4();" class="nav-link -item{{ $activePage == 'tareas' ? ' active' : '' }} ">
                     <i><img id="cambiaBCO4" style="width:25px"
                             src="{{ $activePage == 'tareas' ? '/img/navs/tareasBco.svg' : '/img/navs/tareas.svg' }}"></i>
                     <p> {{ __('Tareas') }} </p>
@@ -64,36 +64,39 @@
 
             <!------ 5 Check List ------>
             <li class="nav-item {{ $activePage == 'checkList' || $activePage == 'user-management' ? ' active' : '' }}">
-                            <a class="nav-link p-2 " onmouseover="cambiar5();" onmouseout="volver5();" data-toggle="collapse"
-                                href="#checkList" aria-expanded="false">
-                                <i><img id="cambiaBCO5" style="width:25px"
-                                        src="{{ $activePage == 'checkList' ? '/img/navs/checkListBco.svg' : '/img/navs/checkList.svg' }}"></i>
-                                <p>{{ __('Check List') }}
-                                    <b class="caret"></b>
-                                </p>
+                <a class="nav-link p-2 " onmouseover="cambiar5();" onmouseout="volver5();" data-toggle="collapse"
+                    href="#checkList" aria-expanded="false">
+                    <i><img id="cambiaBCO5" style="width:25px"
+                            src="{{ $activePage == 'checkList' ? '/img/navs/checkListBco.svg' : '/img/navs/checkList.svg' }}"></i>
+                    <p>{{ __('Check List') }}
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <!--no colapsable>-->
+                <div class="collapse " id="checkList">
+                    <ul class="nav">
+                        <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                            <a href="{{ url('/checkList') }}"
+                                class="nav-link -item{{ $activePage == 'checkList' ? ' active' : '' }} ">
+                                <span class="sidebar-normal py-2 ps-5">{{ __('Ver Check List') }} </span>
                             </a>
-                            <!--no colapsable>-->
-                            <div class="collapse " id="checkList">
-                                <ul class="nav">
-                                    <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                                        <a href="{{ url('/checkList') }}" class="nav-link -item{{ $activePage == 'checkList' ? ' active' : '' }} ">
-                                            <span class="sidebar-normal py-2 ps-5">{{ __('Ver Check List') }} </span>
-                                        </a>
-                                    </li>
-            
-                                    
-                                    <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                                        <a  href="{{ url('/nuevoCheck') }}" class="nav-link -item{{ $activePage == 'nuevoCheck' ? ' active' : '' }} ">
-                                            <span class="sidebar-normal py-2 ps-5"> {{ __('Nueva Tarea') }} </span>
-                                        </a>
-                                    </li>
-                                    
-                                </ul>
-                            </div>
+                        </li>
+
+
+                        <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                            <a href="{{ url('/nuevoCheck') }}"
+                                class="nav-link -item{{ $activePage == 'nuevoCheck' ? ' active' : '' }} ">
+                                <span class="sidebar-normal py-2 ps-5"> {{ __('Nueva Tarea') }} </span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
             </li>
 
             <!------ 6 Mantenimientos ------>
-            <li class="nav-item {{ $activePage == 'mantenimientos' || $activePage == 'user-management' ? ' active' : '' }}">
+            <li
+                class="nav-item {{ $activePage == 'mantenimientos' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a class="nav-link p-2 " onmouseover="cambiar6();" onmouseout="volver6();" data-toggle="collapse"
                     href="#mantenimientos" aria-expanded="false">
                     <i><img id="cambiaBCO6" style="width:25px"
@@ -106,26 +109,30 @@
                 <div class="collapse " id="mantenimientos">
                     <ul class="nav">
                         <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                            <a href="{{ url('/mantenimientos') }}"class="nav-link -item{{ $activePage == 'mantenimientos' ? ' active' : '' }} ">
+                            <a
+                                href="{{ url('/mantenimientos') }}"class="nav-link -item{{ $activePage == 'mantenimientos' ? ' active' : '' }} ">
                                 <span class="sidebar-normal py-2 ps-5">{{ __('Ver Mantenimiento') }} </span>
                             </a>
                         </li>
 
-                        
+
                         <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                            <a  href="{{ url('/nuevoMantenimiento') }}" class="nav-link -item{{ $activePage == 'nuevoMantenimiento' ? ' active' : '' }} ">
+                            <a href="{{ url('/nuevoMantenimiento') }}"
+                                class="nav-link -item{{ $activePage == 'nuevoMantenimiento' ? ' active' : '' }} ">
                                 <span class="sidebar-normal py-2 ps-5"> {{ __('Nuevo Mantemiento') }} </span>
                             </a>
                         </li>
-                        
+
                     </ul>
                 </div>
             </li>
 
             <!------ 7 Bitácoras / Reportes ------>
             <li class="nav-item {{ $activePage == 'bitacoras' || $activePage == 'user-management' ? ' active' : '' }}">
-                <a class="nav-link p-2" onmouseover="cambiar7();" onmouseout="volver7();" data-toggle="collapse"  href="#bitacoras" aria-expanded="false">
-                    <i><img id="cambiaBCO7" src="{{ $activePage == 'bitacoras' ? '/img/navs/bitacorasmenubco.svg' : '/img/navs/bitacorasmenu.svg' }}"
+                <a class="nav-link p-2" onmouseover="cambiar7();" onmouseout="volver7();" data-toggle="collapse"
+                    href="#bitacoras" aria-expanded="false">
+                    <i><img id="cambiaBCO7"
+                            src="{{ $activePage == 'bitacoras' ? '/img/navs/bitacorasmenubco.svg' : '/img/navs/bitacorasmenu.svg' }}"
                             style="width:25px"></i>
                     <p>{{ __('Bitácoras / Reportes') }}
                         <b class="caret"></b>
@@ -134,7 +141,7 @@
                 <!--no colapsable>-->
                 <div class="collapse " id="bitacoras">
                     <ul class="nav">
-                       
+
                         <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
                             <a class="nav-link py-2 ps-5" href="{{ url('/indexBitacora') }}">
                                 <span class="sidebar-normal py-2 ps-5"> {{ __('Ver Bitácoras') }} </span>
@@ -148,42 +155,45 @@
                         </li>
                     </ul>
                 </div>
-            </li> 
+            </li>
 
-            
-             <!------ 8 Grupos------>
+
+            <!------ 8 Grupos------>
             <li class="nav-item {{ $activePage == 'grupos' || $activePage == 'user-management' ? ' active' : '' }}">
-                            <a class="nav-link p-2 " onmouseover="cambiar8();" onmouseout="volver8();" data-toggle="collapse"
-                                href="#grupos" aria-expanded="false">
-                                <i><img id="cambiaBCO8" style="width:25px"
-                                        src="{{ $activePage == 'grupos' ? '/img/navs/gruposBco.svg' : '/img/navs/grupos.svg' }}"></i>
-                                <p>{{ __('Grupos') }}
-                                    <b class="caret"></b>
-                                </p>
+                <a class="nav-link p-2 " onmouseover="cambiar8();" onmouseout="volver8();" data-toggle="collapse"
+                    href="#grupos" aria-expanded="false">
+                    <i><img id="cambiaBCO8" style="width:25px"
+                            src="{{ $activePage == 'grupos' ? '/img/navs/gruposBco.svg' : '/img/navs/grupos.svg' }}"></i>
+                    <p>{{ __('Grupos') }}
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <!--no colapsable>-->
+                <div class="collapse " id="grupos">
+                    <ul class="nav">
+                        <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                            <a href="{{ url('/indexGrupos') }}"
+                                class="nav-link -item{{ $activePage == 'grupos' ? ' active' : '' }} ">
+                                <span class="sidebar-normal py-2 ps-5">{{ __('Ver Grupos') }} </span>
                             </a>
-                            <!--no colapsable>-->
-                            <div class="collapse " id="grupos">
-                                <ul class="nav">
-                                    <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                                        <a href="{{ url('/indexGrupos') }}" class="nav-link -item{{ $activePage == 'grupos' ? ' active' : '' }} ">
-                                            <span class="sidebar-normal py-2 ps-5">{{ __('Ver Grupos') }} </span>
-                                        </a>
-                                    </li>
-            
-                                    
-                                    <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                                        <a  href="{{ url('/nuevoGrupo') }}" class="nav-link -item{{ $activePage == 'nuevoGrupo' ? ' active' : '' }} ">
-                                            <span class="sidebar-normal py-2 ps-5"> {{ __('Nuevo Grupo') }} </span>
-                                        </a>
-                                    </li>
-                                    
-                                </ul>
-                            </div>
+                        </li>
+
+
+                        <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                            <a href="{{ url('/nuevoGrupo') }}"
+                                class="nav-link -item{{ $activePage == 'nuevoGrupo' ? ' active' : '' }} ">
+                                <span class="sidebar-normal py-2 ps-5"> {{ __('Nuevo Grupo') }} </span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
             </li>
 
             <!-- 9 EQUIPOS -->
             @can('maquinaria_show')
-                <li class="nav-item {{ $activePage == 'dashboard' || $activePage == 'user-management' ? ' active' : '' }}">
+                <li
+                    class="nav-item {{ $activePage == 'dashboard' || $activePage == 'user-management' ? ' active' : '' }}">
                     <a href="#equipo" onmouseover="cambiar9();" onmouseout="volver9();" class="nav-link p-2"
                         data-toggle="collapse" aria-expanded="false">
                         <i><img id="cambiaBCO9"
@@ -234,8 +244,8 @@
             @endcan
 
             <!------ 10 PERSONAL ------>
-             @can('personal_show')
-            <li class="nav-item {{ $activePage == 'personal' || $activePage == 'user-management' ? ' active' : '' }}">
+            @can('personal_show')
+                <li class="nav-item {{ $activePage == 'personal' || $activePage == 'user-management' ? ' active' : '' }}">
                     <a class="nav-link p-2 " onmouseover="cambiar10();" onmouseout="volver10();" data-toggle="collapse"
                         href="#personal" aria-expanded="false">
                         <i><img id="cambiaBCO10" style="width:25px"
@@ -273,7 +283,7 @@
 
                         </ul>
                     </div>
-            </li>
+                </li>
             @endcan
 
             <!------ 11 INVENTARIO ------>
@@ -291,7 +301,7 @@
             @endcan
 
             <!------ 12 OBRA ------>
-             @can('obra_show')
+            @can('obra_show')
                 <li class="nav-item {{ $activePage == 'obra' || $activePage == 'user-management' ? ' active' : '' }}">
                     <a class="nav-link p-2" onmouseover="cambiar12();" onmouseout="volver12();" data-toggle="collapse"
                         href="#obras" aria-expanded="false">
@@ -331,9 +341,10 @@
                 </li>
             @endcan
 
-         <!------ 13 Usuarios ------>
-             @can('user_show')
-                <li class="nav-item {{ $activePage == 'usuarios' || $activePage == 'user-management' ? ' active' : '' }}">
+            <!------ 13 Usuarios ------>
+            @can('user_show')
+                <li
+                    class="nav-item {{ $activePage == 'usuarios' || $activePage == 'user-management' ? ' active' : '' }}">
                     <a class="nav-link p-2" onmouseover="cambiar13();" onmouseout="volver13();" data-toggle="collapse"
                         href="#usuarios" aria-expanded="false">
                         <i><img id="cambiaBCO13"
@@ -415,7 +426,6 @@
                 </div>
             </li>  --}}
 
-            
 
 
 
@@ -427,7 +437,8 @@
 
 
 
-           
+
+
             <!------ Inspecciones ------>
             <li
                 class="nav-item {{ $activePage == 'inspecciones' || $activePage == 'user-management' ? ' active' : '' }}">
@@ -454,7 +465,7 @@
     });
 
     //FUNCIONES PARA CAMBIAR BOTONES A BLANCO
-//---1 CALENDARIO-----
+    //---1 CALENDARIO-----
     function cambiar1() {
         document.getElementById('cambiaBCO1').src = "{{ asset('/img/navs/calendarioBco.svg') }}";
     }
@@ -463,7 +474,7 @@
         document.getElementById('cambiaBCO7').src = "{{ asset('/img/navs/calendario.svg') }}";
     }
 
-//---2 CAJA CHICA-----
+    //---2 CAJA CHICA-----
     function cambiar2() {
         document.getElementById('cambiaBCO2').src = "{{ asset('/img/navs/cajaChicaBco.svg') }}";
     }
@@ -472,7 +483,7 @@
         document.getElementById('cambiaBCO2').src = "{{ asset('/img/navs/cajaChica.svg') }}";
     }
 
-//---3 ASISTENCIA-----
+    //---3 ASISTENCIA-----
     function cambiar3() {
         document.getElementById('cambiaBCO3').src = "{{ asset('/img/navs/asistenciaBco.svg') }}";
     }
@@ -481,7 +492,7 @@
         document.getElementById('cambiaBCO3').src = "{{ asset('/img/navs/asistencia.svg') }}";
     }
 
-//---4 TAREAS-----
+    //---4 TAREAS-----
     function cambiar4() {
         document.getElementById('cambiaBCO4').src = "{{ asset('/img/navs/tareasBco.svg') }}";
     }
@@ -490,7 +501,7 @@
         document.getElementById('cambiaBCO4').src = "{{ asset('/img/navs/tareas.svg') }}";
     }
 
-//---5 CHECK LIST-----
+    //---5 CHECK LIST-----
     function cambiar5() {
         document.getElementById('cambiaBCO5').src = "{{ asset('/img/navs/checkListBco.svg') }}";
     }
@@ -499,7 +510,7 @@
         document.getElementById('cambiaBCO5').src = "{{ asset('/img/navs/checkList.svg') }}";
     }
 
-//---6 MANTENIMIENTOS-----
+    //---6 MANTENIMIENTOS-----
     function cambiar6() {
         document.getElementById('cambiaBCO6').src = "{{ asset('/img/navs/mantenimientoBco.svg') }}";
     }
@@ -508,8 +519,8 @@
         document.getElementById('cambiaBCO6').src = "{{ asset('/img/navs/mantenimiento.svg') }}";
     }
 
-//---7 BITÁCORAS-----
-        function cambiar7() {
+    //---7 BITÁCORAS-----
+    function cambiar7() {
         document.getElementById('cambiaBCO7').src = "{{ asset('/img/navs/bitacorasmenubco.svg') }}";
     }
 
@@ -517,7 +528,7 @@
         document.getElementById('cambiaBCO7').src = "{{ asset('/img/navs/bitacorasmenu.svg') }}";
     }
 
-//---8 GRUPOS-----
+    //---8 GRUPOS-----
     function cambiar8() {
         document.getElementById('cambiaBCO8').src = "{{ asset('/img/navs/gruposBco.svg') }}";
     }
@@ -528,7 +539,7 @@
 
 
 
-//---9 EQUIPOS-----
+    //---9 EQUIPOS-----
     function cambiar9() {
         document.getElementById('cambiaBCO9').src = "{{ asset('/img/navs/eqiposmenubco.svg') }}";
     }
@@ -537,7 +548,7 @@
         document.getElementById('cambiaBCO9').src = "{{ asset('/img/navs/eqiposmenu.svg') }}";
     }
 
-//---10 PERSONAL-----
+    //---10 PERSONAL-----
     function cambiar10() {
         document.getElementById('cambiaBCO10').src = "{{ asset('/img/navs/personalmenubco.svg') }}";
     }
@@ -546,7 +557,7 @@
         document.getElementById('cambiaBCO10').src = "{{ asset('/img/navs/personalmenu.svg') }}";
     }
 
-//---11 INVENTARIO-----
+    //---11 INVENTARIO-----
     function cambiar11() {
         document.getElementById('cambiaBCO11').src = "{{ asset('/img/navs/inventariomenubco.svg') }}";
     }
@@ -555,7 +566,7 @@
         document.getElementById('cambiaBCO11').src = "{{ asset('/img/navs/inventariomenu.svg') }}";
     }
 
-//---12 OBRAS-----
+    //---12 OBRAS-----
     function cambiar12() {
         document.getElementById('cambiaBCO12').src = "{{ asset('/img/navs/obrasmenubco.svg') }}";
     }
@@ -565,7 +576,7 @@
     }
 
 
-//---13 USUARIOS Y PERMISOS-----
+    //---13 USUARIOS Y PERMISOS-----
     function cambiar13() {
         document.getElementById('cambiaBCO13').src = "{{ asset('/img/navs/usuariosBco.svg') }}";
     }
@@ -593,8 +604,4 @@
     function volver6() {
         document.getElementById('cambiaBCO6').src = "{{ asset('/img/navs/formatosmenu.svg') }}";
     }
-
-
-
-
 </script>
