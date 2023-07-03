@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => ' Agregar Nuevo Registro de Revisión', 'titlePage' => __('Agregar Nuevo Registro de Revision')])
+@extends('layouts.main', ['activePage' => ' checkList', 'titlePage' => __('Agregar Nuevo Registro de Revision')])
 @section('content')
 <div class="content">
         <div class="container-fluid">

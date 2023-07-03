@@ -35,8 +35,7 @@
                                             <thead class="labelTitulo">
                                                 <tr>
                                                     <th class="labelTitulo">Nombre</th>
-                                                    <th class="labelTitulo">Número de grupos</th>
-                                                    <th class="labelTitulo">Comentario</th>
+                                                   <th class="labelTitulo">Comentario</th>
                                                     <th class="labelTitulo text-right">Acciones</th>
                                                 </tr>   
                                             </thead>
@@ -44,7 +43,7 @@
                                              
                                                     <tr>
                                                         <td>RE-214 </td>
-                                                        <td>3 grupos </td>
+                                                       
                                                         <td>It is a long established fact that a reader will be distracted by the readable content of a page when looking </td>
                                                         
                                                         <td class="td-actions text-right">

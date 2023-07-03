@@ -91,7 +91,24 @@ if ($asistencias->isEmpty() == true) {
                                         </div>
                                     @endif
                                     <div class="row">
-                                        <div class="col-6 ">
+                                    <div class="col-12 my-4 pb-4 d-flex align-items-center divBorder">
+                                            <div>
+                                                    <button type="button" class="botonSinFondo mx-2"title="Clic para marcar la asistencia en otro día."
+                                                        data-bs-toggle="modal" data-bs-target="#modal-cliente">
+                                                        <img style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}">
+                                                        <p class="botonTitulos mt-2">Otro día</p>
+                                                    </button>
+                                                </div>
+                                                <div class="">
+                                                    <a href="{{ route('asistencia.HEstore') }}" class="combustibleLitros fw-semibold text-end"
+                                                        title="Ir al mes en curso"><b>Hoy es
+                                                                {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                   
+                                        <!--<div class="col-6 ">
 
                                             <span>
                                                 <a href="{{ route('asistencia.HEstore') }}"
@@ -108,7 +125,7 @@ if ($asistencias->isEmpty() == true) {
                                                 <p class="botonTitulos mt-2">Otro día</p>
                                             </button>
 
-                                        </div>
+                                        </div>-->
                                     </div>
                                     <form class="row alertaGuardar" action="{{ route('asistencia.HEstore') }}"
                                         method="post" enctype="multipart/form-data">
