@@ -59,10 +59,13 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                     {{-- {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }} --}}
                                                 </b></a>
                                         </span>
+
                                         {{-- &nbsp;&nbsp;&nbsp;
                                         {{ $objCalendar->getFechaFormateada($fechaSeleccionada) }}
                                         &nbsp;&nbsp;&nbsp; --}}
                                         <!-- Un dia adelante del cargado -->
+
+                                        
                                         <span>
                                             <a href="{{ url('asistencia/diaria/' . $anioSiguiente . '/' . $mesSiguiente . '/' . $diaSiguiente) }}"
                                                 class="" title="Ir al día siguiente">
@@ -83,8 +86,15 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                         </div>
                                     @endif
 
+
+
+
+
+
+
+
                                     <div class="row">
-                                        <div class="col-6 ">
+                                    <!--<div class="col-12 my-4 pb-4 d-flex align-items-center divBorder">
                                             <span>
                                                 {{-- <a href="{{ route('asistencia.create') }}"
                                                     class="display-8 mb-8 text-center" title="Ir al día en curso"><b>Hoy es
@@ -104,7 +114,25 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             </button>
 
                                         </div>
+                                    </div>-->
+
+                                    <div class="col-12 my-4 pb-4 d-flex align-items-center divBorder">
+                                        <div>
+                                            <button type="button" class="botonSinFondo mx-2"title="Clic para marcar la asistencia en otro día."
+                                                data-bs-toggle="modal" data-bs-target="#modal-cliente">
+                                                <img style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}">
+                                                <p class="botonTitulos mt-2">Otro día</p>
+                                            </button>
+                                        </div>
+                                        <div class="">
+                                            <a href="{{ route('asistencia.create') }}" class="combustibleLitros fw-semibold text-end"
+                                                title="Ir al mes en curso"><b>Hoy es
+                                                        {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b>
+                                            </a>
+                                        </div>
                                     </div>
+
+
 
                                     <form class="row alertaGuardar" action="{{ route('asistencia.store') }}" method="post"
                                         enctype="multipart/form-data">

@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Detalle de Equipo')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Detalle de Equipo')])
 @section('content')
     <div class="content">
         @if ($errors->any())
