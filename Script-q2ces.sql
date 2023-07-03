@@ -215,7 +215,9 @@ create table puesto(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     nombre varchar(200) not null,
     comentario text null,
-    primary key (id)
+    puestoNivelId bigint(20) unsigned NULL,
+    primary key (id),
+    CONSTRAINT FK_puesto_puestoNivelId foreign key (puestoNivelId) references puestoNivel(id)
 );
 
 INSERT INTO
@@ -280,7 +282,8 @@ VALUES
 create table puestoNivel(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     nombre varchar(200) not null,
-    requiereAsistencia int(1) unsigned NULL,
+    requiereAsistencia int(1) NOT NULL DEFAULT '0',
+    usaCajaChica TINYINT(1) NOT NULL DEFAULT '0',
     comentario text null,
     primary key (id)
 );

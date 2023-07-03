@@ -77,18 +77,53 @@ Route::get('/detalleHerramienta', function () {
     return view('inventario.detalleHerramienta');
 });
 
-// Route::get('/dashCombustible', function () {
-//     return view('inventario.dashCombustible');
-// });
+ Route::get('/checkList', function () {
+     return view('checkList.checkList');
+ });
 
 
+ Route::get('/nuevoCheck', function () {
+     return view('checkList.nuevoCheck');
+ });
+
+ Route::get('/editarTareaCheck', function () {
+    return view('checkList.editarTareaCheck');
+});
+
+ Route::get('/nuevaTareaCheck', function () {
+    return view('checkList.nuevaTareaCheck');
+});
+
+Route::get('/indexBitacora', function () {
+    return view('bitacora.indexBitacora');
+});
 
 
+Route::get('/nuevoBitacora', function () {
+    return view('bitacora.nuevoBitacora');
+});
+
+Route::get('/editarBitacora', function () {
+    return view('bitacora.editarBitacora');
+});
+
+Route::get('/tareas', function () {
+    return view('tareas.tareas');
+});
+
+Route::get('/indexGrupos', function () {
+    return view('grupos.indexGrupos');
+});
+
+Route::get('/nuevoGrupo', function () {
+    return view('grupos.nuevoGrupo');
+});
+
+Route::get('/editarGupo', function () {
+    return view('grupos.editarGupo');
+});
 
 
-// Route::get('/altaObra', function () {
-//     return view('obra.altaObra');
-// });
 
 // Route::get('/vistaObra', function () {
 //     return view('obra.vistaObra');
@@ -237,6 +272,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Caja Chica
     Route::resource('cajaChica', App\Http\Controllers\cajaChicaController::class);
+
     // Conceptos
     Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
+
+
+    Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');
+    Route::get('search/materialMantenimiento', [App\Http\Controllers\searchController::class, 'materialMantenimiento'])->name('search.materialMantenimiento');
+
 });

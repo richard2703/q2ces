@@ -22,7 +22,11 @@ class puestoController extends Controller
     {
         abort_if(Gate::denies('puesto_index'), 403);
 
-        $puestos = puesto::orderBy('nombre', 'asc')->paginate(15);
+        $puestos = puesto::select('puestos.*','puestosNivel.nombre as puestoNivel')
+        ->leftJoin('puestoNivel', 'puestoNivel.id', '=', 'puestos.puestoNivelId')
+        ->orderBy('nombre', 'asc')->paginate(15);
+
+
         return view('catalogo.indexPuestos', compact('puestos'));
     }
 
