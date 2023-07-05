@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'bitacoras', 'titlePage' => __('Bitácoras')])
+@extends('layouts.main', ['activePage' => 'bitacoras', 'activeItem' => 'bitacoras'])
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -14,12 +14,12 @@
                                 <div class="card-body">
 
                                     <!--<div class="alert alert-success" role="success">
+                                                        
+                                                    </div>
                                                 
-                                            </div>
-                                        
-                                            <div class="alert alert-danger" role="faild">
-                                                
-                                            </div>-->
+                                                    <div class="alert alert-danger" role="faild">
+                                                        
+                                                    </div>-->
 
                                     <div class="row">
                                         <div class="col-12 text-right">
