@@ -45,7 +45,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
         {{--  Logo  --}}
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="{{ url('home', session('id')) }}" class="logo d-flex align-items-center">
                 <img src="{{ asset('img/login/logoQcem2.svg') }}" width="30%" alt="Q2Ces">
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -558,10 +558,10 @@
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>Richard</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>Q2Ces</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-            Designed by <a href="#">Richard.Inc</a>
+            Designed by <a href="#">Q2Ces Developer Team</a>
         </div>
     </footer>
     <!-- End Footer -->
