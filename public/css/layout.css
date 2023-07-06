@@ -26,12 +26,13 @@
 
 --fondo:#F8F9F7;
 --verde:#8EB322;
+--amarillo:#F7C90D;
 --texto: #3C4858;
 --select: #727176;
   }
   
   body {
-	font-family: "Open Sans", sans-serif;
+	/* font-family: "Open Sans", sans-serif; */
 	background: var(--fondo);
 	color: var(--text);
   }
@@ -251,7 +252,7 @@
 	z-index: 997;
 	/* height: 60px; */
 	/* box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1); */
-	/* background-color: var(--dash); */
+	background-color: var(--fondo);
 	/* padding-left: 20px; */
 	/* Toggle Sidebar Button */
 	/* Search Bar */
@@ -637,10 +638,6 @@
 	font-size: 14px;
 	transition: all 0.3s;
 	border-top: 1px solid #cddfff;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-
   }
   
   .footer .copyright {
@@ -668,4 +665,29 @@
     transition: opacity .5s ease-out, visibility 0s linear 0s;
     visibility: visible;
     opacity: 1;
+}
+
+/*--------------------------------------------------------------
+# Botones
+--------------------------------------------------------------*/
+.regresar{
+  background-color: var(--select);
+  color: #fff;
+  display: inline-flex;
+}
+
+
+button.regresar:hover{
+  background-color: whitesmoke !important;
+  color: #fff;
+  border: 1px solid var(--texto) !important;
+}
+
+/*--------------------------------------------------------------
+# Titulos
+--------------------------------------------------------------*/
+.corte{
+  border-left: 1px solid var(--verde);
+  border-right: 1px solid var(--verde);
+
 }
