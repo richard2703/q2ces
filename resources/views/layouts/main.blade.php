@@ -348,7 +348,7 @@
                         @can('mantenimiento_index')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
-                                <a href="#" class="">
+                                <a href="{{ url('/mantenimientos') }}" class="">
                                     <i class="bi bi-circle"></i><span>Ver Mantenimientos</span>
                                 </a>
                             </li>
@@ -356,7 +356,7 @@
                         @can('mantenimiento_create')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
-                                <a href="#" class="">
+                                <a href="{{ url('/nuevoMantenimiento') }}" class="">
                                     <i class="bi bi-circle"></i><span>Nuevo Mantenimeinto</span>
                                 </a>
                             </li>
