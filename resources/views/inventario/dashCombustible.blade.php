@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Carga y Descarga')])
+@extends('layouts.main', ['activePage' => 'combustible', 'titlePage' => __('Carga y Descarga')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -403,9 +403,9 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <!-- <div class="card-header bacTituloPrincipal">
-                                                                                                                                                                                                                                                                    <h4 class="card-title">Carga y descarga de combustible</h4>
+                                                                                                                                                                                                                                                                        <h4 class="card-title">Carga y descarga de combustible</h4>
 
-                                                                                                                                                                                                                                                                </div>-->
+                                                                                                                                                                                                                                                                    </div>-->
                                     <div class="card-body mb-3">
                                         <div class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
                                             <button
