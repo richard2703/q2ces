@@ -12,7 +12,7 @@ class mantenimientos extends Model {
 
     protected $fillable = [
         'tipo', 'estadoId', 'titulo', 'maquinariaId', 'personalId', 'comentario', 'fechaInicio', 'fechaReal', 'adscripcion',
-        'horometro',        'km',        'subtotal',        'iva',
+        'horometro',        'kilometraje',        'subtotal',        'iva',
         'costo' ,
     ];
 }

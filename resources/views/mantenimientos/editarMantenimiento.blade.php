@@ -18,9 +18,11 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <form class="row alertaGuardar" action="{{ route('mantenimientos.store') }}" method="post"
+                                <form class="row alertaGuardar"
+                                    action="{{ route('mantenimientos.update', $mantenimiento->id) }}" method="post"
                                     enctype="multipart/form-data">
                                     @csrf
+                                    @method('put')
                                     <input type="hidden" name="maquinariaId" id="maquinariaId" value="">
                                     <input type="hidden" name="titulo" id="titulo" value="">
                                     <div class="card-header bacTituloPrincipal">
@@ -31,95 +33,123 @@
 
                                         <div class="col-12 my-4">
                                             <div class="row">
-                                                <div class="divBorder">
+                                                <input type="hidden" name="mantenimientoId" id="mantenimientoId"
+                                                    value="{{ $mantenimiento->id }}">
 
-                                                    <p class="subEncabezado">Busca una Maquinaria</p>
-                                                    <div class="mb-4 mt-0" role="search" class="">
-                                                        <input value="" class="search-submit " onclick="crearItems()">
-                                                        {{-- <input type="search" name="q" class="search-text" placeholder="Search..." autocomplete="off"> --}}
-                                                        <input autofocus type="text" class="search-text" id="search"
-                                                            name="search" placeholder="Buscar..."
-                                                            title="Escriba la(s) palabra(s) a buscar.">
-                                                    </div>
-                                                </div>
-                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Equipo: <span>*</span></label></br>
-                                                    <input type="text" class="inputCaja" id="nombre" name="nombre"
-                                                        required readonly>
-                                                </div>
-                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Número de Serie: </label></br>
-                                                    <input type="text" class="inputCaja" id="numserie" name="numserie"
-                                                        readonly>
-                                                </div>
-                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Marca: </label></br>
-                                                    <input type="text" class="inputCaja" id="marca" name="marca"
-                                                        readonly>
-                                                </div>
-                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Modelo: </label></br>
-                                                    <input type="text" class="inputCaja" id="modelo" name="modelo"
-                                                        readonly>
-                                                </div>
-                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Placas: </label></br>
-                                                    <input type="text" class="inputCaja" id="placas" name="placas"
-                                                        readonly>
-                                                </div>
-                                                <hr>
-                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Resguardatario:</label></br><input id="personalId" name="personalId"
-                                                        type="text" placeholder="Especifique..." class="inputCaja">
-                                                </div>
-                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Adscripción:</label></br><input id="adscripcion" name="adscripcion"
-                                                        type="text" placeholder="Especifique..." class="inputCaja">
-                                                </div>
-                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Horómetro: </label></br>
-                                                    <input type="text" class="inputCaja" placeholder="Ej. 1000" id="horometro" name="horometro">
-                                                </div>
-                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Km/m: </label></br>
-                                                    <input type="text" class="inputCaja" placeholder="Especifique..." id="km" name="km">
-                                                </div>
-                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Fecha: </label></br>
-                                                    <input type="date" class="inputCaja" placeholder="Especifique..." id="fechaInicio" name="fechaInicio">
+                                                <input type="hidden" name="maquinariaId" id="maquinariaId"
+                                                    value="{{ $mantenimiento->maquinariaId }}">
+
+                                                <input type="hidden" name="personalId" id="personalId"
+                                                    value="{{ $mantenimiento->personalId }}">
+
+                                                {{-- <input type="hidden" name="titulo" id="titulo"
+                                                    value="{{ $mantenimiento->titulo }}"> --}}
+
+                                                <div class=" col-12 col-sm-6 col-lg-12 my-3 ">
+                                                    <label class="labelTitulo">Descripción del mantenimiento:
+                                                        <span>*</span></label></br>
+                                                    <textarea rows="2" cols="80" class="form-control" id="titulo" name="titulo" required readonly>{{ $mantenimiento->titulo }}</textarea>
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Tipo:</label></br>
-                                                    <select class="form-select form-select-lg mb-3 inputCaja"
-                                                        name="tipoId" id="tipoId"
-                                                        aria-label=".form-select-lg example">
+                                                    <label class="labelTitulo">Fecha de Inicio: </label></br>
+                                                    <input type="date" class="inputCaja" placeholder="Especifique..."
+                                                        readonly id="fechaInicio" name="fechaInicio"
+                                                        value="{{ $mantenimiento->fechaInicio }}">
+                                                </div>
+
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Tipo de Mantenimiento:</label></br>
+                                                    <select class="form-select form-select-lg mb-3 inputCaja" name="tipo"
+                                                        id="tipo" aria-label=".form-select-lg example">
 
                                                         <option value="">Seleccione</option>
-                                                        <option value="Correctivo">Correctivo</option>
-                                                        <option value="250">250</option>
-                                                        <option value="500">500</option>
-                                                        <option value="1000">1000</option>
+                                                        <option value="Correctivo"
+                                                            {{ $mantenimiento->tipo == 'Correctivo' ? ' selected' : '' }}>
+                                                            Correctivo</option>
+                                                        <option value="250"
+                                                            {{ $mantenimiento->tipo == '250' ? ' selected' : '' }}>250
+                                                        </option>
+                                                        <option value="500"
+                                                            {{ $mantenimiento->tipo == '500' ? ' selected' : '' }}>500
+                                                        </option>
+                                                        <option value="1000"
+                                                            {{ $mantenimiento->tipo == '1000' ? ' selected' : '' }}>1000
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Estado del Mantenimiento:</label></br>
+                                                    <select class="form-select form-select-lg mb-3 inputCaja"
+                                                        name="estadoId" id="estadoId" aria-label=".form-select-lg example">
+
+                                                        <option value="">Seleccione</option>
+                                                        <option value="1"
+                                                            {{ $mantenimiento->estadoId == 1 ? ' selected' : '' }}>En
+                                                            Espera
+                                                        </option>
+                                                        <option value="2"
+                                                            {{ $mantenimiento->estadoId == 2 ? ' selected' : '' }}>
+                                                            Realizando
+                                                        </option>
+                                                        <option value="3"
+                                                            {{ $mantenimiento->estadoId == 3 ? ' selected' : '' }}>
+                                                            Terminado
+                                                        </option>
                                                     </select>
                                                 </div>
                                                 <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
                                                     <label class="labelTitulo">Comentarios:</label></br>
-                                                    <textarea rows="3" cols="80" class="form-control" placeholder="Escribe tu comentario aquí"
-                                                        name="comentario" id="comentario"></textarea>
+                                                    <textarea rows="2" cols="80" class="form-control"
+                                                        placeholder="Escribe tus comentarios o información relevante sobre el mantenimiento aquí." name="comentario"
+                                                        id="comentario">{{ $mantenimiento->comentario }}</textarea>
+                                                </div>
+                                                <br>
+                                                <hr>
+                                                <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
+                                                    <label class="labelTitulo">Resguardatario:</label></br><input
+                                                        id="personalId2" name="personalId2" type="text"
+                                                        value="{{ $mantenimiento->personaId }}"
+                                                        placeholder="Especifique..." class="inputCaja">
+                                                </div>
+                                                <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
+                                                    <label class="labelTitulo">Adscripción:</label></br><input
+                                                        id="adscripcion" name="adscripcion" type="text"
+                                                        value="{{ $mantenimiento->adcripcion }}"
+                                                        placeholder="Especifique..." class="inputCaja">
+                                                </div>
+                                                <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
+                                                    <label class="labelTitulo">Horómetro: </label></br>
+                                                    <input type="number" class="inputCaja text-right"
+                                                        value="{{ $mantenimiento->horometro }}" placeholder="Ej. 1000"
+                                                        step="1" min="0" id="horometro" name="horometro">
+                                                </div>
+                                                <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
+                                                    <label class="labelTitulo">Km/m: </label></br>
+                                                    <input type="number" class="inputCaja text-right"
+                                                        value="{{ $mantenimiento->kilometraje }}" placeholder="Ej. 1000"
+                                                        step="1" min="0" id="kilometraje"
+                                                        name="kilometraje">
                                                 </div>
 
                                                 <hr>
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Subtotal: </label></br>
-                                                    <input type="text" class="inputCaja" placeholder="Especifique..." id="subtotal" name="subtotal">
+                                                    <input type="text" class="inputCaja text-right"
+                                                        value="{{ $mantenimiento->subtotal }}" placeholder="Ej. 1"
+                                                        id="subtotal" name="subtotal">
                                                 </div>
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Iva: </label></br>
-                                                    <input type="text" class="inputCaja" placeholder="Especifique..." id="iva" name="iva">
+                                                    <input type="text" class="inputCaja text-right"
+                                                        value="{{ $mantenimiento->iva }}" placeholder="Ej. 1"
+                                                        id="iva" name="iva">
                                                 </div>
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Total: </label></br>
-                                                    <input type="text" class="inputCaja" placeholder="Especifique..." id="total" name="total">
+                                                    <input type="text" class="inputCaja text-right"
+                                                        value="{{ $mantenimiento->costo }}" placeholder="Ej. 1"
+                                                        id="total" name="total">
                                                 </div>
                                             </div>
                                         </div>
@@ -140,94 +170,6 @@
                                                 </div>
                                             </div>
 
-                                            {{-- <div class="col-12 col-md-6 mt-3 align-items-center  ">
-                                            <button class="btnSinFondocALENDARIO  float-end" type="button"
-                                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                                                aria-controls="offcanvasRight">
-                                                <img class="imgBtns" style="height: 25px;"
-                                                    src="{{ asset('img/mantenimiento/box.svg') }}"></br>Ver materiales
-                                                seleccionados
-                                                <span
-                                                    class="position-absolute top-0 start-97 translate-middle p-2 bg-danger border border-light rounded-circle">
-                                                    <span class="visually-hidden">New alerts</span>
-                                                </span>
-                                            </button>
-                                            <!-- off canvas-->
-                                            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
-                                                aria-labelledby="offcanvasRightLabel">
-                                                <div class="offcanvas-header divBorder">
-                                                    <h3 class="offcanvas-title tituloEncabezado" id="offcanvasRightLabel">
-                                                        Lista de Material</h3>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="offcanvas-body">
-                                                    <ul class="">
-                                                        <li
-                                                            class="listaMaterialMantenimiento my-3 d-flex py-5 border-bottom">
-                                                            <div class="col-9 ">
-                                                                <p class="fw-semibold">4 litros</p></br>
-                                                                <p> <span class="fw-semibold">Descripción:</span>
-                                                                    PG PC5667C Filtro de aire de cabina | Compatible con
-                                                                    Toyota Prius 2020-10, Highland 2019-09</br>
-                                                                    <span class="fw-semibold">N.parte:</span> Lexus CT200h
-                                                                    2017-11</br>
-                                                                    <span class="fw-semibold">Costo:</span> $ 300.00</br>
-                                                                    <span class="fw-semibold">Importe:</span> $ 300.00
-                                                                </p>
-                                                            </div>
-                                                            <div class="col-3">
-                                                                <button class="btnSinFondo float-end" type="submit"
-                                                                    rel="tooltip">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28"
-                                                                        height="28" fill="currentColor"
-                                                                        title="Eliminar" class="bi bi-x-circle"
-                                                                        viewBox="0 0 16 16">
-                                                                        <path
-                                                                            d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                        <path
-                                                                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                                    </svg>
-                                                                </button>
-                                                            </div>
-                                                        </li>
-                                                        <li
-                                                            class="listaMaterialMantenimiento my-3 d-flex py-5 border-bottom">
-                                                            <div class="col-9 ">
-                                                                <p class="fw-semibold">4 litros</p></br>
-                                                                <p> <span class="fw-semibold">Descripción:</span>
-                                                                    PG PC5667C Filtro de aire de cabina | Compatible con
-                                                                    Toyota Prius 2020-10, Highland 2019-09</br>
-                                                                    <span class="fw-semibold">N.parte:</span> Lexus CT200h
-                                                                    2017-11</br>
-                                                                    <span class="fw-semibold">Costo:</span> $ 300.00</br>
-                                                                    <span class="fw-semibold">Importe:</span> $ 300.00
-                                                                </p>
-                                                            </div>
-                                                            <div class="col-3">
-                                                                <button class="btnSinFondo float-end" type="submit"
-                                                                    rel="tooltip">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28"
-                                                                        height="28" fill="currentColor"
-                                                                        title="Eliminar" class="bi bi-x-circle"
-                                                                        viewBox="0 0 16 16">
-                                                                        <path
-                                                                            d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                        <path
-                                                                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                                    </svg>
-                                                                </button>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                    <div class="col-12 mt-5">
-                                                        <button type="button"
-                                                            class="btn botonGral mx-auto d-block">Agregar</button>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div> --}}
                                         </div>
 
                                         <div class="my-4 divBorder">
@@ -235,6 +177,48 @@
                                         </div>
                                         <div class=" col-12  my-3 ">
                                             <ul class="" id="newRow">
+
+                                                @forelse ($gastos as $item)
+                                                    <li class="listaMaterialMantenimiento my-3 border-bottom"
+                                                        id="inputFormRow">
+                                                        <div class="row d-flex pb-4">
+
+
+                                                            <input type="hidden" name="gastoId[]" id="gastoId"
+                                                                value="{{ $item->id != null ? $item->id : 0 }}">
+
+                                                            <input type="hidden" name="inventarioId[]" id="inventarioId"
+                                                                value="{{ $item->inventarioId }}">
+
+                                                            <div class="col-3 ">
+                                                                <label for="cantidad"
+                                                                    class="">Cantidad</label></br></br>
+                                                                <input type="number" maxlength="2" min="1"
+                                                                    required max="99" step="1"
+                                                                    class="inputCaja text-right" id="cantidad"
+                                                                    placeholder="Ej. 1" name="cantidad[]"
+                                                                    value="{{ $item->cantidad }}">
+                                                            </div>
+
+                                                            <div class="col-7">
+                                                                <label for="descripcion"
+                                                                    class="">Descripción</label></br></br>
+                                                                <textarea rows="3" cols="80" class="form-control form-select" id="descripcion" readonly
+                                                                    name="descripcion[]" value="">{{ 'Artículo: ' . $item->articulo . ', Número de parte: ' . $item->numeroParte . ', Modelo: ' . $item->modelo . ', PU: $ ' . $item->valor }} </textarea>
+                                                            </div>
+
+                                                            <div class="col-2"></br></br>
+                                                                <button id="removeRow" type="button"
+                                                                    class="btn btn-danger">Borrar</button>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
+
+                                                @empty
+                                                    <li>Sin registros.</li>
+                                                @endforelse
+
                                                 {{-- <li class="listaMaterialMantenimiento my-3 border-bottom">
                                                 <div class="row d-flex pb-4">
                                                     <div class="col-12 col-md-9  py-3 d-flex">
@@ -254,62 +238,6 @@
                                                                 class="">Descripción</label></br></br>
                                                             <textarea rows="3" cols="80" class="form-control form-select" id="descripcion" readonly
                                                                 name="descripcion[]" value=""></textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-md-3">
-                                                        <button class="btnSinFondocALENDARIO ms-3 float-end">
-                                                            <img class="imgBtns" style="height: 20px;"
-                                                                src="{{ asset('img/mantenimiento/material.svg') }}">
-                                                            Seleccionar
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </li> --}}
-                                                {{-- <li class="listaMaterialMantenimiento my-3 border-bottom ">
-                                                <div class="row d-flex pb-4">
-                                                    <div class="col-12 col-md-9  py-3 d-flex">
-                                                        <div class="col-3 ">
-                                                            <label for="exampleFormControlInput1"
-                                                                class="">Cantidad</label></br></br>
-                                                            <input type="text" class="inputCaja">
-                                                        </div>
-                                                        <div class="col-9">
-                                                            <p> <span class="fw-semibold">Descripción:</span>
-                                                                PG PC5667C Filtro de aire de cabina | Compatible con Toyota
-                                                                Prius 2020-10, Highland 2019-09</br>
-                                                                <span class="fw-semibold">N.parte:</span> Lexus CT200h
-                                                                2017-11</br>
-                                                                <span class="fw-semibold">Costo:</span> $ 300.00</br>
-                                                                <span class="fw-semibold">Importe:</span> $ 300.00
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-md-3">
-                                                        <button class="btnSinFondocALENDARIO ms-3 float-end">
-                                                            <img class="imgBtns" style="height: 20px;"
-                                                                src="{{ asset('img/mantenimiento/material.svg') }}">
-                                                            Seleccionar
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="listaMaterialMantenimiento my-3 border-bottom">
-                                                <div class="row d-flex pb-4">
-                                                    <div class="col-12 col-md-9  py-3 d-flex">
-                                                        <div class="col-3 ">
-                                                            <label for="exampleFormControlInput1"
-                                                                class="">Cantidad</label></br></br>
-                                                            <input type="text" class="inputCaja">
-                                                        </div>
-                                                        <div class="col-9">
-                                                            <p> <span class="fw-semibold">Descripción:</span>
-                                                                PG PC5667C Filtro de aire de cabina | Compatible con Toyota
-                                                                Prius 2020-10, Highland 2019-09</br>
-                                                                <span class="fw-semibold">N.parte:</span> Lexus CT200h
-                                                                2017-11</br>
-                                                                <span class="fw-semibold">Costo:</span> $ 300.00</br>
-                                                                <span class="fw-semibold">Importe:</span> $ 300.00
-                                                            </p>
                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-md-3">

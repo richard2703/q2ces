@@ -141,7 +141,7 @@ class searchController extends Controller
         $sugerencias = [];
         foreach ( $inventario as $item ) {
             $sugerencias[] = [
-                'value' => 'Artículo: ' . $item->nombre . ' Número de parte: ' . $item->numparte . ', Modelo: ' . $item->modelo . ', PU: $ '. $item->valor,
+                'value' => 'Artículo: ' . $item->nombre . ', Número de parte: ' . $item->numparte . ', Modelo: ' . $item->modelo . ', PU: $ '. $item->valor,
                 'id' => $item->id,
                 'nombre' => $item->nombre,
                 'valor' => $item->valor,

@@ -37,8 +37,7 @@
 
                                                     <p class="subEncabezado">Busca una Maquinaria</p>
                                                     <div class="mb-4 mt-0" role="search" class="">
-                                                        <input value="" class="search-submit " onclick="crearItems()">
-                                                        {{-- <input type="search" name="q" class="search-text" placeholder="Search..." autocomplete="off"> --}}
+                                                        <input value="" class="search-submit ">
                                                         <input autofocus type="text" class="search-text" id="search"
                                                             name="search" placeholder="Buscar..."
                                                             title="Escriba la(s) palabra(s) a buscar.">
@@ -96,7 +95,7 @@
                                                         id="km" name="km">
                                                 </div> --}}
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Fecha de inicio: <span>*</span> </label></br>
+                                                    <label class="labelTitulo">Fecha de Inicio: <span>*</span> </label></br>
                                                     <input type="date" class="inputCaja" placeholder="Especifique..." required
                                                         id="fechaInicio" name="fechaInicio">
                                                 </div>

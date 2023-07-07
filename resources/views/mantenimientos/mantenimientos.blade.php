@@ -15,11 +15,11 @@
 
                                     <!--<div class="alert alert-success" role="success">
 
-                                                            </div>
+                                                                </div>
 
-                                                            <div class="alert alert-danger" role="faild">
+                                                                <div class="alert alert-danger" role="faild">
 
-                                                            </div>-->
+                                                                </div>-->
 
                                     <div class="row">
                                         <div class="col-12 text-right">
@@ -51,21 +51,22 @@
                                                 @forelse ($vctMantenimientos as $item)
                                                     <tr>
                                                         <td class="text-center">
-                                                            <a href="{{ url('/mantenimientos/editar/' . $item->id) }}" title="Editar el mantenimiento"
+                                                            <a href="{{ url('/mantenimientos/editar/' . $item->id) }}"
+                                                                title="Editar el mantenimiento"
                                                                 class="">{{ $item->id }}
                                                             </a>
-                                                            </td>
+                                                        </td>
                                                         <td>{{ $item->titulo }} </td>
                                                         <td>{{ $item->fechaInicio }}</td>
-                                                        <td  class="text-right">$ {{ $item->costo }} </td>
+                                                        <td class="text-right">$ {{ number_format($item->costo, 2) }} </td>
 
-                                                        <td>{{  $item->estado }} </td>
+                                                        <td>{{ $item->estado }} </td>
 
                                                         <td class="td-actions text-right">
 
                                                             @can('mantenimiento_edit')
-                                                                <a href="{{ url('/mantenimientos/editar/' . $item->id) }}"  title="Editar el mantenimiento"
-                                                                    class="">
+                                                                <a href="{{ url('/mantenimientos/editar/' . $item->id) }}"
+                                                                    title="Editar el mantenimiento" class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                         height="28" fill="currentColor" title="Editar"
                                                                         class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
