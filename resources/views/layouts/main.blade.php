@@ -229,7 +229,7 @@
                     </a>
                     <ul id="maquinaria-nav" class="nav-content collapse {{ $activePage == 'equipos' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
-                        @can('mantenimiento_index')
+                        @can('maquinaria_index')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('maquinaria.index') }}" class="">
@@ -245,7 +245,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('mantenimiento_index')
+                        @can('maquinaria_index')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('accesorios.index') }}" class="">
