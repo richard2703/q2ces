@@ -117,7 +117,10 @@
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'calendario' ? '' : 'collapsed' }}"
                         href="{{ route('calendario.index') }}">
-                        <i class="bi bi-shop"></i>
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons ">
+                            calendar_month
+                        </span>
                         <span>Calendario</span>
                     </a>
                 </li>
@@ -127,7 +130,11 @@
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'asistencia' ? '' : 'collapsed' }}"
                         href="{{ route('asistencia.index') }}">
-                        <i class="bi bi-shop"></i>
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            event_available
+                        </span>
+
                         <span>Asistencia</span>
                     </a>
                 </li>
@@ -137,7 +144,10 @@
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'cajaChica' ? '' : 'collapsed' }}"
                         href="{{ route('cajaChica.index') }}">
-                        <i class="bi bi-shop"></i>
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            currency_exchange
+                        </span>
                         <span>Caja Chica</span>
                     </a>
                 </li>
@@ -147,7 +157,11 @@
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'combustible' ? '' : 'collapsed' }}"
                         href="{{ route('inventario.index', 'combustible') }}">
-                        <i class="bi bi-shop"></i>
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            local_gas_station
+                        </span>
+
                         <span>Combustible</span>
                     </a>
                 </li>
@@ -157,7 +171,11 @@
                 <li class="nav-item ">
                     <a class="nav-link {{ $activePage == 'mantenimiento' ? '' : 'collapsed' }}"
                         data-bs-target="#mantenimiento-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-receipt"></i><span>Mantenimientos</span><i class="bi bi-chevron-down ms-auto"></i>
+                        {{--  <i class="bi bi-receipt"></i>  --}}
+                        <span class="material-icons">
+                            build
+                        </span>
+                        <span>Mantenimientos</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="mantenimiento-nav"
                         class="nav-content collapse {{ $activePage == 'mantenimiento' ? 'show' : '' }}"
@@ -186,8 +204,12 @@
                 <li class="nav-item ">
                     <a class="nav-link {{ $activePage == 'bitacoras' ? '' : 'collapsed' }}"
                         data-bs-target="#bitacora-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-receipt"></i><span>Bitacoras y Check List</span><i
-                            class="bi bi-chevron-down ms-auto"></i>
+                        {{--  <i class="bi bi-receipt"></i>  --}}
+                        <span class="material-icons">
+                            fact_check
+                        </span>
+
+                        <span>Bitacoras y Check List</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="bitacora-nav" class="nav-content collapse {{ $activePage == 'bitacoras' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
@@ -224,8 +246,12 @@
                 <li class="nav-item ">
                     <a class="nav-link {{ $activePage == 'equipos' ? '' : 'collapsed' }}"
                         data-bs-target="#maquinaria-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-receipt"></i><span>Maquinaria y Accesorios</span><i
-                            class="bi bi-chevron-down ms-auto"></i>
+                        {{--  <i class="bi bi-receipt"></i>  --}}
+                        <span class="material-icons">
+                            agriculture
+                        </span>
+
+                        <span>Maquinaria y Accesorios</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="maquinaria-nav" class="nav-content collapse {{ $activePage == 'equipos' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
@@ -269,7 +295,12 @@
                 <li class="nav-item ">
                     <a class="nav-link {{ $activePage == 'personal' ? '' : 'collapsed' }}" data-bs-target="#personal-nav"
                         data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-receipt"></i><span>Personal</span><i class="bi bi-chevron-down ms-auto"></i>
+                        {{--  i class="bi bi-receipt"></i>  --}}
+                        <span class="material-icons">
+                            person
+                        </span>
+
+                        <span>Personal</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="personal-nav" class="nav-content collapse {{ $activePage == 'personal' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
@@ -297,7 +328,10 @@
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'inventario' ? '' : 'collapsed' }}"
                         href="{{ route('inventario.dash') }}">
-                        <i class="bi bi-shop"></i>
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            shelves
+                        </span>
                         <span>Inventario</span>
                     </a>
                 </li>
@@ -307,7 +341,11 @@
                 <li class="nav-item ">
                     <a class="nav-link {{ $activePage == 'obra' ? '' : 'collapsed' }}" data-bs-target="#obra-nav"
                         data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-receipt"></i><span>Obras</span><i class="bi bi-chevron-down ms-auto"></i>
+                        {{--  <i class="bi bi-receipt"></i>  --}}
+                        <span class="material-icons">
+                            construction
+                        </span>
+                        <span>Obras</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="obra-nav" class="nav-content collapse {{ $activePage == 'obra' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
@@ -335,8 +373,11 @@
                 <li class="nav-item ">
                     <a class="nav-link {{ $activePage == 'usuarios' ? '' : 'collapsed' }}" data-bs-target="#user-nav"
                         data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-receipt"></i><span>Usuarios y Permisos</span><i
-                            class="bi bi-chevron-down ms-auto"></i>
+                        {{--  <i class="bi bi-receipt"></i>  --}}
+                        <span class="material-icons">
+                            pan_tool
+                        </span>
+                        <span>Usuarios y Permisos</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="user-nav" class="nav-content collapse {{ $activePage == 'usuarios' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">

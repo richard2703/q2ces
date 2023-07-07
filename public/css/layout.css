@@ -630,6 +630,10 @@
 .sidebar-nav .nav-content a.active i {
   background-color: var(--select);
 }
+
+#sidebar .material-icons {
+  padding-right: 5px;
+}
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
