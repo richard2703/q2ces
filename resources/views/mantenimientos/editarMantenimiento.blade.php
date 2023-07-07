@@ -23,10 +23,8 @@
                                     @csrf
                                     <input type="hidden" name="maquinariaId" id="maquinariaId" value="">
                                     <input type="hidden" name="titulo" id="titulo" value="">
-                                    <input type="hidden" name="estadoId" id="estadoId" value="1">
-                                    <input type="hidden" name="personalId" id="personalId" value="{{ auth()->user()->id }}">
                                     <div class="card-header bacTituloPrincipal">
-                                        <h4 class="card-title">Nuevo Registro de Mantenimiento</h4>
+                                        <h4 class="card-title">Editar Registro de Mantenimiento</h4>
                                     </div>
 
                                     <div class="card-body ">
@@ -44,12 +42,7 @@
                                                             title="Escriba la(s) palabra(s) a buscar.">
                                                     </div>
                                                 </div>
-                                                <div class=" col-12 col-sm-6 col-lg-12 my-3 ">
-                                                    <label class="labelTitulo">Descripción Equipo/Maquinaría: <span>*</span></label></br>
-                                                    <textarea rows="2" cols="80" class="form-control form-select" id="descripcion" readonly name="descripcion"
-                                                        value=""></textarea>
-                                                </div>
-                                                {{--  <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Equipo: <span>*</span></label></br>
                                                     <input type="text" class="inputCaja" id="nombre" name="nombre"
                                                         required readonly>
@@ -73,38 +66,34 @@
                                                     <label class="labelTitulo">Placas: </label></br>
                                                     <input type="text" class="inputCaja" id="placas" name="placas"
                                                         readonly>
-                                                </div> --}}
-                                                {{-- <hr> --}}
-                                                {{-- <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Resguardatario:</label></br><input
-                                                        id="personalId" name="personalId" type="text"
-                                                        placeholder="Especifique..." class="inputCaja">
+                                                </div>
+                                                <hr>
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Resguardatario:</label></br><input id="personalId" name="personalId"
+                                                        type="text" placeholder="Especifique..." class="inputCaja">
                                                 </div>
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Adscripción:</label></br><input
-                                                        id="adscripcion" name="adscripcion" type="text"
-                                                        placeholder="Especifique..." class="inputCaja">
+                                                    <label class="labelTitulo">Adscripción:</label></br><input id="adscripcion" name="adscripcion"
+                                                        type="text" placeholder="Especifique..." class="inputCaja">
                                                 </div>
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Horómetro: </label></br>
-                                                    <input type="text" class="inputCaja" placeholder="Ej. 1000"
-                                                        id="horometro" name="horometro">
+                                                    <input type="text" class="inputCaja" placeholder="Ej. 1000" id="horometro" name="horometro">
                                                 </div>
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Km/m: </label></br>
-                                                    <input type="text" class="inputCaja" placeholder="Especifique..."
-                                                        id="km" name="km">
-                                                </div> --}}
+                                                    <input type="text" class="inputCaja" placeholder="Especifique..." id="km" name="km">
+                                                </div>
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Fecha de inicio: <span>*</span> </label></br>
-                                                    <input type="date" class="inputCaja" placeholder="Especifique..." required
-                                                        id="fechaInicio" name="fechaInicio">
+                                                    <label class="labelTitulo">Fecha: </label></br>
+                                                    <input type="date" class="inputCaja" placeholder="Especifique..." id="fechaInicio" name="fechaInicio">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Tipo de Mantenimiento: <span>*</span></label></br>
-                                                    <select class="form-select form-select-lg mb-3 inputCaja" name="tipo" required
-                                                        id="tipo" aria-label=".form-select-lg example">
+                                                    <label class="labelTitulo">Tipo:</label></br>
+                                                    <select class="form-select form-select-lg mb-3 inputCaja"
+                                                        name="tipoId" id="tipoId"
+                                                        aria-label=".form-select-lg example">
 
                                                         <option value="">Seleccione</option>
                                                         <option value="Correctivo">Correctivo</option>
@@ -115,31 +104,28 @@
                                                 </div>
                                                 <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
                                                     <label class="labelTitulo">Comentarios:</label></br>
-                                                    <textarea rows="4" cols="80" class="form-control" placeholder="Escribe tus comentarios o información relevante sobre el mantenimiento aquí."
+                                                    <textarea rows="3" cols="80" class="form-control" placeholder="Escribe tu comentario aquí"
                                                         name="comentario" id="comentario"></textarea>
                                                 </div>
 
-                                                {{-- <hr>
+                                                <hr>
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Subtotal: </label></br>
-                                                    <input type="text" class="inputCaja" placeholder="Especifique..."
-                                                        id="subtotal" name="subtotal">
+                                                    <input type="text" class="inputCaja" placeholder="Especifique..." id="subtotal" name="subtotal">
                                                 </div>
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Iva: </label></br>
-                                                    <input type="text" class="inputCaja" placeholder="Especifique..."
-                                                        id="iva" name="iva">
+                                                    <input type="text" class="inputCaja" placeholder="Especifique..." id="iva" name="iva">
                                                 </div>
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Total: </label></br>
-                                                    <input type="text" class="inputCaja" placeholder="Especifique..."
-                                                        id="total" name="total">
-                                                </div> --}}
+                                                    <input type="text" class="inputCaja" placeholder="Especifique..." id="total" name="total">
+                                                </div>
                                             </div>
                                         </div>
 
 
-                                        {{-- <div class="col-12 divBorder">
+                                        <div class="col-12 divBorder">
                                             <h2 class="tituloEncabezado">Material de Mantenimiento</h2></br></br>
                                         </div>
 
@@ -152,7 +138,7 @@
                                                         name="search2" placeholder="Buscar..."
                                                         title="Escriba la(s) palabra(s) a buscar.">
                                                 </div>
-                                            </div> --}}
+                                            </div>
 
                                             {{-- <div class="col-12 col-md-6 mt-3 align-items-center  ">
                                             <button class="btnSinFondocALENDARIO  float-end" type="button"
@@ -242,13 +228,13 @@
                                                 </div>
                                             </div>
                                         </div> --}}
-                                        {{-- </div>
+                                        </div>
 
                                         <div class="my-4 divBorder">
                                             <h3 class="subEncabezado mb-3">Listado de busqueda</h3>
                                         </div>
                                         <div class=" col-12  my-3 ">
-                                            <ul class="" id="newRow"> --}}
+                                            <ul class="" id="newRow">
                                                 {{-- <li class="listaMaterialMantenimiento my-3 border-bottom">
                                                 <div class="row d-flex pb-4">
                                                     <div class="col-12 col-md-9  py-3 d-flex">
@@ -335,8 +321,8 @@
                                                     </div>
                                                 </div>
                                             </li> --}}
-                                            {{-- </ul>
-                                        </div> --}}
+                                            </ul>
+                                        </div>
 
                                         <div class="col-12 text-center mt-5 pt-5">
                                             <button type="submit" class="btn botonGral">Guardar</button>
@@ -383,13 +369,12 @@
 
                 // Rellenar los campos con los datos de la persona seleccionada
                 $('#maquinariaId').val(ui.item.id);
-                $('#descripcion').val(ui.item.value);
-                $('#titulo').val('Mantenimiento ' + ui.item.nombre);
-                // $('#nombre').val(ui.item.nombre);
-                // $('#marca').val(ui.item.marca);
-                // $('#modelo').val(ui.item.modelo);
-                // $('#numserie').val(ui.item.numserie);
-                // $('#placas').val(ui.item.placas);
+                $('#nombre').val(ui.item.nombre);
+                $('#marca').val(ui.item.marca);
+                $('#modelo').val(ui.item.modelo);
+                $('#numserie').val(ui.item.numserie);
+                $('#placas').val(ui.item.placas);
+                $('#titulo').val(ui.item.nombre);
             }
 
         });

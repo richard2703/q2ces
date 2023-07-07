@@ -38,17 +38,17 @@ Route::get('/usuarios/export', [App\Http\Controllers\UserController::class, 'exp
 Route::get('/asistencia/export', [App\Http\Controllers\asistenciaController::class, 'export'])->name('asistencia.export');
 
 
-//Mantenimiento
-Route::get('/mantenimientos', function () {
-    return view('mantenimientos.mantenimientos');
-});
+// //Mantenimiento
+// Route::get('/mantenimientos', function () {
+//     return view('mantenimientos.mantenimientos');
+// });
 
-Route::get('/nuevoMantenimiento', function () {
-    return view('mantenimientos.nuevoMantenimiento');
-});
-Route::get('/editarMantenimientos', function () {
-    return view('mantenimientos.editarMantenimientos');
-});
+// Route::get('/nuevoMantenimiento', function () {
+//     return view('mantenimientos.nuevoMantenimiento');
+// });
+// Route::get('/editarMantenimientos', function () {
+//     return view('mantenimientos.editarMantenimientos');
+// });
 
 // Route::get('/verEquipos', function () {
 //     return view('equipos.verEquipos');
@@ -238,6 +238,24 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/calendario/mantenimientos/nuevo', [App\Http\Controllers\mantenimientosController::class, 'store'])->name('mantenimientos.store');
     Route::put('/calendario/mantenimientos/editar', [App\Http\Controllers\mantenimientosController::class, 'update'])->name('mantenimientos.update');
 
+//Mantenimiento
+Route::get('/mantenimientos', [App\Http\Controllers\mantenimientosController::class, 'index'])->name('mantenimientos.index');
+Route::get('/mantenimientos/nuevo/', [App\Http\Controllers\mantenimientosController::class, 'create'])->name('mantenimientos.create');
+Route::post('/mantenimientos/nuevo/add', [App\Http\Controllers\mantenimientosController::class, 'store'])->name('mantenimientos.store');
+Route::get('/mantenimientos/editar/{id}', [App\Http\Controllers\mantenimientosController::class, 'edit'])->name('mantenimientos.edit');
+Route::put('/mantenimiento/editar/{id}/update', [App\Http\Controllers\mantenimientosController::class, 'update'])->name('mantenimientos.update');
+// Route::get('/mantenimientos', function () {
+//     return view('mantenimientos.mantenimientos');
+// });
+
+// Route::get('/nuevoMantenimiento', function () {
+//     return view('mantenimientos.nuevoMantenimiento');
+// });
+// Route::get('/editarMantenimientos', function () {
+//     return view('mantenimientos.editarMantenimientos');
+// });
+
+
     //*** operaciones con reparaciones */
     Route::post('/calendario/reparaciones/nuevo', [App\Http\Controllers\reparacionesController::class, 'store'])->name('reparaciones.store');
     Route::put('/calendario/reparaciones/editar', [App\Http\Controllers\reparacionesController::class, 'update'])->name('reparaciones.update');
@@ -279,5 +297,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');
     Route::get('search/materialMantenimiento', [App\Http\Controllers\searchController::class, 'materialMantenimiento'])->name('search.materialMantenimiento');
+
+
+
 
 });

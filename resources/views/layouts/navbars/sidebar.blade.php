@@ -43,7 +43,7 @@
                     <a class="nav-link" href="{{ route('cajaChica.index') }}" onmouseover="cambiar2();"
                         onmouseout="volver2();" class="nav-link -item{{ $activePage == 'cajachica' ? ' active' : '' }} ">
                         <i><img id="cambiaBCO2" style="width:25px"
-                                src="{{ $activePage == 'cajachica' ? '/img/navs/cajaChicaBco.svg' : '/img/navs/cajaChica.svg' }}"></i>
+                                src="{{ $activePage == 'cajaChica' ? '/img/navs/cajaChicaBco.svg' : '/img/navs/cajaChica.svg' }}"></i>
                         <p> {{ __('Caja chica') }} </p>
                         {{--  <b class="caret"></b>  --}}
                     </a>
@@ -92,6 +92,24 @@
                                 class="nav-link -item{{ $activePage == 'checkList' ? ' active' : '' }} ">
                                 <span class="sidebar-normal py-2 ps-5">{{ __('Ver Check List') }} </span>
                             </a>
+                            <!--no colapsable>-->
+                            <div class="collapse " id="checkList">
+                                <ul class="nav">
+                                    <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                                        <a href="{{ url('/checkList') }}" class="nav-link -item{{ $activePage == 'checkList' ? ' active' : '' }} ">
+                                            <span class="sidebar-normal py-2 ps-5">{{ __('Ver Check List') }} </span>
+                                        </a>
+                                    </li>
+
+
+                                    <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                                        <a  href="{{ url('/nuevoCheck') }}" class="nav-link -item{{ $activePage == 'nuevoCheck' ? ' active' : '' }} ">
+                                            <span class="sidebar-normal py-2 ps-5"> {{ __('Nueva Tarea') }} </span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
                         </li>
 
 
@@ -210,6 +228,24 @@
                                 class="nav-link -item{{ $activePage == 'grupos' ? ' active' : '' }} ">
                                 <span class="sidebar-normal py-2 ps-5">{{ __('Ver Grupos') }} </span>
                             </a>
+                            <!--no colapsable>-->
+                            <div class="collapse " id="grupos">
+                                <ul class="nav">
+                                    <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                                        <a href="{{ url('/indexGrupos') }}" class="nav-link -item{{ $activePage == 'grupos' ? ' active' : '' }} ">
+                                            <span class="sidebar-normal py-2 ps-5">{{ __('Ver Grupos') }} </span>
+                                        </a>
+                                    </li>
+
+
+                                    <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                                        <a  href="{{ url('/nuevoGrupo') }}" class="nav-link -item{{ $activePage == 'nuevoGrupo' ? ' active' : '' }} ">
+                                            <span class="sidebar-normal py-2 ps-5"> {{ __('Nuevo Grupo') }} </span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
                         </li>
 
 

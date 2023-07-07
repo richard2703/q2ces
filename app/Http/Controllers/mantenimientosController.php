@@ -11,6 +11,7 @@ use App\Helpers\Calculos;
 use App\Models\mantenimientos;
 use App\Models\maquinaria;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\DB;
 
 class mantenimientosController extends Controller {
     /**
@@ -21,7 +22,25 @@ class mantenimientosController extends Controller {
 
     public function index() {
 
-        dd( 'Todas las tareas...' );
+        abort_if ( Gate::denies( 'mantenimiento_index' ), '404' );
+
+        //** mantenimientos del mes seleccionado */
+        $vctMantenimientos = mantenimientos::select(
+            'mantenimientos.*',
+            DB::raw( 'estados.nombre AS estado' ),
+            DB::raw( 'maquinaria.nombre AS maquinaria' ),
+            DB::raw( 'maquinaria.identificador AS maquinariaCodigo' )
+        )
+        ->join( 'estados', 'estados.id', '=', 'mantenimientos.estadoId' )
+        ->join( 'maquinaria', 'maquinaria.id', '=', 'mantenimientos.maquinariaId' )
+        // ->where( 'mantenimientos.fechaInicio', '>=', $dteMesInicio )
+
+        // ->where( 'mantenimientos.fechaInicio', '<=', $dteMesFin )
+        ->orderBy( 'estados.id', 'asc' )
+        ->orderBy( 'mantenimientos.fechaInicio', 'desc' )->paginate( 10 );
+
+        return view( 'mantenimientos.mantenimientos', compact( 'vctMantenimientos' ) );
+
     }
 
     /**
@@ -31,8 +50,9 @@ class mantenimientosController extends Controller {
     */
 
     public function create() {
+        abort_if ( Gate::denies( 'mantenimiento_create' ), '404' );
 
-        dd( 'Todas las tareas...' );
+        return view( 'mantenimientos.nuevoMantenimiento' );
     }
 
     /**
@@ -43,18 +63,24 @@ class mantenimientosController extends Controller {
     */
 
     public function store( Request $request ) {
-        abort_if ( Gate::denies( 'calendario_create' ), 403 );
+        abort_if ( Gate::denies( 'mantenimiento_create' ), '404' );
 
+        // dd( $request );
         $request->validate( [
             'titulo' => 'required|max:250',
             'maquinariaId' => 'required',
-            'comentarios' => 'nullable|max:500',
+            'tipo' => 'required',
+            'comentario' => 'required|max:500',
+            'fechaInicio' => 'required|date|date_format:Y-m-d',
 
         ], [
             'titulo.required' => 'El campo nombre es obligatorio.',
+            'tipo.required' => 'El campo tipo de mantenimiento es obligatorio.',
             'maquinariaId.required' => 'El campo maquinaria es obligatorio.',
             'titulo.max' => 'El campo título excede el límite de caracteres permitidos.',
-            'comentarios.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+            'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+            'fechaInicio' => 'El campo de fecha de inicio del mantenimiento es obligatorio',
+            'fechaInicio.date_format' => 'El campo fecha de nacimiento tiene un formato inválido.',
         ] );
         $mantenimiento = $request->all();
 
@@ -63,7 +89,7 @@ class mantenimientosController extends Controller {
         mantenimientos::create( $mantenimiento );
         Session::flash( 'message', 1 );
 
-        return redirect()->route( 'calendario.index' );
+        return redirect()->route( 'mantenimientos.index' );
     }
 
     /**
@@ -86,7 +112,9 @@ class mantenimientosController extends Controller {
     */
 
     public function edit( $id ) {
+        abort_if ( Gate::denies( 'mantenimiento_edit' ), '404' );
 
+        return view( 'mantenimientos.editarMantenimiento' );
         dd( 'Todas las tareas...' );
     }
 
@@ -99,7 +127,7 @@ class mantenimientosController extends Controller {
     */
 
     public function update( Request $request ) {
-        abort_if ( Gate::denies( 'calendario_edit' ), 403 );
+        abort_if ( Gate::denies( 'mantenimiento_edit' ), '404' );
 
         //  dd( $request );
         $request->validate( [
@@ -152,8 +180,8 @@ class mantenimientosController extends Controller {
     */
 
     public function destroy( $id ) {
+        abort_if ( Gate::denies( 'mantenimiento_destroy' ), '404' );
         //
     }
-
 
 }
