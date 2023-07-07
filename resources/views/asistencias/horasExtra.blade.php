@@ -26,7 +26,7 @@ if ($asistencias->isEmpty() == true) {
 } else {
     //*** preguntamos si esta en la semana en curso para permitir el registro de horas extras ***//
     if ($fechaSeleccionada->format('Ymd') >= $vctDiasSemanaActual[0]->format('Ymd')) {
-    //*** la fecha seleccionada es mayor o igual que el día inicial del periodo
+        //*** la fecha seleccionada es mayor o igual que el día inicial del periodo
         $blnBloquearRegistro = false;
     } else {
         $blnBloquearRegistro = true;
@@ -91,129 +91,125 @@ if ($asistencias->isEmpty() == true) {
                                         </div>
                                     @endif
                                     <div class="row">
-                                    <div class="col-12 my-4 pb-4 d-flex align-items-center divBorder">
-                                            <div>
-                                                    <button type="button" class="botonSinFondo mx-2"title="Clic para marcar la asistencia en otro día."
-                                                        data-bs-toggle="modal" data-bs-target="#modal-cliente">
-                                                        <img style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}">
-                                                        <p class="botonTitulos mt-2">Otro día</p>
+                                        <div class="col-12 my-4 pb-4 d-md-flex align-items-center divBorder">
+                                            <div class="col-12 col-md-2">
+                                                <a href="{{ route('asistencia.index') }}">
+                                                    <button class="btn regresar">
+                                                        <span class="material-icons">
+                                                            reply
+                                                        </span>
+                                                        Regresar
                                                     </button>
-                                                </div>
-                                                <div class="">
-                                                    <a href="{{ route('asistencia.HEstore') }}" class="combustibleLitros fw-semibold text-end"
-                                                        title="Ir al mes en curso"><b>Hoy es
-                                                                {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b>
-                                                    </a>
-                                                </div>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-10 col-md-8 text-center">
+                                                <a href="{{ route('asistencia.HEstore') }}"
+                                                    class="combustibleLitros fw-semibold text-end"
+                                                    title="Ir al mes en curso"><b>Horas Extras del dia
+                                                        {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-12 col-md-2 text-end">
+                                                <button type="button"
+                                                    class="botonSinFondo mx-2"title="Clic para marcar la asistencia en otro día."
+                                                    data-bs-toggle="modal" data-bs-target="#modal-cliente">
+                                                    <img style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}">
+                                                    <p class="botonTitulos mt-2">Otro día</p>
+                                                </button>
                                             </div>
                                         </div>
-                                   
-                                        <!--<div class="col-6 ">
-
-                                            <span>
-                                                <a href="{{ route('asistencia.HEstore') }}"
-                                                    class="display-8 mb-8 text-center" title="Ir al mes en curso"><b>Hoy es
-                                                        {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
-                                            </span>
-                                        </div>
-
-                                        <div class="col-6 ">
-                                            <button type="button"
-                                                class="botonSinFondo mx-2"title="Clic para marcar la asistencia en otro día."
-                                                data-bs-toggle="modal" data-bs-target="#modal-cliente">
-                                                <img style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}">
-                                                <p class="botonTitulos mt-2">Otro día</p>
-                                            </button>
-
-                                        </div>-->
                                     </div>
-                                    <form class="row alertaGuardar" action="{{ route('asistencia.HEstore') }}"
-                                        method="post" enctype="multipart/form-data">
-                                        @csrf
-                                        {{-- @method('put') --}}
 
-                                        <input type="hidden" name="intAnio" value="{{ $intAnio }}">
-                                        <input type="hidden" name="intMes" value="{{ $intMes }}">
-                                        <input type="hidden" name="intDia" value="{{ $intDia }}">
-                                        <input type="hidden" name="fecha"
-                                            value="{{ date_format($fechaSeleccionada, 'Y-m-d') }}">
+                                </div>
+                                <form class="row alertaGuardar" action="{{ route('asistencia.HEstore') }}" method="post"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    {{-- @method('put') --}}
 
-                                        <div class="table-responsive">
-                                            <table class="table">
-                                                <thead class="labelTitulo text-center">
-                                                    <th class="labelTitulo">Código</th>
-                                                    <th class="labelTitulo">Nombre</th>
-                                                    <th class="labelTitulo">Horas Extra</th>
-                                                    <th class="labelTitulo">Tipo</th>
-                                                    {{--  <th class="labelTitulo">Faltas</th>
+                                    <input type="hidden" name="intAnio" value="{{ $intAnio }}">
+                                    <input type="hidden" name="intMes" value="{{ $intMes }}">
+                                    <input type="hidden" name="intDia" value="{{ $intDia }}">
+                                    <input type="hidden" name="fecha"
+                                        value="{{ date_format($fechaSeleccionada, 'Y-m-d') }}">
+
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead class="labelTitulo text-center">
+                                                <th class="labelTitulo">Código</th>
+                                                <th class="labelTitulo">Nombre</th>
+                                                <th class="labelTitulo">Horas Extra</th>
+                                                <th class="labelTitulo">Tipo</th>
+                                                {{--  <th class="labelTitulo">Faltas</th>
                                                 <th class="labelTitulo">Incapacidadades</th>
                                                 <th class="labelTitulo">Vacaciones</th>
                                                 <th class="labelTitulo">Descansos</th>  --}}
-                                                </thead>
-                                                <tbody class="text-center">
-                                                    @forelse ($asistencias as $item)
-                                                        <tr>
-                                                            <td>
-                                                                {{ $item->id }}
-                                                                <input type="hidden" name="asistenciaId[]"
-                                                                    value="{{ $item->asistenciaId }}">
-                                                                <input type="hidden" name="personalId[]"
-                                                                    value="{{ $item->id }}">
-                                                            </td>
-                                                            <td class="text-left">
-                                                                {{ $item->getFullLastNameAttribute() }}
-                                                            </td>
-                                                            <td><input type="number" class="inputCaja text-right" required
-                                                                    name="horasExtra[]" id="horasExtra"
-                                                                    value="{{ $item->horasExtra }}" maxlength="2"
-                                                                    step="1" min="0" max="16"></td>
-                                                            <td>
-                                                                <select id="tipoHoraExtraId" name="tipoHoraExtraId[]"
-                                                                    class="form-select" aria-label="Default select example">
+                                            </thead>
+                                            <tbody class="text-center">
+                                                @forelse ($asistencias as $item)
+                                                    <tr>
+                                                        <td>
+                                                            {{ $item->id }}
+                                                            <input type="hidden" name="asistenciaId[]"
+                                                                value="{{ $item->asistenciaId }}">
+                                                            <input type="hidden" name="personalId[]"
+                                                                value="{{ $item->id }}">
+                                                        </td>
+                                                        <td class="text-left">
+                                                            {{ $item->getFullLastNameAttribute() }}
+                                                        </td>
+                                                        <td><input type="number" class="inputCaja text-right" required
+                                                                name="horasExtra[]" id="horasExtra"
+                                                                value="{{ $item->horasExtra }}" maxlength="2"
+                                                                step="1" min="0" max="16"></td>
+                                                        <td>
+                                                            <select id="tipoHoraExtraId" name="tipoHoraExtraId[]"
+                                                                class="form-select" aria-label="Default select example">
 
-                                                                    @foreach ($vctTiposHoras as $tipo)
-                                                                        <option value="{{ $tipo->id }}"
-                                                                            {{ $item->tipoHoraExtraId == $tipo->id ? ' selected' : '' }}>
-                                                                            {{ $tipo->nombre }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </td>
-                                                            {{--  <td><input type="radio" name="Asistensia1542" value="2"></td>
+                                                                @foreach ($vctTiposHoras as $tipo)
+                                                                    <option value="{{ $tipo->id }}"
+                                                                        {{ $item->tipoHoraExtraId == $tipo->id ? ' selected' : '' }}>
+                                                                        {{ $tipo->nombre }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </td>
+                                                        {{--  <td><input type="radio" name="Asistensia1542" value="2"></td>
                                                     <td><input type="radio" name="Asistensia1542" value="3"></td>
                                                     <td><input type="radio" name="Asistensia1542" value="4"></td>
                                                     <td><input type="radio" name="Asistensia1542" value="5"></td>  --}}
-                                                        </tr>
-                                                    @empty
-                                                        <tr>
-                                                            <td colspan="2">Sin registros.<br><br> <b>Es necesario
-                                                                    registrar primero la asistencia del personal antes de
-                                                                    poder asignar las horas extras.</b></td>
-                                                        </tr>
-                                                    @endforelse
+                                                    </tr>
+                                                @empty
+                                                    <tr>
+                                                        <td colspan="2">Sin registros.<br><br> <b>Es necesario
+                                                                registrar primero la asistencia del personal antes de
+                                                                poder asignar las horas extras.</b></td>
+                                                    </tr>
+                                                @endforelse
 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="card-footer mr-auto">
-                                            <?php if( $blnBloquearRegistro == false){  ?>
-                                            <a href="{{ route('asistencia.index') }}">
-                                                <button type="button" class="btn btn-danger">Cancelar</button>
-                                            </a>
-                                            <a href="#">
-                                                <button type="submit" class="btn botonGral">Guardar</button>
-                                            </a>
-                                            <?php } ?>
-                                            {{--  {{ $personal->links() }}  --}}
-                                        </div>
-                                </div>
-                                </form>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="card-footer mr-auto">
+                                        <?php if( $blnBloquearRegistro == false){  ?>
+                                        <a href="{{ route('asistencia.index') }}">
+                                            <button type="button" class="btn btn-danger">Cancelar</button>
+                                        </a>
+                                        <a href="#">
+                                            <button type="submit" class="btn botonGral">Guardar</button>
+                                        </a>
+                                        <?php } ?>
+                                        {{--  {{ $personal->links() }}  --}}
+                                    </div>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     {{-- //Modales --}}
     <div class="modal fade" id="modal-cliente" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-cliente"

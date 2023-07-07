@@ -864,14 +864,9 @@ INSERT INTO
     userEstatus
 VALUES
     (1, 'Activo', 'green', 'Usuario activo'),
-    (2, 'Inactivo', 'yellow', 'El usuario esta inactivo'),
+    (2, 'Inactivo', 'darkcyan', 'El usuario esta inactivo'),
     (3, 'Baja', 'orange', 'El usuario fue dado de baja'),
-    (
-        4,
-        'Borrado',
-        'red',
-        'El usario fue borrado de forma definitiva'
-    );
+    (4, 'Borrado','red','El usario fue borrado de forma definitiva');
 
 create table maquinariaEstatus(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -885,24 +880,9 @@ INSERT INTO
     maquinariaEstatus
 VALUES
     (1, 'Activo', 'green', 'Maquinaría activa'),
-    (
-        2,
-        'Inactivo',
-        'yellow',
-        'La maquinaría esta inactiva'
-    ),
-    (
-        3,
-        'Baja',
-        'orange',
-        'La maquinaría esta fue dada de baja'
-    ),
-    (
-        4,
-        'Borrado',
-        'red',
-        'La maquinaría fue borrada de forma definitiva'
-    );
+    (2,'Inactivo','darkcyan','La maquinaría esta inactiva'),
+    (3,'Baja','orange','La maquinaría esta fue dada de baja'),
+    (4,'Borrado','red','La maquinaría fue borrada de forma definitiva');
 
 create table tipoAsistencia(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -916,27 +896,11 @@ create table tipoAsistencia(
 INSERT INTO
     tipoasistencia
 VALUES
-    (1, 'Asistencia',   'Asistio a trabajar'),
-    (
-        2,
-        'Falta',
-        'No se presento a trabajar'
-    ),
-    (
-        3,
-        'Incapacidad',
-        'Se encuentra con incapacidad'
-    ),
-    (
-        4,
-        'Vacaciones',
-        'Con permiso de vacaciones'
-    ),
-    (
-        5,
-        'Descanso',
-        'Con permiso de descanso o feriado'
-    );
+    (1, 'Asistencia',   'Asistio a trabajar','green','1'),
+    (2,'Falta','No se presento a trabajar','red','0'),
+    (3,'Incapacidad','Se encuentra con incapacidad','darkcyan','0'),
+    (4,'Vacaciones','Con permiso de vacaciones','orange','1'),
+    (5,'Descanso','Con permiso de descanso o feriado','purple','0');
 
 create table tipoHoraExtra(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
