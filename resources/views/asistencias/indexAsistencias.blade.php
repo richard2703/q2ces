@@ -27,7 +27,7 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                     <h4 class="card-title">
                                         <!-- Un mes atras del cargado -->
                                         <span>
-                                            <a href="{{ url('asistencia/' . $mesAnterior['year'] . '/' . $mesAnterior['month']) }}"
+                                            <a href="{{ route('asistencia.reloadAsistencia', [$mesAnterior['year'], $mesAnterior['month']]) }}"
                                                 class="" title="Ir al mes anterior">
                                                 <i class="bi bi-arrow-left-square"></i>
                                             </a>
@@ -38,7 +38,7 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                         &nbsp;&nbsp;&nbsp;
                                         <!-- Un mes adelante del cargado -->
                                         <span>
-                                            <a href="{{ url('asistencia/' . $mesSiguiente['year'] . '/' . $mesSiguiente['month']) }}"
+                                            <a href="{{ route('asistencia.reloadAsistencia', [$mesSiguiente['year'], $mesSiguiente['month']]) }}"
                                                 class="" title="Ir al mes siguiente">
                                                 <i class="bi bi-arrow-right-square"></i>
                                             </a>
@@ -178,8 +178,8 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
             <div class="modal-content">
                 <div class="col-12">
                     <div class="card ">
-                        <form action="{{ route('asistencia.index') }}">
-
+                        <form
+                            action="{{ route('asistencia.reloadAsistencia', [$mesAnterior['year'], $mesAnterior['month']]) }}">
                             <div class="card-header bacTituloPrincipal ">
                                 <div class="nav-tabs-navigation">
                                     <div class="nav-tabs-wrapper">
@@ -194,7 +194,7 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                     <input type="hidden" name="productoid" id="productoid" value="">
 
                                     <div class="col-12 col-lg-6">
-                                        <input type="date" class="inputCaja" id="fechaAsistencia"
+                                        <input type="month" class="inputCaja" id="fechaAsistencia"
                                             name="fechaAsistencia" value=""></br>
                                     </div>
                                 </div>

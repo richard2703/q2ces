@@ -110,13 +110,14 @@ class asistenciaController extends Controller
      * @param [type] $intDia
      * @return void
      */
-    public function create($intAnio = null, $intMes = null, $intDia = null)
+    public function create(Request $request, $intAnio = null, $intMes = null, $intDia = null)
     {
         abort_if(Gate::denies('asistencia_create'), '403');
 
         $objCalendario = new Calendario();
 
         $data = request()->all();
+        // dd(request()->all());
         if (is_array($data) == true && count($data) > 0) {
             $intMes = $data['intMes'];
             $intAnio = $data['intAnio'];
