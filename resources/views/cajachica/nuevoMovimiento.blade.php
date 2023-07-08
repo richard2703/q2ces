@@ -37,19 +37,9 @@
                                             </div>
                                         @endif
                                         <div class="row">
-                                            <div class="col-6 ">
-                                            <p>Semana del</br> <span class="combustibleLitros">28 de mayo al 4 de junio</span></p>
-
-                                            </div>
-                                            <div class="col-6 text-right">
-                                                <span class="h3">
-                                                    Caja Chica: <strong class="negritas">$ </strong>
-                                                </span>
-
-                                            </div>
-                                            <div class="col-12 text-right pt-3">
+                                            <div class="col-12 text-end ">
                                                 {{-- @can('user_create') --}}
-                                                <button type="button" class="btn botonGral" data-bs-toggle="modal"
+                                                <button type="button" class="btn botonGral " data-bs-toggle="modal"
                                                     data-bs-target="#modalConcepto">Nuevo Concepto</button>
                                                 {{-- @endcan --}}
                                             </div>
@@ -57,8 +47,8 @@
                                         <div class="row">
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Dia: <span>*</span></label></br>
-                                                <input type="date" class="inputCaja" id="dia" name="dia" required
-                                                    value="{{ old('dia') }}">
+                                                <input type="date" class="inputCaja" id="dia" name="dia"
+                                                    required value="{{ old('dia') }}">
 
                                             </div>
 
@@ -187,8 +177,9 @@
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Cantidad: <span>*</span></label></br>
-                                                <input type="number" class="inputCaja text-right" id="cantidad" required name="cantidad"  maxlength="100000" step="1" min="1" max="99999" placeholder="ej. 100"
-                                                    value="{{ old('calle') }}">
+                                                <input type="number" class="inputCaja text-right" id="cantidad" required
+                                                    name="cantidad" maxlength="100000" step="1" min="1"
+                                                    max="99999" placeholder="ej. 100" value="{{ old('calle') }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">

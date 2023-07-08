@@ -11,6 +11,7 @@ use App\Models\personal;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Carbon;
 
 use App\Helpers\Calculos;
 
@@ -61,13 +62,52 @@ class cajaChicaController extends Controller
             $lastTotal = $last->total;
         }
 
-        // dd( $last );
+        $lunes = new Carbon('last monday');
+        $domingo = new Carbon('last sunday');
+
+        $ingreso = cajaChica::whereBetween('dia', [$lunes, now()])
+            ->where('tipo', 1)
+            ->get()
+            ->sum('cantidad');
+
+        $egreso = cajaChica::whereBetween('dia', [$lunes, now()])
+            ->where('tipo', 2)
+            ->get()
+            ->sum('cantidad');
+
+        $lunes->subDay(7);
+
+        $semana = cajaChica::whereBetween('dia', [$lunes, $domingo])
+            ->orderby('dia', 'desc')
+            ->orderby('id', 'desc')->first();
+        $lastweek = $semana->total;
+
+
+        if (Carbon::parse(now())->locale('es')->isoFormat('dddd') == 'lunes') {
+            $pLunes = now();
+            // dd(Carbon::parse($pLunes)->locale('es')->isoFormat('dddd'));
+        } else {
+            $pLunes = new Carbon('last monday');
+        }
+
+        if (Carbon::parse(now())->locale('es')->isoFormat('dddd') == 'domingo') {
+            $pDomingo = now();
+            // dd(Carbon::parse($pLunes)->locale('es')->isoFormat('dddd'));
+        } else {
+            $pDomingo = new Carbon('next sunday');
+        }
+
+        // dd(Carbon::parse($semana)->locale('es')->isoFormat('D MMMM'));
+        // $categorias = Categoria::sum('cantidad')->groupBy('categoria')->get();
+
+
         // tomas::join( 'examenes', 'tomas.examenes_id', 'examenes.id' )
         // ->select( 'examenes.id', 'examenes.nombre', 'tomas.estatus', 'tomas.id as toma' )
         // ->where( 'tomas.tickets_id', $ticket->id )
         // ->paginate( 10 );
         // Dia, concepto, comprabante, numero de comprobante, cliente, obra, equipo, personal, cantidad, tipo
-        return view('cajaChica.indexCajaChica', compact('registros', 'lastTotal'));
+
+        return view('cajaChica.indexCajaChica', compact('registros', 'lastTotal', 'ingreso', 'egreso', 'lastweek', 'pLunes', 'pDomingo'));
     }
 
     /**
