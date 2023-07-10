@@ -25,7 +25,7 @@
                                 @method('put')
                                 <div class="accordion my-3" id="accordionExample">
 
-                                    <div class="accordion-item">
+                                    <div class="accordion-item" style="margin-top: -20px;">
                                         <h2 class="accordion-header " id="headingOne">
                                             <button class="accordion-button bacTituloPrincipal" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#datosPersonales"
@@ -47,11 +47,12 @@
 
                                                             <div class="col-12 my-3 d-flex justify-content-around"
                                                                 id="selectores">
+                                                                <!--<p1>{{ $fotos }}</p1>-->
                                                                 @forelse ($fotos as $foto)
                                                                     <img onclick="abre(this)"
                                                                         title="'{{ $maquinaria->nombre }}'."
                                                                         src="{{ asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $foto->ruta) }}"
-                                                                        class="img-fluid ">
+                                                                        class="img-fluid mb-5">
                                                                 @empty
                                                                 @endforelse
 
@@ -70,9 +71,9 @@
 
                                                     <div class="col-12 col-lg-8">
 
-                                                        <div class="row alin">
+                                                        <div class="row alin"> 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
-                                                                <label class="labelTitulo">Nombre:</label></br>
+                                                                <label class="labelTitulo">Equipo:</label></br>
                                                                 <input type="text" class="inputCaja" id="nombre"
                                                                     placeholder="Especifique..." required name="nombre"
                                                                     value="{{ $maquinaria->nombre }}">
@@ -151,7 +152,7 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <div class="row align-items-end">
-                                                                    <div class="col-8">
+                                                                    <div class="pl-2">
                                                                         <label class="labelTitulo">Tipo:</label></br>
                                                                         <select class="form-select"
                                                                             aria-label="Default select example"
@@ -949,6 +950,7 @@
             </div>
         </div>
     </div>
+
     <script type="application/javascript">
         jQuery('input[type=file]').change(function(){
          var filename = jQuery(this).val().split('\\').pop();
