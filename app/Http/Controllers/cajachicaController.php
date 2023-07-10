@@ -62,8 +62,20 @@ class cajaChicaController extends Controller
             $lastTotal = $last->total;
         }
 
-        $lunes = new Carbon('last monday');
-        $domingo = new Carbon('last sunday');
+        // SEMANA ACTUAL 
+        if (Carbon::parse(now())->locale('es')->isoFormat('dddd') == 'lunes') {
+            $lunes = now();
+            // dd(Carbon::parse($pLunes)->locale('es')->isoFormat('dddd'));
+        } else {
+            $lunes = new Carbon('last monday');
+        }
+
+        if (Carbon::parse(now())->locale('es')->isoFormat('dddd') == 'domingo') {
+            $domingo = now();
+            // dd(Carbon::parse($pLunes)->locale('es')->isoFormat('dddd'));
+        } else {
+            $domingo = new Carbon('next sunday');
+        }
 
         $ingreso = cajaChica::whereBetween('dia', [$lunes, now()])
             ->where('tipo', 1)
@@ -75,39 +87,16 @@ class cajaChicaController extends Controller
             ->get()
             ->sum('cantidad');
 
+        $domingo = new Carbon('last sunday');
+
         $lunes->subDay(7);
 
         $semana = cajaChica::whereBetween('dia', [$lunes, $domingo])
             ->orderby('dia', 'desc')
             ->orderby('id', 'desc')->first();
         $lastweek = $semana->total;
-
-
-        if (Carbon::parse(now())->locale('es')->isoFormat('dddd') == 'lunes') {
-            $pLunes = now();
-            // dd(Carbon::parse($pLunes)->locale('es')->isoFormat('dddd'));
-        } else {
-            $pLunes = new Carbon('last monday');
-        }
-
-        if (Carbon::parse(now())->locale('es')->isoFormat('dddd') == 'domingo') {
-            $pDomingo = now();
-            // dd(Carbon::parse($pLunes)->locale('es')->isoFormat('dddd'));
-        } else {
-            $pDomingo = new Carbon('next sunday');
-        }
-
-        // dd(Carbon::parse($semana)->locale('es')->isoFormat('D MMMM'));
-        // $categorias = Categoria::sum('cantidad')->groupBy('categoria')->get();
-
-
-        // tomas::join( 'examenes', 'tomas.examenes_id', 'examenes.id' )
-        // ->select( 'examenes.id', 'examenes.nombre', 'tomas.estatus', 'tomas.id as toma' )
-        // ->where( 'tomas.tickets_id', $ticket->id )
-        // ->paginate( 10 );
-        // Dia, concepto, comprabante, numero de comprobante, cliente, obra, equipo, personal, cantidad, tipo
-
-        return view('cajaChica.indexCajaChica', compact('registros', 'lastTotal', 'ingreso', 'egreso', 'lastweek', 'pLunes', 'pDomingo'));
+        // $lunes = $lunes->clone()->subDay(7);
+        return view('cajaChica.indexCajaChica', compact('registros', 'lastTotal', 'ingreso', 'egreso', 'lastweek', 'lunes', 'domingo'));
     }
 
     /**
