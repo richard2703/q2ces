@@ -2,7 +2,9 @@
 <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top text-white">
     <div class="container">
         <div class="navbar-wrapper">
-            <a class="navbar-brand" href="{{ route('home') }}"></a>
+            <a class="navbar-brand" href="{{ route('home') }}">
+                Es necesario ingresar a su sesión
+            </a>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
             aria-expanded="false" aria-label="Toggle navigation">

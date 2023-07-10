@@ -174,7 +174,6 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                         $intTotalCostoHorasExtras = 0;
                                                         $intDiasAsistidos = 0;
                                                         $intDiasPagados = count($item->pagos);
-                                                        
                                                         ?>
                                                         <tr>
                                                             <td>{{ $item->puesto }}</td>

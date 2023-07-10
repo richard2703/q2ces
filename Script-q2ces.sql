@@ -765,17 +765,25 @@ CREATE TABLE eventos(
 CREATE TABLE mantenimientos(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     maquinariaId bigint(20) unsigned NOT NULL,
+    personalId bigint(20) unsigned NOT NULL,
     titulo varchar(255) not null,
     tipo varchar(255) not null,
     fechaInicio date not null,
     fechaReal date null,
     estadoId bigint(20) unsigned NOT NULL,
     comentario text null,
+    adscripcion varchar(200) null,
+    horometro int null,
+    kilometraje int null,
+    subtotal float(10,2) null,
+    iva float(10,2) null,
+    costo float(10,2) null,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_mantenimientos_userId foreign key (maquinariaId) references maquinaria(id),
-    CONSTRAINT FK_mantenimientos_estadoId foreign key (estadoId) references estados(id)
+    CONSTRAINT FK_mantenimientos_estadoId foreign key (estadoId) references estados(id),
+    CONSTRAINT FK_mantenimiento_personalId foreign key (personalId) references personal(id)
 );
 
 CREATE TABLE servicios(
@@ -927,36 +935,36 @@ create table asistencia(
     CONSTRAINT FK_asistencia_tipoHoraExtraId foreign key (tipoHoraExtraId) references tipoHoraExtra(id)
 );
 
-create table bMantenimiento(
-    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    personalId bigint(20) unsigned NOT NULL,
-    maquinariaId bigint(20) unsigned NOT NULL,
-    fecha date not null,
-    adscripcion varchar(200) null,
-    horometro int null,
-    km int null,
-    subtotal float(10,2) null,
-    iva float(10,2) null,
-    costo float(10,2) null,
-    created_at datetime NULL,
-    updated_at datetime NULL,
-    primary key (id),
-    CONSTRAINT FK_bmantenimiento_personalId foreign key (personalId) references personal(id),
-    CONSTRAINT FK_bmantenimiento_userId foreign key (maquinariaId) references maquinaria(id)
-);
+-- create table bMantenimiento(
+--     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+--     personalId bigint(20) unsigned NOT NULL,
+--     maquinariaId bigint(20) unsigned NOT NULL,
+--     fecha date not null,
+--     adscripcion varchar(200) null,
+--     horometro int null,
+--     km int null,
+--     subtotal float(10,2) null,
+--     iva float(10,2) null,
+--     costo float(10,2) null,
+--     created_at datetime NULL,
+--     updated_at datetime NULL,
+--     primary key (id),
+--     CONSTRAINT FK_bmantenimiento_personalId foreign key (personalId) references personal(id),
+--     CONSTRAINT FK_bmantenimiento_userId foreign key (maquinariaId) references maquinaria(id)
+-- );
 
 create table gastosMantenimiento(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    bmantenimientoId bigint(20) unsigned NOT NULL,
+    mantenimientoId bigint(20) unsigned NOT NULL,
     inventarioId bigint(20) unsigned NOT NULL,
     cantidad int not null,
-    costo float(10,2) null,
-    total float(10,2) null,
+    costo float(16,2) null,
+    total float(16,2) null,
     created_at datetime NULL,
     updated_at datetime NULL,
     primary key (id),
-    CONSTRAINT FK_gastosmantenimiento_personalId foreign key (bmantenimientoId) references bmantenimiento(id),
-    CONSTRAINT FK_gastosmantenimiento_producto foreign key (inventarioId) references inventario(id)
+    CONSTRAINT FK_gastosmantenimiento_mantenimientoId foreign key (mantenimientoId) references mantenimiento(id),
+    CONSTRAINT FK_gastosmantenimiento_productoId foreign key (inventarioId) references inventario(id)
 );
 create table conceptos(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
