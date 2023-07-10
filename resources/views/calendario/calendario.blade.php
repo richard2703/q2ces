@@ -66,7 +66,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                                                 <path  d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
                                                             </svg>
                                                         </a>
-                                                        
+
                                                     </div>
                                                     <div class="ms-4 ">
                                                         <button type="button" class="botonSinFondo mx-2"title="Clic para marcar la asistencia en otro día."
@@ -1428,7 +1428,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                             aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form class="row d-flex" action="{{ route('mantenimientos.update') }}" method="post">
+                        <form class="row d-flex" action="{{ route('mantenimientos.update',1) }}" method="post">
                             @csrf
                             @method('put')
                             <input type="hidden" name="manttoId" id="manttoId" value="">
@@ -1763,7 +1763,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                 <div class="col-12">
                     <div class="card ">
                         <form action="{{ url('asistencia/otrodia/') }}" method="post">
-                           
+
                             <div class="card-header bacTituloPrincipal ">
                                 <div class="nav-tabs-navigation">
                                     <div class="nav-tabs-wrapper">
@@ -1852,11 +1852,11 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
             txtTitulo.value = titulo;
 
             const lblTitulo = document.getElementById('eventoLblTitulo');
-            lblTitulo.innerText = titulo; 
+            lblTitulo.innerText = titulo;
 
             const txtComentario = document.getElementById('eventoComentario');
             txtComentario.innerText = comentarios;
- 
+
         }
     </script>
 

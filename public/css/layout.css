@@ -630,6 +630,10 @@
 .sidebar-nav .nav-content a.active i {
   background-color: var(--select);
 }
+
+#sidebar .material-icons {
+  padding-right: 5px;
+}
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
@@ -683,6 +687,12 @@ button.regresar:hover{
   border: 1px solid var(--texto) !important;
 }
 
+.division{
+  border-bottom: 3px solid var(--amarillo);
+  padding-bottom: 10px;
+  /* text-align-last:center ; */
+}
+
 /*--------------------------------------------------------------
 # Titulos
 --------------------------------------------------------------*/
@@ -691,3 +701,5 @@ button.regresar:hover{
   border-right: 1px solid var(--verde);
 
 }
+
+

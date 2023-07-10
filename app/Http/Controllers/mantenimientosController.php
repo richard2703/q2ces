@@ -9,8 +9,10 @@ use Illuminate\Http\Request;
 use App\Helpers\Validaciones;
 use App\Helpers\Calculos;
 use App\Models\mantenimientos;
+use App\Models\gastosMantenimiento;
 use App\Models\maquinaria;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\DB;
 
 class mantenimientosController extends Controller {
     /**
@@ -21,7 +23,25 @@ class mantenimientosController extends Controller {
 
     public function index() {
 
-        dd( 'Todas las tareas...' );
+        abort_if ( Gate::denies( 'mantenimiento_index' ), '404' );
+
+        //** mantenimientos del mes seleccionado */
+        $vctMantenimientos = mantenimientos::select(
+            'mantenimientos.*',
+            DB::raw( 'estados.nombre AS estado' ),
+            DB::raw( 'maquinaria.nombre AS maquinaria' ),
+            DB::raw( 'maquinaria.identificador AS maquinariaCodigo' )
+        )
+        ->join( 'estados', 'estados.id', '=', 'mantenimientos.estadoId' )
+        ->join( 'maquinaria', 'maquinaria.id', '=', 'mantenimientos.maquinariaId' )
+        // ->where( 'mantenimientos.fechaInicio', '>=', $dteMesInicio )
+
+        // ->where( 'mantenimientos.fechaInicio', '<=', $dteMesFin )
+        ->orderBy( 'estados.id', 'asc' )
+        ->orderBy( 'mantenimientos.fechaInicio', 'desc' )->paginate( 10 );
+
+        return view( 'mantenimientos.mantenimientos', compact( 'vctMantenimientos' ) );
+
     }
 
     /**
@@ -31,8 +51,9 @@ class mantenimientosController extends Controller {
     */
 
     public function create() {
+        abort_if ( Gate::denies( 'mantenimiento_create' ), '404' );
 
-        dd( 'Todas las tareas...' );
+        return view( 'mantenimientos.nuevoMantenimiento' );
     }
 
     /**
@@ -43,18 +64,24 @@ class mantenimientosController extends Controller {
     */
 
     public function store( Request $request ) {
-        abort_if ( Gate::denies( 'calendario_create' ), 403 );
+        abort_if ( Gate::denies( 'mantenimiento_create' ), '404' );
 
+        // dd( $request );
         $request->validate( [
             'titulo' => 'required|max:250',
             'maquinariaId' => 'required',
-            'comentarios' => 'nullable|max:500',
+            'tipo' => 'required',
+            'comentario' => 'required|max:500',
+            'fechaInicio' => 'required|date|date_format:Y-m-d',
 
         ], [
             'titulo.required' => 'El campo nombre es obligatorio.',
+            'tipo.required' => 'El campo tipo de mantenimiento es obligatorio.',
             'maquinariaId.required' => 'El campo maquinaria es obligatorio.',
             'titulo.max' => 'El campo título excede el límite de caracteres permitidos.',
-            'comentarios.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+            'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+            'fechaInicio' => 'El campo de fecha de inicio del mantenimiento es obligatorio',
+            'fechaInicio.date_format' => 'El campo fecha de nacimiento tiene un formato inválido.',
         ] );
         $mantenimiento = $request->all();
 
@@ -63,7 +90,7 @@ class mantenimientosController extends Controller {
         mantenimientos::create( $mantenimiento );
         Session::flash( 'message', 1 );
 
-        return redirect()->route( 'calendario.index' );
+        return redirect()->route( 'mantenimientos.index' );
     }
 
     /**
@@ -86,12 +113,25 @@ class mantenimientosController extends Controller {
     */
 
     public function edit( $id ) {
+        abort_if ( Gate::denies( 'mantenimiento_edit' ), '404' );
 
-        dd( 'Todas las tareas...' );
+        $mantenimiento = mantenimientos::where( 'id', '=', $id )->first();
+
+        $gastos = gastosMantenimiento::select( 'gastosMantenimiento.*',
+        DB::raw( 'inventario.nombre as articulo' ),
+        DB::raw( 'inventario.numparte as numparte' ),
+        DB::raw( 'inventario.modelo as modelo' ),
+        DB::raw( 'inventario.valor as valor ' )
+        )
+        ->join( 'inventario', 'inventario.id', '=', 'gastosMantenimiento.inventarioId' )
+        ->where( 'mantenimientoId', '=', $id )->get();
+
+        // dd( $mantenimiento );
+
+        return view( 'mantenimientos.editarMantenimiento', compact( 'mantenimiento', 'gastos' ) );
     }
 
     /**
-    * Update the specified resource in storage.
     *
     * @param  \Illuminate\Http\Request  $request
     * @param  int  $id
@@ -99,49 +139,82 @@ class mantenimientosController extends Controller {
     */
 
     public function update( Request $request ) {
-        abort_if ( Gate::denies( 'calendario_edit' ), 403 );
 
-        //  dd( $request );
+        dd( $request );
+
+        abort_if ( Gate::denies( 'mantenimiento_edit' ), '404' );
+
         $request->validate( [
-            'manttoTitulo' => 'required|max:250',
-            'manttoComentario' => 'nullable|max:500',
+            'titulo' => 'required|max:250',
+            'maquinariaId' => 'required',
+            'tipo' => 'required',
+            'comentario' => 'required|max:500',
+            'fechaInicio' => 'required|date|date_format:Y-m-d',
+
         ], [
-            'manttoTitulo.required' => 'El campo nombre es obligatorio.',
-            'manttoTitulo.max' => 'El campo título excede el límite de caracteres permitidos.',
-            'manttoComentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+            'titulo.required' => 'El campo nombre es obligatorio.',
+            'titulo.max' => 'El campo título excede el límite de caracteres permitidos.',
+            'tipo.required' => 'El campo tipo de mantenimiento es obligatorio.',
+            'maquinariaId.required' => 'El campo maquinaria es obligatorio.',
+            'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+            'fechaInicio' => 'El campo de fecha de inicio del mantenimiento es obligatorio',
+            'fechaInicio.date_format' => 'El campo fecha de nacimiento tiene un formato inválido.',
         ] );
 
         $data = $request->all();
 
-        $mantto = mantenimientos::where( 'id', $data[ 'manttoId' ] )->first();
+        $mantto = mantenimientos::where( 'id', $data[ 'mantenimientoId' ] )->first();
 
         if ( is_null( $mantto ) == false ) {
 
-            $data[ 'titulo' ] =  $data[ 'manttoTitulo' ];
-            $data[ 'comentario' ] =  $data[ 'manttoComentario' ];
-            $data[ 'tipo' ] =  $data[ 'manttoTipoId' ];
-
-            // $data[ 'prioridadId' ] =  $data[ 'manttoPrioridadId' ] ;
+            $data[ 'costo' ] =  $data[ 'total' ];
 
             //*** manejo del estatus de la tarea cuando se cambia su estatus inicial*/
-            // if ( $mantto->estadoId <= 1 && $mantto->fechaReal == '0000-00-00' ) {
-            //     if ( $data[ 'manttoEstadoId' ] > 1 ) {
-            //         $data[ 'fechaReal' ] =  date( 'Y-m-d' ) ;
-            //     }
-            // }
+            if ( $mantto->estadoId <= 1 && $mantto->fechaReal == '0000-00-00' ) {
+                if ( $data[ 'estadoId' ] > 1 ) {
+                    $data[ 'fechaReal' ] =  date( 'Y-m-d' ) ;
+                }
+            }
             //*** manejo del estatus de la tarea cuando se cambia su estatus final*/
-            if ( $data[ 'manttoEstadoId' ] == 3 ) {
+            if ( $data[ 'estadoId' ] == 3 ) {
                 $data[ 'fechaReal' ] =  date( 'Y-m-d' );
             }
 
-            $data[ 'estadoId' ] =  $data[ 'manttoEstadoId' ];
+            $data[ 'estadoId' ] =  $data[ 'estadoId' ];
 
             // dd( $data );
             $mantto->update( $data );
+
+            //*** trabajamos con los items de piezas */
+ //*** registro de maquinas */
+ for (
+    $i = 0;
+    $i < count($request['inventarioId']);
+    $i++
+) {
+    //*** se guarda solo si se selecciono una máquina */
+    if ($request['inventarioId'][$i] != '') {
+
+
+
+        // $objMaq = new obraMaqPer();
+        // $objMaq->obraId  = $obraId;
+        // $objMaq->maquinariaId = $request['maquinariaId'][$i];
+        // $objMaq->personalId  = $request['personalId'][$i];
+        // $objMaq->inicio  = $request['inicio'][$i];
+        // $objMaq->fin  = $request['fin'][$i];
+        // $objMaq->combustible  = $request['combustible'][$i];
+        // $objMaq->save();
+
+
+    }
+}
+
+
             Session::flash( 'message', 1 );
         }
 
-        return redirect()->route( 'calendario.index' );
+        return redirect()->route( 'mantenimientos.index' );
     }
 
     /**
@@ -152,8 +225,8 @@ class mantenimientosController extends Controller {
     */
 
     public function destroy( $id ) {
+        abort_if ( Gate::denies( 'mantenimiento_destroy' ), '404' );
         //
     }
-
 
 }

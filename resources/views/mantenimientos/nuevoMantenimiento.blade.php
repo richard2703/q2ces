@@ -1,107 +1,159 @@
 @extends('layouts.main', ['activePage' => ' nuevoMantenimientos', 'titlePage' => __('Nuevo Mantenimiento')])
 @section('content')
     <div class="content">
+        @if ($errors->any())
+            <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+            <div class="alert alert-danger">
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Registro Nuevo Mantenimiento</h4>
-                                </div>
-                                <div class="card-body ">
-
-                                    <div class="col-12 my-4">
-                                        <div class="row">
-                                            <div class="divBorder">
-
-                                                <p class="subEncabezado">Busca una Maquinaria</p>
-                                                <form class="mb-4 mt-0" role="search" class="">
-                                                    <input type="submit" value="" class="search-submit ">
-                                                    {{-- <input type="search" name="q" class="search-text" placeholder="Search..." autocomplete="off"> --}}
-                                                    <input type="text" class="search-text" id="search" name="search"
-                                                        placeholder="Buscar..." title="Escriba la(s) palabra(s) a buscar.">
-                                                </form>
-                                            </div>
-                                            <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                <label class="labelTitulo">Equipo: </label></br>
-                                                <input type="text" class="inputCaja" id="nombre" name="nombre"
-                                                    readonly>
-                                            </div>
-                                            <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                <label class="labelTitulo">Número de Serie: </label></br>
-                                                <input type="text" class="inputCaja" id="numserie" name="numserie"
-                                                    readonly>
-                                            </div>
-                                            <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                <label class="labelTitulo">Marca: </label></br>
-                                                <input type="text" class="inputCaja" id="marca" name="marca"
-                                                    readonly>
-                                            </div>
-                                            <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                <label class="labelTitulo">Modelo: </label></br>
-                                                <input type="text" class="inputCaja" id="modelo" name="modelo"
-                                                    readonly>
-                                            </div>
-                                            <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                <label class="labelTitulo">Placas: </label></br>
-                                                <input type="text" class="inputCaja" id="placas" name="placas"
-                                                    readonly>
-                                            </div>
-                                            <hr>
-                                            <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                <label class="labelTitulo">Resguardatario:</label></br><input type="text"
-                                                    placeholder="Especifique..." class="inputCaja">
-                                            </div>
-                                            <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                <label class="labelTitulo">Adscripción:</label></br><input type="text"
-                                                    placeholder="Especifique..." class="inputCaja">
-                                            </div>
-                                            <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                <label class="labelTitulo">Horómetro: </label></br>
-                                                <input type="text" class="inputCaja" placeholder="Especifique...">
-                                            </div>
-                                            <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                <label class="labelTitulo">Km/m: </label></br>
-                                                <input type="text" class="inputCaja" placeholder="Especifique...">
-                                            </div>
-                                            <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                <label class="labelTitulo">Fecha: </label></br>
-                                                <input type="date" class="inputCaja" placeholder="Especifique...">
-                                            </div>
-                                            <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                <label class="labelTitulo">Subtotal: </label></br>
-                                                <input type="text" class="inputCaja" placeholder="Especifique...">
-                                            </div>
-                                            <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                <label class="labelTitulo">Iva: </label></br>
-                                                <input type="text" class="inputCaja" placeholder="Especifique...">
-                                            </div>
-                                            <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                <label class="labelTitulo">Total: </label></br>
-                                                <input type="text" class="inputCaja" placeholder="Especifique...">
-                                            </div>
-                                        </div>
+                                <form class="row alertaGuardar" action="{{ route('mantenimientos.store') }}" method="post"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="maquinariaId" id="maquinariaId" value="">
+                                    <input type="hidden" name="titulo" id="titulo" value="">
+                                    <input type="hidden" name="estadoId" id="estadoId" value="1">
+                                    <input type="hidden" name="personalId" id="personalId" value="{{ auth()->user()->id }}">
+                                    <div class="card-header bacTituloPrincipal">
+                                        <h4 class="card-title">Nuevo Registro de Mantenimiento</h4>
                                     </div>
 
+                                    <div class="card-body ">
 
-                                    <div class="col-12 divBorder">
-                                        <h2 class="tituloEncabezado">Material de Mantenimiento</h2></br></br>
-                                    </div>
+                                        <div class="col-12 my-4">
+                                            <div class="row">
+                                                <div class="divBorder">
 
-                                    <div class="row d-flex">
-                                        <div class="col-12 col-md-6    mt-3 ">
-                                            <p class="subEncabezado">Busca un Material</p>
-                                            <form class="mb-4 mt-0" role="search" class="">
-                                                <input type="submit" value="" class="search-submit ">
-                                                {{-- <input type="search" name="q" class="search-text" placeholder="Search..." autocomplete="off"> --}}
-                                                <input type="text" class="search-text" id="search2" name="search2"
-                                                    placeholder="Buscar..." title="Escriba la(s) palabra(s) a buscar.">
-                                            </form>
+                                                    <p class="subEncabezado">Busca una Maquinaria</p>
+                                                    <div class="mb-4 mt-0" role="search" class="">
+                                                        <input value="" class="search-submit ">
+                                                        <input autofocus type="text" class="search-text" id="search"
+                                                            name="search" placeholder="Buscar..."
+                                                            title="Escriba la(s) palabra(s) a buscar.">
+                                                    </div>
+                                                </div>
+                                                <div class=" col-12 col-sm-6 col-lg-12 my-3 ">
+                                                    <label class="labelTitulo">Descripción Equipo/Maquinaría: <span>*</span></label></br>
+                                                    <textarea rows="2" cols="80" class="form-control form-select" id="descripcion" readonly name="descripcion"
+                                                        value=""></textarea>
+                                                </div>
+                                                {{--  <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Equipo: <span>*</span></label></br>
+                                                    <input type="text" class="inputCaja" id="nombre" name="nombre"
+                                                        required readonly>
+                                                </div>
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Número de Serie: </label></br>
+                                                    <input type="text" class="inputCaja" id="numserie" name="numserie"
+                                                        readonly>
+                                                </div>
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Marca: </label></br>
+                                                    <input type="text" class="inputCaja" id="marca" name="marca"
+                                                        readonly>
+                                                </div>
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Modelo: </label></br>
+                                                    <input type="text" class="inputCaja" id="modelo" name="modelo"
+                                                        readonly>
+                                                </div>
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Placas: </label></br>
+                                                    <input type="text" class="inputCaja" id="placas" name="placas"
+                                                        readonly>
+                                                </div> --}}
+                                                {{-- <hr> --}}
+                                                {{-- <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Resguardatario:</label></br><input
+                                                        id="personalId" name="personalId" type="text"
+                                                        placeholder="Especifique..." class="inputCaja">
+                                                </div>
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Adscripción:</label></br><input
+                                                        id="adscripcion" name="adscripcion" type="text"
+                                                        placeholder="Especifique..." class="inputCaja">
+                                                </div>
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Horómetro: </label></br>
+                                                    <input type="text" class="inputCaja" placeholder="Ej. 1000"
+                                                        id="horometro" name="horometro">
+                                                </div>
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Km/m: </label></br>
+                                                    <input type="text" class="inputCaja" placeholder="Especifique..."
+                                                        id="km" name="km">
+                                                </div> --}}
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Fecha de Inicio: <span>*</span> </label></br>
+                                                    <input type="date" class="inputCaja" placeholder="Especifique..." required
+                                                        id="fechaInicio" name="fechaInicio">
+                                                </div>
+
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Tipo de Mantenimiento: <span>*</span></label></br>
+                                                    <select class="form-select form-select-lg mb-3 inputCaja" name="tipo" required
+                                                        id="tipo" aria-label=".form-select-lg example">
+
+                                                        <option value="">Seleccione</option>
+                                                        <option value="Correctivo">Correctivo</option>
+                                                        <option value="250">250</option>
+                                                        <option value="500">500</option>
+                                                        <option value="1000">1000</option>
+                                                    </select>
+                                                </div>
+                                                <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
+                                                    <label class="labelTitulo">Comentarios:</label></br>
+                                                    <textarea rows="4" cols="80" class="form-control" placeholder="Escribe tus comentarios o información relevante sobre el mantenimiento aquí."
+                                                        name="comentario" id="comentario"></textarea>
+                                                </div>
+
+                                                {{-- <hr>
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Subtotal: </label></br>
+                                                    <input type="text" class="inputCaja" placeholder="Especifique..."
+                                                        id="subtotal" name="subtotal">
+                                                </div>
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Iva: </label></br>
+                                                    <input type="text" class="inputCaja" placeholder="Especifique..."
+                                                        id="iva" name="iva">
+                                                </div>
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Total: </label></br>
+                                                    <input type="text" class="inputCaja" placeholder="Especifique..."
+                                                        id="total" name="total">
+                                                </div> --}}
+                                            </div>
                                         </div>
 
-                                        <div class="col-12 col-md-6 mt-3 align-items-center  ">
+
+                                        {{-- <div class="col-12 divBorder">
+                                            <h2 class="tituloEncabezado">Material de Mantenimiento</h2></br></br>
+                                        </div>
+
+                                        <div class="row d-flex">
+                                            <div class="col-12 col-md-6    mt-3 ">
+                                                <p class="subEncabezado">Busca un Material</p>
+                                                <div class="mb-4 mt-0" role="search" class="">
+                                                    <input value="" class="search-submit ">
+                                                    <input autofocus type="text" class="search-text" id="search2"
+                                                        name="search2" placeholder="Buscar..."
+                                                        title="Escriba la(s) palabra(s) a buscar.">
+                                                </div>
+                                            </div> --}}
+
+                                            {{-- <div class="col-12 col-md-6 mt-3 align-items-center  ">
                                             <button class="btnSinFondocALENDARIO  float-end" type="button"
                                                 data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
                                                 aria-controls="offcanvasRight">
@@ -188,106 +240,108 @@
 
                                                 </div>
                                             </div>
+                                        </div> --}}
+                                        {{-- </div>
+
+                                        <div class="my-4 divBorder">
+                                            <h3 class="subEncabezado mb-3">Listado de busqueda</h3>
+                                        </div>
+                                        <div class=" col-12  my-3 ">
+                                            <ul class="" id="newRow"> --}}
+                                                {{-- <li class="listaMaterialMantenimiento my-3 border-bottom">
+                                                <div class="row d-flex pb-4">
+                                                    <div class="col-12 col-md-9  py-3 d-flex">
+
+                                                        <input type="hidden" name="inventarioId[]" id="inventarioId"
+                                                            value=" ">
+                                                        <div class="col-3 ">
+                                                            <label for="cantidad"
+                                                                class="">Cantidad</label></br></br>
+                                                            <input type="number" maxlength="2" min="1" required
+                                                                max="99" step="1"
+                                                                class="inputCaja text-right" id="cantidad"
+                                                                placeholder="Ej. 1" name="cantidad[]" value="">
+                                                        </div>
+                                                        <div class="col-9">
+                                                            <label for="descripcion"
+                                                                class="">Descripción</label></br></br>
+                                                            <textarea rows="3" cols="80" class="form-control form-select" id="descripcion" readonly
+                                                                name="descripcion[]" value=""></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-3">
+                                                        <button class="btnSinFondocALENDARIO ms-3 float-end">
+                                                            <img class="imgBtns" style="height: 20px;"
+                                                                src="{{ asset('img/mantenimiento/material.svg') }}">
+                                                            Seleccionar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </li> --}}
+                                                {{-- <li class="listaMaterialMantenimiento my-3 border-bottom ">
+                                                <div class="row d-flex pb-4">
+                                                    <div class="col-12 col-md-9  py-3 d-flex">
+                                                        <div class="col-3 ">
+                                                            <label for="exampleFormControlInput1"
+                                                                class="">Cantidad</label></br></br>
+                                                            <input type="text" class="inputCaja">
+                                                        </div>
+                                                        <div class="col-9">
+                                                            <p> <span class="fw-semibold">Descripción:</span>
+                                                                PG PC5667C Filtro de aire de cabina | Compatible con Toyota
+                                                                Prius 2020-10, Highland 2019-09</br>
+                                                                <span class="fw-semibold">N.parte:</span> Lexus CT200h
+                                                                2017-11</br>
+                                                                <span class="fw-semibold">Costo:</span> $ 300.00</br>
+                                                                <span class="fw-semibold">Importe:</span> $ 300.00
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-3">
+                                                        <button class="btnSinFondocALENDARIO ms-3 float-end">
+                                                            <img class="imgBtns" style="height: 20px;"
+                                                                src="{{ asset('img/mantenimiento/material.svg') }}">
+                                                            Seleccionar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="listaMaterialMantenimiento my-3 border-bottom">
+                                                <div class="row d-flex pb-4">
+                                                    <div class="col-12 col-md-9  py-3 d-flex">
+                                                        <div class="col-3 ">
+                                                            <label for="exampleFormControlInput1"
+                                                                class="">Cantidad</label></br></br>
+                                                            <input type="text" class="inputCaja">
+                                                        </div>
+                                                        <div class="col-9">
+                                                            <p> <span class="fw-semibold">Descripción:</span>
+                                                                PG PC5667C Filtro de aire de cabina | Compatible con Toyota
+                                                                Prius 2020-10, Highland 2019-09</br>
+                                                                <span class="fw-semibold">N.parte:</span> Lexus CT200h
+                                                                2017-11</br>
+                                                                <span class="fw-semibold">Costo:</span> $ 300.00</br>
+                                                                <span class="fw-semibold">Importe:</span> $ 300.00
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-3">
+                                                        <button class="btnSinFondocALENDARIO ms-3 float-end">
+                                                            <img class="imgBtns" style="height: 20px;"
+                                                                src="{{ asset('img/mantenimiento/material.svg') }}">
+                                                            Seleccionar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </li> --}}
+                                            {{-- </ul>
+                                        </div> --}}
+
+                                        <div class="col-12 text-center mt-5 pt-5">
+                                            <button type="submit" class="btn botonGral">Guardar</button>
                                         </div>
                                     </div>
-
-                                    <div class="my-4 divBorder">
-                                        <h3 class="subEncabezado mb-3">Listado de busqueda</h3>
-                                    </div>
-                                    <div class=" col-12  my-3 ">
-                                        <ul class="">
-                                            <li class="listaMaterialMantenimiento my-3 border-bottom">
-                                                <div class="row d-flex pb-4">
-                                                    <div class="col-12 col-md-9  py-3 d-flex">
-                                                        <div class="col-3 ">
-                                                            <label for="exampleFormControlInput1"
-                                                                class="">Cantidad</label></br></br>
-                                                            <input type="text" class="inputCaja">
-                                                        </div>
-                                                        <div class="col-9">
-                                                            <p> <span class="fw-semibold">Descripción:</span>
-                                                                PG PC5667C Filtro de aire de cabina | Compatible con Toyota
-                                                                Prius 2020-10, Highland 2019-09</br>
-                                                                <span class="fw-semibold">N.parte:</span> Lexus CT200h
-                                                                2017-11</br>
-                                                                <span class="fw-semibold">Costo:</span> $ 300.00</br>
-                                                                <span class="fw-semibold">Importe:</span> $ 300.00
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-md-3">
-                                                        <button class="btnSinFondocALENDARIO ms-3 float-end">
-                                                            <img class="imgBtns" style="height: 20px;"
-                                                                src="{{ asset('img/mantenimiento/material.svg') }}">
-                                                            Seleccionar
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="listaMaterialMantenimiento my-3 border-bottom ">
-                                                <div class="row d-flex pb-4">
-                                                    <div class="col-12 col-md-9  py-3 d-flex">
-                                                        <div class="col-3 ">
-                                                            <label for="exampleFormControlInput1"
-                                                                class="">Cantidad</label></br></br>
-                                                            <input type="text" class="inputCaja">
-                                                        </div>
-                                                        <div class="col-9">
-                                                            <p> <span class="fw-semibold">Descripción:</span>
-                                                                PG PC5667C Filtro de aire de cabina | Compatible con Toyota
-                                                                Prius 2020-10, Highland 2019-09</br>
-                                                                <span class="fw-semibold">N.parte:</span> Lexus CT200h
-                                                                2017-11</br>
-                                                                <span class="fw-semibold">Costo:</span> $ 300.00</br>
-                                                                <span class="fw-semibold">Importe:</span> $ 300.00
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-md-3">
-                                                        <button class="btnSinFondocALENDARIO ms-3 float-end">
-                                                            <img class="imgBtns" style="height: 20px;"
-                                                                src="{{ asset('img/mantenimiento/material.svg') }}">
-                                                            Seleccionar
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="listaMaterialMantenimiento my-3 border-bottom">
-                                                <div class="row d-flex pb-4">
-                                                    <div class="col-12 col-md-9  py-3 d-flex">
-                                                        <div class="col-3 ">
-                                                            <label for="exampleFormControlInput1"
-                                                                class="">Cantidad</label></br></br>
-                                                            <input type="text" class="inputCaja">
-                                                        </div>
-                                                        <div class="col-9">
-                                                            <p> <span class="fw-semibold">Descripción:</span>
-                                                                PG PC5667C Filtro de aire de cabina | Compatible con Toyota
-                                                                Prius 2020-10, Highland 2019-09</br>
-                                                                <span class="fw-semibold">N.parte:</span> Lexus CT200h
-                                                                2017-11</br>
-                                                                <span class="fw-semibold">Costo:</span> $ 300.00</br>
-                                                                <span class="fw-semibold">Importe:</span> $ 300.00
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-md-3">
-                                                        <button class="btnSinFondocALENDARIO ms-3 float-end">
-                                                            <img class="imgBtns" style="height: 20px;"
-                                                                src="{{ asset('img/mantenimiento/material.svg') }}">
-                                                            Seleccionar
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="col-12 text-center mt-5 pt-5">
-                                        <button type="submit" class="btn botonGral">Guardar</button>
-                                    </div>
-                                </div>
-
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -326,14 +380,15 @@
             minLength: 1,
             select: function(event, ui) {
 
-                // alert(ui.item.nombre);
                 // Rellenar los campos con los datos de la persona seleccionada
-                $('#equipo_id').val(ui.item.id);
-                $('#nombre').val(ui.item.nombre);
-                $('#marca').val(ui.item.marca);
-                $('#modelo').val(ui.item.modelo);
-                $('#numserie').val(ui.item.numserie);
-                $('#placas').val(ui.item.placas);
+                $('#maquinariaId').val(ui.item.id);
+                $('#descripcion').val(ui.item.value);
+                $('#titulo').val('Mantenimiento ' + ui.item.nombre);
+                // $('#nombre').val(ui.item.nombre);
+                // $('#marca').val(ui.item.marca);
+                // $('#modelo').val(ui.item.modelo);
+                // $('#numserie').val(ui.item.numserie);
+                // $('#placas').val(ui.item.placas);
             }
 
         });
@@ -360,17 +415,46 @@
             autoFill: true,
             minLength: 1,
             select: function(event, ui) {
+                // Rellenar los campos con los datos del inventario seleccionado
+                crearItems(ui.item.id, ui.item.value);
 
-                // alert(ui.item.nombre);
-                // Rellenar los campos con los datos de la persona seleccionada
-                $('#equipo_id').val(ui.item.id);
-                $('#nombre').val(ui.item.nombre);
-                $('#marca').val(ui.item.marca);
-                $('#modelo').val(ui.item.modelo);
-                $('#numserie').val(ui.item.numserie);
-                $('#placas').val(ui.item.placas);
+                // $('#inventarioId').val(ui.item.id);
+                // $('#descripcion').val(ui.item.value);
             }
 
         });
     </script>
+
+    <script type="text/javascript">
+        function crearItems(inventarioId, descripcion) {
+            var html = '';
+            html += '<li class="listaMaterialMantenimiento my-3 border-bottom" id="inputFormRow">';
+            html += '   <div class="row d-flex pb-4">';
+            html += '      <input type="hidden" name="inventarioId[]" id="inventarioId" value="' + inventarioId + '">';
+            html += '      <div class="col-3 ">';
+            html += '           <label for="cantidad" class="">Cantidad</label></br></br>';
+            html +=
+                '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-right" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="1">';
+            html += '      </div>';
+            html += '      <div class="col-7">';
+            html += '          <label for="descripcion" class="">Descripción</label></br></br>';
+            html +=
+                '          <textarea rows="3" cols="80" class="form-control form-select" id="descripcion" readonly name="descripcion[]" value="">' +
+                descripcion + '</textarea>';
+            html += '      </div>';
+            html += '      <div class="col-2"></br></br>';
+            html += '         <button id="removeRow" type="button" class="btn btn-danger">Borrar</button>';
+            html += '      </div>';
+            html += '    </div>';
+            html += '</li>';
+
+            $('#newRow').append(html);
+        }
+
+        // borrar registro
+        $(document).on('click', '#removeRow', function() {
+            $(this).closest('#inputFormRow').remove();
+        });
+    </script>
+
 @endsection
