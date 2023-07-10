@@ -140,9 +140,11 @@ class mantenimientosController extends Controller {
 
     public function update( Request $request ) {
 
-        dd( $request );
+        // dd( $request );
 
         abort_if ( Gate::denies( 'mantenimiento_edit' ), '404' );
+
+        $objValida = new Validaciones();
 
         $request->validate( [
             'titulo' => 'required|max:250',
@@ -185,31 +187,94 @@ class mantenimientosController extends Controller {
             // dd( $data );
             $mantto->update( $data );
 
-            //*** trabajamos con los items de piezas */
- //*** registro de maquinas */
- for (
-    $i = 0;
-    $i < count($request['inventarioId']);
-    $i++
-) {
-    //*** se guarda solo si se selecciono una máquina */
-    if ($request['inventarioId'][$i] != '') {
+            //*** trabajamos con los items de piezas registradas y no registradas */
+        $vctRegistrados = $objValida->preparaArreglo(gastosMantenimiento::where('mantenimientoId', '=', $mantto->id)->pluck('id')->toArray());
+        $vctArreglo = $objValida->preparaArreglo($request['gastoId']);
 
+        // dd( $request, $data, $vctRegistrados, $vctArreglo );
 
+        //*** Preguntamos si existen registros en el arreglo */
+        if (is_array($vctArreglo) && count($vctArreglo) > 0) {
 
-        // $objMaq = new obraMaqPer();
-        // $objMaq->obraId  = $obraId;
-        // $objMaq->maquinariaId = $request['maquinariaId'][$i];
-        // $objMaq->personalId  = $request['personalId'][$i];
-        // $objMaq->inicio  = $request['inicio'][$i];
-        // $objMaq->fin  = $request['fin'][$i];
-        // $objMaq->combustible  = $request['combustible'][$i];
-        // $objMaq->save();
+            //** buscamos si el registrado esta en el arreglo, de no ser asi se elimina */
+            if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
+                for (
+                    $i = 0;
+                    $i < count($vctRegistrados);
+                    $i++
+                ) {
+                    $intValor = (int) $vctRegistrados[$i];
 
+                    if (in_array($intValor, $vctArreglo) == false) {
+                        /*** no existe y se debe de eliminar */
+                         gastosMantenimiento::destroy($vctRegistrados[$i]);
+                        // dd( 'Borrando por que se quito el gasto del Mantenimiento' );
+                    } else {
+                        /*** existe el registro */
+                        // dd( 'Sigue vivo en el arreglo' );
+                    }
+                }
+            }
 
-    }
-}
+            //*** trabajamos el resto */
+            for (
+                $i = 0;
+                $i < count($request['gastoId']);
+                $i++
+            ) {
+                if ($request['gastoId'][$i] != '') {
+                    //** Actualizacion de registro */
+                    $objGasto =  gastosMantenimiento::where('id', '=', $request['gastoId'][$i])->first();
 
+                    if ($objGasto && $objGasto->id > 0) {
+                        $objGasto->mantenimientoId  = $mantto->id;
+                        $objGasto->inventarioId  = $request['inventarioId'][$i];
+                        $objGasto->cantidad  =  $request['cantidad'][$i];
+                        $objGasto->costo  = $request['costo'][$i];
+                        $objGasto->total =  $request['cantidad'][$i] * $request['costo'][$i];
+                        $objGasto->save();
+                        // dd( 'Actualizando gasto de Mantenimiento' );
+                    }
+                } else {
+
+                    //** No existe en bd */
+                    if ($request['inventarioId'][$i] != '') {
+                        $objGasto = new gastosMantenimiento();
+                        $objGasto->mantenimientoId  = $mantto->id;
+                        $objGasto->inventarioId  = $request['inventarioId'][$i];
+                        $objGasto->cantidad  =  $request['cantidad'][$i];
+                        $objGasto->costo  = $request['costo'][$i];
+                        $objGasto->total =  $request['cantidad'][$i] * $request['costo'][$i];
+                        $objGasto->save();
+                        // dd( 'Guardando gastos de Mantenimiento' );
+                    }
+                }
+            }
+        } else {
+            //*** se deben de eliminar todos los registrados */
+            if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
+                for (
+                    $i = 0;
+                    $i < count($vctRegistrados);
+                    $i++
+                ) {
+                    gastosMantenimiento::destroy($vctRegistrados[$i]);
+                    // dd( 'Borrando todo gasto de Mantenimiento' );
+                }
+            }
+        }
+
+        //*** obtenemos el total de todos los gastos */
+        $objGasto = gastosMantenimiento::where('mantenimientoId', '=', $mantto->id)->selectRaw("SUM(total) as totalGral")->groupBy('mantenimientoId')->first();
+
+        if( $objGasto){
+            $mantto->subtotal = $objGasto->totalGral;
+            $mantto->iva = $objGasto->totalGral * 0.16;
+            $mantto->costo = $objGasto->totalGral * 1.16;
+            $mantto->update();
+        }
+
+        // dd( 'calculo de todo el gasto de Mantenimiento',  $objGasto );
 
             Session::flash( 'message', 1 );
         }

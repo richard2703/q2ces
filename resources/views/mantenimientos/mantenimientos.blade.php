@@ -15,11 +15,11 @@
 
                                     <!--<div class="alert alert-success" role="success">
 
-                                                                </div>
+                                                                                                </div>
 
-                                                                <div class="alert alert-danger" role="faild">
+                                                                                                <div class="alert alert-danger" role="faild">
 
-                                                                </div>-->
+                                                                                                </div>-->
 
                                     <div class="row">
                                         <div class="col-12 text-right">
@@ -58,7 +58,7 @@
                                                         </td>
                                                         <td>{{ $item->titulo }} </td>
                                                         <td>{{ $item->fechaInicio }}</td>
-                                                        <td class="text-right">$ {{ number_format($item->costo, 2) }} </td>
+                                                        <td class="text-end">$ {{ number_format($item->costo, 2) }} </td>
 
                                                         <td>{{ $item->estado }} </td>
 
@@ -104,10 +104,10 @@
 
                                             </tbody>
                                         </table>
+                                        <div class="card-footer mr-auto">
+                                            {{ $vctMantenimientos->links() }}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="card-footer mr-auto">
-                                    {{ $vctMantenimientos->links() }}
                                 </div>
                             </div>
                         </div>
@@ -115,5 +115,6 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection
