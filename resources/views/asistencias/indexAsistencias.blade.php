@@ -27,7 +27,7 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                     <h4 class="card-title">
                                         <!-- Un mes atras del cargado -->
                                         <span>
-                                            <a href="{{ url('asistencia/' . $mesAnterior['year'] . '/' . $mesAnterior['month']) }}"
+                                            <a href="{{ route('asistencia.reloadAsistencia', [$mesAnterior['year'], $mesAnterior['month']]) }}"
                                                 class="" title="Ir al mes anterior">
                                                 <i class="bi bi-arrow-left-square"></i>
                                             </a>
@@ -38,7 +38,7 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                         &nbsp;&nbsp;&nbsp;
                                         <!-- Un mes adelante del cargado -->
                                         <span>
-                                            <a href="{{ url('asistencia/' . $mesSiguiente['year'] . '/' . $mesSiguiente['month']) }}"
+                                            <a href="{{ route('asistencia.reloadAsistencia', [$mesSiguiente['year'], $mesSiguiente['month']]) }}"
                                                 class="" title="Ir al mes siguiente">
                                                 <i class="bi bi-arrow-right-square"></i>
                                             </a>
@@ -60,26 +60,28 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
 
 
                                     <div class="row d-flex pb-4 divBorder">
-                                        
-                                            <div class="col-12 my-4 pb-4 d-flex align-items-center divBorder">
-                                                <div>
-                                                    <button type="button" class="botonSinFondo mx-2"title="Clic para marcar la asistencia en otro día."
-                                                        data-bs-toggle="modal" data-bs-target="#modal-cliente">
-                                                        <img style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}">
-                                                        <p class="botonTitulos mt-2">Otro día</p>
-                                                    </button>
-                                                </div>
-                                                <div class="">
-                                                    <a href="{{ route('asistencia.index') }}" class="combustibleLitros fw-semibold text-end"
-                                                        title="Ir al mes en curso"><b>Hoy es
-                                                            {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b>
-                                                    </a>
-                                                </div>
+
+                                        <div class="col-12 my-4 pb-4 d-flex align-items-center divBorder">
+                                            <div class="col-8">
+                                                <a href="{{ route('asistencia.index') }}"
+                                                    class="combustibleLitros fw-semibold text-end"
+                                                    title="Ir al mes en curso"><b>Hoy es
+                                                        {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b>
+                                                </a>
                                             </div>
+                                            <div class="col-4 text-end">
+                                                <button type="button"
+                                                    class="botonSinFondo mx-2"title="Clic para marcar la asistencia en otro día."
+                                                    data-bs-toggle="modal" data-bs-target="#modal-cliente">
+                                                    <img style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}">
+                                                    <p class="botonTitulos mt-2">Otro día</p>
+                                                </button>
+                                            </div>
+                                        </div>
 
-                                         
 
-                                        
+
+
 
                                         <div class="col-4 text-left">
                                             @can('asistencia_cortesemanal')
@@ -89,7 +91,7 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                             @endcan
                                         </div>
 
-                                        <div class="col-8 text-right">
+                                        <div class="col-8 text-end">
                                             @can('asistencia_horasextra')
                                                 <a href="{{ route('asistencia.horasExtra') }}">
                                                     <button type="button" class="btn botonGral">Horas Extra</button>
@@ -171,43 +173,42 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
 
     <!--MODALES-->
     <div class="modal fade" id="modal-cliente" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-cliente"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="col-12">
-                <div class="card ">
-                    <form action="{{ route('asistencia.index') }}" >
-                       
-                        <div class="card-header bacTituloPrincipal ">
-                            <div class="nav-tabs-navigation">
-                                <div class="nav-tabs-wrapper">
-                                    <span class="nav-tabs-title">
-                                        <h2 class="titulos">Seleccionar otro día</h2>
-                                    </span>
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="col-12">
+                    <div class="card ">
+                        <form
+                            action="{{ route('asistencia.reloadAsistencia', [$mesAnterior['year'], $mesAnterior['month']]) }}">
+                            <div class="card-header bacTituloPrincipal ">
+                                <div class="nav-tabs-navigation">
+                                    <div class="nav-tabs-wrapper">
+                                        <span class="nav-tabs-title">
+                                            <h2 class="titulos">Seleccionar otro día</h2>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row  card-body">
-                            <div class="row card-body" style=" text-align: center;">
-                                <input type="hidden" name="productoid" id="productoid" value="">
+                            <div class="row  card-body">
+                                <div class="row card-body" style=" text-align: center;">
+                                    <input type="hidden" name="productoid" id="productoid" value="">
 
-                                <div class="col-12 col-lg-6">
-                                    <input type="date" class="inputCaja" id="fechaAsistencia"
-                                        name="fechaAsistencia"
-                                        value=""></br>
+                                    <div class="col-12 col-lg-6">
+                                        <input type="month" class="inputCaja" id="fechaAsistencia"
+                                            name="fechaAsistencia" value=""></br>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-12  mb-3 d-flex  justify-content-center align-self-end">
-                            <button  class="btn botonGral ">Ir</button>
-                        </div>
-                    </form>
+                            <div class="col-12  mb-3 d-flex  justify-content-center align-self-end">
+                                <button class="btn botonGral ">Ir</button>
+                            </div>
+                        </form>
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
     <script>
         function Guardado() {

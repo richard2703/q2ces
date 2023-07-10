@@ -110,13 +110,14 @@ class asistenciaController extends Controller
      * @param [type] $intDia
      * @return void
      */
-    public function create($intAnio = null, $intMes = null, $intDia = null)
+    public function create(Request $request, $intAnio = null, $intMes = null, $intDia = null)
     {
         abort_if(Gate::denies('asistencia_create'), '403');
 
         $objCalendario = new Calendario();
 
         $data = request()->all();
+        // dd(request()->all());
         if (is_array($data) == true && count($data) > 0) {
             $intMes = $data['intMes'];
             $intAnio = $data['intAnio'];
@@ -383,6 +384,7 @@ class asistenciaController extends Controller
             DB::raw('nomina.diario AS sueldo'),
             DB::raw('nomina.nomina AS numeroNomina'),
             DB::raw('tipoasistencia.color AS tipoAsistenciaColor'),
+            DB::raw('tipoasistencia.nombre AS tipoAsistenciaNombre'),
             DB::raw('tipoasistencia.esAsistencia AS esAsistencia'),
             DB::raw('tipoHoraExtra.color AS horaExtraColor'),
             DB::raw('tipoHoraExtra.valor AS horaExtraCosto'),
@@ -441,6 +443,7 @@ class asistenciaController extends Controller
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
+                $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
                 $vctPagos[] = $objPagos;
 
                 $intDia += 1;
@@ -454,6 +457,7 @@ class asistenciaController extends Controller
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
+                $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
                 $vctPagos[] = $objPagos;
 
                 $objDia->pagos  = $vctPagos;
@@ -472,6 +476,7 @@ class asistenciaController extends Controller
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
+                $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
                 $vctPagos[] = $objPagos;
                 $intDia += 1;
             } else {
@@ -500,6 +505,7 @@ class asistenciaController extends Controller
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
+                $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
                 $vctPagos[] = $objPagos;
 
                 $intDia += 1;

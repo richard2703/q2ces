@@ -13,16 +13,9 @@
         content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'name='viewport' />
 
     <!--     Fonts and icons     -->
-    <link rel="stylesheet"
-        type="text/css"href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-
-
 
     <script src="https://cdn.lordicon.com/qjzruarw.js"></script>
     <!-- CSS Files -->
@@ -30,13 +23,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     {{--  <link href="{{ asset('css/material-dashboard.css?v=2.1.1') }}" rel="stylesheet" />  --}}
     {{--  <link rel="stylesheet" type="text/css" href="{{ asset('css/reset.css') }}">  --}}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/general.css') }}">
     {{--  <link rel="stylesheet" type="text/css" href="{{ asset('css/menuDerecho.css') }}">  --}}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/equipos.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/sider.css') }}">
-    <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/layout.css') }}">
 
 </head>
 
@@ -45,7 +39,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
         {{--  Logo  --}}
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="{{ url('home', session('id')) }}" class="logo d-flex align-items-center">
                 <img src="{{ asset('img/login/logoQcem2.svg') }}" width="30%" alt="Q2Ces">
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -69,154 +63,6 @@
                         <i class="bi bi-search"></i>
                     </a>
                 </li>
-                {{--  <!-- End Search Icon-->  --}}
-
-                <li class="nav-item dropdown">
-
-                    {{--  <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                        <i class="bi bi-bell"></i>
-                        <span class="badge bg-primary badge-number">4</span>
-                    </a>  --}}
-                    {{--  <!-- End Notification Icon -->  --}}
-
-                    {{--  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-                        <li class="dropdown-header">
-                            You have 4 new notifications
-                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="notification-item">
-                            <i class="bi bi-exclamation-circle text-warning"></i>
-                            <div>
-                                <h4>Lorem Ipsum</h4>
-                                <p>Quae dolorem earum veritatis oditseno</p>
-                                <p>30 min ago</p>
-                            </div>
-                        </li>
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="notification-item">
-                            <i class="bi bi-x-circle text-danger"></i>
-                            <div>
-                                <h4>Atque rerum nesciunt</h4>
-                                <p>Quae dolorem earum veritatis oditseno</p>
-                                <p>1 hr. ago</p>
-                            </div>
-                        </li>
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="notification-item">
-                            <i class="bi bi-check-circle text-success"></i>
-                            <div>
-                                <h4>Sit rerum fuga</h4>
-                                <p>Quae dolorem earum veritatis oditseno</p>
-                                <p>2 hrs. ago</p>
-                            </div>
-                        </li>
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="notification-item">
-                            <i class="bi bi-info-circle text-primary"></i>
-                            <div>
-                                <h4>Dicta reprehenderit</h4>
-                                <p>Quae dolorem earum veritatis oditseno</p>
-                                <p>4 hrs. ago</p>
-                            </div>
-                        </li>
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li class="dropdown-footer">
-                            <a href="#">Show all notifications</a>
-                        </li>
-
-                    </ul>  --}}
-                    {{--  <!-- End Notification Dropdown Items -->  --}}
-
-                </li>
-                {{--  <!-- End Notification Nav -->  --}}
-
-                <li class="nav-item dropdown">
-                    {{--  
-                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                        <i class="bi bi-chat-left-text"></i>
-                        <span class="badge bg-success badge-number">3</span>
-                    </a>  --}}
-                    {{--  <!-- End Messages Icon -->  --}}
-
-                    {{--  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-                        <li class="dropdown-header">
-                            You have 3 new messagessi
-                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="message-item">
-                            <a href="#">
-                                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
-                                <div>
-                                    <h4>Maria Hudson</h4>
-                                    <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                    <p>4 hrs. ago</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="message-item">
-                            <a href="#">
-                                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
-                                <div>
-                                    <h4>Anna Nelson</h4>
-                                    <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                    <p>6 hrs. ago</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="message-item">
-                            <a href="#">
-                                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
-                                <div>
-                                    <h4>David Muldon</h4>
-                                    <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                    <p>8 hrs. ago</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="dropdown-footer">
-                            <a href="#">Show all messages</a>
-                        </li>
-
-                    </ul>  --}}
-                    {{--  <!-- End Messages Dropdown Items -->  --}}
-
-                </li>
-                {{--  <!-- End Messages Nav -->  --}}
 
                 <li class="nav-item dropdown pe-3">
 
@@ -232,36 +78,7 @@
                             <h6>{{ auth()->user()->name }}</h6>
                             {{--  <span>Web Designer</span>  --}}
                         </li>
-                        {{--  <li>
-                            <hr class="dropdown-divider">
-                        </li>
 
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                                <i class="bi bi-person"></i>
-                                <span>My Profile</span>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                                <i class="bi bi-gear"></i>
-                                <span>Account Settings</span>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
-                                <i class="bi bi-question-circle"></i>
-                                <span>Need Help</span>
-                            </a>
-                        </li>  --}}
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -300,7 +117,10 @@
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'calendario' ? '' : 'collapsed' }}"
                         href="{{ route('calendario.index') }}">
-                        <i class="bi bi-shop"></i>
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons ">
+                            calendar_month
+                        </span>
                         <span>Calendario</span>
                     </a>
                 </li>
@@ -310,7 +130,11 @@
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'asistencia' ? '' : 'collapsed' }}"
                         href="{{ route('asistencia.index') }}">
-                        <i class="bi bi-shop"></i>
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            event_available
+                        </span>
+
                         <span>Asistencia</span>
                     </a>
                 </li>
@@ -320,7 +144,10 @@
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'cajaChica' ? '' : 'collapsed' }}"
                         href="{{ route('cajaChica.index') }}">
-                        <i class="bi bi-shop"></i>
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            currency_exchange
+                        </span>
                         <span>Caja Chica</span>
                     </a>
                 </li>
@@ -330,7 +157,11 @@
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'combustible' ? '' : 'collapsed' }}"
                         href="{{ route('inventario.index', 'combustible') }}">
-                        <i class="bi bi-shop"></i>
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            local_gas_station
+                        </span>
+
                         <span>Combustible</span>
                     </a>
                 </li>
@@ -340,7 +171,11 @@
                 <li class="nav-item ">
                     <a class="nav-link {{ $activePage == 'mantenimiento' ? '' : 'collapsed' }}"
                         data-bs-target="#mantenimiento-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-receipt"></i><span>Mantenimientos</span><i class="bi bi-chevron-down ms-auto"></i>
+                        {{--  <i class="bi bi-receipt"></i>  --}}
+                        <span class="material-icons">
+                            build
+                        </span>
+                        <span>Mantenimientos</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="mantenimiento-nav"
                         class="nav-content collapse {{ $activePage == 'mantenimiento' ? 'show' : '' }}"
@@ -369,8 +204,12 @@
                 <li class="nav-item ">
                     <a class="nav-link {{ $activePage == 'bitacoras' ? '' : 'collapsed' }}"
                         data-bs-target="#bitacora-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-receipt"></i><span>Bitacoras y Check List</span><i
-                            class="bi bi-chevron-down ms-auto"></i>
+                        {{--  <i class="bi bi-receipt"></i>  --}}
+                        <span class="material-icons">
+                            fact_check
+                        </span>
+
+                        <span>Bitacoras y Check List</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="bitacora-nav" class="nav-content collapse {{ $activePage == 'bitacoras' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
@@ -407,12 +246,16 @@
                 <li class="nav-item ">
                     <a class="nav-link {{ $activePage == 'equipos' ? '' : 'collapsed' }}"
                         data-bs-target="#maquinaria-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-receipt"></i><span>Maquinaria y Accesorios</span><i
-                            class="bi bi-chevron-down ms-auto"></i>
+                        {{--  <i class="bi bi-receipt"></i>  --}}
+                        <span class="material-icons">
+                            agriculture
+                        </span>
+
+                        <span>Maquinaria y Accesorios</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="maquinaria-nav" class="nav-content collapse {{ $activePage == 'equipos' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
-                        @can('mantenimiento_index')
+                        @can('maquinaria_index')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('maquinaria.index') }}" class="">
@@ -428,7 +271,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('mantenimiento_index')
+                        @can('maquinaria_index')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('accesorios.index') }}" class="">
@@ -448,21 +291,16 @@
                 </li>
             @endcan
 
-            @can('inventario_show')
-                <li class="nav-item collapsed">
-                    <a class="nav-link {{ $activePage == 'inventario' ? '' : 'collapsed' }}"
-                        href="{{ route('inventario.dash') }}">
-                        <i class="bi bi-shop"></i>
-                        <span>Inventario</span>
-                    </a>
-                </li>
-            @endcan
-
             @can('personal_index')
                 <li class="nav-item ">
                     <a class="nav-link {{ $activePage == 'personal' ? '' : 'collapsed' }}" data-bs-target="#personal-nav"
                         data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-receipt"></i><span>Personal</span><i class="bi bi-chevron-down ms-auto"></i>
+                        {{--  i class="bi bi-receipt"></i>  --}}
+                        <span class="material-icons">
+                            person
+                        </span>
+
+                        <span>Personal</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="personal-nav" class="nav-content collapse {{ $activePage == 'personal' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
@@ -486,11 +324,28 @@
                 </li>
             @endcan
 
+            @can('inventario_show')
+                <li class="nav-item collapsed">
+                    <a class="nav-link {{ $activePage == 'inventario' ? '' : 'collapsed' }}"
+                        href="{{ route('inventario.dash') }}">
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            shelves
+                        </span>
+                        <span>Inventario</span>
+                    </a>
+                </li>
+            @endcan
+
             @can('obra_index')
                 <li class="nav-item ">
                     <a class="nav-link {{ $activePage == 'obra' ? '' : 'collapsed' }}" data-bs-target="#obra-nav"
                         data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-receipt"></i><span>Obras</span><i class="bi bi-chevron-down ms-auto"></i>
+                        {{--  <i class="bi bi-receipt"></i>  --}}
+                        <span class="material-icons">
+                            construction
+                        </span>
+                        <span>Obras</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="obra-nav" class="nav-content collapse {{ $activePage == 'obra' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
@@ -518,8 +373,11 @@
                 <li class="nav-item ">
                     <a class="nav-link {{ $activePage == 'usuarios' ? '' : 'collapsed' }}" data-bs-target="#user-nav"
                         data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-receipt"></i><span>Usuarios y Permisos</span><i
-                            class="bi bi-chevron-down ms-auto"></i>
+                        {{--  <i class="bi bi-receipt"></i>  --}}
+                        <span class="material-icons">
+                            pan_tool
+                        </span>
+                        <span>Usuarios y Permisos</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="user-nav" class="nav-content collapse {{ $activePage == 'usuarios' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
@@ -558,10 +416,10 @@
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>Richard</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>Q2Ces</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-            Designed by <a href="#">Richard.Inc</a>
+            Designed by <a href="#">Q2Ces Developer Team</a>
         </div>
     </footer>
     <!-- End Footer -->

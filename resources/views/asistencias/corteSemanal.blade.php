@@ -90,32 +90,37 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                     @endif
                                     <div class="row">
 
-                                    <div class="col-12 my-4 pb-4 d-flex align-items-center divBorder justify-content-evenly">
-                                        <div>
-                                            <button type="button" class="botonSinFondo mx-2"title="Clic para marcar la asistencia en otro día."
-                                                data-bs-toggle="modal" data-bs-target="#modal-cliente">
-                                                <img style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}">
-                                                <p class="botonTitulos mt-2">Otro día</p>
-                                            </button>
-                                        </div>
-                                        <div class="">
-                                            <a href="{{ route('asistencia.corteSemanal') }}" class="combustibleLitros fw-semibold text-end"
-                                                title="Ir al mes en curso"><b>Hoy es
+                                        <div
+                                            class="col-12 my-4 pb-4 d-flex align-items-center divBorder justify-content-evenly">
+                                            <div>
+                                                <a href="{{ url()->previous() }}">
+                                                    <button class="btn regresar">
+                                                        <span class="material-icons">
+                                                            reply
+                                                        </span>
+                                                        Regresar
+                                                    </button>
+                                                </a>
+                                            </div>
+                                            <div class="">
+                                                <a href="{{ route('asistencia.corteSemanal') }}"
+                                                    class="combustibleLitros fw-semibold text-end"
+                                                    title="Ir al mes en curso"><b>Hoy es
                                                         {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b>
-                                            </a>
+                                                </a>
+                                            </div>
+                                            <div class="">
+                                                <button type="submit" class="btn botonGral ">Descargar a Exel</button>
+                                            </div>
                                         </div>
-                                        <div class="">
-                                        <button type="submit" class="btn botonGral " >Descargar a Exel</button>
-                                    </div>
-                                    </div>
 
 
 
                                         <!--<span>
-                                            <a href="{{ route('asistencia.corteSemanal') }}"
-                                                class="display-8 mb-8 text-center" title="Ir al periodo en curso"><b>Hoy es
-                                                    {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
-                                        </span>-->
+                                                                                                                                                                                                <a href="{{ route('asistencia.corteSemanal') }}"
+                                                                                                                                                                                                    class="display-8 mb-8 text-center" title="Ir al periodo en curso"><b>Hoy es
+                                                                                                                                                                                                        {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
+                                                                                                                                                                                            </span>-->
                                         {{-- <h4 class="card-title">
                                             {{ $personal->nombres }} {{ $personal->apellidoP }}
                                             {{ $personal->apellidoM }}</h4> --}}
@@ -139,25 +144,25 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead class="labelTitulo text-center">
-                                                    <th class="labelTitulo">Puesto</th>
-                                                    <th class="labelTitulo">Código</th>
-                                                    <th class="labelTitulo">Nombre</th>
+                                                    <th class="labelTitulo corte">Puesto</th>
+                                                    <th class="labelTitulo corte">Código</th>
+                                                    <th class="labelTitulo corte">Nombre</th>
                                                     <?php
                                                     for ($i=0; $i < 7 ; $i++) {
                                                        ?>
-                                                    <th class="labelTitulo" colspan="2">
+                                                    <th class="labelTitulo corte" colspan="2">
                                                         {{ $objCalendar->getNameDay($vctDiasSemana[$i]->format('N')) }}
                                                         <strong>{{ $vctDiasSemana[$i]->format('d') }}</strong>
                                                     </th>
                                                     <?php
                                                     }
                                                     ?>
-                                                    <th class="labelTitulo">Días</th>
-                                                    <th class="labelTitulo">Salario por día</th>
-                                                    <th class="labelTitulo">Importe semanal</th>
-                                                    <th class="labelTitulo">Horas extra</th>
-                                                    <th class="labelTitulo">Total horas extra</th>
-                                                    <th class="labelTitulo">Pago semanal</th>
+                                                    <th class="labelTitulo corte">Días</th>
+                                                    <th class="labelTitulo corte">Salario por día</th>
+                                                    <th class="labelTitulo corte">Importe semanal</th>
+                                                    <th class="labelTitulo corte">Horas extra</th>
+                                                    <th class="labelTitulo corte">Total horas extra</th>
+                                                    <th class="labelTitulo corte">Pago semanal</th>
                                                 </thead>
                                                 <?php
                                                 $intTotalGeneralSueldo = 0;
@@ -172,7 +177,9 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                         ?>
                                                         <tr>
                                                             <td>{{ $item->puesto }}</td>
-                                                            <td style="color: {{ $item->estatusColor }};"><strong>{{ $item->numEmpleado }}</strong></td>
+                                                            <td style="color: {{ $item->estatusColor }};">
+                                                                <strong>{{ $item->numEmpleado }}</strong>
+                                                            </td>
                                                             <td class="text-left">{{ $item->empleado }}</td>
                                                             <?php
                                                                 //*** recorremos el arreglo de los dias de la semana de trabajo ***************//
@@ -199,12 +206,14 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
 
                                                                     if($blnExiste == true){
                                                                         ?>
-                                                            <td
+                                                            <td title="{{ $item->pagos[$iDay]->tipoAsistenciaNombre }}"
                                                                 style="color: {{ $item->pagos[$iDay]->tipoAsistenciaColor }};">
-                                                                {{ $item->pagos[$iDay]->esAsistencia }} </td>
-                                                            <td
+                                                                <strong> {{ $item->pagos[$iDay]->esAsistencia }}</strong>
+                                                            </td>
+                                                            <td title="Horas Extra"
                                                                 style="color: {{ $item->pagos[$iDay]->horaExtraColor }}; background: whitesmoke;">
-                                                                {{ $item->pagos[$iDay]->horasExtra }} </td>
+                                                                <strong> {{ $item->pagos[$iDay]->horasExtra }}</strong>
+                                                            </td>
                                                             <?php
                                                                     }else{
                                                                        ?>
