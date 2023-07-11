@@ -180,21 +180,21 @@
 
                             @can('bitacora_show')
                                 <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                                    <a class="nav-link py-2 ps-5" href="{{ url('/indexBitacora') }}">
+                                    <a class="nav-link py-2 ps-5" href="{{ url('/bitacoras') }}">
                                         <span class="sidebar-normal py-2 ps-5"> {{ __('Ver Bitácoras') }} </span>
-                                    </a>
+                                    </a
                                 </li>
                             @endcan
                             @can('grupo_show')
                                 <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                                    <a class="nav-link py-2 ps-5" href="{{ url('/indexGrupos') }}">
+                                    <a class="nav-link py-2 ps-5" href="{{ url('/bitacoras/grupos') }}">
                                         <span class="sidebar-normal py-2 ps-5"> {{ __('Ver Grupos') }} </span>
                                     </a>
                                 </li>
                             @endcan
                             @can('tarea_show')
                                 <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-                                    <a class="nav-link py-2 ps-5" href="{{ url('/tareas') }}">
+                                    <a class="nav-link py-2 ps-5" href="{{ url('/bitacoras/tareas') }}">
                                         <span class="sidebar-normal py-2 ps-5"> {{ __('Ver Tareas') }} </span>
                                     </a>
                                 </li>
