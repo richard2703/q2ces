@@ -18,19 +18,29 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <form class="row alertaGuardar"
-                                    action="{{ route('mantenimientos.update', $mantenimiento->id) }}" method="post"
-                                    enctype="multipart/form-data">
-                                    @csrf
-                                    @method('put')
-                                    <input type="hidden" name="maquinariaId" id="maquinariaId" value="">
-                                    <input type="hidden" name="titulo" id="titulo" value="">
-                                    <div class="card-header bacTituloPrincipal">
-                                        <h4 class="card-title">Editar Registro de Mantenimiento</h4>
+
+                                <div class="card-header bacTituloPrincipal">
+                                    <h4 class="card-title">Editar Registro de Mantenimiento</h4>
+                                </div>
+
+                                <div class="card-body ">
+                                    <div class="col-12 col-md-2">
+                                        <a href="{{ route('mantenimientos.index') }}">
+                                            <button class="btn regresar">
+                                                <span class="material-icons">
+                                                    reply
+                                                </span>
+                                                Regresar
+                                            </button>
+                                        </a>
                                     </div>
-
-                                    <div class="card-body ">
-
+                                    <form class="row alertaGuardar"
+                                        action="{{ route('mantenimientos.update', $mantenimiento->id) }}" method="post"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('put')
+                                        <input type="hidden" name="maquinariaId" id="maquinariaId" value="">
+                                        <input type="hidden" name="titulo" id="titulo" value="">
                                         <div class="col-12 my-4">
                                             <div class="row">
                                                 <input type="hidden" name="mantenimientoId" id="mantenimientoId"
@@ -42,8 +52,6 @@
                                                 <input type="hidden" name="personalId" id="personalId"
                                                     value="{{ $mantenimiento->personalId }}">
 
-                                                {{-- <input type="hidden" name="titulo" id="titulo"
-                                                    value="{{ $mantenimiento->titulo }}"> --}}
 
                                                 <div class=" col-12 col-sm-6 col-lg-12 my-3 ">
                                                     <label class="labelTitulo">Descripción del mantenimiento:
@@ -53,14 +61,14 @@
 
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Fecha de Inicio: </label></br>
-                                                    <input type="date" class="inputCaja" placeholder="Especifique..."
+                                                    <input type="date" class="inputCaja" placeholder="Especifique..." {{ ($mantenimiento->estadoId < 3? '': 'readonly')}}
                                                         readonly id="fechaInicio" name="fechaInicio"
                                                         value="{{ $mantenimiento->fechaInicio }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Tipo de Mantenimiento:</label></br>
-                                                    <select class="form-select form-select-lg mb-3 inputCaja" name="tipo"
+                                                    <select class="form-select form-select-lg mb-3 inputCaja" name="tipo" {{ ($mantenimiento->estadoId < 3? '': 'disabled="false"')}}
                                                         id="tipo" aria-label=".form-select-lg example">
 
                                                         <option value="">Seleccione</option>
@@ -80,7 +88,7 @@
                                                 </div>
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Estado del Mantenimiento:</label></br>
-                                                    <select class="form-select form-select-lg mb-3 inputCaja"
+                                                    <select class="form-select form-select-lg mb-3 inputCaja" {{ ($mantenimiento->estadoId < 3? '': 'disabled="false"')}}
                                                         name="estadoId" id="estadoId" aria-label=".form-select-lg example">
 
                                                         <option value="">Seleccione</option>
@@ -100,7 +108,7 @@
                                                 </div>
                                                 <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
                                                     <label class="labelTitulo">Comentarios:</label></br>
-                                                    <textarea rows="2" cols="80" class="form-control"
+                                                    <textarea rows="2" cols="80" class="form-control"  {{ ($mantenimiento->estadoId < 3? '': 'disabled="false"')}}
                                                         placeholder="Escribe tus comentarios o información relevante sobre el mantenimiento aquí." name="comentario"
                                                         id="comentario">{{ $mantenimiento->comentario }}</textarea>
                                                 </div>
@@ -108,25 +116,25 @@
                                                 <hr>
                                                 <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
                                                     <label class="labelTitulo">Resguardatario:</label></br><input
-                                                        id="personalId2" name="personalId2" type="text"
+                                                        id="personalId2" name="personalId2" type="text"  {{ ($mantenimiento->estadoId < 3? '': 'disabled="false"')}}
                                                         value="{{ $mantenimiento->personaId }}"
                                                         placeholder="Especifique..." class="inputCaja">
                                                 </div>
                                                 <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
                                                     <label class="labelTitulo">Adscripción:</label></br><input
-                                                        id="adscripcion" name="adscripcion" type="text"
+                                                        id="adscripcion" name="adscripcion" type="text"  {{ ($mantenimiento->estadoId < 3? '': 'disabled="false"')}}
                                                         value="{{ $mantenimiento->adcripcion }}"
                                                         placeholder="Especifique..." class="inputCaja">
                                                 </div>
                                                 <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
                                                     <label class="labelTitulo">Horómetro: </label></br>
-                                                    <input type="number" class="inputCaja text-right"
+                                                    <input type="number" class="inputCaja text-end"  {{ ($mantenimiento->estadoId < 3? '': 'disabled="false"')}}
                                                         value="{{ $mantenimiento->horometro }}" placeholder="Ej. 1000"
                                                         step="1" min="0" id="horometro" name="horometro">
                                                 </div>
                                                 <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
                                                     <label class="labelTitulo">Km/m: </label></br>
-                                                    <input type="number" class="inputCaja text-right"
+                                                    <input type="number" class="inputCaja text-end"  {{ ($mantenimiento->estadoId < 3? '': 'disabled="false"')}}
                                                         value="{{ $mantenimiento->kilometraje }}" placeholder="Ej. 1000"
                                                         step="1" min="0" id="kilometraje"
                                                         name="kilometraje">
@@ -135,19 +143,19 @@
                                                 <hr>
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Subtotal: </label></br>
-                                                    <input type="text" class="inputCaja text-right"
+                                                    <input type="text" class="inputCaja text-end" readonly
                                                         value="{{ $mantenimiento->subtotal }}" placeholder="Ej. 1"
                                                         id="subtotal" name="subtotal">
                                                 </div>
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Iva: </label></br>
-                                                    <input type="text" class="inputCaja text-right"
+                                                    <input type="text" class="inputCaja text-end" readonly
                                                         value="{{ $mantenimiento->iva }}" placeholder="Ej. 1"
                                                         id="iva" name="iva">
                                                 </div>
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Total: </label></br>
-                                                    <input type="text" class="inputCaja text-right"
+                                                    <input type="text" class="inputCaja text-end" readonly
                                                         value="{{ $mantenimiento->costo }}" placeholder="Ej. 1"
                                                         id="total" name="total">
                                                 </div>
@@ -158,23 +166,24 @@
                                         <div class="col-12 divBorder">
                                             <h2 class="tituloEncabezado">Material de Mantenimiento</h2></br></br>
                                         </div>
-
-                                        <div class="row d-flex">
-                                            <div class="col-12 col-md-6    mt-3 ">
-                                                <p class="subEncabezado">Busca un Material</p>
-                                                <div class="mb-4 mt-0" role="search" class="">
-                                                    <input value="" class="search-submit ">
-                                                    <input autofocus type="text" class="search-text" id="search2"
-                                                        name="search2" placeholder="Buscar..."
-                                                        title="Escriba la(s) palabra(s) a buscar.">
+                                        @if ($mantenimiento->estadoId < 3)
+                                            <div class="row d-flex">
+                                                <div class="col-12 col-md-6  mt-3 ">
+                                                    <p class="subEncabezado">Busca un Material</p>
+                                                    <div class="mb-4 mt-0" role="search" class="">
+                                                        <input value="" class="search-submit ">
+                                                        <input autofocus type="text" class="search-text"
+                                                            id="search2" name="search2" placeholder="Buscar..."
+                                                            title="Escriba la(s) palabra(s) a buscar.">
+                                                    </div>
                                                 </div>
+
                                             </div>
 
-                                        </div>
-
-                                        <div class="my-4 divBorder">
-                                            <h3 class="subEncabezado mb-3">Listado de busqueda</h3>
-                                        </div>
+                                            <div class="my-4 divBorder">
+                                                <h3 class="subEncabezado mb-3">Listado de refacciones</h3>
+                                            </div>
+                                        @endif
                                         <div class=" col-12  my-3 ">
                                             <ul class="" id="newRow">
 
@@ -190,14 +199,24 @@
                                                             <input type="hidden" name="inventarioId[]" id="inventarioId"
                                                                 value="{{ $item->inventarioId }}">
 
+                                                            <input type="hidden" name="costo[]" id="costo"
+                                                                value="{{ $item->costo }}">
+
                                                             <div class="col-3 ">
                                                                 <label for="cantidad"
                                                                     class="">Cantidad</label></br></br>
-                                                                <input type="number" maxlength="2" min="1"
-                                                                    required max="99" step="1"
-                                                                    class="inputCaja text-right" id="cantidad"
-                                                                    placeholder="Ej. 1" name="cantidad[]"
-                                                                    value="{{ $item->cantidad }}">
+                                                                @if ($mantenimiento->estadoId < 3)
+                                                                    <input type="number" maxlength="2" min="1"
+                                                                        required max="99" step="1"
+                                                                        class="inputCaja text-right" id="cantidad"
+                                                                        placeholder="Ej. 1" name="cantidad[]"
+                                                                        value="{{ $item->cantidad }}">
+                                                                @else
+                                                                    <input type="text" readonly required
+                                                                        class="inputCaja text-end" id="cantidad"
+                                                                        placeholder="Ej. 1" name="cantidad[]"
+                                                                        value="{{ $item->cantidad }}">
+                                                                @endif
                                                             </div>
 
                                                             <div class="col-7">
@@ -207,10 +226,12 @@
                                                                     name="descripcion[]" value="">{{ 'Artículo: ' . $item->articulo . ', Número de parte: ' . $item->numeroParte . ', Modelo: ' . $item->modelo . ', PU: $ ' . $item->valor }} </textarea>
                                                             </div>
 
-                                                            <div class="col-2"></br></br>
-                                                                <button id="removeRow" type="button"
-                                                                    class="btn btn-danger">Borrar</button>
-                                                            </div>
+                                                            @if ($mantenimiento->estadoId < 3)
+                                                                <div class="col-2"></br></br>
+                                                                    <button id="removeRow" type="button"
+                                                                        class="btn btn-danger">Borrar</button>
+                                                                </div>
+                                                            @endif
                                                         </div>
                                                     </li>
 
@@ -219,44 +240,16 @@
                                                     <li>Sin registros.</li>
                                                 @endforelse
 
-                                                {{-- <li class="listaMaterialMantenimiento my-3 border-bottom">
-                                                <div class="row d-flex pb-4">
-                                                    <div class="col-12 col-md-9  py-3 d-flex">
-
-                                                        <input type="hidden" name="inventarioId[]" id="inventarioId"
-                                                            value=" ">
-                                                        <div class="col-3 ">
-                                                            <label for="cantidad"
-                                                                class="">Cantidad</label></br></br>
-                                                            <input type="number" maxlength="2" min="1" required
-                                                                max="99" step="1"
-                                                                class="inputCaja text-right" id="cantidad"
-                                                                placeholder="Ej. 1" name="cantidad[]" value="">
-                                                        </div>
-                                                        <div class="col-9">
-                                                            <label for="descripcion"
-                                                                class="">Descripción</label></br></br>
-                                                            <textarea rows="3" cols="80" class="form-control form-select" id="descripcion" readonly
-                                                                name="descripcion[]" value=""></textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-md-3">
-                                                        <button class="btnSinFondocALENDARIO ms-3 float-end">
-                                                            <img class="imgBtns" style="height: 20px;"
-                                                                src="{{ asset('img/mantenimiento/material.svg') }}">
-                                                            Seleccionar
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </li> --}}
                                             </ul>
                                         </div>
 
+                                        @if ($mantenimiento->estadoId < 3)
                                         <div class="col-12 text-center mt-5 pt-5">
                                             <button type="submit" class="btn botonGral">Guardar</button>
                                         </div>
-                                    </div>
-                                </form>
+                                        @endif
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -330,7 +323,7 @@
             minLength: 1,
             select: function(event, ui) {
                 // Rellenar los campos con los datos del inventario seleccionado
-                crearItems(ui.item.id, ui.item.value);
+                crearItems(ui.item.id, ui.item.value, ui.item.valor);
 
                 // $('#inventarioId').val(ui.item.id);
                 // $('#descripcion').val(ui.item.value);
@@ -340,15 +333,17 @@
     </script>
 
     <script type="text/javascript">
-        function crearItems(inventarioId, descripcion) {
+        function crearItems(inventarioId, descripcion, costo) {
             var html = '';
             html += '<li class="listaMaterialMantenimiento my-3 border-bottom" id="inputFormRow">';
             html += '   <div class="row d-flex pb-4">';
+            html += '      <input type="hidden" name="gastoId[]" id="gastoId" value="">';
             html += '      <input type="hidden" name="inventarioId[]" id="inventarioId" value="' + inventarioId + '">';
+            html += '      <input type="hidden" name="costo[]" id="costo" value="' + costo + '">';
             html += '      <div class="col-3 ">';
             html += '           <label for="cantidad" class="">Cantidad</label></br></br>';
             html +=
-                '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-right" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="1">';
+                '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-right" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="">';
             html += '      </div>';
             html += '      <div class="col-7">';
             html += '          <label for="descripcion" class="">Descripción</label></br></br>';

@@ -12,11 +12,11 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use App\Helpers\Validaciones;
 use App\Helpers\Calculos;
 use App\Models\maquinaria;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 
 class inventarioController extends Controller
 {

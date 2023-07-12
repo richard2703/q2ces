@@ -8,13 +8,13 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Editar Grupo</h4>   
+                                    <h4 class="card-title">Editar Grupo</h4>
                                 </div>
-                                <div class="card-body ">   
+                                <div class="card-body ">
 
                                     <div class="col-12 my-4">
                                         <div class="row">
-                                            
+
                                             <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                 <label class="labelTitulo">Nombre:</label></br><input type="text"
                                                     placeholder="Especifique..." class="inputCaja">
@@ -29,7 +29,7 @@
                                                     </select>
                                             </div>
 
-                                            
+
                                             <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                 <label for="exampleFormControlTextarea1" class="form-label">Pon tu comentario</label>
                                                 <textarea class="form-select" id="exampleFormControlTextarea1" rows="3"></textarea>
@@ -84,4 +84,42 @@
             </div>
         </div>
 </div>
+<script src="{{ asset('js/alertas.js') }}"></script>
+<script type="application/javascript">
+    jQuery('input[type=file]').change(function(){
+     var filename = jQuery(this).val().split('\\').pop();
+     var idname = jQuery(this).attr('id');
+     console.log(jQuery(this));
+     console.log(filename);
+     console.log(idname);
+     jQuery('span.'+idname).next().find('span').html(filename);
+    });
+    </script>
+
+<script>
+    function Guardado() {
+        // alert('test');
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'success',
+            title: 'Guardado con exito'
+        })
+    }
+    var slug = '{{ Session::get('message') }}';
+    if (slug == 1) {
+        Guardado();
+
+    }
+</script>
 @endsection

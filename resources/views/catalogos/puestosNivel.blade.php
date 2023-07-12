@@ -276,7 +276,6 @@
             const lstAsistencia = document.getElementById('puestoRequiereAsistencia').value = asistencia;
             const lstCaja = document.getElementById('puestoUsaCajaChica').value = caja;
 
-
             const txtComentarios = document.getElementById('puestoComentarios');
             txtComentarios.value = comentarios;
 

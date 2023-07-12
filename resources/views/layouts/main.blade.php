@@ -217,7 +217,7 @@
                             <li>
                                 {{--  <a href="{{ url('/indexBitacora') }}"
                                     class="{{ $activeItem == 'bitacoras' ? 'active' : '' }}">  --}}
-                                <a href="{{ url('/indexBitacora') }}" class="">
+                                <a href="{{ url('/bitacoras') }}" class="">
                                     <i class="bi bi-circle"></i><span>Ver Bitacoras</span>
                                 </a>
                             </li>
@@ -225,7 +225,7 @@
                         @can('grupo_index')
                             <li>
                                 {{--  <a href="{{ url('/indexGrupos') }}" class="{{ $activeItem == 'grupos' ? 'active' : '' }}">  --}}
-                                <a href="{{ url('/indexGrupos') }}" class="">
+                                <a href="{{ url('/bitacoras/grupos') }}" class="">
                                     <i class="bi bi-circle"></i><span>Ver Grupos</span>
                                 </a>
                             </li>
@@ -233,7 +233,7 @@
                         @can('tarea_index')
                             <li>
                                 {{--  <a href="{{ url('/tareas') }}" class="{{ $activeItem == 'tareas' ? 'active' : '' }}">  --}}
-                                <a href="{{ url('/tareas') }}" class="">
+                                <a href="{{ url('/bitacoras/tareas') }}" class="">
                                     <i class="bi bi-circle"></i><span>Ver Tareas</span>
                                 </a>
                             </li>
