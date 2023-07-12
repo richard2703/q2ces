@@ -22,7 +22,7 @@
                                 @csrf
                                 <div class="accordion my-3" id="accordionExample">
 
-                                    <div class="accordion-item">
+                                    <div class="accordion-item" style="margin-top: -20px;">
                                         <h2 class="accordion-header " id="headingOne">
                                             <button class="accordion-button bacTituloPrincipal" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#datosPersonales"
@@ -51,7 +51,7 @@
 
                                                         <div class="row alin">
                                                             <div class=" col-12 col-sm-6  mb-3 ">
-                                                                <label class="labelTitulo">Nombre:
+                                                                <label class="labelTitulo">Equipo:
                                                                     <span>*</span></label></br>
                                                                 <input type="text" class="inputCaja" id="nombre"
                                                                     placeholder="Especifique..." required name="nombre"
