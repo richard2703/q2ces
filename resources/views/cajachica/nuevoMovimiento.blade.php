@@ -22,7 +22,7 @@
                                     <h4 class="card-title">Movimientos de Caja Chica</h4>
                                     {{-- <p class="card-category">Usuarios registrados</p> --}}
                                 </div>
-                                <form class="row alertaGuardar" action="{{ route('cajaChica.store') }}" method="post"
+                                <form class="alertaGuardar" action="{{ route('cajaChica.store') }}" method="post"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="card-body">
@@ -36,7 +36,7 @@
                                                 {{ session('faild') }}
                                             </div>
                                         @endif
-                                        <div class="row">
+                                        <div class="row division">
                                             <div class="col-12 text-end ">
                                                 {{-- @can('user_create') --}}
                                                 <button type="button" class="btn botonGral " data-bs-toggle="modal"
@@ -44,7 +44,7 @@
                                                 {{-- @endcan --}}
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row pt-3">
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Dia: <span>*</span></label></br>
                                                 <input type="date" class="inputCaja" id="dia" name="dia"

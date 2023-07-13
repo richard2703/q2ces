@@ -22,7 +22,7 @@
                             </div>
                             <form class="row alertaGuardar" action="{{ route('inventario.store') }}"
                                 method="post"class="row" enctype="multipart/form-data">
-                                @csrf 
+                                @csrf
                                 <div class="col-12 col-md-4  my-3">
                                     <div class="text-center mx-auto border vistaFoto mb-4">
                                         <i><img class="imgVista img-fluid"
@@ -74,25 +74,25 @@
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Cantidad a ingresar:</label></br>
-                                            <input type="number" step="0.01" min="0.01" class="inputCaja"
+                                            <input type="number" step="0.01" min="0.01" class="inputCaja text-end"
                                                 id="cantidad" name="cantidad" value="{{ old('cantidad')}}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Minimo:</label></br>
-                                            <input type="number" step="0.01" min="0.01" class="inputCaja"
+                                            <input type="number" step="0.01" min="0.01" class="inputCaja text-end"
                                                 id="reorden" name="reorden" value="{{ old('reorden')}}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Maximo:</label></br>
-                                            <input type="number" step="0.01" min="0.01" class="inputCaja"
+                                            <input type="number" step="0.01" min="0.01" class="inputCaja text-end"
                                                 id="maximo" name="maximo" value="{{ old('maximo')}}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Costo unitario:</label></br>
-                                            <input type="number" step="0.01" min="0.01" class="inputCaja"
+                                            <input type="number" step="0.01" min="0.01" class="inputCaja text-end"
                                                 id="valor" name="valor" value="{{ old('valor')}}">
                                         </div>
 
@@ -105,14 +105,16 @@
                                                 <option value="herramientas">Herramienta</option>
                                                 <option value="refacciones">Refaccion</option>
                                                 <option value="consumibles">Consumible</option>
+                                                <option value="uniformes">Uniformes</option>
+                                                <option value="extintores">Extintores</option>
 
                                             </select>
                                         </div>
-                                       
+
 
                                     </div>
                                 </div>
-                                
+
                                 {{--  <div class="col-12 text-end mb-3 ">
                                     <button type="submit" class="btn botonGral">Guardar</button>
                                 </div>  --}}
@@ -157,7 +159,7 @@
                                             </div>
                                         </div>
                                     </div>
-                            
+
                                 </div>
 
                             </div>-->
@@ -168,9 +170,9 @@
 
                     </div>
 
-                  
+
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -189,7 +191,7 @@
 <style>
 
 
-   
+
 
 </style>
 

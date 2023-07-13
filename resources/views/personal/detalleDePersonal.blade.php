@@ -14,119 +14,147 @@
         @endif
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-11 align-self-start">
+                <div class="col-12 align-self-start">
                     <div class="card">
                         <div class="card-body contCart">
                             <div class="p-1 align-self-start bacTituloPrincipal">
-                                <h2 class="my-3 ms-3 texticonos ">{{ $personal->nombres }} {{ $personal->apellidoP }}
-                                    {{ $personal->apellidoM }}</h2>
+                                <h6 class="my-3 ms-3 texticonos ">{{ $personal->nombres }} {{ $personal->apellidoP }}
+                                    {{ $personal->apellidoM }}</h6>
                             </div>
-                            <form action="{{ route('personal.update', $personal->id) }}"
-                                method="post"class="row alertaGuardar" enctype="multipart/form-data">
+                            <div class="d-flex p-3 divBorder">
+
+                                <div class="col-4 text-left">
+                                    <a href="{{ route('personal.index') }}">
+                                        <button class="btn regresar">
+                                            <span class="material-icons">
+                                                reply
+                                            </span>
+                                            Regresar
+                                        </button>
+                                    </a>
+                                    {{--  @can('asistencia_cortesemanal')
+                                        <a href="{{ route('asistencia.corteSemanal') }}">
+                                            <button type="button" class="btn botonGral">Corte Semanal</button>
+                                        </a>
+                                    @endcan  --}}
+                                </div>
+
+                                <div class="col-8 text-end">
+                                    {{--  @can('asistencia_horasextra')
+                                        <a href="{{ route('asistencia.horasExtra') }}">
+                                            <button type="button" class="btn botonGral">Horas Extra</button>
+                                        </a>
+                                    @endcan  --}}
+                                    @can('asistencia_create')
+                                        <a href="{{ route('personal.equipo', $personal->id) }}" method="get">
+                                            <button class="btn botonGral">Asignar Equipo</button>
+                                        </a>
+                                    @endcan
+
+
+                                </div>
+                            </div>
+
+                            <form action="{{ route('personal.update', $personal->id) }}" method="post"class="alertaGuardar"
+                                enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
-                                <div class="col-12 col-md-4  my-3">
-                                    <div class="text-center mx-auto border  mb-4">
-                                        <i><img class="imgPersonal img-fluid"
-                                                src="{{ $personal->foto == '' ? ' /img/general/default.jpg' : asset('/storage/personal/' . str_pad($personal->id, 4, '0', STR_PAD_LEFT) . '/' . $personal->foto) }}"></i>
+                                <div class="d-flex p-3">
+                                    <div class="col-12 col-md-4 px-2 ">
+                                        <div class="text-center mx-auto border  mb-4">
+                                            <i><img class="imgPersonal img-fluid"
+                                                    src="{{ $personal->foto == '' ? ' /img/general/default.jpg' : asset('/storage/personal/' . str_pad($personal->id, 4, '0', STR_PAD_LEFT) . '/' . $personal->foto) }}"></i>
 
-                                        <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"
-                                                id="mi-archivo" accept="image/*"></span>
-                                        <label for="mi-archivo">
-                                            <span>sube imagen</span>
-                                        </label>
+                                            <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"
+                                                    id="mi-archivo" accept="image/*"></span>
+                                            <label for="mi-archivo">
+                                                <span>sube imagen</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-8 px-2">
+                                        <div class="row alin">
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                <label class="labelTitulo">Número del Empleado:</label></br>
+                                                <input type="text" class="inputCaja" id="" name="calle"
+                                                    value="">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                <label class="labelTitulo">Nombre(s): <span>*</span></label></br>
+                                                <input type="text" class="inputCaja" id="nombres" name="nombres"
+                                                    required value="{{ $personal->nombres }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                <label class="labelTitulo">Apellido Paterno: <span>*</span></label></br>
+                                                <input type="text" class="inputCaja" id="apellidoP" name="apellidoP"
+                                                    required value="{{ $personal->apellidoP }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                <label class="labelTitulo">Apellio Materno:</label></br>
+                                                <input type="text" class="inputCaja" id="apellidoM" name="apellidoM"
+                                                    value="{{ $personal->apellidoM }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                <label class="labelTitulo">Tipo de Sangre:</label></br>
+                                                <select class="form-select" aria-label="Default select example"
+                                                    id="sangre" name="sangre">
+                                                    <option value="A+"
+                                                        {{ $personal->sangre == 'A+' ? ' selected' : '' }}>A+
+                                                    </option>
+                                                    <option
+                                                        value="A-"{{ $personal->sangre == 'A-' ? ' selected' : '' }}>A-
+                                                    </option>
+                                                    <option
+                                                        value="B+"{{ $personal->sangre == 'B+' ? ' selected' : '' }}>B+
+                                                    </option>
+                                                    <option
+                                                        value="B-"{{ $personal->sangre == 'B-' ? ' selected' : '' }}>B-
+                                                    </option>
+                                                    <option
+                                                        value="AB+"{{ $personal->sangre == 'AB+' ? ' selected' : '' }}>
+                                                        AB+</option>
+                                                    <option
+                                                        value="AB-"{{ $personal->sangre == 'AB-' ? ' selected' : '' }}>
+                                                        AB-</option>
+                                                    <option
+                                                        value="O+"{{ $personal->sangre == 'O+' ? ' selected' : '' }}>O+
+                                                    </option>
+                                                    <option
+                                                        value="O-"{{ $personal->sangre == 'O-' ? ' selected' : '' }}>O-
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                <label class="labelTitulo">Alergias:</label></br>
+                                                <input type="text" class="inputCaja" id="aler" name="aler"
+                                                    value="{{ $personal->aler }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 mb-3 ">
+                                                <label class="labelTitulo">Correo Electrónico Empresa:</label></br>
+                                                <input type="text" class="inputCaja" id="mailEmpresarial"
+                                                    name="mailEmpresarial" value="{{ $personal->mailEmpresarial }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                <label class="labelTitulo">Celular:</label></br>
+                                                <input type="text" class="inputCaja" id="celular" name="celular"
+                                                    value="{{ $personal->celular }}">
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="col-12 col-md-8 my-3">
-                                    <div class="row alin">
-                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Número del Empleado:</label></br>
-                                            <input type="text" class="inputCaja" id="" name="calle"
-                                                value="">
-                                        </div>
-
-                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Nombre(s): <span>*</span></label></br>
-                                            <input type="text" class="inputCaja" id="nombres" name="nombres" required
-                                                value="{{ $personal->nombres }}">
-                                        </div>
-
-                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Apellido Paterno: <span>*</span></label></br>
-                                            <input type="text" class="inputCaja" id="apellidoP" name="apellidoP" required
-                                                value="{{ $personal->apellidoP }}">
-                                        </div>
-
-                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Apellio Materno:</label></br>
-                                            <input type="text" class="inputCaja" id="apellidoM" name="apellidoM"
-                                                value="{{ $personal->apellidoM }}">
-                                        </div>
-
-                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Tipo de Sangre:</label></br>
-                                            <select class="form-select" aria-label="Default select example" id="sangre"
-                                                name="sangre">
-                                                <option value="A+" {{ $personal->sangre == 'A+' ? ' selected' : '' }}>A+
-                                                </option>
-                                                <option value="A-"{{ $personal->sangre == 'A-' ? ' selected' : '' }}>A-
-                                                </option>
-                                                <option value="B+"{{ $personal->sangre == 'B+' ? ' selected' : '' }}>B+
-                                                </option>
-                                                <option value="B-"{{ $personal->sangre == 'B-' ? ' selected' : '' }}>B-
-                                                </option>
-                                                <option value="AB+"{{ $personal->sangre == 'AB+' ? ' selected' : '' }}>
-                                                    AB+</option>
-                                                <option value="AB-"{{ $personal->sangre == 'AB-' ? ' selected' : '' }}>
-                                                    AB-</option>
-                                                <option value="O+"{{ $personal->sangre == 'O+' ? ' selected' : '' }}>O+
-                                                </option>
-                                                <option value="O-"{{ $personal->sangre == 'O-' ? ' selected' : '' }}>O-
-                                                </option>
-                                            </select>
-                                        </div>
-
-                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Alergias:</label></br>
-                                            <input type="text" class="inputCaja" id="aler" name="aler"
-                                                value="{{ $personal->aler }}">
-                                        </div>
-
-                                        <div class=" col-12 col-sm-6 mb-3 ">
-                                            <label class="labelTitulo">Correo Electrónico Empresa:</label></br>
-                                            <input type="text" class="inputCaja" id="mailEmpresarial"
-                                                name="mailEmpresarial" value="{{ $personal->mailEmpresarial }}">
-                                        </div>
-
-                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Celular:</label></br>
-                                            <input type="text" class="inputCaja" id="celular" name="celular"
-                                                value="{{ $personal->celular }}">
-                                        </div>
-
-                                        {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                            <label class="labelTitulo">Equipo Asignado:</label></br>
-                                            <select class="form-select" aria-label="Default select example">
-                                                <option selected>Equipo 1</option>
-                                                <option value="1">Equipo 2</option>
-                                            </select>
-                                        </div>
-
-                                        <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                            <label class="labelTitulo">Obra Asignada:</label></br>
-                                            <select class="form-select" aria-label="Default select example">
-                                                <option selected>Obra 1</option>
-                                                <option value="1">Obra 2</option>
-                                            </select>
-                                        </div>  --}}
-
-                                    </div>
-                                </div>
-                                <div class="row">
+                                <div class="row p-3">
                                     <div class=" col-12   mb-3 ">
                                         <p class="textTitulo my-2">Obra Asignada: <span>Falta Agregar Bloque</span></p>
-                                        <p class="textTitulo my-2">Equipo Asignado: <span>Falta Agregar Bloque</span>
+                                        <p class="textTitulo my-2">Maquinaria Asignada: <span>Falta Agregar Bloque</span>
                                         </p>
                                         <p class="textTitulo my-2">Fecha de Inicio: <span>Falta Agregar Bloque</span>
                                         </p>
@@ -143,13 +171,13 @@
                         {{--  Datos Personales  --}}
 
                         <div class="accordion-item">
-                            <h2 class="accordion-header " id="headingOne">
+                            <h6 class="accordion-header " id="headingOne">
                                 <button class="accordion-button bacTituloPrincipal" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#datosPersonales" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     Datos Personales
                                 </button>
-                            </h2>
+                            </h6>
                             <div id="datosPersonales" class="accordion-collapse collapse show"
                                 aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
@@ -313,13 +341,13 @@
                         </div>
                         {{--  Direcciones  --}}
                         <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingTwo">
+                            <h6 class="accordion-header" id="headingTwo">
                                 <button class="accordion-button bacTituloPrincipal" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#direcciones" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     Direcciones
                                 </button>
-                            </h2>
+                            </h6>
                             <div id="direcciones" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
@@ -329,7 +357,7 @@
                                             <div class="row alin">
 
                                                 <div class=" col-12  mb-3 border-bottom">
-                                                    <h2 class="text-start fs-5 textTitulo mb-2">Física</h2>
+                                                    <h6 class="text-start fs-5 textTitulo mb-2">Física</h6>
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  mb-3 ">
@@ -398,7 +426,7 @@
                                             <div class="row">
 
                                                 <div class=" col-12  mb-3 border-bottom">
-                                                    <h2 class="text-start fs-5 textTitulo mb-2">Fiscal</h2>
+                                                    <h6 class="text-start fs-5 textTitulo mb-2">Fiscal</h6>
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  mb-3 ">
@@ -462,13 +490,13 @@
                         </div>
                         {{--  Datos Familiares  --}}
                         <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree">
+                            <h6 class="accordion-header" id="headingThree">
                                 <button class="accordion-button bacTituloPrincipal" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#datosFamiliares" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     Datos Familiares
                                 </button>
-                            </h2>
+                            </h6>
                             <div id="datosFamiliares" class="accordion-collapse collapse" aria-labelledby="headingThree"
                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
@@ -478,7 +506,7 @@
                                             <div class="row alin">
 
                                                 <div class=" col-12  mb-3 border-bottom">
-                                                    <h2 class="text-start fs-5 textTitulo mb-2">Personales</h2>
+                                                    <h6 class="text-start fs-5 textTitulo mb-2">Personales</h6>
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6   mb-3 ">
@@ -524,8 +552,8 @@
                                             <div class="row">
 
                                                 <div class=" col-12  mb-3 border-bottom"><br>
-                                                    <h2 class="text-start fs-5 textTitulo mb-2">Beneficiario
-                                                    </h2>
+                                                    <h6 class="text-start fs-5 textTitulo mb-2">Beneficiario
+                                                    </h6>
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
@@ -573,13 +601,13 @@
                         </div>
                         {{-- Nomina   --}}
                         <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree">
+                            <h6 class="accordion-header" id="headingThree">
                                 <button class="accordion-button bacTituloPrincipal" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#datosNomina" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     Datos de Nómina
                                 </button>
-                            </h2>
+                            </h6>
                             <div id="datosNomina" class="accordion-collapse collapse" aria-labelledby="headingThree"
                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
@@ -806,13 +834,13 @@
                         </div>
                         {{--  Uniforme  --}}
                         <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree">
+                            <h6 class="accordion-header" id="headingThree">
                                 <button class="accordion-button bacTituloPrincipal" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#uniforme" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     Uniforme
                                 </button>
-                            </h2>
+                            </h6>
                             <div id="uniforme" class="accordion-collapse collapse" aria-labelledby="headingThree"
                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
@@ -938,13 +966,13 @@
                         </div>
                         {{--  Asignacion de Equipo  --}}
                         <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree">
+                            <h6 class="accordion-header" id="headingThree">
                                 <button class="accordion-button bacTituloPrincipal" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#equipoAsignado" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     Equipo Asignado
                                 </button>
-                            </h2>
+                            </h6>
                             <div id="equipoAsignado" class="accordion-collapse collapse" aria-labelledby="headingThree"
                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
@@ -1026,13 +1054,13 @@
                         </div>
                         {{--  Documentacion  --}}
                         <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree">
+                            <h6 class="accordion-header" id="headingThree">
                                 <button class="accordion-button bacTituloPrincipal" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#documentos" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     Documentos
                                 </button>
-                            </h2>
+                            </h6>
                             <div id="documentos" class="accordion-collapse collapse" aria-labelledby="headingThree"
                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
@@ -1291,7 +1319,8 @@
                                                                 <label class="custom-file-upload">
                                                                     <input class="mb-4" type="file" name="dfiscal"
                                                                         id="foto" accept=".pdf">
-                                                                    <lord-icon src="https://cdn.lordicon.com/koyivthb.json"
+                                                                    <lord-icon
+                                                                        src="https://cdn.lordicon.com/koyivthb.json"
                                                                         trigger="hover"
                                                                         colors="primary:#86c716,secondary:#e8e230"
                                                                         stroke="65" style="width:50px;height:70px">
@@ -1736,13 +1765,13 @@
                         </div>
                         {{--  estatus  --}}
                         <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree">
+                            <h6 class="accordion-header" id="headingThree">
                                 <button class="accordion-button bacTituloPrincipal" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#estatus" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     Sistema
                                 </button>
-                            </h2>
+                            </h6>
                             <div id="estatus" class="accordion-collapse collapse" aria-labelledby="headingThree"
                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">

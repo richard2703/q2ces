@@ -18,20 +18,20 @@ Route::get('/', function () {
 });
 
 /* Mis rutas */
-Route::get('/index', function () {
-    return view('inventario.indexInventario');
-});
+// Route::get('/index', function () {
+//     return view('inventario.indexInventario');
+// });
 
-Route::get('/nuevo', function () {
-    return view('inventario.inventarioNuevo');
-});
-Route::get('/modifi', function () {
-    return view('inventario.inventarioModifi');
-});
+// Route::get('/nuevo', function () {
+//     return view('inventario.inventarioNuevo');
+// });
+// Route::get('/modifi', function () {
+//     return view('inventario.inventarioModifi');
+// });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// });
 
 // Route::get('users/export/', [UserController::class, 'export']);
 Route::get('/usuarios/export', [App\Http\Controllers\UserController::class, 'export'])->name('users.export');
@@ -66,62 +66,17 @@ Route::get('/asistencia/export', [App\Http\Controllers\asistenciaController::cla
 
 
 //Inventario
-Route::get('/dashInventario', function () {
-    return view('inventario.dashInventario');
-});
-Route::get('/indexInventario', function () {
-    return view('inventario.indexInventario');
-});
+// Route::get('/dashInventario', function () {
+//     return view('inventario.dashInventario');
+// });
+// Route::get('/indexInventario', function () {
+//     return view('inventario.indexInventario');
+// });
 
-Route::get('/detalleHerramienta', function () {
-    return view('inventario.detalleHerramienta');
-});
+// Route::get('/detalleHerramienta', function () {
+//     return view('inventario.detalleHerramienta');
+// });
 
- Route::get('/checkList', function () {
-     return view('checkList.checkList');
- });
-
-
- Route::get('/nuevoCheck', function () {
-     return view('checkList.nuevoCheck');
- });
-
- Route::get('/editarTareaCheck', function () {
-    return view('checkList.editarTareaCheck');
-});
-
- Route::get('/nuevaTareaCheck', function () {
-    return view('checkList.nuevaTareaCheck');
-});
-
-Route::get('/indexBitacora', function () {
-    return view('bitacora.indexBitacora');
-});
-
-
-Route::get('/nuevoBitacora', function () {
-    return view('bitacora.nuevoBitacora');
-});
-
-Route::get('/editarBitacora', function () {
-    return view('bitacora.editarBitacora');
-});
-
-Route::get('/tareas', function () {
-    return view('tareas.tareas');
-});
-
-Route::get('/indexGrupos', function () {
-    return view('grupos.indexGrupos');
-});
-
-Route::get('/nuevoGrupo', function () {
-    return view('grupos.nuevoGrupo');
-});
-
-Route::get('/editarGupo', function () {
-    return view('grupos.editarGupo');
-});
 
 
 
@@ -169,6 +124,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/personal/{personal}', [App\Http\Controllers\personalController::class, 'update'])->name('personal.update');
     Route::get('personal/{id}/{doc}', [App\Http\Controllers\personalController::class, 'download'])->name('personal.download');
     Route::delete('/personal/{personal}', [App\Http\Controllers\personalController::class, 'destroy'])->name('personal.delete');
+    Route::get('personal/asignar/{personal}/equipo', [App\Http\Controllers\personalController::class, 'edit'])->name('personal.equipo');
+    Route::put('personal/asignar/{personal}/equipo', [App\Http\Controllers\personalController::class, 'asignacion'])->name('personal.equipo.asignacion');
 
     //*** catalogos */
     Route::get('/catalogos/puestos', [App\Http\Controllers\catalogosController::class, 'indexPuestos'])->name('catalogoPuestos.index');
@@ -240,22 +197,22 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/calendario/mantenimientos/nuevo', [App\Http\Controllers\mantenimientosController::class, 'store'])->name('mantenimientos.store');
     Route::put('/calendario/mantenimientos/editar', [App\Http\Controllers\mantenimientosController::class, 'update'])->name('mantenimientos.update');
 
-//Mantenimiento
-Route::get('/mantenimientos', [App\Http\Controllers\mantenimientosController::class, 'index'])->name('mantenimientos.index');
-Route::get('/mantenimientos/nuevo/', [App\Http\Controllers\mantenimientosController::class, 'create'])->name('mantenimientos.create');
-Route::post('/mantenimientos/nuevo/add', [App\Http\Controllers\mantenimientosController::class, 'store'])->name('mantenimientos.store');
-Route::get('/mantenimientos/editar/{id}', [App\Http\Controllers\mantenimientosController::class, 'edit'])->name('mantenimientos.edit');
-Route::put('/mantenimiento/editar/{id}/update', [App\Http\Controllers\mantenimientosController::class, 'update'])->name('mantenimientos.update');
-// Route::get('/mantenimientos', function () {
-//     return view('mantenimientos.mantenimientos');
-// });
+    //Mantenimiento
+    Route::get('/mantenimientos', [App\Http\Controllers\mantenimientosController::class, 'index'])->name('mantenimientos.index');
+    Route::get('/mantenimientos/nuevo/', [App\Http\Controllers\mantenimientosController::class, 'create'])->name('mantenimientos.create');
+    Route::post('/mantenimientos/nuevo/add', [App\Http\Controllers\mantenimientosController::class, 'store'])->name('mantenimientos.store');
+    Route::get('/mantenimientos/editar/{id}', [App\Http\Controllers\mantenimientosController::class, 'edit'])->name('mantenimientos.edit');
+    Route::put('/mantenimiento/editar/{id}/update', [App\Http\Controllers\mantenimientosController::class, 'update'])->name('mantenimientos.update');
+    // Route::get('/mantenimientos', function () {
+    //     return view('mantenimientos.mantenimientos');
+    // });
 
-// Route::get('/nuevoMantenimiento', function () {
-//     return view('mantenimientos.nuevoMantenimiento');
-// });
-// Route::get('/editarMantenimientos', function () {
-//     return view('mantenimientos.editarMantenimientos');
-// });
+    // Route::get('/nuevoMantenimiento', function () {
+    //     return view('mantenimientos.nuevoMantenimiento');
+    // });
+    // Route::get('/editarMantenimientos', function () {
+    //     return view('mantenimientos.editarMantenimientos');
+    // });
 
 
     //*** operaciones con reparaciones */
@@ -299,8 +256,73 @@ Route::put('/mantenimiento/editar/{id}/update', [App\Http\Controllers\mantenimie
 
     Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');
     Route::get('search/materialMantenimiento', [App\Http\Controllers\searchController::class, 'materialMantenimiento'])->name('search.materialMantenimiento');
+    Route::get('search/tareasParaGrupos', [App\Http\Controllers\searchController::class, 'tareasParaGrupos'])->name('search.tareasParaGrupos');
+    Route::get('search/gruposParaBitacoras', [App\Http\Controllers\searchController::class, 'gruposParaBitacoras'])->name('search.gruposParaBitacoras');
 
 
+    // Tareas de bitacoras
 
+    Route::get('/bitacoras/', [App\Http\Controllers\bitacorasController::class, 'index'])->name('bitacoras.index');
+    Route::get('/bitacoras/bitacora/nuevo/', [App\Http\Controllers\bitacorasController::class, 'create'])->name('bitacoras.create');
+    Route::post('/bitacoras/bitacora/nuevo', [App\Http\Controllers\bitacorasController::class, 'store'])->name('bitacoras.store');
+    Route::get('/bitacoras/bitacora/editar/{id}', [App\Http\Controllers\bitacorasController::class, 'edit'])->name('bitacoras.edit');
+    Route::put('/bitacoras/bitacora/editar/{bitacoras}', [App\Http\Controllers\bitacorasController::class, 'update'])->name('bitacoras.update');
+
+    Route::get('/bitacoras/grupos', [App\Http\Controllers\grupoController::class, 'index'])->name('grupo.index');
+    Route::get('/bitacoras/grupos/nuevo/', [App\Http\Controllers\grupoController::class, 'create'])->name('grupo.create');
+    Route::post('/bitacoras/grupos/nuevo', [App\Http\Controllers\grupoController::class, 'store'])->name('grupo.store');
+    Route::get('/bitacoras/grupos/editar/{id}', [App\Http\Controllers\grupoController::class, 'edit'])->name('grupo.edit');
+    Route::put('/bitacoras/grupos/editar/{grupo}', [App\Http\Controllers\grupoController::class, 'update'])->name('grupo.update');
+
+    Route::get('/bitacoras/tareas', [App\Http\Controllers\tareaController::class, 'index'])->name('tarea.index');
+    Route::post('/bitacoras/tareas/nueva', [App\Http\Controllers\tareaController::class, 'store'])->name('tarea.store');
+    Route::put('/bitacoras/tareas/editar/{tarea}', [App\Http\Controllers\tareaController::class, 'update'])->name('tarea.update');
+
+    // Route::get('/tareas', function () {
+    //     return view('tareas.tareas');
+    // });
+
+    Route::get('/checkList', function () {
+        return view('checkList.checkList');
+    });
+
+
+    Route::get('/nuevoCheck', function () {
+        return view('checkList.nuevoCheck');
+    });
+
+    Route::get('/editarTareaCheck', function () {
+       return view('checkList.editarTareaCheck');
+   });
+
+    Route::get('/nuevaTareaCheck', function () {
+       return view('checkList.nuevaTareaCheck');
+   });
+
+//    Route::get('/indexBitacora', function () {
+//        return view('bitacora.indexBitacora');
+//    });
+
+
+   Route::get('/nuevoBitacora', function () {
+       return view('bitacora.nuevoBitacora');
+   });
+
+   Route::get('/editarBitacora', function () {
+       return view('bitacora.editarBitacora');
+   });
+
+
+//    Route::get('/indexgrupo', function () {
+//        return view('grupo.indexgrupo');
+//    });
+
+//    Route::get('/nuevoGrupo', function () {
+//        return view('grupo.nuevoGrupo');
+//    });
+
+//    Route::get('/editarGupo', function () {
+//        return view('grupo.editarGrupo');
+//    });
 
 });

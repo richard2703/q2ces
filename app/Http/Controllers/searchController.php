@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 use App\Models\maquinaria;
 use App\Models\inventario;
+use App\Models\tarea;
+use App\Models\grupo;
 
 class searchController extends Controller
 {
@@ -150,6 +152,64 @@ class searchController extends Controller
                 'numparte' => $item->numparte,
                 'tipo' => $item->tipo,
                 'modelo' => $item->modelo,
+            ];
+        }
+
+        return $sugerencias;
+        // return response()->json( $sugerencias );
+    }
+
+    /**
+     * Busca material para el mantenimiento de equipos
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function tareasParaGrupos(Request $request)
+    {
+        //  dd( $request );
+        // $term = $request->input( 'term' );
+        $term = $request->get( 'term' );
+
+        $tareas = tarea::where( 'nombre', 'LIKE', '%' . $term . '%' )
+        ->orwhere( 'comentario', 'LIKE', '%' . $term . '%' )->get();
+
+        $sugerencias = [];
+        foreach ( $tareas as $item ) {
+            $sugerencias[] = [
+                'value' => 'Tarea: ' . $item->nombre . ', '. $item->comentario,
+                'id' => $item->id,
+                'nombre' => $item->nombre,
+                'comentario' => $item->comentario,
+            ];
+        }
+
+        return $sugerencias;
+        // return response()->json( $sugerencias );
+    }
+
+    /**
+     * Busca material para el mantenimiento de equipos
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function gruposParaBitacoras(Request $request)
+    {
+        //  dd( $request );
+        // $term = $request->input( 'term' );
+        $term = $request->get( 'term' );
+
+        $grupos = grupo::where( 'nombre', 'LIKE', '%' . $term . '%' )
+        ->orwhere( 'comentario', 'LIKE', '%' . $term . '%' )->get();
+
+        $sugerencias = [];
+        foreach ( $grupos as $item ) {
+            $sugerencias[] = [
+                'value' => 'Grupo de Tareas: ' . $item->nombre . ', '. $item->comentario,
+                'id' => $item->id,
+                'nombre' => $item->nombre,
+                'comentario' => $item->comentario,
             ];
         }
 

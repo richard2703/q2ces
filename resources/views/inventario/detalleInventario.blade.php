@@ -78,26 +78,26 @@
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Cantidad a ingresar:</label></br>
-                                            <input type="number" step="0.01" min="0.01" class="inputCaja"
+                                            <input type="number" step="0.01" min="0.01" class="inputCaja text-end"
                                                 id="cantidad" name="cantidad" value="{{ $inventario->cantidad }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Minimo:</label></br>
-                                            <input type="number" step="0.01" min="0.01" class="inputCaja"
+                                            <input type="number" step="0.01" min="0.01" class="inputCaja text-end"
                                                 id="reorden" name="reorden" value="{{ $inventario->reorden }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Maximo:</label></br>
-                                            <input type="number" step="0.01" min="0.01" class="inputCaja"
+                                            <input type="number" step="0.01" min="0.01" class="inputCaja text-end"
                                                 id="maximo" name="maximo" value="{{ $inventario->maximo }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Costo unitario:</label></br>
-                                            <input type="number" step="0.01" min="0.01" class="inputCaja"
-                                                id="valor" name="valor" value="{{ $inventario->Valor }}">
+                                            <input type="number" step="0.01" min="0.01" class="inputCaja text-end"
+                                                id="valor" name="valor" value="{{ $inventario->valor }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-6 mb-5 ">
@@ -112,6 +112,12 @@
                                                 </option>
                                                 <option value="consumibles"
                                                     {{ $inventario->tipo == 'consumibles' ? ' selected' : '' }}>Consumible
+                                                </option>
+                                                <option value="uniformes"
+                                                    {{ $inventario->tipo == 'uniformes' ? ' selected' : '' }}>Uniformes
+                                                </option>
+                                                <option value="extintores"
+                                                    {{ $inventario->tipo == 'extintores' ? ' selected' : '' }}>Extintores
                                                 </option>
                                             </select>
                                         </div>
