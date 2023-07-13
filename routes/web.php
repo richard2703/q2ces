@@ -77,20 +77,20 @@ Route::get('/detalleHerramienta', function () {
     return view('inventario.detalleHerramienta');
 });
 
- Route::get('/checkList', function () {
-     return view('checkList.checkList');
- });
+Route::get('/checkList', function () {
+    return view('checkList.checkList');
+});
 
 
- Route::get('/nuevoCheck', function () {
-     return view('checkList.nuevoCheck');
- });
+Route::get('/nuevoCheck', function () {
+    return view('checkList.nuevoCheck');
+});
 
- Route::get('/editarTareaCheck', function () {
+Route::get('/editarTareaCheck', function () {
     return view('checkList.editarTareaCheck');
 });
 
- Route::get('/nuevaTareaCheck', function () {
+Route::get('/nuevaTareaCheck', function () {
     return view('checkList.nuevaTareaCheck');
 });
 
@@ -169,6 +169,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/personal/{personal}', [App\Http\Controllers\personalController::class, 'update'])->name('personal.update');
     Route::get('personal/{id}/{doc}', [App\Http\Controllers\personalController::class, 'download'])->name('personal.download');
     Route::delete('/personal/{personal}', [App\Http\Controllers\personalController::class, 'destroy'])->name('personal.delete');
+    Route::get('personal/asignar/{personal}/equipo', [App\Http\Controllers\personalController::class, 'edit'])->name('personal.equipo');
+    Route::put('personal/asignar/{personal}/equipo', [App\Http\Controllers\personalController::class, 'asignacion'])->name('personal.equipo.asignacion');
 
     //*** catalogos */
     Route::get('/catalogos/puestos', [App\Http\Controllers\catalogosController::class, 'indexPuestos'])->name('catalogoPuestos.index');
@@ -193,7 +195,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('maquinaria/{id}/{doc}/download', [App\Http\Controllers\maquinariaController::class, 'download'])->name('maquinaria.download');
     Route::post('maquinaria/upload', [App\Http\Controllers\maquinariaController::class, 'upload'])->name('maquinaria.upload');
     Route::get('/maquinaria/{maquinaria}/edit', [App\Http\Controllers\maquinariaController::class, 'edit'])->name('maquinaria.edit');
-    Route::delete('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'destroy'])->name('maquinaria.delete');
+    Route::delete('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'equipo'])->name('maquinaria.delete');
 
     //Crud accesorios
     Route::get('/accesorios/nuevo', [App\Http\Controllers\accesoriosController::class, 'create'])->name('accesorios.create');
@@ -238,22 +240,22 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/calendario/mantenimientos/nuevo', [App\Http\Controllers\mantenimientosController::class, 'store'])->name('mantenimientos.store');
     Route::put('/calendario/mantenimientos/editar', [App\Http\Controllers\mantenimientosController::class, 'update'])->name('mantenimientos.update');
 
-//Mantenimiento
-Route::get('/mantenimientos', [App\Http\Controllers\mantenimientosController::class, 'index'])->name('mantenimientos.index');
-Route::get('/mantenimientos/nuevo/', [App\Http\Controllers\mantenimientosController::class, 'create'])->name('mantenimientos.create');
-Route::post('/mantenimientos/nuevo/add', [App\Http\Controllers\mantenimientosController::class, 'store'])->name('mantenimientos.store');
-Route::get('/mantenimientos/editar/{id}', [App\Http\Controllers\mantenimientosController::class, 'edit'])->name('mantenimientos.edit');
-Route::put('/mantenimiento/editar/{id}/update', [App\Http\Controllers\mantenimientosController::class, 'update'])->name('mantenimientos.update');
-// Route::get('/mantenimientos', function () {
-//     return view('mantenimientos.mantenimientos');
-// });
+    //Mantenimiento
+    Route::get('/mantenimientos', [App\Http\Controllers\mantenimientosController::class, 'index'])->name('mantenimientos.index');
+    Route::get('/mantenimientos/nuevo/', [App\Http\Controllers\mantenimientosController::class, 'create'])->name('mantenimientos.create');
+    Route::post('/mantenimientos/nuevo/add', [App\Http\Controllers\mantenimientosController::class, 'store'])->name('mantenimientos.store');
+    Route::get('/mantenimientos/editar/{id}', [App\Http\Controllers\mantenimientosController::class, 'edit'])->name('mantenimientos.edit');
+    Route::put('/mantenimiento/editar/{id}/update', [App\Http\Controllers\mantenimientosController::class, 'update'])->name('mantenimientos.update');
+    // Route::get('/mantenimientos', function () {
+    //     return view('mantenimientos.mantenimientos');
+    // });
 
-// Route::get('/nuevoMantenimiento', function () {
-//     return view('mantenimientos.nuevoMantenimiento');
-// });
-// Route::get('/editarMantenimientos', function () {
-//     return view('mantenimientos.editarMantenimientos');
-// });
+    // Route::get('/nuevoMantenimiento', function () {
+    //     return view('mantenimientos.nuevoMantenimiento');
+    // });
+    // Route::get('/editarMantenimientos', function () {
+    //     return view('mantenimientos.editarMantenimientos');
+    // });
 
 
     //*** operaciones con reparaciones */
@@ -297,8 +299,4 @@ Route::put('/mantenimiento/editar/{id}/update', [App\Http\Controllers\mantenimie
 
     Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');
     Route::get('search/materialMantenimiento', [App\Http\Controllers\searchController::class, 'materialMantenimiento'])->name('search.materialMantenimiento');
-
-
-
-
 });

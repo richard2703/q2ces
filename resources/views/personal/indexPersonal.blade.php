@@ -11,6 +11,7 @@
                                     <h4 class="card-title">Personal</h4>
                                     {{-- <p class="card-category">Usuarios registrados</p> --}}
                                 </div>
+
                                 <div class="card-body">
                                     @if (session('success'))
                                         <div class="alert alert-success" role="success">
@@ -22,8 +23,8 @@
                                             {{ session('faild') }}
                                         </div>
                                     @endif
-                                    <div class="row">
-                                        <div class="col-12 text-right">
+                                    <div class="row divBorder">
+                                        <div class="col-12 pb-3 text-end">
                                             @can('personal_create')
                                                 <a href="{{ route('personal.create') }}">
                                                     <button type="button" class="btn botonGral">Añadir personal</button>
