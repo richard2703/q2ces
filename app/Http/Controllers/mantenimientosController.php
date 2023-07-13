@@ -6,13 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\DB;
 use App\Helpers\Validaciones;
 use App\Helpers\Calculos;
 use App\Models\mantenimientos;
 use App\Models\gastosMantenimiento;
 use App\Models\maquinaria;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\DB;
 
 class mantenimientosController extends Controller {
     /**

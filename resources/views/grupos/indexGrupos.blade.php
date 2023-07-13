@@ -56,7 +56,7 @@
                                                         <td class="td-actions text-right">
 
                                                             @can('grupo_edit')
-                                                                <a href="{{ url('/editarGupo') }}" class="">
+                                                                <a href="{{ url('/bitacoras/grupos/editar/' . $item->id ) }}" class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                         height="28" fill="currentColor" title="Editar"
                                                                         class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
