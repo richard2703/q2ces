@@ -26,6 +26,7 @@
 
 --fondo:#F8F9F7;
 --verde:#8EB322;
+--verdeF:#5C7C26 ;
 --amarillo:#F7C90D;
 --texto: #3C4858;
 --select: #727176;
@@ -699,6 +700,37 @@ button.regresar:hover{
 .corte{
   border-left: 1px solid var(--verde);
   border-right: 1px solid var(--verde);
+
+}
+
+/*--------------------------------------------------------------
+# Separadores
+--------------------------------------------------------------*/
+.divBorderItems {
+  border-bottom: var(--verde) solid 1px;
+}
+
+/*--------------------------------------------------------------
+# inputs
+--------------------------------------------------------------*/
+.inputComent{
+  display: block;
+    width: 100%;
+    padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    background-color: #fff;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    border: 1px solid var(--verdeF);
+    border-radius: 0.375rem;
+
+}
+.inputComent:focus,
+.inputComent:active{
+    box-shadow: 2px 2px 10px 2px var(--amarillo);
+    border: 1px solid var(--verdeF);
 
 }
 

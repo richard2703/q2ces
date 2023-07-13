@@ -321,6 +321,7 @@ CREATE TABLE personal(
     ine varchar(20) NULL,
     rfc varchar(20) NULL,
     licencia varchar(20) NULL,
+    tipoLicencia varchar(200) null,
     cpf varchar(25) NULL,
     cpe varchar(25) NULL,
     sexo varchar(10) NULL,
@@ -368,6 +369,29 @@ CREATE TABLE equipo(
     cargadorSerial varchar(200) null,
     PRIMARY KEY (id),
     CONSTRAINT FK_equipo_personalId foreign key (personalId) references personal(id)
+);
+
+CREATE TABLE tipoEquipo(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    Nombre int not null,
+    tipo varchar(200) not NULL,
+    comentario text null,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE asignacionEquipo(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    personalId bigint(20) unsigned NOT NULL,
+    equipoId bigint(20) unsigned NOT NULL,
+    cantidad int not null,
+    marca varchar(200) NULL,
+    serial varchar(200) NULL,
+    comentario text null,
+    created_at timestamp NULL DEFAULT NULL,
+    updated_at timestamp NULL DEFAULT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_asignacionEquipo_personalId foreign key (personalId) references personal(id),
+    CONSTRAINT FK_asignacionEquipo_equipoId foreign key (equipoId) references tipoEquipo(id)
 );
 
 CREATE TABLE userdocs(

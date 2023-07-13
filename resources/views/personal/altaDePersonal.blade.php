@@ -14,24 +14,24 @@
         @endif
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-11 align-self-start">
+                <div class="col-12 align-self-start">
                     <div class="card">
                         <div class="card-body contCart">
-                            <form class="row alertaGuardar" action="{{ route('personal.store') }}" method="post"
+                            <form class=" alertaGuardar" action="{{ route('personal.store') }}" method="post"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="estatusId" id="estatusId" value="1">
-                                <div class="accordion my-3" id="accordionExample">
+                                <div class="accordion " id="accordionExample">
                                     {{--  Datos Personales  --}}
 
                                     <div class="accordion-item">
-                                        <h2 class="accordion-header " id="headingOne">
+                                        <h6 class="accordion-header " id="headingOne">
                                             <button class="accordion-button bacTituloPrincipal" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#datosPersonales"
                                                 aria-expanded="true" aria-controls="collapseOne">
                                                 Datos Personales
                                             </button>
-                                        </h2>
+                                        </h6>
                                         <div id="datosPersonales" class="accordion-collapse collapse show"
                                             aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
@@ -135,6 +135,13 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                                <label class="labelTitulo">Tipo de licencia:</label></br>
+                                                                <input type="email" class="inputCaja" id="tipoLicencia"
+                                                                    name="tipoLicencia"
+                                                                    value="{{ old('tipoLicencia') }}">
+                                                            </div>
+
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Cédula Profesional
                                                                     Federal:</label></br>
                                                                 <input type="text" class="inputCaja" id="cpf"
@@ -208,14 +215,6 @@
                                                                     name="mailpersonal"
                                                                     value="{{ old('mailpersonal') }}">
                                                             </div>
-
-                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Correo Electrónico
-                                                                    Empresa:</label></br>
-                                                                <input type="email" class="inputCaja"
-                                                                    id="mailEmpresarial" name="mailEmpresarial"
-                                                                    value="{{ old('mailEmpresarial') }}">
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -224,13 +223,13 @@
                                     </div>
                                     {{--  Direcciones  --}}
                                     <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingTwo">
+                                        <h6 class="accordion-header" id="headingTwo">
                                             <button class="accordion-button bacTituloPrincipal" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#direcciones"
                                                 aria-expanded="true" aria-controls="collapseOne">
                                                 Direcciones
                                             </button>
-                                        </h2>
+                                        </h6>
                                         <div id="direcciones" class="accordion-collapse collapse"
                                             aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
@@ -240,7 +239,7 @@
                                                         <div class="row alin">
 
                                                             <div class=" col-12  mb-3 border-bottom">
-                                                                <h2 class="text-start fs-5 textTitulo mb-2">Física</h2>
+                                                                <h6 class="text-start fs-5 textTitulo mb-2">Física</h6>
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
@@ -309,7 +308,7 @@
                                                         <div class="row">
 
                                                             <div class=" col-12  mb-3 border-bottom">
-                                                                <h2 class="text-start fs-5 textTitulo mb-2">Fiscal</h2>
+                                                                <h6 class="text-start fs-5 textTitulo mb-2">Fiscal</h6>
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
@@ -380,13 +379,13 @@
                                     </div>
                                     {{--  Datos Familiares  --}}
                                     <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingThree">
+                                        <h6 class="accordion-header" id="headingThree">
                                             <button class="accordion-button bacTituloPrincipal" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#datosFamiliares"
                                                 aria-expanded="true" aria-controls="collapseOne">
                                                 Datos Familiares
                                             </button>
-                                        </h2>
+                                        </h6>
                                         <div id="datosFamiliares" class="accordion-collapse collapse"
                                             aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
@@ -396,7 +395,7 @@
                                                         <div class="row alin">
 
                                                             <div class=" col-12  mb-3 border-bottom">
-                                                                <h2 class="text-start fs-5 textTitulo mb-2">Personales</h2>
+                                                                <h6 class="text-start fs-5 textTitulo mb-2">Personales</h6>
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6   mb-3 ">
@@ -444,8 +443,8 @@
                                                         <div class="row">
 
                                                             <div class=" col-12  mb-3 border-bottom"><br>
-                                                                <h2 class="text-start fs-5 textTitulo mb-2">Beneficiario
-                                                                </h2>
+                                                                <h6 class="text-start fs-5 textTitulo mb-2">Beneficiario
+                                                                </h6>
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
@@ -494,13 +493,13 @@
                                     </div>
                                     {{-- Nomina   --}}
                                     <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingThree">
+                                        <h6 class="accordion-header" id="headingThree">
                                             <button class="accordion-button bacTituloPrincipal" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#datosNomina"
                                                 aria-expanded="true" aria-controls="collapseOne">
                                                 Datos de Nómina
                                             </button>
-                                        </h2>
+                                        </h6>
                                         <div id="datosNomina" class="accordion-collapse collapse"
                                             aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
@@ -733,13 +732,13 @@
                                     </div>
                                     {{--  Uniforme  --}}
                                     <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingThree">
+                                        <h6 class="accordion-header" id="headingThree">
                                             <button class="accordion-button bacTituloPrincipal" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#uniforme" aria-expanded="true"
                                                 aria-controls="collapseOne">
                                                 Uniforme
                                             </button>
-                                        </h2>
+                                        </h6>
                                         <div id="uniforme" class="accordion-collapse collapse"
                                             aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
@@ -828,14 +827,14 @@
                                         </div>
                                     </div>
                                     {{--  Asignacion de Equipo  --}}
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingThree">
+                                    {{--  <div class="accordion-item">
+                                        <h6 class="accordion-header" id="headingThree">
                                             <button class="accordion-button bacTituloPrincipal" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#equipoAsignado"
                                                 aria-expanded="true" aria-controls="collapseOne">
                                                 Equipo Asignado
                                             </button>
-                                        </h2>
+                                        </h6>
                                         <div id="equipoAsignado" class="accordion-collapse collapse"
                                             aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
@@ -843,21 +842,6 @@
 
                                                     <div class="col-12 border-end">
                                                         <div class="row alin">
-
-                                                            {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                                <label class="labelTitulo">Automóvil 1
-                                                                    Asignado:</label></br>
-                                                                <input type="text" class="inputCaja" id=""
-                                                                    name="calle1" value="" placeholder="Marca">
-                                                            </div>
-
-                                                            <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                                <label class="labelTitulo">Automóvil 2
-                                                                    Asignado:</label></br>
-                                                                <input type="text" class="inputCaja" id=""
-                                                                    name="calle1" value="">
-                                                            </div>  --}}
-
                                                             <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                                 <label class="labelTitulo">Equipo de Cómputo:</label></br>
                                                                 <input type="text" class="inputCaja" id=""
@@ -870,12 +854,6 @@
                                                                 <input type="text" class="inputCaja" id=""
                                                                     name="pcSerial" value="{{ old('pcSerial') }}">
                                                             </div>
-
-                                                            {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                                <label class="labelTitulo">Accesorios:</label></br>
-                                                                <input type="text" class="inputCaja" id=""
-                                                                    name="calle1" value="">
-                                                            </div>  --}}
 
                                                             <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
                                                                 <label class="labelTitulo">Teléfono Celular:</label></br>
@@ -916,16 +894,16 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>  --}}
                                     {{--  Documentacion  --}}
                                     <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingThree">
+                                        <h6 class="accordion-header" id="headingThree">
                                             <button class="accordion-button bacTituloPrincipal" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#documentos"
                                                 aria-expanded="true" aria-controls="collapseOne">
                                                 Documentos
                                             </button>
-                                        </h2>
+                                        </h6>
                                         <div id="documentos" class="accordion-collapse collapse"
                                             aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
