@@ -11,7 +11,6 @@
                                     <h4 class="card-title">Editar Grupo</h4>
                                 </div>
                                 <div class="card-body ">
-
                                     <form class="row alertaGuardar" action="{{ route('grupo.update', $grupo->id) }}"
                                         method="post" enctype="multipart/form-data">
                                         @csrf

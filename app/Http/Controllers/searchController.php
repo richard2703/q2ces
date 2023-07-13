@@ -188,5 +188,34 @@ class searchController extends Controller
         // return response()->json( $sugerencias );
     }
 
+    /**
+     * Busca material para el mantenimiento de equipos
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function gruposParaBitacoras(Request $request)
+    {
+        //  dd( $request );
+        // $term = $request->input( 'term' );
+        $term = $request->get( 'term' );
+
+        $grupos = grupo::where( 'nombre', 'LIKE', '%' . $term . '%' )
+        ->orwhere( 'comentario', 'LIKE', '%' . $term . '%' )->get();
+
+        $sugerencias = [];
+        foreach ( $grupos as $item ) {
+            $sugerencias[] = [
+                'value' => 'Grupo de Tareas: ' . $item->nombre . ', '. $item->comentario,
+                'id' => $item->id,
+                'nombre' => $item->nombre,
+                'comentario' => $item->comentario,
+            ];
+        }
+
+        return $sugerencias;
+        // return response()->json( $sugerencias );
+    }
+
 
 }

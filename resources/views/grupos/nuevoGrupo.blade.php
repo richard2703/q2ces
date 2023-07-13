@@ -29,7 +29,7 @@
                                                         placeholder="Escribe aquí tus comentarios sobre el grupo."></textarea>
                                                 </div>
 
-                                                <input type="hidden" name="activo" id="activo" value="1">
+                                                <input type="hidden" name="activa" id="activa" value="1">
 
 
                                                 <div class="col-12 text-center mt-5 pt-5">

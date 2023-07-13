@@ -6,7 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Carbon;
+use App\Models\bitacoras;
+use App\Models\grupo;
+use App\Models\grupoBitacoras;
+use App\Helpers\Validaciones;
 
 class bitacorasController extends Controller {
     /**
@@ -19,9 +25,11 @@ class bitacorasController extends Controller {
 
         abort_if ( Gate::denies( 'bitacora_index' ), 403 );
 
-        return view( 'bitacora.indexBitacora', );
-    }
+        $vctBitacoras = bitacoras::select( 'bitacoras.*', )
+        ->orderBy( 'created_at', 'desc' )->paginate( 15 );
 
+        return view( 'bitacora.indexBitacora', compact( 'vctBitacoras' ) );
+    }
 
     /**
     * Show the form for creating a new resource.
@@ -30,7 +38,13 @@ class bitacorasController extends Controller {
     */
 
     public function create() {
-        //
+
+        abort_if ( Gate::denies( 'bitacora_create' ), 403 );
+
+        $vctGrupos = grupo::select( 'grupo.*', )
+        ->orderBy( 'created_at', 'desc' )->get();
+
+        return view( 'bitacora.nuevoBitacora', compact( 'vctGrupos' ) );
     }
 
     /**
@@ -41,7 +55,23 @@ class bitacorasController extends Controller {
     */
 
     public function store( Request $request ) {
-        //
+        // dd( $request );
+
+        abort_if ( Gate::denies( 'bitacora_create' ), 403 );
+
+        $request->validate( [
+            'nombre' => 'required|max:250',
+            'comentario' => 'nullable|max:500',
+        ], [
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
+            'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+        ] );
+        $bitacoras = $request->all();
+
+        $bitacoras = bitacoras::create( $bitacoras );
+        Session::flash( 'message', 1 );
+        return redirect()->route( 'bitacoras.edit', $bitacoras->id )->with( 'success', 'Bitácora creada correctamente.' );
     }
 
     /**
@@ -63,7 +93,22 @@ class bitacorasController extends Controller {
     */
 
     public function edit( $id ) {
-        //
+
+        abort_if ( Gate::denies( 'bitacora_edit' ), 403 );
+
+        $bitacora = bitacoras::where( 'id', '=', $id )->first();
+
+        $grupos = grupoBitacoras::select( 'grupoBitacoras.*',
+        DB::raw( 'bitacoras.nombre as bitacora' ),
+        DB::raw( 'grupo.nombre as grupo' ),
+        DB::raw( 'grupo.comentario as comentario' ),
+        )
+        ->join( 'grupo', 'grupo.id', '=', 'grupoBitacoras.grupoId' )
+        ->join( 'bitacoras', 'bitacoras.id', '=', 'grupoBitacoras.bitacoraId' )
+        ->where( 'bitacoraId', '=', $id )->get();
+
+        // dd($tareas);
+        return view( 'bitacora.editarBitacora', compact( 'bitacora','grupos' ) );
     }
 
     /**
@@ -75,7 +120,105 @@ class bitacorasController extends Controller {
     */
 
     public function update( Request $request, $id ) {
-        //
+
+        // dd( $request );
+        abort_if ( Gate::denies( 'bitacora_edit' ), 403 );
+
+        $objValida = new Validaciones();
+        $request->validate( [
+            'nombre' => 'required|max:250',
+            'comentario' => 'nullable|max:500',
+        ], [
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
+            'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+        ] );
+
+        $data = $request->all();
+
+        $bitacora = bitacoras::where( 'id', '=', $id )->first();
+
+        if ( is_null( $bitacora ) == false ) {
+            $bitacora->nombre = $request['nombre'];
+            $bitacora->comentario = $request['comentario'];
+            $bitacora->update();
+            // dd( $data );
+
+            //*** trabajamos con los items de piezas registradas y no registradas */
+            $vctRegistrados = $objValida->preparaArreglo(grupoBitacoras::where('bitacoraId', '=', $bitacora->id)->pluck('id')->toArray());
+            $vctArreglo = $objValida->preparaArreglo($request['grupoBitacoraId']);
+
+            // dd( $request, $data, "Registrados", $vctRegistrados, "Arreglo", $vctArreglo );
+
+            //*** Preguntamos si existen registros en el arreglo */
+            if (is_array($vctArreglo) && count($vctArreglo) > 0) {
+
+                //** buscamos si el registrado esta en el arreglo, de no ser asi se elimina */
+                if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
+                    for (
+                        $i = 0;
+                        $i < count($vctRegistrados);
+                        $i++
+                    ) {
+                        $intValor = (int) $vctRegistrados[$i];
+
+                        if (in_array($intValor, $vctArreglo) == false) {
+                            /*** no existe y se debe de eliminar */
+                            grupoBitacoras::destroy($vctRegistrados[$i]);
+                            // dd( 'Borrando por que se quito la tarea del grupo' );
+                        } else {
+                            /*** existe el registro */
+                            // dd( 'Sigue vivo en el arreglo' );
+                        }
+                    }
+                }
+
+                //*** trabajamos el resto */
+                for (
+                    $i = 0;
+                    $i < count($request['grupoBitacoraId']);
+                    $i++
+                ) {
+                    if ($request['grupoBitacoraId'][$i] != '') {
+                        //** Actualizacion de registro */
+                        $objRecord =  grupoBitacoras::where('id', '=', $request['grupoBitacoraId'][$i])->first();
+
+                        if ($objRecord && $objRecord->id > 0) {
+                            $objRecord->bitacoraId  = $request['bitacoraId'][$i];
+                            $objRecord->grupoId  =  $request['grupoId'][$i];
+                            $objRecord->save();
+                            // dd( 'Actualizando gasto de grupo' );
+                        }
+                    } else {
+
+                        //** No existe en bd */
+                        if ($request['grupoBitacoraId'][$i] == 0) {
+                            $objRecord = new grupoBitacoras();
+                            $objRecord->bitacoraId  = $request['bitacoraId'][$i];
+                            $objRecord->grupoId  =  $request['grupoId'][$i];
+                            $objRecord->save();
+                            // dd( 'Guardando tarea de grupo' );
+                        }
+                    }
+                }
+            } else {
+                //*** se deben de eliminar todos los registrados */
+                if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
+                    for (
+                        $i = 0;
+                        $i < count($vctRegistrados);
+                        $i++
+                    ) {
+                        grupoBitacoras::destroy($vctRegistrados[$i]);
+                        // dd( 'Borrando toda tarea de grupo' );
+                    }
+                }
+            }
+
+            Session::flash( 'message', 1 );
+        }
+
+        return redirect()->route( 'bitacoras.index' );
     }
 
     /**

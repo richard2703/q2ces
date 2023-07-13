@@ -253,11 +253,16 @@ Route::put('/mantenimiento/editar/{id}/update', [App\Http\Controllers\mantenimie
     Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');
     Route::get('search/materialMantenimiento', [App\Http\Controllers\searchController::class, 'materialMantenimiento'])->name('search.materialMantenimiento');
     Route::get('search/tareasParaGrupos', [App\Http\Controllers\searchController::class, 'tareasParaGrupos'])->name('search.tareasParaGrupos');
+    Route::get('search/gruposParaBitacoras', [App\Http\Controllers\searchController::class, 'gruposParaBitacoras'])->name('search.gruposParaBitacoras');
 
 
     // Tareas de bitacoras
 
-    Route::get('/bitacoras/', [App\Http\Controllers\bitacorasController::class, 'index'])->name('bitacora.index');
+    Route::get('/bitacoras/', [App\Http\Controllers\bitacorasController::class, 'index'])->name('bitacoras.index');
+    Route::get('/bitacoras/bitacora/nuevo/', [App\Http\Controllers\bitacorasController::class, 'create'])->name('bitacoras.create');
+    Route::post('/bitacoras/bitacora/nuevo', [App\Http\Controllers\bitacorasController::class, 'store'])->name('bitacoras.store');
+    Route::get('/bitacoras/bitacora/editar/{id}', [App\Http\Controllers\bitacorasController::class, 'edit'])->name('bitacoras.edit');
+    Route::put('/bitacoras/bitacora/editar/{bitacoras}', [App\Http\Controllers\bitacorasController::class, 'update'])->name('bitacoras.update');
 
     Route::get('/bitacoras/grupos', [App\Http\Controllers\grupoController::class, 'index'])->name('grupo.index');
     Route::get('/bitacoras/grupos/nuevo/', [App\Http\Controllers\grupoController::class, 'create'])->name('grupo.create');
