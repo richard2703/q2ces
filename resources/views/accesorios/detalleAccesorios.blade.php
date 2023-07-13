@@ -21,9 +21,10 @@
                                 method="post"class="row alertaGuardar" enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
-
-                                <div class="p-1 align-self-start bacTituloPrincipal">
-                                    <h2 class="my-3 ms-3 texticonos ">Detalle de Accesorios</h2>
+                                <div class="ml-3">
+                                    <div class="p-1 align-self-start bacTituloPrincipal">
+                                        <h2 class="my-3 ms-3 texticonos ">Detalle de Accesorios</h2>
+                                    </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-12 col-md-4  my-3">

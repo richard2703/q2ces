@@ -20,9 +20,12 @@
                             <form class="row alertaGuardar" action="{{ route('accesorios.store') }}"
                                 method="post"class="row" enctype="multipart/form-data">
                                 @csrf
-                                <div class="p-1 align-self-start bacTituloPrincipal">
-                                    <h2 class="my-3 ms-3 texticonos ">Alta de Accesorios</h2>
+                                <div class="ml-3">
+                                    <div class="p-1 align-self-start bacTituloPrincipal">
+                                        <h2 class="my-3 ms-3 texticonos">Alta de Accesorios</h2>
+                                    </div>
                                 </div>
+                                
                                 <div class="row mt-3">
                                     <div class="col-12 col-md-4  my-3">
                                         <div class="text-center mx-auto border vistaFoto mb-4">
@@ -39,7 +42,7 @@
                                     <div class="col-12 col-md-8 ">
                                         <div class="row">
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                <label class="labelTitulo">Nombre: <span>*</span></label></br>
+                                                <label class="labelTitulo">Accesorio: <span>*</span></label></br>
                                                 <input type="text" class="inputCaja" id="nombre" name="nombre" placeholder="Especifique..." required
                                                     value="{{ old('nombre') }}">
                                             </div>

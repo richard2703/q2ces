@@ -38,8 +38,8 @@
                                             <tr>
                                                 <th class="labelTitulo">Imagen</th>
                                                 <th class="labelTitulo">Nombre</th>
-                                                <th class="labelTitulo">Maquinaria</th>
-                                                <th class="labelTitulo text-right">Acciones</th>
+                                                <th class="labelTitulo" style="width:130px">Maquinaria</th>
+                                                <th class="labelTitulo text-right" style="width:110px">Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -112,6 +112,15 @@
             </div>
         </div>
     </div>
+    <style>
+    table{
+    table-layout: fixed;
+    }
+    th, td {
+        width: 100px;
+        word-wrap: break-word;
+    }
+    </style>
     <script src="{{ asset('js/alertas.js') }}"></script>
     <script type="application/javascript">
         jQuery('input[type=file]').change(function(){
