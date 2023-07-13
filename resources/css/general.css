@@ -124,6 +124,7 @@ background-color: #A6CE34;
     width: 15%;
     /* height: 50%; */
   }
+  
 }
 
 .txtVistaObra{
@@ -833,6 +834,11 @@ color : #5C7C26;
   width: 150px;
   padding: 0 6px;
 }
+.buttonImage {
+  margin-top: -320px;
+  margin-left: 200!important;
+}
+
 }
 
 /* Cuadricula de calendario*/

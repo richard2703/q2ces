@@ -26,6 +26,7 @@
 
 --fondo:#F8F9F7;
 --verde:#8EB322;
+--verdeF:#5C7C26 ;
 --amarillo:#F7C90D;
 --texto: #3C4858;
 --select: #727176;
@@ -700,6 +701,189 @@ button.regresar:hover{
   border-left: 1px solid var(--verde);
   border-right: 1px solid var(--verde);
 
+}
+
+/*--------------------------------------------------------------
+# Separadores
+--------------------------------------------------------------*/
+.divBorderItems {
+  border-bottom: var(--verde) solid 1px;
+}
+
+/*--------------------------------------------------------------
+# inputs
+--------------------------------------------------------------*/
+.inputComent{
+  display: block;
+    width: 100%;
+    padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    background-color: #fff;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    border: 1px solid var(--verdeF);
+    border-radius: 0.375rem;
+
+}
+.inputComent:focus,
+.inputComent:active{
+    box-shadow: 2px 2px 10px 2px var(--amarillo);
+    border: 1px solid var(--verdeF);
+
+}
+
+/*--------------------------------------------------------------
+# Slider de imagenes en maquinaria
+--------------------------------------------------------------*/
+.contFotoMaquinaria {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.buttonImage {
+  width: 3em;
+  height: 3em;
+}
+
+.image-container {
+ position: relative;
+}
+
+.image-wrapper button {
+ position: absolute;
+ top: 5px;
+ right: 5px;
+ z-index: 1;
+}
+.selectoresSlider img{
+   padding: 3px;
+   margin: none;
+   cursor: pointer;
+   width: 10px !important;
+   background-size: cover;
+   border: #F7C90D solid 1px;
+}
+.contFotoMaquinaria {
+ display: flex;
+ justify-content: flex-end;
+ position: relative;
+}
+
+.buttonImage {
+ align-self: flex-start;
+ margin-top: 10px;
+ margin-right: 10px;
+}
+
+.imgMaquinaria {
+  padding-left: auto;
+}
+
+/* Escritorio extra grande */
+@media only screen and (min-width: 1200px){
+  .buttonImage {
+  margin-right: -50!important;
+  }
+  /*ALta maquinaria*/
+  .inputNumberKilometraje{
+    width: max-content;
+  }
+}
+
+/*--------------------------------------------------------------
+Alta de maquinaria
+--------------------------------------------------------------*/
+/*Button con eye para ver documentos*/
+.btnView{
+  margin-left: 10px !important;
+  background-color: white !important;
+  color: #8eb322;
+}
+
+.btnView:hover{
+  background-color: #cee8a1 !important;
+  color: red !important;
+  
+}
+@media screen and (max-width: 620px) {
+  .ExpirationDates {
+    margin-top: -23px !important;
+  }
+  .textTitulo{
+    font-size: 17px !important;
+  }
+  .btnSinFondo{
+    font-size: 10px !important;
+    margin-top: 2px !important;
+  }
+
+  /*Este button es de editar la maquinaria*/
+  .buttonImage {
+    margin-right: -45!important;
+  }
+}
+
+/* Escritorio pequeño / tablet */
+@media only screen and (min-width: 768px) and (max-width: 991px){
+  .ExpirationDates {
+    margin-top: -20px !important;
+  }
+  .textTitulo{
+    font-size: 20px !important;
+  }
+}
+
+/* Macbook Pro / laptop */
+@media only screen and (min-width: 992px) and (max-width: 1440px){
+  /*ALta maquinaria*/
+  .inputNumberKilometraje{
+    width: 55%;
+  }
+  .inputKilometraje{
+    width: 45%;
+    font-size: 13px;
+  }
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinner-container {
+  position: fixed; /* Cambiamos a posición fija */
+  top: 50%; /* Centramos verticalmente */
+  left: 50%; /* Centramos horizontalmente */
+  transform: translate(-50%, -50%); /* Centramos el spinner exactamente en el centro */
+  z-index: 9999; /* Aseguramos que esté por encima de otros elementos */
+}
+
+.spinner {
+  position: absolute;
+  top: 50%; /* Centramos verticalmente */
+  left: 50%; /* Centramos horizontalmente */
+  transform: translate(-50%, -50%); /* Centramos el spinner exactamente en el centro */
+  border: 40px solid #f3f3f3 !important; /* Color del borde */
+  border-top: 40px solid #8eb322 !important; /* Color del borde superior */
+  border-radius: 50%;
+  width: 400px !important;
+  height: 400px !important;
+  animation: spin 2s linear infinite; /* Duración y tipo de animación */
+  margin: 0 auto;
+}
+.contenedor {
+  display: flex;
+  justify-content: center;
 }
 
 

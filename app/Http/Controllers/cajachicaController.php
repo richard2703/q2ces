@@ -77,12 +77,14 @@ class cajaChicaController extends Controller
             $domingo = new Carbon('next sunday');
         }
 
-        $ingreso = cajaChica::whereBetween('dia', [$lunes, now()])
+        $pLunes = $lunes->clone()->subDay(1);
+
+        $ingreso = cajaChica::whereBetween('dia', [$pLunes, now()])
             ->where('tipo', 1)
             ->get()
             ->sum('cantidad');
 
-        $egreso = cajaChica::whereBetween('dia', [$lunes, now()])
+        $egreso = cajaChica::whereBetween('dia', [$pLunes, now()])
             ->where('tipo', 2)
             ->get()
             ->sum('cantidad');
@@ -95,7 +97,6 @@ class cajaChicaController extends Controller
             ->orderby('dia', 'desc')
             ->orderby('id', 'desc')->first();
         $lastweek = $semana->total;
-        // $lunes = $lunes->clone()->subDay(7);
         return view('cajaChica.indexCajaChica', compact('registros', 'lastTotal', 'ingreso', 'egreso', 'lastweek', 'lunes', 'domingo'));
     }
 

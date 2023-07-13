@@ -105,8 +105,6 @@
                                     </div>
                                 </div>
 
-
-
                                 <div class="row card-body" id="elementos">
                                     <div class="row opcion" id="opc">
                                         <div class="col-12 my-5 ">
@@ -159,9 +157,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
 
                                 <div class="row card-body" id="elementosB">
                                     <div class="row opcionB" id="opcB">
