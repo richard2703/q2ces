@@ -1,6 +1,6 @@
-@extends('layouts.main', ['activePage' => ' bitacoras', 'titlePage' => __('Nuevo Registro de Bitácoras')])
+@extends('layouts.main', ['activePage' => ' bitacoras', 'titlePage' => __('Nuevo Registro de Bitácora')])
 @section('content')
-<div class="content">
+    <div class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -8,51 +8,39 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Nuevo Registro de Bitácoras</h4>   
+                                    <h4 class="card-title">Nuevo Registro de Bitácora</h4>
                                 </div>
-                                <div class="card-body ">   
+                                <div class="card-body ">
+                                    <form action="{{ route('bitacoras.store') }}" method="post"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="col-12 my-4">
+                                            <div class="row">
 
-                                    <div class="col-12 my-4">
-                                        <div class="row">
-                                            
-                                            <div class=" col-12 col-sm-6   my-3 ">
-                                                <label class="labelTitulo">Nombre:</label></br><input type="text"
-                                                    placeholder="Especifique..." class="inputCaja">
-                                            </div>
-                                            
-                                            <div class=" col-12 col-sm-6   my-3 ">
-                                                <label for="exampleFormControlTextarea1" class="form-label">Pon tu comentario</label>
-                                                <textarea class="form-select" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                            </div>
-                                            <div class=" col-12 col-sm-6  col-lg-4  my-3 d-flex align-items-start ">
-                                                <div class="form-check  px-3 d-flex align-items-start">
-                                                    <input class="mx-2 " type="checkbox" value="" id="flexCheckDefault">
-                                                        <p>Nombre: Luces</p>         
+                                                <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
+                                                    <label class="labelTitulo">Nombre: <span>*</span></label></br>
+                                                    <input type="text" required maxlength="250" id="nombre"
+                                                        name="nombre" placeholder="Especifique el nombre del grupo."
+                                                        class="inputCaja">
+                                                </div>
+
+                                                <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
+                                                    <label for="exampleFormControlTextarea1" class="labelTitulo">Descripción
+                                                        de la bitácora: <span>*</span></label>
+                                                    <textarea class="form-select" id="exampleFormControlTextarea1" rows="3" maxlength="1000" required id="comentario"
+                                                        name="comentario" placeholder="Escribe aquí tus comentarios sobre la bitácora."></textarea>
+                                                </div>
+
+                                                <input type="hidden" name="activo" id="activo" value="1">
+                                                <div class="col-12 text-center mt-5 pt-5">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal"><a
+                                                            href="{{ url('/bitacoras') }}">Regresar</a></button>
+                                                    <button type="submit" class="btn botonGral">Guardar</button>
                                                 </div>
                                             </div>
-                                            <div class=" col-12 col-sm-6  col-lg-4  my-3 d-flex align-items-start ">
-                                                <div class="form-check  px-3 d-flex align-items-start">
-                                                    <input class="mx-2 " type="checkbox" value="" id="flexCheckDefault">
-                                                        <p>Nombre: Luces</p>         
-                                                </div>
-                                            </div>
-                                            <div class=" col-12 col-sm-6  col-lg-4  my-3 d-flex align-items-start ">
-                                                <div class="form-check  px-3 d-flex align-items-start">
-                                                    <input class="mx-2 " type="checkbox" value="" id="flexCheckDefault">
-                                                        <p>Nombre: Luces</p>         
-                                                </div>
-                                            </div>
-                                            <div class=" col-12 col-sm-6  col-lg-4  my-3 d-flex align-items-start ">
-                                                <div class="form-check  px-3 d-flex align-items-start">
-                                                    <input class="mx-2 " type="checkbox" value="" id="flexCheckDefault">
-                                                        <p>Nombre: Luces</p>         
-                                                </div>
-                                            </div>
-                                            <div class="col-12 text-center mt-5 pt-5">
-                                                <button type="submit" class="btn botonGral" >Guardar</button>
-                                             </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

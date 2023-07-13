@@ -45,3 +45,20 @@ function Guardado()
 		title: 'Guardado con exito'
 	})
 }
+
+function mostrarSpinner(estado) {
+	const spinnerContainer = document.getElementById('spinner-container');
+  
+	if (estado) {
+	  // Mostrar spinner
+	  const spinner = document.createElement('div');
+	  spinner.classList.add('spinner');
+	  spinnerContainer.appendChild(spinner);
+	} else {
+	  // Ocultar spinner
+	  const spinner = document.querySelector('.spinner');
+	  spinnerContainer.removeChild(spinner);
+	}
+  }
+  
+  

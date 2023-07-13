@@ -12,11 +12,11 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use App\Helpers\Validaciones;
 use App\Helpers\Calculos;
 use App\Models\maquinaria;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 
 class inventarioController extends Controller
 {
@@ -121,6 +121,7 @@ class inventarioController extends Controller
             return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas', 'gasolinas', 'suma', 'dia', 'despachadores', 'cargas', 'descargas'));
         } else {
             $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(5);
+
             return view('inventario.indexInventario', compact('inventarios', 'tipo'));
         }
     }

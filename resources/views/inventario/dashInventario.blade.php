@@ -30,10 +30,24 @@
                                             <p class="mt-4 texticonos">Consumibles</p>
                                         </a>
                                     </div>
+                                    <div class="col-12 col-md-6 text-center my-4">
+                                        <a href="{{ route('inventario.index', 'uniformes') }}" class="">
+                                            <img src="/img/inventario/consumible.svg" alt="inventario" title="Uniformes"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Uniformes</p>
+                                        </a>
+                                    </div>
+                                    <div class="col-12 col-md-6 text-center my-4">
+                                        <a href="{{ route('inventario.index', 'extintores') }}" class="">
+                                            <img src="/img/inventario/consumible.svg" alt="inventario" title="Extintores"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Extintores</p>
+                                        </a>
+                                    </div>
                                 @endcan
 
 
-                                @can('combustible_show')
+                                {{-- @can('combustible_show')
                                     <div class="col-12 col-md-6 text-center my-4">
 
                                         <a href="{{ route('inventario.index', 'combustible') }}" class="">
@@ -42,7 +56,7 @@
                                             <p class="mt-4 texticonos">Combustibles</p>
                                         </a>
                                     </div>
-                                @endcan
+                                @endcan --}}
 
 
                             </div>

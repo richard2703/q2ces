@@ -105,8 +105,6 @@
                                     </div>
                                 </div>
 
-
-
                                 <div class="row card-body" id="elementos">
                                     <div class="row opcion" id="opc">
                                         <div class="col-12 my-5 ">
@@ -159,9 +157,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
 
                                 <div class="row card-body" id="elementosB">
                                     <div class="row opcionB" id="opcB">
@@ -252,32 +247,32 @@
     </div>
     </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+    <script>
+        // agregar registro
+        function crearItems() {
+
+            $('.opcion:first').clone().find("input").val("").end().appendTo('#elementos');
+
+        }
+        // borrar registro
+        $(document).on('click', '#removeRow', function() {
+
+            $(this).closest('#opc').remove();
+        });
+
+
+
+        function crearItemsB() {
+
+            $('.opcionB:first').clone().find("input").val("").end().appendTo('#elementosB');
+
+        }
+        // borrar registro
+        $(document).on('click', '#removeRow', function() {
+
+            $(this).closest('#opcB').remove();
+        });
+    </script>
 @endsection
-<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous"></script>
-<script>
-    // agregar registro
-    function crearItems() {
-
-        $('.opcion:first').clone().find("input").val("").end().appendTo('#elementos');
-
-    }
-    // borrar registro
-    $(document).on('click', '#removeRow', function() {
-
-        $(this).closest('#opc').remove();
-    });
-
-
-
-    function crearItemsB() {
-
-        $('.opcionB:first').clone().find("input").val("").end().appendTo('#elementosB');
-
-    }
-    // borrar registro
-    $(document).on('click', '#removeRow', function() {
-
-        $(this).closest('#opcB').remove();
-    });
-</script>

@@ -1021,22 +1021,86 @@ create table cajaChica(
     CONSTRAINT FK_cajachica_personal foreign key (personal) references personal(id)
 );
 
+/* Para soporte de bitacoras y checklists */
+
+create table tareaCategoria(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) not null,
+    comentario text null,
+    primary key (id)
+);
+INSERT INTO
+    `tareaCategoria` (
+        `id`,
+        `nombre`,
+        `comentario`
+    )
+VALUES
+    (
+        NULL,
+        'No definida',
+        'Sin categoría definida'
+    );
+
+create table tareaTipo(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) not null,
+    comentario text null,
+    primary key (id)
+);
+INSERT INTO
+    `tareaTipo` (
+        `id`,
+        `nombre`,
+        `comentario`
+    )
+VALUES
+    (
+        NULL,
+        'No definido',
+        'Sin tipo definido'
+    );
+
+create table tareaUbicacion(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) not null,
+    comentario text null,
+    primary key (id)
+);
+INSERT INTO
+    `tareaUbicacion` (
+        `id`,
+        `nombre`,
+        `comentario`
+    )
+VALUES
+    (
+        NULL,
+        'No definida',
+        'Sin ubicación definida'
+    );
+
 create table tarea(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    categoria varchar(200) null,
     nombre varchar(200) null,
-    ubicacion varchar(200) null,
-    tipo varchar(200) null,
     comentario text null,
+    categoriaId bigint(20) unsigned null,
+    ubicacionId bigint(20) unsigned null,
+    tipoId bigint(20) unsigned null,
     created_at datetime NULL,
     updated_at datetime NULL,
-    primary key (id)
+    activa TINYINT(1) NOT NULL DEFAULT '1',
+    primary key (id),
+    CONSTRAINT FK_tarea_categoria foreign key (categoriaId) references tareaCategoria(id),
+    CONSTRAINT FK_tarea_tipo foreign key (tipoId) references tareaTipo(id),
+    CONSTRAINT FK_tarea_ubicacion foreign key (ubicacionId) references tareaUbicacion(id)
 );
 
 create table bitacoras(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     nombre varchar(200) null,
     comentario text null,
+    activa TINYINT(1) NOT NULL DEFAULT '1',
     created_at datetime NULL,
     updated_at datetime NULL,
     primary key (id)
@@ -1044,11 +1108,33 @@ create table bitacoras(
 
 create table grupo(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) null,
+    comentario text null,
+    activo TINYINT(1) NOT NULL DEFAULT '1',
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id)
+);
+
+create table grupoBitacoras(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     bitacoraId bigint(20) unsigned NOT NULL,
-    tareaID bigint(20) unsigned NOT NULL,
+    grupoId bigint(20) unsigned NOT NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     primary key (id),
     CONSTRAINT FK_grupo_bitacora foreign key (bitacoraId) references bitacoras(id),
+    CONSTRAINT FK_grupo_tarea foreign key (grupoId) references grupo(id)
+);
+create table grupoTareas(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    grupoId bigint(20) unsigned NOT NULL,
+    tareaId bigint(20) unsigned NOT NULL,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id),
+    CONSTRAINT FK_grupo_grupo foreign key (grupoId) references grupo(id),
     CONSTRAINT FK_grupo_tarea foreign key (tareaID) references tarea(id)
 );
+
+
