@@ -96,7 +96,11 @@ class cajaChicaController extends Controller
         $semana = cajaChica::whereBetween('dia', [$lunes, $domingo])
             ->orderby('dia', 'desc')
             ->orderby('id', 'desc')->first();
-        $lastweek = $semana->total;
+        if ($semana == null) {
+            $lastweek = 0;
+        } else {
+            $lastweek = $semana->total;
+        }
         return view('cajaChica.indexCajaChica', compact('registros', 'lastTotal', 'ingreso', 'egreso', 'lastweek', 'lunes', 'domingo'));
     }
 
