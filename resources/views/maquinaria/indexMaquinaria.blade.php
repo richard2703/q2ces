@@ -37,16 +37,16 @@
                                                 <th class="labelTitulo">ID</th>
                                                 <th class="labelTitulo">Marca</th>
                                                 <th class="labelTitulo">Modelo</th>
-                                                <th class="labelTitulo">Categoria </th>
+                                                <th class="labelTitulo" style="width:120px">Categoria </th>
                                                 <th class="labelTitulo">Uso</th>
                                                 <th class="labelTitulo">placas</th>
                                                 <th class="labelTitulo">ID</th>
                                                 <th class="labelTitulo">Marca</th>
                                                 <th class="labelTitulo">Modelo</th>
-                                                <th class="labelTitulo">Categoria </th>
+                                                <th class="labelTitulo" style="width:120px">Categoria </th>
                                                 <th class="labelTitulo">Uso</th>
                                                 <th class="labelTitulo">placas</th>
-                                                <th class="labelTitulo text-right">Acciones</th>
+                                                <th class="labelTitulo text-right" style="width:120px">Acciones</th>
                                             </thead>
                                             <tbody>
                                                 @forelse ($maquinaria as $maquina)
@@ -119,6 +119,15 @@
             </div>
         </div>
     </div>
+    <style>
+    table{
+    table-layout: fixed;
+    }
+    th, td {
+        width: 100px;
+        word-wrap: break-word;
+    }
+    </style>
     <script>
         function Guardado() {
             // alert('test');

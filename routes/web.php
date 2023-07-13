@@ -150,7 +150,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('maquinaria/{id}/{doc}/download', [App\Http\Controllers\maquinariaController::class, 'download'])->name('maquinaria.download');
     Route::post('maquinaria/upload', [App\Http\Controllers\maquinariaController::class, 'upload'])->name('maquinaria.upload');
     Route::get('/maquinaria/{maquinaria}/edit', [App\Http\Controllers\maquinariaController::class, 'edit'])->name('maquinaria.edit');
-    Route::delete('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'equipo'])->name('maquinaria.delete');
+    Route::delete('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'destroy'])->name('maquinaria.delete');
+    // Maquinaria Imagen Borrar
+    Route::put('/maquinaria/imagen/delete', [App\Http\Controllers\maquinariaController::class, 'destroyImage'])->name('maquinaria.destroyImage');
 
     //Crud accesorios
     Route::get('/accesorios/nuevo', [App\Http\Controllers\accesoriosController::class, 'create'])->name('accesorios.create');
