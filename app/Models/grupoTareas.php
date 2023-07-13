@@ -12,6 +12,6 @@ class grupoTareas extends Model {
     public $timestamps = true;
 
     protected $fillable = [
-        'bitacoraId', 'tareaId'
+        'grupoId', 'tareaId'
     ];
 }

@@ -1,6 +1,6 @@
-@extends('layouts.main', ['activePage' => ' bitacoras', 'titlePage' => __('Editar Bitácoras')])
+@extends('layouts.main', ['activePage' => ' grupos', 'titlePage' => __('Editar Grupo')])
 @section('content')
-<div class="content">
+    <div class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -8,11 +8,10 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Editar Bitácoras</h4>
+                                    <h4 class="card-title">Editar Grupo</h4>
                                 </div>
                                 <div class="card-body ">
-
-                                    <form class="row alertaGuardar" action="{{ route('bitacoras.update', $bitacora->id) }}"
+                                    <form class="row alertaGuardar" action="{{ route('grupo.update', $grupo->id) }}"
                                         method="post" enctype="multipart/form-data">
                                         @csrf
                                         @method('put')
@@ -23,23 +22,23 @@
                                                     <label class="labelTitulo">Nombre: <span>*</span></label></br>
 
                                                     <input type="text" required maxlength="250" id="nombre"
-                                                        name="nombre" value="{{ $bitacora->nombre }}"
-                                                        placeholder="Especifique el nombre de la bitácora." class="inputCaja">
+                                                        name="nombre" value="{{ $grupo->nombre }}"
+                                                        placeholder="Especifique el nombre del grupo." class="inputCaja">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
                                                     <label for="exampleFormControlTextarea1" class="labelTitulo">Descripción
-                                                        de la bitácora: <span>*</span></label>
+                                                        del grupo de tareas: <span>*</span></label>
                                                     <textarea class="form-select" id="exampleFormControlTextarea1" rows="3" maxlength="1000" required id="comentario"
-                                                        name="comentario" placeholder="Escribe aquí tus comentarios sobre la bitácora.">  {{ $bitacora->comentario }} </textarea>
+                                                        name="comentario" placeholder="Escribe aquí tus comentarios sobre el grupo.">  {{ $grupo->comentario }} </textarea>
                                                 </div>
 
-                                                <input type="hidden" name="activa" id="activa"
-                                                    value="{{ $bitacora->activo }}">
+                                                <input type="hidden" name="activo" id="activo"
+                                                    value="{{ $grupo->activo }}">
 
                                                 <div class="row d-flex">
                                                     <div class="col-12 col-md-6  mt-3 ">
-                                                        <p class="subEncabezado">Busca un grupo de tareas </p>
+                                                        <p class="subEncabezado">Busca una tarea </p>
                                                         <div class="mb-6 mt-0" role="search" class="inputCaja">
                                                             <input value="" class="search-submit ">
                                                             <input autofocus type="text" class=""
@@ -51,35 +50,35 @@
                                                 </div>
 
                                                 <div class="my-4 divBorder">
-                                                    <h3 class="subEncabezado mb-3">Listado de grupo de tareas</h3>
+                                                    <h3 class="subEncabezado mb-3">Listado de tareas del grupo</h3>
                                                 </div>
 
                                                 <div class=" col-12  my-3 ">
                                                     <ul class="" id="newRow">
 
-                                                        @forelse ($grupos as $item)
+                                                        @forelse ($tareas as $item)
                                                             <li class="listaMaterialMantenimiento my-3 border-bottom"
                                                                 id="inputFormRow">
 
                                                                 <div class="row d-flex pb-4">
 
-                                                                    <input type="hidden" name="grupoBitacoraId[]"
-                                                                        id="grupoBitacoraId"
+                                                                    <input type="hidden" name="grupoTareaId[]"
+                                                                        id="grupoTareaId"
                                                                         value="{{ $item->id != null ? $item->id : 0 }}">
+
+                                                                    <input type="hidden" name="tareaId[]" id="tareaId"
+                                                                        value="{{ $item->tareaId }}">
 
                                                                     <input type="hidden" name="grupoId[]" id="grupoId"
                                                                         value="{{ $item->grupoId }}">
 
-                                                                    <input type="hidden" name="bitacoraId[]" id="bitacoraId"
-                                                                        value="{{ $item->bitacoraId }}">
-
                                                                     <div class="col-5 ">
-                                                                        <label for="nombreGrupo"
-                                                                            class="">Grupo de tareas</label></br></br>
+                                                                        <label for="nombreTarea"
+                                                                            class="">Tarea</label></br></br>
                                                                         <input type="text" maxlength="250" readonly
-                                                                            class="inputCaja" id="nombreGrupo" disabled="true"
-                                                                            placeholder="Ej. Tarea 1" name="nombreGrupo[]"
-                                                                            value="{{ $item->grupo }}">
+                                                                            class="inputCaja" id="nombreTarea" disabled="true"
+                                                                            placeholder="Ej. Tarea 1" name="nombreTarea[]"
+                                                                            value="{{ $item->tarea }}">
                                                                     </div>
 
                                                                     <div class="col-5">
@@ -106,7 +105,7 @@
                                                 <div class="col-12 text-center mt-5 pt-5">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal"><a
-                                                            href="{{ url('/bitacoras') }}">Regresar</a></button>
+                                                            href="{{ url('/bitacoras/grupos') }}">Regresar</a></button>
                                                     <button type="submit" class="btn botonGral">Guardar</button>
                                                 </div>
                                             </div>
@@ -173,7 +172,7 @@
 
             source: function(request, response) {
                 $.ajax({
-                    url: "{{ route('search.gruposParaBitacoras') }}",
+                    url: "{{ route('search.tareasParaGrupos') }}",
 
                     dataType: 'json',
                     data: {
@@ -199,23 +198,23 @@
     </script>
 
     <script type="text/javascript">
-        function crearItems(grupoId, nombre, descripcion, value) {
+        function crearItems(tareaId, nombre, descripcion, value) {
             var html = '';
             html += '<li class="listaMaterialMantenimiento my-3 border-bottom" id="inputFormRow">';
             html += '   <div class="row d-flex pb-4">';
-            html += '      <input type="hidden" name="grupoBitacoraId[]" id="grupoBitacoraId" value="">';
-            html += '      <input type="hidden" name="bitacoraId[]" id="bitacoraId" value="{{ $bitacora->id }}">';
-            html += '      <input type="hidden" name="grupoId[]" id="grupoId" value="' + grupoId + '">';
+            html += '      <input type="hidden" name="grupoTareaId[]" id="grupoTareaId" value="">';
+            html += '      <input type="hidden" name="grupoId[]" id="grupoId" value="{{ $grupo->id }}">';
+            html += '      <input type="hidden" name="tareaId[]" id="tareaId" value="' + tareaId + '">';
             html += '      <div class="col-5 ">';
-            html += '           <label for="nombreGrupo" class="">Grupo de tareas</label></br></br>';
+            html += '           <label for="nombreTarea" class="">Tarea</label></br></br>';
             html +=
-                '           <input type="text" required readonly class="inputCaja" id="nombreGrupo" placeholder="Ej. 1" name="nombreGrupo[]" value="' +
+                '           <input type="text" required readonly class="inputCaja" id="nombreTarea" placeholder="Ej. 1" name="nombreTarea[]" value="' +
                 nombre + '">';
             html += '      </div>';
             html += '      <div class="col-5">';
             html += '          <label for="descripcion" class="">Descripción</label></br></br>';
             html +=
-                '          <textarea rows="3" cols="80" class="form-control form-select" id="descripcion" readonly name="descripcion[]" disabled="true">' +
+                '          <textarea rows="3" cols="80" class="form-control form-select" id="descripcion" readonly name="descripcion[]">' +
                 descripcion + '</textarea>';
             html += '      </div>';
             html += '      <div class="col-2"></br></br>';

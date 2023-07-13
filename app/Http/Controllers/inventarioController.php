@@ -121,6 +121,7 @@ class inventarioController extends Controller
             return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas', 'gasolinas', 'suma', 'dia', 'despachadores', 'cargas', 'descargas'));
         } else {
             $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(5);
+
             return view('inventario.indexInventario', compact('inventarios', 'tipo'));
         }
     }

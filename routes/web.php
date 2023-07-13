@@ -18,20 +18,20 @@ Route::get('/', function () {
 });
 
 /* Mis rutas */
-Route::get('/index', function () {
-    return view('inventario.indexInventario');
-});
+// Route::get('/index', function () {
+//     return view('inventario.indexInventario');
+// });
 
-Route::get('/nuevo', function () {
-    return view('inventario.inventarioNuevo');
-});
-Route::get('/modifi', function () {
-    return view('inventario.inventarioModifi');
-});
+// Route::get('/nuevo', function () {
+//     return view('inventario.inventarioNuevo');
+// });
+// Route::get('/modifi', function () {
+//     return view('inventario.inventarioModifi');
+// });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// });
 
 // Route::get('users/export/', [UserController::class, 'export']);
 Route::get('/usuarios/export', [App\Http\Controllers\UserController::class, 'export'])->name('users.export');
@@ -66,16 +66,16 @@ Route::get('/asistencia/export', [App\Http\Controllers\asistenciaController::cla
 
 
 //Inventario
-Route::get('/dashInventario', function () {
-    return view('inventario.dashInventario');
-});
-Route::get('/indexInventario', function () {
-    return view('inventario.indexInventario');
-});
+// Route::get('/dashInventario', function () {
+//     return view('inventario.dashInventario');
+// });
+// Route::get('/indexInventario', function () {
+//     return view('inventario.indexInventario');
+// });
 
-Route::get('/detalleHerramienta', function () {
-    return view('inventario.detalleHerramienta');
-});
+// Route::get('/detalleHerramienta', function () {
+//     return view('inventario.detalleHerramienta');
+// });
 
 
 
@@ -254,17 +254,23 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');
     Route::get('search/materialMantenimiento', [App\Http\Controllers\searchController::class, 'materialMantenimiento'])->name('search.materialMantenimiento');
+    Route::get('search/tareasParaGrupos', [App\Http\Controllers\searchController::class, 'tareasParaGrupos'])->name('search.tareasParaGrupos');
+    Route::get('search/gruposParaBitacoras', [App\Http\Controllers\searchController::class, 'gruposParaBitacoras'])->name('search.gruposParaBitacoras');
 
 
     // Tareas de bitacoras
 
-    Route::get('/bitacoras/', [App\Http\Controllers\bitacorasController::class, 'index'])->name('bitacora.index');
+    Route::get('/bitacoras/', [App\Http\Controllers\bitacorasController::class, 'index'])->name('bitacoras.index');
+    Route::get('/bitacoras/bitacora/nuevo/', [App\Http\Controllers\bitacorasController::class, 'create'])->name('bitacoras.create');
+    Route::post('/bitacoras/bitacora/nuevo', [App\Http\Controllers\bitacorasController::class, 'store'])->name('bitacoras.store');
+    Route::get('/bitacoras/bitacora/editar/{id}', [App\Http\Controllers\bitacorasController::class, 'edit'])->name('bitacoras.edit');
+    Route::put('/bitacoras/bitacora/editar/{bitacoras}', [App\Http\Controllers\bitacorasController::class, 'update'])->name('bitacoras.update');
 
     Route::get('/bitacoras/grupos', [App\Http\Controllers\grupoController::class, 'index'])->name('grupo.index');
     Route::get('/bitacoras/grupos/nuevo/', [App\Http\Controllers\grupoController::class, 'create'])->name('grupo.create');
     Route::post('/bitacoras/grupos/nuevo', [App\Http\Controllers\grupoController::class, 'store'])->name('grupo.store');
     Route::get('/bitacoras/grupos/editar/{id}', [App\Http\Controllers\grupoController::class, 'edit'])->name('grupo.edit');
-    Route::put('/bitacoras/grupos/editar/{tarea}', [App\Http\Controllers\tareaController::class, 'update'])->name('tarea.update');
+    Route::put('/bitacoras/grupos/editar/{grupo}', [App\Http\Controllers\grupoController::class, 'update'])->name('grupo.update');
 
     Route::get('/bitacoras/tareas', [App\Http\Controllers\tareaController::class, 'index'])->name('tarea.index');
     Route::post('/bitacoras/tareas/nueva', [App\Http\Controllers\tareaController::class, 'store'])->name('tarea.store');
@@ -309,12 +315,12 @@ Route::group(['middleware' => 'auth'], function () {
 //        return view('grupo.indexgrupo');
 //    });
 
-   Route::get('/nuevoGrupo', function () {
-       return view('grupo.nuevoGrupo');
-   });
+//    Route::get('/nuevoGrupo', function () {
+//        return view('grupo.nuevoGrupo');
+//    });
 
-   Route::get('/editarGupo', function () {
-       return view('grupo.editarGupo');
-   });
+//    Route::get('/editarGupo', function () {
+//        return view('grupo.editarGrupo');
+//    });
 
 });

@@ -1116,14 +1116,24 @@ create table grupo(
     primary key (id)
 );
 
-create table grupoTareas(
+create table grupoBitacoras(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     bitacoraId bigint(20) unsigned NOT NULL,
-    tareaId bigint(20) unsigned NOT NULL,
+    grupoId bigint(20) unsigned NOT NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     primary key (id),
     CONSTRAINT FK_grupo_bitacora foreign key (bitacoraId) references bitacoras(id),
+    CONSTRAINT FK_grupo_tarea foreign key (grupoId) references grupo(id)
+);
+create table grupoTareas(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    grupoId bigint(20) unsigned NOT NULL,
+    tareaId bigint(20) unsigned NOT NULL,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id),
+    CONSTRAINT FK_grupo_grupo foreign key (grupoId) references grupo(id),
     CONSTRAINT FK_grupo_tarea foreign key (tareaID) references tarea(id)
 );
 

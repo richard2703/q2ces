@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class bitacoras extends Model
+class grupoBitacoras extends Model
 {
     use HasFactory;
-    protected $table = 'bitacoras';
+    protected $table = 'grupoBitacoras';
 
     public $timestamps = true;
 
     protected $fillable = [
-        'nombre', 'comentario', 'activa'
+        'bitacoraId', 'tareaId'
     ];
 }

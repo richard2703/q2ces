@@ -236,7 +236,7 @@
 
                         <div class="mb-3">
                             <label for="exampleFormControlTextarea1" class="form-label">Pon tu comentario</label>
-                            <textarea class="form-select" id="tareaComentario" name="comentario" rows="3"></textarea>
+                            <textarea class="form-select" id="tareaComentario" name="comentario" rows="3" placeholder="Escribe aquí tus comentarios sobre la tarea."></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
