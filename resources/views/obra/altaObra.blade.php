@@ -225,6 +225,7 @@
 
 
                                 <div class="col-12 text-end mb-3 ">
+                                    <div class="mb-5" id="spinner-container"></div>
                                     <button type="submit" class="btn botonGral"
                                         onclick="alertaGuardar()">Guardar</button>
                                 </div>
