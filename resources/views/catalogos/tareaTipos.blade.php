@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Puestos')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Tipos de Tareas')])
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -8,7 +8,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Puestos</h4>
+                                    <h4 class="card-title">Tipos De Tareas</h4>
 
                                 </div>
                                 <div class="card-body">
@@ -37,7 +37,7 @@
                                             @can('catalogos_create')
                                                 <button class="btn botonGral float-end" data-bs-toggle="modal"
                                                     data-bs-target="#nuevoItem">
-                                                    Añadir Puesto
+                                                    Añadir Tipo De Tareas
                                                 </button>
                                             @endcan
                                         </div>
@@ -50,7 +50,6 @@
                                                 <th class="labelTitulo">Id</th>
                                                 <th class="labelTitulo">Nombre</th>
                                                 <th class="labelTitulo">Comentario</th>
-                                                <th class="labelTitulo">Nivel de puesto</th>
                                                 <th class="labelTitulo text-right">Acciones</th>
                                             </tr>
                                         </thead>
@@ -60,7 +59,6 @@
                                                     <td>{{ $item->id }}</td>
                                                     <td class="text-left">{{ $item->nombre }}</td>
                                                     <td class="text-left">{{ $item->comentario }}</td>
-                                                    <td class="text-left">{{ $item->puestoNivel }}</td>
 
                                                     <td class="td-actions text-right">
                                                         {{-- @can('user_show') --}}
@@ -74,7 +72,7 @@
                                                         {{-- @can('user_edit') --}}
                                                         <a href="#" class="" data-bs-toggle="modal"
                                                             data-bs-target="#editarItem"
-                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->puestoNivelId }}','{{ $item->comentario }}')">
+                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->requiereAsistencia }}','{{ $item->usaCajaChica }}','{{ $item->comentario }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                 height="28" fill="currentColor"
                                                                 class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -108,6 +106,7 @@
                                                     <td colspan="2">Sin registros.</td>
                                                 </tr>
                                             @endforelse
+
                                         </tbody>
                                     </table>
                                     <div class="card-footer mr-auto">
@@ -127,31 +126,17 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nuevo Puesto</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nuevo Tipo de Tareas</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('puesto.store') }}" method="post">
+                    <form class="row d-flex" action="{{ route('tareaTipo.store') }}" method="post">
                         @csrf
                         {{-- <input type="hidden" name="userId" id="userId" value="{{ $usuario->id }}"> --}}
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Nombre:<span>*</span></label></br>
                             <input type="text" class="inputCaja" id="nombre" name="nombre"
                                 value="{{ old('nombre') }}" required placeholder="Especifique...">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Nivel de puesto:
-                                <span>*</span></label></br>
-                            <select id="puestoNivelId" name="puestoNivelId" class="form-select" required
-                                aria-label="Default select example">
-                                <option value="">Seleccione</option>
-                                @foreach ($vctNiveles as $item)
-                                    <option value="{{ $item->id }}">
-                                        {{ $item->nombre }}
-                                    </option>
-                                @endforeach
-                            </select>
                         </div>
 
                         <div class=" col-12  mb-3 ">
@@ -176,36 +161,23 @@
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
 
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar puesto</label>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Tipo de Tareas</label>
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('puesto.update', 0) }}" method="post">
+                    <form class="row d-flex" action="{{ route('tareaTipo.update', 0) }}" method="post">
                         @csrf
                         @method('put')
-                        <input type="hidden" name="puestoId" id="puestoId" value="">
+                        <input type="hidden" name="controlId" id="controlId" value="">
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Nombre:</label></br>
-                            <input type="text" class="inputCaja" id="puestoNombre" name="nombre" value="">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                            <label class="labelTitulo">Nivel de puesto: <span>*</span></label></br>
-                            <select id="editPuestoNivelId" name="puestoNivelId" class="form-select" required
-                                aria-label="Default select example">
-                                <option value="">Seleccione</option>
-                                @foreach ($vctNiveles as $item)
-                                    <option value="{{ $item->id }}">
-                                        {{ $item->nombre }}
-                                    </option>
-                                @endforeach
-                            </select>
+                            <input type="text" class="inputCaja" id="controlNombre" name="nombre" value="">
                         </div>
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
-                            <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="puestoComentarios" name="comentario"></textarea>
+                            <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="controlComentarios" name="comentario"></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -258,17 +230,15 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, nivel, comentarios) {
+        function cargaItem(id, nombre, asistencia, caja, comentarios) {
 
-            const txtId = document.getElementById('puestoId');
+            const txtId = document.getElementById('controlId');
             txtId.value = id;
 
-            const txtNombre = document.getElementById('puestoNombre');
+            const txtNombre = document.getElementById('controlNombre');
             txtNombre.value = nombre;
 
-            const lstNivel = document.getElementById('editPuestoNivelId').value = nivel;
-
-            const txtComentarios = document.getElementById('puestoComentarios');
+            const txtComentarios = document.getElementById('controlComentarios');
             txtComentarios.value = comentarios;
 
         }

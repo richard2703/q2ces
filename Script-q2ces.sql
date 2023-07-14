@@ -105,7 +105,12 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('inventario_restock','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('inventario_mover','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('asistencia_cortesemanal','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('asistencia_horasextra','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	 ('asistencia_horasextra','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('catalogos_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('catalogos_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('catalogos_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('catalogos_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('catalogos_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 
 CREATE TABLE users (
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
