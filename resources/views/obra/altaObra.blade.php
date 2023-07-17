@@ -21,6 +21,18 @@
                                 <h2 class="my-3 ms-3 texticonos ">Alta de Obra</h2>
                             </div>
 
+                            <div class="col-4 text-left mt-3" style="margin-left:20px">
+                                    <a href="{{ route('obras.index') }}">
+                                        <button class="btn regresar">
+                                            <span class="material-icons">
+                                                reply
+                                            </span>
+                                            Regresar
+                                        </button>
+                                    </a>    
+                                </div>
+                                <div class="d-flex p-3 divBorder" style="margin-top:-15px"></div>
+
                             <form class="row alertaGuardar" action="{{ route('obras.store') }}" method="post"
                                 enctype="multipart/form-data">
                                 @csrf

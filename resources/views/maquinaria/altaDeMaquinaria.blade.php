@@ -12,6 +12,30 @@
                 </ul>
             </div>
         @endif
+        <div class="container-fluid mb-2">
+            <div class="row justify-content-center">
+                <div class="col-12 align-self-center">
+                    <div class="col-12">
+
+                        <div class="card-body contCart">
+                        <div class="text-left">
+                            <a href="{{ route('maquinaria.index') }}">
+                                <button class="btn regresar">
+                                    <span class="material-icons">
+                                        reply
+                                    </span>
+                                    Regresar
+                                </button>
+                            </a>
+
+                            <div class="col-8 text-end">
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12 align-self-center">

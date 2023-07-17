@@ -9,7 +9,6 @@
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
                                     <h4 class="card-title">Bitácora de Mantenimientos</h4>
-
                                 </div>
                                 <div class="card-body">
 
@@ -22,7 +21,7 @@
                                                                                                 </div>-->
 
                                     <div class="row">
-                                        <div class="col-12 text-right">
+                                        <div class="col-12 text-end">
 
                                             @can('mantenimiento_create')
                                                 <a href="{{ url('/mantenimientos/nuevo') }}">
@@ -30,20 +29,20 @@
                                                     <button type="button" class="btn botonGral">Añadir Mantenimiento</button>
                                                 </a>
                                             @endcan
-
+                                            <div class="d-flex p-3 divBorder"></div>
                                         </div>
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="labelTitulo">
                                                 <tr>
-                                                    <th class="labelTitulo">Folio</th>
-                                                    <th class="labelTitulo">Equipo</th>
-                                                    <th class="labelTitulo">Fecha</th>
-                                                    <th class="labelTitulo">Costo</th>
-                                                    <th class="labelTitulo">Estatus</th>
+                                                    <th class="labelTitulo text-center">Folio</th>
+                                                    <th class="labelTitulo text-center">Equipo</th>
+                                                    <th class="labelTitulo text-center">Fecha</th>
+                                                    <th class="labelTitulo text-center">Costo</th>
+                                                    <th class="labelTitulo text-center">Estatus</th>
 
-                                                    <th class="labelTitulo text-right">Acciones</th>
+                                                    <th class="labelTitulo text-center" style="width:120px">Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -56,13 +55,13 @@
                                                                 class="">{{ $item->id }}
                                                             </a>
                                                         </td>
-                                                        <td>{{ $item->titulo }} </td>
-                                                        <td>{{ $item->fechaInicio }}</td>
-                                                        <td class="text-end">$ {{ number_format($item->costo, 2) }} </td>
+                                                        <td class="text-center">{{ $item->titulo }} </td>
+                                                        <td class="text-center">{{ $item->fechaInicio }}</td>
+                                                        <td class="text-center">$ {{ number_format($item->costo, 2) }} </td>
 
-                                                        <td>{{ $item->estado }} </td>
+                                                        <td class="text-center">{{ $item->estado }} </td>
 
-                                                        <td class="td-actions text-right">
+                                                        <td class="td-actions text-center">
 
                                                             @can('mantenimiento_edit')
                                                                 <a href="{{ url('/mantenimientos/editar/' . $item->id) }}"
@@ -104,7 +103,7 @@
 
                                             </tbody>
                                         </table>
-                                        <div class="card-footer mr-auto">
+                                        <div class="card-footer d-flex justify-content-center">
                                             {{ $vctMantenimientos->links() }}
                                         </div>
                                     </div>
@@ -116,5 +115,5 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 @endsection

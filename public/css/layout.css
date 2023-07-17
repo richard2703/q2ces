@@ -794,6 +794,9 @@ button.regresar:hover{
   .spinner {
     top: -500px;
   }
+  .btnRegresarTop{
+    margin-left: 77px;
+  }
   
 }
 
@@ -839,6 +842,9 @@ Alta de maquinaria
     animation: spin 2s linear infinite; /* Duración y tipo de animación */
     margin: 0 auto;
   }
+  .btnRegresarTop{
+    margin-left: 31px;
+  }
 }
 
 /* Escritorio pequeño / tablet */
@@ -860,6 +866,9 @@ Alta de maquinaria
     animation: spin 2s linear infinite; /* Duración y tipo de animación */
     margin: 0 auto;
   }
+  .btnRegresarTop{
+    margin-left: 49px;
+  }
 }
 
 /* Celular grande */
@@ -874,6 +883,9 @@ Alta de maquinaria
     height: 210px !important;
     animation: spin 2s linear infinite; /* Duración y tipo de animación */
     margin: 0 auto;
+  }
+  .btnRegresarTop{
+    margin-left: 37px;
   }
 }
 
@@ -897,6 +909,9 @@ Alta de maquinaria
     height: 260px !important;
     animation: spin 2s linear infinite; /* Duración y tipo de animación */
     margin: 0 auto;
+  }
+  .btnRegresarTop{
+    margin-left: 50px;
   }
 }
 
@@ -931,6 +946,14 @@ Alta de maquinaria
   position: absolute;
   z-index: 9999;
 }
+
+table{
+  table-layout: fixed;
+  }
+  th, td {
+      width: 100px;
+      word-wrap: break-word;
+  }
 
 
 

@@ -17,14 +17,28 @@
                 <div class="col-11 align-self-start">
                     <div class="card">
                         <div class="card-body contCart">
-                            <form class="row alertaGuardar" action="{{ route('accesorios.store') }}"
-                                method="post"class="row" enctype="multipart/form-data">
-                                @csrf
-                                <div class="ml-3">
+                        <div class="ml-3">
                                     <div class="p-1 align-self-start bacTituloPrincipal">
                                         <h2 class="my-3 ms-3 texticonos">Alta de Accesorios</h2>
                                     </div>
-                                </div>
+                                    <div>
+                                    <div class="col-4 text-left mt-3" style="margin-left:20px">
+                                    <a href="{{ route('accesorios.index') }}">
+                                        <button class="btn regresar">
+                                            <span class="material-icons">
+                                                reply
+                                            </span>
+                                            Regresar
+                                        </button>
+                                    </a>    
+                                    </div>
+                                    <div class="d-flex p-3 divBorder" style="margin-top:-15px">
+                                    </div>
+                                    </div>
+                            <form class="alertaGuardar" action="{{ route('accesorios.store') }}"
+                                method="post"class="row" enctype="multipart/form-data">
+                                @csrf
+                                
                                 
                                 <div class="row mt-3">
                                     <div class="col-12 col-md-4  my-3">

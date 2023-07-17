@@ -18,7 +18,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <form class="row alertaGuardar" action="{{ route('mantenimientos.store') }}" method="post"
+                                <form class="alertaGuardar" action="{{ route('mantenimientos.store') }}" method="post"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="maquinariaId" id="maquinariaId" value="">

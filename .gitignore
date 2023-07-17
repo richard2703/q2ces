@@ -13,3 +13,5 @@ yarn-error.log
 /.idea
 /.vscode
 q2ces.code-workspace
+
+resources/views/catalogos/dashCatalogos.blade.php
