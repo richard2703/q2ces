@@ -12,6 +12,30 @@
                 </ul>
             </div>
         @endif
+        <div class="container-fluid mb-2">
+            <div class="row justify-content-center">
+                <div class="col-12 align-self-center">
+                    <div class="col-12">
+
+                        <div class="card-body contCart">
+                        <div class="text-left">
+                            <a href="{{ route('personal.index') }}">
+                                <button class="btn regresar">
+                                    <span class="material-icons">
+                                        reply
+                                    </span>
+                                    Regresar
+                                </button>
+                            </a>
+
+                            <div class="col-8 text-end">
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12 align-self-start">
@@ -25,7 +49,7 @@
                                     {{--  Datos Personales  --}}
 
                                     <div class="accordion-item">
-                                        <h6 class="accordion-header " id="headingOne">
+                                        <h6 class="accordion-header" id="headingOne">
                                             <button class="accordion-button bacTituloPrincipal" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#datosPersonales"
                                                 aria-expanded="true" aria-controls="collapseOne">
@@ -272,10 +296,9 @@
                                                                     name="colonia" value="{{ old('colonia') }}">
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6  mb-3 ">
+                                                            <div class="col-12 col-sm-6 mb-3">
                                                                 <label class="labelTitulo">Código Postal:</label></br>
-                                                                <input type="text" class="inputCaja" id="cp"
-                                                                    name="cp" value="{{ old('cp') }}">
+                                                                <input type="text" class="inputCaja" id="cp" name="cp" onchange="fillAddressFields()" value="{{ old('cp') }}">
                                                             </div>
 
                                                             {{--  <div class=" col-12 col-sm-6  mb-3 ">
@@ -286,8 +309,8 @@
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Municipio:</label></br>
-                                                                <input type="text" class="inputCaja" id="ciudad"
-                                                                    name="ciudad" value="{{ old('ciudad') }}">
+                                                                <input type="text" class="inputCaja" id="municipio"
+                                                                    name="municipio" value="{{ old('municipio') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
@@ -313,8 +336,7 @@
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Codigo Postal:</label></br>
-                                                                <input type="number" class="inputCaja" id="cp_f"
-                                                                    name="cp_f" value="{{ old('cp_f') }}">
+                                                                <input type="text" class="inputCaja" id="cp_f" name="cp_f" onchange="fillAddressFieldsFiscal()" value="{{ old('cp_f') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
@@ -1430,7 +1452,6 @@
                                                                             <label
                                                                                 class="form-check-label text-start fs-5 textTitulo text-break mb-2"
                                                                                 for="flexCheckDefault">
-
                                                                                 Contrato Firmado
                                                                             </label>
                                                                         </div>
@@ -1466,8 +1487,6 @@
                                     <button type="submit" class="btn botonGral"
                                         onclick="alertaGuardar()">Guardar</button>
                                 </div>
-
-
                             </form>
                         </div>
                     </div>
@@ -1475,6 +1494,64 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+    function fillAddressFields() {
+        var cp = document.getElementById('cp').value;
+
+        // OpenStreetMap Nominatim API con filtro para México
+        axios.get(`https://nominatim.openstreetmap.org/search?postalcode=${cp}&countrycodes=MX&format=json&addressdetails=1`)
+        .then(function(response) {
+            console.log(response);
+            var data = response.data;
+            if (data.length > 0) {
+            var address = data[0];
+
+            var state = address.address.state;
+            var city = address.address.city || address.address.town || address.address.village || "";
+            var municipality = address.address.county || address.county;
+
+            document.getElementById('estado').value = state;
+            document.getElementById('municipio').value = municipality;
+            document.getElementById('colonia').value = city;
+            
+            }
+        })
+        .catch(function(error) {
+            console.error(error);
+        });
+    }
+    </script>
+
+    <script>
+    function fillAddressFieldsFiscal() {
+        var cp = document.getElementById('cp_f').value;
+
+        // OpenStreetMap Nominatim API con filtro para México
+        axios.get(`https://nominatim.openstreetmap.org/search?postalcode=${cp}&countrycodes=MX&format=json&addressdetails=1`)
+        .then(function(response) {
+            console.log(response);
+            var data = response.data;
+            if (data.length > 0) {
+            var address = data[0];
+
+            var state = address.address.state;
+            var city = address.address.city || address.address.town || address.address.village || "";
+            var municipality = address.address.county || address.county;
+
+            document.getElementById('estadof').value = state;
+            document.getElementById('municipiof').value = municipality;
+            document.getElementById('coloniaf').value = city;
+            
+            }
+        })
+        .catch(function(error) {
+            console.error(error);
+        });
+    }
+    </script>
+
+
     <script type="application/javascript">
         jQuery('input[type=file]').change(function(){
          var filename = jQuery(this).val().split('\\').pop();
