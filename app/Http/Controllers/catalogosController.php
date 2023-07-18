@@ -11,112 +11,129 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use App\Models\puesto;
 use App\Models\puestoNivel;
+use App\Models\tareaCategoria;
+use App\Models\tareaTipo;
+use App\Models\tareaUbicacion;
 
-class catalogosController extends Controller
-{
+class catalogosController extends Controller {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
 
-    public function index()
-    {
-        //
+    public function index() {
+        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+        return view( 'catalogos.dashCatalogos' );
     }
 
-    public function indexPuestos()
-    {
-        abort_if(Gate::denies('puesto_index'), 403);
+    public function indexPuestos() {
+        abort_if ( Gate::denies( 'puesto_index' ), 403 );
 
+        $records = puesto::select( 'puesto.*', 'puestoNivel.nombre as puestoNivel' )
+        ->leftJoin( 'puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId' )
+        ->orderBy( 'nombre', 'asc' )->paginate( 10 );
 
-        $puestos = puesto::select('puesto.*','puestoNivel.nombre as puestoNivel')
-        ->leftJoin('puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId')
-        ->orderBy('nombre', 'asc')->paginate(15);
-
-        $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->get();
+        $vctNiveles = puestoNivel::orderBy( 'nombre', 'asc' )->get();
         // dd( $puestos );
-        return view('catalogos.puestos', compact('puestos','vctNiveles'));
+        return view( 'catalogos.puestos', compact( 'records', 'vctNiveles' ) );
     }
 
-    public function indexPuestosNivel()
-    {
-        abort_if(Gate::denies('puesto_index'), 403);
+    public function indexPuestosNivel() {
+        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
 
-        $puestos = puestoNivel::orderBy('nombre', 'asc')->paginate(15);
+        $records = puestoNivel::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        return view( 'catalogos.puestosNivel', compact( 'records' ) );
+    }
+
+    public function indexCatalogoCategoriasTareas() {
+        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+
+        $records = tareaCategoria::orderBy( 'nombre', 'asc' )->paginate( 10 );
         // dd( $puestos );
-        return view('catalogos.puestosNivel', compact('puestos'));
+        return view( 'catalogos.tareaCategorias', compact( 'records' ) );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function indexCatalogoTiposTareas() {
+        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
 
-    public function create()
-    {
+        $records = tareaTipo::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        // dd( $puestos );
+        return view( 'catalogos.tareaTipos', compact( 'records' ) );
+    }
+
+    public function indexCatalogoUbicacionesTareas() {
+        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+
+        $records = tareaUbicacion::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        // dd( $puestos );
+        return view( 'catalogos.tareaUbicaciones', compact( 'records' ) );
+    }
+
+
+    /**
+    * Show the form for creating a new resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
+
+    public function create() {
         //
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
 
-    public function store(Request $request)
-    {
+    public function store( Request $request ) {
         //
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Display the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
 
-    public function show($id)
-    {
+    public function show( $id ) {
         //
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Show the form for editing the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
 
-    public function edit($id)
-    {
+    public function edit( $id ) {
         //
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
 
-    public function update(Request $request, $id)
-    {
+    public function update( Request $request, $id ) {
         //
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Remove the specified resource from storage.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
 
-    public function destroy($id)
-    {
+    public function destroy( $id ) {
         //
     }
 }

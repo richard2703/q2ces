@@ -12,11 +12,37 @@
                 </ul>
             </div>
         @endif
+        
+        <div class="container-fluid mb-2">
+            <div class="row justify-content-center">
+                <div class="col-11 align-self-center">
+                    <div class="col-12">
+
+                        <div class="card-body contCart">
+                        <div class="text-left">
+                            <a href="{{ route('maquinaria.index') }}">
+                                <button class="btn regresar">
+                                    <span class="material-icons">
+                                        reply
+                                    </span>
+                                    Regresar
+                                </button>
+                            </a>
+
+                            <div class="col-8 text-end">
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-11 align-self-center">
                     <div class="card col-12">
-
 
                         <div class="card-body contCart">
                             <form action="{{ route('maquinaria.update', $maquinaria->id) }}"
@@ -47,36 +73,34 @@
                                                         <img src="{{ empty($fotos[0]) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $fotos[0]->ruta) }}" class="mx-auto d-block img-fluid imgMaquinaria">
                                                     </div>
 
-
-                                                            <div class="col-12 my-3 d-flex justify-content-around" id="selectores">
-                                                            @forelse ($fotos as $foto)
-                                                                <img onclick="abre(this)"
-                                                                    title="'{{ $maquinaria->nombre }}'."
-                                                                    src="{{ asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $foto->ruta) }}"
-                                                                    class="img-fluid mb-5" id="{{$foto->id}}" style="margin-right:-20px;">
-                                                                <div class="form-group">
-                                                                    <div class="col-md-8">
-                                                                    <!--<button type="button" class="btn btn-secondary btn-sm buttonImage" onclick="esconde_div('{{ $foto->id }}','{{ $fotos }}', (this));">X</button>-->
-                                                                    </div>
+                                                        <div class="col-12 my-3 d-flex justify-content-around" id="selectores">
+                                                        @forelse ($fotos as $foto)
+                                                            <img onclick="abre(this)"
+                                                                title="'{{ $maquinaria->nombre }}'."
+                                                                src="{{ asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $foto->ruta) }}"
+                                                                class="img-fluid mb-5" id="{{$foto->id}}" style="margin-right:-20px;">
+                                                            <div class="form-group">
+                                                                <div class="col-md-8">
+                                                                <!--<button type="button" class="btn btn-secondary btn-sm buttonImage" onclick="esconde_div('{{ $foto->id }}','{{ $fotos }}', (this));">X</button>-->
                                                                 </div>
-                                                            @empty
-                                                            @endforelse
                                                             </div>
+                                                        @empty
+                                                        @endforelse
+                                                        </div>
 
-                                                            @if (count($fotos) <= 3)
-                                                                <span class="mi-archivo"> <input class="mb-4 ver "
-                                                                        type="file" name="ruta[]" id="mi-archivo"
-                                                                        accept="image/*" multiple></span>
-                                                                <label for="mi-archivo">
-                                                                    <span class="">sube imagen</span>
-                                                                </label>
-                                                            @endif
+                                                        @if (count($fotos) <= 3)
+                                                            <span class="mi-archivo"> <input class="mb-4 ver "
+                                                                    type="file" name="ruta[]" id="mi-archivo"
+                                                                    accept="image/*" multiple></span>
+                                                            <label for="mi-archivo">
+                                                                <span class="">sube imagen</span>
+                                                            </label>
+                                                        @endif
                                                         </div>
 
                                                     </div>
 
                                                     <div class="col-12 col-lg-8">
-
                                                         <div class="row alin"> 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Equipo:</label></br>
@@ -415,7 +439,8 @@
                                                 <div class="row mt-3">
 
                                                    <!-- FACTURA -->
-<div class="col-12 col-md-4 col-lg-3">
+
+                                                   <div class="col-12 col-md-4 col-lg-3">
     <div class="card h-99 contDocumentos">
         <div class="card-body m-2">
             <div>
@@ -758,8 +783,6 @@
                                                                         </ul>
                                                                     </label>
                                                                 </div>
-
-
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1098,7 +1121,7 @@
     if (imageElement) {
         
     }
-}
+    }
 
     //let arrayFotos = JSON.parse(fotos);
     function esconde_div(id, fotos, button){

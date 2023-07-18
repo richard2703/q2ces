@@ -791,6 +791,13 @@ button.regresar:hover{
   .inputNumberKilometraje{
     width: max-content;
   }
+  .spinner {
+    top: -500px;
+  }
+  .btnRegresarTop{
+    margin-left: 77px;
+  }
+  
 }
 
 /*--------------------------------------------------------------
@@ -824,6 +831,20 @@ Alta de maquinaria
   .buttonImage {
     margin-right: -45!important;
   }
+  .spinner {
+    top: -380px;
+    position: absolute;
+    border: 15px solid #8eb322 !important; /* Color del borde */
+    border-top: 15px solid rgba(255,255,255,0) !important; /* Color del borde superior */
+    border-radius: 50%;
+    width: 140px !important;
+    height: 140px !important;
+    animation: spin 2s linear infinite; /* Duración y tipo de animación */
+    margin: 0 auto;
+  }
+  .btnRegresarTop{
+    margin-left: 31px;
+  }
 }
 
 /* Escritorio pequeño / tablet */
@@ -833,6 +854,38 @@ Alta de maquinaria
   }
   .textTitulo{
     font-size: 20px !important;
+  }
+  .spinner {
+    top: -350px;
+    position: absolute;
+    border: 25px solid #8eb322 !important; /* Color del borde */
+    border-top: 25px solid rgba(255,255,255,0) !important; /* Color del borde superior */
+    border-radius: 50%;
+    width: 190px !important;
+    height: 190px !important;
+    animation: spin 2s linear infinite; /* Duración y tipo de animación */
+    margin: 0 auto;
+  }
+  .btnRegresarTop{
+    margin-left: 49px;
+  }
+}
+
+/* Celular grande */
+@media only screen and (min-width: 620px) and (max-width: 768px){
+  .spinner {
+    top: -370px;
+    position: absolute;
+    border: 30px solid #8eb322 !important; /* Color del borde */
+    border-top: 30px solid rgba(255,255,255,0) !important; /* Color del borde superior */
+    border-radius: 50%;
+    width: 210px !important;
+    height: 210px !important;
+    animation: spin 2s linear infinite; /* Duración y tipo de animación */
+    margin: 0 auto;
+  }
+  .btnRegresarTop{
+    margin-left: 37px;
   }
 }
 
@@ -845,6 +898,20 @@ Alta de maquinaria
   .inputKilometraje{
     width: 45%;
     font-size: 13px;
+  }
+  .spinner {
+    top: -430px;
+    position: absolute;
+    border: 28px solid #8eb322 !important; /* Color del borde */
+    border-top: 28px solid rgba(255,255,255,0) !important; /* Color del borde superior */
+    border-radius: 50%;
+    width: 260px !important;
+    height: 260px !important;
+    animation: spin 2s linear infinite; /* Duración y tipo de animación */
+    margin: 0 auto;
+  }
+  .btnRegresarTop{
+    margin-left: 50px;
   }
 }
 
@@ -860,30 +927,35 @@ Alta de maquinaria
   100% { transform: rotate(360deg); }
 }
 
-.spinner-container {
-  position: fixed; /* Cambiamos a posición fija */
-  top: 50%; /* Centramos verticalmente */
-  left: 50%; /* Centramos horizontalmente */
-  transform: translate(-50%, -50%); /* Centramos el spinner exactamente en el centro */
-  z-index: 9999; /* Aseguramos que esté por encima de otros elementos */
+.col-12.text-center.mb-3 {
+  position: relative;
+}
+
+#spinner-container {
+  position: absolute;
+  left: 35%;
 }
 
 .spinner {
-  position: absolute;
-  top: 50%; /* Centramos verticalmente */
-  left: 50%; /* Centramos horizontalmente */
-  transform: translate(-50%, -50%); /* Centramos el spinner exactamente en el centro */
-  border: 40px solid #f3f3f3 !important; /* Color del borde */
-  border-top: 40px solid #8eb322 !important; /* Color del borde superior */
+  border: 35px solid #8eb322;
+  border-top: 35px solid rgba(255, 255, 255, 0);
   border-radius: 50%;
-  width: 400px !important;
-  height: 400px !important;
-  animation: spin 2s linear infinite; /* Duración y tipo de animación */
-  margin: 0 auto;
+  width: 400px;
+  height: 400px;
+  animation: spin 2s linear infinite;
+  position: absolute;
+  z-index: 9999;
 }
-.contenedor {
-  display: flex;
-  justify-content: center;
-}
+
+table{
+  table-layout: fixed;
+  }
+  th, td {
+      width: 100px;
+      word-wrap: break-word;
+  }
+
+
+
 
 

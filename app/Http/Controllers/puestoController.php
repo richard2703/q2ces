@@ -20,12 +20,11 @@ class puestoController extends Controller
 
     public function index()
     {
-        abort_if(Gate::denies('puesto_index'), 403);
+        abort_if(Gate::denies('catalogos_index'), 403);
 
-        $puestos = puesto::select('puestos.*','puestosNivel.nombre as puestoNivel')
+        $records = puesto::select('puestos.*','puestosNivel.nombre as puestoNivel')
         ->leftJoin('puestoNivel', 'puestoNivel.id', '=', 'puestos.puestoNivelId')
         ->orderBy('nombre', 'asc')->paginate(15);
-
 
         return view('catalogo.indexPuestos', compact('puestos'));
     }
@@ -50,7 +49,7 @@ class puestoController extends Controller
 
     public function store(Request $request)
     {
-        abort_if(Gate::denies('puesto_create'), 403);
+        abort_if(Gate::denies('catalogos_create'), 403);
 
         // dd( $request );
         $request->validate([
@@ -61,9 +60,9 @@ class puestoController extends Controller
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
             'comentarios.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
         ]);
-        $puesto = $request->all();
+        $record = $request->all();
 
-        puesto::create($puesto);
+        puesto::create($record);
         Session::flash('message', 1);
 
         return redirect()->route('catalogoPuestos.index');
@@ -103,7 +102,7 @@ class puestoController extends Controller
 
     public function update(Request $request, $id = null)
     {
-        abort_if(Gate::denies('puesto_edit'), 403);
+        abort_if(Gate::denies('catalogos_edit'), 403);
 
         // dd( $request );
 
@@ -117,11 +116,11 @@ class puestoController extends Controller
         ]);
         $data = $request->all();
 
-        $puesto = puesto::where('id', $data['puestoId'])->first();
+        $record = puesto::where('id', $data['puestoId'])->first();
 
-        if (is_null($puesto) == false) {
+        if (is_null($record) == false) {
             // dd( $data );
-            $puesto->update($data);
+            $record->update($data);
             Session::flash('message', 1);
         }
 

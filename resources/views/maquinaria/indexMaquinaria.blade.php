@@ -23,7 +23,8 @@
                                         </div>
                                     @endif
                                     <div class="row">
-                                        <div class="col-12 text-right">
+                                    <div class="d-flex p-3 divBorder">
+                                        <div class="col-12 text-end">
                                             @can('maquinaria_create')
                                                 <a href="{{ route('maquinaria.create') }}">
                                                     <button type="button" class="btn botonGral">Añadir Maquina</button>
@@ -34,37 +35,37 @@
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="labelTitulo">
-                                                <th class="labelTitulo">ID</th>
-                                                <th class="labelTitulo">Marca</th>
-                                                <th class="labelTitulo">Modelo</th>
-                                                <th class="labelTitulo" style="width:120px">Categoria </th>
-                                                <th class="labelTitulo">Uso</th>
-                                                <th class="labelTitulo">placas</th>
-                                                <th class="labelTitulo">ID</th>
-                                                <th class="labelTitulo">Marca</th>
-                                                <th class="labelTitulo">Modelo</th>
-                                                <th class="labelTitulo" style="width:120px">Categoria </th>
-                                                <th class="labelTitulo">Uso</th>
-                                                <th class="labelTitulo">placas</th>
-                                                <th class="labelTitulo text-right" style="width:120px">Acciones</th>
+                                                <th class="labelTitulo text-center">ID</th>
+                                                <th class="labelTitulo text-center">Marca</th>
+                                                <th class="labelTitulo text-center">Modelo</th>
+                                                <th class="labelTitulo text-center" style="width:120px">Categoria </th>
+                                                <th class="labelTitulo text-center">Uso</th>
+                                                <th class="labelTitulo text-center">placas</th>
+                                                <th class="labelTitulo text-center">ID</th>
+                                                <th class="labelTitulo text-center">Marca</th>
+                                                <th class="labelTitulo text-center">Modelo</th>
+                                                <th class="labelTitulo text-center" style="width:120px">Categoria </th>
+                                                <th class="labelTitulo text-center">Uso</th>
+                                                <th class="labelTitulo text-center">placas</th>
+                                                <th class="labelTitulo text-center" style="width:120px">Acciones</th>
                                             </thead>
                                             <tbody>
                                                 @forelse ($maquinaria as $maquina)
                                                     <tr>
-                                                        <td>{{ $maquina->identificador }}</td>
-                                                        <td>{{ $maquina->marca }}</td>
-                                                        <td>{{ $maquina->modelo }}</td>
-                                                        <td>{{ $maquina->categoria }}</td>
-                                                        <td>{{ $maquina->uso }}</td>
-                                                        <td>{{ $maquina->placas }}</td>
-                                                        <td>{{ $maquina->identificador }}</td>
-                                                        <td>{{ $maquina->marca }}</td>
-                                                        <td>{{ $maquina->modelo }}</td>
-                                                        <td>{{ $maquina->categoria }}</td>
-                                                        <td>{{ $maquina->uso }}</td>
-                                                        <td>{{ $maquina->placas }}</td>
+                                                        <td class="text-center">{{ $maquina->identificador }}</td>
+                                                        <td class="text-center">{{ $maquina->marca }}</td>
+                                                        <td class="text-center">{{ $maquina->modelo }}</td>
+                                                        <td class="text-center">{{ $maquina->categoria }}</td>
+                                                        <td class="text-center">{{ $maquina->uso }}</td>
+                                                        <td class="text-center">{{ $maquina->placas }}</td>
+                                                        <td class="text-center">{{ $maquina->identificador }}</td>
+                                                        <td class="text-center">{{ $maquina->marca }}</td>
+                                                        <td class="text-center">{{ $maquina->modelo }}</td>
+                                                        <td class="text-center">{{ $maquina->categoria }}</td>
+                                                        <td class="text-center">{{ $maquina->uso }}</td>
+                                                        <td class="text-center">{{ $maquina->placas }}</td>
 
-                                                        <td class="td-actions text-right">
+                                                        <td class="td-actions text-center">
                                                             {{-- @can('user_show') --}}
                                                             {{-- <a href="{{ route('maquinaria.show', $maquina->id) }}"  class="">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
@@ -109,7 +110,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="card-footer mr-auto">
+                                <div class="card-footer d-flex justify-content-center">
                                     {{ $maquinaria->links() }}
                                 </div>
                             </div>
@@ -119,15 +120,7 @@
             </div>
         </div>
     </div>
-    <style>
-    table{
-    table-layout: fixed;
-    }
-    th, td {
-        width: 100px;
-        word-wrap: break-word;
-    }
-    </style>
+
     <script>
         function Guardado() {
             // alert('test');

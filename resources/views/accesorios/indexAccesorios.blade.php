@@ -23,7 +23,9 @@
                                         </div>
                                     @endif
                                     <div class="row">
-                                        <div class="col-12 text-right">
+                                    <div class="d-flex p-3 divBorder">
+                                    
+                                        <div class="col-12 text-end">
                                             @can('maquinaria_create')
                                                 <a href="{{ route('accesorios.create') }}">
                                                     <button type="button" class="btn botonGral">Añadir Accesorio</button>
@@ -112,15 +114,6 @@
             </div>
         </div>
     </div>
-    <style>
-    table{
-    table-layout: fixed;
-    }
-    th, td {
-        width: 100px;
-        word-wrap: break-word;
-    }
-    </style>
     <script src="{{ asset('js/alertas.js') }}"></script>
     <script type="application/javascript">
         jQuery('input[type=file]').change(function(){

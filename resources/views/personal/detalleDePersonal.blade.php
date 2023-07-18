@@ -23,7 +23,7 @@
                             </div>
                             <div class="d-flex p-3 divBorder">
 
-                                <div class="col-4 text-left">
+                                <div class="col-12 text-left">
                                     <a href="{{ route('personal.index') }}">
                                         <button class="btn regresar">
                                             <span class="material-icons">

@@ -35,27 +35,27 @@
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="labelTitulo">
-                                                <th class="labelTitulo">ID</th>
-                                                <th class="labelTitulo">Nombre</th>
-                                                <th class="labelTitulo">Apellido</th>
-                                                <th class="labelTitulo">Puesto </th>
-                                                <th class="labelTitulo">Teléfono</th>
-                                                <th class="labelTitulo">Correo electrónico</th>
-                                                <th class="labelTitulo">Estatus</th>
-                                                <th class="labelTitulo text-right">Acciones</th>
+                                                <th class="labelTitulo text-center">ID</th>
+                                                <th class="labelTitulo text-center">Nombre</th>
+                                                <th class="labelTitulo text-center">Apellido</th>
+                                                <th class="labelTitulo text-center">Puesto </th>
+                                                <th class="labelTitulo text-center">Teléfono</th>
+                                                <th class="labelTitulo text-center">Correo electrónico</th>
+                                                <th class="labelTitulo text-center">Estatus</th>
+                                                <th class="labelTitulo text-center">Acciones</th>
                                             </thead>
                                             <tbody>
                                                 @forelse ($personal as $persona)
                                                     <tr>
-                                                        <td>{{ $persona->id }}</td>
-                                                        <td>{{ $persona->nombres }}</td>
-                                                        <td>{{ $persona->apellidoP }}</td>
-                                                        <td>{{ $persona->puesto }}</td>
-                                                        <td>{{ $persona->celular }}</td>
-                                                        <td>{{ $persona->mailEmpresarial }}</td>
-                                                        <td>{{ $persona->estatus }}</td>
+                                                        <td class="text-center">{{ $persona->id }}</td>
+                                                        <td class="text-center">{{ $persona->nombres }}</td>
+                                                        <td class="text-center">{{ $persona->apellidoP }}</td>
+                                                        <td class="text-center">{{ $persona->puesto }}</td>
+                                                        <td class="text-center">{{ $persona->celular }}</td>
+                                                        <td class="text-center">{{ $persona->mailEmpresarial }}</td>
+                                                        <td class="text-center">{{ $persona->estatus }}</td>
 
-                                                        <td class="td-actions text-right">
+                                                        <td class="td-actions text-center">
                                                             @can('personal_edit')
                                                                 <a href="{{ route('personal.show', $persona->id) }}"
                                                                     class="">
