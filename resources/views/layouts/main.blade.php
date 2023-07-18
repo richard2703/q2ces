@@ -153,9 +153,9 @@
                 </li>
             @endcan
 
-            
+            @can('catalogos_show')
                 <li class="nav-item collapsed">
-                    <a class="nav-link {{ $activePage == 'catalogos' ? '' : 'collapsed' }}"
+                    <a class="nav-link {{ $activePage == 'equipos' ? '' : 'collapsed' }}"
                         href="{{ route('catalogos.index') }}">
                         {{--  <i class="bi bi-shop"></i>  --}}
                         <span class="material-icons">
@@ -164,6 +164,7 @@
                         <span>Catalogos</span>
                     </a>
                 </li>
+            @endcan
 
             @can('combustible_index')
                 <li class="nav-item collapsed">
@@ -256,7 +257,7 @@
 
             @can('maquinaria_index')
                 <li class="nav-item ">
-                    <a class="nav-link {{ $activePage == 'equipos' ? '' : 'collapsed' }}"
+                    <a class="nav-link {{ $activePage == 'maquinaria' ? '' : 'collapsed' }}"
                         data-bs-target="#maquinaria-nav" data-bs-toggle="collapse" href="#">
                         {{--  <i class="bi bi-receipt"></i>  --}}
                         <span class="material-icons">
@@ -265,7 +266,7 @@
 
                         <span>Maquinaria y Accesorios</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
-                    <ul id="maquinaria-nav" class="nav-content collapse {{ $activePage == 'equipos' ? 'show' : '' }}"
+                    <ul id="maquinaria-nav" class="nav-content collapse {{ $activePage == 'maquinaria' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
                         @can('maquinaria_index')
                             <li>
@@ -349,34 +350,18 @@
                 </li>
             @endcan
 
-            {{-- @can('mtq_index')
-                <li class="nav-item ">
-                    <a class="nav-link {{ $activePage == 'mtq' ? '' : 'collapsed' }}" data-bs-target="#mtq-nav"
-                        data-bs-toggle="collapse" href="#">
+            
+                <li class="nav-item collapsed">
+                    <a class="nav-link {{ $activePage == 'mtq' ? '' : 'collapsed' }}"
+                        href="{{ url('dashMtq') }}">
+                        {{--  <i class="bi bi-shop"></i>  --}}
                         <span class="material-icons">
-                            construction
+                            apartment
                         </span>
-                        <span>Obras</span><i class="bi bi-chevron-down ms-auto"></i>
+                        <span>MTQ'S</span>
                     </a>
-                    <ul id="mtq-nav" class="nav-content collapse {{ $activePage == 'mtq' ? 'show' : '' }}"
-                        data-bs-parent="#sidebar-nav">
-                        @can('mtq_index')
-                            <li>
-                                <a href="{{ route('mtqs.index') }}" class="">
-                                    <i class="bi bi-circle"></i><span>Ver MTQ'S</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('mtq_create')
-                            <li>
-                                <a href="{{ route('mtqs.create') }}" class="">
-                                    <i class="bi bi-circle"></i><span>Nuevo MTQ</span>
-                                </a>
-                            </li>
-                        @endcan
-                    </ul>
                 </li>
-            @endcan --}}
+            
 
             @can('obra_index')
                 <li class="nav-item ">
@@ -453,7 +438,7 @@
     </main>
 
     <!-- End main -->
-
+    <div class="mb-5" id="spinner-container"></div>
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
