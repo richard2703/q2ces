@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Niveles de Puestos')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Niveles de records')])
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -24,15 +24,22 @@
                                     @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
-                                            {{-- @can('user_create') --}}
-                                            {{-- <a href="{{ route('puesto.create') }}">
-                                                <button type="button" class="btn botonGral">Añadir Puesto</button>
-                                            </a> --}}
-                                            <button class="btn botonGral float-end" data-bs-toggle="modal"
-                                                data-bs-target="#nuevoItem">
-                                                Añadir Nivel de Puesto
-                                            </button>
-                                            {{-- @endcan --}}
+
+                                            <a href="{{ route('catalogos.index') }}">
+                                                <button class="btn regresar">
+                                                    <span class="material-icons">
+                                                        reply
+                                                    </span>
+                                                    Regresar
+                                                </button>
+                                            </a>
+
+                                            @can('catalogos_create')
+                                                <button class="btn botonGral float-end" data-bs-toggle="modal"
+                                                    data-bs-target="#nuevoItem">
+                                                    Añadir Nivel de Puesto
+                                                </button>
+                                            @endcan
                                         </div>
                                     </div>
 
@@ -49,7 +56,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($puestos as $item)
+                                            @forelse ($records as $item)
                                                 <tr>
                                                     <td>{{ $item->id }}</td>
                                                     <td class="text-left">{{ $item->nombre }}</td>
@@ -106,11 +113,9 @@
 
                                         </tbody>
                                     </table>
-
-                                </div>
-
-                                <div class="card-footer mr-auto">
-                                    {{ $puestos->links() }}
+                                    <div class="card-footer mr-auto">
+                                        {{ $records->links() }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
