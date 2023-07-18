@@ -153,6 +153,18 @@
                 </li>
             @endcan
 
+            
+                <li class="nav-item collapsed">
+                    <a class="nav-link {{ $activePage == 'catalogos' ? '' : 'collapsed' }}"
+                        href="{{ route('catalogos.index') }}">
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            print
+                        </span>
+                        <span>Catalogos</span>
+                    </a>
+                </li>
+
             @can('combustible_index')
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'combustible' ? '' : 'collapsed' }}"
@@ -217,7 +229,7 @@
                             <li>
                                 {{--  <a href="{{ url('/indexBitacora') }}"
                                     class="{{ $activeItem == 'bitacoras' ? 'active' : '' }}">  --}}
-                                <a href="{{ url('/bitacoras') }}" class="">
+                                <a href="{{ url('/indexBitacora') }}" class="">
                                     <i class="bi bi-circle"></i><span>Ver Bitacoras</span>
                                 </a>
                             </li>
@@ -225,7 +237,7 @@
                         @can('grupo_index')
                             <li>
                                 {{--  <a href="{{ url('/indexGrupos') }}" class="{{ $activeItem == 'grupos' ? 'active' : '' }}">  --}}
-                                <a href="{{ url('/bitacoras/grupos') }}" class="">
+                                <a href="{{ url('/indexGrupos') }}" class="">
                                     <i class="bi bi-circle"></i><span>Ver Grupos</span>
                                 </a>
                             </li>
@@ -233,7 +245,7 @@
                         @can('tarea_index')
                             <li>
                                 {{--  <a href="{{ url('/tareas') }}" class="{{ $activeItem == 'tareas' ? 'active' : '' }}">  --}}
-                                <a href="{{ url('/bitacoras/tareas') }}" class="">
+                                <a href="{{ url('/tareas') }}" class="">
                                     <i class="bi bi-circle"></i><span>Ver Tareas</span>
                                 </a>
                             </li>
@@ -337,6 +349,35 @@
                 </li>
             @endcan
 
+            {{-- @can('mtq_index')
+                <li class="nav-item ">
+                    <a class="nav-link {{ $activePage == 'mtq' ? '' : 'collapsed' }}" data-bs-target="#mtq-nav"
+                        data-bs-toggle="collapse" href="#">
+                        <span class="material-icons">
+                            construction
+                        </span>
+                        <span>Obras</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="mtq-nav" class="nav-content collapse {{ $activePage == 'mtq' ? 'show' : '' }}"
+                        data-bs-parent="#sidebar-nav">
+                        @can('mtq_index')
+                            <li>
+                                <a href="{{ route('mtqs.index') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Ver MTQ'S</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('mtq_create')
+                            <li>
+                                <a href="{{ route('mtqs.create') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Nuevo MTQ</span>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcan --}}
+
             @can('obra_index')
                 <li class="nav-item ">
                     <a class="nav-link {{ $activePage == 'obra' ? '' : 'collapsed' }}" data-bs-target="#obra-nav"
@@ -360,7 +401,7 @@
                         @can('obra_create')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
-                                <a href"{{ route('obras.create') }}" class="">
+                                <a href="{{ route('obras.create') }}" class="">
                                     <i class="bi bi-circle"></i><span>Nuevo Obra</span>
                                 </a>
                             </li>

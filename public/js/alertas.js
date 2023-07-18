@@ -17,6 +17,7 @@ function alertaGuardar()
 			confirmButtonText: 'Si, Guardalo!'
 		}).then((result) => {
 			if (result.isConfirmed) {
+				mostrarSpinner(true);
 				this.submit();
 			}
 		})
@@ -39,11 +40,12 @@ function Guardado()
 			toast.addEventListener('mouseleave', Swal.resumeTimer)
 		}
 	})
-
+	
 	Toast.fire({
 		icon: 'success',
 		title: 'Guardado con exito'
 	})
+
 }
 
 function mostrarSpinner(estado) {
@@ -54,11 +56,14 @@ function mostrarSpinner(estado) {
 	  const spinner = document.createElement('div');
 	  spinner.classList.add('spinner');
 	  spinnerContainer.appendChild(spinner);
+
 	} else {
 	  // Ocultar spinner
 	  const spinner = document.querySelector('.spinner');
 	  spinnerContainer.removeChild(spinner);
 	}
   }
+  
+  
   
   

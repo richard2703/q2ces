@@ -12,24 +12,53 @@
                 </ul>
             </div>
         @endif
+        <div class="container-fluid mb-2">
+            <div class="row justify-content-center">
+                <div class="col-12 align-self-center">
+                    <div class="col-12">
+
+                        <div class="card-body contCart">
+                        <div class="text-left">
+                            <a href="{{ route('maquinaria.index') }}">
+                                <button class="btn regresar">
+                                    <span class="material-icons">
+                                        reply
+                                    </span>
+                                    Regresar
+                                </button>
+                            </a>
+
+                            <div class="col-8 text-end">
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12 align-self-center">
+                    
                     <div class="card col-12">
                         <div class="card-body contCart">
+                            
                             <form class="row alertaGuardar" action="{{ route('maquinaria.store') }}" method="post"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="accordion my-3" id="accordionExample">
-                                <div id="spinner-container"></div>
-                                    <div class="accordion-item" style="margin-top: -20px;">
+                                    
+                                    <div class="accordion-item" style="margin-top: -20px;" id="AccordionPrincipal">
+                                    
                                         <h2 class="accordion-header " id="headingOne">
                                             <button class="accordion-button bacTituloPrincipal" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#datosPersonales"
                                                 aria-expanded="true" aria-controls="collapseOne">
                                                 Alta de Maquinaria
                                             </button>
+          
                                         </h2>
+          
                                         <div id="datosPersonales" class="accordion-collapse collapse show"
                                             aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
@@ -357,49 +386,55 @@
                                                         </div>
                                                         
                                                     </div>
-                                                    <hr>
-                                                    <div class="row card-body" id="elementos" style="margin-left: 10px;">
-                                                        <div class="mt-5 tituloRefacciones" style="margin-bottom: -10px;">
-                                                            <h2 class="tituloEncabezado">Refacciónes</h2>
+                                                    <div class="d-flex p-3">
+                                                    <div class="col-12" id="elementos">
+                                                        <div class="d-flex">
+                                                            <div class="col-6 divBorder">
+                                                                <h2 class="tituloEncabezado ">Refacciónes</h2>
+                                                            </div>
+                                                            <div class="col-6 divBorder pb-3 text-end">
+                                                                <button type="button" class="btnVerde" onclick="crearItems()">
+                                                                </button>
+                                                            </div>
                                                         </div>
-                                                        <div class="row opcion" id="opc">
-                                                            <div class="col-12 my-4 ">
-                                                                
-                                                                <div class="col-12 divBorder pb-3" style="text-align: right;">
-                                                                    <button type="button" id="removeRow" class="btnRojo"></button>
-                                                                    <button type="button" class="btnVerde" onclick="crearItems()"> </button>
+
+                                                            <div class="row opcion divBorderItems" id="opc">
+
+                                                                <input type="hidden" name="asignado[]" value="">
+                                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                                    <label class="labelTitulo">Tipo de Refacción:</label></br>
+                                                                    <select id="tipoRefaccion" name="tipoRefaccion[]" class="form-select">
+                                                                        <option value="">Seleccione</option>
+                                                                            <option value="Aceite Primario">Aceite Primario</option>
+                                                                            <option value="Aceite Secundario">Aceite Secundario</option>
+                                                                            <option value="Combustible Primario">Combustible Primario</option>
+                                                                            <option value="Combustible Secundario">Combustible Secundario</option>
+                                                                            <option value="Aire de Motor Primario">Aire de Motor Primario</option>
+                                                                            <option value="Aire de Motor Secundario">Aire de Motor Secundario</option>
+                                                                            <option value="Aire de Cabina">Aire de Cabina</option>
+                                                                            <option value="Transmisión">Transmisión</option>
+                                                                            <option value="Dirección">Dirección</option>
+                                                                            <option value="Bujía">Bujía</option>
+                                                                    </select>
                                                                 </div>
 
-                                                                <div class="row">
-                                                                    <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                                        <label class="labelTitulo">Tipo de Refacción:</label></br>
-                                                                        <select id="tipoRefaccion" name="tipoRefaccion[]" class="form-select">
-                                                                            <option value="">Seleccione</option>
-                                                                                <option value="Aceite Primario">Aceite Primario</option>
-                                                                                <option value="Aceite Secundario">Aceite Secundario</option>
-                                                                                <option value="Combustible Primario">Combustible Primario</option>
-                                                                                <option value="Combustible Secundario">Combustible Secundario</option>
-                                                                                <option value="Aire de Motor Primario">Aire de Motor Primario</option>
-                                                                                <option value="Aire de Motor Secundario">Aire de Motor Secundario</option>
-                                                                                <option value="Aire de Cabina">Aire de Cabina</option>
-                                                                                <option value="Transmisión">Transmisión</option>
-                                                                                <option value="Dirección">Dirección</option>
-                                                                                <option value="Bujía">Bujía</option>
-                                                                        </select>
-                                                                    </div>
-                                                                    
-                                                                    <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                                        <label class="labelTitulo">Marca:</label></br>
-                                                                        <input type="text" class="inputCaja" id="marcaRefaccion"
-                                                                            placeholder="Especifique..." name="marcaRefaccion[]" value="">
-                                                                    </div>
-                    
-                                                                    <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                                        <label class="labelTitulo">Numero De Parte:</label></br>
-                                                                        <input type="text" class="inputCaja" id="nParteRefaccion"
-                                                                            placeholder="Especifique..." name="nParteRefaccion[]" value="">
-                                                                    </div>
+                                                                <div class=" col-12 col-sm-6 col-lg-2 my-3 ">
+                                                                    <label class="labelTitulo">Marca:</label></br>
+                                                                    <input type="text" class="inputCaja" id="marcaRefaccion"
+                                                                        placeholder="Especifique..." name="marcaRefaccion[]" value="">
                                                                 </div>
+                    
+                                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                                    <label class="labelTitulo">Numero De Parte:</label></br>
+                                                                    <input type="text" class="inputCaja" id="nParteRefaccion"
+                                                                        placeholder="Especifique..." name="nParteRefaccion[]" value="">
+                                                                </div> 
+
+                                                                <div class="col-lg-2 my-3 text-end">
+                                                                    <button type="button" id="removeRow" class="btnRojo"></button>
+                                                                </div>
+
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>
@@ -409,7 +444,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="accordion-item">
+                                    <div class="accordion-item" id="AccordionSecondary">
                                         <h2 class="accordion-header" id="headingThree">
                                             <button class="accordion-button bacTituloPrincipal" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#documentos"
@@ -652,10 +687,10 @@
                                     </div>
                                 </div>
                                 <div class="col-12 text-center mb-3 ">
-                                    <button type="submit" class="btn botonGral" onclick="test()">Guardar</button>
-                                </div>
-                                <div class="col-12 text-center mb-3 ">
-                                    <button type="button" class="btn botonGral" onclick="cargarDatos()">Loading</button>
+                                <div class="mb-5" id="spinner-container"></div>
+                                <button type="submit" class="btn botonGral" onclick="test()">
+                                    Guardar
+                                </button>
                                 </div>
                             </form>
                         </div>
@@ -664,15 +699,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-    function cargarDatos() {
-        mostrarSpinner(true);
-        setTimeout(() => {
-            mostrarSpinner(false);
-        }, 10000);
-    }
-    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -941,35 +967,38 @@
                     text: 'Maximo 4 imagenes',
                 })
             } else {
+                
                 alertaGuardar()
             }
         }
     </script>
-@endsection
-<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous"></script>
-<script>
-    // agregar registro
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+    <script>
     function crearItems() {
         $('.opcion:first').clone().find("input").val("").end().appendTo('#elementos');
-        mostrarOcultarTitulo();
     }
 
-    // borrar registro
+    // Borrar registro
     $(document).on('click', '#removeRow', function() {
-        $(this).closest('#opc').remove();
-        mostrarOcultarTitulo();
-    });
-
-    // función para mostrar u ocultar el título de "Refacciónes" según los elementos existentes
-    function mostrarOcultarTitulo() {
-        var elementosExistentes = $('.opcion').length;
-        if (elementosExistentes > 0) {
-            $('.tituloRefacciones').show();
-        } else {
-            $('.tituloRefacciones').hide();
+        if ($('.opcion').length > 1) {
+            $(this).closest('.opcion').remove();
         }
-    }
-    
-</script>
+    });
+    </script>
+
+    <script type="application/javascript">
+        jQuery('input[type=file]').change(function(){
+         var filename = jQuery(this).val().split('\\').pop();
+         var idname = jQuery(this).attr('id');
+         console.log(jQuery(this));
+         console.log(filename);
+         console.log(idname);
+         jQuery('span.'+idname).next().find('span').html(filename);
+        });
+    </script>
+
+@endsection
+
 

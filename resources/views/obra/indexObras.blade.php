@@ -23,38 +23,41 @@
                                         </div>
                                     @endif
                                     <div class="row">
-                                        <div class="col-12 text-right">
+                                        
+                                        <div class="d-flex p-3 divBorder">
+                                            <div class="col-12 text-end">
                                             @can('obra_create')
                                                 <a href="{{ route('obras.create') }}">
                                                     <button type="button" class="btn botonGral">Añadir Obra</button>
                                                 </a>
                                             @endcan
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="labelTitulo">
                                                 <tr>
-                                                    <th class="labelTitulo">ID</th>
-                                                    <th class="labelTitulo">Nombre</th>
-                                                    <th class="labelTitulo">Ciudad</th>
-                                                    <th class="labelTitulo">Residente</th>
-                                                    <th class="labelTitulo">Teléfono</th>
-                                                    <th class="labelTitulo">Estatus</th>
-                                                    <th class="labelTitulo text-right">Acciones</th>
+                                                    <th class="labelTitulo text-center">ID</th>
+                                                    <th class="labelTitulo text-center">Nombre</th>
+                                                    <th class="labelTitulo text-center">Ciudad</th>
+                                                    <th class="labelTitulo text-center">Residente</th>
+                                                    <th class="labelTitulo text-center">Teléfono</th>
+                                                    <th class="labelTitulo text-center">Estatus</th>
+                                                    <th class="labelTitulo text-center">Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($obras as $obra)
                                                     <tr>
-                                                        <td>{{ $obra->id }}</td>
-                                                        <td>{{ $obra->nombre }}</td>
-                                                        <td>{{ $obra->ciudad }}</td>
-                                                        <td>{{ $obra->residente }}</td>
-                                                        <td>{{ $obra->telefono }}</td>
-                                                        <td>{{ $obra->estatus }}</td>
+                                                        <td class="text-center">{{ $obra->id }}</td>
+                                                        <td class="text-center">{{ $obra->nombre }}</td>
+                                                        <td class="text-center">{{ $obra->ciudad }}</td>
+                                                        <td class="text-center">{{ $obra->residente }}</td>
+                                                        <td class="text-center">{{ $obra->telefono }}</td>
+                                                        <td class="text-center">{{ $obra->estatus }}</td>
 
-                                                        <td class="td-actions text-right">
+                                                        <td class="td-actions text-center">
                                                             @can('obra_show')
                                                                 <a href="{{ route('obras.show', $obra->id) }}" class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="28"
