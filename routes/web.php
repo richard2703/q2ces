@@ -128,6 +128,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('personal/asignar/{personal}/equipo', [App\Http\Controllers\personalController::class, 'asignacion'])->name('personal.equipo.asignacion');
 
     //*** catalogos */
+    Route::get('/catalogos/', [App\Http\Controllers\catalogosController::class, 'index'])->name('catalogos.index');
+
     Route::get('/catalogos/puestos', [App\Http\Controllers\catalogosController::class, 'indexPuestos'])->name('catalogoPuestos.index');
     Route::get('/catalogos/puestos/nuevo', [App\Http\Controllers\puestoController::class, 'create'])->name('puesto.create');
     Route::post('/catalogos/puestos', [App\Http\Controllers\puestoController::class, 'store'])->name('puesto.store');
@@ -139,6 +141,24 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/catalogos/puestosNivel', [App\Http\Controllers\puestoNivelController::class, 'store'])->name('puestoNivel.store');
     Route::put('/catalogos/puestosNivel/{puesto}', [App\Http\Controllers\puestoNivelController::class, 'update'])->name('puestoNivel.update');
     Route::delete('/catalogos/puestosNivel/{puesto}', [App\Http\Controllers\puestoNivelController::class, 'destroy'])->name('puestoNivel.delete');
+
+    Route::get('/catalogos/categoriasTareas', [App\Http\Controllers\catalogosController::class, 'indexCatalogoCategoriasTareas'])->name('catalogoCategoriasTareas.index');
+    Route::get('/catalogos/categoriasTareas/nuevo', [App\Http\Controllers\tareaCategoriaController::class, 'create'])->name('tareaCategoria.create');
+    Route::post('/catalogos/categoriasTareas', [App\Http\Controllers\tareaCategoriaController::class, 'store'])->name('tareaCategoria.store');
+    Route::put('/catalogos/categoriasTareas/{tarea}', [App\Http\Controllers\tareaCategoriaController::class, 'update'])->name('tareaCategoria.update');
+    Route::delete('/catalogos/categoriasTareas/{tarea}', [App\Http\Controllers\tareaCategoriaController::class, 'destroy'])->name('tareaCategoria.delete');
+
+    Route::get('/catalogos/tiposTareas', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposTareas'])->name('catalogoTiposTareas.index');
+    Route::get('/catalogos/tiposTareas/nuevo', [App\Http\Controllers\tareaTipoController::class, 'create'])->name('tareaTipo.create');
+    Route::post('/catalogos/tiposTareas', [App\Http\Controllers\tareaTipoController::class, 'store'])->name('tareaTipo.store');
+    Route::put('/catalogos/tiposTareas/{tarea}', [App\Http\Controllers\tareaTipoController::class, 'update'])->name('tareaTipo.update');
+    Route::delete('/catalogos/tiposTareas/{tarea}', [App\Http\Controllers\tareaTipoController::class, 'destroy'])->name('tareaTipo.delete');
+
+    Route::get('/catalogos/ubicacionesTareas', [App\Http\Controllers\catalogosController::class, 'indexCatalogoUbicacionesTareas'])->name('catalogoUbicacionesTareas.index');
+    Route::get('/catalogos/ubicacionesTareas/nuevo', [App\Http\Controllers\tareaUbicacionController::class, 'create'])->name('tareaUbicacion.create');
+    Route::post('/catalogos/ubicacionesTareas', [App\Http\Controllers\tareaUbicacionController::class, 'store'])->name('tareaUbicacion.store');
+    Route::put('/catalogos/ubicacionesTareas/{tarea}', [App\Http\Controllers\tareaUbicacionController::class, 'update'])->name('tareaUbicacion.update');
+    Route::delete('/catalogos/ubicacionesTareas/{tarea}', [App\Http\Controllers\tareaUbicacionController::class, 'destroy'])->name('tareaUbicacion.delete');
 
     //Crud maquinaria
     Route::get('/maquinaria/nuevo', [App\Http\Controllers\maquinariaController::class, 'create'])->name('maquinaria.create');

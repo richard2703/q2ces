@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\tareaCategoria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class tareaCategoriaController extends Controller
 {
@@ -35,7 +40,24 @@ class tareaCategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        abort_if(Gate::denies('catalogos_create'), 403);
+
+        // dd( $request );
+        $request->validate([
+            'nombre' => 'required|max:250',
+            'comentario' => 'nullable|max:500',
+        ], [
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
+            'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+        ]);
+        $record = $request->all();
+
+        tareaCategoria::create($record);
+        Session::flash('message', 1);
+
+        return redirect()->route('catalogoCategoriasTareas.index');
     }
 
     /**
@@ -69,7 +91,30 @@ class tareaCategoriaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        abort_if(Gate::denies('catalogos_edit'), 403);
+
+        // dd( $request );
+
+        $request->validate([
+            'nombre' => 'required|max:250',
+            'comentario' => 'nullable|max:500',
+        ], [
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
+            'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+        ]);
+        $data = $request->all();
+
+        $record = tareaCategoria::where('id', $data['controlId'])->first();
+
+        if (is_null($record) == false) {
+            // dd( $data );
+            $record->update($data);
+            Session::flash('message', 1);
+        }
+
+        return redirect()->route('catalogoCategoriasTareas.index');
     }
 
     /**

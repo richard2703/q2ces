@@ -110,7 +110,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                 </a>
                                             </div>
                                             <div class="">
-                                                <button type="submit" class="btn botonGral ">Descargar a Exel</button>
+                                                <button type="submit" class="btn botonGral ">Descargar a Excel</button>
                                             </div>
                                         </div>
 

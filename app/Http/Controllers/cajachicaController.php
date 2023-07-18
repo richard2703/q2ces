@@ -62,7 +62,7 @@ class cajaChicaController extends Controller
             $lastTotal = $last->total;
         }
 
-        // SEMANA ACTUAL 
+        // SEMANA ACTUAL
         if (Carbon::parse(now())->locale('es')->isoFormat('dddd') == 'lunes') {
             $lunes = now();
             // dd(Carbon::parse($pLunes)->locale('es')->isoFormat('dddd'));
