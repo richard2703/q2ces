@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'catalogos', 'titlePage' => __('Lista de Ubicaciones de Tareas')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Tipos de Tareas')])
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -8,7 +8,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Ubicaciones De Tareas</h4>
+                                    <h4 class="card-title">Residentes</h4>
 
                                 </div>
                                 <div class="card-body">
@@ -37,7 +37,7 @@
                                             @can('catalogos_create')
                                                 <button class="btn botonGral float-end" data-bs-toggle="modal"
                                                     data-bs-target="#nuevoItem">
-                                                    Añadir Ubicación De Tareas
+                                                    Añadir Residente
                                                 </button>
                                             @endcan
                                         </div>
@@ -72,7 +72,7 @@
                                                         {{-- @can('user_edit') --}}
                                                         <a href="#" class="" data-bs-toggle="modal"
                                                             data-bs-target="#editarItem"
-                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->requiereAsistencia }}','{{ $item->usaCajaChica }}','{{ $item->comentario }}')">
+                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->empresa }}','{{ $item->email }}','{{ $item->telefono }}','{{ $item->puesto }}','{{ $item->obraId }}','{{ $item->comentario }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                 height="28" fill="currentColor"
                                                                 class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -126,24 +126,63 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nueva Ubicación de Tareas</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nuevo Tipo de Tareas</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('tareaUbicacion.store') }}" method="post">
+                    <form class="row d-flex" action="{{ route('residente.store') }}" method="post">
                         @csrf
-                        {{-- <input type="hidden" name="userId" id="userId" value="{{ $usuario->id }}"> --}}
+                        <input type="hidden" name="userId" id="userId" value="{{ auth()->user()->id }}">
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Nombre:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="nombre" name="nombre"
+                            <input type="text" class="inputCaja" id="nombre" name="nombre" required
                                 value="{{ old('nombre') }}" required placeholder="Especifique...">
+                        </div>
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Empresa:<span>*</span></label></br>
+                            <input type="text" class="inputCaja" id="empresa" name="empresa" required
+                                value="{{ old('empresa') }}" required placeholder="Especifique...">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">E-mail</label></br>
+                            <input type="email" class="inputCaja" id="remail" required
+                                placeholder="ej. elcorreo@delresponsable.com" min="6" name="email"
+                                value="{{ old('email') }}">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Teléfono:</label></br>
+                            <input type="tel" pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}" placeholder="ej. 00-0000-0000"
+                                class="inputCaja" id="telefono" name="telefono"value="{{ old('telefono') }}">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Puesto:<span>*</span></label></br>
+                            <input type="text" class="inputCaja" id="puesto" name="puesto" required
+                                value="{{ old('puesto') }}" required placeholder="Especifique...">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Obra: <span>*</span></label></br>
+                            <select id="obraId" name="obraId" class="form-select" required
+                                aria-label="Default select example">
+                                <option value="">Seleccione</option>
+                                @foreach ($vctObras as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
                             <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario"
-                                spellcheck="true"></textarea>
+                                spellcheck="true">{{ old('comentario') }}</textarea>
                         </div>
+
+
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -161,18 +200,56 @@
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
 
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Ubicación de Tareas</label>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Tipo de Tareas</label>
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('tareaUbicacion.update', 0) }}" method="post">
+                    <form class="row d-flex" action="{{ route('residente.update', 0) }}" method="post">
                         @csrf
                         @method('put')
                         <input type="hidden" name="controlId" id="controlId" value="">
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Nombre:</label></br>
                             <input type="text" class="inputCaja" id="controlNombre" name="nombre" value="">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Empresa:<span>*</span></label></br>
+                            <input type="text" class="inputCaja" id="controlEmpresa" name="empresa" required
+                                value=" " required placeholder="Especifique...">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">E-mail</label></br>
+                            <input type="email" class="inputCaja" id="controlEmail" required
+                                placeholder="ej. elcorreo@delresponsable.com" min="6" name="email"
+                                value="">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Teléfono:</label></br>
+                            <input type="tel" pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}" placeholder="ej. 00-0000-0000"
+                                required class="inputCaja" id="controlTelefono" name="telefono"value="">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Puesto:<span>*</span></label></br>
+                            <input type="text" class="inputCaja" id="controlPuesto" name="puesto" value=""
+                                required placeholder="Especifique...">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Obra: <span>*</span></label></br>
+                            <select id="controlObraId" name="obraId" class="form-select" required
+                                aria-label="Default select example">
+                                <option value="">Seleccione</option>
+                                @foreach ($vctObras as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class=" col-12  mb-3 ">
@@ -230,13 +307,27 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, asistencia, caja, comentarios) {
+        function cargaItem(id, nombre, empresa, email, telefono, puesto, obraId, comentarios) {
 
             const txtId = document.getElementById('controlId');
             txtId.value = id;
 
             const txtNombre = document.getElementById('controlNombre');
             txtNombre.value = nombre;
+
+            const txtEmpresa = document.getElementById('controlEmpresa');
+            txtEmpresa.value = empresa;
+
+            const txtEmail = document.getElementById('controlEmail');
+            txtEmail.value = email;
+
+            const txtTelefono = document.getElementById('controlTelefono');
+            txtTelefono.value = telefono;
+
+            const txtPuesto = document.getElementById('controlPuesto');
+            txtPuesto.value = puesto;
+
+            const lstObre = document.getElementById('controlObraId').value = obraId;
 
             const txtComentarios = document.getElementById('controlComentarios');
             txtComentarios.value = comentarios;

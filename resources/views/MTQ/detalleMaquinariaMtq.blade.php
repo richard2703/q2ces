@@ -226,7 +226,7 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Identificador:</label></br>
+                                                                <label class="labelTitulo">Numero Económico:</label></br>
                                                                 <input type="text" class="inputCaja"
                                                                     id="identificador" name="identificador"
                                                                     value="{{ $maquinaria->identificador }}"

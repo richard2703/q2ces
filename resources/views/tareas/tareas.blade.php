@@ -128,10 +128,10 @@
                                 value="" placeholder="Asigna un nombre a la tarea.">
                         </div>
                         <div class="mb-3">
-                            <label for="recipient-name" class="labelTitulo">Categoría:</label>
-                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                            <label for="recipient-name" class="labelTitulo">Categoría: <span>*</span></label>
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" required
                                 id="categoriaId" name="categoriaId">
-                                <option selected>Selecciona una opción</option>
+                                <option selected value="">Selecciona una opción</option>
                                 @foreach ($vctCategorias as $item)
                                     <option value="{{ $item->id }}">
                                         {{ $item->nombre }}
@@ -140,10 +140,10 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="recipient-name" class="labelTitulo">Ubicación:</label>
-                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                            <label for="recipient-name" class="labelTitulo">Ubicación: <span>*</span></label>
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" required
                                 id="ubicacionId" name="ubicacionId">
-                                <option selected>Selecciona una opción</option>
+                                <option selected value="">Selecciona una opción</option>
                                 @foreach ($vctUbicaciones as $item)
                                     <option value="{{ $item->id }}">
                                         {{ $item->nombre }}
@@ -152,10 +152,10 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="recipient-name" class="labelTitulo">Tipo:</label>
-                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                            <label for="recipient-name" class="labelTitulo">Tipo: <span>*</span></label>
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" required
                                 id="tipoId" name="tipoId">
-                                <option selected>Selecciona una opción</option>
+                                <option selected value="">Selecciona una opción</option>
                                 @foreach ($vctTipos as $item)
                                     <option value="{{ $item->id }}">
                                         {{ $item->nombre }}
@@ -193,15 +193,15 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="message-text" class="labelTitulo">Nombre:</label>
+                            <label for="message-text" class="labelTitulo">Nombre: <span>*</span></label>
                             <input type="text" class="inputCaja" id="tareaNombre" required name="nombre"
                                 maxlength="250" value="">
                         </div>
                         <div class="mb-3">
-                            <label for="recipient-name" class="labelTitulo">Categoría:</label>
-                            <select class="form-select" id="tareaCategoriaId" name="categoriaId"
+                            <label for="recipient-name" class="labelTitulo">Categoría: <span>*</span></label>
+                            <select class="form-select" id="tareaCategoriaId" name="categoriaId" required
                                 aria-label="Floating label select example">
-                                <option selected>Selecciona una opción</option>
+                                <option selected value="">Selecciona una opción</option>
                                 @foreach ($vctCategorias as $item)
                                     <option value="{{ $item->id }}">
                                         {{ $item->nombre }}
@@ -210,10 +210,10 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="recipient-name" class="labelTitulo">Ubicación:</label>
-                            <select class="form-select" id="tareaUbicacionId" name="ubicacionId"
+                            <label for="recipient-name" class="labelTitulo">Ubicación: <span>*</span></label>
+                            <select class="form-select" id="tareaUbicacionId" name="ubicacionId" required
                                 aria-label="Floating label select example">
-                                <option selected>Selecciona una opción</option>
+                                <option selected value="">Selecciona una opción</option>
                                 @foreach ($vctUbicaciones as $item)
                                     <option value="{{ $item->id }}">
                                         {{ $item->nombre }}
@@ -222,10 +222,10 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="recipient-name" class="labelTitulo">Tipo:</label>
-                            <select class="form-select" id="tareaTipoId" name="tipoId"
+                            <label for="recipient-name" class="labelTitulo">Tipo: <span>*</span></label>
+                            <select class="form-select" id="tareaTipoId" name="tipoId" required
                                 aria-label="Floating label select example">
-                                <option selected>Selecciona una opción</option>
+                                <option selected value="">Selecciona una opción</option>
                                 @foreach ($vctTipos as $item)
                                     <option value="{{ $item->id }}">
                                         {{ $item->nombre }}
