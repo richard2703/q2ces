@@ -192,16 +192,12 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Identificador:</label></br>
+                                                                <label class="labelTitulo">Numero Económico:</label></br>
                                                                 <input type="text" class="inputCaja"
                                                                     id="identificador" name="identificador"
                                                                     value="{{ old('identificador') }}"
                                                                     placeholder="ej: MT-00">
                                                             </div>
-                                                            <div class=" col-12 col-sm-6 mb-3 ">
-                                                                <label class="labelTitulo">Numero Económico:</label></br>
-                                                                <input type="text" class="inputCaja" >
-                                                            </div> 
 
                                                             {{--  <input type="hidden" id="identificador" name="identificador"
                                                                 value="">  --}}

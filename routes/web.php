@@ -106,6 +106,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
     Route::resource('roles', App\Http\Controllers\RoleController::class);
 
+    // Dash mtq
+    Route::get('/dashMtq', function () {
+        return view('mtq.dashMtq');
+        });
+
+    //Route::resource('mtq', App\Http\Controllers\mtqController::class);
+
     //Crud Obras
     Route::get('/obras/nuevo', [App\Http\Controllers\obrasController::class, 'create'])->name('obras.create');
     Route::post('/obras', [App\Http\Controllers\obrasController::class, 'store'])->name('obras.store');
@@ -261,6 +268,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Conceptos
     Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
+
+    // Maquinaria MTQ
+    Route::resource('mtq', App\Http\Controllers\maquinariaMtqController::class);
 
 
     Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');

@@ -2,97 +2,107 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\mtq;
+use App\Models\maquinaria;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use App\Helpers\Validaciones;
 
 class mtqController extends Controller
- {
+{
     /**
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
-
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
- {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
-        return view( 'mtq.indexMtq' );
+    {
+        return view('mtq.dashMtq');
+    }
+
+    public function indexMtqs()
+    {
+        abort_if(Gate::denies('maquinaria_index'), 403);
+
+        $maquinaria = maquinaria::paginate(15);
+        // dd( 'test' );
+        return view('mtq.indexMtq', compact('maquinaria'));
+    }
+
+    public function indexResidentes()
+    {
+        abort_if(Gate::denies('maquinaria_index'), 403);
+
+        $maquinaria = maquinaria::paginate(15);
+        // dd( 'test' );
+        return view('mtq.indexMtq', compact('maquinaria'));
     }
 
     /**
-    * Show the form for creating a new resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
-
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
- {
+    {
         //
     }
 
     /**
-    * Store a newly created resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
-    */
-
-    public function store( Request $request )
- {
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
         //
     }
 
     /**
-    * Display the specified resource.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
-
-    public function show( $id )
- {
+     * Display the specified resource.
+     *
+     * @param  \App\Models\mtq  $mtq
+     * @return \Illuminate\Http\Response
+     */
+    public function show(mtq $mtq)
+    {
         //
     }
 
     /**
-    * Show the form for editing the specified resource.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
-
-    public function edit( $id )
- {
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\mtq  $mtq
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(mtq $mtq)
+    {
         //
     }
 
     /**
-    * Update the specified resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
-
-    public function update( Request $request, $id )
- {
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\mtq  $mtq
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, mtq $mtq)
+    {
         //
     }
 
     /**
-    * Remove the specified resource from storage.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
-
-    public function destroy( $id )
- {
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\mtq  $mtq
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(mtq $mtq)
+    {
         //
     }
 }

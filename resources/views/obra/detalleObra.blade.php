@@ -67,10 +67,9 @@
                                         </div>
                                     </div>
 
-
                                 </div>
 
-                                <div class="col-12   ">
+                                <div class="col-12">
                                     <div class="row">
                                         <div class="col-12 col-sm-6 col-lg-4 my-3 ">
                                             <label class="labelTitulo">Nombre de la Obra: <span>*</span></label></br>
@@ -410,7 +409,8 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
+
 @endsection
 <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
     crossorigin="anonymous"></script>
@@ -426,8 +426,6 @@
 
         $(this).closest('#opc').remove();
     });
-
-
 
     function crearItemsB() {
 

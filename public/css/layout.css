@@ -746,6 +746,7 @@ button.regresar:hover{
 .buttonImage {
   width: 3em;
   height: 3em;
+  background-color: #727176 !important;
 }
 
 .image-container {
@@ -951,8 +952,8 @@ table{
   table-layout: fixed;
   }
   th, td {
-      width: 100px;
-      word-wrap: break-word;
+    width: 100px;
+    word-wrap: break-word;
   }
 
 
