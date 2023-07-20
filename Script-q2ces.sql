@@ -535,6 +535,7 @@ CREATE TABLE maquinaria(
     foto4 varchar(255) NULL,
     cisterna int(1) NULL,
     cisternaNivel float(10, 2) NULL,
+    compania varchar(200) null,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
