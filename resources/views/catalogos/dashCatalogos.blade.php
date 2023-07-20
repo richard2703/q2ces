@@ -49,6 +49,14 @@
                                         </a>
                                     </div>
 
+                                    <div class="col-12 col-md-6 text-center my-4">
+                                        <a href="{{ route('catalogoTipoUniforme.index') }}" class="">
+                                            <img src="/img/inventario/herramientas.svg" alt="Tipos de Uniforme" title="Tipos de Uniforme"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Tipos de Uniforme</p>
+                                        </a>
+                                    </div>
+
                                 @endcan
 
 

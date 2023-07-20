@@ -52,9 +52,9 @@
                                                 value="{{ $inventario->numparte }}">
                                         </div>
 
-                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Nombre:</label></br>
-                                            <input type="text" class="inputCaja" id="nombres" name="nombre"
+                                        <div class=" col-12 col-sm-6 col-lg-8 mb-3 ">
+                                            <label class="labelTitulo">Nombre: <span>*</span></label></br>
+                                            <input type="text" class="inputCaja" id="nombres" name="nombre" required
                                                 value="{{ $inventario->nombre }}">
                                         </div>
 
@@ -77,33 +77,33 @@
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Cantidad a ingresar:</label></br>
-                                            <input type="number" step="0.01" min="0.01" class="inputCaja text-end"
-                                                id="cantidad" name="cantidad" value="{{ $inventario->cantidad }}">
+                                            <label class="labelTitulo">Cantidad a ingresar: <span>*</span></label></br>
+                                            <input type="number" step="1" min="1" class="inputCaja text-end"
+                                                required id="cantidad" name="cantidad" value="{{ $inventario->cantidad }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Minimo:</label></br>
-                                            <input type="number" step="0.01" min="0.01" class="inputCaja text-end"
+                                            <input type="number" step="1" min="1" class="inputCaja text-end"
                                                 id="reorden" name="reorden" value="{{ $inventario->reorden }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Maximo:</label></br>
-                                            <input type="number" step="0.01" min="0.01" class="inputCaja text-end"
+                                            <input type="number" step="1" min="1" class="inputCaja text-end"
                                                 id="maximo" name="maximo" value="{{ $inventario->maximo }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Costo unitario:</label></br>
+                                            <label class="labelTitulo">Costo unitario: <span>*</span></label></br>
                                             <input type="number" step="0.01" min="0.01" class="inputCaja text-end"
-                                                id="valor" name="valor" value="{{ $inventario->valor }}">
+                                                required id="valor" name="valor" value="{{ $inventario->valor }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-6 mb-5 ">
                                             <label class="labelTitulo">Tipo:</label></br>
                                             <select class="form-select" aria-label="Default select example"
-                                                id="tipo" name="tipo">
+                                                id="tipo" name="tipo" disabled="false">
                                                 <option value="herramientas"
                                                     {{ $inventario->tipo == 'herramientas' ? ' selected' : '' }}>
                                                     Herramienta</option>
@@ -121,6 +121,63 @@
                                                 </option>
                                             </select>
                                         </div>
+                                        @if ($inventario->tipo == 'uniformes')
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-5 ">
+                                                <label class="labelTitulo">Tipo de Uniforme:</label></br>
+                                                <select id="uniformeTipoId" name="uniformeTipoId" class="form-select"
+                                                    required aria-label="Default select example">
+                                                    <option value="">Seleccione</option>
+                                                    @foreach ($vctTipos as $item)
+                                                        <option value="{{ $item->id }}"
+                                                            {{ $item->id == $inventario->uniformeTipoId ? ' selected' : '' }}>
+                                                            {{ $item->nombre }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                <label class="labelTitulo">Talla:</label></br>
+                                                <input type="text" class="inputCaja" id="uniformeTalla"
+                                                    name="uniformeTalla" value="{{ $inventario->uniformeTalla }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                <label class="labelTitulo">Es Retornable:</label></br>
+                                                <select class="form-select" aria-label="Default select example"
+                                                    id="uniformeRetornable" name="uniformeRetornable">
+                                                    <option value="0"
+                                                        {{ $inventario->uniformeRetornable <= 0 ? ' selected' : '' }}>No
+                                                    </option>
+                                                    <option value="1"
+                                                        {{ $inventario->uniformeRetornable == 1 ? ' selected' : '' }}>Sí
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        @endif
+
+                                        @if ($inventario->tipo == 'extintores')
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                <label class="labelTitulo">Capacidad:</label></br>
+                                                <input type="text" class="inputCaja" id="extintorCapacidad"
+                                                    name="extintorCapacidad"
+                                                    value="{{ $inventario->extintorCapacidad }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                <label class="labelTitulo">Identificador:</label></br>
+                                                <input type="text" class="inputCaja" id="extintorCodigo"
+                                                    name="extintorCodigo" value="{{ $inventario->extintorCodigo }}">
+                                            </div>
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                <label class="labelTitulo">Fecha de vencimiento:</label></br>
+                                                <input type="date" class="inputCaja" id="extintorFechaVencimiento"
+                                                    name="extintorFechaVencimiento"
+                                                    value="{{ $inventario->extintorFechaVencimiento }}">
+                                            </div>
+                                        @endif
+
+
 
                                         <div class="col-12 text-center mt-5">
 
@@ -232,7 +289,8 @@
                     <select id="desde" name="desde" class="form-select" aria-label="Default select example">
                         @foreach ($vctDesde as $maquina)
                             <option value="{{ $maquina->id }}" {{ $maquina->id == $inventario->id ? ' selected' : '' }}>
-                                {{ $maquina->nombre . ' / ' . $maquina->modelo . ( $maquina->placas != "" ? ' [' . $maquina->placas . ']' : "") }} </option>
+                                {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                            </option>
                         @endforeach
                     </select>
 
@@ -241,7 +299,8 @@
                     <select id="hasta" name="hasta" class="form-select" aria-label="Default select example">
                         @foreach ($vctHasta as $maquina)
                             <option value="{{ $maquina->id }}" {{ $maquina->id == $inventario->id ? ' selected' : '' }}>
-                                {{ $maquina->nombre . ' / ' . $maquina->modelo . ( $maquina->placas != "" ? ' [' . $maquina->placas . ']' : "") }} </option>
+                                {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                            </option>
                         @endforeach
                     </select>
 
