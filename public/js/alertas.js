@@ -64,6 +64,22 @@ function mostrarSpinner(estado) {
 	}
   }
   
+
+  //archivos
+  jQuery('input[type=file]').change(function(){
+   var filename = jQuery(this).val().split('\\').pop();
+   var idname = jQuery(this).attr('id');
+   console.log(jQuery(this));
+   console.log(filename);
+   console.log(idname);
+   var $fileUpload = $("input[type='file']");
+   if (parseInt($fileUpload.get(0).files.length) > 1) {
+	  jQuery('span.'+idname).next().find('span').html(parseInt($fileUpload.get(0).files.length)+' archivos');
+
+   } else {
+	  jQuery('span.'+idname).next().find('span').html(filename);
+  }
+  });
   
   
   

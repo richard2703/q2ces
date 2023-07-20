@@ -18,19 +18,19 @@
                     <div class="col-12">
 
                         <div class="card-body contCart">
-                        <div class="text-left">
-                            <a href="{{ route('personal.index') }}">
-                                <button class="btn regresar">
-                                    <span class="material-icons">
-                                        reply
-                                    </span>
-                                    Regresar
-                                </button>
-                            </a>
+                            <div class="text-left">
+                                <a href="{{ route('personal.index') }}">
+                                    <button class="btn regresar">
+                                        <span class="material-icons">
+                                            reply
+                                        </span>
+                                        Regresar
+                                    </button>
+                                </a>
 
-                            <div class="col-8 text-end">
+                                <div class="col-8 text-end">
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -298,7 +298,9 @@
 
                                                             <div class="col-12 col-sm-6 mb-3">
                                                                 <label class="labelTitulo">Código Postal:</label></br>
-                                                                <input type="text" class="inputCaja" id="cp" name="cp" onchange="fillAddressFields()" value="{{ old('cp') }}">
+                                                                <input type="text" class="inputCaja" id="cp"
+                                                                    name="cp" onchange="fillAddressFields()"
+                                                                    value="{{ old('cp') }}">
                                                             </div>
 
                                                             {{--  <div class=" col-12 col-sm-6  mb-3 ">
@@ -336,7 +338,9 @@
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Codigo Postal:</label></br>
-                                                                <input type="text" class="inputCaja" id="cp_f" name="cp_f" onchange="fillAddressFieldsFiscal()" value="{{ old('cp_f') }}">
+                                                                <input type="text" class="inputCaja" id="cp_f"
+                                                                    name="cp_f" onchange="fillAddressFieldsFiscal()"
+                                                                    value="{{ old('cp_f') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
@@ -1483,7 +1487,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 text-center mb-3 ">
+                                <div class="col-12 text-center my-3 ">
                                     <button type="submit" class="btn botonGral"
                                         onclick="alertaGuardar()">Guardar</button>
                                 </div>
@@ -1496,59 +1500,63 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-    function fillAddressFields() {
-        var cp = document.getElementById('cp').value;
+        function fillAddressFields() {
+            var cp = document.getElementById('cp').value;
 
-        // OpenStreetMap Nominatim API con filtro para México
-        axios.get(`https://nominatim.openstreetmap.org/search?postalcode=${cp}&countrycodes=MX&format=json&addressdetails=1`)
-        .then(function(response) {
-            console.log(response);
-            var data = response.data;
-            if (data.length > 0) {
-            var address = data[0];
+            // OpenStreetMap Nominatim API con filtro para México
+            axios.get(
+                    `https://nominatim.openstreetmap.org/search?postalcode=${cp}&countrycodes=MX&format=json&addressdetails=1`
+                    )
+                .then(function(response) {
+                    console.log(response);
+                    var data = response.data;
+                    if (data.length > 0) {
+                        var address = data[0];
 
-            var state = address.address.state;
-            var city = address.address.city || address.address.town || address.address.village || "";
-            var municipality = address.address.county || address.county;
+                        var state = address.address.state;
+                        var city = address.address.city || address.address.town || address.address.village || "";
+                        var municipality = address.address.county || address.county;
 
-            document.getElementById('estado').value = state;
-            document.getElementById('municipio').value = municipality;
-            document.getElementById('colonia').value = city;
-            
-            }
-        })
-        .catch(function(error) {
-            console.error(error);
-        });
-    }
+                        document.getElementById('estado').value = state;
+                        document.getElementById('municipio').value = municipality;
+                        document.getElementById('colonia').value = city;
+
+                    }
+                })
+                .catch(function(error) {
+                    console.error(error);
+                });
+        }
     </script>
 
     <script>
-    function fillAddressFieldsFiscal() {
-        var cp = document.getElementById('cp_f').value;
+        function fillAddressFieldsFiscal() {
+            var cp = document.getElementById('cp_f').value;
 
-        // OpenStreetMap Nominatim API con filtro para México
-        axios.get(`https://nominatim.openstreetmap.org/search?postalcode=${cp}&countrycodes=MX&format=json&addressdetails=1`)
-        .then(function(response) {
-            console.log(response);
-            var data = response.data;
-            if (data.length > 0) {
-            var address = data[0];
+            // OpenStreetMap Nominatim API con filtro para México
+            axios.get(
+                    `https://nominatim.openstreetmap.org/search?postalcode=${cp}&countrycodes=MX&format=json&addressdetails=1`
+                    )
+                .then(function(response) {
+                    console.log(response);
+                    var data = response.data;
+                    if (data.length > 0) {
+                        var address = data[0];
 
-            var state = address.address.state;
-            var city = address.address.city || address.address.town || address.address.village || "";
-            var municipality = address.address.county || address.county;
+                        var state = address.address.state;
+                        var city = address.address.city || address.address.town || address.address.village || "";
+                        var municipality = address.address.county || address.county;
 
-            document.getElementById('estadof').value = state;
-            document.getElementById('municipiof').value = municipality;
-            document.getElementById('coloniaf').value = city;
-            
-            }
-        })
-        .catch(function(error) {
-            console.error(error);
-        });
-    }
+                        document.getElementById('estadof').value = state;
+                        document.getElementById('municipiof').value = municipality;
+                        document.getElementById('coloniaf').value = city;
+
+                    }
+                })
+                .catch(function(error) {
+                    console.error(error);
+                });
+        }
     </script>
 
 
