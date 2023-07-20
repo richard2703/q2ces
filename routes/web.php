@@ -106,6 +106,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
     Route::resource('roles', App\Http\Controllers\RoleController::class);
 
+    // Dash mtq
+    Route::get('/dashMtq', function () {
+        return view('mtq.dashMtq');
+    });
+
+    //Route::resource('mtq', App\Http\Controllers\mtqController::class);
+
     //Crud Obras
     Route::get('/obras/nuevo', [App\Http\Controllers\obrasController::class, 'create'])->name('obras.create');
     Route::post('/obras', [App\Http\Controllers\obrasController::class, 'store'])->name('obras.store');
@@ -114,6 +121,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/obras/{obras}/edit', [App\Http\Controllers\obrasController::class, 'edit'])->name('obras.edit');
     Route::delete('/obras/{obras}', [App\Http\Controllers\obrasController::class, 'destroy'])->name('obras.delete');
     Route::put('/obras/{obras}', [App\Http\Controllers\obrasController::class, 'update'])->name('obras.update');
+
+    // Crud Clientes
+    Route::resource('clientes', App\Http\Controllers\clientesController::class);
 
     //Crud personal
     Route::get('/personal/nuevo', [App\Http\Controllers\personalController::class, 'create'])->name('personal.create');
@@ -160,6 +170,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/catalogos/ubicacionesTareas/{tarea}', [App\Http\Controllers\tareaUbicacionController::class, 'update'])->name('tareaUbicacion.update');
     Route::delete('/catalogos/ubicacionesTareas/{tarea}', [App\Http\Controllers\tareaUbicacionController::class, 'destroy'])->name('tareaUbicacion.delete');
 
+    Route::get('/catalogos/tiposUniforme', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTipoUniforme'])->name('catalogoTipoUniforme.index');
+    Route::get('/catalogos/tiposUniforme/nuevo', [App\Http\Controllers\tipoUniformeController::class, 'create'])->name('tipoUniforme.create');
+    Route::post('/catalogos/tiposUniforme', [App\Http\Controllers\tipoUniformeController::class, 'store'])->name('tipoUniforme.store');
+    Route::put('/catalogos/tiposUniforme/{tipoUniforme}', [App\Http\Controllers\tipoUniformeController::class, 'update'])->name('tipoUniforme.update');
+    Route::delete('/catalogos/tiposUniforme/{tipoUniforme}', [App\Http\Controllers\tipoUniformeController::class, 'destroy'])->name('tipoUniforme.delete');
+
     //Crud maquinaria
     Route::get('/maquinaria/nuevo', [App\Http\Controllers\maquinariaController::class, 'create'])->name('maquinaria.create');
     Route::post('/maquinaria', [App\Http\Controllers\maquinariaController::class, 'store'])->name('maquinaria.store');
@@ -186,7 +202,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Crud Inventario
     Route::get('/inventarios', [App\Http\Controllers\inventarioController::class, 'dash'])->name('inventario.dash');
     Route::get('/inventario/{tipo}', [App\Http\Controllers\inventarioController::class, 'index'])->name('inventario.index');
-    Route::get('/inventario/producto/nuevo', [App\Http\Controllers\inventarioController::class, 'create'])->name('inventario.create');
+    Route::get('/inventario/producto/nuevo/{tipo}', [App\Http\Controllers\inventarioController::class, 'create'])->name('inventario.create');
     Route::post('/inventario', [App\Http\Controllers\inventarioController::class, 'store'])->name('inventario.store');
     Route::put('/inventario/{producto}/restock', [App\Http\Controllers\inventarioController::class, 'restock'])->name('inventario.restock');
     Route::put('/inventario/{producto}/mover', [App\Http\Controllers\inventarioController::class, 'mover'])->name('inventario.mover');
@@ -318,37 +334,37 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::get('/editarTareaCheck', function () {
-       return view('checkList.editarTareaCheck');
-   });
+        return view('checkList.editarTareaCheck');
+    });
 
     Route::get('/nuevaTareaCheck', function () {
-       return view('checkList.nuevaTareaCheck');
-   });
+        return view('checkList.nuevaTareaCheck');
+    });
 
-//    Route::get('/indexBitacora', function () {
-//        return view('bitacora.indexBitacora');
-//    });
-
-
-//    Route::get('/nuevoBitacora', function () {
-//        return view('bitacora.nuevoBitacora');
-//    });
-
-//    Route::get('/editarBitacora', function () {
-//        return view('bitacora.editarBitacora');
-//    });
+    //    Route::get('/indexBitacora', function () {
+    //        return view('bitacora.indexBitacora');
+    //    });
 
 
-//    Route::get('/indexgrupo', function () {
-//        return view('grupo.indexgrupo');
-//    });
+    //    Route::get('/nuevoBitacora', function () {
+    //        return view('bitacora.nuevoBitacora');
+    //    });
 
-//    Route::get('/nuevoGrupo', function () {
-//        return view('grupo.nuevoGrupo');
-//    });
+    //    Route::get('/editarBitacora', function () {
+    //        return view('bitacora.editarBitacora');
+    //    });
 
-//    Route::get('/editarGupo', function () {
-//        return view('grupo.editarGrupo');
-//    });
+
+    //    Route::get('/indexgrupo', function () {
+    //        return view('grupo.indexgrupo');
+    //    });
+
+    //    Route::get('/nuevoGrupo', function () {
+    //        return view('grupo.nuevoGrupo');
+    //    });
+
+    //    Route::get('/editarGupo', function () {
+    //        return view('grupo.editarGrupo');
+    //    });
 
 });

@@ -350,18 +350,17 @@
                 </li>
             @endcan
 
-            
-                <li class="nav-item collapsed">
-                    <a class="nav-link {{ $activePage == 'mtq' ? '' : 'collapsed' }}"
-                        href="{{ url('dashMtq') }}">
-                        {{--  <i class="bi bi-shop"></i>  --}}
-                        <span class="material-icons">
-                            apartment
-                        </span>
-                        <span>MTQ'S</span>
-                    </a>
-                </li>
-            
+
+            <li class="nav-item collapsed">
+                <a class="nav-link {{ $activePage == 'mtq' ? '' : 'collapsed' }}" href="{{ url('dashMtq') }}">
+                    {{--  <i class="bi bi-shop"></i>  --}}
+                    <span class="material-icons">
+                        apartment
+                    </span>
+                    <span>MTQS</span>
+                </a>
+            </li>
+
 
             @can('obra_index')
                 <li class="nav-item ">
@@ -388,6 +387,15 @@
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('obras.create') }}" class="">
                                     <i class="bi bi-circle"></i><span>Nuevo Obra</span>
+                                </a>
+                            </li>
+                        @endcan
+
+                        @can('cliente_create')
+                            <li>
+                                {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
+                                <a href="{{ route('clientes.index') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Clientes</span>
                                 </a>
                             </li>
                         @endcan
@@ -463,7 +471,7 @@
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous">
     </script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('js/alertas.js') }}"></script> 
+    <script src="{{ asset('js/alertas.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
 
     @stack('js')

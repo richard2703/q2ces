@@ -561,7 +561,7 @@ class personalController extends Controller
     public function update(Request $request, personal $personal)
     {
         abort_if(Gate::denies('personal_edit'), 403);
-        // dd( $request );
+        dd($personal);
         $request->validate([
             'nombres' => 'required|max:150',
             'apellidoP' => 'required|max:150',

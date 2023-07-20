@@ -14,6 +14,8 @@ class inventario extends Model
 
     protected $fillable = [
         'numparte', 'nombre', 'marca', 'modelo', 'proveedor', 'cantidad', 'reorden',
-        'maximo', 'valor', 'imagen', 'tipo', 
+        'maximo', 'valor', 'imagen', 'tipo',
+        'uniformeTipoId', 'uniformeTalla','uniformeRetornable',
+        'extintorCapacidad', 'extintorCodigo','extintorFechaVencimiento'
     ];
 }
