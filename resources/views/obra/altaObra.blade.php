@@ -245,8 +245,8 @@
                                 <div class="mb-5" id="spinner-container"></div>
                                 <button type="submit" class="btn botonGral" onclick="alertaGuardar()">Guardar</button>
                             </div>
+                        </form>
                     </div>
-                    </form>
                 </div>
             </div>
         </div>

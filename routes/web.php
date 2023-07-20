@@ -109,7 +109,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Dash mtq
     Route::get('/dashMtq', function () {
         return view('mtq.dashMtq');
-        });
+    });
 
     //Route::resource('mtq', App\Http\Controllers\mtqController::class);
 
@@ -121,6 +121,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/obras/{obras}/edit', [App\Http\Controllers\obrasController::class, 'edit'])->name('obras.edit');
     Route::delete('/obras/{obras}', [App\Http\Controllers\obrasController::class, 'destroy'])->name('obras.delete');
     Route::put('/obras/{obras}', [App\Http\Controllers\obrasController::class, 'update'])->name('obras.update');
+
+    // Crud Clientes
+    Route::resource('clientes', App\Http\Controllers\clientesController::class);
 
     //Crud personal
     Route::get('/personal/nuevo', [App\Http\Controllers\personalController::class, 'create'])->name('personal.create');
@@ -320,37 +323,37 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::get('/editarTareaCheck', function () {
-       return view('checkList.editarTareaCheck');
-   });
+        return view('checkList.editarTareaCheck');
+    });
 
     Route::get('/nuevaTareaCheck', function () {
-       return view('checkList.nuevaTareaCheck');
-   });
+        return view('checkList.nuevaTareaCheck');
+    });
 
-//    Route::get('/indexBitacora', function () {
-//        return view('bitacora.indexBitacora');
-//    });
-
-
-//    Route::get('/nuevoBitacora', function () {
-//        return view('bitacora.nuevoBitacora');
-//    });
-
-//    Route::get('/editarBitacora', function () {
-//        return view('bitacora.editarBitacora');
-//    });
+    //    Route::get('/indexBitacora', function () {
+    //        return view('bitacora.indexBitacora');
+    //    });
 
 
-//    Route::get('/indexgrupo', function () {
-//        return view('grupo.indexgrupo');
-//    });
+    //    Route::get('/nuevoBitacora', function () {
+    //        return view('bitacora.nuevoBitacora');
+    //    });
 
-//    Route::get('/nuevoGrupo', function () {
-//        return view('grupo.nuevoGrupo');
-//    });
+    //    Route::get('/editarBitacora', function () {
+    //        return view('bitacora.editarBitacora');
+    //    });
 
-//    Route::get('/editarGupo', function () {
-//        return view('grupo.editarGrupo');
-//    });
+
+    //    Route::get('/indexgrupo', function () {
+    //        return view('grupo.indexgrupo');
+    //    });
+
+    //    Route::get('/nuevoGrupo', function () {
+    //        return view('grupo.nuevoGrupo');
+    //    });
+
+    //    Route::get('/editarGupo', function () {
+    //        return view('grupo.editarGrupo');
+    //    });
 
 });
