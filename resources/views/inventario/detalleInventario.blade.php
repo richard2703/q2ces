@@ -101,6 +101,9 @@
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-6 mb-5 ">
+
+                                            <input type="hidden" name="tipo" value="{{ $inventario->tipo }}">
+
                                             <label class="labelTitulo">Tipo:</label></br>
                                             <select class="form-select" aria-label="Default select example"
                                                 id="tipo" name="tipo" disabled="false">
