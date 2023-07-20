@@ -73,7 +73,7 @@
                                                     <td class="td-actions text-center">
                                                         @can('maquinaria_show')
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
-                                                                onclick="cargaItem('{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marca }}','{{ $maquina->modelo }}','{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}','{{ $maquina->foto }}','{{$maquina}}','{{true}}')">
+                                                                onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marca }}','{{ $maquina->modelo }}','{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}','{{ $maquina->foto }}','{{$maquina}}','{{true}}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
                                                                 <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
                                                                 <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
@@ -83,7 +83,7 @@
                                                         @can('maquinaria_edit')
                                                         
                                                             <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
-                                                                onclick="cargaItem('{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marca }}','{{ $maquina->modelo }}','{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}','{{ $maquina->foto }}','{{$maquina}}','{{false}}')">
+                                                                onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->nombre }}','{{ $maquina->marca }}','{{ $maquina->modelo }}','{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}','{{ $maquina->foto }}','{{$maquina}}','{{false}}')">
                                                                 <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                     height="28" fill="currentColor"
                                                                     class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -249,6 +249,7 @@
                     <form class="row d-flex" action="{{ route('mtq.update', 0) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('put')
+                        <input type="hidden" name="id" value="" id="id">
                         <div class="row d-flex justify-content-center">
                             <div class="col-12 col-sm-6 align-items-center">
                                 <div class="text-center mx-auto border vistaFoto mb-4">
@@ -366,8 +367,9 @@
     </style>
 
     <script>
-    function cargaItem(identificador, nombre, marca, modelo, submarca, ano, color, placas, numserie, nummotor, img, maquina, modalTipo) {
-        console.log('modalTipo', modalTipo);
+    function cargaItem(id, identificador, nombre, marca, modelo, submarca, ano, color, placas, numserie, nummotor, img, maquina, modalTipo) {
+        console.log('id', id);
+
         const contenedorBotonGuardar = document.getElementById('contenedorBotonGuardar');
         const contenedorBotonSubirImagen = document.getElementById('contenedorBotonSubirImagen');
         if (modalTipo) {
@@ -428,6 +430,9 @@
         const txtNummotor = document.getElementById('nummotor');
         txtNummotor.value = nummotor;
         txtNummotor.readOnly = modalTipo;
+
+        const txtId = document.getElementById('id');
+        txtId.value = id;
 
         const imagenVista = document.getElementById('foto');
         console.log('imagen 1', img);
