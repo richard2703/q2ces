@@ -163,7 +163,7 @@
                         </span>
                         <span>Catalogos</span>
                     </a>
-                </li>
+                </li> 
             @endcan
 
             @can('combustible_index')
@@ -204,7 +204,7 @@
                         @can('mantenimiento_create')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
-                                <a href="{{ url('/nuevoMantenimiento') }}" class="">
+                                <a href="{{ url('/mantenimientos/nuevo') }}" class="">
                                     <i class="bi bi-circle"></i><span>Nuevo Mantenimeinto</span>
                                 </a>
                             </li>
