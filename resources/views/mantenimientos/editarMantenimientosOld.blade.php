@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => ' Mantenimiento', 'titlePage' => __('EditarMantenimiento')])
+@extends('layouts.main', ['activePage' => 'mantenimiento', 'titlePage' => __('EditarMantenimiento')])
 @section('content')
 <div class="content">
         <div class="container-fluid">
@@ -11,7 +11,6 @@
                                     <h4 class="card-title">Registro Nuevo Mantenimiento</h4>   
                                 </div>
                                 <div class="card-body ">   
-
                                     <div class="col-12 my-4">
                                         <div class="row">
                                             <div class="divBorder">

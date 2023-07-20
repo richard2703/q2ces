@@ -4,15 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\residente;
-use App\Models\obras;
-
+use App\Models\tipoUniforme;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
-class residenteController extends Controller {
+class tipoUniformeController extends Controller {
     /**
     * Display a listing of the resource.
     *
@@ -20,16 +18,7 @@ class residenteController extends Controller {
     */
 
     public function index() {
-        abort_if ( Gate::denies( 'puesto_index' ), 403 );
-
-        $records = residente::select( 'residente.*',
-        DB::raw( 'obras.nombre AS obra' ) )
-        ->join( 'obras', 'obras.id', '=', 'residente.obraId' )
-        ->orderBy( 'nombre', 'asc' )->paginate( 10 );
-
-        $vctObras = obras::orderBy( 'nombre', 'asc' )->get();
-        // dd( $puestos );
-        return view( 'mtq.residentes', compact( 'records', 'vctObras' ) );
+        //
     }
 
     /**
@@ -50,6 +39,7 @@ class residenteController extends Controller {
     */
 
     public function store( Request $request ) {
+
         abort_if ( Gate::denies( 'catalogos_create' ), 403 );
 
         // dd( $request );
@@ -63,10 +53,10 @@ class residenteController extends Controller {
         ] );
         $record = $request->all();
 
-        residente::create( $record );
+        tipoUniforme::create( $record );
         Session::flash( 'message', 1 );
 
-        return redirect()->route( 'residentes.index' );
+        return redirect()->route( 'catalogoTipoUniforme.index' );
     }
 
     /**
@@ -115,7 +105,7 @@ class residenteController extends Controller {
         ] );
         $data = $request->all();
 
-        $record = residente::where( 'id', $data[ 'controlId' ] )->first();
+        $record = tipoUniforme::where( 'id', $data[ 'controlId' ] )->first();
 
         if ( is_null( $record ) == false ) {
             // dd( $data );
@@ -123,7 +113,7 @@ class residenteController extends Controller {
             Session::flash( 'message', 1 );
         }
 
-        return redirect()->route( 'residentes.index' );
+        return redirect()->route( 'catalogoTipoUniforme.index' );
     }
 
     /**

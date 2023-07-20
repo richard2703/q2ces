@@ -123,7 +123,7 @@ CREATE TABLE users (
     remember_token varchar(100) DEFAULT NULL,
     created_at timestamp NULL DEFAULT NULL,
     updated_at timestamp NULL DEFAULT NULL,
-    username varchar(255) null,
+    username varchar(255) NULL,
     PRIMARY KEY (id)
 );
 
@@ -218,8 +218,8 @@ create table failed_jobs(
 /* Para soporte de puesto de personal */
 create table puesto(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) not null,
-    comentario text null,
+    nombre varchar(200) not NULL,
+    comentario text NULL,
     puestoNivelId bigint(20) unsigned NULL,
     primary key (id),
     CONSTRAINT FK_puesto_puestoNivelId foreign key (puestoNivelId) references puestoNivel(id)
@@ -286,10 +286,10 @@ VALUES
 /* Para soporte de nivel puesto de personal */
 create table puestoNivel(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) not null,
+    nombre varchar(200) not NULL,
     requiereAsistencia int(1) NOT NULL DEFAULT '0',
     usaCajaChica TINYINT(1) NOT NULL DEFAULT '0',
-    comentario text null,
+    comentario text NULL,
     primary key (id)
 );
 
@@ -320,27 +320,27 @@ CREATE TABLE personal(
     nombres varchar(255) NULL,
     apellidoP varchar(255) NULL,
     apellidoM varchar(255) NULL,
-    fechaNacimiento datetime null,
-    lugarNacimiento varchar(255) null,
+    fechaNacimiento datetime NULL,
+    lugarNacimiento varchar(255) NULL,
     curp varchar(21) NULL,
     ine varchar(20) NULL,
     rfc varchar(20) NULL,
     licencia varchar(20) NULL,
-    tipoLicencia varchar(200) null,
+    tipoLicencia varchar(200) NULL,
     cpf varchar(25) NULL,
     cpe varchar(25) NULL,
     sexo varchar(10) NULL,
     civil varchar(25) NULL,
-    hijos int null,
+    hijos int NULL,
     sangre varchar(10) NULL,
-    aler text null,
-    profe varchar (255) null,
+    aler text NULL,
+    profe varchar (255) NULL,
     calle varchar(255) NULL,
     numero varchar(255) NULL,
-    interior varchar (255) null,
+    interior varchar (255) NULL,
     colonia varchar(255) NULL,
     estado varchar(255) NULL,
-    ciudad varchar(255) null,
+    ciudad varchar(255) NULL,
     cp varchar(255) NULL,
     particular varchar(255) NULL,
     celular varchar(255) NULL,
@@ -364,23 +364,23 @@ CREATE TABLE equipo(
     camisa varchar(200) NULL,
     botas varchar(200) NULL,
     guantes varchar(200) NULL,
-    comentarios text null,
+    comentarios text NULL,
     pc varchar(200) NULL,
     pcSerial varchar(200) NULL,
     celular varchar(200) NULL,
     celularImei varchar(200) NULL,
     radio varchar(200) NULL,
     radioSerial varchar(200) NULL,
-    cargadorSerial varchar(200) null,
+    cargadorSerial varchar(200) NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_equipo_personalId foreign key (personalId) references personal(id)
 );
 
 CREATE TABLE tipoEquipo(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    Nombre int not null,
+    Nombre int not NULL,
     tipo varchar(200) not NULL,
-    comentario text null,
+    comentario text NULL,
     PRIMARY KEY (id)
 );
 
@@ -388,10 +388,10 @@ CREATE TABLE asignacionEquipo(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     personalId bigint(20) unsigned NOT NULL,
     equipoId bigint(20) unsigned NOT NULL,
-    cantidad int not null,
+    cantidad int not NULL,
     marca varchar(200) NULL,
     serial varchar(200) NULL,
-    comentario text null,
+    comentario text NULL,
     created_at timestamp NULL DEFAULT NULL,
     updated_at timestamp NULL DEFAULT NULL,
     PRIMARY KEY (id),
@@ -433,8 +433,8 @@ CREATE TABLE contactos(
     particular varchar(255) NULL,
     celular varchar(255) NULL,
     parentesco varchar(255) NULL,
-    nombreP varchar(255) null,
-    nombreM varchar(255) null,
+    nombreP varchar(255) NULL,
+    nombreM varchar(255) NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_contactos_personalId foreign key (personalId) references personal(id)
 );
@@ -447,7 +447,7 @@ CREATE TABLE beneficiario(
     apellidoM varchar(255) NULL,
     particular varchar(255) NULL,
     celular varchar(255) NULL,
-    nacimiento datetime null,
+    nacimiento datetime NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_beneficiario_personalId foreign key (personalId) references personal(id)
 );
@@ -455,35 +455,35 @@ CREATE TABLE beneficiario(
 CREATE TABLE nomina(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     personalId bigint(20) unsigned NULL,
-    nomina int null,
+    nomina int NULL,
     imss varchar(255) NULL,
     clinica varchar(255) NULL,
     infonavit varchar(255) NULL,
     afore varchar(255) NULL,
-    pago varchar(25) null,
+    pago varchar(25) NULL,
     tarjeta varchar(255) NULL,
     banco varchar(255) NULL,
-    ingreso datetime null,
-    vactotales int null,
-    vactomadas int null,
-    primavactotal float(10, 2) null,
-    primavactomadas float(10, 2) null,
-    fechaPagoPrimaVac date null,
-    laborables int null,
+    ingreso datetime NULL,
+    vactotales int NULL,
+    vactomadas int NULL,
+    primavactotal float(10, 2) NULL,
+    primavactomadas float(10, 2) NULL,
+    fechaPagoPrimaVac date NULL,
+    laborables int NULL,
     horario varchar(255) NULL,
     jefeId bigint(20) unsigned NULL,
-    neto float(10, 2) null,
-    bruto float(10, 2) null,
-    diario float(10, 2) null,
-    diariointegrado float(10, 2) null,
-    mensualintegrado float(10, 2) null,
-    imssAportacion float(10, 2) null,
-    imssriesgo float(10, 2) null,
-    aforeAportacion float(10, 2) null,
-    isr float(10, 2) null,
-    ispt float(10, 2) null,
-    aguinaldo float(10, 2) null,
-    ptu float(10, 2) null,
+    neto float(10, 2) NULL,
+    bruto float(10, 2) NULL,
+    diario float(10, 2) NULL,
+    diariointegrado float(10, 2) NULL,
+    mensualintegrado float(10, 2) NULL,
+    imssAportacion float(10, 2) NULL,
+    imssriesgo float(10, 2) NULL,
+    aforeAportacion float(10, 2) NULL,
+    isr float(10, 2) NULL,
+    ispt float(10, 2) NULL,
+    aguinaldo float(10, 2) NULL,
+    ptu float(10, 2) NULL,
     puestoId bigint(20) unsigned NULL,
     asistencia int(1) unsigned NULL,
     PRIMARY KEY (id),
@@ -502,7 +502,7 @@ CREATE TABLE maquinaria(
     marca varchar(255) NULL,
     submarca varchar(255) NULL,
     modelo varchar(255) NULL,
-    ano int null,
+    ano int NULL,
     uso varchar(255) NULL,
     color varchar(255) NULL,
     placas varchar(255) NULL,
@@ -511,7 +511,7 @@ CREATE TABLE maquinaria(
     numserie varchar(255) NULL,
     vin varchar(255) NULL,
     capacidad varchar(255) NULL,
-    combustible varchar(255) null,
+    combustible varchar(255) NULL,
     tanque int NULL,
     ejes varchar(255) NULL,
     rinD varchar(255) NULL,
@@ -535,6 +535,7 @@ CREATE TABLE maquinaria(
     foto4 varchar(255) NULL,
     cisterna int(1) NULL,
     cisternaNivel float(10, 2) NULL,
+    compania varchar(200) null,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
@@ -544,11 +545,11 @@ CREATE TABLE maquinaria(
 CREATE TABLE maqdocs(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     maquinariaId bigint(20) unsigned NOT NULL,
-    ruta varchar(255) null,
-    tipo varchar(255) null,
-    fechaVencimiento date not null,
+    ruta varchar(255) NULL,
+    tipo varchar(255) NULL,
+    fechaVencimiento date not NULL,
     estatus varchar(255) NULL,
-    comentarios text null,
+    comentarios text NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
@@ -563,7 +564,7 @@ CREATE TABLE accesorios(
     color varchar(255) NULL,
     ano varchar(255) NULL,
     serie varchar(255) NULL,
-    foto varchar(255) null,
+    foto varchar(255) NULL,
     maquinariaId bigint(20) unsigned NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_accesorios_maquinariaId foreign key (maquinariaId) references maquinaria(id)
@@ -632,6 +633,13 @@ CREATE TABLE obraMaqPer(
     CONSTRAINT FK_obraMaqPer_obras foreign key (obraId) references obras(id)
 );
 
+CREATE TABLE tipoUniforme(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(100) not NULL,
+    comentario text NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE inventario(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     numparte varchar(255) NOT NULL,
@@ -639,22 +647,29 @@ CREATE TABLE inventario(
     marca varchar(255) NULL,
     modelo varchar(255) NULL,
     proveedor varchar(255) NULL,
-    cantidad float(10, 2) null,
-    reorden float(10, 2) null,
-    maximo float(10, 2) null,
-    Valor float(10, 2) null,
+    cantidad float(10, 2) NULL,
+    reorden float(10, 2) NULL,
+    maximo float(10, 2) NULL,
+    Valor float(10, 2) NULL,
     imagen varchar(255) NULL,
     tipo varchar(255) NULL,
+    uniformeTipoId bigint(20) unsigned  NULL,
+    uniformeTalla varchar(16) NULL,
+    uniformeRetornable int(1) NULL,
+    extintorCapacidad int(20) NULL,
+    extintorCodigo varchar(32) NULL,
+    extintorFechaVencimiento date NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT FK_inventario_tipouniforme foreign key (uniformeTipoId) references tipoUniforme(id)
 );
 
 CREATE TABLE restock(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     productoId bigint(20) unsigned NOT NULL,
-    cantidad float(10, 2) not null,
-    costo float(10, 2) not null,
+    cantidad float(10, 2) not NULL,
+    costo float(10, 2) not NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
@@ -665,7 +680,7 @@ CREATE TABLE invconsu(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     productoId bigint(20) unsigned NOT NULL,
     tipo varchar(255) NULL,
-    cantidad float(10, 2) not null,
+    cantidad float(10, 2) not NULL,
     desde bigint(20) unsigned NOT NULL,
     hasta bigint(20) unsigned NOT NULL,
     comentarios text DEFAULT NULL,
@@ -681,15 +696,15 @@ CREATE TABLE fiscal(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     personalId bigint(20) unsigned NOT NULL,
     cp varchar(255) NULL,
-    tipo varchar(255) null,
+    tipo varchar(255) NULL,
     calle varchar(255) NULL,
     numero varchar(255) NULL,
-    interior varchar (255) null,
+    interior varchar (255) NULL,
     colonia varchar(255) NULL,
-    localidad varchar(255) null,
-    municipio varchar(255) null,
+    localidad varchar(255) NULL,
+    municipio varchar(255) NULL,
     estado varchar(255) NULL,
-    entre varchar(255) null,
+    entre varchar(255) NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_fiscal_personalId foreign key (personalId) references personal(id)
 );
@@ -697,7 +712,7 @@ CREATE TABLE fiscal(
 CREATE TABLE maqimagen(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     maquinariaId bigint(20) unsigned NOT NULL,
-    ruta varchar(255) null,
+    ruta varchar(255) NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_maqimagen_maquinariaId foreign key (maquinariaId) references maquinaria(id)
 );
@@ -706,8 +721,8 @@ CREATE TABLE carga(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     maquinariaId bigint(20) unsigned NOT NULL,
     operadorId bigint(20) unsigned NOT NULL,
-    precio float(10, 2) not null,
-    litros float(10, 2) not null,
+    precio float(10, 2) not NULL,
+    litros float(10, 2) not NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
@@ -721,11 +736,11 @@ CREATE TABLE descarga(
     operadorId bigint(20) unsigned NOT NULL,
     servicioId bigint(20) unsigned NOT NULL,
     receptorId bigint(20) unsigned NOT NULL,
-    litros float(10, 2) not null,
-    km int not null,
-    imgKm varchar(255) not null,
-    horas float(10, 2) not null,
-    imgHoras varchar(255) not null,
+    litros float(10, 2) not NULL,
+    km int not NULL,
+    imgKm varchar(255) not NULL,
+    horas float(10, 2) not NULL,
+    imgHoras varchar(255) not NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
@@ -739,14 +754,14 @@ CREATE TABLE residente(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     userId bigint(20) unsigned NOT NULL,
     obraId bigint(20) unsigned NOT NULL,
-    nombre varchar(255) null,
-    apellido varchar(255) null,
-    empresa varchar(255) null,
-    puesto varchar(255) null,
-    telefono varchar(255) null,
-    firma varchar(255) null,
+    nombre varchar(255) NULL,
+    apellido varchar(255) NULL,
+    empresa varchar(255) NULL,
+    puesto varchar(255) NULL,
+    telefono varchar(255) NULL,
+    firma varchar(255) NULL,
     email varchar(255) NOT NULL,
-    comentario text null,
+    comentario text NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_residente_userId foreign key (userId) references users(id),
     CONSTRAINT FK_residente_obraId foreign key (obraId) references obras(id)
@@ -754,25 +769,25 @@ CREATE TABLE residente(
 
 create table estados(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) not null,
-    color varchar(8) null,
-    comentario text null,
+    nombre varchar(200) not NULL,
+    color varchar(8) NULL,
+    comentario text NULL,
     primary key (id)
 );
 
 create table prioridades(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) not null,
-    color varchar(8) null,
-    comentario text null,
+    nombre varchar(200) not NULL,
+    color varchar(8) NULL,
+    comentario text NULL,
     primary key (id)
 );
 
 create table reparaciones(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) not null,
-    codigo varchar(8) null,
-    comentario text null,
+    nombre varchar(200) not NULL,
+    codigo varchar(8) NULL,
+    comentario text NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     primary key (id)
@@ -782,14 +797,14 @@ CREATE TABLE tareas(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     userId bigint(20) unsigned NOT NULL,
     responsable bigint(20) unsigned NOT NULL,
-    titulo varchar(255) not null,
-    fechaInicio date null,
-    fechaFin date null,
+    titulo varchar(255) not NULL,
+    fechaInicio date NULL,
+    fechaFin date NULL,
     prioridadId bigint(20) unsigned NOT NULL,
     estadoId bigint(20) unsigned NOT NULL,
-    fechaInicioR date not null,
-    fechaFinR date not null,
-    comentario text null,
+    fechaInicioR date not NULL,
+    fechaFinR date not NULL,
+    comentario text NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
@@ -802,11 +817,11 @@ CREATE TABLE tareas(
 CREATE TABLE eventos(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     userId bigint(20) unsigned NOT NULL,
-    titulo varchar(255) not null,
-    fechaInicio date null,
-    fechaFin date null,
+    titulo varchar(255) not NULL,
+    fechaInicio date NULL,
+    fechaFin date NULL,
     prioridadId bigint(20) unsigned NOT NULL,
-    comentario text null,
+    comentario text NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
@@ -818,18 +833,18 @@ CREATE TABLE mantenimientos(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     maquinariaId bigint(20) unsigned NOT NULL,
     personalId bigint(20) unsigned NOT NULL,
-    titulo varchar(255) not null,
-    tipo varchar(255) not null,
-    fechaInicio date not null,
-    fechaReal date null,
+    titulo varchar(255) not NULL,
+    tipo varchar(255) not NULL,
+    fechaInicio date not NULL,
+    fechaReal date NULL,
     estadoId bigint(20) unsigned NOT NULL,
-    comentario text null,
-    adscripcion varchar(200) null,
-    horometro int null,
-    kilometraje int null,
-    subtotal float(10,2) null,
-    iva float(10,2) null,
-    costo float(10,2) null,
+    comentario text NULL,
+    adscripcion varchar(200) NULL,
+    horometro int NULL,
+    kilometraje int NULL,
+    subtotal float(10,2) NULL,
+    iva float(10,2) NULL,
+    costo float(10,2) NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
@@ -843,12 +858,12 @@ CREATE TABLE servicios(
     userId bigint(20) unsigned NOT NULL,
     maquinariaId bigint(20) unsigned NOT NULL,
     reparacionId bigint(20) unsigned NOT NULL,
-    titulo varchar(255) not null,
+    titulo varchar(255) not NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     prioridadId bigint(20) unsigned NOT NULL,
     estadoId bigint(20) unsigned NOT NULL,
-    comentario text null,
+    comentario text NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_servicios_userId foreign key (userId) references users(id),
     CONSTRAINT FK_servicios_maquinariaId foreign key (maquinariaId) references maquinaria(id),
@@ -863,14 +878,14 @@ CREATE TABLE solicitudes(
     responsable bigint(20) unsigned NOT NULL,
     maquinariaId bigint(20) unsigned NOT NULL,
     serviciosId bigint(20) unsigned NOT NULL,
-    titulo varchar(255) not null,
-    fechaSolicitud date not null,
-    fechaRequerimiento date not null,
+    titulo varchar(255) not NULL,
+    fechaSolicitud date not NULL,
+    fechaRequerimiento date not NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     prioridadId bigint(20) unsigned NOT NULL,
     estadoId bigint(20) unsigned NOT NULL,
-    comentario text null,
+    comentario text NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_solicitudes_userId foreign key (userId) references users(id),
     CONSTRAINT FK_solicitudes_userId foreign key (maquinariaId) references maquinaria(id),
@@ -883,7 +898,7 @@ CREATE TABLE solicitudesListas(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     solicitudId bigint(20) unsigned NOT NULL,
     inventarioId bigint(20) unsigned NOT NULL,
-    cantidad float(10, 2) not null,
+    cantidad float(10, 2) not NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
@@ -896,7 +911,7 @@ CREATE TABLE historialServicios(
     solicitudId bigint(20) unsigned NOT NULL,
     servicioId bigint(20) unsigned NOT NULL,
     estadoId bigint(20) unsigned NOT NULL,
-    comentario float(10, 2) not null,
+    comentario float(10, 2) not NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
@@ -907,16 +922,16 @@ CREATE TABLE historialServicios(
 
 create table tipoAsistencia(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) not null,
-    comentario text null,
+    nombre varchar(200) not NULL,
+    comentario text NULL,
     primary key (id)
 );
 
 create table userEstatus(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) not null,
-    color varchar(8) null,
-    comentario text null,
+    nombre varchar(200) not NULL,
+    color varchar(8) NULL,
+    comentario text NULL,
     primary key (id)
 );
 
@@ -930,9 +945,9 @@ VALUES
 
 create table maquinariaEstatus(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) not null,
-    color varchar(8) null,
-    comentario text null,
+    nombre varchar(200) not NULL,
+    color varchar(8) NULL,
+    comentario text NULL,
     primary key (id)
 );
 
@@ -946,10 +961,10 @@ VALUES
 
 create table tipoAsistencia(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) not null,
-    comentario text null,,
-    color varchar(200) not null,
-    esAsistencia int null,
+    nombre varchar(200) not NULL,
+    comentario text NULL,,
+    color varchar(200) not NULL,
+    esAsistencia int NULL,
     primary key (id)
 );
 
@@ -964,10 +979,10 @@ VALUES
 
 create table tipoHoraExtra(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) not null,
-    valor int null,
-    comentario text null,
-    color varchar(200) not null,
+    nombre varchar(200) not NULL,
+    valor int NULL,
+    comentario text NULL,
+    color varchar(200) not NULL,
     primary key (id)
 );
 
@@ -975,10 +990,10 @@ create table asistencia(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     personalId bigint(20) unsigned NOT NULL,
     asistenciaId bigint(20) unsigned NOT NULL,
-    fecha date not null,
-    horasExtra int null,
-    tipoHoraExtraId int null,
-    comentario text null,
+    fecha date not NULL,
+    horasExtra int NULL,
+    tipoHoraExtraId int NULL,
+    comentario text NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     primary key (id),
@@ -991,13 +1006,13 @@ create table asistencia(
 --     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 --     personalId bigint(20) unsigned NOT NULL,
 --     maquinariaId bigint(20) unsigned NOT NULL,
---     fecha date not null,
---     adscripcion varchar(200) null,
---     horometro int null,
---     km int null,
---     subtotal float(10,2) null,
---     iva float(10,2) null,
---     costo float(10,2) null,
+--     fecha date not NULL,
+--     adscripcion varchar(200) NULL,
+--     horometro int NULL,
+--     km int NULL,
+--     subtotal float(10,2) NULL,
+--     iva float(10,2) NULL,
+--     costo float(10,2) NULL,
 --     created_at datetime NULL,
 --     updated_at datetime NULL,
 --     primary key (id),
@@ -1009,9 +1024,9 @@ create table gastosMantenimiento(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     mantenimientoId bigint(20) unsigned NOT NULL,
     inventarioId bigint(20) unsigned NOT NULL,
-    cantidad int not null,
-    costo float(16,2) null,
-    total float(16,2) null,
+    cantidad int not NULL,
+    costo float(16,2) NULL,
+    total float(16,2) NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     primary key (id),
@@ -1020,26 +1035,26 @@ create table gastosMantenimiento(
 );
 create table conceptos(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    codigo varchar(200) not null,
-    nombre varchar(200) not null,
-    comentario text null,
+    codigo varchar(200) not NULL,
+    nombre varchar(200) not NULL,
+    comentario text NULL,
     primary key (id)
 );
 
 create table cajaChica(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    dia date not null,
-    concepto bigint(20) unsigned NOT null,
-    comprobante float(10,2) null,
-    ncomprobante int not null,
+    dia date not NULL,
+    concepto bigint(20) unsigned NOT NULL,
+    comprobante float(10,2) NULL,
+    ncomprobante int not NULL,
     cliente varchar(200),
-    obra bigint(20) unsigned NOT null,
-    equipo bigint(20) unsigned NOT null,
-    personal bigint(20) unsigned NOT null,
-    tipo varchar(200) null,
-    cantidad int not null,
-    total float(10, 2) null,
-    comentario text null,
+    obra bigint(20) unsigned NOT NULL,
+    equipo bigint(20) unsigned NOT NULL,
+    personal bigint(20) unsigned NOT NULL,
+    tipo varchar(200) NULL,
+    cantidad int not NULL,
+    total float(10, 2) NULL,
+    comentario text NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     primary key (id),
@@ -1053,8 +1068,8 @@ create table cajaChica(
 
 create table tareaCategoria(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) not null,
-    comentario text null,
+    nombre varchar(200) not NULL,
+    comentario text NULL,
     primary key (id)
 );
 INSERT INTO
@@ -1072,8 +1087,8 @@ VALUES
 
 create table tareaTipo(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) not null,
-    comentario text null,
+    nombre varchar(200) not NULL,
+    comentario text NULL,
     primary key (id)
 );
 INSERT INTO
@@ -1091,8 +1106,8 @@ VALUES
 
 create table tareaUbicacion(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) not null,
-    comentario text null,
+    nombre varchar(200) not NULL,
+    comentario text NULL,
     primary key (id)
 );
 INSERT INTO
@@ -1110,11 +1125,11 @@ VALUES
 
 create table tarea(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) null,
-    comentario text null,
-    categoriaId bigint(20) unsigned null,
-    ubicacionId bigint(20) unsigned null,
-    tipoId bigint(20) unsigned null,
+    nombre varchar(200) NULL,
+    comentario text NULL,
+    categoriaId bigint(20) unsigned NULL,
+    ubicacionId bigint(20) unsigned NULL,
+    tipoId bigint(20) unsigned NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     activa TINYINT(1) NOT NULL DEFAULT '1',
@@ -1126,8 +1141,8 @@ create table tarea(
 
 create table bitacoras(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) null,
-    comentario text null,
+    nombre varchar(200) NULL,
+    comentario text NULL,
     activa TINYINT(1) NOT NULL DEFAULT '1',
     created_at datetime NULL,
     updated_at datetime NULL,
@@ -1136,8 +1151,8 @@ create table bitacoras(
 
 create table grupo(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) null,
-    comentario text null,
+    nombre varchar(200) NULL,
+    comentario text NULL,
     activo TINYINT(1) NOT NULL DEFAULT '1',
     created_at datetime NULL,
     updated_at datetime NULL,
