@@ -20,7 +20,6 @@ class residenteController extends Controller {
     */
 
     public function index() {
-        // dd( 'Hola' );
         abort_if ( Gate::denies( 'puesto_index' ), 403 );
 
         $records = residente::select( 'residente.*',
@@ -67,7 +66,7 @@ class residenteController extends Controller {
         residente::create( $record );
         Session::flash( 'message', 1 );
 
-        return redirect()->route( 'residente.index' );
+        return redirect()->route( 'residentes.index' );
     }
 
     /**
@@ -124,7 +123,7 @@ class residenteController extends Controller {
             Session::flash( 'message', 1 );
         }
 
-        return redirect()->route( 'residente.index' );
+        return redirect()->route( 'residentes.index' );
     }
 
     /**

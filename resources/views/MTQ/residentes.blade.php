@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Tipos de Tareas')])
+@extends('layouts.main', ['activePage' => 'mtq', 'titlePage' => __('Lista de Tipos de Tareas')])
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -25,7 +25,7 @@
                                     <div class="row">
                                         <div class="col-12 text-right">
 
-                                            <a href="{{ route('catalogos.index') }}">
+                                            <a href="{{ url('dashMtq') }}">
                                                 <button class="btn regresar">
                                                     <span class="material-icons">
                                                         reply
@@ -41,6 +41,7 @@
                                                 </button>
                                             @endcan
                                         </div>
+                                        <div class="d-flex p-3 divBorder"></div>
                                     </div>
 
 
@@ -130,7 +131,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('residente.store') }}" method="post">
+                    <form class="row d-flex" action="{{ route('residentes.store') }}" method="post">
                         @csrf
                         <input type="hidden" name="userId" id="userId" value="{{ auth()->user()->id }}">
                         <div class=" col-12 col-sm-6 mb-3 ">
@@ -205,7 +206,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('residente.update', 0) }}" method="post">
+                    <form class="row d-flex" action="{{ route('residentes.update', 0) }}" method="post">
                         @csrf
                         @method('put')
                         <input type="hidden" name="controlId" id="controlId" value="">

@@ -106,13 +106,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
     Route::resource('roles', App\Http\Controllers\RoleController::class);
 
-    // Dash mtq
-    Route::get('/dashMtq', function () {
-        return view('mtq.dashMtq');
-        });
-
-    //Route::resource('mtq', App\Http\Controllers\mtqController::class);
-
     //Crud Obras
     Route::get('/obras/nuevo', [App\Http\Controllers\obrasController::class, 'create'])->name('obras.create');
     Route::post('/obras', [App\Http\Controllers\obrasController::class, 'store'])->name('obras.store');
@@ -270,6 +263,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
 
     // Maquinaria MTQ
+
+    Route::get('/dashMtq', function () {
+        return view('mtq.dashMtq');
+    });
     Route::resource('mtq', App\Http\Controllers\maquinariaMtqController::class);
 
 
@@ -298,12 +295,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/bitacoras/tareas/editar/{tarea}', [App\Http\Controllers\tareaController::class, 'update'])->name('tarea.update');
 
     //*** Mtq */
-    Route::get('/mtq/', [App\Http\Controllers\mtqController::class, 'dash'])->name('mtq.dash');
-    Route::get('/mtq/residentes', [App\Http\Controllers\residenteController::class, 'index'])->name('residente.index');
-    Route::get('/mtq/residentes/nuevo', [App\Http\Controllers\residenteController::class, 'create'])->name('residente.create');
-    Route::post('/mtq/residentes', [App\Http\Controllers\residenteController::class, 'store'])->name('residente.store');
-    Route::put('/mtq/residentes/{residente}', [App\Http\Controllers\residenteController::class, 'update'])->name('residente.update');
-    Route::delete('/mtq/residentes/{residente}', [App\Http\Controllers\residenteController::class, 'destroy'])->name('residente.delete');
+    //Route::get('/mtq/', [App\Http\Controllers\mtqController::class, 'dash'])->name('mtq.dash');
+    Route::resource('residentes', App\Http\Controllers\residenteController::class);
+    // Route::get('/residentes', [App\Http\Controllers\residenteController::class, 'index'])->name('residente.index');
+    // Route::get('/mtq/residentes/nuevo', [App\Http\Controllers\residenteController::class, 'create'])->name('residente.create');
+    // Route::post('/mtq/residentes', [App\Http\Controllers\residenteController::class, 'store'])->name('residente.store');
+    // Route::put('/mtq/residentes/{residente}', [App\Http\Controllers\residenteController::class, 'update'])->name('residente.update');
+    // Route::delete('/mtq/residentes/{residente}', [App\Http\Controllers\residenteController::class, 'destroy'])->name('residente.delete');
 
 
     // Route::get('/tareas', function () {
