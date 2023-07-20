@@ -535,6 +535,7 @@ CREATE TABLE maquinaria(
     foto4 varchar(255) NULL,
     cisterna int(1) NULL,
     cisternaNivel float(10, 2) NULL,
+    compania varchar(200) null,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
@@ -578,6 +579,26 @@ CREATE TABLE maqacce(
     CONSTRAINT FK_maqacce_accesorioId foreign key (accesorioId) references accesorios(id)
 );
 
+CREATE TABLE clientes(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(255) NULL,
+    razonSocial varchar(255) NULL,
+    rfc varchar(255) NULL,
+    calle varchar(255) NULL,
+	exterior varchar(255) NULL,
+    interior varchar(255) NULL,
+    colonia varchar(255) NULL,
+    estado varchar(255) NULL,
+    ciudad varchar(255) NULL,
+    cp varchar(255) NULL,
+    logo varchar(255) NULL,
+    fiscal varchar(255) NULL,
+    estatus varchar(255) NULL,
+    created_at timestamp NULL DEFAULT NULL,
+    updated_at timestamp NULL DEFAULT NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE obras(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     nombre varchar(255) NULL,
@@ -591,9 +612,11 @@ CREATE TABLE obras(
     logo varchar(255) NULL,
     foto varchar(255) NULL,
     estatus varchar(255) NULL,
+    clienteId bigint(20) unsigned NOT NULL,
     created_at timestamp NULL DEFAULT NULL,
     updated_at timestamp NULL DEFAULT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT FK_obras_cliente foreign key (clienteId) references clientes(id)
 );
 
 CREATE TABLE obraMaqPer(

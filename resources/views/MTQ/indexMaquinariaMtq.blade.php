@@ -32,12 +32,12 @@
                                             </button>
                                         </a>    
                                     </div>
-                                    <div class="col-8 text-end">
-                                    @can('maquinaria_create')
-                                        <button  data-bs-toggle="modal" data-bs-target="#nuevoItem" 
-                                        type="button" class="btn botonGral">Añadir Maquinaria MTQ</button>
-                                    @endcan
+                                    <div class="col-8 align-end">
+                                        @can('maquinaria_create')
+                                            <button data-bs-toggle="modal" data-bs-target="#nuevoItem" type="button" class="btn botonGral">Añadir Maquinaria MTQ</button>
+                                        @endcan
                                     </div>
+
                                     <div class="d-flex p-3 divBorder"></div>
                                     </div>
                                     
@@ -71,17 +71,19 @@
                                                     <td class="text-center">{{ $maquina->nummotor }}</td>
 
                                                     <td class="td-actions text-center">
-                                                        {{-- @can('user_show') --}}
-                                                        {{-- <a href="{{ route('maquinaria.show', $maquina->id) }}"  class="">
+                                                        @can('maquinaria_show')
+                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
+                                                                onclick="cargaItem('{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marca }}','{{ $maquina->modelo }}','{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}','{{ $maquina->foto }}','{{$maquina}}','{{true}}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
                                                                 <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
                                                                 <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
                                                             </svg>
-                                                        </a> --}}
-                                                        {{-- @endcan --}}
+                                                        </a>
+                                                        @endcan
                                                         @can('maquinaria_edit')
+                                                        
                                                             <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
-                                                                onclick="cargaItem('{{ $maquina->nombre }}','{{ $maquina->marca }}','{{ $maquina->modelo }}','{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->identificador }}','{{ $maquina->nummotor }}',)">
+                                                                onclick="cargaItem('{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marca }}','{{ $maquina->modelo }}','{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}','{{ $maquina->foto }}','{{$maquina}}','{{false}}')">
                                                                 <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                     height="28" fill="currentColor"
                                                                     class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -135,7 +137,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('puesto.store') }}" method="post">
+                    <form class="row d-flex" action="{{ route('mtq.store') }}" method="post">
                         @csrf
                         {{-- <input type="hidden" name="userId" id="userId" value="{{ $usuario->id }}"> --}}
 
@@ -156,19 +158,19 @@
                     <div class=" col-12 col-sm-6 mb-3 ">
                         <label class="labelTitulo">Numero Económico*:</label></br>
                         <input type="text" class="inputCaja"
-                            id="identificador" name="identificador"
+                            name="identificador"
                             value="{{ old('identificador') }}"
                             placeholder="ej: MT-00">
                     </div>
 
                     <div class=" col-12 col-sm-6 mb-3 ">
                         <label class="labelTitulo">Equipo:<span>*</span></label></br>
-                        <input type="text" class="inputCaja" id="nombre" name="nombre"
+                        <input type="text" class="inputCaja" name="nombre"
                             value="{{ old('nombre') }}" required placeholder="Especifique...">
                     </div>
                     <div class=" col-12 col-sm-6 mb-3 ">
                         <label class="labelTitulo">Marca:</label></br>
-                        <input type="text" class="inputCaja" id="marca"
+                        <input type="text" class="inputCaja"
                             placeholder="Especifique..." name="marca"
                             value="{{ old('marca') }}">
                     </div>
@@ -176,49 +178,49 @@
 
                     <div class=" col-12 col-sm-6 mb-3 ">
                         <label class="labelTitulo">Modelo:</label></br>
-                        <input type="text" class="inputCaja" id="modelo"
+                        <input type="text" class="inputCaja"
                             placeholder="Especifique..." name="modelo"
                             value="{{ old('modelo') }}">
                     </div>
 
                     <div class=" col-12 col-sm-6 mb-3 ">
                         <label class="labelTitulo">Sub Marca:</label></br>
-                        <input type="text" class="inputCaja" id="submarca"
+                        <input type="text" class="inputCaja"
                             placeholder="Especifique..." name="submarca"
                             value="{{ old('submarca') }}">
                     </div>
 
                     <div class="col-12 col-sm-6 mb-3 ">
                         <label class="labelTitulo">Año:</label></br>
-                        <input type="number" class="inputCaja" id="ano"
+                        <input type="number" class="inputCaja"
                             maxlength="4" placeholder="Ej. 2000" name="ano"
                             value="{{ old('ano') }}">
                     </div>
 
                     <div class=" col-12 col-sm-6 mb-3 ">
                         <label class="labelTitulo">Color:</label></br>
-                        <input type="text" class="inputCaja" id="color"
+                        <input type="text" class="inputCaja"
                             placeholder="Ej. Amarillo" name="color"
                             value="{{ old('color') }}">
                     </div>
 
                     <div class=" col-12 col-sm-6 mb-3 ">
                         <label class="labelTitulo">Placas:</label></br>
-                        <input type="text" class="inputCaja" id="placas"
+                        <input type="text" class="inputCaja"
                             placeholder="Ej. JAL-0000" name="placas"
                             value="{{ old('placas') }}">
                     </div>
 
                     <div class=" col-12 col-sm-6  mb-3 ">
                         <label class="labelTitulo">Número Serie -VIN:</label></br>
-                        <input type="text" class="inputCaja" id="numserie"
+                        <input type="text" class="inputCaja"
                             placeholder="Ej. NS01234ABCD" name="numserie"
                             value="{{ old('numserie') }}">
                     </div>
 
                     <div class=" col-12 col-sm-6  mb-3 ">
                         <label class="labelTitulo">Número Motor:</label></br>
-                        <input type="text" class="inputCaja" id="nummotor"
+                        <input type="text" class="inputCaja"
                             placeholder="Ej. NUM0123ABCD" name="nummotor"
                             value="{{ old('nummotor') }}">
                     </div>
@@ -233,30 +235,35 @@
         </div>
     </div>
 
-    <!-- Modal Editar  Tarea-->
-    <div class="modal fade" id="editarItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal Editar maquinaria Mtq-->
+    <div class="modal fade" id="editarItem" tabindex="-1" aria-labelledby="exampleModalLabelEdit" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
 
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Maquinaria Mtq</label>
+                    <h1 class="modal-title fs-5" id="exampleModalLabelEdit">&nbsp <span id="tituloModal">Editar</span> Maquinaria Mtq</label>
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('maquinaria.update', 0) }}" method="post">
+                    <form class="row d-flex" action="{{ route('mtq.update', 0) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('put')
                         <div class="row d-flex justify-content-center">
                             <div class="col-12 col-sm-6 align-items-center">
                                 <div class="text-center mx-auto border vistaFoto mb-4">
-                                    <i><img class="imgVista img-fluid mb-5" src="{{ asset('/img/general/default.jpg') }}"></i>
+                                    <i>
+                                    <img id="foto" class="imgVista img-fluid mb-5" src="{{ asset('/img/general/default.jpg') }}">
+                                        <!--<img src="{{ empty($fotos[0]) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $fotos[0]->ruta) }}" class="imgVista img-fluid mb-5">-->
+                                    </i>
                                     <span class="mi-archivo">
                                         <input class="mb-4 ver" type="file" name="foto" id="mi-archivo2" accept="image/*">
                                     </span>
-                                    <label for="mi-archivo2">
-                                        <span>sube Imagen</span>
-                                    </label>
+                                    <div id="contenedorBotonSubirImagen">
+                                        <label for="mi-archivo2">
+                                            <span>sube Imagen</span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -335,14 +342,116 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn botonGral" id="btnTareaGuardar">Guardar cambios</button>
+                            <div id="contenedorBotonGuardar">
+                                <button type="submit" class="btn botonGral" id="btnTareaGuardar" onclick="alertaGuardar()" >Guardar cambios</button>
+                            </div>
                         </div>
-
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <style>
+        /* Estilos personalizados para alinear el botón de hacia la derecha */
+        .align-end {
+        display: flex !important;
+        justify-content: flex-end !important;
+        }
+        @media only screen and (max-width: 500px) {
+            .align-end button{
+                width:120px !important;
+            }
+        }
+    </style>
+
+    <script>
+    function cargaItem(identificador, nombre, marca, modelo, submarca, ano, color, placas, numserie, nummotor, img, maquina, modalTipo) {
+        console.log('modalTipo', modalTipo);
+        const contenedorBotonGuardar = document.getElementById('contenedorBotonGuardar');
+        const contenedorBotonSubirImagen = document.getElementById('contenedorBotonSubirImagen');
+        if (modalTipo) {
+            contenedorBotonSubirImagen.style.display = 'none';
+        } else {
+            contenedorBotonSubirImagen.style.display = 'block';
+        }
+
+        if (modalTipo) {
+            contenedorBotonGuardar.style.display = 'none';
+        } else {
+            contenedorBotonGuardar.style.display = 'block';
+        }
+
+        const tituloModal = document.getElementById('tituloModal');
+        if (modalTipo) {
+            tituloModal.textContent = 'Ver';
+        } else {
+            tituloModal.textContent = 'Editar';
+        }
+
+        const txtIdentificador = document.getElementById('identificador');
+        txtIdentificador.value = identificador;
+        txtIdentificador.readOnly = modalTipo; // Aplicar solo lectura si modalTipo es true
+
+        const txtNombre = document.getElementById('nombre');
+        txtNombre.value = nombre;
+        txtNombre.readOnly = modalTipo;
+
+        const txtMarca = document.getElementById('marca');
+        txtMarca.value = marca;
+        txtMarca.readOnly = modalTipo;
+
+        const txtModelo = document.getElementById('modelo');
+        txtModelo.value = modelo;
+        txtModelo.readOnly = modalTipo;
+
+        const txtSubmarca = document.getElementById('submarca');
+        txtSubmarca.value = submarca;
+        txtSubmarca.readOnly = modalTipo;
+
+        const txtAno = document.getElementById('ano');
+        txtAno.value = ano;
+        txtAno.readOnly = modalTipo;
+
+        const txtColor = document.getElementById('color');
+        txtColor.value = color;
+        txtColor.readOnly = modalTipo;
+
+        const txtPlacas = document.getElementById('placas');
+        txtPlacas.value = placas;
+        txtPlacas.readOnly = modalTipo;
+
+        const txtNumserie = document.getElementById('numserie');
+        txtNumserie.value = numserie;
+        txtNumserie.readOnly = modalTipo;
+
+        const txtNummotor = document.getElementById('nummotor');
+        txtNummotor.value = nummotor;
+        txtNummotor.readOnly = modalTipo;
+
+        const imagenVista = document.getElementById('foto');
+        console.log('imagen 1', img);
+        if (img != "") {
+            imagenVista.src = "{{ asset('/storage/maquinaria/') }}/" + identificador + "/" + img;
+        } else {
+            imagenVista.src = "{{ asset('/img/general/default.jpg') }}"
+        }
+        // Obtener todos los campos del formulario
+        const campos = document.querySelectorAll('input[type="text"], textarea');
+
+        // Aplicar color gris a los campos con readonly
+        campos.forEach((campo) => {
+            if (modalTipo) {
+                campo.readOnly = true;
+                campo.style.color = 'grey';
+            } else {
+                campo.readOnly = false;
+                campo.style.color = 'initial'; // Vuelve al color original del texto
+            }
+        });
+    }
+    </script>
+
 
     <script>
     function Guardado() {

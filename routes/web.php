@@ -106,10 +106,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
     Route::resource('roles', App\Http\Controllers\RoleController::class);
 
-    // // Dash mtq
-    // Route::get('/dashMtq', function () {
-    //     return view('mtq.dashMtq');
-    //     });
+    // Dash mtq
+    Route::get('/dashMtq', function () {
+        return view('mtq.dashMtq');
+    });
 
     //Route::resource('mtq', App\Http\Controllers\mtqController::class);
 
@@ -121,6 +121,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/obras/{obras}/edit', [App\Http\Controllers\obrasController::class, 'edit'])->name('obras.edit');
     Route::delete('/obras/{obras}', [App\Http\Controllers\obrasController::class, 'destroy'])->name('obras.delete');
     Route::put('/obras/{obras}', [App\Http\Controllers\obrasController::class, 'update'])->name('obras.update');
+
+    // Crud Clientes
+    Route::resource('clientes', App\Http\Controllers\clientesController::class);
 
     //Crud personal
     Route::get('/personal/nuevo', [App\Http\Controllers\personalController::class, 'create'])->name('personal.create');
@@ -276,6 +279,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
 
     // Maquinaria MTQ
+
+    Route::get('/dashMtq', function () {
+        return view('mtq.dashMtq');
+    });
     Route::resource('mtq', App\Http\Controllers\maquinariaMtqController::class);
 
 
@@ -304,12 +311,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/bitacoras/tareas/editar/{tarea}', [App\Http\Controllers\tareaController::class, 'update'])->name('tarea.update');
 
     //*** Mtq */
-    Route::get('/mtq/', [App\Http\Controllers\mtqController::class, 'index'])->name('mtq.index');
-    Route::get('/mtq/residentes', [App\Http\Controllers\residenteController::class, 'index'])->name('residente.index');
-    Route::get('/mtq/residentes/nuevo', [App\Http\Controllers\residenteController::class, 'create'])->name('residente.create');
-    Route::post('/mtq/residentes', [App\Http\Controllers\residenteController::class, 'store'])->name('residente.store');
-    Route::put('/mtq/residentes/{residente}', [App\Http\Controllers\residenteController::class, 'update'])->name('residente.update');
-    Route::delete('/mtq/residentes/{residente}', [App\Http\Controllers\residenteController::class, 'destroy'])->name('residente.delete');
+    //Route::get('/mtq/', [App\Http\Controllers\mtqController::class, 'dash'])->name('mtq.dash');
+    Route::resource('residentes', App\Http\Controllers\residenteController::class);
+    // Route::get('/residentes', [App\Http\Controllers\residenteController::class, 'index'])->name('residente.index');
+    // Route::get('/mtq/residentes/nuevo', [App\Http\Controllers\residenteController::class, 'create'])->name('residente.create');
+    // Route::post('/mtq/residentes', [App\Http\Controllers\residenteController::class, 'store'])->name('residente.store');
+    // Route::put('/mtq/residentes/{residente}', [App\Http\Controllers\residenteController::class, 'update'])->name('residente.update');
+    // Route::delete('/mtq/residentes/{residente}', [App\Http\Controllers\residenteController::class, 'destroy'])->name('residente.delete');
 
 
     // Route::get('/tareas', function () {
@@ -326,37 +334,37 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::get('/editarTareaCheck', function () {
-       return view('checkList.editarTareaCheck');
-   });
+        return view('checkList.editarTareaCheck');
+    });
 
     Route::get('/nuevaTareaCheck', function () {
-       return view('checkList.nuevaTareaCheck');
-   });
+        return view('checkList.nuevaTareaCheck');
+    });
 
-//    Route::get('/indexBitacora', function () {
-//        return view('bitacora.indexBitacora');
-//    });
-
-
-//    Route::get('/nuevoBitacora', function () {
-//        return view('bitacora.nuevoBitacora');
-//    });
-
-//    Route::get('/editarBitacora', function () {
-//        return view('bitacora.editarBitacora');
-//    });
+    //    Route::get('/indexBitacora', function () {
+    //        return view('bitacora.indexBitacora');
+    //    });
 
 
-//    Route::get('/indexgrupo', function () {
-//        return view('grupo.indexgrupo');
-//    });
+    //    Route::get('/nuevoBitacora', function () {
+    //        return view('bitacora.nuevoBitacora');
+    //    });
 
-//    Route::get('/nuevoGrupo', function () {
-//        return view('grupo.nuevoGrupo');
-//    });
+    //    Route::get('/editarBitacora', function () {
+    //        return view('bitacora.editarBitacora');
+    //    });
 
-//    Route::get('/editarGupo', function () {
-//        return view('grupo.editarGrupo');
-//    });
+
+    //    Route::get('/indexgrupo', function () {
+    //        return view('grupo.indexgrupo');
+    //    });
+
+    //    Route::get('/nuevoGrupo', function () {
+    //        return view('grupo.nuevoGrupo');
+    //    });
+
+    //    Route::get('/editarGupo', function () {
+    //        return view('grupo.editarGrupo');
+    //    });
 
 });

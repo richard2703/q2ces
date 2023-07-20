@@ -16,6 +16,14 @@
                                 </a>
                             </div>
 
+                            <div class="col-12 col-md-6 text-center my-4">
+                                <a href="{{route('residentes.index')}}">
+                                    <img src="/img/inventario/herramientas.svg" alt="Puestos" title="Puestos"
+                                        width="30%" class="botonIconoPrincipal">
+                                    <p class="mt-4 texticonos">Residentes</p>
+                                </a>
+                            </div>
+
                         </div>
                     </div>
                     <!--Footer-->

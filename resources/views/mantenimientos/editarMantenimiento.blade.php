@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => ' nuevoMantenimientos', 'titlePage' => __('Nuevo Mantenimiento')])
+@extends('layouts.main', ['activePage' => 'mantenimiento', 'titlePage' => __('Nuevo Mantenimiento')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -22,9 +22,8 @@
                                 <div class="card-header bacTituloPrincipal">
                                     <h4 class="card-title">Editar Registro de Mantenimiento</h4>
                                 </div>
-
-                                <div class="card-body ">
-                                    <div class="col-12 col-md-2">
+                                
+                                <div class="col-12 col-md-2 mt-4" style="margin-left:20px">
                                         <a href="{{ route('mantenimientos.index') }}">
                                             <button class="btn regresar">
                                                 <span class="material-icons">
@@ -34,6 +33,10 @@
                                             </button>
                                         </a>
                                     </div>
+                                    <div class="d-flex p-3 divBorder w-100" style="margin-top:-10px"></div>
+                                <div class="card-body ">
+                                    
+                                    
                                     <form class="row alertaGuardar"
                                         action="{{ route('mantenimientos.update', $mantenimiento->id) }}" method="post"
                                         enctype="multipart/form-data">

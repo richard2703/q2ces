@@ -107,32 +107,31 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        function Guardado() {
-            // alert('test');
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
+        <script>
+            function Guardado() {
+                // alert('test');
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
 
-            Toast.fire({
-                icon: 'success',
-                title: 'Guardado con exito'
-            })
-        }
-        var slug = '{{ Session::get('message') }}';
-        if (slug == 1) {
-            Guardado();
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Guardado con exito'
+                })
+            }
+            var slug = '{{ Session::get('message') }}';
+            if (slug == 1) {
+                Guardado();
 
-        }
-    </script>
-@endsection
+            }
+        </script>
+    @endsection

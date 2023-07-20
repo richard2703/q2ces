@@ -23,7 +23,7 @@ class maquinariaController extends Controller
     {
         abort_if(Gate::denies('maquinaria_index'), 403);
 
-        $maquinaria = maquinaria::paginate(15);
+        $maquinaria = maquinaria::whereNull('compania')->paginate(15);
         // dd( 'test' );
         return view('maquinaria.indexMaquinaria', compact('maquinaria'));
     }

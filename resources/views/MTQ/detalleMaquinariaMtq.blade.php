@@ -64,13 +64,12 @@
                                                 <div class="row mt-3">
                                                     <div class="col-12 col-lg-4  my-3">
                                                         <div class="row mb-5">
-
-                                                        <div class="col-12 contFotoMaquinaria" id="visor">
-                                                        @if (count($fotos) > 0)
-                                                        <button type="button" class="btn btn-secondary btn-sm buttonImage" onclick="deleteImage('{{$fotos[0]->id}}','{{ $fotos }}', (this));">X</button>
-                                                        @endif
-                                                        <img src="{{ empty($fotos[0]) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $fotos[0]->ruta) }}" class="mx-auto d-block img-fluid imgMaquinaria">
-                                                    </div>
+                                                            <div class="col-12 contFotoMaquinaria" id="visor">
+                                                            @if (count($fotos) > 0)
+                                                            <button type="button" class="btn btn-secondary btn-sm buttonImage" onclick="deleteImage('{{$fotos[0]->id}}','{{ $fotos }}', (this));">X</button>
+                                                            @endif
+                                                            <img src="{{ empty($fotos[0]) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $fotos[0]->ruta) }}" class="mx-auto d-block img-fluid imgMaquinaria">
+                                                        </div>
 
                                                         <div class="col-12 my-3 d-flex justify-content-around" id="selectores">
                                                         @forelse ($fotos as $foto)

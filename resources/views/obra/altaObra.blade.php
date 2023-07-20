@@ -13,15 +13,17 @@
             </div>
         @endif
         <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col-11 align-self-start">
-                    <div class="card">
-                        <div class="card-body contCart">
-                            <div class="p-1 align-self-start bacTituloPrincipal">
-                                <h2 class="my-3 ms-3 texticonos ">Alta de Obra</h2>
-                            </div>
+            <div class="justify-content-center">
+                <div class="card">
+                    <div class="card-header bacTituloPrincipal">
+                        <h4 class="card-title">Alta de obras</h4>
+                        {{-- <p class="card-category">Usuarios registrados</p> --}}
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
 
-                            <div class="col-4 text-left mt-3" style="margin-left:20px">
+                            <div class="d-flex p-3 divBorder">
+                                <div class="col-12 ">
                                     <a href="{{ route('obras.index') }}">
                                         <button class="btn regresar">
                                             <span class="material-icons">
@@ -29,95 +31,96 @@
                                             </span>
                                             Regresar
                                         </button>
-                                    </a>    
+                                    </a>
                                 </div>
-                                <div class="d-flex p-3 divBorder" style="margin-top:-15px"></div>
+                            </div>
+                        </div>
 
-                            <form class="row alertaGuardar" action="{{ route('obras.store') }}" method="post"
-                                enctype="multipart/form-data">
-                                @csrf
+                        <form class="alertaGuardar" action="{{ route('obras.store') }}" method="post"
+                            enctype="multipart/form-data">
+                            @csrf
 
-                                <div class="col-12   my-5 ">
+                            <div class="col-12 my-3 ">
 
-                                    <div class="row d-flex justify-content-around">
-                                        <div class="col-12 col-sm-4 ">
-                                            <div class="text-center mx-auto border mb-4">
-                                                <i><img class="imgVista img-fluid mb-5"
-                                                        src="{{ asset('/img/general/default.jpg') }}"></i>
-                                                <span class="mi-archivo"> <input class="mb-4 ver" type="file"
-                                                        name="foto" id="mi-archivo" accept="image/*"></span>
-                                                <label for="mi-archivo">
-                                                    <span>sube vista aérea</span>
-                                                </label>
-                                            </div>
+                                <div class="row d-flex justify-content-around">
+                                    <div class="col-12 col-sm-4 ">
+                                        <div class="text-center mx-auto border mb-4">
+                                            <i><img class="imgVista img-fluid mb-5"
+                                                    src="{{ asset('/img/general/default.jpg') }}"></i>
+                                            <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"
+                                                    id="mi-archivo" accept="image/*"></span>
+                                            <label for="mi-archivo">
+                                                <span>sube vista aérea</span>
+                                            </label>
                                         </div>
+                                    </div>
 
 
-                                        <div class="col-12 col-sm-4 ">
-                                            <div class="text-center mx-auto border vistaFoto mb-4">
-                                                <i><img class="imgVista img-fluid mb-5"
-                                                        src="{{ asset('/img/general/default.jpg') }}"></i>
-                                                <span class="mi-archivo"> <input class="mb-4 ver" type="file"
-                                                        name="foto" id="mi-archivo2" accept="image/*"></span>
-                                                <label for="mi-archivo2">
-                                                    <span>sube Logo</span>
-                                                </label>
-                                            </div>
+                                    <div class="col-12 col-sm-4 ">
+                                        <div class="text-center mx-auto border vistaFoto mb-4">
+                                            <i><img class="imgVista img-fluid mb-5"
+                                                    src="{{ asset('/img/general/default.jpg') }}"></i>
+                                            <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"
+                                                    id="mi-archivo2" accept="image/*"></span>
+                                            <label for="mi-archivo2">
+                                                <span>sube Logo</span>
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="col-12 my-4">
-                                    <div class="row">
-                                        <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Nombre de la Obra: <span>*</span></label></br>
-                                            <input type="text" class="inputCaja" id="nombre" name="nombre" required
-                                                placeholder="Especifique..." value="{{ old('nombre') }}">
-                                        </div>
-                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Tipo: <span>*</span></label></br>
-                                            <select class="form-select" aria-label="Default select example" id="tipo"
-                                                required name="tipo">
-                                                <option selected>Seleccione</option>
-                                                <option value="Q2Ces">Q2Ces</option>
-                                                <option value="Externa">Externa</option>
-                                            </select>
-                                        </div>
-                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Calle: <span>*</span></label></br>
-                                            <input type="text" class="inputCaja" id="calle" name="calle" required
-                                                placeholder="Especifique..." value="{{ old('calle') }}">
-                                        </div>
-                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Número: </label></br>
-                                            <input type="number" class="inputCaja" id="numero" name="numero"
-                                                placeholder="Especifique..." value="{{ old('numero') }}">
-                                        </div>
-                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Colonia: <span>*</span></label></br>
-                                            <input type="text" class="inputCaja" id="colonia" name="colonia" required
-                                                placeholder="Especifique..." value="{{ old('colonia') }}">
-                                        </div>
-                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Código Postal:</label></br><input type="number"
-                                                maxlength="5" step="1" min="00000" max="99999"
-                                                placeholder="ej. 44100" class="inputCaja" id="cp" name="cp"
-                                                value="{{ old('cp') }}">
-                                        </div>
-                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Localidad: <span>*</span></label></br>
-                                            <input type="text" class="inputCaja" id="ciudad" name="ciudad" required
-                                                placeholder="Especifique..." value="{{ old('ciudad') }}">
-                                        </div>
-                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Estado: <span>*</span></label></br>
-                                            <input type="text" class="inputCaja" id="estado" name="estado"
-                                                required placeholder="Especifique..." value="{{ old('estado') }}">
-                                        </div>
+                            <div class="col-12 ">
+                                <div class="row">
+                                    <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                        <label class="labelTitulo">Nombre de la Obra: <span>*</span></label></br>
+                                        <input type="text" class="inputCaja" id="nombre" name="nombre" required
+                                            placeholder="Especifique..." value="{{ old('nombre') }}">
+                                    </div>
+                                    <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                        <label class="labelTitulo">Empresa: <span>*</span></label></br>
+                                        <select class="form-select" aria-label="Default select example" id="tipo"
+                                            required name="tipo">
+                                            <option selected>Seleccione</option>
+                                            <option value="Q2Ces">Q2Ces</option>
+                                            <option value="Externa">Externa</option>
+                                        </select>
+                                    </div>
+                                    <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                        <label class="labelTitulo">Calle: <span>*</span></label></br>
+                                        <input type="text" class="inputCaja" id="calle" name="calle" required
+                                            placeholder="Especifique..." value="{{ old('calle') }}">
+                                    </div>
+                                    <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                        <label class="labelTitulo">Número: </label></br>
+                                        <input type="number" class="inputCaja" id="numero" name="numero"
+                                            placeholder="Especifique..." value="{{ old('numero') }}">
+                                    </div>
+                                    <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                        <label class="labelTitulo">Colonia: <span>*</span></label></br>
+                                        <input type="text" class="inputCaja" id="colonia" name="colonia" required
+                                            placeholder="Especifique..." value="{{ old('colonia') }}">
+                                    </div>
+                                    <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                        <label class="labelTitulo">Código Postal:</label></br><input type="number"
+                                            maxlength="5" step="1" min="00000" max="99999"
+                                            placeholder="ej. 44100" class="inputCaja" id="cp" name="cp"
+                                            value="{{ old('cp') }}">
+                                    </div>
+                                    <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                        <label class="labelTitulo">Localidad: <span>*</span></label></br>
+                                        <input type="text" class="inputCaja" id="ciudad" name="ciudad" required
+                                            placeholder="Especifique..." value="{{ old('ciudad') }}">
+                                    </div>
+                                    <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                        <label class="labelTitulo">Estado: <span>*</span></label></br>
+                                        <input type="text" class="inputCaja" id="estado" name="estado" required
+                                            placeholder="Especifique..." value="{{ old('estado') }}">
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="row card-body" id="elementos">
+                            {{--  <div class="card-body" id="elementos">
                                     <div class="row opcion" id="opc">
                                         <div class="col-12 my-5 ">
                                             <div class="">
@@ -168,97 +171,85 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>  --}}
 
-                                <div class="row card-body" id="elementosB">
-                                    <div class="row opcionB" id="opcB">
-                                        <div class="col-12 my-5 ">
-                                            <div class="">
+                            <div class="" id="elementosB">
+                                <div class="opcionB" id="opcB">
+                                    <div class="col-12 my-5 ">
+                                        <div class="d-flex">
+                                            <div class="col-6 divBorder">
                                                 <h2 class="tituloEncabezado ">Detalle de Obra</h2>
                                             </div>
-                                            <div class="col-12 divBorder pb-3" style="text-align: right;">
+                                            <div class="col-6 divBorder pb-3 text-end" style="text-align: right;">
                                                 <button type="button" id="removeRow" class="btnRojo"></button>
                                                 <button type="button" class="btnVerde" onclick="crearItemsB()">
                                                 </button>
                                             </div>
+                                        </div>
 
-                                            <div class="row">
-                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Equipo:</label></br>
-                                                    <select id="maquinariaId" name="maquinariaId[]" class="form-select"
-                                                        aria-label="Default select example">
-                                                        <option value="">Seleccione</option>
-                                                        @foreach ($vctMaquinaria as $maquina)
-                                                            <option value="{{ $maquina->id }}">
-                                                                {{ $maquina->identificador . ' ' . $maquina->nombre }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Operador:</label></br>
-                                                    <select id="personalId" name="personalId[]" class="form-select"
-                                                        aria-label="Default select example">
-                                                        <option value="">Seleccione</option>
-                                                        @foreach ($vctPersonal as $persona)
-                                                            <option value="{{ $persona->id }}">
-                                                                {{ $persona->nombres . ' ' . $persona->apellidoP }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Combustible:</label></br>
-                                                    <select class="form-select" aria-label="Default select example"
-                                                        id="combustible" name="combustible[]">
-                                                        <option value="0">No</option>
-                                                        <option value="1">Sí</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Fecha de Inicio:</label></br>
-                                                    <input type="date" class="inputCaja" id="inicio"
-                                                        name="inicio[]" value="">
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Fecha de Término:</label></br>
-                                                    <input type="date" class="inputCaja" id="fin"
-                                                        name="fin[]" value="">
-                                                </div>
-
+                                        <div class="row">
+                                            <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                <label class="labelTitulo">Equipo:</label></br>
+                                                <select id="maquinariaId" name="maquinariaId[]" class="form-select"
+                                                    aria-label="Default select example">
+                                                    <option value="">Seleccione</option>
+                                                    @foreach ($vctMaquinaria as $maquina)
+                                                        <option value="{{ $maquina->id }}">
+                                                            {{ $maquina->identificador . ' ' . $maquina->nombre }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                <label class="labelTitulo">Operador:</label></br>
+                                                <select id="personalId" name="personalId[]" class="form-select"
+                                                    aria-label="Default select example">
+                                                    <option value="">Seleccione</option>
+                                                    @foreach ($vctPersonal as $persona)
+                                                        <option value="{{ $persona->id }}">
+                                                            {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                <label class="labelTitulo">Combustible:</label></br>
+                                                <select class="form-select" aria-label="Default select example"
+                                                    id="combustible" name="combustible[]">
+                                                    <option value="0">No</option>
+                                                    <option value="1">Sí</option>
+                                                </select>
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                <label class="labelTitulo">Fecha de Inicio:</label></br>
+                                                <input type="date" class="inputCaja" id="inicio" name="inicio[]"
+                                                    value="">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                <label class="labelTitulo">Fecha de Término:</label></br>
+                                                <input type="date" class="inputCaja" id="fin" name="fin[]"
+                                                    value="">
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
 
-                                <div class="col-12 text-end mb-3 ">
-                                    <div class="mb-5" id="spinner-container"></div>
-                                    <button type="submit" class="btn botonGral"
-                                        onclick="alertaGuardar()">Guardar</button>
-                                </div>
-                        </div>
+                            <div class="col-12 text-end mb-3 ">
+                                <div class="mb-5" id="spinner-container"></div>
+                                <button type="submit" class="btn botonGral" onclick="alertaGuardar()">Guardar</button>
+                            </div>
+                        </form>
                     </div>
-
-
-                    </form>
-
                 </div>
-
-
-
-
-
-
             </div>
         </div>
-    </div>
-    </div>
-    </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
@@ -274,8 +265,6 @@
 
             $(this).closest('#opc').remove();
         });
-
-
 
         function crearItemsB() {
 
