@@ -14,6 +14,7 @@ use App\Models\puestoNivel;
 use App\Models\tareaCategoria;
 use App\Models\tareaTipo;
 use App\Models\tareaUbicacion;
+use App\Models\tipoUniforme;
 
 class catalogosController extends Controller {
     /**
@@ -70,6 +71,13 @@ class catalogosController extends Controller {
         return view( 'catalogos.tareaUbicaciones', compact( 'records' ) );
     }
 
+    public function indexCatalogoTipoUniforme () {
+        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+
+        $records = tipoUniforme::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        // dd( $puestos );
+        return view( 'catalogos.uniformeTipos', compact( 'records' ) );
+    }
 
     /**
     * Show the form for creating a new resource.

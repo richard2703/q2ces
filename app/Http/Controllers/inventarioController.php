@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Gate;
 use App\Helpers\Validaciones;
 use App\Helpers\Calculos;
 use App\Models\maquinaria;
+use App\Models\tipoEquipo;
+use App\Models\tipoUniforme;
 
 class inventarioController extends Controller
 {
@@ -131,11 +133,13 @@ class inventarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create( $tipo )
     {
         abort_if(Gate::denies('inventario_create'), 403);
 
-        return view('inventario.inventarioNuevo');
+        $vctTipos = tipoUniforme::all();
+
+        return view('inventario.inventarioNuevo', compact('tipo','vctTipos'));
     }
 
     /**
@@ -195,9 +199,10 @@ class inventarioController extends Controller
 
         $vctDesde = maquinaria::all();
         $vctHasta = maquinaria::all();
+        $vctTipos = tipoUniforme::all();
         // dd($vctDesde);
         $inventario = inventario::where("id", $inventario->id)->first();
-        return view('inventario.detalleInventario', compact('inventario', 'vctDesde', 'vctHasta'));
+        return view('inventario.detalleInventario', compact('inventario', 'vctDesde', 'vctHasta','vctTipos'));
     }
 
     /**
@@ -211,6 +216,8 @@ class inventarioController extends Controller
         abort_if(Gate::denies('inventario_edit'), 403);
 
         $inventario = inventario::where("id", $inventario->id)->first();
+        $vctTipos = tipoUniforme::all();
+
         // dd($inventario);
         return view('inventario.detalleInventario', compact('inventario'));
     }
@@ -259,7 +266,8 @@ class inventarioController extends Controller
             'valor',
             'reorden',
             'maximo',
-            'tipo',
+            'tipo','uniformeTipoId', 'uniformeTalla','uniformeRetornable',
+            'extintorCapacidad', 'extintorCodigo','extintorFechaVencimiento'
         );
 
         if ($request->hasFile("imagen")) {

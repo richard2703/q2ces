@@ -106,10 +106,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
     Route::resource('roles', App\Http\Controllers\RoleController::class);
 
-    // Dash mtq
-    Route::get('/dashMtq', function () {
-        return view('mtq.dashMtq');
-        });
+    // // Dash mtq
+    // Route::get('/dashMtq', function () {
+    //     return view('mtq.dashMtq');
+    //     });
 
     //Route::resource('mtq', App\Http\Controllers\mtqController::class);
 
@@ -167,6 +167,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/catalogos/ubicacionesTareas/{tarea}', [App\Http\Controllers\tareaUbicacionController::class, 'update'])->name('tareaUbicacion.update');
     Route::delete('/catalogos/ubicacionesTareas/{tarea}', [App\Http\Controllers\tareaUbicacionController::class, 'destroy'])->name('tareaUbicacion.delete');
 
+    Route::get('/catalogos/tiposUniforme', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTipoUniforme'])->name('catalogoTipoUniforme.index');
+    Route::get('/catalogos/tiposUniforme/nuevo', [App\Http\Controllers\tipoUniformeController::class, 'create'])->name('tipoUniforme.create');
+    Route::post('/catalogos/tiposUniforme', [App\Http\Controllers\tipoUniformeController::class, 'store'])->name('tipoUniforme.store');
+    Route::put('/catalogos/tiposUniforme/{tipoUniforme}', [App\Http\Controllers\tipoUniformeController::class, 'update'])->name('tipoUniforme.update');
+    Route::delete('/catalogos/tiposUniforme/{tipoUniforme}', [App\Http\Controllers\tipoUniformeController::class, 'destroy'])->name('tipoUniforme.delete');
+
     //Crud maquinaria
     Route::get('/maquinaria/nuevo', [App\Http\Controllers\maquinariaController::class, 'create'])->name('maquinaria.create');
     Route::post('/maquinaria', [App\Http\Controllers\maquinariaController::class, 'store'])->name('maquinaria.store');
@@ -193,7 +199,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Crud Inventario
     Route::get('/inventarios', [App\Http\Controllers\inventarioController::class, 'dash'])->name('inventario.dash');
     Route::get('/inventario/{tipo}', [App\Http\Controllers\inventarioController::class, 'index'])->name('inventario.index');
-    Route::get('/inventario/producto/nuevo', [App\Http\Controllers\inventarioController::class, 'create'])->name('inventario.create');
+    Route::get('/inventario/producto/nuevo/{tipo}', [App\Http\Controllers\inventarioController::class, 'create'])->name('inventario.create');
     Route::post('/inventario', [App\Http\Controllers\inventarioController::class, 'store'])->name('inventario.store');
     Route::put('/inventario/{producto}/restock', [App\Http\Controllers\inventarioController::class, 'restock'])->name('inventario.restock');
     Route::put('/inventario/{producto}/mover', [App\Http\Controllers\inventarioController::class, 'mover'])->name('inventario.mover');
@@ -298,7 +304,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/bitacoras/tareas/editar/{tarea}', [App\Http\Controllers\tareaController::class, 'update'])->name('tarea.update');
 
     //*** Mtq */
-    Route::get('/mtq/', [App\Http\Controllers\mtqController::class, 'dash'])->name('mtq.dash');
+    Route::get('/mtq/', [App\Http\Controllers\mtqController::class, 'index'])->name('mtq.index');
     Route::get('/mtq/residentes', [App\Http\Controllers\residenteController::class, 'index'])->name('residente.index');
     Route::get('/mtq/residentes/nuevo', [App\Http\Controllers\residenteController::class, 'create'])->name('residente.create');
     Route::post('/mtq/residentes', [App\Http\Controllers\residenteController::class, 'store'])->name('residente.store');
