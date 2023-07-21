@@ -23,7 +23,7 @@
                             </div>
                             <div class="d-flex p-3 divBorder">
 
-                                <div class="col-12 text-left">
+                                <div class="col-4 text-left">
                                     <a href="{{ route('personal.index') }}">
                                         <button class="btn regresar">
                                             <span class="material-icons">
@@ -45,11 +45,11 @@
                                             <button type="button" class="btn botonGral">Horas Extra</button>
                                         </a>
                                     @endcan  --}}
-                                    @can('asistencia_create')
-                                        <a href="{{ route('personal.equipo', $personal->id) }}" method="get">
-                                            <button class="btn botonGral">Asignar Equipo</button>
-                                        </a>
-                                    @endcan
+                                    {{--  @can('asistencia_create')  --}}
+                                    <a href="{{ route('personal.equipo', $personal->id) }}" method="get">
+                                        <button class="btn botonGral">Asignar Equipo</button>
+                                    </a>
+                                    {{--  @endcan  --}}
 
 
                                 </div>
@@ -59,7 +59,7 @@
                                 enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
-                                <div class="d-flex p-3">
+                                <div class="d-md-flex p-3">
                                     <div class="col-12 col-md-4 px-2 ">
                                         <div class="text-center mx-auto border  mb-4">
                                             <i><img class="imgPersonal img-fluid"
