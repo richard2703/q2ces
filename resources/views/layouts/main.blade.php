@@ -350,7 +350,7 @@
                 </li>
             @endcan
 
-
+            @can('maquinaria_mtq_dash')
             <li class="nav-item collapsed">
                 <a class="nav-link {{ $activePage == 'mtq' ? '' : 'collapsed' }}" href="{{ url('dashMtq') }}">
                     {{--  <i class="bi bi-shop"></i>  --}}
@@ -360,6 +360,7 @@
                     <span>MTQS</span>
                 </a>
             </li>
+            @endcan
 
 
             @can('obra_index')

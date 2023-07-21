@@ -31,7 +31,7 @@
                                 </a>    
                             </div>
                             <div class="col-8 align-end">
-                                @can('maquinaria_create')
+                                @can('maquinaria_mtq_create')
                                     <button data-bs-toggle="modal" data-bs-target="#nuevoItem" type="button" class="btn botonGral" onclick="cargaItem(' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','{{false}}')">Añadir Maquinaria MTQ</button>
                                 @endcan
                             </div>
@@ -69,7 +69,7 @@
                                             <td class="text-center">{{ $maquina->nummotor }}</td>
 
                                             <td class="td-actions text-center">
-                                                @can('maquinaria_show')
+                                                @can('maquinaria_mtq_show')
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
                                                         onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marca }}','{{ $maquina->modelo }}','{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}','{{ $maquina->foto }}','{{true}}')">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
@@ -78,7 +78,7 @@
                                                     </svg>
                                                 </a>
                                                 @endcan
-                                                @can('maquinaria_edit')
+                                                @can('maquinaria_mtq_edit')
                                                 
                                                     <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
                                                         onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marca }}','{{ $maquina->modelo }}','{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}','{{ $maquina->foto }}','{{false}}')">
@@ -90,8 +90,8 @@
                                                         </svg>
                                                     </a>
                                                 @endcan
-                                                {{-- @can('user_destroy') --}}
-                                                {{-- <form action="{{ route('maquinaria.delete', $maquina->id) }}"
+                                                {{-- @can('maquinaria_mtq_destroy') --}}
+                                                {{-- <form action="{{ route('mtq.delete', $maquina->id) }}"
                                                     method="POST" style="display: inline-block;"
                                                     onsubmit="return confirm('Seguro?')">
                                                     @csrf

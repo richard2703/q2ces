@@ -20,7 +20,7 @@ class maquinariaMtqController extends Controller
      */
     public function index()
     {
-        abort_if(Gate::denies('maquinaria_index'), 403);
+        abort_if(Gate::denies('maquinaria_mtq_index'), 403);
 
         // Filtrar maquinarias donde el campo 'compania' no sea nulo
         $maquinaria = maquinaria::whereNotNull('compania')->paginate(15);
@@ -35,7 +35,7 @@ class maquinariaMtqController extends Controller
      */
     public function create()
     {
-        abort_if(Gate::denies('maquinaria_create'), 403);
+        abort_if(Gate::denies('maquinaria_mtq_create'), 403);
 
         return view('mtq.altaDeMaquinariaMtq');
     }
@@ -48,7 +48,7 @@ class maquinariaMtqController extends Controller
      */
     public function store(Request $request)
     {
-        abort_if(Gate::denies('maquinaria_create'), 403);
+        abort_if(Gate::denies('maquinaria_mtq_create'), 403);
 
         // dd( $request );
 
@@ -94,7 +94,7 @@ class maquinariaMtqController extends Controller
      */
     public function show(maquinaria $maquinaria)
     {
-        abort_if(Gate::denies('maquinaria_show'), 403);
+        abort_if(Gate::denies('maquinaria_mtq_show'), 403);
 
         // dd( $docs );
 //        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'docs', 'fotos', 'vctEstatus'));
@@ -122,7 +122,7 @@ class maquinariaMtqController extends Controller
      */
     public function update(Request $request, $maquinaria)
     {
-        abort_if(Gate::denies('maquinaria_edit'), 403);
+        abort_if(Gate::denies('maquinaria_mtq_edit'), 403);
 
         $maquinariaMtq = maquinaria::where('id',$request->id)->first();
         // dd($request, $maquinaria, $maquinariaMtq);
@@ -162,7 +162,7 @@ class maquinariaMtqController extends Controller
      */
     public function destroy(maquinaria $maquinaria)
     {
-        abort_if(Gate::denies('maquinaria_destroy'), 403);
+        abort_if(Gate::denies('maquinaria_mtq_destroy'), 403);
 
         $this->cambiaEstatusMaquinaria($id, $estatusId);
     }
