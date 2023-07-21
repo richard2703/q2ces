@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use App\Helpers\Validaciones;
 use Illuminate\Support\Facades\Session;
+use App\Models\maqimagen;
 
 class maquinariaMtqController extends Controller
 {
@@ -67,18 +68,19 @@ class maquinariaMtqController extends Controller
 
         //*** se guarda la maquinaria */
         //dd($request);
+        
         $maquinaria = maquinaria::create($maquinaria);
         
-
         //**Imagenes de la maquinaria */
-        if ($request->hasFile('ruta')) {
-            foreach ($request->file('ruta') as $ruta) {
-                $imagen['maquinariaId'] = $maquinaria->id;
-                $imagen['ruta'] = time() . '_' . $ruta->getClientOriginalName();
-                $ruta->storeAs('/public/maquinaria/' . $pathMaquinaria, $imagen['ruta']);
-                maqimagen::create($imagen);
-            }
+        
+        if ($request->hasFile('foto')) {
+            // dd($request);
+                $maquinaria->foto = time() . '_' . $request->file('foto')->getClientOriginalName();
+                //$maqimagen = maqimagen::create($imagen); 
+                $request->file('foto')->storeAs('/public/maquinaria/' . $pathMaquinaria, $maquinaria->foto);
+                $maquinaria->save();
         }
+        
 
         Session::flash('message', 1);
         return redirect()->route('mtq.index');
@@ -134,20 +136,18 @@ class maquinariaMtqController extends Controller
         /*** directorio contenedor de su información */
         $pathMaquinaria = str_pad($data['identificador'], 4, '0', STR_PAD_LEFT);
         $data['compania'] = 'mtq';
-        
 
         $maquinariaMtq->update($data);
-        
-        // dd($request);
 
-        if ($request->hasFile('ruta')) {
-            foreach ($request->file('ruta') as $ruta) {
-                $imagen['maquinariaId'] = $maquinaria->id;
-                $imagen['ruta'] = time() . '_' . $ruta->getClientOriginalName();
-                $ruta->storeAs('/public/maquinaria/' . $pathMaquinaria, $imagen['ruta']);
-                maqimagen::create($imagen);
-            }
+        
+        if ($request->hasFile('foto')) {
+            //dd($request);    
+            $maquinariaMtq->foto = time() . '_' . $request->file('foto')->getClientOriginalName();
+            //$maqimagen = maqimagen::create($imagen); 
+            $request->file('foto')->storeAs('/public/maquinaria/' . $pathMaquinaria, $maquinariaMtq->foto);
+            $maquinariaMtq->save();
         }
+        //  dd($maquinaria);
 
         Session::flash('message', 1);
 
