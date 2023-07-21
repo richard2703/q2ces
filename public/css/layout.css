@@ -846,6 +846,9 @@ Alta de maquinaria
   .btnRegresarTop{
     margin-left: 31px;
   }
+  .small-card-group .card {
+    height: 220px !important; 
+  }
 }
 
 /* Escritorio pequeño / tablet */
@@ -869,6 +872,9 @@ Alta de maquinaria
   }
   .btnRegresarTop{
     margin-left: 49px;
+  }
+  .small-card-group .card {
+    height: 220px !important; 
   }
 }
 
@@ -914,6 +920,14 @@ Alta de maquinaria
   .btnRegresarTop{
     margin-left: 50px;
   }
+  .small-card-group .card {
+    height: 200px !important; 
+  }
+}
+
+/*Ajuste a las cards en Alta maquina en subida de documentos*/
+.small-card-group .card {
+  height: 170px; 
 }
 
 .spinner {
