@@ -153,19 +153,6 @@
                 </li>
             @endcan
 
-            @can('catalogos_show')
-                <li class="nav-item collapsed">
-                    <a class="nav-link {{ $activePage == 'equipos' ? '' : 'collapsed' }}"
-                        href="{{ route('catalogos.index') }}">
-                        {{--  <i class="bi bi-shop"></i>  --}}
-                        <span class="material-icons">
-                            print
-                        </span>
-                        <span>Catalogos</span>
-                    </a>
-                </li>
-            @endcan
-
             @can('combustible_index')
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'combustible' ? '' : 'collapsed' }}"
@@ -404,6 +391,19 @@
                 </li>
             @endcan
 
+            @can('catalogos_show')
+                <li class="nav-item collapsed">
+                    <a class="nav-link {{ $activePage == 'equipos' ? '' : 'collapsed' }}"
+                        href="{{ route('catalogos.index') }}">
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            print
+                        </span>
+                        <span>Catalogos</span>
+                    </a>
+                </li>
+            @endcan
+
             @can('user_show')
                 <li class="nav-item ">
                     <a class="nav-link {{ $activePage == 'usuarios' ? '' : 'collapsed' }}" data-bs-target="#user-nav"
@@ -421,6 +421,14 @@
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('users.index') }}" class="">
                                     <i class="bi bi-circle"></i><span>Ver Usuario</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('user_create')
+                            <li>
+                                {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
+                                <a href="{{ route('roles.index') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Ver Roles</span>
                                 </a>
                             </li>
                         @endcan
