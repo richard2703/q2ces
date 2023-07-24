@@ -163,7 +163,7 @@
                         </span>
                         <span>Catalogos</span>
                     </a>
-                </li> 
+                </li>
             @endcan
 
             @can('combustible_index')
@@ -230,7 +230,7 @@
                             <li>
                                 {{--  <a href="{{ url('/indexBitacora') }}"
                                     class="{{ $activeItem == 'bitacoras' ? 'active' : '' }}">  --}}
-                                <a href="{{ url('/indexBitacora') }}" class="">
+                                <a href="{{ route('bitacoras.index') }}" class="">
                                     <i class="bi bi-circle"></i><span>Ver Bitacoras</span>
                                 </a>
                             </li>
@@ -238,7 +238,7 @@
                         @can('grupo_index')
                             <li>
                                 {{--  <a href="{{ url('/indexGrupos') }}" class="{{ $activeItem == 'grupos' ? 'active' : '' }}">  --}}
-                                <a href="{{ url('/indexGrupos') }}" class="">
+                                <a href="{{ route('grupo.index') }}" class="">
                                     <i class="bi bi-circle"></i><span>Ver Grupos</span>
                                 </a>
                             </li>
@@ -246,7 +246,7 @@
                         @can('tarea_index')
                             <li>
                                 {{--  <a href="{{ url('/tareas') }}" class="{{ $activeItem == 'tareas' ? 'active' : '' }}">  --}}
-                                <a href="{{ url('/tareas') }}" class="">
+                                <a href="{{ route('tarea.index') }}" class="">
                                     <i class="bi bi-circle"></i><span>Ver Tareas</span>
                                 </a>
                             </li>
@@ -351,15 +351,15 @@
             @endcan
 
             @can('maquinaria_mtq_dash')
-            <li class="nav-item collapsed">
-                <a class="nav-link {{ $activePage == 'mtq' ? '' : 'collapsed' }}" href="{{ url('dashMtq') }}">
-                    {{--  <i class="bi bi-shop"></i>  --}}
-                    <span class="material-icons">
-                        apartment
-                    </span>
-                    <span>MTQS</span>
-                </a>
-            </li>
+                <li class="nav-item collapsed">
+                    <a class="nav-link {{ $activePage == 'mtq' ? '' : 'collapsed' }}" href="{{ url('dashMtq') }}">
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            apartment
+                        </span>
+                        <span>MTQS</span>
+                    </a>
+                </li>
             @endcan
 
 
