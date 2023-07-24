@@ -410,6 +410,8 @@ class personalController extends Controller
         $newnomina->puesto = $request->puesto;
         $newnomina->ingreso = $request->ingreso;
         $newnomina->horario = $request->horario;
+        $newnomina->hEntrada = $request->hEntrada;
+        $newnomina->hSalida = $request->hSalida;
         $newnomina->jefeId = $request->jefeId;
         $newnomina->neto = $request->neto;
         $newnomina->isr = $request->isr;
@@ -561,7 +563,7 @@ class personalController extends Controller
     public function update(Request $request, personal $personal)
     {
         abort_if(Gate::denies('personal_edit'), 403);
-        dd($personal);
+        // dd($personal);
         $request->validate([
             'nombres' => 'required|max:150',
             'apellidoP' => 'required|max:150',
@@ -799,6 +801,8 @@ class personalController extends Controller
         $nomina->puesto = $request->puesto;
         $nomina->ingreso = $request->ingreso;
         $nomina->horario = $request->horario;
+        $nomina->hEntrada = $request->hEntrada;
+        $nomina->hSalida = $request->hSalida;
         $nomina->jefeId = $request->jefeId;
         $nomina->neto = $request->neto;
         $nomina->diario = $request->diario;
@@ -806,6 +810,7 @@ class personalController extends Controller
         $nomina->fechaPagoPrimaVac = $request->fechaPagoPrimaVac;
         $nomina->puestoId = $request->puestoId;
         $nomina->asistencia = $request->asistencia;
+        // dd($nomina, $request);
         $nomina->save();
 
         $equipo = equipo::where('personalId', "$id")->first();
