@@ -23,6 +23,7 @@
                                         </div>
                                     @endif
                                     <div class="row">
+                                    <div class="d-flex p-3 divBorder">
                                         <div class="col-12 text-right">
 
                                             <a href="{{ route('catalogos.index') }}">
@@ -41,6 +42,7 @@
                                                 </button>
                                             @endcan
                                         </div>
+                                    </div>
                                     </div>
 
 
@@ -109,7 +111,7 @@
 
                                         </tbody>
                                     </table>
-                                    <div class="card-footer mr-auto">
+                                    <div class="card-footer mr-auto d-flex justify-content-center">
                                         {{ $records->links() }}
                                     </div>
                                 </div>

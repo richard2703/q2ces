@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use App\Helpers\Validaciones;
 use Illuminate\Support\Facades\Session;
+use App\Models\maqimagen;
 
 class maquinariaMtqController extends Controller
 {
@@ -19,7 +20,7 @@ class maquinariaMtqController extends Controller
      */
     public function index()
     {
-        abort_if(Gate::denies('maquinaria_index'), 403);
+        abort_if(Gate::denies('maquinaria_mtq_index'), 403);
 
         // Filtrar maquinarias donde el campo 'compania' no sea nulo
         $maquinaria = maquinaria::whereNotNull('compania')->paginate(15);
@@ -34,7 +35,7 @@ class maquinariaMtqController extends Controller
      */
     public function create()
     {
-        abort_if(Gate::denies('maquinaria_create'), 403);
+        abort_if(Gate::denies('maquinaria_mtq_create'), 403);
 
         return view('mtq.altaDeMaquinariaMtq');
     }
@@ -47,7 +48,7 @@ class maquinariaMtqController extends Controller
      */
     public function store(Request $request)
     {
-        abort_if(Gate::denies('maquinaria_create'), 403);
+        abort_if(Gate::denies('maquinaria_mtq_create'), 403);
 
         // dd( $request );
 
@@ -67,18 +68,19 @@ class maquinariaMtqController extends Controller
 
         //*** se guarda la maquinaria */
         //dd($request);
+        
         $maquinaria = maquinaria::create($maquinaria);
         
-
         //**Imagenes de la maquinaria */
-        if ($request->hasFile('ruta')) {
-            foreach ($request->file('ruta') as $ruta) {
-                $imagen['maquinariaId'] = $maquinaria->id;
-                $imagen['ruta'] = time() . '_' . $ruta->getClientOriginalName();
-                $ruta->storeAs('/public/maquinaria/' . $pathMaquinaria, $imagen['ruta']);
-                maqimagen::create($imagen);
-            }
+        
+        if ($request->hasFile('foto')) {
+            // dd($request);
+                $maquinaria->foto = time() . '_' . $request->file('foto')->getClientOriginalName();
+                //$maqimagen = maqimagen::create($imagen); 
+                $request->file('foto')->storeAs('/public/maquinaria/' . $pathMaquinaria, $maquinaria->foto);
+                $maquinaria->save();
         }
+        
 
         Session::flash('message', 1);
         return redirect()->route('mtq.index');
@@ -92,7 +94,7 @@ class maquinariaMtqController extends Controller
      */
     public function show(maquinaria $maquinaria)
     {
-        abort_if(Gate::denies('maquinaria_show'), 403);
+        abort_if(Gate::denies('maquinaria_mtq_show'), 403);
 
         // dd( $docs );
 //        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'docs', 'fotos', 'vctEstatus'));
@@ -120,7 +122,7 @@ class maquinariaMtqController extends Controller
      */
     public function update(Request $request, $maquinaria)
     {
-        abort_if(Gate::denies('maquinaria_edit'), 403);
+        abort_if(Gate::denies('maquinaria_mtq_edit'), 403);
 
         $maquinariaMtq = maquinaria::where('id',$request->id)->first();
         // dd($request, $maquinaria, $maquinariaMtq);
@@ -134,20 +136,18 @@ class maquinariaMtqController extends Controller
         /*** directorio contenedor de su información */
         $pathMaquinaria = str_pad($data['identificador'], 4, '0', STR_PAD_LEFT);
         $data['compania'] = 'mtq';
-        
 
         $maquinariaMtq->update($data);
-        
-        // dd($request);
 
-        if ($request->hasFile('ruta')) {
-            foreach ($request->file('ruta') as $ruta) {
-                $imagen['maquinariaId'] = $maquinaria->id;
-                $imagen['ruta'] = time() . '_' . $ruta->getClientOriginalName();
-                $ruta->storeAs('/public/maquinaria/' . $pathMaquinaria, $imagen['ruta']);
-                maqimagen::create($imagen);
-            }
+        
+        if ($request->hasFile('foto')) {
+            //dd($request);    
+            $maquinariaMtq->foto = time() . '_' . $request->file('foto')->getClientOriginalName();
+            //$maqimagen = maqimagen::create($imagen); 
+            $request->file('foto')->storeAs('/public/maquinaria/' . $pathMaquinaria, $maquinariaMtq->foto);
+            $maquinariaMtq->save();
         }
+        //  dd($maquinaria);
 
         Session::flash('message', 1);
 
@@ -162,75 +162,8 @@ class maquinariaMtqController extends Controller
      */
     public function destroy(maquinaria $maquinaria)
     {
-        abort_if(Gate::denies('maquinaria_destroy'), 403);
+        abort_if(Gate::denies('maquinaria_mtq_destroy'), 403);
 
         $this->cambiaEstatusMaquinaria($id, $estatusId);
-    }
-
-    public function cambiaEstatusMaquinaria($id, $estatusId)
-    {
-        abort_if(Gate::denies('maquinaria_destroy'), 403);
-
-        $objMaquinaria = maquinaria::where('id', '=', $id)->firstOrFail();
-
-        $vctEstatus = maquinariaEstatus::select('maquinariaEstatus.nombre')->get()->toArray();
-        $aEstatus = array();
-        foreach ($vctEstatus as   $value) {
-            $aEstatus[] = strtoupper($value['nombre'] . '_');
-        }
-
-        if (empty($objMaquinaria) === false) {
-            $strPrefijo = '';
-            $objEstatus = maquinariaEstatus::where('id', $estatusId)->firstOrFail();
-
-            //** si el estatus es mayor de 1 se debe de realizar ajustes */
-            if (empty($objEstatus) === false && $objEstatus->id > 1) {
-                //** para todos los estatus */
-                $strPrefijo = $objEstatus->nombre . '_';
-
-                $strMaquinariaId = $strPrefijo .  str_replace($aEstatus, '', $objMaquinaria->identificador);
-
-                $objMaquinaria->identificador = strtoupper($strMaquinariaId);
-                $objMaquinaria->update();
-            } else {
-                /** es activacion */
-                $strMaquinariaId =  str_replace($aEstatus, '', $objMaquinaria->identificador);
-
-                $objMaquinaria->identificador = strtoupper($strMaquinariaId);
-                $objMaquinaria->update();
-            }
-        }
-    }
-
-    public function upload(Request $request)
-    {
-        abort_if(Gate::denies('maquinaria_edit'), 403);
-
-        // dd( $request );
-        $objMaquinaria = maquinaria::where('id', '=', $request['maquinariaId'])->firstOrFail();
-
-        if ($objMaquinaria) {
-            /*** directorio contenedor de su información */
-            $pathMaquinaria = str_pad($objMaquinaria->identificador, 4, '0', STR_PAD_LEFT);
-
-            if ($request->hasFile('ruta')) {
-                //$objMaquinaria = new maqdocs();
-
-                $objMaquinaria->ruta = time() . '_' . $request->file('ruta')->getClientOriginalName();
-                $objMaquinaria->tipo =  $request['tipo'];
-                $objMaquinaria->maquinariaId = $request['maquinariaId'];
-                $objMaquinaria->comentarios = $request['comentarios'];
-                $objMaquinaria->fechaVencimiento = $request['fechaVencimiento'];
-                $objMaquinaria->save();
-
-                //$request->file('ruta')->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos/' .  $objMaquinaria->tipo, $objMaquinaria->ruta);
-
-                Session::flash('message', 1);
-            } else {
-                Session::flash('message', 0);
-            }
-        }
-
-        return redirect()->route('maquinaria.show', $request['maquinariaId']);
     }
 }
