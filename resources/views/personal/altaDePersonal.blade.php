@@ -660,11 +660,29 @@
                                                                     name="calle1" value="">
                                                             </div>  --}}
 
-
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Horario:</label></br>
-                                                                <input type="text" class="inputCaja" id=""
-                                                                    name="horario" value="{{ old('horario') }}">
+                                                                {{--  <label class="labelTitulo">Horario:</label></br>  --}}
+                                                                <div class="d-flex">
+                                                                    <div class="col-6 pe-1">
+                                                                        <label class="labelTitulo">Horario
+                                                                            entrada:</label></br>
+
+                                                                        <input type="time" class="inputCaja "
+                                                                            placeholder="Entrada" id=""
+                                                                            name="hEntrada"
+                                                                            value="{{ $nomina->hEntrada }}">
+                                                                    </div>
+                                                                    <div class="col-6  ps-1">
+                                                                        <label class="labelTitulo">Horario
+                                                                            salida:</label></br>
+
+                                                                        <input type="time" class="inputCaja "
+                                                                            placeholder="Salida" id=""
+                                                                            name="hSalida"
+                                                                            value="{{ $nomina->hSalida }}">
+                                                                    </div>
+                                                                </div>
+
                                                             </div>
 
                                                             {{-- <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -1506,7 +1524,7 @@
             // OpenStreetMap Nominatim API con filtro para México
             axios.get(
                     `https://nominatim.openstreetmap.org/search?postalcode=${cp}&countrycodes=MX&format=json&addressdetails=1`
-                    )
+                )
                 .then(function(response) {
                     console.log(response);
                     var data = response.data;
@@ -1536,7 +1554,7 @@
             // OpenStreetMap Nominatim API con filtro para México
             axios.get(
                     `https://nominatim.openstreetmap.org/search?postalcode=${cp}&countrycodes=MX&format=json&addressdetails=1`
-                    )
+                )
                 .then(function(response) {
                     console.log(response);
                     var data = response.data;
