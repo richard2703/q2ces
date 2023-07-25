@@ -86,29 +86,30 @@ class Calendario
         return count($this->getDaysInMonth($month, $year));
     }
 
-    function getNameDay( $intDay, $blnCompleto = false ) {
-        switch ( ( int )$intDay ) {
+    function getNameDay($intDay, $blnCompleto = false)
+    {
+        switch ((int)$intDay) {
             case 1:
-            $strDia = ( $blnCompleto == true?'Lunes':'Lun' );
-            break;
+                $strDia = ($blnCompleto == true ? 'Lunes' : 'Lun');
+                break;
             case 2:
-            $strDia = ( $blnCompleto == true?'Martes':'Mar' );
-            break;
+                $strDia = ($blnCompleto == true ? 'Martes' : 'Mar');
+                break;
             case 3:
-            $strDia = ( $blnCompleto == true?'Miércoles':'Mié' );
-            break;
+                $strDia = ($blnCompleto == true ? 'Miércoles' : 'Mié');
+                break;
             case 4:
-            $strDia = ( $blnCompleto == true?'Jueves':'Jue' );
-            break;
+                $strDia = ($blnCompleto == true ? 'Jueves' : 'Jue');
+                break;
             case 5:
-            $strDia = ( $blnCompleto == true?'Viernes':'Vie' );
-            break;
+                $strDia = ($blnCompleto == true ? 'Viernes' : 'Vie');
+                break;
             case 6:
-            $strDia = ( $blnCompleto == true?'Sábado':'Sáb' );
-            break;
+                $strDia = ($blnCompleto == true ? 'Sábado' : 'Sáb');
+                break;
             case 7:
-            $strDia = ( $blnCompleto == true?'Domingo':'Dom' );
-            break;
+                $strDia = ($blnCompleto == true ? 'Domingo' : 'Dom');
+                break;
 
             default:
                 # code...

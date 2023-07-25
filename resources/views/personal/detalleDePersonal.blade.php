@@ -23,7 +23,7 @@
                             </div>
                             <div class="d-flex p-3 divBorder">
 
-                                <div class="col-12 text-left">
+                                <div class="col-4 text-left">
                                     <a href="{{ route('personal.index') }}">
                                         <button class="btn regresar">
                                             <span class="material-icons">
@@ -45,11 +45,11 @@
                                             <button type="button" class="btn botonGral">Horas Extra</button>
                                         </a>
                                     @endcan  --}}
-                                    @can('asistencia_create')
-                                        <a href="{{ route('personal.equipo', $personal->id) }}" method="get">
-                                            <button class="btn botonGral">Asignar Equipo</button>
-                                        </a>
-                                    @endcan
+                                    {{--  @can('asistencia_create')  --}}
+                                    <a href="{{ route('personal.equipo', $personal->id) }}" method="get">
+                                        <button class="btn botonGral">Asignar Equipo</button>
+                                    </a>
+                                    {{--  @endcan  --}}
 
 
                                 </div>
@@ -59,7 +59,7 @@
                                 enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
-                                <div class="d-flex p-3">
+                                <div class="d-md-flex p-3">
                                     <div class="col-12 col-md-4 px-2 ">
                                         <div class="text-center mx-auto border  mb-4">
                                             <i><img class="imgPersonal img-fluid"
@@ -716,16 +716,27 @@
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                    <label class="labelTitulo">Horario:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="horario" value="{{ $nomina->horario }}">
-                                                </div>
+                                                    {{--  <label class="labelTitulo">Horario:</label></br>  --}}
+                                                    <div class="d-flex">
+                                                        <div class="col-6 pe-1">
+                                                            <label class="labelTitulo">Horario
+                                                                entrada:</label></br>
 
-                                                {{-- <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                    <label class="labelTitulo">Jefe Inmediato:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="jefeId" value="{{ $nomina->jefeId }}">
-                                                </div> --}}
+                                                            <input type="time" class="inputCaja "
+                                                                placeholder="Entrada" id="" name="hEntrada"
+                                                                value="{{ $nomina->hEntrada }}">
+                                                        </div>
+                                                        <div class="col-6  ps-1">
+                                                            <label class="labelTitulo">Horario
+                                                                salida:</label></br>
+
+                                                            <input type="time" class="inputCaja " placeholder="Salida"
+                                                                id="" name="hSalida"
+                                                                value="{{ $nomina->hSalida }}">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Jefe Inmediato:</label></br>
@@ -1294,7 +1305,8 @@
                                                                             src="https://cdn.lordicon.com/tyounuzx.json"
                                                                             trigger="hover"
                                                                             colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65" style="width:50px;height:70px">
+                                                                            stroke="65"
+                                                                            style="width:50px;height:70px">
                                                                         </lord-icon>
                                                                     </a>
                                                                 </label>
@@ -1317,8 +1329,8 @@
                                                             </div>
                                                             <div class="contIconosDocumentos d-flex align-items-end">
                                                                 <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file" name="dfiscal"
-                                                                        id="foto" accept=".pdf">
+                                                                    <input class="mb-4" type="file"
+                                                                        name="dfiscal" id="foto" accept=".pdf">
                                                                     <lord-icon
                                                                         src="https://cdn.lordicon.com/koyivthb.json"
                                                                         trigger="hover"

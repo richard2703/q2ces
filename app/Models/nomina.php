@@ -14,13 +14,14 @@ class nomina extends Model
 
     protected $fillable = [
         'userId', 'nomina', 'imss', 'clinica', 'infonavit', 'afore', 'pago', 'tarjeta', 'banco', 'puesto',
-        'ingreso', 'vactotales', 'vactomadas', 'primavactotal', 'primavactomadas', 'laborables', 'horario',
+        'ingreso', 'vactotales', 'vactomadas', 'primavactotal', 'primavactomadas', 'laborables', 'horario', 'hEntrada', 'hSalida',
         'jefeId', 'neto', 'bruto', 'diario', 'diariointegro', 'mensualintegro',
-        'imssAportacion', 'imssriesgo', 'aforeAportacion', 'isn', 'ispt', 'aguinaldo', 'ptu','personal','fechaPagoPrimaVac', 'puestoId'
+        'imssAportacion', 'imssriesgo', 'aforeAportacion', 'isn', 'ispt', 'aguinaldo', 'ptu', 'personal', 'fechaPagoPrimaVac', 'puestoId'
     ];
 
 
-    public function personal()    {
+    public function personal()
+    {
         return $this->belongsTo(Personal::class, 'jefeId');
     }
 }

@@ -34,6 +34,29 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
 // dd($asistencias, $diaAnterior, $diaSiguiente, $fechaSeleccionada, $diaSeleccionado, $dtToday, $dtTrabajar);
 
 ?>
+
+<style>
+    .no-wrap {
+        max-width: 150px;
+        /* Ajusta el valor según tus necesidades */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Estilo para el tooltip */
+    .no-wrap:hover {
+        overflow: visible;
+        white-space: normal;
+        z-index: 1;
+        position: relative;
+        background-color: #f9f9f9;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 5px;
+        font-size: 15px;
+    }
+</style>
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -117,10 +140,10 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
 
 
                                         <!--<span>
-                                                                                                                                                                                                <a href="{{ route('asistencia.corteSemanal') }}"
-                                                                                                                                                                                                    class="display-8 mb-8 text-center" title="Ir al periodo en curso"><b>Hoy es
-                                                                                                                                                                                                        {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
-                                                                                                                                                                                            </span>-->
+                                                                                                                                                                                                                                                    <a href="{{ route('asistencia.corteSemanal') }}"
+                                                                                                                                                                                                                                                        class="display-8 mb-8 text-center" title="Ir al periodo en curso"><b>Hoy es
+                                                                                                                                                                                                                                                            {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
+                                                                                                                                                                                                                                                </span>-->
                                         {{-- <h4 class="card-title">
                                             {{ $personal->nombres }} {{ $personal->apellidoP }}
                                             {{ $personal->apellidoM }}</h4> --}}
@@ -151,18 +174,18 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                     for ($i=0; $i < 7 ; $i++) {
                                                        ?>
                                                     <th class="labelTitulo corte" colspan="2">
-                                                        {{ $objCalendar->getNameDay($vctDiasSemana[$i]->format('N')) }}
+                                                        {{ $objCalendar->getNameDay($vctDiasSemana[$i]->format('N')) }}<br>
                                                         <strong>{{ $vctDiasSemana[$i]->format('d') }}</strong>
                                                     </th>
                                                     <?php
                                                     }
                                                     ?>
-                                                    <th class="labelTitulo corte">Días</th>
-                                                    <th class="labelTitulo corte">Salario por día</th>
-                                                    <th class="labelTitulo corte">Importe semanal</th>
-                                                    <th class="labelTitulo corte">Horas extra</th>
-                                                    <th class="labelTitulo corte">Total horas extra</th>
-                                                    <th class="labelTitulo corte">Pago semanal</th>
+                                                    <th class="labelTitulo corte ">Días</th>
+                                                    <th class="labelTitulo corte ">Salario por día</th>
+                                                    <th class="labelTitulo corte  no-wrap">Importe semanal</th>
+                                                    <th class="labelTitulo corte  ">Horas extra</th>
+                                                    <th class="labelTitulo corte ">Total horas extra</th>
+                                                    <th class="labelTitulo corte no-wrap">Pago semanal</th>
                                                 </thead>
                                                 <?php
                                                 $intTotalGeneralSueldo = 0;
