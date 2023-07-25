@@ -1331,6 +1331,8 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                         @csrf
 
                         <input type="hidden" name="fechaInicio" id="fechaInicio" value="{{ date('Y-m-d') }}">
+                        <input type="hidden" name="personalId" id="personalId" value="{{  auth()->user()->id }}">
+
                             <div class="col-12 mb-5 pb-5">
                                 <div class="searchBox mb-5">
                                     <input class="searchInput "type="text" name="" placeholder="Buscar">
