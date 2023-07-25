@@ -25,7 +25,7 @@
                                     @endif
                                     <div class="row divBorder">
                                         <div class="col-12 pb-3 text-end">
-                                            @can('cliente_create')
+                                            @can('tiposDocs_create')
                                                 <a href="{{ route('tiposDocs.create') }}">
                                                     <button type="button" class="btn botonGral">Añadir Tipo</button>
                                                 </a>
@@ -48,7 +48,7 @@
                                                         <td class="text-center">{{ $tiposDoc->comentario }}</td>
 
                                                         <td class="td-actions text-center">
-                                                            @can('cliente_edit')
+                                                            @can('tiposDocs_edit')
                                                                 <a href="{{ route('tiposDocs.edit', $tiposDoc->id) }}"
                                                                     class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="28"

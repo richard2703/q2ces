@@ -17,7 +17,7 @@ class tiposDocsController extends Controller
      */
     public function index()
     {
-        abort_if(Gate::denies('cliente_index'), 403);
+        abort_if(Gate::denies('tiposDocs_index'), 403);
         $tiposDocs = tiposDocs::orderBy('created_at', 'desc')->paginate(5);
         return view('tiposDocs.indexTiposDocs', compact('tiposDocs'));
     }
@@ -29,7 +29,7 @@ class tiposDocsController extends Controller
      */
     public function create()
     {
-        abort_if(Gate::denies('cliente_create'), 403);
+        abort_if(Gate::denies('tiposDocs_create'), 403);
         return view('tiposDocs.createTiposDocs');
     }
 
@@ -41,7 +41,7 @@ class tiposDocsController extends Controller
      */
     public function store(Request $request)
     {
-        abort_if(Gate::denies('cliente_create'), 403);
+        abort_if(Gate::denies('tiposDocs_create'), 403);
 
         $tipoDocs = $request->all();
         $tipoDocs = tiposDocs::create($tipoDocs);
@@ -67,7 +67,7 @@ class tiposDocsController extends Controller
      */
     public function edit(tiposDocs $tiposDoc)
     {
-        abort_if(Gate::denies('cliente_edit'), 403);
+        abort_if(Gate::denies('tiposDocs_edit'), 403);
         // dd($tiposDoc);
         return view('tiposDocs.editTiposDocs', compact('tiposDoc'));
     }
@@ -81,6 +81,7 @@ class tiposDocsController extends Controller
      */
     public function update(Request $request, tiposDocs $tiposDoc)
     {
+        abort_if(Gate::denies('tiposDocs_edit'), 403);
         $data = $request->all();
         // dd($data);
         $tiposDoc->update($data);
