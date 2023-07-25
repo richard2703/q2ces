@@ -491,6 +491,7 @@ CREATE TABLE nomina(
 CREATE TABLE maquinaria(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     estatusId bigint(20) unsigned NULL,
+    bitacoraId bigint(20) unsigned NULL,
     nombre varchar(255) NULL,
     identificador varchar(32) NULL,
     tipo varchar(255) NULL,
@@ -535,7 +536,8 @@ CREATE TABLE maquinaria(
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
-    CONSTRAINT FK_maquinaria_maquinariaEstatusId foreign key (estatusId) references maquinariaEstatus(id)
+    CONSTRAINT FK_maquinaria_maquinariaEstatusId foreign key (estatusId) references maquinariaEstatus(id),
+    CONSTRAINT FK_maquinaria_bitacoraId FOREIGN KEY (bitacoraId) REFERENCES bitacoras (id)
 );
 
 CREATE TABLE maqdocs(

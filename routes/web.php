@@ -327,6 +327,17 @@ Route::group(['middleware' => 'auth'], function () {
     //     return view('tareas.tareas');
     // });
 
+    // Docs and TiposDocs
+    // Route::get('/dashDocs', function () {
+    //     return view('docs.dashDocs');
+    // });
+    Route::resource('docs', App\Http\Controllers\docsController::class);
+
+    // Route::get('/dashTiposDocs', function () {
+    //     return view('tiposDocs.dashTiposDocs');
+    // });
+    Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
+
     Route::get('/checkList', function () {
         return view('checkList.checkList');
     });

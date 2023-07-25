@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\maquinaria;
 use App\Models\maqdocs;
 use App\Models\maqimagen;
+use App\Models\bitacoras;
 use App\Models\maquinariaEstatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -37,8 +38,9 @@ class maquinariaController extends Controller
     public function create()
     {
         abort_if(Gate::denies('maquinaria_create'), 403);
+        $bitacora = bitacoras::all();
 
-        return view('maquinaria.altaDeMaquinaria');
+        return view('maquinaria.altaDeMaquinaria', compact('bitacora'));
     }
 
     /**
@@ -52,7 +54,6 @@ class maquinariaController extends Controller
     {
         abort_if(Gate::denies('maquinaria_create'), 403);
 
-        // dd( $request );
         $request->validate([
             'nombre' => 'required|max:250',
             'identificador' => 'required|max:8',
@@ -138,7 +139,6 @@ class maquinariaController extends Controller
         $maquinaria['nummotor'] = strtoupper($maquinaria['nummotor']);
         $maquinaria['numserie'] = strtoupper($maquinaria['numserie']);
 
-        dd($request);
         //*** se guarda la maquinaria */
         $maquinaria = maquinaria::create($maquinaria);
         
