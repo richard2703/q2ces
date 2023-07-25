@@ -133,13 +133,15 @@ class maquinariaController extends Controller
 
         /*** directorio contenedor de su información */
         $pathMaquinaria = str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT);
-
+        
         $maquinaria['placas'] = strtoupper($maquinaria['placas']);
         $maquinaria['nummotor'] = strtoupper($maquinaria['nummotor']);
         $maquinaria['numserie'] = strtoupper($maquinaria['numserie']);
 
+        dd($request);
         //*** se guarda la maquinaria */
         $maquinaria = maquinaria::create($maquinaria);
+        
 
         if ($request->hasFile('factura_ruta')) {
             $objFactura = new maqdocs();

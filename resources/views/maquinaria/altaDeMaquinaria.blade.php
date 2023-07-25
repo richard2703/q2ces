@@ -457,7 +457,7 @@
                                             <div class="accordion-body">
                                                 <div class="row mt-3">
 
-                                                    <div class="card-group col-12 col-md-6 col-lg-4">
+                                                    <div class="card-group col-12 col-md-6 col-lg-4 small-card-group">
                                                         <div class="card contDocumentos">
                                                             <div class="card-body m-2">
                                                                 <div>
@@ -476,16 +476,17 @@
                                                                     </label>
                                                                     <a id="downloadFacturaButton" class="btn btn-outline-success btnView" style="display: none" download><i class="fa fa-regular fa-eye mt-2"></i> Descargar</a>
                                                                     <button id="removeFacturaButton" class="btn btn-outline-danger btnView" style="width: 2.4em; height: 2.4em; display: none;"><i class="fa fa-times"></i></button>
+                                                                    <button id="omitirFacturaButton" class="btnSinFondo float-end mt-3" style="margin-left:20px" type="submit" rel="tooltip">
+                                                                        <P class="fs-5"> Omitir</P>
+                                                                    </button>
                                                                 </div>
                                                     
-                                                                <button class="btnSinFondo float-end" type="submit" rel="tooltip">
-                                                                    <P class="fs-5"> Omitir</P>
-                                                                </button>
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="card-group col-12 col-md-6 col-lg-4">
+                                                    <div class="card-group col-12 col-md-6 col-lg-4 small-card-group">
                                                         <div class="card contDocumentos">
                                                             <div class="card-body m-2">
                                                                 <div>
@@ -504,16 +505,15 @@
                                                                     </label>
                                                                     <a id="downloadManualButton" class="btn btn-outline-success btnView" style="display: none" download><i class="fa fa-regular fa-eye mt-2"></i> Descargar</a>
                                                                     <button id="removeManualButton" class="btn btn-outline-danger btnView" style="width: 2.4em; height: 2.4em; display: none;"><i class="fa fa-times"></i></button>
+                                                                    <button id="omitirManualButton" class="btnSinFondo float-end mt-3" style="margin-left:20px" type="submit" rel="tooltip">
+                                                                        <P class="fs-5"> Omitir</P>
+                                                                    </button>
                                                                 </div>
-                                                    
-                                                                <button class="btnSinFondo float-end" type="submit" rel="tooltip">
-                                                                    <P class="fs-5"> Omitir</P>
-                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="card-group col-12 col-md-6 col-lg-4">
+                                                    <div class="card-group col-12 col-md-6 col-lg-4 small-card-group">
                                                         <div class="card contDocumentos">
                                                             <div class="card-body m-2">
                                                                 <div>
@@ -532,16 +532,15 @@
                                                                     </label>
                                                                     <a id="downloadRegistroButton" class="btn btn-outline-success btnView" style="display: none" download><i class="fa fa-regular fa-eye mt-2"></i> Descargar</a>
                                                                     <button id="removeRegistroButton" class="btn btn-outline-danger btnView" style="width: 2.4em; height: 2.4em; display: none;"><i class="fa fa-times"></i></button>
+                                                                    <button id="omitirRegistroButton" class="btnSinFondo float-end mt-3" style="margin-left:20px" type="submit" rel="tooltip">
+                                                                        <P class="fs-5"> Omitir</P>
+                                                                    </button>
                                                                 </div>
-                                                    
-                                                                <button class="btnSinFondo float-end" type="submit" rel="tooltip">
-                                                                    <P class="fs-5"> Omitir</P>
-                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="card-group col-12 col-md-6 col-lg-4">
+                                                    <div class="card-group col-12 col-md-6 col-lg-4 small-card-group">
                                                         <div class="card contDocumentos">
                                                             <div class="card-body m-2">
                                                                 <div>
@@ -560,16 +559,15 @@
                                                                     </label>
                                                                     <a id="downloadFichaButton" class="btn btn-outline-success btnView" style="display: none" download><i class="fa fa-regular fa-eye mt-2"></i> Descargar</a>
                                                                     <button id="removeFichaButton" class="btn btn-outline-danger btnView" style="width: 2.4em; height: 2.4em; display: none;"><i class="fa fa-times"></i></button>
+                                                                    <button id="omitirFichaButton" class="btnSinFondo float-end mt-3" style="margin-left:20px" type="submit" rel="tooltip">
+                                                                        <P class="fs-5"> Omitir</P>
+                                                                    </button>
                                                                 </div>
-                                                    
-                                                                <button class="btnSinFondo float-end" type="submit" rel="tooltip">
-                                                                    <P class="fs-5"> Omitir</P>
-                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="card-group col-12 col-md-6 col-lg-4">
+                                                    <div class="card-group col-12 col-md-6 col-lg-4 small-card-group">
                                                         <div class="card contDocumentos">
                                                             <div class="card-body m-2">
                                                                 <div>
@@ -588,16 +586,15 @@
                                                                     </label>
                                                                     <a id="downloadVerificacionButton" class="btn btn-outline-success btnView" style="display: none" download><i class="fa fa-regular fa-eye mt-2"></i> Descargar</a>
                                                                     <button id="removeVerificacionButton" class="btn btn-outline-danger btnView" style="width: 2.4em; height: 2.4em; display: none;"><i class="fa fa-times"></i></button>
+                                                                    <button id="omitirVerificacionButton" class="btnSinFondo float-end mt-3" style="margin-left:20px" type="submit" rel="tooltip">
+                                                                        <P class="fs-5"> Omitir</P>
+                                                                    </button>
                                                                 </div>
-                                                    
-                                                                <button class="btnSinFondo float-end" type="submit" rel="tooltip">
-                                                                    <P class="fs-5"> Omitir</P>
-                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="card-group col-12 col-md-6 col-lg-4">
+                                                    <div class="card-group col-12 col-md-6 col-lg-4 small-card-group">
                                                         <div class="card contDocumentos">
                                                             <div class="card-body m-2">
                                                                 <div>
@@ -616,16 +613,15 @@
                                                                     </label>
                                                                     <a id="downloadTarjetaButton" class="btn btn-outline-success btnView" style="display: none" download><i class="fa fa-regular fa-eye mt-2"></i> Descargar</a>
                                                                     <button id="removeTarjetaButton" class="btn btn-outline-danger btnView" style="width: 2.4em; height: 2.4em; display: none;"><i class="fa fa-times"></i></button>
+                                                                    <button id="omitirTarjetaButton" class="btnSinFondo float-end mt-3" style="margin-left:20px" type="submit" rel="tooltip">
+                                                                        <P class="fs-5"> Omitir</P>
+                                                                    </button>
                                                                 </div>
-                                                    
-                                                                <button class="btnSinFondo float-end" type="submit" rel="tooltip">
-                                                                    <P class="fs-5"> Omitir</P>
-                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="card-group col-12 col-md-6 col-lg-4">
+                                                    <div class="card-group col-12 col-md-6 col-lg-4 small-card-group">
                                                         <div class="card contDocumentos">
                                                             <div class="card-body m-2">
                                                                 <div>
@@ -644,16 +640,15 @@
                                                                     </label>
                                                                     <a id="downloadSegurosButton" class="btn btn-outline-success btnView" style="display: none" download><i class="fa fa-regular fa-eye mt-2"></i> Descargar</a>
                                                                     <button id="removeSegurosButton" class="btn btn-outline-danger btnView" style="width: 2.4em; height: 2.4em; display: none;"><i class="fa fa-times"></i></button>
+                                                                    <button id="omitirSegurosButton" class="btnSinFondo float-end mt-3" style="margin-left:20px" type="submit" rel="tooltip">
+                                                                        <P class="fs-5"> Omitir</P>
+                                                                    </button>
                                                                 </div>
-                                                    
-                                                                <button class="btnSinFondo float-end" type="submit" rel="tooltip">
-                                                                    <P class="fs-5"> Omitir</P>
-                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="card-group col-12 col-md-6 col-lg-4">
+                                                    <div class="card-group col-12 col-md-6 col-lg-4 small-card-group">
                                                         <div class="card contDocumentos">
                                                             <div class="card-body m-2">
                                                                 <div>
@@ -672,11 +667,10 @@
                                                                     </label>
                                                                     <a id="downloadEspecialesButton" class="btn btn-outline-success btnView" style="display: none" download><i class="fa fa-regular fa-eye mt-2"></i> Descargar</a>
                                                                     <button id="removeEspecialesButton" class="btn btn-outline-danger btnView" style="width: 2.4em; height: 2.4em; display: none;"><i class="fa fa-times"></i></button>
+                                                                    <button id="omitirEspecialesButton" class="btnSinFondo float-end mt-3" style="margin-left:20px" type="submit" rel="tooltip">
+                                                                        <P class="fs-5"> Omitir</P>
+                                                                    </button>
                                                                 </div>
-                                                    
-                                                                <button class="btnSinFondo float-end" type="submit" rel="tooltip">
-                                                                    <P class="fs-5"> Omitir</P>
-                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -687,7 +681,6 @@
                                     </div>
                                 </div>
                                 <div class="col-12 text-center mb-3 ">
-                                
                                 <button type="submit" class="btn botonGral" onclick="test()">
                                     Guardar
                                 </button>
@@ -705,6 +698,7 @@
             var facturaInput = document.getElementById("factura_ruta");
             var downloadFacturaButton = document.getElementById("downloadFacturaButton");
             var removeFacturaButton = document.getElementById("removeFacturaButton");
+            var omitirFacturaButton = document.getElementById("omitirFacturaButton");
             var iconContainer = document.getElementById("iconContainerFactura");
     
             facturaInput.addEventListener("change", function(event) {
@@ -714,10 +708,12 @@
                     downloadFacturaButton.setAttribute("href", fileURL);
                     downloadFacturaButton.style.display = "block";
                     removeFacturaButton.style.display = "block";
+                    omitirFacturaButton.style.display = "none";
                     iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
                 } else {
                     downloadFacturaButton.style.display = "none";
                     removeFacturaButton.style.display = "none";
+                    omitirFacturaButton.style.display = "block";
                     iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
                 }
             });
@@ -727,6 +723,7 @@
                 downloadFacturaButton.removeAttribute("href");
                 downloadFacturaButton.style.display = "none";
                 removeFacturaButton.style.display = "none";
+                omitirFacturaButton.style.display = "block";
                 iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
             });
         });
@@ -734,6 +731,7 @@
             var manualInput = document.getElementById("manual_ruta");
             var downloadManualButton = document.getElementById("downloadManualButton");
             var removeManualButton = document.getElementById("removeManualButton");
+            var omitirManualButton = document.getElementById("omitirManualButton");
             var iconContainer = document.getElementById("iconContainerManual");
     
             manualInput.addEventListener("change", function(event) {
@@ -743,10 +741,12 @@
                     downloadManualButton.setAttribute("href", fileURL);
                     downloadManualButton.style.display = "block";
                     removeManualButton.style.display = "block";
+                    omitirManualButton.style.display = "none";
                     iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
                 } else {
                     downloadManualButton.style.display = "none";
                     removeManualButton.style.display = "none";
+                    omitirManualButton.style.display = "block";
                     iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
                 }
             });
@@ -756,6 +756,7 @@
                 downloadManualButton.removeAttribute("href");
                 downloadManualButton.style.display = "none";
                 removeManualButton.style.display = "none";
+                omitirManualButton.style.display = "block";
                 iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
             });
         });
@@ -763,6 +764,7 @@
             var registroInput = document.getElementById("registro_ruta");
             var downloadRegistroButton = document.getElementById("downloadRegistroButton");
             var removeRegistroButton = document.getElementById("removeRegistroButton");
+            var omitirRegistroButton = document.getElementById("omitirRegistroButton");
             var iconContainer = document.getElementById("iconContainerRegistro");
     
             registroInput.addEventListener("change", function(event) {
@@ -772,10 +774,12 @@
                     downloadRegistroButton.setAttribute("href", fileURL);
                     downloadRegistroButton.style.display = "block";
                     removeRegistroButton.style.display = "block";
+                    omitirRegistroButton.style.display = "none";
                     iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
                 } else {
                     downloadRegistroButton.style.display = "none";
                     removeRegistroButton.style.display = "none";
+                    omitirRegistroButton.style.display = "block";
                     iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
                 }
             });
@@ -785,6 +789,7 @@
                 downloadRegistroButton.removeAttribute("href");
                 downloadRegistroButton.style.display = "none";
                 removeRegistroButton.style.display = "none";
+                omitirRegistroButton.style.display = "block";
                 iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
             });
         });
@@ -792,6 +797,7 @@
             var fichaInput = document.getElementById("ficha_ruta");
             var downloadFichaButton = document.getElementById("downloadFichaButton");
             var removeFichaButton = document.getElementById("removeFichaButton");
+            var omitirFichaButton = document.getElementById("omitirFichaButton");
             var iconContainer = document.getElementById("iconContainerFicha");
     
             fichaInput.addEventListener("change", function(event) {
@@ -800,11 +806,13 @@
                     var fileURL = URL.createObjectURL(file);
                     downloadFichaButton.setAttribute("href", fileURL);
                     downloadFichaButton.style.display = "block";
+                    omitirFichaButton.style.display = "none";
                     removeFichaButton.style.display = "block";
                     iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
                 } else {
                     downloadFichaButton.style.display = "none";
                     removeFichaButton.style.display = "none";
+                    omitirFichaButton.style.display = "block";
                     iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
                 }
             });
@@ -814,6 +822,7 @@
                 downloadFichaButton.removeAttribute("href");
                 downloadFichaButton.style.display = "none";
                 removeFichaButton.style.display = "none";
+                omitirFichaButton.style.display = "block";
                 iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
             });
         });
@@ -822,6 +831,7 @@
             var tarjetaInput = document.getElementById("tarjeta_ruta");
             var downloadTarjetaButton = document.getElementById("downloadTarjetaButton");
             var removeTarjetaButton = document.getElementById("removeTarjetaButton");
+            var omitirTarjetaButton = document.getElementById("omitirTarjetaButton");
             var iconContainer = document.getElementById("iconContainerTarjeta");
     
             tarjetaInput.addEventListener("change", function(event) {
@@ -831,10 +841,12 @@
                     downloadTarjetaButton.setAttribute("href", fileURL);
                     downloadTarjetaButton.style.display = "block";
                     removeTarjetaButton.style.display = "block";
+                    omitirTarjetaButton.style.display = "none";
                     iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
                 } else {
                     downloadTarjetaButton.style.display = "none";
                     removeTarjetaButton.style.display = "none";
+                    omitirTarjetaButton.style.display = "block";
                     iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
                 }
             });
@@ -844,6 +856,7 @@
                 downloadTarjetaButton.removeAttribute("href");
                 downloadTarjetaButton.style.display = "none";
                 removeTarjetaButton.style.display = "none";
+                omitirTarjetaButton.style.display = "block";
                 iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
             });
         });
@@ -852,6 +865,7 @@
             var segurosInput = document.getElementById("seguros_ruta");
             var downloadSegurosButton = document.getElementById("downloadSegurosButton");
             var removeSegurosButton = document.getElementById("removeSegurosButton");
+            var omitirSegurosButton = document.getElementById("omitirSegurosButton");
             var iconContainer = document.getElementById("iconContainerSeguros");
     
             segurosInput.addEventListener("change", function(event) {
@@ -861,10 +875,12 @@
                     downloadSegurosButton.setAttribute("href", fileURL);
                     downloadSegurosButton.style.display = "block";
                     removeSegurosButton.style.display = "block";
+                    omitirSegurosButton.style.display = "none";
                     iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
                 } else {
                     downloadSegurosButton.style.display = "none";
                     removeSegurosButton.style.display = "none";
+                    omitirSegurosButton.style.display = "block";
                     iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
                 }
             });
@@ -874,6 +890,7 @@
                 downloadSegurosButton.removeAttribute("href");
                 downloadSegurosButton.style.display = "none";
                 removeSegurosButton.style.display = "none";
+                omitirSegurosButton.style.display = "block";
                 iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
             });
         });
@@ -882,6 +899,7 @@
             var especialesInput = document.getElementById("especiales_ruta");
             var downloadEspecialesButton = document.getElementById("downloadEspecialesButton");
             var removeEspecialesButton = document.getElementById("removeEspecialesButton");
+            var omitirEspecialesButton = document.getElementById("omitirEspecialesButton");
             var iconContainer = document.getElementById("iconContainerEspeciales");
     
             especialesInput.addEventListener("change", function(event) {
@@ -891,10 +909,12 @@
                     downloadEspecialesButton.setAttribute("href", fileURL);
                     downloadEspecialesButton.style.display = "block";
                     removeEspecialesButton.style.display = "block";
+                    omitirEspecialesButton.style.display = "none";
                     iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
                 } else {
                     downloadEspecialesButton.style.display = "none";
                     removeEspecialesButton.style.display = "none";
+                    omitirEspecialesButton.style.display = "block";
                     iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
                 }
             });
@@ -904,6 +924,7 @@
                 downloadEspecialesButton.removeAttribute("href");
                 downloadEspecialesButton.style.display = "none";
                 removeEspecialesButton.style.display = "none";
+                omitirEspecialesButton.style.display = "block";
                 iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
             });
         });
@@ -912,6 +933,7 @@
             var verificacionInput = document.getElementById("verificacion_ruta");
             var downloadVerificacionButton = document.getElementById("downloadVerificacionButton");
             var removeVerificacionButton = document.getElementById("removeVerificacionButton");
+            var omitirVerificacionButton = document.getElementById("omitirVerificacionButton");
             var iconContainer = document.getElementById("iconContainerVerificacion");
     
             verificacionInput.addEventListener("change", function(event) {
@@ -921,10 +943,12 @@
                     downloadVerificacionButton.setAttribute("href", fileURL);
                     downloadVerificacionButton.style.display = "block";
                     removeVerificacionButton.style.display = "block";
+                    omitirVerificacionButton.style.display = "none";
                     iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
                 } else {
                     downloadVerificacionButton.style.display = "none";
                     removeVerificacionButton.style.display = "none";
+                    omitirVerificacionButton.style.display = "block";
                     iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
                 }
             });
@@ -934,6 +958,7 @@
                 downloadVerificacionButton.removeAttribute("href");
                 downloadVerificacionButton.style.display = "none";
                 removeVerificacionButton.style.display = "none";
+                omitirVerificacionButton.style.display = "block";
                 iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
             });
         });

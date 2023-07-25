@@ -670,7 +670,7 @@
                                                                         <input type="time" class="inputCaja "
                                                                             placeholder="Entrada" id=""
                                                                             name="hEntrada"
-                                                                            value="{{ $nomina->hEntrada }}">
+                                                                            value="{{ old('hEntrada') }}">
                                                                     </div>
                                                                     <div class="col-6  ps-1">
                                                                         <label class="labelTitulo">Horario
@@ -678,8 +678,7 @@
 
                                                                         <input type="time" class="inputCaja "
                                                                             placeholder="Salida" id=""
-                                                                            name="hSalida"
-                                                                            value="{{ $nomina->hSalida }}">
+                                                                            name="hSalida" value="{{ old('hSalida') }}">
                                                                     </div>
                                                                 </div>
 

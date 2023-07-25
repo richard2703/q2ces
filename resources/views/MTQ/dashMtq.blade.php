@@ -8,6 +8,7 @@
                     <div class="card-body">
                         <div class="row d-flex ">
 
+                        @can('maquinaria_mtq_index')
                             <div class="col-12 col-md-6 text-center my-4">
                                 <a href="{{route('mtq.index')}}">
                                     <img src="/img/inventario/herramientas.svg" alt="Puestos" title="Puestos"
@@ -15,6 +16,7 @@
                                     <p class="mt-4 texticonos">Maquinaria Mtq's</p>
                                 </a>
                             </div>
+                        @endcan
 
                             <div class="col-12 col-md-6 text-center my-4">
                                 <a href="{{route('residentes.index')}}">

@@ -111,6 +111,13 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('catalogos_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('catalogos_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('catalogos_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+     ('maquinaria_mtq_dash','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('maquinaria_mtq_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('maquinaria_mtq_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('maquinaria_mtq_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('maquinaria_mtq_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('maquinaria_mtq_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 
 CREATE TABLE users (
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -524,7 +531,7 @@ CREATE TABLE maquinaria(
     foto4 varchar(255) NULL,
     cisterna int(1) NULL,
     cisternaNivel float(10, 2) NULL,
-    compania varchar(200) null,
+    compania varchar(200)ï¿½null,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
