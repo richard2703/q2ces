@@ -18,8 +18,21 @@
                     <div class="card-body contCart justify-content-center">
                         <div class="card ">
                             <div class="card-header bacTituloPrincipal mb-5">
-                                <h2 class="my-3 ms-3 texticonos ">Detalle Herramienta</h2>
+                                <h2 class="my-3 ms-3 texticonos ">Detalle {{ ucfirst($inventario->tipo) }}</h2>
                             </div>
+                            <div class="row">
+                                <div class="col-12 text-right">
+                                    <a href="{{ route('inventario.dash') }}" title="Regresa a la vista de consulta de inventario.">
+                                        <button class="btn regresar">
+                                            <span class="material-icons">
+                                                reply
+                                            </span>
+                                            Regresar
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+
                             <form action="{{ route('inventario.update', $inventario->id) }}"
                                 method="post"class="row alertaGuardar" enctype="multipart/form-data">
                                 @csrf
@@ -32,13 +45,13 @@
                                         <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="imagen"
                                                 id="mi-archivo" accept="image/*"></span>
                                         <label for="mi-archivo">
-                                            <span>sube imagen</span>
+                                            <span>Sube Imagen</span>
                                         </label>
 
                                     </div>
 
-
                                     <div class="col-12 text-center mb-3 ">
+
                                         <button type="submit" class="btn botonGral"
                                             onclick="alertaGuardar()">Guardar</button>
                                     </div>
@@ -47,7 +60,7 @@
                                 <div class="col-12 col-md-8 my-3 ">
                                     <div class="row alin">
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Número del Parte:</label></br>
+                                            <label class="labelTitulo">Número de Parte:</label></br>
                                             <input type="text" class="inputCaja" id="numparte" name="numparte"
                                                 value="{{ $inventario->numparte }}">
                                         </div>
@@ -77,27 +90,29 @@
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Cantidad a ingresar: <span>*</span></label></br>
+                                            <label class="labelTitulo">Cantidad: <span>*</span></label></br>
                                             <input type="number" step="1" min="1" class="inputCaja text-end"
-                                                required id="cantidad" name="cantidad" value="{{ $inventario->cantidad }}">
+                                                required id="cantidad" name="cantidad"
+                                                value="{{ $inventario->cantidad }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Minimo:</label></br>
+                                            <label class="labelTitulo">Mínimo:</label></br>
                                             <input type="number" step="1" min="1" class="inputCaja text-end"
                                                 id="reorden" name="reorden" value="{{ $inventario->reorden }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Maximo:</label></br>
+                                            <label class="labelTitulo">Máximo:</label></br>
                                             <input type="number" step="1" min="1" class="inputCaja text-end"
                                                 id="maximo" name="maximo" value="{{ $inventario->maximo }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Costo unitario: <span>*</span></label></br>
-                                            <input type="number" step="0.01" min="0.01" class="inputCaja text-end"
-                                                required id="valor" name="valor" value="{{ $inventario->valor }}">
+                                            <label class="labelTitulo">Costo Unitario: <span>*</span></label></br>
+                                            <input type="number" step="0.01" min="0.01"
+                                                class="inputCaja text-end" required id="valor" name="valor"
+                                                value="{{ $inventario->valor }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-6 mb-5 ">
@@ -109,12 +124,12 @@
                                                 id="tipo" name="tipo" disabled="false">
                                                 <option value="herramientas"
                                                     {{ $inventario->tipo == 'herramientas' ? ' selected' : '' }}>
-                                                    Herramienta</option>
+                                                    Herramientas</option>
                                                 <option value="refacciones"
-                                                    {{ $inventario->tipo == 'refacciones' ? ' selected' : '' }}>Refaccion
+                                                    {{ $inventario->tipo == 'refacciones' ? ' selected' : '' }}>Refacciones
                                                 </option>
                                                 <option value="consumibles"
-                                                    {{ $inventario->tipo == 'consumibles' ? ' selected' : '' }}>Consumible
+                                                    {{ $inventario->tipo == 'consumibles' ? ' selected' : '' }}>Consumibles
                                                 </option>
                                                 <option value="uniformes"
                                                     {{ $inventario->tipo == 'uniformes' ? ' selected' : '' }}>Uniformes
@@ -173,7 +188,7 @@
                                                     name="extintorCodigo" value="{{ $inventario->extintorCodigo }}">
                                             </div>
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                <label class="labelTitulo">Fecha de vencimiento:</label></br>
+                                                <label class="labelTitulo">Fecha de Vencimiento:</label></br>
                                                 <input type="date" class="inputCaja" id="extintorFechaVencimiento"
                                                     name="extintorFechaVencimiento"
                                                     value="{{ $inventario->extintorFechaVencimiento }}">
@@ -236,7 +251,7 @@
                                                             style="width: 55px;"src="{{ '/img/equipos/calendar.svg' }}"></i>
                                                 </div>
                                                 <h4 class="textTitulo text-dark ">Fecha de Inicio</h4>
-                                                <p class="description bolder">No asignado <br>aún.</p>
+                                                <p class="description bolder">No Asignado <br>aún.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -277,7 +292,7 @@
                     @method('put')
                     <input type="hidden" name="productoId" id="productoId" value="{{ $inventario->id }}">
                     <input type="hidden" name="productoTipo" id="productoTipo" value="{{ $inventario->tipo }}">
-                    <label class="labelTitulo">Tipo de movimiento:</label></br>
+                    <label class="labelTitulo">Tipo de Movimiento:</label></br>
                     <select class="form-select" aria-label="Default select example" id="tipo" name="tipo">
                         <option value="asignar">Asignar</option>
                         <option value="desechar">Desechar</option>

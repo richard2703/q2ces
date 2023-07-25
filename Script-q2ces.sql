@@ -1177,3 +1177,56 @@ create table grupoTareas(
 );
 
 
+create table marca(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) NULL,
+    comentario text NULL,
+    activo TINYINT(1) NOT NULL DEFAULT '1',
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id)
+);
+
+create table proveedorCategoria(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) NULL,
+    comentario text NULL,
+    activo TINYINT(1) NOT NULL DEFAULT '1',
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id)
+);
+
+
+create table marca(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) NULL,
+    comentario text NULL,
+    activo TINYINT(1) NOT NULL DEFAULT '1',
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id)
+);
+
+
+CREATE TABLE proveedor(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(255) NULL,
+    razonSocial varchar(255) NULL,
+    rfc varchar(255) NULL,
+    calle varchar(255) NULL,
+	exterior varchar(255) NULL,
+    interior varchar(255) NULL,
+    colonia varchar(255) NULL,
+    estado varchar(255) NULL,
+    ciudad varchar(255) NULL,
+    cp varchar(255) NULL,
+    logo varchar(255) NULL,
+    fiscal varchar(255) NULL,
+    estatus varchar(255) NULL,
+    categoriaId bigint(20) unsigned NOT NULL,
+    created_at timestamp NULL DEFAULT NULL,
+    updated_at timestamp NULL DEFAULT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_proveedor_categoria foreign key (categoriaId) references proveedorCategoria(id)
+);

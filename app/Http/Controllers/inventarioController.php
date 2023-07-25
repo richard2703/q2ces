@@ -361,6 +361,8 @@ class inventarioController extends Controller
                 Session::flash('message', 0);
                 return redirect()->back()->with('failed', 'No se encuentra en el inventario!');
             }
+        }else{
+            return redirect()->back()->with('failed', 'No se pueden mover!');
         }
         Session::flash('message', 1);
         return redirect()->route('inventario.show', $invconsu->productoId);
@@ -444,13 +446,17 @@ class inventarioController extends Controller
      */
     public function descargaCombustible(Request $request)
     {
+        // dd($request);
+
         abort_if(Gate::denies('combustible_create'), 403);
 
         $blnHayImagen = false;
+        $blnHayDatos=false;
+
         $request->validate([
             'litros' => 'required|numeric',
-            'km' => 'required|numeric',
-            'horas' => 'required|numeric',
+            'km' => 'nullable|numeric',
+            'horas' => 'nullable|numeric',
             'imgKm' => 'nullable',
             'imgHoras' => 'nullable',
         ], [
@@ -460,9 +466,23 @@ class inventarioController extends Controller
             'imgKm.required' => 'El campo imagen de kilometraje es obligatorio.',
             'imgHoras.required' => 'El campo imagen de horómetro es obligatorio.',
             'litros.numeric' => 'El campo litros debe de ser numérico.',
-            'km.numeric' => 'El campo Km/Mi debe de ser numérico.',
-            'horas.numeric' => 'El campo horometro debe de ser numérico.',
+            // 'km.numeric' => 'El campo Km/Mi debe de ser numérico.',
+            // 'horas.numeric' => 'El campo horometro debe de ser numérico.',
         ]);
+
+
+        if ( is_null($request['horas']) == false && strlen(trim($request['horas'])) > 0) {
+            $blnHayDatos = true;
+        }else{
+            $request['horas']=0;
+        }
+
+        if ( is_null($request['horas']) && strlen(trim($request['km'])) > 0) {
+            $blnHayDatos = true;
+        }else{
+            $request['km']=0;
+        }
+
         $descarga = $request->only(
             'horas',
             'km',
@@ -475,15 +495,23 @@ class inventarioController extends Controller
             'servicioId',
         );
 
+
         if ($request->hasFile("imgKm")) {
             $descarga['imgKm'] = time() . '_' . 'imgKm.' . $request->file('imgKm')->getClientOriginalExtension();
             $request->file('imgKm')->storeAs('/public/combustibles', $descarga['imgKm']);
             $blnHayImagen = true;
         }
+
         if ($request->hasFile("imgHoras")) {
             $descarga['imgHoras'] = time() . '_' . 'imgHoras.' . $request->file('imgHoras')->getClientOriginalExtension();
             $request->file('imgHoras')->storeAs('/public/combustibles', $descarga['imgHoras']);
             $blnHayImagen = true;
+        }
+
+
+        //*** Preguntamos si hay un valor cargado de kilometraje o del horometro */
+        if ($blnHayDatos == false) {
+            return redirect()->back()->withInput()->withErrors("Se requiere al menos que registre el valor del Kilometraje o del Horometro.");
         }
 
         //*** Preguntamos si no hay una imagen cargada */

@@ -18,8 +18,23 @@
                     <div class="card">
                         <div class="card-body contCart">
                             <div class="p-1 align-self-start bacTituloPrincipal">
-                                <h2 class="my-3 ms-3 texticonos ">Inventario Nuevo</h2>
+                                <h2 class="my-3 ms-3 texticonos ">Inventario Nuevo {{ ucfirst($tipo) }}</h2>
                             </div>
+
+                            <div class="row">
+                                <div class="col-12 text-right">
+                                    <a href="{{ route('inventario.dash') }}"  title="Regresa a la vista de consulta de inventario.">
+                                        <button class="btn regresar">
+                                            <span class="material-icons">
+                                                reply
+                                            </span>
+                                            Regresar
+                                        </button>
+                                    </a>
+
+                                </div>
+                            </div>
+
                             <form class="row alertaGuardar" action="{{ route('inventario.store') }}"
                                 method="post"class="row" enctype="multipart/form-data">
                                 @csrf
@@ -31,7 +46,7 @@
                                         <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="imagen"
                                                 id="mi-archivo" accept="image/*"></span>
                                         <label for="mi-archivo">
-                                            <span>sube imagen</span>
+                                            <span>Sube Imagen</span>
                                         </label>
                                     </div>
 
@@ -46,14 +61,14 @@
 
                                         <div class=" col-12 col-sm-6 col-lg-8 mb-3 ">
                                             <label class="labelTitulo">Tipo:</label></br>
-                                            <input type="text" class="inputCaja" id="tipoInventario" name="tipoInventario" readonly disabled="true"
-                                                value="{{ $tipo }}">
+                                            <input type="text" class="inputCaja" id="tipoInventario"
+                                                name="tipoInventario" readonly disabled="true" value="{{ $tipo }}">
                                         </div>
 
                                         <input type="hidden" name="tipo" value="{{ $tipo }}">
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Número del Parte:</label></br>
+                                            <label class="labelTitulo">Número de Parte:</label></br>
                                             <input type="text" class="inputCaja" id="numparte" name="numparte"
                                                 value="{{ old('numparte') }}">
                                         </div>
@@ -83,25 +98,26 @@
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Cantidad a ingresar: <span>*</span></label></br>
+                                            <label class="labelTitulo">Cantidad: <span>*</span></label></br>
                                             <input type="number" step="1" min="1" class="inputCaja text-end"
                                                 id="cantidad" name="cantidad" value="{{ old('cantidad') }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Minimo:</label></br>
+                                            <label class="labelTitulo">Mínimo:</label></br>
                                             <input type="number" step="1" min="1" class="inputCaja text-end"
                                                 id="reorden" name="reorden" value="{{ old('reorden') }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Maximo:</label></br>
-                                            <input type="number" step="1" min="1" class="inputCaja text-end"
-                                                id="maximo" name="maximo" value="{{ old('maximo') }}">
+                                            <label class="labelTitulo">Máximo:</label></br>
+                                            <input type="number" step="1" min="1"
+                                                class="inputCaja text-end" id="maximo" name="maximo"
+                                                value="{{ old('maximo') }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Costo unitario: <span>*</span></label></br>
+                                            <label class="labelTitulo">Costo Unitario: <span>*</span></label></br>
                                             <input type="number" step="0.01" min="0.01"
                                                 class="inputCaja text-end" id="valor" name="valor"
                                                 value="{{ old('valor') }}">
@@ -150,7 +166,7 @@
                                                     name="extintorCodigo" value="{{ old('extintorCodigo') }}">
                                             </div>
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                <label class="labelTitulo">Fecha de vencimiento:</label></br>
+                                                <label class="labelTitulo">Fecha de Vencimiento:</label></br>
                                                 <input type="date" class="inputCaja" id="extintorFechaVencimiento"
                                                     name="extintorFechaVencimiento"
                                                     value="{{ old('extintorFechaVencimiento') }}">
@@ -164,7 +180,6 @@
                                     <button type="submit" class="btn botonGral">Guardar</button>
                                 </div>  --}}
                             </form>
-
                         </div>
 
 

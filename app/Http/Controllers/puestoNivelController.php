@@ -24,7 +24,7 @@ class puestoNivelController extends Controller
 
         $records = puestoNivel::orderBy('nombre', 'asc')->paginate(15);
 
-        return view('catalogo.indexPuestosNivel', compact('puestos'));
+        return view('catalogo.indexPuestosNivel', compact('records'));
     }
 
     /**
