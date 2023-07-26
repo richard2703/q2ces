@@ -786,7 +786,7 @@ button.regresar:hover{
   padding-left: auto;
 }
 
-/* Escritorio extra grande */
+
 @media only screen and (min-width: 1200px){
   .buttonImage {
   margin-right: -50!important;
@@ -801,8 +801,51 @@ button.regresar:hover{
   .btnRegresarTop{
     margin-left: 77px;
   }
-  
+  .btnViewDescargar {
+    padding: 6px 12px !important;
+    line-height: 1 !important;
+    text-align: center !important;
+  }
+
+  .btnViewDescargar .btn-text {
+    display: none !important;
+  }
+
+  .btnViewDescargar .icon {
+    display: block !important;
+    margin-bottom: 5px !important;
+    font-size: 18px !important;
+  }
+  .btnViewDelete {
+    width: 2.8em !important; 
+    height: 2.8em !important;
+    margin-left: 15px !important;
+  }
 }
+
+/* Escritorio extra grande */
+/* @media screen and (min-width: 992px) and (max-width: 1450px){
+  .btnViewDescargar {
+    padding: 6px 12px !important;
+    line-height: 1 !important;
+    text-align: center !important;
+  }
+
+  .btnViewDescargar .btn-text {
+    display: none !important;
+  }
+
+  .btnViewDescargar .icon {
+    display: block !important;
+    margin-bottom: 5px !important;
+    font-size: 18px !important;
+  }
+  .btnViewDelete {
+    width: 2.8em !important; 
+    height: 2.8em !important;
+    margin-left: 15px !important;
+  }
+} */
 
 /*--------------------------------------------------------------
 Alta de maquinaria
