@@ -1,10 +1,9 @@
-@extends('layouts.main', ['activePage' => 'obra', 'titlePage' => __('Alta de Clientes')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista De Los Tipos De Documentos')])
 @section('content')
     <div class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    
                     <div class="card">
                         
                         <div class="card-header bacTituloPrincipal">
@@ -91,26 +90,10 @@
             </div>
         </div>
     </div>
-    <script>
-        function Guardado() {
-            // alert('test');
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
 
-            Toast.fire({
-                icon: 'success',
-                title: 'Guardado con exito'
-            })
-        }
+    <script src="{{ asset('js/alertas.js') }}"></script>
+
+    <script>   
         var slug = '{{ Session::get('message') }}';
         if (slug == 1) {
             Guardado();

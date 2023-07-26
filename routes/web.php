@@ -179,6 +179,24 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/catalogos/tiposUniforme/{tipoUniforme}', [App\Http\Controllers\tipoUniformeController::class, 'update'])->name('tipoUniforme.update');
     Route::delete('/catalogos/tiposUniforme/{tipoUniforme}', [App\Http\Controllers\tipoUniformeController::class, 'destroy'])->name('tipoUniforme.delete');
 
+    Route::get('/catalogos/marcas', [App\Http\Controllers\catalogosController::class, 'indexCatalogoMarca'])->name('catalogoMarca.index');
+    Route::get('/catalogos/marca/nueva', [App\Http\Controllers\marcaController::class, 'create'])->name('marca.create');
+    Route::post('/catalogos/marcas', [App\Http\Controllers\marcaController::class, 'store'])->name('marca.store');
+    Route::put('/catalogos/marcas/{marca}', [App\Http\Controllers\marcaController::class, 'update'])->name('marca.update');
+    Route::delete('/catalogos/marcas/{marca}', [App\Http\Controllers\marcaController::class, 'destroy'])->name('marca.delete');
+
+    Route::get('/catalogos/proveedores', [App\Http\Controllers\catalogosController::class, 'indexCatalogoProveedor'])->name('catalogoProveedor.index');
+    Route::get('/catalogos/proveedores/nuevo', [App\Http\Controllers\proveedorController::class, 'create'])->name('proveedor.create');
+    Route::post('/catalogos/proveedores', [App\Http\Controllers\proveedorController::class, 'store'])->name('proveedor.store');
+    Route::put('/catalogos/proveedores/{marca}', [App\Http\Controllers\proveedorController::class, 'update'])->name('proveedor.update');
+    Route::delete('/catalogos/proveedores/{marca}', [App\Http\Controllers\proveedorController::class, 'destroy'])->name('proveedor.delete');
+
+    Route::get('/catalogos/proveedores/categorias', [App\Http\Controllers\catalogosController::class, 'indexCatalogoProveedorCategoria'])->name('catalogoProveedorCategoria.index');
+    Route::get('/catalogos/proveedores/categorias/nuevo', [App\Http\Controllers\proveedorCategoriaController::class, 'create'])->name('proveedorCategoria.create');
+    Route::post('/catalogos/proveedores/categorias', [App\Http\Controllers\proveedorCategoriaController::class, 'store'])->name('proveedorCategoria.store');
+    Route::put('/catalogos/proveedores/categorias/{proveedorCategoria}', [App\Http\Controllers\proveedorCategoriaController::class, 'update'])->name('proveedorCategoria.update');
+    Route::delete('/catalogos/proveedores/categorias/{proveedorCategoria}', [App\Http\Controllers\proveedorCategoriaController::class, 'destroy'])->name('proveedorCategoria.delete');
+
     //Crud maquinaria
     Route::get('/maquinaria/nuevo', [App\Http\Controllers\maquinariaController::class, 'create'])->name('maquinaria.create');
     Route::post('/maquinaria', [App\Http\Controllers\maquinariaController::class, 'store'])->name('maquinaria.store');

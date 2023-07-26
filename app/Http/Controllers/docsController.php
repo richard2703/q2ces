@@ -6,6 +6,8 @@ use App\Models\docs;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\tiposDocs;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Session;
 
 class docsController extends Controller
 {
@@ -17,7 +19,7 @@ class docsController extends Controller
     public function index()
     {
         //$docs = docs::orderBy('created_at', 'desc')->paginate(5);
-
+        abort_if(Gate::denies('docs_index'), 404);
         $docs = docs::join('tiposDocs', 'docs.tipoId', 'tiposDocs.id')
         ->select(
             'docs.id',
@@ -26,6 +28,7 @@ class docsController extends Controller
             'docs.comentario'
         )->orderBy('docs.created_at', 'desc')->paginate(5);
         // dd($docs);
+        
         return view('docs.indexDocs', compact('docs'));
     }
 
@@ -36,6 +39,7 @@ class docsController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('docs_create'), 404);
         $tiposDocs = tiposDocs::all();
         
         return view('docs.createDocs', compact('tiposDocs'));
@@ -49,8 +53,10 @@ class docsController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(Gate::denies('docs_create'), 404);
         $docs = $request->all();
         $docs = docs::create($docs);
+        Session::flash('message', 1);
         return redirect()->action([docsController::class, 'index']);
     }
 
@@ -73,7 +79,7 @@ class docsController extends Controller
      */
     public function edit(docs $doc)
     {
-        //dd($doc);
+        abort_if(Gate::denies('tiposDocs_edit'), 404);
         $tiposDocs = tiposDocs::all();
         return view('docs.editDocs', compact('doc','tiposDocs'));
     }
@@ -87,10 +93,11 @@ class docsController extends Controller
      */
     public function update(Request $request, docs $doc)
     {
-        
+        abort_if(Gate::denies('tiposDocs_edit'), 404);
         $data = $request->all();
         //dd($data);
         $doc->update($data);
+        Session::flash('message', 1);
         return redirect()->action([docsController::class, 'index']);
     }
 

@@ -118,6 +118,12 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('maquinaria_mtq_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('maquinaria_mtq_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('maquinaria_mtq_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('docs_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('docs_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('docs_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('docs_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('docs_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 
 CREATE TABLE users (
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -642,9 +648,9 @@ CREATE TABLE inventario(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     numparte varchar(255) NOT NULL,
     nombre varchar(255) NOT NULL,
-    marca varchar(255) NULL,
+    marcaId bigint(20) unsigned NOT NULL,
     modelo varchar(255) NULL,
-    proveedor varchar(255) NULL,
+    proveedorId bigint(20) unsigned NOT NULL,
     cantidad float(10, 2) NULL,
     reorden float(10, 2) NULL,
     maximo float(10, 2) NULL,
@@ -657,10 +663,16 @@ CREATE TABLE inventario(
     extintorCapacidad int(20) NULL,
     extintorCodigo varchar(32) NULL,
     extintorFechaVencimiento date NULL,
+    extintorTipo varchar(32) NULL,
+    extintorUbicacion varchar(255) NULL,
+    extintorAsignadoMaquinariaId bigint(20) unsigned NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
-    CONSTRAINT FK_inventario_tipouniforme foreign key (uniformeTipoId) references tipoUniforme(id)
+    CONSTRAINT FK_inventario_tipouniforme foreign key (uniformeTipoId) references tipoUniforme(id),
+    CONSTRAINT FK_inventario_marca foreign key (marcaId) references marca(id),
+    CONSTRAINT FK_inventario_proveedor foreign key (proveedorId) references proveedor(id),
+    CONSTRAINT FK_inventario_maquinaria foreign key (extintorAsignadoMaquinariaId) references maquinaria(id)
 );
 
 CREATE TABLE restock(
@@ -1179,3 +1191,56 @@ create table grupoTareas(
 );
 
 
+create table marca(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) NULL,
+    comentario text NULL,
+    activo TINYINT(1) NOT NULL DEFAULT '1',
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id)
+);
+
+create table proveedorCategoria(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) NULL,
+    comentario text NULL,
+    activo TINYINT(1) NOT NULL DEFAULT '1',
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id)
+);
+
+
+create table marca(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) NULL,
+    comentario text NULL,
+    activo TINYINT(1) NOT NULL DEFAULT '1',
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id)
+);
+
+
+CREATE TABLE proveedor(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(255) NULL,
+    razonSocial varchar(255) NULL,
+    rfc varchar(255) NULL,
+    calle varchar(255) NULL,
+	exterior varchar(255) NULL,
+    interior varchar(255) NULL,
+    colonia varchar(255) NULL,
+    estado varchar(255) NULL,
+    ciudad varchar(255) NULL,
+    cp varchar(255) NULL,
+    logo varchar(255) NULL,
+    fiscal varchar(255) NULL,
+    estatus varchar(255) NULL,
+    categoriaId bigint(20) unsigned NOT NULL,
+    created_at timestamp NULL DEFAULT NULL,
+    updated_at timestamp NULL DEFAULT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_proveedor_categoria foreign key (categoriaId) references proveedorCategoria(id)
+);

@@ -15,6 +15,9 @@ use App\Models\tareaCategoria;
 use App\Models\tareaTipo;
 use App\Models\tareaUbicacion;
 use App\Models\tipoUniforme;
+use App\Models\marca;
+use App\Models\proveedor;
+use App\Models\proveedorCategoria;
 
 class catalogosController extends Controller {
     /**
@@ -77,6 +80,33 @@ class catalogosController extends Controller {
         $records = tipoUniforme::orderBy( 'nombre', 'asc' )->paginate( 10 );
         // dd( $puestos );
         return view( 'catalogos.uniformeTipos', compact( 'records' ) );
+    }
+
+    public function indexCatalogoMarca () {
+        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+
+        $records = marca::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        // dd( $puestos );
+        return view( 'catalogos.marcas', compact( 'records' ) );
+    }
+
+    public function indexCatalogoProveedorCategoria () {
+        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+
+        $records = proveedorCategoria::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        // dd( $puestos );
+        return view( 'catalogos.proveedorCategoria', compact( 'records' ) );
+    }
+
+    public function indexCatalogoProveedor () {
+        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+
+        $records = proveedor::select( 'proveedor.*', 'proveedorCategoria.nombre as categoria' )
+        ->leftJoin( 'proveedorCategoria', 'proveedorCategoria.id', '=', 'proveedor.categoriaId' )
+        ->orderBy( 'nombre', 'asc' )->paginate( 10 );
+        $vctCategorias = proveedorCategoria::orderBy( 'nombre', 'asc' )->get();
+        // dd( $puestos );
+        return view( 'catalogos.proveedores', compact( 'records', 'vctCategorias' ) );
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Models\tiposDocs;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Session;
 
 
 class tiposDocsController extends Controller
@@ -45,6 +46,7 @@ class tiposDocsController extends Controller
 
         $tipoDocs = $request->all();
         $tipoDocs = tiposDocs::create($tipoDocs);
+        Session::flash('message', 1);
         return redirect()->action([tiposDocsController::class, 'index']);
     }
 
@@ -85,6 +87,7 @@ class tiposDocsController extends Controller
         $data = $request->all();
         // dd($data);
         $tiposDoc->update($data);
+        Session::flash('message', 1);
         return redirect()->action([tiposDocsController::class, 'index']);
     }
 
