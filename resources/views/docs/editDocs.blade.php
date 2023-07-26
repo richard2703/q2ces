@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'obras', 'titlePage' => __('Alta de Clietes')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Modificación De Documentos')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -20,10 +20,9 @@
                         {{-- <p class="card-category">Usuarios registrados</p> --}}
                     </div>
                     <div class="card-body">
-                        <div class="row">
+                        <div class="row divBorder">
 
-                            <div class="d-flex p-3 divBorder">
-                                <div class="col-12 ">
+                                <div class="col-12 mb-3">
                                     <a href="{{ route('docs.index') }}">
                                         <button class="btn regresar">
                                             <span class="material-icons">
@@ -34,7 +33,6 @@
                                     </a>
                                 </div>
                             </div>
-                        </div>
 
                         <form class="alertaGuardar" action="{{ route('docs.update', $doc->id) }}" method="post"
                             enctype="multipart/form-data">

@@ -118,6 +118,12 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('maquinaria_mtq_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('maquinaria_mtq_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('maquinaria_mtq_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('docs_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('docs_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('docs_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('docs_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('docs_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 
 CREATE TABLE users (
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,

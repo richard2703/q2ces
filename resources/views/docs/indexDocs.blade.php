@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'docs', 'titlePage' => __('Lista de Documentos')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista De Documentos')])
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -7,10 +7,8 @@
                     <div class="card">
                         <div class="card-header bacTituloPrincipal">
                             <h4 class="card-title">Administrador De Documentos</h4>
-
                         </div>
                         <div class="card-body">
-                        
                             @if (session('success'))
                                 <div class="alert alert-success" role="success">
                                     {{ session('success') }}
@@ -34,7 +32,7 @@
                                 </div>
                                 <div class="col-12 col-lg-6 pb-3 divAñadir">
                               
-                                    @can('tiposDocs_create')
+                                    @can('docs_create')
                                         <a href="{{ route('docs.create') }}">
                                             <button type="button" class="btn botonGral align-it">Añadir Tipo</button>
                                         </a>
@@ -59,7 +57,7 @@
                                                 <td class="text-center">{{ $doc->comentario }}</td>
 
                                                 <td class="td-actions text-center">
-                                                    @can('tiposDocs_edit')
+                                                    @can('docs_edit')
                                                         <a href="{{ route('docs.edit', $doc->id) }}"
                                                             class="">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="28"
@@ -90,31 +88,15 @@
             </div>
         </div>
     </div>
-    <script>
-        function Guardado() {
-            // alert('test');
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
 
-            Toast.fire({
-                icon: 'success',
-                title: 'Guardado con exito'
-            })
-        }
+    <script src="{{ asset('js/alertas.js') }}"></script>
+
+    <script>   
         var slug = '{{ Session::get('message') }}';
         if (slug == 1) {
             Guardado();
 
         }
     </script>
-@endsection
+    @endsection
 
