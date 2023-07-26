@@ -52,7 +52,7 @@
                                                 <th class="labelTitulo">Id</th>
                                                 <th class="labelTitulo">Nombre</th>
                                                 <th class="labelTitulo">Comentario</th>
-                                                <th class="labelTitulo">Nivel de puesto</th>
+                                                <th class="labelTitulo">Nivel de Puesto</th>
                                                 <th class="labelTitulo text-right">Acciones</th>
                                             </tr>
                                         </thead>
@@ -143,7 +143,7 @@
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Nivel de puesto:
+                            <label class="labelTitulo">Nivel de Puesto:
                                 <span>*</span></label></br>
                             <select id="puestoNivelId" name="puestoNivelId" class="form-select" required
                                 aria-label="Default select example">
@@ -178,7 +178,7 @@
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
 
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar puesto</label>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Puesto</label>
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -193,7 +193,7 @@
                         </div>
 
                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                            <label class="labelTitulo">Nivel de puesto: <span>*</span></label></br>
+                            <label class="labelTitulo">Nivel de Puesto: <span>*</span></label></br>
                             <select id="editPuestoNivelId" name="puestoNivelId" class="form-select" required
                                 aria-label="Default select example">
                                 <option value="">Seleccione</option>

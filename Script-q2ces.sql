@@ -640,9 +640,9 @@ CREATE TABLE inventario(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     numparte varchar(255) NOT NULL,
     nombre varchar(255) NOT NULL,
-    marca varchar(255) NULL,
+    marcaId bigint(20) unsigned NOT NULL,
     modelo varchar(255) NULL,
-    proveedor varchar(255) NULL,
+    proveedorId bigint(20) unsigned NOT NULL,
     cantidad float(10, 2) NULL,
     reorden float(10, 2) NULL,
     maximo float(10, 2) NULL,
@@ -655,10 +655,16 @@ CREATE TABLE inventario(
     extintorCapacidad int(20) NULL,
     extintorCodigo varchar(32) NULL,
     extintorFechaVencimiento date NULL,
+    extintorTipo varchar(32) NULL,
+    extintorUbicacion varchar(255) NULL,
+    extintorAsignadoMaquinariaId bigint(20) unsigned NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
-    CONSTRAINT FK_inventario_tipouniforme foreign key (uniformeTipoId) references tipoUniforme(id)
+    CONSTRAINT FK_inventario_tipouniforme foreign key (uniformeTipoId) references tipoUniforme(id),
+    CONSTRAINT FK_inventario_marca foreign key (marcaId) references marca(id),
+    CONSTRAINT FK_inventario_proveedor foreign key (proveedorId) references proveedor(id),
+    CONSTRAINT FK_inventario_maquinaria foreign key (extintorAsignadoMaquinariaId) references maquinaria(id)
 );
 
 CREATE TABLE restock(

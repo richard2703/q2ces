@@ -190,7 +190,7 @@
                             <input type="text" class="inputCaja" id="puestoNombre" name="nombre" value="">
                         </div>
 
-                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                        <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
                             <label class="labelTitulo">Categoría: <span>*</span></label></br>
                             <select id="editPuestoNivelId" name="categoriaId" class="form-select" required
                                 aria-label="Default select example">

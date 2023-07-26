@@ -29,7 +29,7 @@
 
                                                 <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
                                                     <label for="exampleFormControlTextarea1" class="labelTitulo">Descripción
-                                                        de la bitácora: <span>*</span></label>
+                                                        de la Bitácora: <span>*</span></label>
                                                     <textarea class="form-select" id="exampleFormControlTextarea1" rows="3" maxlength="1000" required id="comentario"
                                                         name="comentario" placeholder="Escribe aquí tus comentarios sobre la bitácora.">  {{ $bitacora->comentario }} </textarea>
                                                 </div>
@@ -39,7 +39,7 @@
 
                                                 <div class="row d-flex">
                                                     <div class="col-12 col-md-6  mt-3 ">
-                                                        <p class="subEncabezado">Busca un grupo de tareas </p>
+                                                        <p class="subEncabezado">Busca un Grupo de Tareas </p>
                                                         <div class="mb-6 mt-0" role="search" class="inputCaja">
                                                             <input value="" class="search-submit ">
                                                             <input autofocus type="text" class=""
@@ -51,7 +51,7 @@
                                                 </div>
 
                                                 <div class="my-4 divBorder">
-                                                    <h3 class="subEncabezado mb-3">Listado de grupo de tareas</h3>
+                                                    <h3 class="subEncabezado mb-3">Listado de Grupo de Tareas</h3>
                                                 </div>
 
                                                 <div class=" col-12  my-3 ">
@@ -75,7 +75,7 @@
 
                                                                     <div class="col-5 ">
                                                                         <label for="nombreGrupo"
-                                                                            class="">Grupo de tareas</label></br></br>
+                                                                            class="">Grupo de Tareas</label></br></br>
                                                                         <input type="text" maxlength="250" readonly
                                                                             class="inputCaja" id="nombreGrupo" disabled="true"
                                                                             placeholder="Ej. Tarea 1" name="nombreGrupo[]"

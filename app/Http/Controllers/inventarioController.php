@@ -8,6 +8,8 @@ use App\Models\restock;
 use App\Models\invconsu;
 use App\Models\carga;
 use App\Models\descarga;
+use App\Models\marca;
+use App\Models\proveedor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,6 +19,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Helpers\Validaciones;
 use App\Helpers\Calculos;
 use App\Models\maquinaria;
+use App\Models\proveedorCategoria;
 use App\Models\tipoEquipo;
 use App\Models\tipoUniforme;
 
@@ -122,7 +125,12 @@ class inventarioController extends Controller
 
             return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas', 'gasolinas', 'suma', 'dia', 'despachadores', 'cargas', 'descargas'));
         } else {
-            $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(5);
+            $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(15);
+
+            if( $inventarios == null){
+                $inventarios=null;
+            }
+
 
             return view('inventario.indexInventario', compact('inventarios', 'tipo'));
         }
@@ -138,8 +146,11 @@ class inventarioController extends Controller
         abort_if(Gate::denies('inventario_create'), 403);
 
         $vctTipos = tipoUniforme::all();
+        $vctMarcas = marca::all();
+        $vctProveedores = proveedor::all();
+        $vctMaquinaria = maquinaria::all();
 
-        return view('inventario.inventarioNuevo', compact('tipo','vctTipos'));
+        return view('inventario.inventarioNuevo', compact('tipo','vctTipos','vctMarcas', 'vctProveedores', 'vctMaquinaria'));
     }
 
     /**
@@ -154,9 +165,9 @@ class inventarioController extends Controller
 
         $request->validate([
             'nombre' => 'required|max:250',
-            'marca' => 'nullable|max:250',
+            // 'marca' => 'nullable|max:250',
             'modelo' => 'nullable|max:250',
-            'proveedor' => 'nullable|max:200',
+            // 'proveedor' => 'nullable|max:200',
             'numparte' => 'nullable|max:250',
             'cantidad' => 'required|numeric',
             'valor' => 'required|numeric',
@@ -165,9 +176,9 @@ class inventarioController extends Controller
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
-            'marca.max' => 'El campo marca excede el límite de caracteres permitidos.',
+            // 'marca.max' => 'El campo marca excede el límite de caracteres permitidos.',
             'modelo.max' => 'El campo modelo excede el límite de caracteres permitidos.',
-            'proveedor.max' => 'El campo proveedor excede el límite de caracteres permitidos.',
+            // 'proveedor.max' => 'El campo proveedor excede el límite de caracteres permitidos.',
             'numparte.max' => 'El campo número de parte excede el límite de caracteres permitidos.',
             'cantidad.numeric' => 'El campo cantidad debe de ser numérico.',
             'valor.numeric' => 'El campo valor debe de ser numérico.',
@@ -200,9 +211,12 @@ class inventarioController extends Controller
         $vctDesde = maquinaria::all();
         $vctHasta = maquinaria::all();
         $vctTipos = tipoUniforme::all();
+        $vctMarcas = marca::all();
+        $vctProveedores = proveedor::all();
+        $vctMaquinaria = maquinaria::all();
         // dd($vctDesde);
         $inventario = inventario::where("id", $inventario->id)->first();
-        return view('inventario.detalleInventario', compact('inventario', 'vctDesde', 'vctHasta','vctTipos'));
+        return view('inventario.detalleInventario', compact('inventario', 'vctDesde', 'vctHasta','vctTipos','vctMarcas', 'vctProveedores', 'vctMaquinaria'));
     }
 
     /**
@@ -236,9 +250,9 @@ class inventarioController extends Controller
 
         $request->validate([
             'nombre' => 'required|max:250',
-            'marca' => 'nullable|max:250',
+            'marcaId' => 'required',
             'modelo' => 'nullable|max:250',
-            'proveedor' => 'nullable|max:200',
+            'proveedorId' => 'required',
             'numparte' => 'nullable|max:250',
             'cantidad' => 'required|numeric',
             'valor' => 'required|numeric',
@@ -247,9 +261,9 @@ class inventarioController extends Controller
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
-            'marca.max' => 'El campo marca excede el límite de caracteres permitidos.',
+            'marcaId.max' => 'El campo marca excede el límite de caracteres permitidos.',
             'modelo.max' => 'El campo modelo excede el límite de caracteres permitidos.',
-            'proveedor.max' => 'El campo proveedor excede el límite de caracteres permitidos.',
+            'proveedorId.max' => 'El campo proveedor excede el límite de caracteres permitidos.',
             'numparte.max' => 'El campo número de parte excede el límite de caracteres permitidos.',
             'cantidad.numeric' => 'El campo cantidad debe de ser numérico.',
             'valor.numeric' => 'El campo valor debe de ser numérico.',
@@ -267,7 +281,8 @@ class inventarioController extends Controller
             'reorden',
             'maximo',
             'tipo','uniformeTipoId', 'uniformeTalla','uniformeRetornable',
-            'extintorCapacidad', 'extintorCodigo','extintorFechaVencimiento'
+            'extintorCapacidad', 'extintorCodigo','extintorFechaVencimiento',
+            'extintorUbicacion', 'extintorTipo','extintorAsignadoMaquinariaId'
         );
 
         if ($request->hasFile("imagen")) {

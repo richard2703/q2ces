@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'personal', 'titlePage' => __('Detalle Herramienta')])
+@extends('layouts.main', ['activePage' => 'personal', 'titlePage' => __('Detalle {{ ucfirst($inventario->tipo) }}')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -22,7 +22,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 text-right">
-                                    <a href="{{ route('inventario.dash') }}" title="Regresa a la vista de consulta de inventario.">
+                                    <a href="{{ route('inventario.dash') }}"
+                                        title="Regresa a la vista de consulta de inventario.">
                                         <button class="btn regresar">
                                             <span class="material-icons">
                                                 reply
@@ -60,8 +61,8 @@
                                 <div class="col-12 col-md-8 my-3 ">
                                     <div class="row alin">
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Número de Parte:</label></br>
-                                            <input type="text" class="inputCaja" id="numparte" name="numparte"
+                                            <label class="labelTitulo">Número de Parte: <span>*</span></label></br>
+                                            <input type="text" class="inputCaja" id="numparte" name="numparte" required
                                                 value="{{ $inventario->numparte }}">
                                         </div>
 
@@ -72,9 +73,17 @@
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Marca:</label></br>
-                                            <input type="text" class="inputCaja" id="marca" name="marca"
-                                                value="{{ $inventario->marca }}">
+                                            <label class="labelTitulo">Marca: <span>*</span></label></br>
+                                            <select id="marcaId" name="marcaId" class="form-select" required
+                                                aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($vctMarcas as $item)
+                                                    <option value="{{ $item->id }}"
+                                                        {{ $inventario->marcaId == $item->id ? ' selected' : '' }}>
+                                                        {{ $item->nombre }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -84,9 +93,17 @@
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Proovedor:</label></br>
-                                            <input type="text" class="inputCaja" id="proveedor" name="proveedor"
-                                                value="{{ $inventario->proveedor }}">
+                                            <label class="labelTitulo">Proveedor: <span>*</span></label></br>
+                                            <select id="proveedorId" name="proveedorId" class="form-select" required
+                                                aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($vctProveedores as $item)
+                                                    <option value="{{ $item->id }}"
+                                                        {{ $inventario->proveedorId == $item->id ? ' selected' : '' }}>
+                                                        {{ $item->nombre }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -137,8 +154,12 @@
                                                 <option value="extintores"
                                                     {{ $inventario->tipo == 'extintores' ? ' selected' : '' }}>Extintores
                                                 </option>
+                                                <option value="servicios"
+                                                    {{ $inventario->tipo == 'servicios' ? ' selected' : '' }}>Servicios
+                                                </option>
                                             </select>
                                         </div>
+                                        <!-- PARA USO EXCLUSIVO DE UNIFORMES -->
                                         @if ($inventario->tipo == 'uniformes')
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-5 ">
                                                 <label class="labelTitulo">Tipo de Uniforme:</label></br>
@@ -174,6 +195,7 @@
                                             </div>
                                         @endif
 
+                                        <!-- PARA USO EXCLUSIVO DE EXTINTORES -->
                                         @if ($inventario->tipo == 'extintores')
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Capacidad:</label></br>
@@ -192,6 +214,46 @@
                                                 <input type="date" class="inputCaja" id="extintorFechaVencimiento"
                                                     name="extintorFechaVencimiento"
                                                     value="{{ $inventario->extintorFechaVencimiento }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                <label class="labelTitulo">Tipo de Extintor:</label></br>
+                                                <select class="form-select" aria-label="Default select example"
+                                                    id="extintorTipo" name="extintorTipo">
+                                                    <option value="A"
+                                                        {{ $inventario->extintorTipo = 'A' ? ' selected' : '' }}>A
+                                                    </option>
+                                                    <option value="B"
+                                                        {{ $inventario->extintorTipo == 'B' ? ' selected' : '' }}>B
+                                                    </option>
+                                                    <option value="C"
+                                                        {{ $inventario->extintorTipo == 'C' ? ' selected' : '' }}>C
+                                                    </option>
+                                                    <option value="D"
+                                                        {{ $inventario->extintorTipo == 'D' ? ' selected' : '' }}>D
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                <label class="labelTitulo">Ubicación:</label></br>
+                                                <input type="text" class="inputCaja" id="extintorUbicacion"
+                                                    name="extintorUbicacion"
+                                                    value="{{ $inventario->extintorUbicacion }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-5 ">
+                                                <label class="labelTitulo">Asignado :</label></br>
+                                                <select id="extintorAsignadoMaquinariaId" name="extintorAsignadoMaquinariaId" class="form-select"
+                                                      aria-label="Default select example">
+                                                    <option value="">Seleccione</option>
+                                                    @foreach ($vctMaquinaria as $item)
+                                                        <option value="{{ $item->id }}"
+                                                            {{ $item->id == $inventario->extintorAsignadoMaquinariaId ? ' selected' : '' }}>
+                                                            {{ $item->nombre }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         @endif
 

@@ -8,7 +8,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Tipos De Uniforme</h4>
+                                    <h4 class="card-title">Tipos de Uniforme</h4>
 
                                 </div>
                                 <div class="card-body">
@@ -38,7 +38,7 @@
                                             @can('catalogos_create')
                                                 <button class="btn botonGral float-end" data-bs-toggle="modal"
                                                     data-bs-target="#nuevoItem">
-                                                    Añadir Tipo De Uniforme
+                                                    Añadir Tipo de Uniforme
                                                 </button>
                                             @endcan
                                         </div>
