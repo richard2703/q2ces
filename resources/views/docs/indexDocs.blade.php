@@ -1,17 +1,14 @@
-@extends('layouts.main', ['activePage' => 'obra', 'titlePage' => __('Alta de Clientes')])
+@extends('layouts.main', ['activePage' => 'docs', 'titlePage' => __('Lista de Documentos')])
 @section('content')
     <div class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    
                     <div class="card">
-                        
                         <div class="card-header bacTituloPrincipal">
-                            <h4 class="card-title">Tipos de Documentos</h4>
-                            {{-- <p class="card-category">Usuarios registrados</p> --}}
-                        </div>
+                            <h4 class="card-title">Administrador De Documentos</h4>
 
+                        </div>
                         <div class="card-body">
                         
                             @if (session('success'))
@@ -38,7 +35,7 @@
                                 <div class="col-12 col-lg-6 pb-3 divAñadir">
                               
                                     @can('tiposDocs_create')
-                                        <a href="{{ route('tiposDocs.create') }}">
+                                        <a href="{{ route('docs.create') }}">
                                             <button type="button" class="btn botonGral align-it">Añadir Tipo</button>
                                         </a>
                                     @endcan
@@ -49,19 +46,21 @@
                                     <thead class="labelTitulo">
                                         <th class="labelTitulo text-center">ID</th>
                                         <th class="labelTitulo text-center">Nombre</th>
+                                        <th class="labelTitulo text-center">Tipo</th>
                                         <th class="labelTitulo text-center">Comentario</th>
                                         <th class="labelTitulo text-center">Acciones</th>
                                     </thead>
                                     <tbody>
-                                        @forelse ($tiposDocs as $tiposDoc)
+                                        @forelse ($docs as $doc)
                                             <tr>
-                                                <td class="text-center">{{ $tiposDoc->id }}</td>
-                                                <td class="text-center">{{ $tiposDoc->nombre }}</td>
-                                                <td class="text-center">{{ $tiposDoc->comentario }}</td>
+                                                <td class="text-center">{{ $doc->id }}</td>
+                                                <td class="text-center">{{ $doc->nombre }}</td>
+                                                <td class="text-center">{{ $doc->nombreTipo }}</td>
+                                                <td class="text-center">{{ $doc->comentario }}</td>
 
                                                 <td class="td-actions text-center">
                                                     @can('tiposDocs_edit')
-                                                        <a href="{{ route('tiposDocs.edit', $tiposDoc->id) }}"
+                                                        <a href="{{ route('docs.edit', $doc->id) }}"
                                                             class="">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                 height="28" fill="currentColor"
@@ -84,7 +83,7 @@
                             </div>
                         </div>
                         <div class="card-footer mr-auto">
-                            {{ $tiposDocs->links() }}
+                            {{ $docs->links() }}
                         </div>
                     </div>
                 </div>
@@ -118,3 +117,4 @@
         }
     </script>
 @endsection
+

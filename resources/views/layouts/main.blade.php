@@ -31,6 +31,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/equipos.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/sider.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/layout.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
 </head>
 
@@ -151,6 +152,19 @@
                         <span>Caja Chica</span>
                     </a>
                 </li>
+            @endcan
+
+            @can('catalogos_show')
+                <li class="nav-item collapsed">
+                    <a class="nav-link {{ $activePage == 'equipos' ? '' : 'collapsed' }}"
+                        href="{{ route('catalogos.index') }}">
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            print
+                        </span>
+                        <span>Catálogos</span>
+                    </a>
+                </li> 
             @endcan
 
             @can('combustible_index')
@@ -340,15 +354,15 @@
             @endcan
 
             @can('maquinaria_mtq_dash')
-                <li class="nav-item collapsed">
-                    <a class="nav-link {{ $activePage == 'mtq' ? '' : 'collapsed' }}" href="{{ url('dashMtq') }}">
-                        {{--  <i class="bi bi-shop"></i>  --}}
-                        <span class="material-icons">
-                            apartment
-                        </span>
-                        <span>MTQS</span>
-                    </a>
-                </li>
+            <li class="nav-item collapsed">
+                <a class="nav-link {{ $activePage == 'mtq' ? '' : 'collapsed' }}" href="{{ url('dashMtq') }}">
+                    {{--  <i class="bi bi-shop"></i>  --}}
+                    <span class="material-icons">
+                        apartment
+                    </span>
+                    <span>MTQ</span>
+                </a>
+            </li>
             @endcan
 
 

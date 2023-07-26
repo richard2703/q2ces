@@ -57,6 +57,22 @@
                                         </a>
                                     </div>
 
+                                    <div class="col-12 col-md-6 text-center my-4">
+                                        <a href="{{ route('tiposDocs.index') }}" class="">
+                                            <img src="/img/inventario/herramientas.svg" alt="Tipos Docs" title="Tipos Docs"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Tipos Docs</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 text-center my-4">
+                                        <a href="{{ route('docs.index') }}" class="">
+                                            <img src="/img/inventario/herramientas.svg" alt="Manage Docs" title="Manage Docs"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Manage Docs</p>
+                                        </a>
+                                    </div>
+
                                 @endcan
 
 
