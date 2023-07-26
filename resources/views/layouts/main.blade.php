@@ -31,6 +31,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/equipos.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/sider.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/layout.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
 </head>
 
@@ -346,11 +347,23 @@
                         <span class="material-icons">
                             apartment
                         </span>
-                        <span>MTQS</span>
+                        <span>MTQ</span>
                     </a>
                 </li>
             @endcan
 
+            @can('catalogos_show')
+                <li class="nav-item collapsed">
+                    <a class="nav-link {{ $activePage == 'equipos' ? '' : 'collapsed' }}"
+                        href="{{ route('catalogos.index') }}">
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            print
+                        </span>
+                        <span>Catalogos</span>
+                    </a>
+                </li>
+            @endcan
 
             @can('obra_index')
                 <li class="nav-item ">
@@ -390,19 +403,6 @@
                             </li>
                         @endcan
                     </ul>
-                </li>
-            @endcan
-
-            @can('catalogos_show')
-                <li class="nav-item collapsed">
-                    <a class="nav-link {{ $activePage == 'equipos' ? '' : 'collapsed' }}"
-                        href="{{ route('catalogos.index') }}">
-                        {{--  <i class="bi bi-shop"></i>  --}}
-                        <span class="material-icons">
-                            print
-                        </span>
-                        <span>Catalogos</span>
-                    </a>
                 </li>
             @endcan
 

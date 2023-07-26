@@ -42,7 +42,7 @@
                             <div class="table-responsive">
                             <table class="table">
                                 <thead class="labelTitulo">
-                                    <th class="labelTitulo text-center">Número Económico</th>
+                                    <th class="labelTitulo text-center" style="width:150px">Número Económico</th>
                                     <th class="labelTitulo text-center">Equipo</th>
                                     <th class="labelTitulo text-center">Marca</th>
                                     <th class="labelTitulo text-center">Modelo</th>

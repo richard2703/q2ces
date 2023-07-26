@@ -125,6 +125,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Crud Clientes
     Route::resource('clientes', App\Http\Controllers\clientesController::class);
 
+    // Crud TiposDocs
+    Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
+
     //Crud personal
     Route::get('/personal/nuevo', [App\Http\Controllers\personalController::class, 'create'])->name('personal.create');
     Route::post('/personal', [App\Http\Controllers\personalController::class, 'store'])->name('personal.store');
@@ -341,6 +344,17 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::get('/tareas', function () {
     //     return view('tareas.tareas');
     // });
+
+    // Docs and TiposDocs
+    // Route::get('/dashDocs', function () {
+    //     return view('docs.dashDocs');
+    // });
+    Route::resource('docs', App\Http\Controllers\docsController::class);
+
+    // Route::get('/dashTiposDocs', function () {
+    //     return view('tiposDocs.dashTiposDocs');
+    // });
+    Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
 
     Route::get('/checkList', function () {
         return view('checkList.checkList');
