@@ -18,19 +18,19 @@
                     <div class="col-12">
 
                         <div class="card-body contCart">
-                        <div class="text-left">
-                            <a href="{{ route('maquinaria.index') }}">
-                                <button class="btn regresar">
-                                    <span class="material-icons">
-                                        reply
-                                    </span>
-                                    Regresar
-                                </button>
-                            </a>
+                            <div class="text-left">
+                                <a href="{{ route('maquinaria.index') }}">
+                                    <button class="btn regresar">
+                                        <span class="material-icons">
+                                            reply
+                                        </span>
+                                        Regresar
+                                    </button>
+                                </a>
 
-                            <div class="col-8 text-end">
+                                <div class="col-8 text-end">
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -39,26 +39,26 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12 align-self-center">
-                    
+
                     <div class="card col-12">
                         <div class="card-body contCart">
-                            
+
                             <form class="row alertaGuardar" action="{{ route('maquinaria.store') }}" method="post"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="accordion my-3" id="accordionExample">
-                                    
+
                                     <div class="accordion-item" style="margin-top: -20px;" id="AccordionPrincipal">
-                                    
+
                                         <h2 class="accordion-header " id="headingOne">
                                             <button class="accordion-button bacTituloPrincipal" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#datosPersonales"
                                                 aria-expanded="true" aria-controls="collapseOne">
                                                 Alta de Maquinaria
                                             </button>
-          
+
                                         </h2>
-          
+
                                         <div id="datosPersonales" class="accordion-collapse collapse show"
                                             aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
@@ -70,7 +70,7 @@
                                                             <span class="mi-archivo"> <input class="mb-4 ver "
                                                                     type="file" name="ruta[]" id="mi-archivo"
                                                                     accept="image/*" multiple></span>
-                                                            <label for="mi-archivo"> 
+                                                            <label for="mi-archivo">
                                                                 <span class="">sube imagen</span>
                                                             </label>
                                                         </div>
@@ -88,9 +88,9 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                            <label class="labelTitulo">Bitacora:</label></br>
-                                                                <select id="bitacoraId" name="bitacoraId" class="form-select"
-                                                                    aria-label="Default select example">
+                                                                <label class="labelTitulo">Bitacora:</label></br>
+                                                                <select id="bitacoraId" name="bitacoraId"
+                                                                    class="form-select" aria-label="Default select example">
                                                                     <option value="">Seleccione</option>
                                                                     @foreach ($bitacora as $item)
                                                                         <option value="{{ $item->id }}">
@@ -162,17 +162,17 @@
                                                             </div>
 
                                                             <div class="col-12 col-sm-6 col-lg-4 mb-3">
-                                                             
+
                                                                 <label class="labelTitulo">Tipo:</label></br>
                                                                 <select class="form-select"
-                                                                    aria-label="Default select example"
-                                                                    id="tipo" name="tipo">
+                                                                    aria-label="Default select example" id="tipo"
+                                                                    name="tipo">
                                                                     <option value="Pesada">Pesada</option>
                                                                     <option value="Ligero">Ligero</option>
                                                                     <option value="Grua">Grua</option>
                                                                     <option value="no_aplica">N/A</option>
                                                                 </select>
-                                                                   
+
                                                             </div>
 
                                                             <div class="col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -205,8 +205,8 @@
                                                             </div>
                                                             <div class=" col-12 col-sm-6 mb-3 ">
                                                                 <label class="labelTitulo">Numero Económico:</label></br>
-                                                                <input type="text" class="inputCaja" >
-                                                            </div> 
+                                                                <input type="text" class="inputCaja">
+                                                            </div>
 
                                                             {{--  <input type="hidden" id="identificador" name="identificador"
                                                                 value="">  --}}
@@ -279,15 +279,16 @@
                                                                 <input type="number" class="inputCaja" id="llantaT"
                                                                     placeholder="Cantidad" name="llantaT"
                                                                     value="{{ old('llantaT') }}">
-                                                            </div> 
-                                                            
+                                                            </div>
+
                                                             <div class="col-12 col-sm-6 col-lg-4 mb-3">
-                                                            <label class="labelTitulo">Combustible*:</label></br>
-                                                            <select class="form-select" id="combustible" name="combustible">
-                                                                <option value="">Seleccione</option>
-                                                                <option value="Diesel">Diesel</option>
-                                                                <option value="Gasolina">Gasolina</option>
-                                                            </select>
+                                                                <label class="labelTitulo">Combustible*:</label></br>
+                                                                <select class="form-select" id="combustible"
+                                                                    name="combustible">
+                                                                    <option value="">Seleccione</option>
+                                                                    <option value="Diesel">Diesel</option>
+                                                                    <option value="Gasolina">Gasolina</option>
+                                                                </select>
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -319,32 +320,32 @@
                                                             </div>
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Filtro Aceite:</label></br>
-                                                                <input type="number" class="inputCaja" id="filtroaceite"
-                                                                    name="filtroaceite" placeholder="Cantidad"
-                                                                    value="{{ old('filtroaceite') }}">
-                                                            </div>-->
+                                                                                                            <label class="labelTitulo">Filtro Aceite:</label></br>
+                                                                                                            <input type="number" class="inputCaja" id="filtroaceite"
+                                                                                                                name="filtroaceite" placeholder="Cantidad"
+                                                                                                                value="{{ old('filtroaceite') }}">
+                                                                                                        </div>-->
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Filtro Aire:</label></br>
-                                                                <input type="number" class="inputCaja" id="filtroaire"
-                                                                    placeholder="Cantidad" name="filtroaire"
-                                                                    value="{{ old('filtroaire') }}">
-                                                            </div>-->
+                                                                                                            <label class="labelTitulo">Filtro Aire:</label></br>
+                                                                                                            <input type="number" class="inputCaja" id="filtroaire"
+                                                                                                                placeholder="Cantidad" name="filtroaire"
+                                                                                                                value="{{ old('filtroaire') }}">
+                                                                                                        </div>-->
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Bujías:</label></br>
-                                                                <input type="number" class="inputCaja" id="bujias"
-                                                                    placeholder="Cantidad" name="bujias"
-                                                                    value="{{ old('bujias') }}">
-                                                            </div>-->
+                                                                                                            <label class="labelTitulo">Bujías:</label></br>
+                                                                                                            <input type="number" class="inputCaja" id="bujias"
+                                                                                                                placeholder="Cantidad" name="bujias"
+                                                                                                                value="{{ old('bujias') }}">
+                                                                                                        </div>-->
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Tipo de Bujías:</label></br>
-                                                                <input type="text" class="inputCaja" id="tipobujia"
-                                                                    placeholder="Especifique..." name="tipobujia"
-                                                                    value="{{ old('tipobujia') }}">
-                                                            </div>-->
+                                                                                                            <label class="labelTitulo">Tipo de Bujías:</label></br>
+                                                                                                            <input type="text" class="inputCaja" id="tipobujia"
+                                                                                                                placeholder="Especifique..." name="tipobujia"
+                                                                                                                value="{{ old('tipobujia') }}">
+                                                                                                        </div>-->
 
                                                             <div class="col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Horómetro Inicial:</label></br>
@@ -370,8 +371,9 @@
                                                                 <div class="row align-items-end">
                                                                     <label class="labelTitulo">Kilometraje / Millaje
                                                                         Inicial:</label></br>
-                                                                    <div class="col-7 col-md-6 col-lg-4 col-xl-7 inputNumberKilometraje">
-                                                                        
+                                                                    <div
+                                                                        class="col-7 col-md-6 col-lg-4 col-xl-7 inputNumberKilometraje">
+
                                                                         <input type="number" class="inputCaja"
                                                                             id="kilometraje" name="kilometraje"
                                                                             placeholder="Numérico"
@@ -389,57 +391,71 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        
+
                                                     </div>
                                                     <div class="d-flex p-3">
-                                                    <div class="col-12" id="elementos">
-                                                        <div class="d-flex">
-                                                            <div class="col-6 divBorder">
-                                                                <h2 class="tituloEncabezado ">Refacciónes</h2>
+                                                        <div class="col-12" id="elementos">
+                                                            <div class="d-flex">
+                                                                <div class="col-6 divBorder">
+                                                                    <h2 class="tituloEncabezado ">Refacciónes</h2>
+                                                                </div>
+                                                                <div class="col-6 divBorder pb-3 text-end">
+                                                                    <button type="button" class="btnVerde"
+                                                                        onclick="crearItems()">
+                                                                    </button>
+                                                                </div>
                                                             </div>
-                                                            <div class="col-6 divBorder pb-3 text-end">
-                                                                <button type="button" class="btnVerde" onclick="crearItems()">
-                                                                </button>
-                                                            </div>
-                                                        </div>
 
                                                             <div class="row opcion divBorderItems" id="opc">
 
                                                                 <input type="hidden" name="asignado[]" value="">
                                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                                    <label class="labelTitulo">Tipo de Refacción:</label></br>
-                                                                    <select id="tipoRefaccion" name="tipoRefaccion[]" class="form-select">
+                                                                    <label class="labelTitulo">Tipo de
+                                                                        Refacción:</label></br>
+                                                                    <select id="tipoRefaccion" name="tipoRefaccion[]"
+                                                                        class="form-select">
                                                                         <option value="">Seleccione</option>
-                                                                            <option value="Aceite Primario">Aceite Primario</option>
-                                                                            <option value="Aceite Secundario">Aceite Secundario</option>
-                                                                            <option value="Combustible Primario">Combustible Primario</option>
-                                                                            <option value="Combustible Secundario">Combustible Secundario</option>
-                                                                            <option value="Aire de Motor Primario">Aire de Motor Primario</option>
-                                                                            <option value="Aire de Motor Secundario">Aire de Motor Secundario</option>
-                                                                            <option value="Aire de Cabina">Aire de Cabina</option>
-                                                                            <option value="Transmisión">Transmisión</option>
-                                                                            <option value="Dirección">Dirección</option>
-                                                                            <option value="Bujía">Bujía</option>
+                                                                        <option value="Aceite Primario">Aceite Primario
+                                                                        </option>
+                                                                        <option value="Aceite Secundario">Aceite Secundario
+                                                                        </option>
+                                                                        <option value="Combustible Primario">Combustible
+                                                                            Primario</option>
+                                                                        <option value="Combustible Secundario">Combustible
+                                                                            Secundario</option>
+                                                                        <option value="Aire de Motor Primario">Aire de
+                                                                            Motor Primario</option>
+                                                                        <option value="Aire de Motor Secundario">Aire de
+                                                                            Motor Secundario</option>
+                                                                        <option value="Aire de Cabina">Aire de Cabina
+                                                                        </option>
+                                                                        <option value="Transmisión">Transmisión</option>
+                                                                        <option value="Dirección">Dirección</option>
+                                                                        <option value="Bujía">Bujía</option>
                                                                     </select>
                                                                 </div>
 
                                                                 <div class=" col-12 col-sm-6 col-lg-2 my-3 ">
                                                                     <label class="labelTitulo">Marca:</label></br>
-                                                                    <input type="text" class="inputCaja" id="marcaRefaccion"
-                                                                        placeholder="Especifique..." name="marcaRefaccion[]" value="">
+                                                                    <input type="text" class="inputCaja"
+                                                                        id="marcaRefaccion" placeholder="Especifique..."
+                                                                        name="marcaRefaccion[]" value="">
                                                                 </div>
-                    
+
                                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                                    <label class="labelTitulo">Numero De Parte:</label></br>
-                                                                    <input type="text" class="inputCaja" id="nParteRefaccion"
-                                                                        placeholder="Especifique..." name="nParteRefaccion[]" value="">
-                                                                </div> 
+                                                                    <label class="labelTitulo">Numero De
+                                                                        Parte:</label></br>
+                                                                    <input type="text" class="inputCaja"
+                                                                        id="nParteRefaccion" placeholder="Especifique..."
+                                                                        name="nParteRefaccion[]" value="">
+                                                                </div>
 
                                                                 <div class="col-lg-2 my-3 text-end">
-                                                                    <button type="button" id="removeRow" class="btnRojo"></button>
+                                                                    <button type="button" id="removeRow"
+                                                                        class="btnRojo"></button>
                                                                 </div>
 
-                                                                
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -462,63 +478,103 @@
                                             <div class="accordion-body">
                                                 <div class="row mt-3">
 
-                                                @foreach ($doc as $item)
-                                                <div class="card-group col-12 col-md-6 col-lg-4 col-xl-3 small-card-group-date">
-                                                    <div class="row card contDocumentos m-1">
-                                                        <div class="card-body m-2">
-                                                            <div>
-                                                                <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
-                                                                    <!--<i class="fa fa-check-circle semaforo2"></i>-->
-                                                                    {{ucwords(trans($item->nombre))}}
-                                                                </label>
-                                                            </div>
-                                                            <div class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
-                                                                <input type="hidden" id='{{$item->nombre}}' name='{{$item->nombre}}' value='{{$item->id}}'>
-                                                                <label class="custom-file-upload" onclick="handleDocumento('{{$item->id}}')">
-                                                                    <input class="mb-4" type="file" name='{{$item->id}}' id='{{$item->id}}' accept=".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, .txt, .csv, .rtf, .odt, .odp, .ods">
-                                                                    <div id='iconContainer{{$item->id}}'>
-                                                                        <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>
+                                                    @foreach ($doc as $item)
+                                                        <div
+                                                            class="card-group col-12 col-md-6 col-lg-4 col-xl-3 small-card-date my-1">
+                                                            <div class=" card">
+                                                                <div class="card-body ">
+                                                                    <div>
+                                                                        <label
+                                                                            class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                            for="flexCheckDefault">
+                                                                            <!--<i class="fa fa-check-circle semaforo2"></i>-->
+                                                                            {{ ucwords(trans($item->nombre)) }}
+                                                                        </label>
+                                                                    </div>
+                                                                    <div
+                                                                        class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
+                                                                        <input type="hidden" id='{{ $item->nombre }}'
+                                                                            name='{{ $item->nombre }}'
+                                                                            value='{{ $item->id }}'>
+                                                                        <label class="custom-file-upload"
+                                                                            onclick="handleDocumento('{{ $item->id }}')">
+                                                                            <input class="mb-4" type="file"
+                                                                                name='{{ $item->id }}'
+                                                                                id='{{ $item->id }}'
+                                                                                accept=".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, .txt, .csv, .rtf, .odt, .odp, .ods">
+                                                                            <div id='iconContainer{{ $item->id }}'>
+                                                                                <lord-icon
+                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                    trigger="hover"
+                                                                                    colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65"
+                                                                                    style="width:50px;height:70px">
+                                                                                </lord-icon>
 
-                                                                    </div>
-                                                                </label>
-                                                                <a id='downloadButton{{$item->id}}' class="btnViewDescargar btn btn-outline-success btnView" style="display: none" download>
-                                                                <span class="btn-text">Descargar</span>
-                                                                <span class="icon">
-                                                                    <i class="far fa-eye mt-2"></i>
-                                                                </span>
-                                                                </a>
-                                                                <button id='removeButton{{$item->id}}' class="btnViewDelete btn btn-outline-danger btnView" style="width: 2.4em; height: 2.4em; display: none;"><i class="fa fa-times"></i></button>
-                                                                <!-- Botón Omitir -->
-                                                                <button id='omitirButton{{$item->id}}' class="btnSinFondo float-end mt-3" style="margin-left: 20px" type="submit" rel="tooltip" onclick='omitir({{$item->id}})'>
-                                                                    <P class="fs-5"> Omitir</P>
-                                                                </button>
-                                                                <button id='cancelarOmitirButton{{$item->id}}' class="btnSinFondo float-end mt-3" style="margin-left: 20px; display: none;" type="submit" rel="tooltip" onclick='cancelarOmitir({{$item->id}})'>
-                                                                    <P class="fs-5"> Cancelar</P>
-                                                                </button>
-                                                                <div class="text-center" style="margin-top: -10px !important">
-                                                                    <label class="text-start fs-5 textTitulo text-break mb-2" style="font-size: 18px !important"> Expiración:</label>
-                                                                    <div class="col-12">
-                                                                        <input type="date" class="inputCaja text-center" id='fecha{{$item->id}}' style="display: block;">
-                                                                    </div>
-                                                                    <div class="col-12">
-                                                                        <label class="text-start fs-5 textTitulo text-break mb-2" style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
-                                                                        <textarea class="form-control-textarea inputCaja" rows="1" maxlength="1000" name='comentario{{$item->id}}' placeholder="Tipo De Permiso etc."></textarea>
+                                                                            </div>
+                                                                        </label>
+                                                                        <a id='downloadButton{{ $item->id }}'
+                                                                            class="btnViewDescargar btn btn-outline-success btnView"
+                                                                            style="display: none" download>
+                                                                            <span class="btn-text">Descargar</span>
+                                                                            <span class="icon">
+                                                                                <i class="far fa-eye mt-2"></i>
+                                                                            </span>
+                                                                        </a>
+                                                                        <button id='removeButton{{ $item->id }}'
+                                                                            class="btnViewDelete btn btn-outline-danger btnView"
+                                                                            style="width: 2.4em; height: 2.4em; display: none;"><i
+                                                                                class="fa fa-times"></i></button>
+                                                                        <!-- Botón Omitir -->
+                                                                        <button id='omitirButton{{ $item->id }}'
+                                                                            class="btnSinFondo float-end mt-3"
+                                                                            style="margin-left: 20px" type="submit"
+                                                                            rel="tooltip"
+                                                                            onclick='omitir({{ $item->id }})'>
+                                                                            <P class="fs-5"> Omitir</P>
+                                                                        </button>
+                                                                        <button
+                                                                            id='cancelarOmitirButton{{ $item->id }}'
+                                                                            class="btnSinFondo float-end mt-3"
+                                                                            style="margin-left: 20px; display: none;"
+                                                                            type="submit" rel="tooltip"
+                                                                            onclick='cancelarOmitir({{ $item->id }})'>
+                                                                            <P class="fs-5"> Cancelar</P>
+                                                                        </button>
+                                                                        <div class="text-center"
+                                                                            style="margin-top: -10px !important">
+                                                                            <label
+                                                                                class="text-start fs-5 textTitulo text-break mb-2"
+                                                                                style="font-size: 18px !important">
+                                                                                Expiración:</label>
+                                                                            <div class="col-12">
+                                                                                <input type="date"
+                                                                                    class="inputCaja text-center"
+                                                                                    id='fecha{{ $item->id }}'
+                                                                                    style="display: block;">
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <label
+                                                                                    class="text-start fs-5 textTitulo text-break mb-2"
+                                                                                    style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
+                                                                                <textarea class="form-control-textarea inputCaja" rows="1" maxlength="1000"
+                                                                                    name='comentario{{ $item->id }}' placeholder="Tipo De Permiso etc."></textarea>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>            
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                @endforeach
+                                                    @endforeach
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 text-center mb-3 ">
-                                <button type="submit" class="btn botonGral" onclick="test()">
-                                    Guardar
-                                </button>
+                                    <button type="submit" class="btn botonGral" onclick="test()">
+                                        Guardar
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -529,129 +585,130 @@
     </div>
 
     <script>
-    function omitir(id) {
-    // Obtener el input del archivo y el contenedor del icono
-    var facturaInput = document.getElementById(id);
-    var iconContainer = document.getElementById("iconContainer"+id);
-    var omitirFacturaButton = document.getElementById("omitirButton"+id);
-    var cancelarOmitirButton = document.getElementById("cancelarOmitirButton"+id);
-    var FechaInput = document.getElementById("fecha"+id);
-    var comentarioInput = document.getElementsByName("comentario"+id)[0];
+        function omitir(id) {
+            // Obtener el input del archivo y el contenedor del icono
+            var facturaInput = document.getElementById(id);
+            var iconContainer = document.getElementById("iconContainer" + id);
+            var omitirFacturaButton = document.getElementById("omitirButton" + id);
+            var cancelarOmitirButton = document.getElementById("cancelarOmitirButton" + id);
+            var FechaInput = document.getElementById("fecha" + id);
+            var comentarioInput = document.getElementsByName("comentario" + id)[0];
 
-    // Deshabilitar el input del archivo
-    facturaInput.disabled = true;
-    FechaInput.disabled = true;
-    FechaInput.value = null;
-    comentarioInput.value = null;
-    comentarioInput.disabled = true;
+            // Deshabilitar el input del archivo
+            facturaInput.disabled = true;
+            FechaInput.disabled = true;
+            FechaInput.value = null;
+            comentarioInput.value = null;
+            comentarioInput.disabled = true;
 
-    // Cambiar el valor del input a 1
-    facturaInput.value = "";
+            // Cambiar el valor del input a 1
+            facturaInput.value = "";
 
-    // Cambiar el icono en el contenedor
-    iconContainer.innerHTML =
-        '<lord-icon src="https://cdn.lordicon.com/jvihlqtw.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+            // Cambiar el icono en el contenedor
+            iconContainer.innerHTML =
+                '<lord-icon src="https://cdn.lordicon.com/jvihlqtw.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
 
-    // Mostrar el botón "Cancelar" y ocultar el botón "Omitir"
-    omitirFacturaButton.style.display = "none";
-    cancelarOmitirButton.style.display = "block";
-    }
+            // Mostrar el botón "Cancelar" y ocultar el botón "Omitir"
+            omitirFacturaButton.style.display = "none";
+            cancelarOmitirButton.style.display = "block";
+        }
 
-    function cancelarOmitir(id) {
-    
-    // Obtener el input del archivo y el contenedor del icono
-    var facturaInput = document.getElementById(id);
-    var iconContainer = document.getElementById("iconContainer"+id);
-    var omitirFacturaButton = document.getElementById("omitirButton"+id);
-    var cancelarOmitirButton = document.getElementById("cancelarOmitirButton"+id);
-    var FechaInput = document.getElementById("fecha"+id);
-    var comentarioInput = document.getElementsByName("comentario"+id)[0];
+        function cancelarOmitir(id) {
 
-    // Habilitar el input del archivo, la fecha y el comentario
-    facturaInput.disabled = false;
-    FechaInput.disabled = false;
-    comentarioInput.disabled = false;
+            // Obtener el input del archivo y el contenedor del icono
+            var facturaInput = document.getElementById(id);
+            var iconContainer = document.getElementById("iconContainer" + id);
+            var omitirFacturaButton = document.getElementById("omitirButton" + id);
+            var cancelarOmitirButton = document.getElementById("cancelarOmitirButton" + id);
+            var FechaInput = document.getElementById("fecha" + id);
+            var comentarioInput = document.getElementsByName("comentario" + id)[0];
 
-    // Restaurar el valor del input a su estado original (vacío)
-    facturaInput.value = "";
+            // Habilitar el input del archivo, la fecha y el comentario
+            facturaInput.disabled = false;
+            FechaInput.disabled = false;
+            comentarioInput.disabled = false;
 
-    // Restaurar el icono original en el contenedor
-    iconContainer.innerHTML =
-        '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+            // Restaurar el valor del input a su estado original (vacío)
+            facturaInput.value = "";
 
-    // Mostrar el botón "Omitir" y ocultar el botón "Cancelar"
-    omitirFacturaButton.style.display = "block";
-    cancelarOmitirButton.style.display = "none";
-    }
+            // Restaurar el icono original en el contenedor
+            iconContainer.innerHTML =
+                '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
 
-    function handleDocumento(id) {
-    let alertShown = true;
-    // Resto del código que utilizas para manejar los eventos, pero ahora con el ID proporcionado
-    var facturaInput = document.getElementById(id);
-    var downloadFacturaButton = document.getElementById("downloadButton"+id);
-    var removeFacturaButton = document.getElementById("removeButton"+id);
-    var omitirFacturaButton = document.getElementById("omitirButton"+id);
-    var cancelarOmitirButton = document.getElementById("cancelarOmitirButton"+id);
-    var iconContainer = document.getElementById("iconContainer"+id);
+            // Mostrar el botón "Omitir" y ocultar el botón "Cancelar"
+            omitirFacturaButton.style.display = "block";
+            cancelarOmitirButton.style.display = "none";
+        }
 
-    facturaInput.addEventListener("click", function (event) {
-      if (!alertShown) {
-        event.stopPropagation(); // Prevent the file explorer from opening immediately
-        event.preventDefault(); // Prevent any default behavior
+        function handleDocumento(id) {
+            let alertShown = true;
+            // Resto del código que utilizas para manejar los eventos, pero ahora con el ID proporcionado
+            var facturaInput = document.getElementById(id);
+            var downloadFacturaButton = document.getElementById("downloadButton" + id);
+            var removeFacturaButton = document.getElementById("removeButton" + id);
+            var omitirFacturaButton = document.getElementById("omitirButton" + id);
+            var cancelarOmitirButton = document.getElementById("cancelarOmitirButton" + id);
+            var iconContainer = document.getElementById("iconContainer" + id);
 
-        Swal.fire({
-          title: "¿Estás seguro?",
-          text: "Se reemplazará la imagen actual por una nueva. ¿Deseas continuar?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Continuar",
-          cancelButtonText: "Cancelar",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            alertShown = true; // Set the flag to true to prevent the alert from showing again
-            facturaInput.click(); 
-          }
-        });
-      }
-    });
+            facturaInput.addEventListener("click", function(event) {
+                if (!alertShown) {
+                    event.stopPropagation(); // Prevent the file explorer from opening immediately
+                    event.preventDefault(); // Prevent any default behavior
 
-    facturaInput.addEventListener("change", function (event) {
-      if (event.target.files.length > 0) {
-        var file = event.target.files[0];
-        var fileURL = URL.createObjectURL(file);
-        downloadFacturaButton.setAttribute("href", fileURL);
-        downloadFacturaButton.style.display = "block";
-        removeFacturaButton.style.display = "block";
-        omitirFacturaButton.style.display = "none";
-        cancelarOmitirButton.style.display = "none";
-        alertShown = false;
-        iconContainer.innerHTML =
-          '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
-      } else {
-        downloadFacturaButton.style.display = "none";
-        removeFacturaButton.style.display = "none";
-        omitirFacturaButton.style.display = "block";
-        cancelarOmitirButton.style.display = "none";
-        alertShown = true;
-        iconContainer.innerHTML =
-          '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
-      }
-    });
+                    Swal.fire({
+                        title: "¿Estás seguro?",
+                        text: "Se reemplazará la imagen actual por una nueva. ¿Deseas continuar?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Continuar",
+                        cancelButtonText: "Cancelar",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            alertShown =
+                                true; // Set the flag to true to prevent the alert from showing again
+                            facturaInput.click();
+                        }
+                    });
+                }
+            });
 
-    removeFacturaButton.addEventListener("click", function () {
-      facturaInput.value = null;
-      downloadFacturaButton.removeAttribute("href");
-      downloadFacturaButton.style.display = "none";
-      removeFacturaButton.style.display = "none";
-      omitirFacturaButton.style.display = "block";
-      cancelarOmitirButton.style.display = "none";
-      alertShown = true;
-      iconContainer.innerHTML =
-        '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
-    });
-    }
+            facturaInput.addEventListener("change", function(event) {
+                if (event.target.files.length > 0) {
+                    var file = event.target.files[0];
+                    var fileURL = URL.createObjectURL(file);
+                    downloadFacturaButton.setAttribute("href", fileURL);
+                    downloadFacturaButton.style.display = "block";
+                    removeFacturaButton.style.display = "block";
+                    omitirFacturaButton.style.display = "none";
+                    cancelarOmitirButton.style.display = "none";
+                    alertShown = false;
+                    iconContainer.innerHTML =
+                        '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
+                } else {
+                    downloadFacturaButton.style.display = "none";
+                    removeFacturaButton.style.display = "none";
+                    omitirFacturaButton.style.display = "block";
+                    cancelarOmitirButton.style.display = "none";
+                    alertShown = true;
+                    iconContainer.innerHTML =
+                        '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+                }
+            });
+
+            removeFacturaButton.addEventListener("click", function() {
+                facturaInput.value = null;
+                downloadFacturaButton.removeAttribute("href");
+                downloadFacturaButton.style.display = "none";
+                removeFacturaButton.style.display = "none";
+                omitirFacturaButton.style.display = "block";
+                cancelarOmitirButton.style.display = "none";
+                alertShown = true;
+                iconContainer.innerHTML =
+                    '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+            });
+        }
     </script>
 
     <script type="application/javascript">
@@ -672,36 +729,37 @@
     </script>
 
     <script>
-    function test() {
-        var $fileUpload = $("input[type='file']");
-        if (parseInt($fileUpload.get(0).files.length) > 4) {
-            event.preventDefault();
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Maximo 4 imagenes',
-            })
-        } else {
-            
-            alertaGuardar()
-        }
-    }
-    </script>
-    
+        function test() {
+            var $fileUpload = $("input[type='file']");
+            if (parseInt($fileUpload.get(0).files.length) > 4) {
+                event.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Maximo 4 imagenes',
+                })
+            } else {
 
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+                alertaGuardar()
+            }
+        }
+    </script>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
 
     <script>
-    function crearItems() {
-        $('.opcion:first').clone().find("input").val("").end().appendTo('#elementos');
-    }
-
-    // Borrar registro
-    $(document).on('click', '#removeRow', function() {
-        if ($('.opcion').length > 1) {
-            $(this).closest('.opcion').remove();
+        function crearItems() {
+            $('.opcion:first').clone().find("input").val("").end().appendTo('#elementos');
         }
-    });
+
+        // Borrar registro
+        $(document).on('click', '#removeRow', function() {
+            if ($('.opcion').length > 1) {
+                $(this).closest('.opcion').remove();
+            }
+        });
     </script>
 
     <script type="application/javascript">
@@ -716,5 +774,3 @@
     </script>
 
 @endsection
-
-
