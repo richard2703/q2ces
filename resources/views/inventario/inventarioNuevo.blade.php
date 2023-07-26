@@ -18,8 +18,24 @@
                     <div class="card">
                         <div class="card-body contCart">
                             <div class="p-1 align-self-start bacTituloPrincipal">
-                                <h2 class="my-3 ms-3 texticonos ">Inventario Nuevo</h2>
+                                <h2 class="my-3 ms-3 texticonos ">Inventario Nuevo {{ ucfirst($tipo) }}</h2>
                             </div>
+
+                            <div class="row">
+                                <div class="col-12 text-right">
+                                    <a href="{{ route('inventario.dash') }}"
+                                        title="Regresa a la vista de consulta de inventario.">
+                                        <button class="btn regresar">
+                                            <span class="material-icons">
+                                                reply
+                                            </span>
+                                            Regresar
+                                        </button>
+                                    </a>
+
+                                </div>
+                            </div>
+
                             <form class="row alertaGuardar" action="{{ route('inventario.store') }}"
                                 method="post"class="row" enctype="multipart/form-data">
                                 @csrf
@@ -31,7 +47,7 @@
                                         <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="imagen"
                                                 id="mi-archivo" accept="image/*"></span>
                                         <label for="mi-archivo">
-                                            <span>sube imagen</span>
+                                            <span>Sube Imagen</span>
                                         </label>
                                     </div>
 
@@ -46,15 +62,15 @@
 
                                         <div class=" col-12 col-sm-6 col-lg-8 mb-3 ">
                                             <label class="labelTitulo">Tipo:</label></br>
-                                            <input type="text" class="inputCaja" id="tipoInventario" name="tipoInventario" readonly disabled="true"
-                                                value="{{ $tipo }}">
+                                            <input type="text" class="inputCaja" id="tipoInventario"
+                                                name="tipoInventario" readonly disabled="true" value="{{ $tipo }}">
                                         </div>
 
                                         <input type="hidden" name="tipo" value="{{ $tipo }}">
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Número del Parte:</label></br>
-                                            <input type="text" class="inputCaja" id="numparte" name="numparte"
+                                            <label class="labelTitulo">Número de Parte: <span>*</span></label></br>
+                                            <input type="text" class="inputCaja" id="numparte" name="numparte" required
                                                 value="{{ old('numparte') }}">
                                         </div>
 
@@ -65,48 +81,64 @@
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Marca:</label></br>
-                                            <input type="text" class="inputCaja" id="marca" name="marca"
-                                                value="{{ old('marca') }}">
+                                            <label class="labelTitulo">Marca: <span>*</span></label></br>
+                                            <select id="marcaId" name="marcaId" class="form-select" required
+                                                aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($vctMarcas as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->nombre }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Modelo:</label></br>
+                                            <label class="labelTitulo">Modelo: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="modelo" name="modelo"
                                                 value="{{ old('modelo') }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Proovedor:</label></br>
-                                            <input type="text" class="inputCaja" id="proveedor" name="proveedor"
-                                                value="{{ old('proveedor') }}">
+                                            <label class="labelTitulo">Proovedor: <span>*</span></label></br>
+                                            <select id="proveedorId" name="proveedorId" class="form-select" required
+                                                aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($vctProveedores as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->nombre }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Cantidad a ingresar: <span>*</span></label></br>
+                                            <label class="labelTitulo">Cantidad: <span>*</span></label></br>
                                             <input type="number" step="1" min="1" class="inputCaja text-end"
                                                 id="cantidad" name="cantidad" value="{{ old('cantidad') }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Minimo:</label></br>
+                                            <label class="labelTitulo">Mínimo:</label></br>
                                             <input type="number" step="1" min="1" class="inputCaja text-end"
                                                 id="reorden" name="reorden" value="{{ old('reorden') }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Maximo:</label></br>
-                                            <input type="number" step="1" min="1" class="inputCaja text-end"
-                                                id="maximo" name="maximo" value="{{ old('maximo') }}">
+                                            <label class="labelTitulo">Máximo:</label></br>
+                                            <input type="number" step="1" min="1"
+                                                class="inputCaja text-end" id="maximo" name="maximo"
+                                                value="{{ old('maximo') }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Costo unitario: <span>*</span></label></br>
+                                            <label class="labelTitulo">Costo Unitario: <span>*</span></label></br>
                                             <input type="number" step="0.01" min="0.01"
                                                 class="inputCaja text-end" id="valor" name="valor"
                                                 value="{{ old('valor') }}">
                                         </div>
 
+                                        <!-- PARA USO EXCLUSIVO DE UNIFORMES -->
                                         @if ($tipo == 'uniformes')
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-5 ">
                                                 <label class="labelTitulo">Tipo de Uniforme:</label></br>
@@ -137,6 +169,7 @@
                                             </div>
                                         @endif
 
+                                        <!-- PARA USO EXCLUSIVO DE EXTINTORES -->
                                         @if ($tipo == 'extintores')
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Capacidad:</label></br>
@@ -150,10 +183,45 @@
                                                     name="extintorCodigo" value="{{ old('extintorCodigo') }}">
                                             </div>
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                <label class="labelTitulo">Fecha de vencimiento:</label></br>
+                                                <label class="labelTitulo">Fecha de Vencimiento:</label></br>
                                                 <input type="date" class="inputCaja" id="extintorFechaVencimiento"
                                                     name="extintorFechaVencimiento"
                                                     value="{{ old('extintorFechaVencimiento') }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                <label class="labelTitulo">Tipo de Extintor:</label></br>
+                                                <select class="form-select" aria-label="Default select example"
+                                                    id="extintorTipo" name="extintorTipo">
+                                                    <option value="A">A
+                                                    </option>
+                                                    <option value="B">B
+                                                    </option>
+                                                    <option value="C">C
+                                                    </option>
+                                                    <option value="D">D
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                <label class="labelTitulo">Ubicación:</label></br>
+                                                <input type="text" class="inputCaja" id="extintorUbicacion"
+                                                    name="extintorUbicacion" value="{{ old('extintorUbicacion') }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 mb-5 ">
+                                                <label class="labelTitulo">Asignado :</label></br>
+                                                <select id="extintorAsignadoMaquinariaId"
+                                                    name="extintorAsignadoMaquinariaId" class="form-select"
+                                                    aria-label="Default select example">
+                                                    <option value="">Seleccione</option>
+                                                    @foreach ($vctMaquinaria as $item)
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->nombre }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         @endif
 
@@ -164,7 +232,6 @@
                                     <button type="submit" class="btn botonGral">Guardar</button>
                                 </div>  --}}
                             </form>
-
                         </div>
 
 

@@ -8,7 +8,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Categorías De Tareas</h4>
+                                    <h4 class="card-title">Categorías de Tareas</h4>
 
                                 </div>
                                 <div class="card-body">
@@ -38,7 +38,7 @@
                                             @can('catalogos_create')
                                                 <button class="btn botonGral float-end" data-bs-toggle="modal"
                                                     data-bs-target="#nuevoItem">
-                                                    Añadir Categoría De Tareas
+                                                    Añadir Categoría de Tareas
                                                 </button>
                                             @endcan
                                         </div>

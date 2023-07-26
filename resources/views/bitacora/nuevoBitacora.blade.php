@@ -26,7 +26,7 @@
 
                                                 <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
                                                     <label for="exampleFormControlTextarea1" class="labelTitulo">Descripción
-                                                        de la bitácora: <span>*</span></label>
+                                                        de la Bitácora: <span>*</span></label>
                                                     <textarea class="form-select" id="exampleFormControlTextarea1" rows="3" maxlength="1000" required id="comentario"
                                                         name="comentario" placeholder="Escribe aquí tus comentarios sobre la bitácora."></textarea>
                                                 </div>

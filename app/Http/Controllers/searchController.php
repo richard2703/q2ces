@@ -4,100 +4,102 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 use App\Models\maquinaria;
 use App\Models\inventario;
 use App\Models\tarea;
 use App\Models\grupo;
 
-class searchController extends Controller
-{
+class searchController extends Controller {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
+
+    public function index() {
         //
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
+    * Show the form for creating a new resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
+
+    public function create() {
         //
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+
+    public function store( Request $request ) {
         //
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
+    * Display the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+
+    public function show( $id ) {
         //
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
+    * Show the form for editing the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+
+    public function edit( $id ) {
         //
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+
+    public function update( Request $request, $id ) {
         //
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
+    * Remove the specified resource from storage.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+
+    public function destroy( $id ) {
         //
     }
 
-
     /**
-     * Busca equipos de maquinaria
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function equipos(Request $request)
-    {
-         // dd( $request );
+    * Busca equipos de maquinaria
+    *
+    * @param Request $request
+    * @return void
+    */
+
+    public function equipos( Request $request ) {
+        // dd( $request );
         // $term = $request->input( 'term' );
         $term = $request->get( 'term' );
 
@@ -123,22 +125,25 @@ class searchController extends Controller
     }
 
     /**
-     * Busca material para el mantenimiento de equipos
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function materialMantenimiento(Request $request)
-    {
-         // dd( $request );
+    * Busca material para el mantenimiento de equipos
+    *
+    * @param Request $request
+    * @return void
+    */
+
+    public function materialMantenimiento( Request $request ) {
+        // dd( $request );
         // $term = $request->input( 'term' );
         $term = $request->get( 'term' );
 
-        $inventario = inventario::where( 'nombre', 'LIKE', '%' . $term . '%' )
-        ->orwhere( 'numparte', 'LIKE', '%' . $term . '%' )
-        ->orwhere( 'modelo', 'LIKE', '%' . $term . '%' )
-        ->orwhere( 'tipo', 'LIKE', '%' . $term . '%' )
-        ->orwhere( 'marca', 'LIKE', '%' . $term . '%' )->get();
+        $inventario = inventario::select( 'inventario.*', DB::raw( 'marca.nombre AS marca' ) )
+        ->join( 'marca', 'marca.id', '=', 'inventario.marcaId' )
+        ->where( 'inventario.nombre', 'LIKE', '%' . $term . '%' )
+        ->whereIn ('tipo', ['refacciones', 'consumibles', 'servicios'])
+        ->orwhere( 'inventario.numparte', 'LIKE', '%' . $term . '%' )
+        ->orwhere( 'inventario.modelo', 'LIKE', '%' . $term . '%' )
+        ->orwhere( 'inventario.tipo', 'LIKE', '%' . $term . '%' )
+        ->orwhere( 'marca.nombre', 'LIKE', '%' . $term . '%' )->get();
 
         $sugerencias = [];
         foreach ( $inventario as $item ) {
@@ -160,13 +165,13 @@ class searchController extends Controller
     }
 
     /**
-     * Busca material para el mantenimiento de equipos
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function tareasParaGrupos(Request $request)
-    {
+    * Busca material para el mantenimiento de equipos
+    *
+    * @param Request $request
+    * @return void
+    */
+
+    public function tareasParaGrupos( Request $request ) {
         //  dd( $request );
         // $term = $request->input( 'term' );
         $term = $request->get( 'term' );
@@ -189,13 +194,13 @@ class searchController extends Controller
     }
 
     /**
-     * Busca material para el mantenimiento de equipos
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function gruposParaBitacoras(Request $request)
-    {
+    * Busca material para el mantenimiento de equipos
+    *
+    * @param Request $request
+    * @return void
+    */
+
+    public function gruposParaBitacoras( Request $request ) {
         //  dd( $request );
         // $term = $request->input( 'term' );
         $term = $request->get( 'term' );
@@ -216,6 +221,5 @@ class searchController extends Controller
         return $sugerencias;
         // return response()->json( $sugerencias );
     }
-
 
 }
