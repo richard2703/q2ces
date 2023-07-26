@@ -118,6 +118,12 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('maquinaria_mtq_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('maquinaria_mtq_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('maquinaria_mtq_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('docs_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('docs_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('docs_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('docs_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('docs_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 
 CREATE TABLE users (
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -491,6 +497,7 @@ CREATE TABLE nomina(
 CREATE TABLE maquinaria(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     estatusId bigint(20) unsigned NULL,
+    bitacoraId bigint(20) unsigned NULL,
     nombre varchar(255) NULL,
     identificador varchar(32) NULL,
     tipo varchar(255) NULL,
@@ -535,7 +542,8 @@ CREATE TABLE maquinaria(
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
-    CONSTRAINT FK_maquinaria_maquinariaEstatusId foreign key (estatusId) references maquinariaEstatus(id)
+    CONSTRAINT FK_maquinaria_maquinariaEstatusId foreign key (estatusId) references maquinariaEstatus(id),
+    CONSTRAINT FK_maquinaria_bitacoraId FOREIGN KEY (bitacoraId) REFERENCES bitacoras (id)
 );
 
 CREATE TABLE maqdocs(
