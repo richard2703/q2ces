@@ -28,7 +28,7 @@
 
                                                 <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
                                                     <label for="exampleFormControlTextarea1" class="labelTitulo">Descripción
-                                                        del grupo de tareas: <span>*</span></label>
+                                                        del Grupo de Tareas: <span>*</span></label>
                                                     <textarea class="form-select" id="exampleFormControlTextarea1" rows="3" maxlength="1000" required id="comentario"
                                                         name="comentario" placeholder="Escribe aquí tus comentarios sobre el grupo.">  {{ $grupo->comentario }} </textarea>
                                                 </div>
@@ -38,7 +38,7 @@
 
                                                 <div class="row d-flex">
                                                     <div class="col-12 col-md-6  mt-3 ">
-                                                        <p class="subEncabezado">Busca una tarea </p>
+                                                        <p class="subEncabezado">Busca una Tarea </p>
                                                         <div class="mb-6 mt-0" role="search" class="inputCaja">
                                                             <input value="" class="search-submit ">
                                                             <input autofocus type="text" class=""
@@ -50,7 +50,7 @@
                                                 </div>
 
                                                 <div class="my-4 divBorder">
-                                                    <h3 class="subEncabezado mb-3">Listado de tareas del grupo</h3>
+                                                    <h3 class="subEncabezado mb-3">Listado de Tareas del Grupo</h3>
                                                 </div>
 
                                                 <div class=" col-12  my-3 ">

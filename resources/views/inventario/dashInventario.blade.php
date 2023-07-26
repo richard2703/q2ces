@@ -44,20 +44,16 @@
                                             <p class="mt-4 texticonos">Extintores</p>
                                         </a>
                                     </div>
-                                @endcan
 
-
-                                {{-- @can('combustible_show')
                                     <div class="col-12 col-md-6 text-center my-4">
 
-                                        <a href="{{ route('inventario.index', 'combustible') }}" class="">
-                                            <img src="/img/inventario/combustible.svg" alt="obras" title="Combustibles"
+                                        <a href="{{ route('inventario.index', 'servicios') }}" class="">
+                                            <img src="/img/inventario/combustible.svg" alt="obras" title="Servicios"
                                                 width="30%" class="botonIconoPrincipal">
-                                            <p class="mt-4 texticonos">Combustibles</p>
+                                            <p class="mt-4 texticonos">Servicios</p>
                                         </a>
                                     </div>
-                                @endcan --}}
-
+                                @endcan
 
                             </div>
                         </div>

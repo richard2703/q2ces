@@ -154,19 +154,6 @@
                 </li>
             @endcan
 
-            @can('catalogos_show')
-                <li class="nav-item collapsed">
-                    <a class="nav-link {{ $activePage == 'equipos' ? '' : 'collapsed' }}"
-                        href="{{ route('catalogos.index') }}">
-                        {{--  <i class="bi bi-shop"></i>  --}}
-                        <span class="material-icons">
-                            print
-                        </span>
-                        <span>Catálogos</span>
-                    </a>
-                </li> 
-            @endcan
-
             @can('combustible_index')
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'combustible' ? '' : 'collapsed' }}"
@@ -354,17 +341,29 @@
             @endcan
 
             @can('maquinaria_mtq_dash')
-            <li class="nav-item collapsed">
-                <a class="nav-link {{ $activePage == 'mtq' ? '' : 'collapsed' }}" href="{{ url('dashMtq') }}">
-                    {{--  <i class="bi bi-shop"></i>  --}}
-                    <span class="material-icons">
-                        apartment
-                    </span>
-                    <span>MTQ</span>
-                </a>
-            </li>
+                <li class="nav-item collapsed">
+                    <a class="nav-link {{ $activePage == 'mtq' ? '' : 'collapsed' }}" href="{{ url('dashMtq') }}">
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            apartment
+                        </span>
+                        <span>MTQ</span>
+                    </a>
+                </li>
             @endcan
 
+            @can('catalogos_show')
+                <li class="nav-item collapsed">
+                    <a class="nav-link {{ $activePage == 'equipos' ? '' : 'collapsed' }}"
+                        href="{{ route('catalogos.index') }}">
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            print
+                        </span>
+                        <span>Catalogos</span>
+                    </a>
+                </li>
+            @endcan
 
             @can('obra_index')
                 <li class="nav-item ">

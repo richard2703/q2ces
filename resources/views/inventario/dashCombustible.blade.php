@@ -103,8 +103,8 @@
                                                                             alt="" style="width:40px;">
                                                                     </div>
                                                                     <div>
-                                                                        <label class="labelTitulo">Litros:</label></br>
-                                                                        <input type="number" step="0.01" min="0.01"
+                                                                        <label class="labelTitulo">Litros: <span>*</span></label></br>
+                                                                        <input type="number" step="0.01" min="0.01" required
                                                                             class="inputCaja" id="litros" name="litros"
                                                                             value="{{ old('litros') }}">
                                                                     </div>
@@ -117,8 +117,8 @@
                                                                             alt="" style="width:40px;">
                                                                     </div>
                                                                     <div>
-                                                                        <label class="labelTitulo">Precio:</label></br>
-                                                                        <input type="number" step="0.01" min="0.01"
+                                                                        <label class="labelTitulo">Precio: <span>*</span></label></br>
+                                                                        <input type="number" step="0.01" min="0.01" required
                                                                             class="inputCaja" id="precio" name="precio"
                                                                             value="{{ old('precio') }}">
                                                                     </div>
@@ -157,7 +157,7 @@
                                                                             type="file" name="imgKm" id="mi-archivo"
                                                                             accept="image/*" multiple></span>
                                                                     <label for="mi-archivo">
-                                                                        <span class="">Sube Imagen</span>
+                                                                        <span class="">Tomar Foto</span>
                                                                     </label>
                                                                 </div>
 
@@ -169,7 +169,7 @@
                                                                             type="file" name="imgHoras" id="mi-archivo2"
                                                                             accept="image/*" multiple></span>
                                                                     <label for="mi-archivo2">
-                                                                        <span class="">Sube Imagen</span>
+                                                                        <span class="">Tomar Foto</span>
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -259,8 +259,8 @@
                                                                             alt="" style="width:40px;">
                                                                     </div>
                                                                     <div>
-                                                                        <label class="labelTitulo">Litros:</label></br>
-                                                                        <input type="number" step="0.01" min="0.01"
+                                                                        <label class="labelTitulo">Litros: <span>*</span></label></br>
+                                                                        <input type="number" step="0.01" min="0.01" required
                                                                             class="inputCaja" id="litros" name="litros"
                                                                             value="{{ old('litros') }}">
                                                                     </div>
@@ -272,7 +272,7 @@
                                                                     </div>
                                                                     <div>
                                                                         <label class="labelTitulo">Km/Mi:</label></br>
-                                                                        <input type="number" step="0.01" min="0.01"
+                                                                        <input type="number" step="1" min="0"
                                                                             class="inputCaja" id="km" name="km"
                                                                             value="{{ old('km') }}">
                                                                     </div>
@@ -285,7 +285,7 @@
                                                                     </div>
                                                                     <div>
                                                                         <label class="labelTitulo">Horómetro:</label></br>
-                                                                        <input type="number" step="0.01" min="0.01"
+                                                                        <input type="number" step="0.1" min="0"
                                                                             class="inputCaja" id="horas" name="horas"
                                                                             value="{{ old('horas') }}">
                                                                     </div>

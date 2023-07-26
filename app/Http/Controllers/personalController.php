@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Models\personal;
 use App\Models\contactos;
 use App\Models\beneficiario;
+use App\Models\docs;
 use App\Models\nomina;
 use App\Models\equipo;
 use App\Models\User;
@@ -61,9 +62,11 @@ class personalController extends Controller
         $vctPersonal = personal::all();
         $vctPuestos = puesto::orderBy('nombre', 'asc')->get();
         $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->get();
+        $docs = docs::where('tipoId', '1')->orderBy('nombre', 'asc')->get();
 
-        // dd( $vctPersonal );
-        return view('personal.altaDePersonal', compact('vctPersonal', 'vctPuestos', 'vctNiveles'))->with('personal', $vctPersonal, $vctPuestos);
+        // dd($docs);
+        // return view('personal.altaDePersonal', compact('vctPersonal', 'vctPuestos', 'vctNiveles'))->with('personal', $vctPersonal, $vctPuestos);
+        return view('personal.altaDePersonal', compact('vctPersonal', 'vctPuestos', 'vctNiveles', 'docs'));
     }
 
     /**

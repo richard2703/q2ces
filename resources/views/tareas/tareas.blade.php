@@ -118,7 +118,7 @@
                 <form action="{{ route('tarea.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="nuevaTareaModalLabel">Nuevo registro de Tarea</h1>
+                        <h1 class="modal-title fs-5" id="nuevaTareaModalLabel">Nuevo Registro de Tarea</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -235,7 +235,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label">Pon tu comentario</label>
+                            <label for="exampleFormControlTextarea1" class="form-label">Pon tu Comentario</label>
                             <textarea class="form-select" id="tareaComentario" name="comentario" rows="3" placeholder="Escribe aquí tus comentarios sobre la tarea."></textarea>
                         </div>
                     </div>

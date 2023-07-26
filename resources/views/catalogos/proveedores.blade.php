@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Ubicaciones de Tareas')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Proveedores')])
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -8,7 +8,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Ubicaciones de Tareas</h4>
+                                    <h4 class="card-title">Proveedores</h4>
 
                                 </div>
                                 <div class="card-body">
@@ -23,7 +23,6 @@
                                         </div>
                                     @endif
                                     <div class="row">
-                                    <div class="d-flex p-3 divBorder">
                                         <div class="col-12 text-right">
 
                                             <a href="{{ route('catalogos.index') }}">
@@ -38,11 +37,10 @@
                                             @can('catalogos_create')
                                                 <button class="btn botonGral float-end" data-bs-toggle="modal"
                                                     data-bs-target="#nuevoItem">
-                                                    Añadir Ubicación de Tareas
+                                                    Añadir Proveedor
                                                 </button>
                                             @endcan
                                         </div>
-                                    </div>
                                     </div>
 
 
@@ -52,6 +50,7 @@
                                                 <th class="labelTitulo">Id</th>
                                                 <th class="labelTitulo">Nombre</th>
                                                 <th class="labelTitulo">Comentario</th>
+                                                <th class="labelTitulo">Categoría</th>
                                                 <th class="labelTitulo text-right">Acciones</th>
                                             </tr>
                                         </thead>
@@ -61,6 +60,7 @@
                                                     <td>{{ $item->id }}</td>
                                                     <td class="text-left">{{ $item->nombre }}</td>
                                                     <td class="text-left">{{ $item->comentario }}</td>
+                                                    <td class="text-left">{{ $item->categoria }}</td>
 
                                                     <td class="td-actions text-right">
                                                         {{-- @can('user_show') --}}
@@ -74,7 +74,7 @@
                                                         {{-- @can('user_edit') --}}
                                                         <a href="#" class="" data-bs-toggle="modal"
                                                             data-bs-target="#editarItem"
-                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->requiereAsistencia }}','{{ $item->usaCajaChica }}','{{ $item->comentario }}')">
+                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->categoriaId }}','{{ $item->comentario }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                 height="28" fill="currentColor"
                                                                 class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -108,10 +108,9 @@
                                                     <td colspan="2">Sin registros.</td>
                                                 </tr>
                                             @endforelse
-
                                         </tbody>
                                     </table>
-                                    <div class="card-footer mr-auto d-flex justify-content-center">
+                                    <div class="card-footer mr-auto">
                                         {{ $records->links() }}
                                     </div>
                                 </div>
@@ -128,17 +127,31 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nueva Ubicación de Tareas</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nuevo Proveedor</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('tareaUbicacion.store') }}" method="post">
+                    <form class="row d-flex" action="{{ route('proveedor.store') }}" method="post">
                         @csrf
                         {{-- <input type="hidden" name="userId" id="userId" value="{{ $usuario->id }}"> --}}
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Nombre:<span>*</span></label></br>
                             <input type="text" class="inputCaja" id="nombre" name="nombre"
                                 value="{{ old('nombre') }}" required placeholder="Especifique...">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Categoría:
+                                <span>*</span></label></br>
+                            <select id="categoriaId" name="categoriaId" class="form-select" required
+                                aria-label="Default select example">
+                                <option value="">Seleccione</option>
+                                @foreach ($vctCategorias as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class=" col-12  mb-3 ">
@@ -163,23 +176,36 @@
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
 
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Ubicación de Tareas</label>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar puesto</label>
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('tareaUbicacion.update', 0) }}" method="post">
+                    <form class="row d-flex" action="{{ route('proveedor.update', 0) }}" method="post">
                         @csrf
                         @method('put')
                         <input type="hidden" name="controlId" id="controlId" value="">
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Nombre:</label></br>
-                            <input type="text" class="inputCaja" id="controlNombre" name="nombre" value="">
+                            <input type="text" class="inputCaja" id="puestoNombre" name="nombre" value="">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
+                            <label class="labelTitulo">Categoría: <span>*</span></label></br>
+                            <select id="editPuestoNivelId" name="categoriaId" class="form-select" required
+                                aria-label="Default select example">
+                                <option value="">Seleccione</option>
+                                @foreach ($vctCategorias as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
-                            <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="controlComentarios" name="comentario"></textarea>
+                            <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="puestoComentarios" name="comentario"></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -232,15 +258,17 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, asistencia, caja, comentarios) {
+        function cargaItem(id, nombre, nivel, comentarios) {
 
             const txtId = document.getElementById('controlId');
             txtId.value = id;
 
-            const txtNombre = document.getElementById('controlNombre');
+            const txtNombre = document.getElementById('puestoNombre');
             txtNombre.value = nombre;
 
-            const txtComentarios = document.getElementById('controlComentarios');
+            const lstNivel = document.getElementById('editPuestoNivelId').value = nivel;
+
+            const txtComentarios = document.getElementById('puestoComentarios');
             txtComentarios.value = comentarios;
 
         }

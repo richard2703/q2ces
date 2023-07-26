@@ -145,8 +145,8 @@
                                 value="{{ old('nombre') }}" required placeholder="Especifique...">
                         </div>
 
-                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                            <label class="labelTitulo">Requiere asistencia:</label></br>
+                        <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
+                            <label class="labelTitulo">Requiere Registrar Asistencia:</label></br>
                             <select class="form-select" aria-label="Default select example" id="requiereAsistencia"
                                 name="requiereAsistencia">
                                 <option value=0>No</option>
@@ -154,8 +154,8 @@
                             </select>
                         </div>
 
-                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                            <label class="labelTitulo">Requiere uso caja chica:</label></br>
+                        <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
+                            <label class="labelTitulo">Requiere Uso Caja Chica:</label></br>
                             <select class="form-select" aria-label="Default select example" id="usaCajaChica"
                                 name="usaCajaChica">
                                 <option value=0>No</option>
@@ -199,8 +199,8 @@
                             <input type="text" class="inputCaja" id="puestoNombre" name="nombre" value="">
                         </div>
 
-                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                            <label class="labelTitulo">Requiere asistencia:</label></br>
+                        <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
+                            <label class="labelTitulo">Requiere Registrar Asistencia:</label></br>
                             <select class="form-select" aria-label="Default select example" id="puestoRequiereAsistencia"
                                 name="requiereAsistencia">
                                 <option value=0>No</option>
@@ -208,8 +208,8 @@
                             </select>
                         </div>
 
-                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                            <label class="labelTitulo">Requiere asistencia:</label></br>
+                        <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
+                            <label class="labelTitulo">Requiere Uso Caja Chica:</label></br>
                             <select class="form-select" aria-label="Default select example" id="puestoUsaCajaChica"
                                 name="usaCajaChica">
                                 <option value=0>No</option>

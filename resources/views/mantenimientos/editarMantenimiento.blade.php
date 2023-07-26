@@ -22,7 +22,7 @@
                                 <div class="card-header bacTituloPrincipal">
                                     <h4 class="card-title">Editar Registro de Mantenimiento</h4>
                                 </div>
-                                
+
                                 <div class="col-12 col-md-2 mt-4" style="margin-left:20px">
                                         <a href="{{ route('mantenimientos.index') }}">
                                             <button class="btn regresar">
@@ -35,8 +35,8 @@
                                     </div>
                                     <div class="d-flex p-3 divBorder w-100" style="margin-top:-10px"></div>
                                 <div class="card-body ">
-                                    
-                                    
+
+
                                     <form class="row alertaGuardar"
                                         action="{{ route('mantenimientos.update', $mantenimiento->id) }}" method="post"
                                         enctype="multipart/form-data">
@@ -57,7 +57,7 @@
 
 
                                                 <div class=" col-12 col-sm-6 col-lg-12 my-3 ">
-                                                    <label class="labelTitulo">Descripción del mantenimiento:
+                                                    <label class="labelTitulo">Descripción del Mantenimiento:
                                                         <span>*</span></label></br>
                                                     <textarea rows="2" cols="80" class="form-control" id="titulo" name="titulo" required readonly>{{ $mantenimiento->titulo }}</textarea>
                                                 </div>
@@ -123,12 +123,12 @@
                                                         value="{{ $mantenimiento->personaId }}"
                                                         placeholder="Especifique..." class="inputCaja">
                                                 </div>
-                                                <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
+                                                {{-- <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
                                                     <label class="labelTitulo">Adscripción:</label></br><input
                                                         id="adscripcion" name="adscripcion" type="text"  {{ ($mantenimiento->estadoId < 3? '': 'disabled="false"')}}
                                                         value="{{ $mantenimiento->adcripcion }}"
                                                         placeholder="Especifique..." class="inputCaja">
-                                                </div>
+                                                </div> --}}
                                                 <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
                                                     <label class="labelTitulo">Horómetro: </label></br>
                                                     <input type="number" class="inputCaja text-end"  {{ ($mantenimiento->estadoId < 3? '': 'disabled="false"')}}
@@ -184,7 +184,7 @@
                                             </div>
 
                                             <div class="my-4 divBorder">
-                                                <h3 class="subEncabezado mb-3">Listado de refacciones</h3>
+                                                <h3 class="subEncabezado mb-3">Listado de Refacciones</h3>
                                             </div>
                                         @endif
                                         <div class=" col-12  my-3 ">
