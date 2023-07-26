@@ -13,6 +13,6 @@ class docs extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'nombre',  'comentario', 'tipoId' 
+        'nombre',  'comentario', 'tipoId'
     ];
 }

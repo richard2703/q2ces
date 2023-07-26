@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\docs;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\tiposDocs;
 
 class docsController extends Controller
 {
@@ -15,8 +16,17 @@ class docsController extends Controller
      */
     public function index()
     {
-        dd( 'test docs' );
-        return view('docs.indexDocs');
+        //$docs = docs::orderBy('created_at', 'desc')->paginate(5);
+
+        $docs = docs::join('tiposDocs', 'docs.tipoId', 'tiposDocs.id')
+        ->select(
+            'docs.id',
+            'docs.nombre',
+            'tiposDocs.nombre as nombreTipo',
+            'docs.comentario'
+        )->orderBy('docs.created_at', 'desc')->paginate(5);
+        // dd($docs);
+        return view('docs.indexDocs', compact('docs'));
     }
 
     /**
@@ -26,7 +36,9 @@ class docsController extends Controller
      */
     public function create()
     {
-        //
+        $tiposDocs = tiposDocs::all();
+        
+        return view('docs.createDocs', compact('tiposDocs'));
     }
 
     /**
@@ -37,7 +49,9 @@ class docsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $docs = $request->all();
+        $docs = docs::create($docs);
+        return redirect()->action([docsController::class, 'index']);
     }
 
     /**
@@ -57,9 +71,11 @@ class docsController extends Controller
      * @param  \App\Models\docs  $docs
      * @return \Illuminate\Http\Response
      */
-    public function edit(docs $docs)
+    public function edit(docs $doc)
     {
-        //
+        //dd($doc);
+        $tiposDocs = tiposDocs::all();
+        return view('docs.editDocs', compact('doc','tiposDocs'));
     }
 
     /**
@@ -69,9 +85,13 @@ class docsController extends Controller
      * @param  \App\Models\docs  $docs
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, docs $docs)
+    public function update(Request $request, docs $doc)
     {
-        //
+        
+        $data = $request->all();
+        //dd($data);
+        $doc->update($data);
+        return redirect()->action([docsController::class, 'index']);
     }
 
     /**
