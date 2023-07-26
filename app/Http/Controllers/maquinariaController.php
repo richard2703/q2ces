@@ -6,6 +6,7 @@ use App\Models\maquinaria;
 use App\Models\maqdocs;
 use App\Models\maqimagen;
 use App\Models\bitacoras;
+use App\Models\docs;
 use App\Models\maquinariaEstatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -23,7 +24,7 @@ class maquinariaController extends Controller
     public function index()
     {
         abort_if(Gate::denies('maquinaria_index'), 403);
-
+        
         $maquinaria = maquinaria::whereNull('compania')->paginate(15);
         // dd( 'test' );
         return view('maquinaria.indexMaquinaria', compact('maquinaria'));
@@ -38,9 +39,11 @@ class maquinariaController extends Controller
     public function create()
     {
         abort_if(Gate::denies('maquinaria_create'), 403);
+        $doc = docs::where('tipoId', '2')->get();
+
         $bitacora = bitacoras::all();
 
-        return view('maquinaria.altaDeMaquinaria', compact('bitacora'));
+        return view('maquinaria.altaDeMaquinaria', compact('bitacora','doc'));
     }
 
     /**
