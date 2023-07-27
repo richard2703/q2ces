@@ -101,14 +101,27 @@
 
                                                     <div class="col-12 col-lg-8">
                                                         <div class="row alin"> 
-                                                            <div class=" col-12 col-sm-6  mb-3 ">
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Equipo:</label></br>
                                                                 <input type="text" class="inputCaja" id="nombre"
                                                                     placeholder="Especifique..." required name="nombre"
                                                                     value="{{ $maquinaria->nombre }}">
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6  mb-3 ">
+                                                            <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                                <label class="labelTitulo">Bitacora:</label></br>
+                                                                <select id="bitacoraId" name="bitacoraId"
+                                                                    class="form-select" aria-label="Default select example">
+                                                                    <option value="">Seleccione</option>
+                                                                    @foreach ($bitacora as $item)
+                                                                        <option value="{{ $item->id }}" {{ $item->id == $maquinaria->bitacoraId ? ' selected' : '' }}>
+                                                                            {{ $item->nombre }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Marca:</label></br>
                                                                 <input type="text" class="inputCaja" id="marca"
                                                                     placeholder="Especifique..." name="marca"

@@ -56,7 +56,6 @@ class maquinariaController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('maquinaria_create'), 403);
-
         $request->validate([
             'nombre' => 'required|max:250',
             'identificador' => 'required|max:8',
@@ -255,12 +254,13 @@ class maquinariaController extends Controller
     public function show(maquinaria $maquinaria)
     {
         abort_if(Gate::denies('maquinaria_show'), 403);
-
+        
+        $bitacora = bitacoras::all();
         $docs = maqdocs::where('maquinariaId', $maquinaria->id)->get();
         $fotos = maqimagen::where('maquinariaId', $maquinaria->id)->get();
         $vctEstatus = maquinariaEstatus::all();
         // dd( $docs );
-        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'docs', 'fotos', 'vctEstatus'));
+        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'docs', 'fotos', 'bitacora', 'vctEstatus'));
     }
 
     /**
@@ -272,9 +272,9 @@ class maquinariaController extends Controller
 
     public function edit(maquinaria $maquinaria)
     {
-        dd($maquinaria);
-        // $docs = maqdocs::where( 'maquinariaId', $maquinaria->id )->first();
-        // return view( 'maquinaria.detalleMaquinaria', compact( 'maquinaria', 'docs' ) );
+        $bitacora = bitacoras::all();
+        $docs = maqdocs::where( 'maquinariaId', $maquinaria->id )->first();
+        return view( 'maquinaria.detalleMaquinaria', compact( 'maquinaria', 'bitacora','docs'));
     }
 
     /**
