@@ -56,6 +56,7 @@ class maquinariaController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->archivo);
         abort_if(Gate::denies('maquinaria_create'), 403);
         // $request->validate([
         //     'nombre' => 'required|max:250',
@@ -151,7 +152,7 @@ class maquinariaController extends Controller
         for ($i = 0; $i < count($request->tipoDocs); $i++) {
             $documento = new maqdocs();
             $documento->maquinariaId = $maquinaria->id;
-            $tipoDocumento = $request->tipoDocs[$i]; // Obtenemos el tipo de documento
+            $tipoDocumento = $request->tipoDocs[$i];
         
             if (strpos($tipoDocumento, '-0') !== false) {
                 $documento->tipo = substr($tipoDocumento, 0, -2);
