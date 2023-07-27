@@ -320,32 +320,32 @@
                                                             </div>
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                                                            <label class="labelTitulo">Filtro Aceite:</label></br>
-                                                                                                            <input type="number" class="inputCaja" id="filtroaceite"
-                                                                                                                name="filtroaceite" placeholder="Cantidad"
-                                                                                                                value="{{ old('filtroaceite') }}">
-                                                                                                        </div>-->
+                                                                                                                                                                                                                            <label class="labelTitulo">Filtro Aceite:</label></br>
+                                                                                                                                                                                                                            <input type="number" class="inputCaja" id="filtroaceite"
+                                                                                                                                                                                                                                name="filtroaceite" placeholder="Cantidad"
+                                                                                                                                                                                                                                value="{{ old('filtroaceite') }}">
+                                                                                                                                                                                                                        </div>-->
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                                                            <label class="labelTitulo">Filtro Aire:</label></br>
-                                                                                                            <input type="number" class="inputCaja" id="filtroaire"
-                                                                                                                placeholder="Cantidad" name="filtroaire"
-                                                                                                                value="{{ old('filtroaire') }}">
-                                                                                                        </div>-->
+                                                                                                                                                                                                                            <label class="labelTitulo">Filtro Aire:</label></br>
+                                                                                                                                                                                                                            <input type="number" class="inputCaja" id="filtroaire"
+                                                                                                                                                                                                                                placeholder="Cantidad" name="filtroaire"
+                                                                                                                                                                                                                                value="{{ old('filtroaire') }}">
+                                                                                                                                                                                                                        </div>-->
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                                                            <label class="labelTitulo">Bujías:</label></br>
-                                                                                                            <input type="number" class="inputCaja" id="bujias"
-                                                                                                                placeholder="Cantidad" name="bujias"
-                                                                                                                value="{{ old('bujias') }}">
-                                                                                                        </div>-->
+                                                                                                                                                                                                                            <label class="labelTitulo">Bujías:</label></br>
+                                                                                                                                                                                                                            <input type="number" class="inputCaja" id="bujias"
+                                                                                                                                                                                                                                placeholder="Cantidad" name="bujias"
+                                                                                                                                                                                                                                value="{{ old('bujias') }}">
+                                                                                                                                                                                                                        </div>-->
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                                                            <label class="labelTitulo">Tipo de Bujías:</label></br>
-                                                                                                            <input type="text" class="inputCaja" id="tipobujia"
-                                                                                                                placeholder="Especifique..." name="tipobujia"
-                                                                                                                value="{{ old('tipobujia') }}">
-                                                                                                        </div>-->
+                                                                                                                                                                                                                            <label class="labelTitulo">Tipo de Bujías:</label></br>
+                                                                                                                                                                                                                            <input type="text" class="inputCaja" id="tipobujia"
+                                                                                                                                                                                                                                placeholder="Especifique..." name="tipobujia"
+                                                                                                                                                                                                                                value="{{ old('tipobujia') }}">
+                                                                                                                                                                                                                        </div>-->
 
                                                             <div class="col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Horómetro Inicial:</label></br>
@@ -494,14 +494,13 @@
                                                                     <div
                                                                         class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
                                                                         <input type="hidden" id='{{ $item->nombre }}'
-                                                                            name='{{ $item->nombre }}'
+                                                                            name='tipoDocs[]'
                                                                             value='{{ $item->id }}'>
                                                                         <label class="custom-file-upload"
-                                                                            onclick="handleDocumento('{{ $item->id }}')">
+                                                                            onclick='handleDocumento("{{ $item->id }}","{{ $item->nombre }}")'>
                                                                             <input class="mb-4" type="file"
-                                                                                name='{{ $item->id }}'
-                                                                                id='{{ $item->id }}'
-                                                                                accept=".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, .txt, .csv, .rtf, .odt, .odp, .ods">
+                                                                                name='docs[]' id='{{ $item->id }}'
+                                                                                accept=".pdf">
                                                                             <div id='iconContainer{{ $item->id }}'>
                                                                                 <lord-icon
                                                                                     src="https://cdn.lordicon.com/koyivthb.json"
@@ -528,17 +527,17 @@
                                                                         <!-- Botón Omitir -->
                                                                         <button id='omitirButton{{ $item->id }}'
                                                                             class="btnSinFondo float-end mt-3"
-                                                                            style="margin-left: 20px" type="submit"
-                                                                            rel="tooltip"
-                                                                            onclick='omitir({{ $item->id }})'>
+                                                                            style="margin-left: 20px" rel="tooltip"
+                                                                            type="button"
+                                                                            onclick='omitir("{{ $item->id }}","{{ $item->nombre }}")'>
                                                                             <P class="fs-5"> Omitir</P>
                                                                         </button>
                                                                         <button
                                                                             id='cancelarOmitirButton{{ $item->id }}'
                                                                             class="btnSinFondo float-end mt-3"
                                                                             style="margin-left: 20px; display: none;"
-                                                                            type="submit" rel="tooltip"
-                                                                            onclick='cancelarOmitir({{ $item->id }})'>
+                                                                            rel="tooltip"
+                                                                            onclick='cancelarOmitir("{{ $item->id }}","{{ $item->nombre }}")'>
                                                                             <P class="fs-5"> Cancelar</P>
                                                                         </button>
                                                                         <div class="text-center"
@@ -585,9 +584,10 @@
     </div>
 
     <script>
-        function omitir(id) {
+        function omitir(id, nombre) {
             // Obtener el input del archivo y el contenedor del icono
             var facturaInput = document.getElementById(id);
+            var nullInput = document.getElementById(nombre);
             var iconContainer = document.getElementById("iconContainer" + id);
             var omitirFacturaButton = document.getElementById("omitirButton" + id);
             var cancelarOmitirButton = document.getElementById("cancelarOmitirButton" + id);
@@ -603,6 +603,7 @@
 
             // Cambiar el valor del input a 1
             facturaInput.value = "";
+            nullInput.value = id + '-0'
 
             // Cambiar el icono en el contenedor
             iconContainer.innerHTML =
@@ -613,10 +614,11 @@
             cancelarOmitirButton.style.display = "block";
         }
 
-        function cancelarOmitir(id) {
+        function cancelarOmitir(id, nombre) {
 
             // Obtener el input del archivo y el contenedor del icono
             var facturaInput = document.getElementById(id);
+            var nullInput = document.getElementById(nombre);
             var iconContainer = document.getElementById("iconContainer" + id);
             var omitirFacturaButton = document.getElementById("omitirButton" + id);
             var cancelarOmitirButton = document.getElementById("cancelarOmitirButton" + id);
@@ -630,6 +632,7 @@
 
             // Restaurar el valor del input a su estado original (vacío)
             facturaInput.value = "";
+            nullInput.value = id
 
             // Restaurar el icono original en el contenedor
             iconContainer.innerHTML =
@@ -640,10 +643,11 @@
             cancelarOmitirButton.style.display = "none";
         }
 
-        function handleDocumento(id) {
+        function handleDocumento(id, nombre) {
             let alertShown = true;
             // Resto del código que utilizas para manejar los eventos, pero ahora con el ID proporcionado
             var facturaInput = document.getElementById(id);
+            var nullInput = document.getElementById(nombre);
             var downloadFacturaButton = document.getElementById("downloadButton" + id);
             var removeFacturaButton = document.getElementById("removeButton" + id);
             var omitirFacturaButton = document.getElementById("omitirButton" + id);
@@ -683,6 +687,7 @@
                     removeFacturaButton.style.display = "block";
                     omitirFacturaButton.style.display = "none";
                     cancelarOmitirButton.style.display = "none";
+                    nullInput.value = id + '-1';
                     alertShown = false;
                     iconContainer.innerHTML =
                         '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
@@ -704,6 +709,7 @@
                 removeFacturaButton.style.display = "none";
                 omitirFacturaButton.style.display = "block";
                 cancelarOmitirButton.style.display = "none";
+                nullInput.value = id;
                 alertShown = true;
                 iconContainer.innerHTML =
                     '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
