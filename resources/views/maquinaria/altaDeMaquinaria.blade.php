@@ -367,12 +367,12 @@
                                                                     name="cisternaNivel" value="0">
                                                             </div>
 
-                                                            <div class="col-12 col-lg-3 col-xl-4  mb-3">
+                                                            <div class="col-12 col-lg-4 col-xl-5  mb-3">
                                                                 <div class="row align-items-end">
                                                                     <label class="labelTitulo">Kilometraje / Millaje
                                                                         Inicial:</label></br>
                                                                     <div
-                                                                        class="col-7 col-md-6 col-lg-4 col-xl-7 inputNumberKilometraje">
+                                                                        class="col-6 col-md-6 col-lg-4 col-xl-7 inputNumberKilometraje">
 
                                                                         <input type="number" class="inputCaja"
                                                                             id="kilometraje" name="kilometraje"
@@ -380,7 +380,7 @@
                                                                             value="{{ old('kilometraje') }}">
 
                                                                     </div>
-                                                                    <div class="col-5 col-md-6 col-lg-4 inputKilometraje">
+                                                                    <div class="col-12 col-md-6 col-lg-4 inputKilometraje">
                                                                         <select class="form-select"
                                                                             aria-label="Default select example"
                                                                             name="kom">
@@ -481,8 +481,8 @@
                                                     @foreach ($doc as $item)
                                                         <div
                                                             class="card-group col-12 col-md-6 col-lg-4 col-xl-3 small-card-date my-1">
-                                                            <div class=" card">
-                                                                <div class="card-body ">
+                                                            <div class="card border-green">
+                                                                <div class="card-body">
                                                                     <div>
                                                                         <label
                                                                             class="form-check-label text-start fs-5 textTitulo text-break mb-2"
@@ -557,7 +557,7 @@
                                                                                     class="text-start fs-5 textTitulo text-break mb-2"
                                                                                     style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
                                                                                 <textarea class="form-control-textarea inputCaja" rows="1" maxlength="1000"
-                                                                                    name='comentario{{ $item->id }}' placeholder="Tipo De Permiso etc."></textarea>
+                                                                                    name='comentario{{ $item->id }}' placeholder="Escribe Un Comentario"></textarea>
                                                                             </div>
                                                                         </div>
                                                                     </div>
