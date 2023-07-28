@@ -178,6 +178,14 @@
                     <div class="collapse " id="bitacoras">
                         <ul class="nav">
 
+                            @can('checkList_show')
+                                <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                                    <a class="nav-link py-2 ps-5" href="{{ url('/checkList') }}">
+                                        <span class="sidebar-normal py-2 ps-5"> {{ __('Ver CheckList') }} </span>
+                                    </a
+                                </li>
+                            @endcan
+
                             @can('bitacora_show')
                                 <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
                                     <a class="nav-link py-2 ps-5" href="{{ url('/bitacoras') }}">

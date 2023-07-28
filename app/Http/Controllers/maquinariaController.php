@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use PhpParser\Node\Stmt\Switch_;
 use Illuminate\Support\Facades\Gate;
+use LengthException;
 
 class maquinariaController extends Controller
 {
@@ -24,7 +25,7 @@ class maquinariaController extends Controller
     public function index()
     {
         abort_if(Gate::denies('maquinaria_index'), 403);
-        
+
         $maquinaria = maquinaria::whereNull('compania')->paginate(15);
         // dd( 'test' );
         return view('maquinaria.indexMaquinaria', compact('maquinaria'));
@@ -43,7 +44,7 @@ class maquinariaController extends Controller
 
         $bitacora = bitacoras::all();
 
-        return view('maquinaria.altaDeMaquinaria', compact('bitacora','doc'));
+        return view('maquinaria.altaDeMaquinaria', compact('bitacora', 'doc'));
     }
 
     /**
@@ -55,96 +56,132 @@ class maquinariaController extends Controller
 
     public function store(Request $request)
     {
+        dd($request);
         abort_if(Gate::denies('maquinaria_create'), 403);
-
-        $request->validate([
-            'nombre' => 'required|max:250',
-            'identificador' => 'required|max:8',
-            'marca' => 'required|max:250',
-            'modelo' => 'required|max:250',
-            'horometro' => 'nullable|numeric',
-            'kilometraje' => 'nullable|numeric',
-            'submarca' => 'nullable|max:200',
-            'categoria' => 'required|max:200',
-            'ano' => 'nullable|max:9999|numeric',
-            'color' => 'nullable|max:200',
-            'placas' => 'nullable|max:200',
-            'motor' => 'nullable|max:200',
-            'nummotor' => 'nullable|max:200',
-            'numserie' => 'nullable|max:200',
-            'vin' => 'nullable|max:200',
-            'combustible' => 'nullable|max:200',
-            'capacidad' => 'nullable|numeric',
-            'tanque' => 'nullable|numeric',
-            'ejes' => 'nullable|numeric',
-            'rinD' => 'nullable|numeric',
-            'rinT' => 'nullable|numeric',
-            'llantaD' => 'nullable|numeric',
-            'llantaT' => 'nullable|numeric',
-            'aceitemotor' => 'nullable|numeric',
-            'aceitetras' => 'nullable|numeric',
-            'aceitehidra' => 'nullable|numeric',
-            'aceitedirec' => 'nullable|numeric',
-            'filtroaceite' => 'nullable|numeric',
-            'filtroaire' => 'nullable|numeric',
-            'bujias' => 'nullable|numeric',
-            'tipobujia' => 'nullable|max:200',
-        ], [
-            'nombre.required' => 'El campo nombre es obligatorio.',
-            'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
-            'identificador.required' => 'El campo identificador es obligatorio.',
-            'identificador.max' => 'El campo identificador excede el límite de caracteres permitidos.',
-            'marca.required' => 'El campo marca es obligatorio.',
-            'marca.max' => 'El campo marca excede el límite de caracteres permitidos.',
-            'modelo.required' => 'El campo modelo es obligatorio.',
-            'modelo.max' => 'El campo modelo excede el límite de caracteres permitidos.',
-            'horometro.numeric' => 'El campo horómetro debe de ser numérico.',
-            'kilometraje.numeric' => 'El campo kilometraje debe de ser numérico.',
-            'submarca.max' => 'El campo submarca excede el límite de caracteres permitidos.',
-            'categoria.required' => 'El campo categoria es obligatorio.',
-            'ano.numeric' => 'El campo año debe ser numérico.',
-            'ano.max' => 'El campo serie excede el límite de caracteres permitidos.',
-            'color.max' => 'El campo color excede el límite de caracteres permitidos.',
-            'placas.max' => 'El campo placas excede el límite de caracteres permitidos.',
-            'motor.max' => 'El campo motor excede el límite de caracteres permitidos.',
-            'nummotor.max' => 'El número de motor placas excede el límite de caracteres permitidos.',
-            'numserie.max' => 'El número de serie placas excede el límite de caracteres permitidos.',
-            'vin.max' => 'El campo VIN excede el límite de caracteres permitidos.',
-            'combustible.max' => 'El campo combustible excede el límite de caracteres permitidos.',
-            'capacidad.numeric' => 'El campo capacidad debe ser numérico.',
-            'tanque.numeric' => 'El campo tanque debe ser numérico.',
-            'ejes.numeric' => 'El campo ejes debe ser numérico.',
-            'rinD.numeric' => 'El campo rin delatero debe ser numérico.',
-            'rinT.numeric' => 'El campo rin trasero debe ser numérico.',
-            'llantaD.numeric' => 'El campo llanta delantera debe ser numérico.',
-            'llantaT.numeric' => 'El campo llanta trasera debe ser numérico.',
-            'aceitemotor.numeric' => 'El campo aceite de motor debe ser numérico.',
-            'aceitetras.numeric' => 'El campo aceite de transmisión debe ser numérico.',
-            'aceitehidra.numeric' => 'El campo aceite hidráulico debe ser numérico.',
-            'aceitedirec.numeric' => 'El campo aceite de dirección debe ser numérico.',
-            'filtroaceite.numeric' => 'El campo filtro de aceite debe ser numérico.',
-            'filtroaire.numeric' => 'El campo filtro de aire debe ser numérico.',
-            'bujias.numeric' => 'El campo bujias trasera debe ser numérico.',
-            'tipobujia.max' => 'El campo tipo de bujía excede el límite de caracteres permitidos.',
-        ]);
+        // $request->validate([
+        //     'nombre' => 'required|max:250',
+        //     'identificador' => 'required|max:8',
+        //     'marca' => 'required|max:250',
+        //     'modelo' => 'required|max:250',
+        //     'horometro' => 'nullable|numeric',
+        //     'kilometraje' => 'nullable|numeric',
+        //     'submarca' => 'nullable|max:200',
+        //     'categoria' => 'required|max:200',
+        //     'ano' => 'nullable|max:9999|numeric',
+        //     'color' => 'nullable|max:200',
+        //     'placas' => 'nullable|max:200',
+        //     'motor' => 'nullable|max:200',
+        //     'nummotor' => 'nullable|max:200',
+        //     'numserie' => 'nullable|max:200',
+        //     'vin' => 'nullable|max:200',
+        //     'combustible' => 'nullable|max:200',
+        //     'capacidad' => 'nullable|numeric',
+        //     'tanque' => 'nullable|numeric',
+        //     'ejes' => 'nullable|numeric',
+        //     'rinD' => 'nullable|numeric',
+        //     'rinT' => 'nullable|numeric',
+        //     'llantaD' => 'nullable|numeric',
+        //     'llantaT' => 'nullable|numeric',
+        //     'aceitemotor' => 'nullable|numeric',
+        //     'aceitetras' => 'nullable|numeric',
+        //     'aceitehidra' => 'nullable|numeric',
+        //     'aceitedirec' => 'nullable|numeric',
+        //     'filtroaceite' => 'nullable|numeric',
+        //     'filtroaire' => 'nullable|numeric',
+        //     'bujias' => 'nullable|numeric',
+        //     'tipobujia' => 'nullable|max:200',
+        // ], [
+        //     'nombre.required' => 'El campo nombre es obligatorio.',
+        //     'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
+        //     'identificador.required' => 'El campo identificador es obligatorio.',
+        //     'identificador.max' => 'El campo identificador excede el límite de caracteres permitidos.',
+        //     'marca.required' => 'El campo marca es obligatorio.',
+        //     'marca.max' => 'El campo marca excede el límite de caracteres permitidos.',
+        //     'modelo.required' => 'El campo modelo es obligatorio.',
+        //     'modelo.max' => 'El campo modelo excede el límite de caracteres permitidos.',
+        //     'horometro.numeric' => 'El campo horómetro debe de ser numérico.',
+        //     'kilometraje.numeric' => 'El campo kilometraje debe de ser numérico.',
+        //     'submarca.max' => 'El campo submarca excede el límite de caracteres permitidos.',
+        //     'categoria.required' => 'El campo categoria es obligatorio.',
+        //     'ano.numeric' => 'El campo año debe ser numérico.',
+        //     'ano.max' => 'El campo serie excede el límite de caracteres permitidos.',
+        //     'color.max' => 'El campo color excede el límite de caracteres permitidos.',
+        //     'placas.max' => 'El campo placas excede el límite de caracteres permitidos.',
+        //     'motor.max' => 'El campo motor excede el límite de caracteres permitidos.',
+        //     'nummotor.max' => 'El número de motor placas excede el límite de caracteres permitidos.',
+        //     'numserie.max' => 'El número de serie placas excede el límite de caracteres permitidos.',
+        //     'vin.max' => 'El campo VIN excede el límite de caracteres permitidos.',
+        //     'combustible.max' => 'El campo combustible excede el límite de caracteres permitidos.',
+        //     'capacidad.numeric' => 'El campo capacidad debe ser numérico.',
+        //     'tanque.numeric' => 'El campo tanque debe ser numérico.',
+        //     'ejes.numeric' => 'El campo ejes debe ser numérico.',
+        //     'rinD.numeric' => 'El campo rin delatero debe ser numérico.',
+        //     'rinT.numeric' => 'El campo rin trasero debe ser numérico.',
+        //     'llantaD.numeric' => 'El campo llanta delantera debe ser numérico.',
+        //     'llantaT.numeric' => 'El campo llanta trasera debe ser numérico.',
+        //     'aceitemotor.numeric' => 'El campo aceite de motor debe ser numérico.',
+        //     'aceitetras.numeric' => 'El campo aceite de transmisión debe ser numérico.',
+        //     'aceitehidra.numeric' => 'El campo aceite hidráulico debe ser numérico.',
+        //     'aceitedirec.numeric' => 'El campo aceite de dirección debe ser numérico.',
+        //     'filtroaceite.numeric' => 'El campo filtro de aceite debe ser numérico.',
+        //     'filtroaire.numeric' => 'El campo filtro de aire debe ser numérico.',
+        //     'bujias.numeric' => 'El campo bujias trasera debe ser numérico.',
+        //     'tipobujia.max' => 'El campo tipo de bujía excede el límite de caracteres permitidos.',
+        // ]);
 
         $maquinaria = $request->all();
 
         //** Generamos el identificador de la maquinaria */
-        // $maquinaria[ 'identificador' ] = $this->generaCodigoIdentificacion( $maquinaria[ 'categoria' ] );
+        $maquinaria[ 'identificador' ] = $this->generaCodigoIdentificacion( $maquinaria[ 'categoria' ] );
         $maquinaria['estatusId'] = 1;
         // dd( $maquinaria[ 'identificador' ] );
 
         /*** directorio contenedor de su información */
         $pathMaquinaria = str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT);
-        
+
+
         $maquinaria['placas'] = strtoupper($maquinaria['placas']);
         $maquinaria['nummotor'] = strtoupper($maquinaria['nummotor']);
         $maquinaria['numserie'] = strtoupper($maquinaria['numserie']);
 
         //*** se guarda la maquinaria */
         $maquinaria = maquinaria::create($maquinaria);
-        
+        $cont = 0;
+        // dd($request->docs[$cont]);
+        for ($i = 0; $i < count($request->tipoDocs); $i++) {
+            // if (strpos($request->tipoDocs[$i], '-0') == true) {
+            //     dd(substr($request->tipoDocs[$i], 0, -2));
+
+            //     // dd($request->docs, $request->tipoDocs);
+            //     $objFactura = new maqdocs();
+            //     $objFactura->maquinariaId = $maquinaria->id;
+            //     $objFactura->tipo = substr($request->tipoDocs[$i], 0, -2);
+            //     $objFactura->estatus = 'omitido';
+            //     $objFactura->save();
+            // }
+            if (strpos($request->tipoDocs[$i], '-1') == true) {
+                // dd(substr($request->tipoDocs[$i], 0, -2));
+                dd($request->hasFile($request->archivo[$cont]));
+                dd($request->docs, $request->tipoDocs);
+
+                if ($request->hasFile($request->docs[$cont])) {
+                    $objFactura = new maqdocs();
+                    $objFactura->maquinariaId = $maquinaria->id;
+                    // $objFactura->maquinariaId = 35;
+                    $objFactura->tipo = substr($request->tipoDocs[$i], 0, -2);
+                    $objFactura->estatus = 'activo';
+                    $objFactura->ruta = time() . '_' . $request->file($request->docs[$cont])->getClientOriginalName();
+                    $request->file($request->docs[$cont])->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos/' .  $objFactura->tipo, $objFactura->ruta);
+                    $objFactura->save();
+                    $cont = $cont + 1;
+                }
+
+            }else{
+                dd("No entre");
+
+            }
+            // dd("false");
+        }
 
         if ($request->hasFile('factura_ruta')) {
             $objFactura = new maqdocs();
@@ -256,11 +293,12 @@ class maquinariaController extends Controller
     {
         abort_if(Gate::denies('maquinaria_show'), 403);
 
+        $bitacora = bitacoras::all();
         $docs = maqdocs::where('maquinariaId', $maquinaria->id)->get();
         $fotos = maqimagen::where('maquinariaId', $maquinaria->id)->get();
         $vctEstatus = maquinariaEstatus::all();
         // dd( $docs );
-        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'docs', 'fotos', 'vctEstatus'));
+        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'docs', 'fotos', 'bitacora', 'vctEstatus'));
     }
 
     /**
@@ -272,9 +310,9 @@ class maquinariaController extends Controller
 
     public function edit(maquinaria $maquinaria)
     {
-        dd($maquinaria);
-        // $docs = maqdocs::where( 'maquinariaId', $maquinaria->id )->first();
-        // return view( 'maquinaria.detalleMaquinaria', compact( 'maquinaria', 'docs' ) );
+        $bitacora = bitacoras::all();
+        $docs = maqdocs::where( 'maquinariaId', $maquinaria->id )->first();
+        return view( 'maquinaria.detalleMaquinaria', compact( 'maquinaria', 'bitacora','docs'));
     }
 
     /**

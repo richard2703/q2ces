@@ -12,32 +12,32 @@
                 </ul>
             </div>
         @endif
-        
+
         <div class="container-fluid mb-2">
             <div class="row justify-content-center">
                 <div class="col-11 align-self-center">
                     <div class="col-12">
 
                         <div class="card-body contCart">
-                        <div class="text-left">
-                            <a href="{{ route('maquinaria.index') }}">
-                                <button class="btn regresar">
-                                    <span class="material-icons">
-                                        reply
-                                    </span>
-                                    Regresar
-                                </button>
-                            </a>
+                            <div class="text-left">
+                                <a href="{{ route('maquinaria.index') }}">
+                                    <button class="btn regresar">
+                                        <span class="material-icons">
+                                            reply
+                                        </span>
+                                        Regresar
+                                    </button>
+                                </a>
 
-                            <div class="col-8 text-end">
+                                <div class="col-8 text-end">
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-11 align-self-center">
@@ -65,50 +65,69 @@
                                                     <div class="col-12 col-lg-4  my-3">
                                                         <div class="row mb-5">
 
-                                                        <div class="col-12 contFotoMaquinaria" id="visor">
-                                                        @if (count($fotos) > 0)
-                                                        <button type="button" class="btn btn-secondary btn-sm buttonImage" onclick="deleteImage('{{$fotos[0]->id}}','{{ $fotos }}', (this));">X</button>
-                                                        @endif
-                                                        <img src="{{ empty($fotos[0]) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $fotos[0]->ruta) }}" class="mx-auto d-block img-fluid imgMaquinaria">
-                                                    </div>
-
-                                                        <div class="col-12 my-3 d-flex justify-content-around" id="selectores">
-                                                        @forelse ($fotos as $foto)
-                                                            <img onclick="abre(this)"
-                                                                title="'{{ $maquinaria->nombre }}'."
-                                                                src="{{ asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $foto->ruta) }}"
-                                                                class="img-fluid mb-5" id="{{$foto->id}}" style="margin-right:-20px;">
-                                                            <div class="form-group">
-                                                                <div class="col-md-8">
-                                                                <!--<button type="button" class="btn btn-secondary btn-sm buttonImage" onclick="esconde_div('{{ $foto->id }}','{{ $fotos }}', (this));">X</button>-->
-                                                                </div>
+                                                            <div class="col-12 contFotoMaquinaria" id="visor">
+                                                                @if (count($fotos) > 0)
+                                                                    <button type="button"
+                                                                        class="btn btn-secondary btn-sm buttonImage"
+                                                                        onclick="deleteImage('{{ $fotos[0]->id }}','{{ $fotos }}', (this));">X</button>
+                                                                @endif
+                                                                <img src="{{ empty($fotos[0]) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $fotos[0]->ruta) }}"
+                                                                    class="mx-auto d-block img-fluid imgMaquinaria">
                                                             </div>
-                                                        @empty
-                                                        @endforelse
-                                                        </div>
 
-                                                        @if (count($fotos) <= 3)
-                                                            <span class="mi-archivo"> <input class="mb-4 ver "
-                                                                    type="file" name="ruta[]" id="mi-archivo"
-                                                                    accept="image/*" multiple></span>
-                                                            <label for="mi-archivo">
-                                                                <span class="">sube imagen</span>
-                                                            </label>
-                                                        @endif
+                                                            <div class="col-12 my-3 d-flex justify-content-around"
+                                                                id="selectores">
+                                                                @forelse ($fotos as $foto)
+                                                                    <img onclick="abre(this)"
+                                                                        title="'{{ $maquinaria->nombre }}'."
+                                                                        src="{{ asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $foto->ruta) }}"
+                                                                        class="img-fluid mb-5" id="{{ $foto->id }}"
+                                                                        style="margin-right:-20px;">
+                                                                    <div class="form-group">
+                                                                        <div class="col-md-8">
+                                                                            <!--<button type="button" class="btn btn-secondary btn-sm buttonImage" onclick="esconde_div('{{ $foto->id }}','{{ $fotos }}', (this));">X</button>-->
+                                                                        </div>
+                                                                    </div>
+                                                                @empty
+                                                                @endforelse
+                                                            </div>
+
+                                                            @if (count($fotos) <= 3)
+                                                                <span class="mi-archivo"> <input class="mb-4 ver "
+                                                                        type="file" name="ruta[]" id="mi-archivo"
+                                                                        accept="image/*" multiple></span>
+                                                                <label for="mi-archivo">
+                                                                    <span class="">sube imagen</span>
+                                                                </label>
+                                                            @endif
                                                         </div>
 
                                                     </div>
 
                                                     <div class="col-12 col-lg-8">
-                                                        <div class="row alin"> 
-                                                            <div class=" col-12 col-sm-6  mb-3 ">
+                                                        <div class="row alin">
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Equipo:</label></br>
                                                                 <input type="text" class="inputCaja" id="nombre"
                                                                     placeholder="Especifique..." required name="nombre"
                                                                     value="{{ $maquinaria->nombre }}">
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6  mb-3 ">
+                                                            <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                                <label class="labelTitulo">Bitacora:</label></br>
+                                                                <select id="bitacoraId" name="bitacoraId"
+                                                                    class="form-select" aria-label="Default select example">
+                                                                    <option value="">Seleccione</option>
+                                                                    @foreach ($bitacora as $item)
+                                                                        <option value="{{ $item->id }}"
+                                                                            {{ $item->id == $maquinaria->bitacoraId ? ' selected' : '' }}>
+                                                                            {{ $item->nombre }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Marca:</label></br>
                                                                 <input type="text" class="inputCaja" id="marca"
                                                                     placeholder="Especifique..." name="marca"
@@ -304,22 +323,26 @@
                                                             </div>
 
                                                             <div class="col-12 col-sm-6 col-lg-4 mb-3">
-                                                            <label class="labelTitulo">Combustible*:</label></br>
-                                                            <select class="form-select"
-                                                                id="combustible" name="combustible">
-                                                                <option value="">Seleccione</option>
-                                                                <option value="Diesel"{{ $maquinaria->combustible == 'Diesel' ? ' selected' : '' }}>Diesel</option>
-                                                                <option value="Gasolina"{{ $maquinaria->combustible == 'Gasolina' ? ' selected' : '' }}>Gasolina</option>
-                                                            </select>
+                                                                <label class="labelTitulo">Combustible*:</label></br>
+                                                                <select class="form-select" id="combustible"
+                                                                    name="combustible">
+                                                                    <option value="">Seleccione</option>
+                                                                    <option
+                                                                        value="Diesel"{{ $maquinaria->combustible == 'Diesel' ? ' selected' : '' }}>
+                                                                        Diesel</option>
+                                                                    <option
+                                                                        value="Gasolina"{{ $maquinaria->combustible == 'Gasolina' ? ' selected' : '' }}>
+                                                                        Gasolina</option>
+                                                                </select>
                                                             </div>
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Combustible:</label></br>
-                                                                <input type="text" class="inputCaja" id="combustible"
-                                                                    name="combustible"
-                                                                    placeholder="Diesel / Gasolina / Especificar"
-                                                                    value="{{ $maquinaria->combustible }}">
-                                                            </div>-->
+                                                                    <label class="labelTitulo">Combustible:</label></br>
+                                                                    <input type="text" class="inputCaja" id="combustible"
+                                                                        name="combustible"
+                                                                        placeholder="Diesel / Gasolina / Especificar"
+                                                                        value="{{ $maquinaria->combustible }}">
+                                                                </div>-->
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Motor:</label></br>
@@ -373,10 +396,10 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4   mb-3 ">
                                                                 <div class="row align-items-end">
-                                                                <label class="labelTitulo">Kilometraje / Millaje
-                                                                            Inicial:</label></br>
-                                                                    <div class="col-7 inputNumberKilometrajeEdit" >
-                                                                        
+                                                                    <label class="labelTitulo">Kilometraje / Millaje
+                                                                        Inicial:</label></br>
+                                                                    <div class="col-7 inputNumberKilometrajeEdit">
+
                                                                         <input type="number" class="inputCaja"
                                                                             id="kilometraje" name="kilometraje"
                                                                             placeholder="Numérico"
@@ -430,51 +453,55 @@
                                                 </div>
                                                 <div class="row mt-3">
 
-                                                   <!-- FACTURA -->
+                                                    <!-- FACTURA -->
 
-                                                   <div class="col-12 col-md-4 col-lg-3">
-    <div class="card h-99 contDocumentos">
-        <div class="card-body m-2">
-            <div>
-                <label class="form-check-label text-start fs-5 textTitulo text-break mb-2" for="flexCheckDefault">
-                    {{-- <i class="fa  {{ $docs->factura != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i> --}}
-                    Factura
-                </label>
-            </div>
-            <div class="contIconosDocumentos d-flex flex-wrap align-items-end">
-                <button id="downloadButton" class="btn btn-primary" style="display: none">Descargar</button>
-                <label class="custom-file-upload">
-                    <ul>
-                        @forelse ($docs as $item)
-                            @if ($item->tipo == 'Factura')
-                                <li>
-                                    <a href="{{ route('maquinaria.download', [$item->id, 'factura']) }}"
-                                        class="document-link"
-                                        title="{{ $item->comentarios ? $item->comentarios : 'Sin comentarios' }}"
-                                        target="blank"
-                                    >
-                                        {{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('Y-m-d') : 'Sin comentarios' }}
-                                        <lord-icon
-                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                            trigger="hover"
-                                            colors="primary:#86c716,secondary:#e8e230"
-                                            stroke="65"
-                                            style="width:35px;height:45px"
-                                        ></lord-icon>
-                                    </a>
-                                </li>
-                            @endif
-                        @empty
-                            <li>
-                                <label>Sin documentos registrados.</label>
-                            </li>
-                        @endforelse
-                    </ul>
-                </label>
-            </div>
-        </div>
-    </div>
-</div>
+                                                    <div class="col-12 col-md-4 col-lg-3">
+                                                        <div class="card h-99 contDocumentos">
+                                                            <div class="card-body m-2">
+                                                                <div>
+                                                                    <label
+                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                        for="flexCheckDefault">
+                                                                        {{-- <i class="fa  {{ $docs->factura != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i> --}}
+                                                                        Factura
+                                                                    </label>
+                                                                </div>
+                                                                <div
+                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
+                                                                    <button id="downloadButton" class="btn btn-primary"
+                                                                        style="display: none">Descargar</button>
+                                                                    <label class="custom-file-upload">
+                                                                        <ul>
+                                                                            @forelse ($docs as $item)
+                                                                                @if ($item->tipo == 'Factura')
+                                                                                    <li>
+                                                                                        <a href="{{ route('maquinaria.download', [$item->id, 'factura']) }}"
+                                                                                            class="document-link"
+                                                                                            title="{{ $item->comentarios ? $item->comentarios : 'Sin comentarios' }}"
+                                                                                            target="blank">
+                                                                                            {{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('Y-m-d') : 'Sin comentarios' }}
+                                                                                            <lord-icon
+                                                                                                src="https://cdn.lordicon.com/tyounuzx.json"
+                                                                                                trigger="hover"
+                                                                                                colors="primary:#86c716,secondary:#e8e230"
+                                                                                                stroke="65"
+                                                                                                style="width:35px;height:45px">
+                                                                                            </lord-icon>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                @endif
+                                                                            @empty
+                                                                                <li>
+                                                                                    <label>Sin documentos
+                                                                                        registrados.</label>
+                                                                                </li>
+                                                                            @endforelse
+                                                                        </ul>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
 
 
@@ -1015,8 +1042,8 @@
                     placeholder="Descripción breve..."></textarea>
 
                 <label class="labelTitulo mt-3">Archivo: <span>*</span></label><br>
-                <input class="inputStyle d-block" type="file" name="ruta" id="ruta" accept=".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, .txt, .csv, .rtf, .odt, .odp, .ods"
-                required>
+                <input class="inputStyle d-block" type="file" name="ruta" id="ruta"
+                    accept=".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, .txt, .csv, .rtf, .odt, .odp, .ods" required>
 
 
                 <div class="modal-footer">
@@ -1060,8 +1087,8 @@
                 </select>
 
                 <label class="labelTitulo">Fecha de vencimiento:</label></br>
-                <input type="datetime" class="inputCaja" id="docFechaVencimiento" name="fechaVencimiento" pattern="\d{2}/\d{2}/\d{4}" placeholder="dd/mm/yyyy"
-                    value="">
+                <input type="datetime" class="inputCaja" id="docFechaVencimiento" name="fechaVencimiento"
+                    pattern="\d{2}/\d{2}/\d{4}" placeholder="dd/mm/yyyy" value="">
 
                 <label class="labelTitulo mt-3">Comentarios:</label></br>
                 <textarea class="col-12 inputCaja mb-3" id="docComentarios" name="comentarios" spellcheck="true"
@@ -1080,66 +1107,68 @@
 </div>
 <style>
     /* Macbook Pro / laptop */
-@media only screen and (min-width: 992px) and (max-width: 1440px){
-  /*ALta maquinaria*/
-  .inputNumberKilometrajeEdit{
-    width: 35%;
-  }
-  .inputKilometrajeEdit{
-    width: 65%;
-    font-size: 11px;
-  }
-}
+    @media only screen and (min-width: 992px) and (max-width: 1440px) {
+
+        /*ALta maquinaria*/
+        .inputNumberKilometrajeEdit {
+            width: 35%;
+        }
+
+        .inputKilometrajeEdit {
+            width: 65%;
+            font-size: 11px;
+        }
+    }
 </style>
 
 <script>
     function deleteImage(id, fotos, button) {
-    console.log('ID de imagen',id);
-    let jsonFotos = JSON.parse(fotos);
-    console.log('Fotos',jsonFotos);
-    var childDiv = document.getElementById('selectores').firstChild;
+        console.log('ID de imagen', id);
+        let jsonFotos = JSON.parse(fotos);
+        console.log('Fotos', jsonFotos);
+        var childDiv = document.getElementById('selectores').firstChild;
 
-    //var parentDiv = button.parentNode.parentNode.parentNode;
-    
-    var childDiv = button.parentNode.parentNode.parentNode;
+        //var parentDiv = button.parentNode.parentNode.parentNode;
 
-    // Modificar el selector para que coincida con la clase de la imagen
-    var imageElement = childDiv.querySelector("img.img-fluid");
-    var parentDivButton = button.parentNode.parentNode;
-    var imageId = imageElement.id;
-    console.log('imageElement',imageElement);
+        var childDiv = button.parentNode.parentNode.parentNode;
 
-    // Cambiar la imagen que se muestra
-    if (imageElement) {
-        
-    }
+        // Modificar el selector para que coincida con la clase de la imagen
+        var imageElement = childDiv.querySelector("img.img-fluid");
+        var parentDivButton = button.parentNode.parentNode;
+        var imageId = imageElement.id;
+        console.log('imageElement', imageElement);
+
+        // Cambiar la imagen que se muestra
+        if (imageElement) {
+
+        }
     }
 
     //let arrayFotos = JSON.parse(fotos);
-    function esconde_div(id, fotos, button){
-    console.log('ID de imagen',id);
-    
-    var parentDiv = button.parentNode.parentNode.parentNode;
-    // Modificar el selector para que coincida con la clase de la imagen
-    var imageElement = parentDiv.querySelector("img.img-fluid");
-    var parentDivButton = button.parentNode.parentNode;
-    var imageId = imageElement.id;
-    console.log('imageElement',imageElement);
-    // Eliminar el elemento de la imagen
-    if (imageElement && imageId == id) {
-        parentDiv.removeChild(imageElement);
-    }
-    var elemento = document.getElementById(id);
-    if (elemento) {
-        elemento.style.display = "none";
-    }
-    // Ocultar el elemento padre
-    parentDiv.style.display = "none";
-    parentDivButton.style.display = "none";
-    console.log('button',button);
+    function esconde_div(id, fotos, button) {
+        console.log('ID de imagen', id);
+
+        var parentDiv = button.parentNode.parentNode.parentNode;
+        // Modificar el selector para que coincida con la clase de la imagen
+        var imageElement = parentDiv.querySelector("img.img-fluid");
+        var parentDivButton = button.parentNode.parentNode;
+        var imageId = imageElement.id;
+        console.log('imageElement', imageElement);
+        // Eliminar el elemento de la imagen
+        if (imageElement && imageId == id) {
+            parentDiv.removeChild(imageElement);
+        }
+        var elemento = document.getElementById(id);
+        if (elemento) {
+            elemento.style.display = "none";
+        }
+        // Ocultar el elemento padre
+        parentDiv.style.display = "none";
+        parentDivButton.style.display = "none";
+        console.log('button', button);
 
     }
-     // $.ajax({
+    // $.ajax({
     //     type: 'put',
     //     url: '/maquinaria/imagen/delete',
     //     data: {
@@ -1186,7 +1215,7 @@
 
         //     document.getElementById('btnTareaGuardar').disabled = true;
 
-    // }
+        // }
     }
 </script>
 

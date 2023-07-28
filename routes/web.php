@@ -299,6 +299,10 @@ Route::group(['middleware' => 'auth'], function () {
     // Conceptos
     Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
 
+    //*** checklists */
+    Route::get('/checkList/', [App\Http\Controllers\checkListController::class, 'index'])->name('checkList.index');
+    Route::get('/checkList/registros/{id}', [App\Http\Controllers\checkListController::class, 'show'])->name('checkList.show');
+
     // Maquinaria MTQ
 
     Route::get('/dashMtq', function () {
@@ -356,22 +360,22 @@ Route::group(['middleware' => 'auth'], function () {
     // });
     Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
 
-    Route::get('/checkList', function () {
-        return view('checkList.checkList');
-    });
+    // Route::get('/checkList', function () {
+    //     return view('checkList.checkList');
+    // });
 
 
-    Route::get('/nuevoCheck', function () {
-        return view('checkList.nuevoCheck');
-    });
+    // Route::get('/nuevoCheck', function () {
+    //     return view('checkList.nuevoCheck');
+    // });
 
-    Route::get('/editarTareaCheck', function () {
-        return view('checkList.editarTareaCheck');
-    });
+    // Route::get('/editarTareaCheck', function () {
+    //     return view('checkList.editarTareaCheck');
+    // });
 
-    Route::get('/nuevaTareaCheck', function () {
-        return view('checkList.nuevaTareaCheck');
-    });
+    // Route::get('/nuevaTareaCheck', function () {
+    //     return view('checkList.nuevaTareaCheck');
+    // });
 
     //    Route::get('/indexBitacora', function () {
     //        return view('bitacora.indexBitacora');

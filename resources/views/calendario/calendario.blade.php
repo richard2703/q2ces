@@ -72,7 +72,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                                         <button type="button" class="botonSinFondo mx-2"title="Clic para marcar la asistencia en otro día."
                                                             data-bs-toggle="modal" data-bs-target="#modal-cliente">
                                                             <img style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}">
-                                                            <p class="botonTitulos mt-2">Otro día</p>
+                                                            <p class="botonTitulos mt-2">Otro Día</p>
                                                         </button>
                                                     </div>
                                                 </div>
@@ -855,7 +855,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                             </div>
 
                             <div class=" col-12 mb-3 ">
-                                <label class="labelTitulo">Maquinaria:</label></br>
+                                <label class="labelTitulo">Maquinaría:</label></br>
                                 <select class="form-select form-select-lg mb-3 inputCaja"  id="maquinariaId" name="maquinariaId"
                                     aria-label=".form-select-lg example">
                                     <option value="">Seleccione</option>
@@ -1351,7 +1351,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                             </div>
 
                             <div class=" col-12 mb-3 ">
-                                <label class="labelTitulo">Maquinaria:</label></br>
+                                <label class="labelTitulo">Maquinaría:</label></br>
                                 <select class="form-select form-select-lg mb-3 inputCaja"  id="maquinariaId" name="maquinariaId"
                                     aria-label=".form-select-lg example">
                                     <option value="">Seleccione</option>
@@ -1617,7 +1617,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
 
                             <div class=" col-12 mb-3 ">
                                 <div class="row">
-                                    <h4 class="labelTitulo mb-2">Funcionalidad sel Equipo</h4>
+                                    <h4 class="labelTitulo mb-2">Funcionalidad del Equipo</h4>
                                     <div class=" col-6  col-lg-3   d-flex mb-3">
                                         <input class="" type="radio" name="estado" id="estado">
                                         <div class=" ms-3">
@@ -1770,7 +1770,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                 <div class="nav-tabs-navigation">
                                     <div class="nav-tabs-wrapper">
                                         <span class="nav-tabs-title">
-                                            <h2 class="titulos">Seleccionar otro día</h2>
+                                            <h2 class="titulos">Seleccionar Otro Día</h2>
                                         </span>
                                     </div>
                                 </div>
