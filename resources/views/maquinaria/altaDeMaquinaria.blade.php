@@ -54,7 +54,7 @@
                                             <button class="accordion-button bacTituloPrincipal" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#datosPersonales"
                                                 aria-expanded="true" aria-controls="collapseOne">
-                                                Alta de Maquinaria
+                                                Alta De Maquinaria
                                             </button>
 
                                         </h2>
@@ -543,7 +543,7 @@
                                                                             onclick='cancelarOmitir("{{ $item->id }}","{{ $item->nombre }}")'>
                                                                             <P class="fs-5"> Cancelar</P>
                                                                         </button>
-                                                                        <div class="text-center" style="margin-top: -10px !important">
+                                                                        <div class="text-center">
                                                                             <div class="form-check d-flex justify-content-between">
                                                                             <div class="text-center"></div>
                                                                                 <label class="text-start fs-5 textTitulo text-break mb-2" style="margin-left:-33px!important; font-size: 18px !important">
