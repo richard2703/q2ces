@@ -56,6 +56,7 @@ class maquinariaController extends Controller
 
     public function store(Request $request)
     {
+        dd($request);
         abort_if(Gate::denies('maquinaria_create'), 403);
         // $request->validate([
         //     'nombre' => 'required|max:250',
@@ -131,19 +132,20 @@ class maquinariaController extends Controller
         $maquinaria = $request->all();
 
         //** Generamos el identificador de la maquinaria */
-        // $maquinaria[ 'identificador' ] = $this->generaCodigoIdentificacion( $maquinaria[ 'categoria' ] );
+        $maquinaria[ 'identificador' ] = $this->generaCodigoIdentificacion( $maquinaria[ 'categoria' ] );
         $maquinaria['estatusId'] = 1;
         // dd( $maquinaria[ 'identificador' ] );
 
         /*** directorio contenedor de su información */
         $pathMaquinaria = str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT);
 
+
         $maquinaria['placas'] = strtoupper($maquinaria['placas']);
         $maquinaria['nummotor'] = strtoupper($maquinaria['nummotor']);
         $maquinaria['numserie'] = strtoupper($maquinaria['numserie']);
 
         //*** se guarda la maquinaria */
-        // $maquinaria = maquinaria::create($maquinaria);
+        $maquinaria = maquinaria::create($maquinaria);
         $cont = 0;
         // dd($request->docs[$cont]);
         for ($i = 0; $i < count($request->tipoDocs); $i++) {
@@ -159,12 +161,13 @@ class maquinariaController extends Controller
             // }
             if (strpos($request->tipoDocs[$i], '-1') == true) {
                 // dd(substr($request->tipoDocs[$i], 0, -2));
-                // dd($request->hasFile($request->archivo[$cont]));
+                dd($request->hasFile($request->archivo[$cont]));
                 dd($request->docs, $request->tipoDocs);
+
                 if ($request->hasFile($request->docs[$cont])) {
                     $objFactura = new maqdocs();
-                    // $objFactura->maquinariaId = $maquinaria->id;
-                    $objFactura->maquinariaId = 35;
+                    $objFactura->maquinariaId = $maquinaria->id;
+                    // $objFactura->maquinariaId = 35;
                     $objFactura->tipo = substr($request->tipoDocs[$i], 0, -2);
                     $objFactura->estatus = 'activo';
                     $objFactura->ruta = time() . '_' . $request->file($request->docs[$cont])->getClientOriginalName();
@@ -172,6 +175,10 @@ class maquinariaController extends Controller
                     $objFactura->save();
                     $cont = $cont + 1;
                 }
+
+            }else{
+                dd("No entre");
+
             }
             // dd("false");
         }
@@ -285,7 +292,7 @@ class maquinariaController extends Controller
     public function show(maquinaria $maquinaria)
     {
         abort_if(Gate::denies('maquinaria_show'), 403);
-        
+
         $bitacora = bitacoras::all();
         $docs = maqdocs::where('maquinariaId', $maquinaria->id)->get();
         $fotos = maqimagen::where('maquinariaId', $maquinaria->id)->get();
