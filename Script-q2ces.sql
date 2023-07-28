@@ -416,14 +416,16 @@ CREATE TABLE userdocs(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     personalId bigint(20) unsigned NOT NULL,
 	ruta varchar(255) NULL,
-    tipo varchar(255) NULL,
+    tipoId bigint(20) unsigned null,
     fechaVencimiento date not NULL,
     estatus varchar(255) NULL,
+    requerido int null
     comentarios text NULL,
     created_at timestamp NULL DEFAULT NULL,
     updated_at timestamp NULL DEFAULT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT FK_userdocs_personalId foreign key (personalId) references personal(id)
+    CONSTRAINT FK_userdocs_personalId foreign key (personalId) references personal(id),
+    CONSTRAINT FK_userdocs_tipoId foreign key (tipoId) references docs(id);
 );
 
 CREATE TABLE contactos(

@@ -951,673 +951,122 @@
                                             aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
                                                 <div class="row mt-3">
+                                                    @php
+                                                        $contador = 0;
+                                                    @endphp
                                                     @forelse ($docs as $doc)
                                                         <div
-                                                            class="card col-12 col-md-6 col-lg-4 col-xl-3 small-card-group-date">
-                                                            <div class="card-body m-2">
-                                                                <div>
-                                                                    <label
-                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                        for="flexCheckDefault">
-                                                                        <!--<i class="fa fa-check-circle semaforo2"></i>-->
-                                                                        Permisos Especiales
-                                                                    </label>
-                                                                </div>
-                                                                <div
-                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
-                                                                    <input type="hidden" id="especiales_tipo"
-                                                                        name="especiales_tipo" value="Especiales">
-                                                                    <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="especiales_ruta" id="especiales_ruta"
-                                                                            accept=".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, .txt, .csv, .rtf, .odt, .odp, .ods">
-                                                                        <div id="iconContainerEspeciales">
-                                                                            <lord-icon
-                                                                                src="https://cdn.lordicon.com/koyivthb.json"
-                                                                                trigger="hover"
-                                                                                colors="primary:#86c716,secondary:#e8e230"
-                                                                                stroke="65"
-                                                                                style="width:50px;height:70px">
-                                                                            </lord-icon>
-                                                                        </div>
-                                                                    </label>
-                                                                    <a id="downloadEspecialesButton"
-                                                                        class="btnViewDescargar btn btn-outline-success btnView"
-                                                                        style="display: none" download>
-                                                                        <span class="btn-text">Descargar</span>
-                                                                        <span class="icon">
-                                                                            <i class="far fa-eye mt-2"></i>
-                                                                        </span>
-                                                                    </a>
-                                                                    <button id="removeEspecialesButton"
-                                                                        class="btnViewDelete btn btn-outline-danger btnView"
-                                                                        style="width: 2.4em; height: 2.4em; display: none;"><i
-                                                                            class="fa fa-times"></i></button>
-                                                                    <!-- Botón Omitir -->
-                                                                    <button id="omitirEspecialesButton"
-                                                                        class="btnSinFondo float-end mt-3"
-                                                                        style="margin-left: 20px" type="submit"
-                                                                        rel="tooltip" onclick="omitirEspeciales()">
-                                                                        <P class="fs-5"> Omitir</P>
-                                                                    </button>
-                                                                    <!-- Botón Cancelar -->
-                                                                    <button id="cancelarOmitirEspecialesButton"
-                                                                        class="btnSinFondo float-end mt-3"
-                                                                        style="margin-left: 20px; display: none;"
-                                                                        type="submit" rel="tooltip"
-                                                                        onclick="cancelarOmitirEspeciales()">
-                                                                        <P class="fs-5"> Cancelar</P>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="text-center"
-                                                                    style="margin-top: -10px !important">
-                                                                    <label
-                                                                        class="text-start fs-5 textTitulo text-break mb-2"
-                                                                        style="font-size: 18px !important">
-                                                                        Expiración:</label>
-                                                                    <div class="col-12">
-                                                                        <input type="date"
-                                                                            class="inputCaja text-center"
-                                                                            id="especiales_fecha" style="display: block;">
-                                                                    </div>
-                                                                    <div class="col-12">
+                                                            class="card-group col-12 col-md-6 col-lg-4 col-xl-3 small-card-date my-1">
+                                                            <div class="card border-green">
+                                                                <div class="card-body">
+                                                                    <div>
                                                                         <label
-                                                                            class="text-start fs-5 textTitulo text-break mb-2"
-                                                                            style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
-                                                                        <textarea class="form-control-textarea inputCaja" rows="1" maxlength="1000" name="comentarioEspeciales"
-                                                                            placeholder="Tipo De Permiso etc."></textarea>
+                                                                            class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                            for="flexCheckDefault">
+                                                                            {{ ucwords(trans($doc->nombre)) }}
+                                                                        </label>
+                                                                    </div>
+                                                                    <div
+                                                                        class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
+                                                                        <input type="hidden" id='{{ $doc->nombre }}'
+                                                                            name='archivo[{{ $contador }}][tipoDocs]'
+                                                                            value='{{ $doc->id }}'>
+                                                                        <input type="hidden"
+                                                                            id='nombre{{ $doc->nombre }}'
+                                                                            name='archivo[{{ $contador }}][tipoDocsNombre]'
+                                                                            value='{{ $doc->nombre }}'>
+                                                                        <input type="hidden"
+                                                                            id='omitido{{ $doc->id }}'
+                                                                            name='archivo[{{ $contador }}][omitido]'
+                                                                            value='0'>
+                                                                        <label class="custom-file-upload"
+                                                                            onclick='handleDocumento("{{ $doc->id }}","{{ $doc->nombre }}")'>
+                                                                            <input class="mb-4" type="file"
+                                                                                name='archivo[{{ $contador }}][docs]'
+                                                                                id='{{ $doc->id }}' accept=".pdf">
+                                                                            <div id='iconContainer{{ $doc->id }}'>
+                                                                                <lord-icon
+                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                    trigger="hover"
+                                                                                    colors="primary:#86c716,secondary:#e8e230"
+                                                                                    stroke="65"
+                                                                                    style="width:50px;height:70px">
+                                                                                </lord-icon>
+
+                                                                            </div>
+                                                                        </label>
+                                                                        <a id='downloadButton{{ $doc->id }}'
+                                                                            class="btnViewDescargar btn btn-outline-success btnView"
+                                                                            style="display: none" download>
+                                                                            <span class="btn-text">Descargar</span>
+                                                                            <span class="icon">
+                                                                                <i class="far fa-eye mt-2"></i>
+                                                                            </span>
+                                                                        </a>
+                                                                        <button id='removeButton{{ $doc->id }}'
+                                                                            class="btnViewDelete btn btn-outline-danger btnView"
+                                                                            style="width: 2.4em; height: 2.4em; display: none;"><i
+                                                                                class="fa fa-times"></i></button>
+                                                                        <!-- Botón Omitir -->
+                                                                        <button id='omitirButton{{ $doc->id }}'
+                                                                            class="btnSinFondo float-end mt-3"
+                                                                            style="margin-left: 20px" rel="tooltip"
+                                                                            type="button"
+                                                                            onclick='omitir("{{ $doc->id }}","{{ $doc->nombre }}")'>
+                                                                            <P class="fs-5"> Omitir</P>
+                                                                        </button>
+                                                                        <button
+                                                                            id='cancelarOmitirButton{{ $doc->id }}'
+                                                                            class="btnSinFondo float-end mt-3"
+                                                                            style="margin-left: 20px; display: none;"
+                                                                            rel="tooltip"
+                                                                            onclick='cancelarOmitir("{{ $doc->id }}","{{ $doc->nombre }}")'>
+                                                                            <P class="fs-5"> Cancelar</P>
+                                                                        </button>
+                                                                        <div class="text-center"
+                                                                            style="margin-top: -10px !important">
+                                                                            <div
+                                                                                class="form-check d-flex justify-content-between">
+                                                                                <div class="text-center"></div>
+                                                                                <label
+                                                                                    class="text-start fs-5 textTitulo text-break mb-2"
+                                                                                    style="margin-left:-33px!important; font-size: 18px !important">
+                                                                                    Expiración:
+                                                                                </label>
+                                                                                <input
+                                                                                    class="form-check-input is-invalid align-self-end mb-2"
+                                                                                    name='archivo[{{ $contador }}][check]'
+                                                                                    type="checkbox"
+                                                                                    id='check{{ $doc->id }}' checked
+                                                                                    style="font-size: 20px; visibility: hidden"
+                                                                                    onchange='handleCheckboxChange("{{ $doc->id }}")'>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <input type="date"
+                                                                                    class="inputCaja text-center"
+                                                                                    id='fecha{{ $doc->id }}'
+                                                                                    name="archivo[{{ $contador }}][fecha]"
+                                                                                    style="display: block;">
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <label
+                                                                                    class="text-start fs-5 textTitulo text-break mb-2"
+                                                                                    style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
+                                                                                <textarea class="form-control-textarea inputCaja" rows="2" maxlength="1000"
+                                                                                    id='comentario{{ $doc->id }}' name="archivo[{{ $contador }}][comentario]"
+                                                                                    placeholder="Escribe Un Comentario"></textarea>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-
+                                                        @php
+                                                            $contador++;
+                                                        @endphp
                                                     @empty
                                                         sin registro
                                                     @endforelse
-
-                                                    {{--  <div class="col-sm-4">
-                                                        <div class="card">
-                                                            <div class="card-body combustibleBorde">
-                                                                <div class="bordeTitulo mb-3">
-                                                                    <h2 class="combustibleTitulo fw-semibold  my-3">
-                                                                        {{ ucwords(trans($doc->nombre)) }}
-                                                                    </h2>
-                                                                </div>
-                                                                <div class="row ">
-                                                                    <input type="hidden" id="especiales_tipo"
-                                                                        name="especiales_tipo" value="Especiales">
-                                                                    <label class="custom-file-upload">
-                                                                        <input class="mb-4" type="file"
-                                                                            name="especiales_ruta" id="especiales_ruta"
-                                                                            accept=".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, .txt, .csv, .rtf, .odt, .odp, .ods">
-                                                                        <div id="iconContainerEspeciales">
-                                                                            <lord-icon
-                                                                                src="https://cdn.lordicon.com/koyivthb.json"
-                                                                                trigger="hover"
-                                                                                colors="primary:#86c716,secondary:#e8e230"
-                                                                                stroke="65"
-                                                                                style="width:50px;height:70px"></lord-icon>
-                                                                        </div>
-                                                                    </label>
-                                                                    <a id="downloadEspecialesButton"
-                                                                        class="btnViewDescargar btn btn-outline-success btnView"
-                                                                        style="display: none" download>
-                                                                        <span class="btn-text">Descargar</span>
-                                                                        <span class="icon">
-                                                                            <i class="far fa-eye mt-2"></i>
-                                                                        </span>
-                                                                    </a>
-                                                                    <button id="removeEspecialesButton"
-                                                                        class="btnViewDelete btn btn-outline-danger btnView"
-                                                                        style="width: 2.4em; height: 2.4em; display: none;"><i
-                                                                            class="fa fa-times"></i></button>
-                                                                    <!-- Botón Omitir -->
-                                                                    <button id="omitirEspecialesButton"
-                                                                        class="btnSinFondo float-end mt-3"
-                                                                        style="margin-left: 20px" type="submit"
-                                                                        rel="tooltip" onclick="omitirEspeciales()">
-                                                                        <P class="fs-5"> Omitir</P>
-                                                                    </button>
-                                                                    <!-- Botón Cancelar -->
-                                                                    <button id="cancelarOmitirEspecialesButton"
-                                                                        class="btnSinFondo float-end mt-3"
-                                                                        style="margin-left: 20px; display: none;"
-                                                                        type="submit" rel="tooltip"
-                                                                        onclick="cancelarOmitirEspeciales()">
-                                                                        <P class="fs-5"> Cancelar</P>
-                                                                    </button>
-                                                                    <label
-                                                                        class="text-start fs-5 textTitulo text-break mb-2"
-                                                                        style="font-size: 18px !important">
-                                                                        Expiración:</label>
-                                                                    <div class="col-12">
-                                                                        <input type="date"
-                                                                            class="inputCaja text-center"
-                                                                            id="especiales_fecha" style="display: block;">
-                                                                    </div>
-                                                                    <div class="col-12">
-                                                                        <label
-                                                                            class="text-start fs-5 textTitulo text-break mb-2"
-                                                                            style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
-                                                                        <textarea class="form-control-textarea inputCaja" rows="1" maxlength="1000" name="comentarioEspeciales"
-                                                                            placeholder="Tipo De Permiso etc."></textarea>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>  --}}
-
-                                                    {{--  <div class="col-12 col-md-6 col-lg-3">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-                                                                        <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                                for="flexCheckDefault">
-
-                                                                                Acta de Nacimiento
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dnacimiento" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <lord-icon
-                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
-                                                                                    trigger="hover"
-                                                                                    colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65"
-                                                                                    style="width:50px;height:70px">
-                                                                                </lord-icon>
-                                                                            </label>
-
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-6 col-lg-3">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                                for="flexCheckDefault">
-
-                                                                                INE
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dine" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <lord-icon
-                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
-                                                                                    trigger="hover"
-                                                                                    colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65"
-                                                                                    style="width:50px;height:70px">
-                                                                                </lord-icon>
-                                                                            </label>
-
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-6 col-lg-3">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo text-break  mb-2"
-                                                                                for="flexCheckDefault">
-
-                                                                                CURP
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dcurp" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <lord-icon
-                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
-                                                                                    trigger="hover"
-                                                                                    colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65"
-                                                                                    style="width:50px;height:70px">
-                                                                                </lord-icon>
-                                                                            </label>
-
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-6 col-lg-3">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                                for="flexCheckDefault">
-
-                                                                                licencia de Conducción
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dlicencia" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <lord-icon
-                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
-                                                                                    trigger="hover"
-                                                                                    colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65"
-                                                                                    style="width:50px;height:70px">
-                                                                                </lord-icon>
-                                                                            </label>
-
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-6 col-lg-3">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                                for="flexCheckDefault">
-
-                                                                                Cédula Profesional
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dcedula" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <lord-icon
-                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
-                                                                                    trigger="hover"
-                                                                                    colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65"
-                                                                                    style="width:50px;height:70px">
-                                                                                </lord-icon>
-                                                                            </label>
-
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-6 col-lg-3">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                                for="flexCheckDefault">
-
-                                                                                Constancia de Situación Fiscal
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dfiscal" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <lord-icon
-                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
-                                                                                    trigger="hover"
-                                                                                    colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65"
-                                                                                    style="width:50px;height:70px">
-                                                                                </lord-icon>
-                                                                            </label>
-
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-6 col-lg-3">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                                for="flexCheckDefault">
-
-                                                                                Carta de no Antecedentes Penales
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dpenales" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <lord-icon
-                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
-                                                                                    trigger="hover"
-                                                                                    colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65"
-                                                                                    style="width:50px;height:70px">
-                                                                                </lord-icon>
-                                                                            </label>
-
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-6 col-lg-3">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                                for="flexCheckDefault">
-
-                                                                                Cartas de Recomendación
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="drecomendacion" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <lord-icon
-                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
-                                                                                    trigger="hover"
-                                                                                    colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65"
-                                                                                    style="width:50px;height:70px">
-                                                                                </lord-icon>
-                                                                            </label>
-
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-6 col-lg-3">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                                for="flexCheckDefault">
-
-                                                                                DC3
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="ddc3" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <lord-icon
-                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
-                                                                                    trigger="hover"
-                                                                                    colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65"
-                                                                                    style="width:50px;height:70px">
-                                                                                </lord-icon>
-                                                                            </label>
-
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-6 col-lg-3">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                                for="flexCheckDefault">
-
-                                                                                Exámen Médico
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dmedico" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <lord-icon
-                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
-                                                                                    trigger="hover"
-                                                                                    colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65"
-                                                                                    style="width:50px;height:70px">
-                                                                                </lord-icon>
-                                                                            </label>
-
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-6 col-lg-3">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                                for="flexCheckDefault">
-                                                                                Prueba Antidoping
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="ddoping" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <lord-icon
-                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
-                                                                                    trigger="hover"
-                                                                                    colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65"
-                                                                                    style="width:50px;height:70px">
-                                                                                </lord-icon>
-                                                                            </label>
-
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-6 col-lg-3">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                                for="flexCheckDefault">
-
-                                                                                Comprobante de Estudios
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="destudios" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <lord-icon
-                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
-                                                                                    trigger="hover"
-                                                                                    colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65"
-                                                                                    style="width:50px;height:70px">
-                                                                                </lord-icon>
-                                                                            </label>
-
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-6 col-lg-3">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                                for="flexCheckDefault">
-
-                                                                                Número de Seguro Social
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dnss" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <lord-icon
-                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
-                                                                                    trigger="hover"
-                                                                                    colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65"
-                                                                                    style="width:50px;height:70px">
-                                                                                </lord-icon>
-                                                                            </label>
-
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-6 col-lg-3">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                                for="flexCheckDefault">
-
-                                                                                Aviso de Retención de Infonavit
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dari" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <lord-icon
-                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
-                                                                                    trigger="hover"
-                                                                                    colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65"
-                                                                                    style="width:50px;height:70px">
-                                                                                </lord-icon>
-                                                                            </label>
-
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-6 col-lg-3">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                                for="flexCheckDefault">
-
-                                                                                Perfil y Descripción del Puesto
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dpuesto" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <lord-icon
-                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
-                                                                                    trigger="hover"
-                                                                                    colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65"
-                                                                                    style="width:50px;height:70px">
-                                                                                </lord-icon>
-                                                                            </label>
-
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-6 col-lg-3">
-                                                                <div class="card contDocumentos">
-                                                                    <div class="card-body m-2">
-
-                                                                        <div>
-                                                                            <label
-                                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                                for="flexCheckDefault">
-                                                                                Contrato Firmado
-                                                                            </label>
-                                                                        </div>
-                                                                        <div
-                                                                            class="contIconosDocumentos d-flex align-items-end">
-                                                                            <label class="custom-file-upload">
-                                                                                <input class="mb-4" type="file"
-                                                                                    name="dcontrato" id="foto"
-                                                                                    accept=".pdf">
-                                                                                <lord-icon
-                                                                                    src="https://cdn.lordicon.com/koyivthb.json"
-                                                                                    trigger="hover"
-                                                                                    colors="primary:#86c716,secondary:#e8e230"
-                                                                                    stroke="65"
-                                                                                    style="width:50px;height:70px">
-                                                                                </lord-icon>
-                                                                            </label>
-
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>  --}}
-
 
                                                 </div>
                                             </div>
@@ -1636,6 +1085,8 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{{ asset('js/cardArchivos.js') }}"></script>
+
     <script>
         function fillAddressFields() {
             var cp = document.getElementById('cp').value;
