@@ -271,36 +271,36 @@ class personalController extends Controller
         for ($i = 0; $i < count($request->archivo); $i++) {
             $documento = new userdocs();
             $documento->personalId = $personal->id;
-            // $tipoDocumento = $request->archivo[$i]['tipoDocs']; // Obtenemos el tipo de documento
+            $documento->tipoId = $request->archivo[$i]['tipoDocs']; // Obtenemos el tipo de documento
             $tipoDocumentoNombre = $request->archivo[$i]['tipoDocsNombre']; // Obtenemos el tipo de documento
 
             if ($request->archivo[$i]['omitido'] == 0) {
                 // OBLIGATORIO
                 $documento->requerido = '1';
-
+                $documento->estatus = '0';
                 if (isset(($request->archivo[$i]['docs']))) {
-                    $documento->tipoId = $request->archivo[$i]['tipoDocs'];
-
                     $file = $request->file('archivo')[$i]['docs'];
-                    // $nombre = time() . '_' . $file->getClientOriginalName();
-                    // dd($nombre);
                     $documento->ruta = time() . '_' . $file->getClientOriginalName();
-                    // $documento->ruta = time() . '_' . $request->file('archivos')[$i]['docs']->getClientOriginalName();
                     $file->storeAs('/public/maquinaria/' . $pathPesonal . '/documentos/' .  $tipoDocumentoNombre, $documento->ruta);
+                    $documento->estatus = '2'; //Si es 2 Esta  OK
                 }
 
                 if ((isset($request->archivo[$i]['check']) && $request->archivo[$i]['check'] == 'on')) {
+                    $documento->vencimiento = 1; //Si es 1 SI vence el documento
+                    $documento->estatus = '0'; //Si esta en 0 Esta MAL
                     if (isset($request->archivo[$i]['fecha'])) {
                         $documento->fechaVencimiento = $request->archivo[$i]['fecha'];
                         // Evaluar fecha de vencimiento
-                        // $documento->estatus = '1';
+                        $documento->estatus = '1'; //Si es 1 Esta proximo a vencer
                     }
                 } else {
-                    $documento->estatus = '1';
+                    $documento->vencimiento = 0; //Si es 0 no vence el documento
+                    // $documento->estatus = '1';
                 }
             } else {
                 // NO REQUERIDO
                 $documento->requerido = '0';
+                $documento->estatus = '2'; //Si es 2 Esta  OK
             }
             $documento->comentarios = $request->archivo[$i]['comentario'];
 
@@ -417,12 +417,26 @@ class personalController extends Controller
         $beneficiario = beneficiario::where('personalId', $personal->id)->first();
         $nomina = nomina::where('personalId', $personal->id)->first();
         $equipo = equipo::where('personalId', $personal->id)->first();
-        $docs = userdocs::where('personalId', $personal->id)->first();
+        // $docs = userdocs::where('personalId', $personal->id)->first();
+        $docs = userdocs::join('docs', "userdocs.tipoId", "docs.id")
+            ->select(
+                'docs.id as tipoDocId',
+                'docs.nombre as docNombre',
+                'userdocs.id',
+                'userdocs.fechaVencimiento',
+                'userdocs.estatus',
+                'userdocs.comentarios',
+                'userdocs.ruta'
+            )
+            ->where('personalId', $personal->id)->get();
+        // dd($docs);
         $fiscal = fiscal::where('personalId', $personal->id)->first();
         $vctPuestos = puesto::orderBy('nombre', 'asc')->get();
         $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->get();
         $vctEstatus = userEstatus::all();
         $vctPersonal = personal::all();
+        // $documentos = docs::where('tipoId', '1')->orderBy('nombre', 'asc')->get();
+
 
         $nomina->decSalarioDiario = ($nomina->diario);
         $nomina->decSalarioDiarioIntegrado = round($nomina->decSalarioDiario * 1.05137, 2);

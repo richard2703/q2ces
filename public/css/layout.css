@@ -704,6 +704,22 @@ button.regresar:hover{
   vertical-align: middle;
 }
 
+.semaforo0{
+    color: red;
+    padding-top: 5px;
+    font-size: 1.25rem;
+}
+.semaforo1{
+  color: var(--amarillo);
+  padding-top: 5px;
+  font-size: 1.25rem;
+}
+.semaforo2{
+  color: green;
+  padding-top: 5px;
+  font-size: 1.25rem;
+}
+
 
 
 /*--------------------------------------------------------------

@@ -419,7 +419,8 @@ CREATE TABLE userdocs(
     tipoId bigint(20) unsigned null,
     fechaVencimiento date not NULL,
     estatus varchar(255) NULL,
-    requerido int null
+    requerido int null,
+    vencimiento int null,
     comentarios text NULL,
     created_at timestamp NULL DEFAULT NULL,
     updated_at timestamp NULL DEFAULT NULL,
