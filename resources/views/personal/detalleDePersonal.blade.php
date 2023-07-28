@@ -1076,701 +1076,123 @@
                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <div class="row mt-3">
+                                        @php
+                                            $contador = 0;
+                                        @endphp
+                                        @forelse ($docs as $doc)
+                                            <div class="card-group col-12 col-md-6 col-lg-4 col-xl-3 small-card-date my-1">
+                                                <div class="card border-green">
+                                                    <div class="card-body">
+                                                        <div>
+                                                            <label
+                                                                class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                for="flexCheckDefault">
+                                                                <div id="divIcono{{ $doc->tipoDocId }}">
+                                                                    <i id="icono" class=""></i>
+                                                                </div>
+                                                                <i class="fas fa-times-circle semaforo{{ $doc->estatus }}"
+                                                                    style="display: {{ $doc->estatus != '0' ? ' none' : '' }};"></i>
+                                                                <i class="fa fa-exclamation-circle semaforo{{ $doc->estatus }}"
+                                                                    style="display: {{ $doc->estatus != '1' ? ' none' : '' }};"></i>
+                                                                <i class="fa fa-check-circle semaforo{{ $doc->estatus }}"
+                                                                    style="display: {{ $doc->estatus != '2' ? ' none' : '' }};"></i>
 
-                                        <div class="col-12">
-                                            <div class="row">
-                                                <div class="col-12 col-md-6 col-lg-3">
-                                                    <div class="card contDocumentos">
-                                                        <div class="card-body m-2">
-
-                                                            <div>
-                                                                <label
-                                                                    class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                    for="flexCheckDefault">
-                                                                    <i
-                                                                        class="fa {{ $docs->dvitae != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
-                                                                    Solicitud o Curriculum Vitae
-                                                                </label>
-                                                            </div>
-                                                            <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file" name="dvitae"
-                                                                        id="foto" accept=".pdf">
+                                                                {{ ucwords(trans($doc->docNombre)) }}
+                                                            </label>
+                                                        </div>
+                                                        <div
+                                                            class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
+                                                            <input type="hidden" id='{{ $doc->docNombre }}'
+                                                                name='archivo[{{ $contador }}][tipoDocs]'
+                                                                value='{{ $doc->tipoDocId }}'>
+                                                            <input type="hidden" id='nombre{{ $doc->docNombre }}'
+                                                                name='archivo[{{ $contador }}][tipoDocsNombre]'
+                                                                value='{{ $doc->docNombre }}'>
+                                                            <input type="hidden" id='omitido{{ $doc->tipoDocId }}'
+                                                                name='archivo[{{ $contador }}][omitido]'
+                                                                value='0'>
+                                                            <label class="custom-file-upload"
+                                                                onclick='handleDocumento("{{ $doc->id }}","{{ $doc->docNombre }}")'>
+                                                                <input class="mb-4" type="file"
+                                                                    name='archivo[{{ $contador }}][docs]'
+                                                                    id='{{ $doc->tipoDocId }}' accept=".pdf"
+                                                                    value="{{ $doc->ruta }}">
+                                                                <div id='iconContainer{{ $doc->tipoDocId }}'>
                                                                     <lord-icon src="https://cdn.lordicon.com/koyivthb.json"
                                                                         trigger="hover"
                                                                         colors="primary:#86c716,secondary:#e8e230"
                                                                         stroke="65" style="width:50px;height:70px">
                                                                     </lord-icon>
-                                                                </label>
 
-                                                                <label class="custom-file-upload">
-                                                                    <a href="{{ route('personal.download', [$docs->id, 'dvitae']) }}"
-                                                                        class="" target="blank">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65" style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </a>
-                                                                </label>
+                                                                </div>
+                                                            </label>
+                                                            <a id='downloadButton{{ $doc->tipoDocId }}'
+                                                                class="btnViewDescargar btn btn-outline-success btnView"
+                                                                style="display: none" download>
+                                                                <span class="btn-text">Descargar</span>
+                                                                <span class="icon">
+                                                                    <i class="far fa-eye mt-2"></i>
+                                                                </span>
+                                                            </a>
+                                                            <button id='removeButton{{ $doc->tipoDocId }}'
+                                                                class="btnViewDelete btn btn-outline-danger btnView"
+                                                                style="width: 2.4em; height: 2.4em; display: none;"><i
+                                                                    class="fa fa-times"></i></button>
+                                                            <!-- Botón Omitir -->
+                                                            <button id='omitirButton{{ $doc->tipoDocId }}'
+                                                                class="btnSinFondo float-end mt-3"
+                                                                style="margin-left: 20px" rel="tooltip" type="button"
+                                                                onclick='omitir("{{ $doc->tipoDocId }}","{{ $doc->docNombre }}")'>
+                                                                <P class="fs-5"> Omitir</P>
+                                                            </button>
+                                                            <button id='cancelarOmitirButton{{ $doc->tipoDocId }}'
+                                                                class="btnSinFondo float-end mt-3"
+                                                                style="margin-left: 20px; display: none;" rel="tooltip"
+                                                                onclick='cancelarOmitir("{{ $doc->tipoDocId }}","{{ $doc->docNombre }}")'>
+                                                                <P class="fs-5"> Cancelar</P>
+                                                            </button>
+                                                            <div class="text-center" style="margin-top: -10px !important">
+                                                                <div class="form-check d-flex justify-content-between">
+                                                                    <div class="text-center"></div>
+                                                                    <label
+                                                                        class="text-start fs-5 textTitulo text-break mb-2"
+                                                                        style="margin-left:-33px!important; font-size: 18px !important">
+                                                                        Expiración:
+                                                                    </label>
+                                                                    <input
+                                                                        class="form-check-input is-invalid align-self-end mb-2"
+                                                                        name='archivo[{{ $contador }}][check]'
+                                                                        type="checkbox" id='check{{ $doc->tipoDocId }}'
+                                                                        checked style="font-size: 20px; visibility: hidden"
+                                                                        onchange='handleCheckboxChange("{{ $doc->tipoDocId }}")'>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <input type="date" class="inputCaja text-center"
+                                                                        id='fecha{{ $doc->tipoDocId }}'
+                                                                        name="archivo[{{ $contador }}][fecha]"
+                                                                        style="display: block;"
+                                                                        value="{{ $doc->fechaVencimiento }}">
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <label
+                                                                        class="text-start fs-5 textTitulo text-break mb-2"
+                                                                        style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
+                                                                    <textarea class="form-control-textarea inputCaja" rows="2" maxlength="1000"
+                                                                        id='comentario{{ $doc->tipoDocId }}' name="archivo[{{ $contador }}][comentario]"
+                                                                        placeholder="Escribe Un Comentario">{{ $doc->comentarios }}</textarea>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-12 col-md-6 col-lg-3">
-                                                    <div class="card contDocumentos">
-                                                        <div class="card-body m-2">
-                                                            <div>
-                                                                <label
-                                                                    class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                    for="flexCheckDefault">
-                                                                    <i
-                                                                        class="fa {{ $docs->dnacimiento != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
-                                                                    Acta de Nacimiento
-                                                                </label>
-                                                            </div>
-                                                            <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file"
-                                                                        name="dnacimiento" id="foto" accept=".pdf">
-                                                                    <lord-icon src="https://cdn.lordicon.com/koyivthb.json"
-                                                                        trigger="hover"
-                                                                        colors="primary:#86c716,secondary:#e8e230"
-                                                                        stroke="65" style="width:50px;height:70px">
-                                                                    </lord-icon>
-                                                                </label>
-
-                                                                <label class="custom-file-upload">
-                                                                    <a href="{{ route('personal.download', [$docs->id, 'dnacimiento']) }}"
-                                                                        class="" target="blank">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65" style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </a>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6 col-lg-3">
-                                                    <div class="card contDocumentos">
-                                                        <div class="card-body m-2">
-
-                                                            <div>
-                                                                <label
-                                                                    class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                    for="flexCheckDefault">
-                                                                    <i
-                                                                        class="fa {{ $docs->dine != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
-                                                                    INE
-                                                                </label>
-                                                            </div>
-                                                            <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file" name="dine"
-                                                                        id="foto" accept=".pdf">
-                                                                    <lord-icon src="https://cdn.lordicon.com/koyivthb.json"
-                                                                        trigger="hover"
-                                                                        colors="primary:#86c716,secondary:#e8e230"
-                                                                        stroke="65" style="width:50px;height:70px">
-                                                                    </lord-icon>
-                                                                </label>
-
-                                                                <label class="custom-file-upload">
-                                                                    <a href="{{ route('personal.download', [$docs->id, 'dine']) }}"
-                                                                        class="" target="blank">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65" style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </a>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6 col-lg-3">
-                                                    <div class="card contDocumentos">
-                                                        <div class="card-body m-2">
-
-                                                            <div>
-                                                                <label
-                                                                    class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                    for="flexCheckDefault">
-                                                                    <i
-                                                                        class="fa {{ $docs->dcurp != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
-                                                                    CURP
-                                                                </label>
-                                                            </div>
-                                                            <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file" name="dcurp"
-                                                                        id="foto" accept=".pdf">
-                                                                    <lord-icon src="https://cdn.lordicon.com/koyivthb.json"
-                                                                        trigger="hover"
-                                                                        colors="primary:#86c716,secondary:#e8e230"
-                                                                        stroke="65" style="width:50px;height:70px">
-                                                                    </lord-icon>
-                                                                </label>
-
-                                                                <label class="custom-file-upload">
-                                                                    <a href="{{ route('personal.download', [$docs->id, 'dcurp']) }}"
-                                                                        class="" target="blank">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65" style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </a>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6 col-lg-3">
-                                                    <div class="card contDocumentos">
-                                                        <div class="card-body m-2">
-
-                                                            <div>
-                                                                <label
-                                                                    class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                    for="flexCheckDefault">
-                                                                    <i
-                                                                        class="fa {{ $docs->dlicencia != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
-                                                                    Licencia de Conducción
-                                                                </label>
-                                                            </div>
-                                                            <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file" name="dlicencia"
-                                                                        id="foto" accept=".pdf">
-                                                                    <lord-icon src="https://cdn.lordicon.com/koyivthb.json"
-                                                                        trigger="hover"
-                                                                        colors="primary:#86c716,secondary:#e8e230"
-                                                                        stroke="65" style="width:50px;height:70px">
-                                                                    </lord-icon>
-                                                                </label>
-
-                                                                <label class="custom-file-upload">
-                                                                    <a href="{{ route('personal.download', [$docs->id, 'dlicencia']) }}"
-                                                                        class="" target="blank">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65" style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </a>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6 col-lg-3">
-                                                    <div class="card contDocumentos">
-                                                        <div class="card-body m-2">
-
-                                                            <div>
-                                                                <label
-                                                                    class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                    for="flexCheckDefault">
-                                                                    <i
-                                                                        class="fa {{ $docs->dcedula != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
-                                                                    Cédula Profesional
-                                                                </label>
-                                                            </div>
-                                                            <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file" name="dcedula"
-                                                                        id="foto" accept=".pdf">
-                                                                    <lord-icon src="https://cdn.lordicon.com/koyivthb.json"
-                                                                        trigger="hover"
-                                                                        colors="primary:#86c716,secondary:#e8e230"
-                                                                        stroke="65" style="width:50px;height:70px">
-                                                                    </lord-icon>
-                                                                </label>
-
-                                                                <label class="custom-file-upload">
-                                                                    <a href="{{ route('personal.download', [$docs->id, 'dcedula']) }}"
-                                                                        class="" target="blank">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65"
-                                                                            style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </a>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6 col-lg-3">
-                                                    <div class="card contDocumentos">
-                                                        <div class="card-body m-2">
-
-                                                            <div>
-                                                                <label
-                                                                    class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                    for="flexCheckDefault">
-                                                                    <i
-                                                                        class="fa {{ $docs->dfiscal != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
-                                                                    Constancia de Situacion Fiscal
-                                                                </label>
-                                                            </div>
-                                                            <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file"
-                                                                        name="dfiscal" id="foto" accept=".pdf">
-                                                                    <lord-icon
-                                                                        src="https://cdn.lordicon.com/koyivthb.json"
-                                                                        trigger="hover"
-                                                                        colors="primary:#86c716,secondary:#e8e230"
-                                                                        stroke="65" style="width:50px;height:70px">
-                                                                    </lord-icon>
-                                                                </label>
-
-                                                                <label class="custom-file-upload">
-                                                                    <a href="{{ route('personal.download', [$docs->id, 'dfiscal']) }}"
-                                                                        class="" target="blank">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65"
-                                                                            style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </a>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6 col-lg-3">
-                                                    <div class="card contDocumentos">
-                                                        <div class="card-body m-2">
-
-                                                            <div>
-                                                                <label
-                                                                    class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                    for="flexCheckDefault">
-                                                                    <i
-                                                                        class="fa {{ $docs->dpenales != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
-                                                                    Carta de no Antecedentes Penales
-                                                                </label>
-                                                            </div>
-                                                            <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file"
-                                                                        name="dpenales" id="foto" accept=".pdf">
-                                                                    <lord-icon
-                                                                        src="https://cdn.lordicon.com/koyivthb.json"
-                                                                        trigger="hover"
-                                                                        colors="primary:#86c716,secondary:#e8e230"
-                                                                        stroke="65" style="width:50px;height:70px">
-                                                                    </lord-icon>
-                                                                </label>
-
-                                                                <label class="custom-file-upload">
-                                                                    <a href="{{ route('personal.download', [$docs->id, 'dpenales']) }}"
-                                                                        class="" target="blank">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65"
-                                                                            style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </a>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6 col-lg-3">
-                                                    <div class="card contDocumentos">
-                                                        <div class="card-body m-2">
-
-                                                            <div>
-                                                                <label
-                                                                    class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                    for="flexCheckDefault">
-                                                                    <i
-                                                                        class="fa {{ $docs->drecomendacion != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
-                                                                    Cartas de Recomendación
-                                                                </label>
-                                                            </div>
-                                                            <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file"
-                                                                        name="drecomendacion" id="foto"
-                                                                        accept=".pdf">
-                                                                    <lord-icon
-                                                                        src="https://cdn.lordicon.com/koyivthb.json"
-                                                                        trigger="hover"
-                                                                        colors="primary:#86c716,secondary:#e8e230"
-                                                                        stroke="65" style="width:50px;height:70px">
-                                                                    </lord-icon>
-                                                                </label>
-
-                                                                <label class="custom-file-upload">
-                                                                    <a href="{{ route('personal.download', [$docs->id, 'drecomendacion']) }}"
-                                                                        class="" target="blank">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65"
-                                                                            style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </a>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6 col-lg-3">
-                                                    <div class="card contDocumentos">
-                                                        <div class="card-body m-2">
-
-                                                            <div>
-                                                                <label
-                                                                    class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                    for="flexCheckDefault">
-                                                                    <i
-                                                                        class="fa {{ $docs->ddc3 != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
-                                                                    DC3
-                                                                </label>
-                                                            </div>
-                                                            <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file"
-                                                                        name="ddc3" id="foto" accept=".pdf">
-                                                                    <lord-icon
-                                                                        src="https://cdn.lordicon.com/koyivthb.json"
-                                                                        trigger="hover"
-                                                                        colors="primary:#86c716,secondary:#e8e230"
-                                                                        stroke="65" style="width:50px;height:70px">
-                                                                    </lord-icon>
-                                                                </label>
-
-                                                                <label class="custom-file-upload">
-                                                                    <a href="{{ route('personal.download', [$docs->id, 'ddc3']) }}"
-                                                                        class="" target="blank">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65"
-                                                                            style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </a>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6 col-lg-3">
-                                                    <div class="card contDocumentos">
-                                                        <div class="card-body m-2">
-
-                                                            <div>
-                                                                <label
-                                                                    class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                    for="flexCheckDefault">
-                                                                    <i
-                                                                        class="fa {{ $docs->dmedico != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
-                                                                    Exámen Médico
-                                                                </label>
-                                                            </div>
-                                                            <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file"
-                                                                        name="dmedico" id="foto" accept=".pdf">
-                                                                    <lord-icon
-                                                                        src="https://cdn.lordicon.com/koyivthb.json"
-                                                                        trigger="hover"
-                                                                        colors="primary:#86c716,secondary:#e8e230"
-                                                                        stroke="65" style="width:50px;height:70px">
-                                                                    </lord-icon>
-                                                                </label>
-
-                                                                <label class="custom-file-upload">
-                                                                    <a href="{{ route('personal.download', [$docs->id, 'dmedico']) }}"
-                                                                        class="" target="blank">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65"
-                                                                            style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </a>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6 col-lg-3">
-                                                    <div class="card contDocumentos">
-                                                        <div class="card-body m-2">
-
-                                                            <div>
-                                                                <label
-                                                                    class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                    for="flexCheckDefault">
-                                                                    <i
-                                                                        class="fa {{ $docs->ddoping != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
-                                                                    Prueba Antidoping
-                                                                </label>
-                                                            </div>
-                                                            <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file"
-                                                                        name="ddoping" id="foto" accept=".pdf">
-                                                                    <lord-icon
-                                                                        src="https://cdn.lordicon.com/koyivthb.json"
-                                                                        trigger="hover"
-                                                                        colors="primary:#86c716,secondary:#e8e230"
-                                                                        stroke="65" style="width:50px;height:70px">
-                                                                    </lord-icon>
-                                                                </label>
-
-                                                                <label class="custom-file-upload">
-                                                                    <a href="{{ route('personal.download', [$docs->id, 'ddoping']) }}"
-                                                                        class="" target="blank">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65"
-                                                                            style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </a>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6 col-lg-3">
-                                                    <div class="card contDocumentos">
-                                                        <div class="card-body m-2">
-
-                                                            <div>
-                                                                <label
-                                                                    class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                    for="flexCheckDefault">
-                                                                    <i
-                                                                        class="fa {{ $docs->destudios != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
-                                                                    Comprobante de Estudios
-                                                                </label>
-                                                            </div>
-                                                            <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file"
-                                                                        name="destudios" id="foto"
-                                                                        accept=".pdf">
-                                                                    <lord-icon
-                                                                        src="https://cdn.lordicon.com/koyivthb.json"
-                                                                        trigger="hover"
-                                                                        colors="primary:#86c716,secondary:#e8e230"
-                                                                        stroke="65" style="width:50px;height:70px">
-                                                                    </lord-icon>
-                                                                </label>
-
-                                                                <label class="custom-file-upload">
-                                                                    <a href="{{ route('personal.download', [$docs->id, 'destudios']) }}"
-                                                                        class="" target="blank">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65"
-                                                                            style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </a>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6 col-lg-3">
-                                                    <div class="card contDocumentos">
-                                                        <div class="card-body m-2">
-
-                                                            <div>
-                                                                <label
-                                                                    class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                    for="flexCheckDefault">
-                                                                    <i
-                                                                        class="fa {{ $docs->dnss != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
-                                                                    Número de Seguro Social
-                                                                </label>
-                                                            </div>
-                                                            <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file"
-                                                                        name="dnss" id="foto" accept=".pdf">
-                                                                    <lord-icon
-                                                                        src="https://cdn.lordicon.com/koyivthb.json"
-                                                                        trigger="hover"
-                                                                        colors="primary:#86c716,secondary:#e8e230"
-                                                                        stroke="65" style="width:50px;height:70px">
-                                                                    </lord-icon>
-                                                                </label>
-
-                                                                <label class="custom-file-upload">
-                                                                    <a href="{{ route('personal.download', [$docs->id, 'dnss']) }}"
-                                                                        class="" target="blank">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65"
-                                                                            style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </a>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6 col-lg-3">
-                                                    <div class="card contDocumentos">
-                                                        <div class="card-body m-2">
-
-                                                            <div>
-                                                                <label
-                                                                    class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                    for="flexCheckDefault">
-                                                                    <i
-                                                                        class="fa {{ $docs->dari != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
-                                                                    Aviso de Retención de Infonavit
-                                                                </label>
-                                                            </div>
-                                                            <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file"
-                                                                        name="dari" id="foto" accept=".pdf">
-                                                                    <lord-icon
-                                                                        src="https://cdn.lordicon.com/koyivthb.json"
-                                                                        trigger="hover"
-                                                                        colors="primary:#86c716,secondary:#e8e230"
-                                                                        stroke="65" style="width:50px;height:70px">
-                                                                    </lord-icon>
-                                                                </label>
-
-                                                                <label class="custom-file-upload">
-                                                                    <a href="{{ route('personal.download', [$docs->id, 'dari']) }}"
-                                                                        class="" target="blank">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65"
-                                                                            style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </a>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6 col-lg-3">
-                                                    <div class="card contDocumentos">
-                                                        <div class="card-body m-2">
-
-                                                            <div>
-                                                                <label
-                                                                    class="form-check-label text-start fs-5 textTitulo mb-2"
-                                                                    for="flexCheckDefault">
-                                                                    <i
-                                                                        class="fa {{ $docs->dpuesto != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
-                                                                    Perfil y Descripción del Puesto
-                                                                </label>
-                                                            </div>
-                                                            <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file"
-                                                                        name="dpuesto" id="foto" accept=".pdf">
-                                                                    <lord-icon
-                                                                        src="https://cdn.lordicon.com/koyivthb.json"
-                                                                        trigger="hover"
-                                                                        colors="primary:#86c716,secondary:#e8e230"
-                                                                        stroke="65" style="width:50px;height:70px">
-                                                                    </lord-icon>
-                                                                </label>
-
-                                                                <label class="custom-file-upload">
-                                                                    <a href="{{ route('personal.download', [$docs->id, 'dpuesto']) }}"
-                                                                        class="" target="blank">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65"
-                                                                            style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </a>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6 col-lg-3">
-                                                    <div class="card contDocumentos">
-                                                        <div class="card-body m-2">
-
-                                                            <div>
-                                                                <label
-                                                                    class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                    for="flexCheckDefault">
-                                                                    <i
-                                                                        class="fa {{ $docs->dcontrato != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i>
-                                                                    Contrato Firmado
-                                                                </label>
-                                                            </div>
-                                                            <div class="contIconosDocumentos d-flex align-items-end">
-                                                                <label class="custom-file-upload">
-                                                                    <input class="mb-4" type="file"
-                                                                        name="dcontrato" id="foto"
-                                                                        accept=".pdf">
-                                                                    <lord-icon
-                                                                        src="https://cdn.lordicon.com/koyivthb.json"
-                                                                        trigger="hover"
-                                                                        colors="primary:#86c716,secondary:#e8e230"
-                                                                        stroke="65" style="width:50px;height:70px">
-                                                                    </lord-icon>
-                                                                </label>
-
-                                                                <label class="custom-file-upload">
-                                                                    <a href="{{ route('personal.download', [$docs->id, 'dcontrato']) }}"
-                                                                        class="" target="blank">
-                                                                        <lord-icon
-                                                                            src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                            trigger="hover"
-                                                                            colors="primary:#86c716,secondary:#e8e230"
-                                                                            stroke="65"
-                                                                            style="width:50px;height:70px">
-                                                                        </lord-icon>
-                                                                    </a>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
                                             </div>
-                                        </div>
+                                            @php
+                                                $contador++;
+                                            @endphp
+                                        @empty
+                                            sin registro
+                                        @endforelse
+
                                     </div>
                                 </div>
                             </div>
@@ -1804,8 +1226,8 @@
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Nivel de puesto: <span>*</span></label></br>
-                                            <select id="puestoNivelId" name="puestoNivelId" class="form-select"
-                                                required aria-label="Default select example">
+                                            <select id="puestoNivelId" name="puestoNivelId" class="form-select" required
+                                                aria-label="Default select example">
                                                 <option value="">Seleccione</option>
                                                 @foreach ($vctNiveles as $item)
                                                     <option value="{{ $item->id }}"
@@ -1843,7 +1265,7 @@
             </div>
         </div>
     </div>
-
+    <script src="{{ asset('js/cardArchivos.js') }}"></script>
     <script type="application/javascript">
         jQuery('input[type=file]').change(function(){
          var filename = jQuery(this).val().split('\\').pop();
