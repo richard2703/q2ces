@@ -13,6 +13,6 @@ class userdocs extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'personalId', 'ruta', 'tipo', 'fechaVencimiento', 'estatus', 'comentarios'
+        'personalId', 'ruta', 'tipo', 'fechaVencimiento', 'estatus', 'comentarios', 'requerido'
     ];
 }
