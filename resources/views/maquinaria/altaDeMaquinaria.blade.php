@@ -549,7 +549,8 @@
                                                                                 <label class="text-start fs-5 textTitulo text-break mb-2" style="margin-left:-33px!important; font-size: 18px !important">
                                                                                     Expiración:
                                                                                 </label>
-                                                                                <input class="form-check-input is-invalid align-self-end mb-2" name='archivo[{{$count}}][check]' type="checkbox" value="" id='check{{ $item->id }}' checked style="font-size: 20px; visibility: hidden" onchange='handleCheckboxChange("{{ $item->id }}")'>
+                                                                                <input class="form-check-input is-invalid align-self-end mb-2" type="checkbox" name='archivo[{{$count}}][check]' id='check{{ $item->id }}' checked style="font-size: 20px; visibility: hidden" onchange='handleCheckboxChange("{{ $item->id }}")'>
+                                                                                <!--<input type="hidden" class="form-check-input is-invalid align-self-end mb-2"  id='checkHidden{{ $item->id }}' value='false'> -->
                                                                             </div>
                                                                             <div class="col-12">
                                                                                 <input type="date"
@@ -651,14 +652,13 @@
         var checkboxInput = document.getElementById("check" + id);
         var fechaInput = document.getElementById("fecha" + id);
 
-        if (checkboxInput.checked) {
-            fechaInput.disabled = false;
-        } else {
-            fechaInput.disabled = true;
-            fechaInput.value = null;
+            if (checkboxInput.checked) {
+                fechaInput.disabled = false;
+            } else {
+                fechaInput.disabled = true;
+                fechaInput.value = null;
+            }
         }
-        }
-        let alertShown = true;
         function handleDocumento(id, nombre) {
             var FechaInput = document.getElementById("fecha" + id);
             // Resto del código que utilizas para manejar los eventos, pero ahora con el ID proporcionado
@@ -671,32 +671,11 @@
             var iconContainer = document.getElementById("iconContainer" + id);
             var checkboxInput = document.getElementById("check" + id);
 
-            facturaInput.addEventListener("click", function(event) {
-                // if (!alertShown) {
-                //     event.stopPropagation(); // Prevent the file explorer from opening immediately
-                //     event.preventDefault(); // Prevent any default behavior
-
-                //     Swal.fire({
-                //         title: "¿Estás seguro?",
-                //         text: "Se reemplazará la imagen actual por una nueva. ¿Deseas continuar?",
-                //         icon: "warning",
-                //         showCancelButton: true,
-                //         confirmButtonColor: "#3085d6",
-                //         cancelButtonColor: "#d33",
-                //         confirmButtonText: "Continuar",
-                //         cancelButtonText: "Cancelar",
-                //     }).then((result) => {
-                //         if (result.isConfirmed) {
-                //             alertShown =
-                //                 true; // Set the flag to true to prevent the alert from showing again
-                //             facturaInput.click();
-                //         }
-                //     });
-                // }
-            });
-
             facturaInput.addEventListener("change", function(event) {
                 if (event.target.files.length > 0) {
+                    
+                    facturaInput.addEventListener("click", createClickHandler(id));
+                    
                     var file = event.target.files[0];
                     var fileURL = URL.createObjectURL(file);
                     downloadFacturaButton.setAttribute("href", fileURL);
@@ -716,7 +695,7 @@
                     removeFacturaButton.style.display = "none";
                     omitirFacturaButton.style.display = "block";
                     cancelarOmitirButton.style.display = "none";
-                    alertShown = true;
+                    alertShown = false;
                     FechaInput.disabled = true;
                     checkboxInput.style.visibility = "hidden";
                     iconContainer.innerHTML =
@@ -735,10 +714,42 @@
                 checkboxInput.style.visibility = "hidden";
                 FechaInput.value = null;
                 nullInput.value = id;
-                alertShown = true;
+                
                 iconContainer.innerHTML =
                     '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
             });
+        }
+        // Función para crear el manejador de eventos "click" usando el ID específico
+        function createClickHandler(id) {
+        return function (event) {
+            var facturaInput = document.getElementById(id);
+            var iconContainer = document.getElementById("iconContainer" + id);
+            var icon = document.getElementById("icon" + id);
+            var expectedIconHTML =
+            '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
+            console.log('expectedIconHTML',expectedIconHTML);
+
+            if (!alertShown && iconContainer.innerHTML === expectedIconHTML) {
+            event.stopPropagation(); // Prevent the file explorer from opening immediately
+            event.preventDefault(); // Prevent any default behavior
+
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: "Se reemplazará la imagen actual por una nueva. ¿Deseas continuar?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Continuar",
+                cancelButtonText: "Cancelar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                alertShown = true; // Set the flag to true to prevent the alert from showing again
+                facturaInput.click();
+                }
+            });
+            }
+        };
         }
     </script>
 
