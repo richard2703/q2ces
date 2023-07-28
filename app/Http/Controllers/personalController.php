@@ -420,13 +420,14 @@ class personalController extends Controller
         // $docs = userdocs::where('personalId', $personal->id)->first();
         $docs = userdocs::join('docs', "userdocs.tipoId", "docs.id")
             ->select(
-                'docs.id as tipoDocId',
-                'docs.nombre as docNombre',
-                'userdocs.id',
+                'docs.id',
+                'docs.nombre',
+                'userdocs.id as usuarioId',
                 'userdocs.fechaVencimiento',
                 'userdocs.estatus',
                 'userdocs.comentarios',
-                'userdocs.ruta'
+                'userdocs.ruta',
+                'userdocs.requerido',
             )
             ->where('personalId', $personal->id)->get();
         // dd($docs);

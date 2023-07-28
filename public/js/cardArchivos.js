@@ -69,7 +69,7 @@ function handleDocumento(id, nombre) {
 	var FechaInput = document.getElementById("fecha" + id);
 	// Resto del código que utilizas para manejar los eventos, pero ahora con el ID proporcionado
 	var facturaInput = document.getElementById(id);
-	var nullInput = document.getElementById(nombre);
+	// var nullInput = document.getElementById(nombre);
 	var downloadFacturaButton = document.getElementById("downloadButton" + id);
 	var removeFacturaButton = document.getElementById("removeButton" + id);
 	var omitirFacturaButton = document.getElementById("omitirButton" + id);

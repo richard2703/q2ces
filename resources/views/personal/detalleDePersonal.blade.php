@@ -1087,37 +1087,34 @@
                                                             <label
                                                                 class="form-check-label text-start fs-5 textTitulo text-break mb-2"
                                                                 for="flexCheckDefault">
-                                                                <div id="divIcono{{ $doc->tipoDocId }}">
-                                                                    <i id="icono" class=""></i>
-                                                                </div>
                                                                 <i class="fas fa-times-circle semaforo{{ $doc->estatus }}"
                                                                     style="display: {{ $doc->estatus != '0' ? ' none' : '' }};"></i>
                                                                 <i class="fa fa-exclamation-circle semaforo{{ $doc->estatus }}"
-                                                                    style="display: {{ $doc->estatus != '1' ? ' none' : '' }};"></i>
+                                                                    style="display: {{ $doc->estatus != '1' ? ' none' : '' }};"
+                                                                    title="Proximo a vencer"></i>
                                                                 <i class="fa fa-check-circle semaforo{{ $doc->estatus }}"
                                                                     style="display: {{ $doc->estatus != '2' ? ' none' : '' }};"></i>
 
-                                                                {{ ucwords(trans($doc->docNombre)) }}
-                                                            </label>
+                                                                {{ ucwords(trans($doc->ruta)) }} </label>
                                                         </div>
                                                         <div
                                                             class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
-                                                            <input type="hidden" id='{{ $doc->docNombre }}'
+                                                            <input type="hidden" id='{{ $doc->nombre }}'
                                                                 name='archivo[{{ $contador }}][tipoDocs]'
-                                                                value='{{ $doc->tipoDocId }}'>
-                                                            <input type="hidden" id='nombre{{ $doc->docNombre }}'
+                                                                value='{{ $doc->id }}'>
+                                                            <input type="hidden" id='nombre{{ $doc->nombre }}'
                                                                 name='archivo[{{ $contador }}][tipoDocsNombre]'
-                                                                value='{{ $doc->docNombre }}'>
-                                                            <input type="hidden" id='omitido{{ $doc->tipoDocId }}'
+                                                                value='{{ $doc->nombre }}'>
+                                                            <input type="hidden" id='omitido{{ $doc->id }}'
                                                                 name='archivo[{{ $contador }}][omitido]'
                                                                 value='0'>
                                                             <label class="custom-file-upload"
-                                                                onclick='handleDocumento("{{ $doc->id }}","{{ $doc->docNombre }}")'>
+                                                                onclick='handleDocumento("{{ $doc->id }}","{{ $doc->nombre }}")'>
                                                                 <input class="mb-4" type="file"
                                                                     name='archivo[{{ $contador }}][docs]'
-                                                                    id='{{ $doc->tipoDocId }}' accept=".pdf"
+                                                                    id='{{ $doc->id }}' accept=".pdf"
                                                                     value="{{ $doc->ruta }}">
-                                                                <div id='iconContainer{{ $doc->tipoDocId }}'>
+                                                                <div id='iconContainer{{ $doc->id }}'>
                                                                     <lord-icon src="https://cdn.lordicon.com/koyivthb.json"
                                                                         trigger="hover"
                                                                         colors="primary:#86c716,secondary:#e8e230"
@@ -1126,7 +1123,7 @@
 
                                                                 </div>
                                                             </label>
-                                                            <a id='downloadButton{{ $doc->tipoDocId }}'
+                                                            <a id='downloadButton{{ $doc->id }}'
                                                                 class="btnViewDescargar btn btn-outline-success btnView"
                                                                 style="display: none" download>
                                                                 <span class="btn-text">Descargar</span>
@@ -1134,21 +1131,23 @@
                                                                     <i class="far fa-eye mt-2"></i>
                                                                 </span>
                                                             </a>
-                                                            <button id='removeButton{{ $doc->tipoDocId }}'
+                                                            <button id='removeButton{{ $doc->id }}'
                                                                 class="btnViewDelete btn btn-outline-danger btnView"
+                                                                type="button"
                                                                 style="width: 2.4em; height: 2.4em; display: none;"><i
                                                                     class="fa fa-times"></i></button>
                                                             <!-- Botón Omitir -->
-                                                            <button id='omitirButton{{ $doc->tipoDocId }}'
+                                                            <button id='omitirButton{{ $doc->id }}'
                                                                 class="btnSinFondo float-end mt-3"
                                                                 style="margin-left: 20px" rel="tooltip" type="button"
-                                                                onclick='omitir("{{ $doc->tipoDocId }}","{{ $doc->docNombre }}")'>
+                                                                onclick='omitir("{{ $doc->id }}","{{ $doc->nombre }}")'>
                                                                 <P class="fs-5"> Omitir</P>
                                                             </button>
-                                                            <button id='cancelarOmitirButton{{ $doc->tipoDocId }}'
+                                                            <button id='cancelarOmitirButton{{ $doc->id }}'
                                                                 class="btnSinFondo float-end mt-3"
                                                                 style="margin-left: 20px; display: none;" rel="tooltip"
-                                                                onclick='cancelarOmitir("{{ $doc->tipoDocId }}","{{ $doc->docNombre }}")'>
+                                                                type="button"
+                                                                onclick='cancelarOmitir("{{ $doc->id }}","{{ $doc->nombre }}")'>
                                                                 <P class="fs-5"> Cancelar</P>
                                                             </button>
                                                             <div class="text-center" style="margin-top: -10px !important">
@@ -1162,13 +1161,13 @@
                                                                     <input
                                                                         class="form-check-input is-invalid align-self-end mb-2"
                                                                         name='archivo[{{ $contador }}][check]'
-                                                                        type="checkbox" id='check{{ $doc->tipoDocId }}'
+                                                                        type="checkbox" id='check{{ $doc->id }}'
                                                                         checked style="font-size: 20px; visibility: hidden"
-                                                                        onchange='handleCheckboxChange("{{ $doc->tipoDocId }}")'>
+                                                                        onchange='handleCheckboxChange("{{ $doc->id }}")'>
                                                                 </div>
                                                                 <div class="col-12">
                                                                     <input type="date" class="inputCaja text-center"
-                                                                        id='fecha{{ $doc->tipoDocId }}'
+                                                                        id='fecha{{ $doc->id }}'
                                                                         name="archivo[{{ $contador }}][fecha]"
                                                                         style="display: block;"
                                                                         value="{{ $doc->fechaVencimiento }}">
@@ -1178,7 +1177,7 @@
                                                                         class="text-start fs-5 textTitulo text-break mb-2"
                                                                         style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
                                                                     <textarea class="form-control-textarea inputCaja" rows="2" maxlength="1000"
-                                                                        id='comentario{{ $doc->tipoDocId }}' name="archivo[{{ $contador }}][comentario]"
+                                                                        id='comentario{{ $doc->id }}' name="archivo[{{ $contador }}][comentario]"
                                                                         placeholder="Escribe Un Comentario">{{ $doc->comentarios }}</textarea>
                                                                 </div>
                                                             </div>
@@ -1186,6 +1185,13 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function() {
+                                                    // Llamar a la función después de que la vista haya cargado completamente
+                                                    evaluar({{ $doc->id }}, {{ $doc->requerido }});
+                                                });
+                                            </script>
+
                                             @php
                                                 $contador++;
                                             @endphp
@@ -1266,14 +1272,15 @@
         </div>
     </div>
     <script src="{{ asset('js/cardArchivos.js') }}"></script>
-    <script type="application/javascript">
-        jQuery('input[type=file]').change(function(){
-         var filename = jQuery(this).val().split('\\').pop();
-         var idname = jQuery(this).attr('id');
-         console.log(jQuery(this));
-         console.log(filename);
-         console.log(idname);
-         jQuery('span.'+idname).next().find('span').html(filename);
-        });
-        </script>
+    <script>
+        function evaluar(id, requerido) {
+            console.log(id, requerido);
+            if (requerido == 0) {
+                console.log('ya');
+                omitir(id);
+
+            }
+        }
+    </script>
+
 @endsection
