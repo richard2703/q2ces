@@ -80,7 +80,9 @@ class personalController extends Controller
     {
         abort_if(Gate::denies('personal_create'), 403);
 
-        // dd( $request );
+        // $request->file('docs')[$cont]
+
+        // dd($request->archivo);
         $request->validate([
             'nombres' => 'required|max:150',
             'apellidoP' => 'required|max:150',
@@ -231,44 +233,7 @@ class personalController extends Controller
             'cargadorSerial.numeric' => 'El campo serial del cargador debe de ser númerico.',
         ]);
 
-        $personal = $request->only(
-            'userId',
-            'nombres',
-            'apellidoP',
-            'apellidoM',
-            'fechaNacimiento',
-            'lugarNacimiento',
-            'curp',
-            'ine',
-            'rfc',
-            'licencia',
-            'cpf',
-            'cpe',
-            'sexo',
-            'civil',
-            'hijos',
-            'sangre',
-            'calle',
-            'numero',
-            'colonia',
-            'estado',
-            'ciudad',
-            'cp',
-            'particular',
-            'celular',
-            'mailpersonal',
-            'mailEmpresarial',
-            'casa',
-            'foto',
-            'aler',
-            'profe',
-            'interior',
-            'estatusId',
-            'puestoId',
-            'usaCajaChica',
-            'puestoNivelId',
-            'tipoLicencia'
-        );
+        $personal = $request->all();
         // conversion a mayuscula de algunos campos
         $personal['curp'] = strtoupper($personal['curp']);
         $personal['ine'] = strtoupper($personal['ine']);
@@ -303,82 +268,44 @@ class personalController extends Controller
         /*** directorio contenedor de su información */
         $pathPesonal = str_pad($personal->id, 4, '0', STR_PAD_LEFT);
 
-        if ($request->hasFile('foto')) {
-            $personal->foto  = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
-            $request->file('foto')->storeAs('/public/personal/' . $pathPesonal,  $personal->foto);
-            $personal->save();
-        }
+        for ($i = 0; $i < count($request->archivo); $i++) {
+            $documento = new userdocs();
+            $documento->personalId = $personal->id;
+            $documento->tipoId = $request->archivo[$i]['tipoDocs']; // Obtenemos el tipo de documento
+            $tipoDocumentoNombre = $request->archivo[$i]['tipoDocsNombre']; // Obtenemos el tipo de documento
 
-        if ($request->hasFile('dvitae')) {
-            $docs['dvitae'] = time() . '_' . $request->file('dvitae')->getClientOriginalName();
-            $request->file('dvitae')->storeAs('/public/personal/' . $pathPesonal, $docs['dvitae']);
+            if ($request->archivo[$i]['omitido'] == 0) {
+                // OBLIGATORIO
+                $documento->requerido = '1';
+                $documento->estatus = '0';
+                if (isset(($request->archivo[$i]['docs']))) {
+                    $file = $request->file('archivo')[$i]['docs'];
+                    $documento->ruta = time() . '_' . $file->getClientOriginalName();
+                    $file->storeAs('/public/maquinaria/' . $pathPesonal . '/documentos/' .  $tipoDocumentoNombre, $documento->ruta);
+                    $documento->estatus = '2'; //Si es 2 Esta  OK
+                }
+
+                if ((isset($request->archivo[$i]['check']) && $request->archivo[$i]['check'] == 'on')) {
+                    $documento->vencimiento = 1; //Si es 1 SI vence el documento
+                    $documento->estatus = '0'; //Si esta en 0 Esta MAL
+                    if (isset($request->archivo[$i]['fecha'])) {
+                        $documento->fechaVencimiento = $request->archivo[$i]['fecha'];
+                        // Evaluar fecha de vencimiento
+                        $documento->estatus = '1'; //Si es 1 Esta proximo a vencer
+                    }
+                } else {
+                    $documento->vencimiento = 0; //Si es 0 no vence el documento
+                    // $documento->estatus = '1';
+                }
+            } else {
+                // NO REQUERIDO
+                $documento->requerido = '0';
+                $documento->estatus = '2'; //Si es 2 Esta  OK
+            }
+            $documento->comentarios = $request->archivo[$i]['comentario'];
+
+            $documento->save();
         }
-        if ($request->hasFile('dnacimiento')) {
-            $docs['dnacimiento'] = time() . '_' . $request->file('dnacimiento')->getClientOriginalName();
-            $request->file('dnacimiento')->storeAs('/public/personal/' . $pathPesonal, $docs['dnacimiento']);
-        }
-        if ($request->hasFile('dine')) {
-            $docs['dine'] = time() . '_' . $request->file('dine')->getClientOriginalName();
-            $request->file('dine')->storeAs('/public/personal/' . $pathPesonal, $docs['dine']);
-        }
-        if ($request->hasFile('dcurp')) {
-            $docs['dcurp'] = time() . '_' . $request->file('dcurp')->getClientOriginalName();
-            $request->file('dcurp')->storeAs('/public/personal/' . $pathPesonal, $docs['dcurp']);
-        }
-        if ($request->hasFile('dlicencia')) {
-            $docs['dlicencia'] = time() . '_' . $request->file('dlicencia')->getClientOriginalName();
-            $request->file('dlicencia')->storeAs('/public/personal/' . $pathPesonal, $docs['dlicencia']);
-        }
-        if ($request->hasFile('dcedula')) {
-            $docs['dcedula'] = time() . '_' . $request->file('dcedula')->getClientOriginalName();
-            $request->file('dcedula')->storeAs('/public/personal/' . $pathPesonal, $docs['dcedula']);
-        }
-        if ($request->hasFile('dfiscal')) {
-            $docs['dfiscal'] = time() . '_' . $request->file('dfiscal')->getClientOriginalName();
-            $request->file('dfiscal')->storeAs('/public/personal/' . $pathPesonal, $docs['dfiscal']);
-        }
-        if ($request->hasFile('dpenales')) {
-            $docs['dpenales'] = time() . '_' . $request->file('dpenales')->getClientOriginalName();
-            $request->file('dpenales')->storeAs('/public/personal/' . $pathPesonal, $docs['dpenales']);
-        }
-        if ($request->hasFile('drecomendacion')) {
-            $docs['drecomendacion'] = time() . '_' . $request->file('drecomendacion')->getClientOriginalName();
-            $request->file('drecomendacion')->storeAs('/public/personal/' . $pathPesonal, $docs['drecomendacion']);
-        }
-        if ($request->hasFile('ddc3')) {
-            $docs['ddc3'] = time() . '_' . $request->file('ddc3')->getClientOriginalName();
-            $request->file('ddc3')->storeAs('/public/personal/' . $pathPesonal, $docs['ddc3']);
-        }
-        if ($request->hasFile('dmedico')) {
-            $docs['dmedico'] = time() . '_' . $request->file('dmedico')->getClientOriginalName();
-            $request->file('dmedico')->storeAs('/public/personal/' . $pathPesonal, $docs['dmedico']);
-        }
-        if ($request->hasFile('ddoping')) {
-            $docs['ddoping'] = time() . '_' . $request->file('ddoping')->getClientOriginalName();
-            $request->file('ddoping')->storeAs('/public/personal/' . $pathPesonal, $docs['ddoping']);
-        }
-        if ($request->hasFile('destudios')) {
-            $docs['destudios'] = time() . '_' . $request->file('destudios')->getClientOriginalName();
-            $request->file('destudios')->storeAs('/public/personal/' . $pathPesonal, $docs['destudios']);
-        }
-        if ($request->hasFile('dnss')) {
-            $docs['dnss'] = time() . '_' . $request->file('dnss')->getClientOriginalName();
-            $request->file('dnss')->storeAs('/public/personal/' . $pathPesonal, $docs['dnss']);
-        }
-        if ($request->hasFile('dari')) {
-            $docs['dari'] = time() . '_' . $request->file('dari')->getClientOriginalName();
-            $request->file('dari')->storeAs('/public/personal/' . $pathPesonal, $docs['dari']);
-        }
-        if ($request->hasFile('dpuesto')) {
-            $docs['dpuesto'] = time() . '_' . $request->file('dpuesto')->getClientOriginalName();
-            $request->file('dpuesto')->storeAs('/public/personal/' . $pathPesonal, $docs['dpuesto']);
-        }
-        if ($request->hasFile('dcontrato')) {
-            $docs['dcontrato'] = time() . '_' . $request->file('dcontrato')->getClientOriginalName();
-            $request->file('dcontrato')->storeAs('/public/personal/' . $pathPesonal, $docs['dcontrato']);
-        }
-        $docs['personalId'] = $personal->id;
-        $docs = userdocs::create($docs);
 
         $newcontacto = new contactos();
         $newcontacto->personalId = $personal->id;
@@ -490,12 +417,27 @@ class personalController extends Controller
         $beneficiario = beneficiario::where('personalId', $personal->id)->first();
         $nomina = nomina::where('personalId', $personal->id)->first();
         $equipo = equipo::where('personalId', $personal->id)->first();
-        $docs = userdocs::where('personalId', $personal->id)->first();
+        // $docs = userdocs::where('personalId', $personal->id)->first();
+        $docs = userdocs::join('docs', "userdocs.tipoId", "docs.id")
+            ->select(
+                'docs.id',
+                'docs.nombre',
+                'userdocs.id as usuarioId',
+                'userdocs.fechaVencimiento',
+                'userdocs.estatus',
+                'userdocs.comentarios',
+                'userdocs.ruta',
+                'userdocs.requerido',
+            )
+            ->where('personalId', $personal->id)->get();
+        // dd($docs);
         $fiscal = fiscal::where('personalId', $personal->id)->first();
         $vctPuestos = puesto::orderBy('nombre', 'asc')->get();
         $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->get();
         $vctEstatus = userEstatus::all();
         $vctPersonal = personal::all();
+        // $documentos = docs::where('tipoId', '1')->orderBy('nombre', 'asc')->get();
+
 
         $nomina->decSalarioDiario = ($nomina->diario);
         $nomina->decSalarioDiarioIntegrado = round($nomina->decSalarioDiario * 1.05137, 2);

@@ -56,7 +56,7 @@ class maquinariaController extends Controller
 
     public function store(Request $request)
     {
-        dd($request);
+        dd($request->archivo);
         abort_if(Gate::denies('maquinaria_create'), 403);
         // $request->validate([
         //     'nombre' => 'required|max:250',
@@ -148,40 +148,26 @@ class maquinariaController extends Controller
         $maquinaria = maquinaria::create($maquinaria);
         $cont = 0;
         // dd($request->docs[$cont]);
+        // Bucle para procesar los documentos
+        //dd($request->tipoDocs);
         for ($i = 0; $i < count($request->tipoDocs); $i++) {
-            // if (strpos($request->tipoDocs[$i], '-0') == true) {
-            //     dd(substr($request->tipoDocs[$i], 0, -2));
-
-            //     // dd($request->docs, $request->tipoDocs);
-            //     $objFactura = new maqdocs();
-            //     $objFactura->maquinariaId = $maquinaria->id;
-            //     $objFactura->tipo = substr($request->tipoDocs[$i], 0, -2);
-            //     $objFactura->estatus = 'omitido';
-            //     $objFactura->save();
-            // }
-            if (strpos($request->tipoDocs[$i], '-1') == true) {
-                // dd(substr($request->tipoDocs[$i], 0, -2));
-                dd($request->hasFile($request->archivo[$cont]));
-                dd($request->docs, $request->tipoDocs);
-
-                if ($request->hasFile($request->docs[$cont])) {
-                    $objFactura = new maqdocs();
-                    $objFactura->maquinariaId = $maquinaria->id;
-                    // $objFactura->maquinariaId = 35;
-                    $objFactura->tipo = substr($request->tipoDocs[$i], 0, -2);
-                    $objFactura->estatus = 'activo';
-                    $objFactura->ruta = time() . '_' . $request->file($request->docs[$cont])->getClientOriginalName();
-                    $request->file($request->docs[$cont])->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos/' .  $objFactura->tipo, $objFactura->ruta);
-                    $objFactura->save();
-                    $cont = $cont + 1;
-                }
-
-            }else{
-                dd("No entre");
-
+            $documento = new maqdocs();
+            $documento->maquinariaId = $maquinaria->id;
+            $tipoDocumento = $request->tipoDocs[$i];
+        
+            if (strpos($tipoDocumento, '-0') !== false) {
+                $documento->tipo = substr($tipoDocumento, 0, -2);
+                $documento->estatus = 'omitido';
+                $documento->save();
+            } elseif (strpos($tipoDocumento, '-1') !== false) {
+                $documento->tipo = substr($tipoDocumento, 0, -2);
+                $documento->estatus = 'activo';
+                $documento->ruta = time() . '_' . $request->file('docs')[$cont]->getClientOriginalName();
+                $request->file('docs')[$cont]->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos/' .  $documento->tipo, $documento->ruta);
+                $documento->save();
             }
-            // dd("false");
         }
+        
 
         if ($request->hasFile('factura_ruta')) {
             $objFactura = new maqdocs();
