@@ -1138,7 +1138,7 @@ VALUES
 
 create table tarea(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) NULL,
+    nombre varchar(255) NULL,
     comentario text NULL,
     categoriaId bigint(20) unsigned NULL,
     ubicacionId bigint(20) unsigned NULL,
@@ -1154,7 +1154,7 @@ create table tarea(
 
 create table bitacoras(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) NULL,
+    nombre varchar(255) NULL,
     comentario text NULL,
     activa TINYINT(1) NOT NULL DEFAULT '1',
     created_at datetime NULL,
@@ -1164,7 +1164,7 @@ create table bitacoras(
 
 create table grupo(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) NULL,
+    nombre varchar(255) NULL,
     comentario text NULL,
     activo TINYINT(1) NOT NULL DEFAULT '1',
     created_at datetime NULL,
@@ -1246,4 +1246,42 @@ CREATE TABLE proveedor(
     updated_at timestamp NULL DEFAULT NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_proveedor_categoria foreign key (categoriaId) references proveedorCategoria(id)
+);
+
+
+create table checkList(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    bitacoraId bigint(20) unsigned NOT NULL,
+    usuarioId bigint(20) unsigned NOT NULL,
+    maquinariaId bigint(20) unsigned NOT NULL,
+    registrada datetime NULL,
+    comentario text NULL,
+    primary key (id),
+    CONSTRAINT FK_checkListBitacora foreign key (bitacoraId) references bitacoras(id),
+    CONSTRAINT FK_checkListUsuario foreign key (usuarioId) references users(id),
+    CONSTRAINT FK_checkListMaquinaria foreign key (maquinariaId) references maquinaria(id)
+);
+
+create table checkListRegistros(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    checkListId bigint(20) unsigned NOT NULL,
+    maquinariaId bigint(20) unsigned NOT NULL,
+    maquinaria varchar(255) NOT NULL,
+    bitacoraId bigint(20) unsigned NOT NULL,
+    bitacora varchar(255) NOT NULL,
+    grupoId bigint(20) unsigned NOT NULL,
+    grupo varchar(255) NOT NULL,
+    tareaId bigint(20) unsigned NOT NULL,
+    tarea varchar(255) NOT NULL,
+    resultado varchar(255) NULL,
+    usuarioId bigint(20) unsigned NOT NULL,
+    created_at timestamp NULL DEFAULT NULL,
+    updated_at timestamp NULL DEFAULT NULL,
+    primary key (id),
+    CONSTRAINT FK_checkListRegistrosBitacora foreign key (bitacoraId) references bitacoras(id),
+    CONSTRAINT FK_checkListRegistrosUsuario foreign key (usuarioId) references users(id),
+    CONSTRAINT FK_checkListRegistrosMaquinaria foreign key (maquinariaId) references maquinaria(id),
+    CONSTRAINT FK_checkListRegistrosGrupo foreign key (grupoId) references grupo(id),
+    CONSTRAINT FK_checkListRegistrosTarea foreign key (tareaId) references tarea(id),
+    CONSTRAINT FK_checkListHistorico foreign key (checkListId) references checkList(id)
 );
