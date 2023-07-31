@@ -13,7 +13,7 @@
                                 <a href="{{route('mtq.index')}}">
                                     <img src="/img/inventario/herramientas.svg" alt="Puestos" title="Puestos"
                                         width="30%" class="botonIconoPrincipal">
-                                    <p class="mt-4 texticonos">Maquinaria Mtq's</p>
+                                    <p class="mt-4 texticonos">Maquinaria MTQ</p>
                                 </a>
                             </div>
                         @endcan
