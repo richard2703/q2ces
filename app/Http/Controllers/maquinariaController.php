@@ -40,7 +40,7 @@ class maquinariaController extends Controller
     public function create()
     {
         abort_if(Gate::denies('maquinaria_create'), 403);
-        $doc = docs::where('tipoId', '2')->get();
+        $doc = docs::where('tipoId', '2')->orderBy('nombre', 'asc')->get();
         $bitacora = bitacoras::all();
 
         return view('maquinaria.altaDeMaquinaria', compact('bitacora', 'doc'));
