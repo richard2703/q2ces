@@ -4,14 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Session;
-use App\Models\reparaciones;
-use App\Helpers\Validaciones;
-use App\Helpers\Calculos;
-use Illuminate\Support\Facades\Gate;
 
-class reparacionesController extends Controller
+class checkListRegistrosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,29 +35,7 @@ class reparacionesController extends Controller
      */
     public function store(Request $request)
     {
-        abort_if(Gate::denies('mantenimiento_create'), 403);
-
-        // dd( 'Todas las tareas...' );
-
-        $request->validate([
-            'nombre' => 'required|max:200',
-            'codigo' => 'required|max:8',
-            'comentario' => 'nullable|max:500',
-        ], [
-            'nombre.required' => 'El campo nombre es obligatorio.',
-            'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
-            'codigo.required' => 'El campo nombre es obligatorio.',
-            'codigo.max' => 'El campo nombre excede el límite de caracteres permitidos.',
-            'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
-        ]);
-        $reparacion = $request->all();
-
-        // dd( $tarea );
-
-        reparaciones::create($reparacion);
-        Session::flash('message', 1);
-
-        return redirect()->route('calendario.index');
+        //
     }
 
     /**

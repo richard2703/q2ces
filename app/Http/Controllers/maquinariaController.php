@@ -131,12 +131,13 @@ class maquinariaController extends Controller
         $maquinaria = $request->all();
 
         //** Generamos el identificador de la maquinaria */
-        // $maquinaria[ 'identificador' ] = $this->generaCodigoIdentificacion( $maquinaria[ 'categoria' ] );
+        $maquinaria[ 'identificador' ] = $this->generaCodigoIdentificacion( $maquinaria[ 'categoria' ] );
         $maquinaria['estatusId'] = 1;
         // dd( $maquinaria[ 'identificador' ] );
 
         /*** directorio contenedor de su información */
         $pathMaquinaria = str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT);
+
 
         $maquinaria['placas'] = strtoupper($maquinaria['placas']);
         $maquinaria['nummotor'] = strtoupper($maquinaria['nummotor']);

@@ -215,12 +215,20 @@
                     </a>
                     <ul id="bitacora-nav" class="nav-content collapse {{ $activePage == 'bitacoras' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
-                        @can('bitacora_index')
+
+                        @can('checkList_show')
+                            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                                <a href="{{ route('checkList.index') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Ver CheckList</span>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('bitacora_index')
                             <li>
                                 {{--  <a href="{{ url('/indexBitacora') }}"
                                     class="{{ $activeItem == 'bitacoras' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('bitacoras.index') }}" class="">
-                                    <i class="bi bi-circle"></i><span>Ver Bitacoras</span>
+                                    <i class="bi bi-circle"></i><span>Ver Bitácoras</span>
                                 </a>
                             </li>
                         @endcan

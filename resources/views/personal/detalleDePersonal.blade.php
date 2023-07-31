@@ -1087,110 +1087,211 @@
                                                             <label
                                                                 class="form-check-label text-start fs-5 textTitulo text-break mb-2"
                                                                 for="flexCheckDefault">
-                                                                <div id="divIcono{{ $doc->tipoDocId }}">
-                                                                    <i id="icono" class=""></i>
-                                                                </div>
                                                                 <i class="fas fa-times-circle semaforo{{ $doc->estatus }}"
                                                                     style="display: {{ $doc->estatus != '0' ? ' none' : '' }};"></i>
                                                                 <i class="fa fa-exclamation-circle semaforo{{ $doc->estatus }}"
-                                                                    style="display: {{ $doc->estatus != '1' ? ' none' : '' }};"></i>
+                                                                    style="display: {{ $doc->estatus != '1' ? ' none' : '' }};"
+                                                                    title="Proximo a vencer"></i>
                                                                 <i class="fa fa-check-circle semaforo{{ $doc->estatus }}"
                                                                     style="display: {{ $doc->estatus != '2' ? ' none' : '' }};"></i>
-
-                                                                {{ ucwords(trans($doc->docNombre)) }}
-                                                            </label>
+                                                                {{ ucwords(trans($doc->nombre)) }} </label>
                                                         </div>
-                                                        <div
-                                                            class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
-                                                            <input type="hidden" id='{{ $doc->docNombre }}'
-                                                                name='archivo[{{ $contador }}][tipoDocs]'
-                                                                value='{{ $doc->tipoDocId }}'>
-                                                            <input type="hidden" id='nombre{{ $doc->docNombre }}'
-                                                                name='archivo[{{ $contador }}][tipoDocsNombre]'
-                                                                value='{{ $doc->docNombre }}'>
-                                                            <input type="hidden" id='omitido{{ $doc->tipoDocId }}'
-                                                                name='archivo[{{ $contador }}][omitido]'
-                                                                value='0'>
-                                                            <label class="custom-file-upload"
-                                                                onclick='handleDocumento("{{ $doc->id }}","{{ $doc->docNombre }}")'>
-                                                                <input class="mb-4" type="file"
-                                                                    name='archivo[{{ $contador }}][docs]'
-                                                                    id='{{ $doc->tipoDocId }}' accept=".pdf"
-                                                                    value="{{ $doc->ruta }}">
-                                                                <div id='iconContainer{{ $doc->tipoDocId }}'>
-                                                                    <lord-icon src="https://cdn.lordicon.com/koyivthb.json"
-                                                                        trigger="hover"
-                                                                        colors="primary:#86c716,secondary:#e8e230"
-                                                                        stroke="65" style="width:50px;height:70px">
-                                                                    </lord-icon>
+                                                        @if ($doc->ruta != null)
+                                                            <div
+                                                                class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
+                                                                <input type="hidden" id='{{ $doc->nombre }}'
+                                                                    name='archivo[{{ $contador }}][tipoDocs]'
+                                                                    value='{{ $doc->id }}'>
+                                                                <input type="hidden" id='nombre{{ $doc->nombre }}'
+                                                                    name='archivo[{{ $contador }}][tipoDocsNombre]'
+                                                                    value='{{ $doc->nombre }}'>
+                                                                <input type="hidden" id='omitido{{ $doc->id }}'
+                                                                    name='archivo[{{ $contador }}][omitido]'
+                                                                    value='0'>
+                                                                <label class="custom-file-upload"
+                                                                    onclick='handleDocumento("{{ $doc->id }}","{{ $doc->nombre }}")'>
+                                                                    <input class="mb-4" type="file"
+                                                                        name='archivo[{{ $contador }}][docs]'
+                                                                        id='{{ $doc->id }}' accept=".pdf"
+                                                                        value="{{ $doc->ruta }}">
+                                                                    <div id='iconContainer{{ $doc->id }}'>
+                                                                        <lord-icon
+                                                                            src="https://cdn.lordicon.com/nxaaasqe.json"
+                                                                            trigger="hover"
+                                                                            colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
 
-                                                                </div>
-                                                            </label>
-                                                            <a id='downloadButton{{ $doc->tipoDocId }}'
-                                                                class="btnViewDescargar btn btn-outline-success btnView"
-                                                                style="display: none" download>
-                                                                <span class="btn-text">Descargar</span>
-                                                                <span class="icon">
-                                                                    <i class="far fa-eye mt-2"></i>
-                                                                </span>
-                                                            </a>
-                                                            <button id='removeButton{{ $doc->tipoDocId }}'
-                                                                class="btnViewDelete btn btn-outline-danger btnView"
-                                                                style="width: 2.4em; height: 2.4em; display: none;"><i
-                                                                    class="fa fa-times"></i></button>
-                                                            <!-- Botón Omitir -->
-                                                            <button id='omitirButton{{ $doc->tipoDocId }}'
-                                                                class="btnSinFondo float-end mt-3"
-                                                                style="margin-left: 20px" rel="tooltip" type="button"
-                                                                onclick='omitir("{{ $doc->tipoDocId }}","{{ $doc->docNombre }}")'>
-                                                                <P class="fs-5"> Omitir</P>
-                                                            </button>
-                                                            <button id='cancelarOmitirButton{{ $doc->tipoDocId }}'
-                                                                class="btnSinFondo float-end mt-3"
-                                                                style="margin-left: 20px; display: none;" rel="tooltip"
-                                                                onclick='cancelarOmitir("{{ $doc->tipoDocId }}","{{ $doc->docNombre }}")'>
-                                                                <P class="fs-5"> Cancelar</P>
-                                                            </button>
-                                                            <div class="text-center" style="margin-top: -10px !important">
-                                                                <div class="form-check d-flex justify-content-between">
-                                                                    <div class="text-center"></div>
-                                                                    <label
-                                                                        class="text-start fs-5 textTitulo text-break mb-2"
-                                                                        style="margin-left:-33px!important; font-size: 18px !important">
-                                                                        Expiración:
-                                                                    </label>
-                                                                    <input
-                                                                        class="form-check-input is-invalid align-self-end mb-2"
-                                                                        name='archivo[{{ $contador }}][check]'
-                                                                        type="checkbox" id='check{{ $doc->tipoDocId }}'
-                                                                        checked style="font-size: 20px; visibility: hidden"
-                                                                        onchange='handleCheckboxChange("{{ $doc->tipoDocId }}")'>
-                                                                </div>
-                                                                <div class="col-12">
-                                                                    <input type="date" class="inputCaja text-center"
-                                                                        id='fecha{{ $doc->tipoDocId }}'
-                                                                        name="archivo[{{ $contador }}][fecha]"
-                                                                        style="display: block;"
-                                                                        value="{{ $doc->fechaVencimiento }}">
-                                                                </div>
-                                                                <div class="col-12">
-                                                                    <label
-                                                                        class="text-start fs-5 textTitulo text-break mb-2"
-                                                                        style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
-                                                                    <textarea class="form-control-textarea inputCaja" rows="2" maxlength="1000"
-                                                                        id='comentario{{ $doc->tipoDocId }}' name="archivo[{{ $contador }}][comentario]"
-                                                                        placeholder="Escribe Un Comentario">{{ $doc->comentarios }}</textarea>
+                                                                    </div>
+                                                                </label>
+                                                                <a id='downloadButton{{ $doc->id }}'
+                                                                    class="btnViewDescargar btn btn-outline-success btnView"
+                                                                    style="" download>
+                                                                    <span class="btn-text">Descargar</span>
+                                                                    <span class="icon">
+                                                                        <i class="far fa-eye mt-2"></i>
+                                                                    </span>
+                                                                </a>
+                                                                <button id='removeButton{{ $doc->id }}'
+                                                                    class="btnViewDelete btn btn-outline-danger btnView"
+                                                                    type="button"
+                                                                    style="width: 2.4em; height: 2.4em; "><i
+                                                                        class="fa fa-times"></i></button>
+                                                                <!-- Botón Omitir -->
+                                                                <button id='omitirButton{{ $doc->id }}'
+                                                                    class="btnSinFondo float-end mt-3"
+                                                                    style="margin-left: 20px display: none;"
+                                                                    rel="tooltip" type="button"
+                                                                    onclick='omitir("{{ $doc->id }}","{{ $doc->nombre }}")'>
+                                                                    <P class="fs-5" style="display: none;"> Omitir</P>
+                                                                </button>
+                                                                <button id='cancelarOmitirButton{{ $doc->id }}'
+                                                                    class="btnSinFondo float-end mt-3"
+                                                                    style="margin-left: 20px; display: none;"
+                                                                    rel="tooltip" type="button"
+                                                                    onclick='cancelarOmitir("{{ $doc->id }}","{{ $doc->nombre }}")'>
+                                                                    <P class="fs-5"> Cancelar</P>
+                                                                </button>
+                                                                <div class="text-center"
+                                                                    style="margin-top: -10px !important">
+                                                                    <div class="form-check d-flex justify-content-between">
+                                                                        <div class="text-center"></div>
+                                                                        <label
+                                                                            class="text-start fs-5 textTitulo text-break mb-2"
+                                                                            style="margin-left:-33px!important; font-size: 18px !important">
+                                                                            Expiración:
+                                                                        </label>
+                                                                        <input
+                                                                            class="form-check-input is-invalid align-self-end mb-2"
+                                                                            name='archivo[{{ $contador }}][check]'
+                                                                            type="checkbox"
+                                                                            id='check{{ $doc->id }}' checked
+                                                                            style="font-size: 20px; visibility: hidden"
+                                                                            onchange='handleCheckboxChange("{{ $doc->id }}")'>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <input type="date"
+                                                                            class="inputCaja text-center"
+                                                                            id='fecha{{ $doc->id }}'
+                                                                            name="archivo[{{ $contador }}][fecha]"
+                                                                            style="display: block;"
+                                                                            value="{{ $doc->fechaVencimiento }}">
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <label
+                                                                            class="text-start fs-5 textTitulo text-break mb-2"
+                                                                            style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
+                                                                        <textarea class="form-control-textarea inputCaja" rows="2" maxlength="1000"
+                                                                            id='comentario{{ $doc->id }}' name="archivo[{{ $contador }}][comentario]"
+                                                                            placeholder="Escribe Un Comentario">{{ $doc->comentarios }}</textarea>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        @else
+                                                            <div
+                                                                class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
+                                                                <input type="hidden" id='{{ $doc->nombre }}'
+                                                                    name='archivo[{{ $contador }}][tipoDocs]'
+                                                                    value='{{ $doc->id }}'>
+                                                                <input type="hidden" id='nombre{{ $doc->nombre }}'
+                                                                    name='archivo[{{ $contador }}][tipoDocsNombre]'
+                                                                    value='{{ $doc->nombre }}'>
+                                                                <input type="hidden" id='omitido{{ $doc->id }}'
+                                                                    name='archivo[{{ $contador }}][omitido]'
+                                                                    value='0'>
+                                                                <label class="custom-file-upload"
+                                                                    onclick='handleDocumento("{{ $doc->id }}","{{ $doc->nombre }}")'>
+                                                                    <input class="mb-4" type="file"
+                                                                        name='archivo[{{ $contador }}][docs]'
+                                                                        id='{{ $doc->id }}' accept=".pdf"
+                                                                        value="{{ $doc->ruta }}">
+                                                                    <div id='iconContainer{{ $doc->id }}'>
+                                                                        <lord-icon
+                                                                            src="https://cdn.lordicon.com/koyivthb.json"
+                                                                            trigger="hover"
+                                                                            colors="primary:#86c716,secondary:#e8e230"
+                                                                            stroke="65" style="width:50px;height:70px">
+                                                                        </lord-icon>
+
+                                                                    </div>
+                                                                </label>
+                                                                <a id='downloadButton{{ $doc->id }}'
+                                                                    class="btnViewDescargar btn btn-outline-success btnView"
+                                                                    style="display: none" download>
+                                                                    <span class="btn-text">Descargar</span>
+                                                                    <span class="icon">
+                                                                        <i class="far fa-eye mt-2"></i>
+                                                                    </span>
+                                                                </a>
+                                                                <button id='removeButton{{ $doc->id }}'
+                                                                    class="btnViewDelete btn btn-outline-danger btnView"
+                                                                    type="button"
+                                                                    style="width: 2.4em; height: 2.4em; display: none;"><i
+                                                                        class="fa fa-times"></i></button>
+                                                                <!-- Botón Omitir -->
+                                                                <button id='omitirButton{{ $doc->id }}'
+                                                                    class="btnSinFondo float-end mt-3"
+                                                                    style="margin-left: 20px" rel="tooltip"
+                                                                    type="button"
+                                                                    onclick='omitir("{{ $doc->id }}","{{ $doc->nombre }}")'>
+                                                                    <P class="fs-5"> Omitir</P>
+                                                                </button>
+                                                                <button id='cancelarOmitirButton{{ $doc->id }}'
+                                                                    class="btnSinFondo float-end mt-3"
+                                                                    style="margin-left: 20px; display: none;"
+                                                                    rel="tooltip" type="button"
+                                                                    onclick='cancelarOmitir("{{ $doc->id }}","{{ $doc->nombre }}")'>
+                                                                    <P class="fs-5"> Cancelar</P>
+                                                                </button>
+                                                                <div class="text-center"
+                                                                    style="margin-top: -10px !important">
+                                                                    <div class="form-check d-flex justify-content-between">
+                                                                        <div class="text-center"></div>
+                                                                        <label
+                                                                            class="text-start fs-5 textTitulo text-break mb-2"
+                                                                            style="margin-left:-33px!important; font-size: 18px !important">
+                                                                            Expiración:
+                                                                        </label>
+                                                                        <input
+                                                                            class="form-check-input is-invalid align-self-end mb-2"
+                                                                            name='archivo[{{ $contador }}][check]'
+                                                                            type="checkbox"
+                                                                            id='check{{ $doc->id }}' checked
+                                                                            style="font-size: 20px; visibility: hidden"
+                                                                            onchange='handleCheckboxChange("{{ $doc->id }}")'>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <input type="date"
+                                                                            class="inputCaja text-center"
+                                                                            id='fecha{{ $doc->id }}'
+                                                                            name="archivo[{{ $contador }}][fecha]"
+                                                                            style="display: block;"
+                                                                            value="{{ $doc->fechaVencimiento }}">
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <label
+                                                                            class="text-start fs-5 textTitulo text-break mb-2"
+                                                                            style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
+                                                                        <textarea class="form-control-textarea inputCaja" rows="2" maxlength="1000"
+                                                                            id='comentario{{ $doc->id }}' name="archivo[{{ $contador }}][comentario]"
+                                                                            placeholder="Escribe Un Comentario">{{ $doc->comentarios }}</textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endif
+
                                                     </div>
                                                 </div>
                                             </div>
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function() {
+                                                    // Llamar a la función después de que la vista haya cargado completamente
+                                                    evaluar({{ $doc->id }}, {{ $doc->requerido }});
+                                                });
+                                            </script>
+
                                             @php
                                                 $contador++;
-                                            @endphp
-                                            @php 
-                                                echo <script>evaluar('KDN');</script>;
                                             @endphp
                                         @empty
                                             sin registro
@@ -1229,8 +1330,8 @@
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Nivel de puesto: <span>*</span></label></br>
-                                            <select id="puestoNivelId" name="puestoNivelId" class="form-select" required
-                                                aria-label="Default select example">
+                                            <select id="puestoNivelId" name="puestoNivelId" class="form-select"
+                                                required aria-label="Default select example">
                                                 <option value="">Seleccione</option>
                                                 @foreach ($vctNiveles as $item)
                                                     <option value="{{ $item->id }}"
@@ -1270,18 +1371,24 @@
     </div>
     <script src="{{ asset('js/cardArchivos.js') }}"></script>
     <script>
-        function evaluar(param) {
-            console.log('hola', param);
+        function evaluar(id, requerido) {
+            console.log(id, requerido);
+            if (requerido == 0) {
+                console.log('requerido');
+                omitir(id);
+
+            }
         }
     </script>
-    <script type="application/javascript">
-        jQuery('input[type=file]').change(function(){
-         var filename = jQuery(this).val().split('\\').pop();
-         var idname = jQuery(this).attr('id');
-         console.log(jQuery(this));
-         console.log(filename);
-         console.log(idname);
-         jQuery('span.'+idname).next().find('span').html(filename);
-        });
-        </script>
+    <script>
+        function evaluarH(id, ruta) {
+            console.log(id, requerido);
+            if (ruta != null) {
+                console.log('ruta');
+                handleDocumento(id);
+
+            }
+        }
+    </script>
+
 @endsection

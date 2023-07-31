@@ -53,7 +53,29 @@ function cancelarOmitir(id, nombre) {
 	omitirFacturaButton.style.display = "block";
 	cancelarOmitirButton.style.display = "none";
 }
-	function handleCheckboxChange(id) {
+
+function handleCheckboxChange(id) {
+var checkboxInput = document.getElementById("check" + id);
+var fechaInput = document.getElementById("fecha" + id);
+
+if (checkboxInput.checked) {
+	fechaInput.disabled = false;
+} else {
+	fechaInput.disabled = true;
+	fechaInput.value = null;
+}
+}
+let alertShown = true;
+function handleDocumento(id, nombre) {
+	var FechaInput = document.getElementById("fecha" + id);
+	// Resto del código que utilizas para manejar los eventos, pero ahora con el ID proporcionado
+	var facturaInput = document.getElementById(id);
+	// var nullInput = document.getElementById(nombre);
+	var downloadFacturaButton = document.getElementById("downloadButton" + id);
+	var removeFacturaButton = document.getElementById("removeButton" + id);
+	var omitirFacturaButton = document.getElementById("omitirButton" + id);
+	var cancelarOmitirButton = document.getElementById("cancelarOmitirButton" + id);
+	var iconContainer = document.getElementById("iconContainer" + id);
 	var checkboxInput = document.getElementById("check" + id);
 	var fechaInput = document.getElementById("fecha" + id);
 
