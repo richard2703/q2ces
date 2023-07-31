@@ -9,23 +9,23 @@ function omitir(id, nombre) {
 	var FechaInput = document.getElementById("fecha" + id);
 
 	// Deshabilitar el input del archivo
-	facturaInput.disabled = true;
-	FechaInput.disabled = true;
+	facturaInput != null ? facturaInput.disabled = true: null;
+	FechaInput != null ? FechaInput.disabled = true : null;
 	//checkboxInput.disabled = true;
-	FechaInput.value = null;
+	FechaInput != null ? FechaInput.value = null: null;
 	
 
 	// Cambiar el valor del input a 1
-	facturaInput.value = "";
-	nullInput.value = '1'
+	facturaInput != null ? facturaInput.value = "": null;
+	nullInput != null ? nullInput.value = '1': null;
 
 	// Cambiar el icono en el contenedor
-	iconContainer.innerHTML =
-		'<lord-icon src="https://cdn.lordicon.com/jvihlqtw.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+	iconContainer != null ? iconContainer.innerHTML =
+		'<lord-icon src="https://cdn.lordicon.com/jvihlqtw.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>': null;
 
 	// Mostrar el botón "Cancelar" y ocultar el botón "Omitir"
-	omitirFacturaButton.style.display = "none";
-	cancelarOmitirButton.style.display = "block";
+	omitirFacturaButton != null ? omitirFacturaButton.style.display = "none" : null;
+	cancelarOmitirButton != null ? cancelarOmitirButton.style.display = "block": null;
 }
 
 function cancelarOmitir(id, nombre) {
@@ -66,43 +66,50 @@ if (checkboxInput.checked) {
 }
 }
 let alertShown = true;
-function handleDocumento(id, nombre) {
-	var FechaInput = document.getElementById("fecha" + id);
-	// Resto del código que utilizas para manejar los eventos, pero ahora con el ID proporcionado
-	var facturaInput = document.getElementById(id);
-	// var nullInput = document.getElementById(nombre);
-	var downloadFacturaButton = document.getElementById("downloadButton" + id);
-	var removeFacturaButton = document.getElementById("removeButton" + id);
-	var omitirFacturaButton = document.getElementById("omitirButton" + id);
-	var cancelarOmitirButton = document.getElementById("cancelarOmitirButton" + id);
-	var iconContainer = document.getElementById("iconContainer" + id);
-	var checkboxInput = document.getElementById("check" + id);
-	var fechaInput = document.getElementById("fecha" + id);
-
-		if (checkboxInput.checked) {
-			fechaInput.disabled = false;
-		} else {
-			fechaInput.disabled = true;
-			fechaInput.value = null;
-		}
-	}
-	function handleDocumento(id, nombre) {
+	function handleDocumento(id, nombre, isEdit, ruta) {
+		
 		var FechaInput = document.getElementById("fecha" + id);
 		// Resto del código que utilizas para manejar los eventos, pero ahora con el ID proporcionado
 		var facturaInput = document.getElementById(id);
 		var nullInput = document.getElementById(nombre);
+		
 		var downloadFacturaButton = document.getElementById("downloadButton" + id);
 		var removeFacturaButton = document.getElementById("removeButton" + id);
 		var omitirFacturaButton = document.getElementById("omitirButton" + id);
 		var cancelarOmitirButton = document.getElementById("cancelarOmitirButton" + id);
 		var iconContainer = document.getElementById("iconContainer" + id);
 		var checkboxInput = document.getElementById("check" + id);
-console.log('facturaInput',facturaInput);
 		facturaInput.addEventListener("change", function(event) {
+			let alertShownEdit = false;
+			// Aquí verificamos si ya hay un documento en ruta
+			console.log('facturaInput.value', facturaInput.value);
+			var hasDocumento = (facturaInput.value !== "");
+			if(isEdit !== undefined && ruta != undefined){
+				alertShownEdit = true; 
+				facturaInput.addEventListener("click", function (event) {
+					event.stopPropagation();
+					event.preventDefault();
+					Swal.fire({
+						title: "¿Estás seguro?",
+						text: "Se reemplazará la imagen actual por una nueva. ¿Deseas continuar?",
+						icon: "warning",
+						showCancelButton: true,
+						confirmButtonColor: "#3085d6",
+						cancelButtonColor: "#d33",
+						confirmButtonText: "Continuar",
+						cancelButtonText: "Cancelar",
+					}).then((result) => {
+						if (result.isConfirmed) {
+						alertShown = true; // Set the flag to true to prevent the alert from showing again
+						facturaInput.click();
+						}
+					});
+				});
+				
+			}
 			if (event.target.files.length > 0) {
 				
 				facturaInput.addEventListener("click", createClickHandler(id));
-				
 				var file = event.target.files[0];
 				var fileURL = URL.createObjectURL(file);
 				downloadFacturaButton.setAttribute("href", fileURL);
@@ -129,7 +136,6 @@ console.log('facturaInput',facturaInput);
 					'<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
 			}
 		});
-
 		removeFacturaButton.addEventListener("click", function() {
 			facturaInput.value = null;
 			downloadFacturaButton.removeAttribute("href");
@@ -146,6 +152,36 @@ console.log('facturaInput',facturaInput);
 				'<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
 		});
 	}
+	
+
+	function eliminarBotonera(id){
+		console.log('so');
+		var FechaInput = document.getElementById("fecha" + id);
+		// Resto del código que utilizas para manejar los eventos, pero ahora con el ID proporcionado
+		var facturaInput = document.getElementById(id);
+		var nullInput = document.getElementById(nombre);
+		
+		var downloadFacturaButton = document.getElementById("downloadButton" + id);
+		var removeFacturaButton = document.getElementById("removeButton" + id);
+		var omitirFacturaButton = document.getElementById("omitirButton" + id);
+		var cancelarOmitirButton = document.getElementById("cancelarOmitirButton" + id);
+		var iconContainer = document.getElementById("iconContainer" + id);
+		var checkboxInput = document.getElementById("check" + id);
+		var paragraphElement = omitirFacturaButton.querySelector('p');
+
+		facturaInput.value = null;
+		downloadFacturaButton.removeAttribute("href");
+		downloadFacturaButton.style.display = "none";
+		removeFacturaButton.style.display = "none";
+		omitirFacturaButton.style.display = "block";
+		cancelarOmitirButton.style.display = "none";
+		FechaInput.disabled = true;
+		checkboxInput.style.visibility = "hidden";
+		paragraphElement.style.display = "block";
+		iconContainer.innerHTML =
+			'<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+	}
+	
 	// Función para crear el manejador de eventos "click" usando el ID específico
 	function createClickHandler(id) {
 	return function (event) {
@@ -178,3 +214,4 @@ console.log('facturaInput',facturaInput);
 		}
 	};
 	}
+	

@@ -223,12 +223,13 @@ class maquinariaController extends Controller
         abort_if(Gate::denies('maquinaria_show'), 403);
         
         $bitacora = bitacoras::all();
+        //$maquinaria = maquinaria::all();
         $docs = maqdocs::where('maquinariaId', $maquinaria->id)->get();
         $doc = maqdocs::join('docs', "maqdocs.tipoId", "docs.id")
             ->select(
-                'docs.id as tipoDocId',
-                'docs.nombre as docNombre',
-                'maqdocs.id',
+                'docs.id',
+                'docs.nombre',
+                'maqdocs.id as usuarioId',
                 'maqdocs.fechaVencimiento',
                 'maqdocs.estatus',
                 'maqdocs.comentarios',
