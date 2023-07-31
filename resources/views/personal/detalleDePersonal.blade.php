@@ -1099,6 +1099,9 @@
                                                         @if ($doc->ruta != null)
                                                             <div
                                                                 class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
+                                                                <input type="hidden" id='{{ $doc->idDoc }}'
+                                                                    name='archivo[{{ $contador }}][idDoc]'
+                                                                    value='{{ $doc->idDoc }}'>
                                                                 <input type="hidden" id='{{ $doc->nombre }}'
                                                                     name='archivo[{{ $contador }}][tipoDocs]'
                                                                     value='{{ $doc->id }}'>
@@ -1190,6 +1193,9 @@
                                                         @else
                                                             <div
                                                                 class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
+                                                                <input type="hidden" id='{{ $doc->idDoc }}'
+                                                                    name='archivo[{{ $contador }}][idDoc]'
+                                                                    value='{{ $doc->idDoc }}'>
                                                                 <input type="hidden" id='{{ $doc->nombre }}'
                                                                     name='archivo[{{ $contador }}][tipoDocs]'
                                                                     value='{{ $doc->id }}'>
