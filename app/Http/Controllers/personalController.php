@@ -455,7 +455,7 @@ class personalController extends Controller
         $nomina->decTotal = round($nomina->decSalarioMensual + $nomina->decEstado + $nomina->decImss + $nomina->decImssRiesgo +
             $nomina->decAfore + $nomina->decInfonavit + $nomina->decVacaciones + $nomina->decPrimaVacacional + $nomina->decAguinaldo + $nomina->isr, 2);
 
-        // dd( $nomina );
+        // dd($docs);
         return view('personal.detalleDePersonal', compact('personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal', 'vctPersonal', 'vctEstatus', 'vctPuestos', 'vctNiveles'));
     }
 
@@ -791,7 +791,7 @@ class personalController extends Controller
         // dd($request->archivo);
 
         for ($i = 0; $i < count($request->archivo); $i++) {
-
+            $documento = null;
             $documento['personalId'] = $personal->id;
             $documento['tipoId'] = $request->archivo[$i]['tipoDocs']; // Obtenemos el tipo de documento
             $tipoDocumentoNombre = $request->archivo[$i]['tipoDocsNombre']; // Obtenemos el tipo de documento
@@ -824,16 +824,18 @@ class personalController extends Controller
                 $documento['requerido'] = '0';
                 $documento['estatus'] = '2'; //Si es 2 Esta  OK
             }
+
             $documento['comentarios'] = $request->archivo[$i]['comentario'];
 
-            $docu = userdocs::where('id', $request->archivo[$i]['tipoDocs']);
+            $docu = userdocs::where('id', $request->archivo[$i]['idDoc'])->first();
+            // dd($docu);
             $docu->update($documento);
         }
 
         Session::flash('message', 1);
         //dd( $request );
 
-        $this->cambiaEstatusUsuario($personal->id, $personal->estatusId);
+        // $this->cambiaEstatusUsuario($personal->id, $personal->estatusId);
 
         return redirect()->route('personal.index');
     }
