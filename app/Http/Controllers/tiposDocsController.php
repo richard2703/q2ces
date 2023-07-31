@@ -20,7 +20,7 @@ class tiposDocsController extends Controller
     {
         abort_if(Gate::denies('tiposDocs_index'), 403);
         $tiposDocs = tiposDocs::orderBy('created_at', 'desc')->paginate(5);
-        return view('tiposDocs.indexTiposDocs', compact('tiposDocs'));
+        return view('catalogos.tiposDocs.indexTiposDocs', compact('tiposDocs'));
     }
 
     /**
@@ -31,7 +31,7 @@ class tiposDocsController extends Controller
     public function create()
     {
         abort_if(Gate::denies('tiposDocs_create'), 403);
-        return view('tiposDocs.createTiposDocs');
+        return view('catalogos.tiposDocs.createTiposDocs');
     }
 
     /**
@@ -71,7 +71,7 @@ class tiposDocsController extends Controller
     {
         abort_if(Gate::denies('tiposDocs_edit'), 403);
         // dd($tiposDoc);
-        return view('tiposDocs.editTiposDocs', compact('tiposDoc'));
+        return view('catalogos.tiposDocs.editTiposDocs', compact('tiposDoc'));
     }
 
     /**
