@@ -65,7 +65,7 @@ if (checkboxInput.checked) {
 	fechaInput.value = null;
 }
 }
-let alertShown = true;
+    let alertShown = true;
 	function handleDocumento(id, nombre, isEdit, ruta) {
 		
 		var FechaInput = document.getElementById("fecha" + id);
@@ -83,30 +83,30 @@ let alertShown = true;
 			let alertShownEdit = false;
 			// Aquí verificamos si ya hay un documento en ruta
 			console.log('facturaInput.value', facturaInput.value);
-			var hasDocumento = (facturaInput.value !== "");
-			if(isEdit !== undefined && ruta != undefined){
-				alertShownEdit = true; 
-				facturaInput.addEventListener("click", function (event) {
-					event.stopPropagation();
-					event.preventDefault();
-					Swal.fire({
-						title: "¿Estás seguro?",
-						text: "Se reemplazará la imagen actual por una nueva. ¿Deseas continuar?",
-						icon: "warning",
-						showCancelButton: true,
-						confirmButtonColor: "#3085d6",
-						cancelButtonColor: "#d33",
-						confirmButtonText: "Continuar",
-						cancelButtonText: "Cancelar",
-					}).then((result) => {
-						if (result.isConfirmed) {
-						alertShown = true; // Set the flag to true to prevent the alert from showing again
-						facturaInput.click();
-						}
-					});
-				});
+			//var hasDocumento = (facturaInput.value !== "");
+			// if(isEdit !== undefined && facturaInput.value !== ""){
+			// 	alertShownEdit = true; 
+			// 	facturaInput.addEventListener("click", function (event) {
+			// 		event.stopPropagation();
+			// 		event.preventDefault();
+			// 		Swal.fire({
+			// 			title: "¿Estás seguro?",
+			// 			text: "Se reemplazará la imagen actual por una nueva. ¿Deseas continuar?",
+			// 			icon: "warning",
+			// 			showCancelButton: true,
+			// 			confirmButtonColor: "#3085d6",
+			// 			cancelButtonColor: "#d33",
+			// 			confirmButtonText: "Continuar",
+			// 			cancelButtonText: "Cancelar",
+			// 		}).then((result) => {
+			// 			if (result.isConfirmed) {
+			// 			alertShown = true; // Set the flag to true to prevent the alert from showing again
+			// 			facturaInput.click();
+			// 			}
+			// 		});
+			// 	});
 				
-			}
+			// }
 			if (event.target.files.length > 0) {
 				
 				facturaInput.addEventListener("click", createClickHandler(id));
