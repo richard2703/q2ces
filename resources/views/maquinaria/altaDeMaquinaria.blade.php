@@ -54,7 +54,7 @@
                                             <button class="accordion-button bacTituloPrincipal" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#datosPersonales"
                                                 aria-expanded="true" aria-controls="collapseOne">
-                                                Alta de Maquinaria
+                                                Alta De Maquinaria
                                             </button>
 
                                         </h2>
@@ -499,6 +499,9 @@
                                                                         <input type="hidden" id='nombre{{ $item->nombre }}'
                                                                             name='archivo[{{$count}}][tipoDocsNombre]'
                                                                             value='{{ $item->nombre }}'>
+                                                                        <input type="hidden" id='omitido{{ $item->id }}'
+                                                                            name='archivo[{{$count}}][omitido]'
+                                                                            value='0'>
                                                                         <label class="custom-file-upload"
                                                                             onclick='handleDocumento("{{ $item->id }}","{{ $item->nombre }}")'>
                                                                             <input class="mb-4" type="file"
@@ -523,7 +526,7 @@
                                                                                 <i class="far fa-eye mt-2"></i>
                                                                             </span>
                                                                         </a>
-                                                                        <button id='removeButton{{ $item->id }}'
+                                                                        <button id='removeButton{{ $item->id }}' type="button"
                                                                             class="btnViewDelete btn btn-outline-danger btnView"
                                                                             style="width: 2.4em; height: 2.4em; display: none;"><i
                                                                                 class="fa fa-times"></i></button>
@@ -540,16 +543,18 @@
                                                                             class="btnSinFondo float-end mt-3"
                                                                             style="margin-left: 20px; display: none;"
                                                                             rel="tooltip"
+                                                                            type="button"
                                                                             onclick='cancelarOmitir("{{ $item->id }}","{{ $item->nombre }}")'>
                                                                             <P class="fs-5"> Cancelar</P>
                                                                         </button>
-                                                                        <div class="text-center" style="margin-top: -10px !important">
+                                                                        <div class="text-center">
                                                                             <div class="form-check d-flex justify-content-between">
                                                                             <div class="text-center"></div>
                                                                                 <label class="text-start fs-5 textTitulo text-break mb-2" style="margin-left:-33px!important; font-size: 18px !important">
                                                                                     Expiración:
                                                                                 </label>
-                                                                                <input class="form-check-input is-invalid align-self-end mb-2" name='archivo[{{$count}}][check]' type="checkbox" value="" id='check{{ $item->id }}' checked style="font-size: 20px; visibility: hidden" onchange='handleCheckboxChange("{{ $item->id }}")'>
+                                                                                <input class="form-check-input is-invalid align-self-end mb-2" type="checkbox" name='archivo[{{$count}}][check]' id='check{{ $item->id }}' checked style="font-size: 20px; visibility: hidden" onchange='handleCheckboxChange("{{ $item->id }}")'>
+                                                                                <!--<input type="hidden" class="form-check-input is-invalid align-self-end mb-2"  id='checkHidden{{ $item->id }}' value='false'> -->
                                                                             </div>
                                                                             <div class="col-12">
                                                                                 <input type="date"
@@ -561,7 +566,7 @@
                                                                                 <label
                                                                                     class="text-start fs-5 textTitulo text-break mb-2"
                                                                                     style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
-                                                                                <textarea id='comentario{{ $item->id }}' name='archivo[{{$count}}][comentario]' class="form-control-textarea inputCaja" rows="1" maxlength="1000"
+                                                                                <textarea id='comentario{{ $item->id }}' name='archivo[{{$count}}][comentario]' class="form-control-textarea inputCaja" rows="2" maxlength="1000"
                                                                                     placeholder="Escribe Un Comentario"></textarea>
                                                                             </div>
                                                                         </div>
@@ -590,157 +595,7 @@
         </div>
     </div>
 
-    <script>
-        
-        function omitir(id, nombre) {
-            // Obtener el input del archivo y el contenedor del icono
-            var facturaInput = document.getElementById(id);
-            var nullInput = document.getElementById(nombre);
-            var iconContainer = document.getElementById("iconContainer" + id);
-            var omitirFacturaButton = document.getElementById("omitirButton" + id);
-            var cancelarOmitirButton = document.getElementById("cancelarOmitirButton" + id);
-            var FechaInput = document.getElementById("fecha" + id);
-
-            // Deshabilitar el input del archivo
-            facturaInput.disabled = true;
-            FechaInput.disabled = true;
-            //checkboxInput.disabled = true;
-            FechaInput.value = null;
-            
-
-            // Cambiar el valor del input a 1
-            facturaInput.value = "";
-            nullInput.value = id + '-0'
-
-            // Cambiar el icono en el contenedor
-            iconContainer.innerHTML =
-                '<lord-icon src="https://cdn.lordicon.com/jvihlqtw.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
-
-            // Mostrar el botón "Cancelar" y ocultar el botón "Omitir"
-            omitirFacturaButton.style.display = "none";
-            cancelarOmitirButton.style.display = "block";
-        }
-
-        function cancelarOmitir(id, nombre) {
-
-            // Obtener el input del archivo y el contenedor del icono
-            var facturaInput = document.getElementById(id);
-            var nullInput = document.getElementById(nombre);
-            var iconContainer = document.getElementById("iconContainer" + id);
-            var omitirFacturaButton = document.getElementById("omitirButton" + id);
-            var cancelarOmitirButton = document.getElementById("cancelarOmitirButton" + id);
-            var FechaInput = document.getElementById("fecha" + id);
-
-            // Habilitar el input del archivo, la fecha y el comentario
-            facturaInput.disabled = false;
-
-            // Restaurar el valor del input a su estado original (vacío)
-            facturaInput.value = "";
-            nullInput.value = id
-
-            // Restaurar el icono original en el contenedor
-            iconContainer.innerHTML =
-                '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
-
-            // Mostrar el botón "Omitir" y ocultar el botón "Cancelar"
-            omitirFacturaButton.style.display = "block";
-            cancelarOmitirButton.style.display = "none";
-        }
-
-        function handleCheckboxChange(id) {
-        var checkboxInput = document.getElementById("check" + id);
-        var fechaInput = document.getElementById("fecha" + id);
-
-        if (checkboxInput.checked) {
-            fechaInput.disabled = false;
-        } else {
-            fechaInput.disabled = true;
-            fechaInput.value = null;
-        }
-        }
-        let alertShown = true;
-        function handleDocumento(id, nombre) {
-            var FechaInput = document.getElementById("fecha" + id);
-            // Resto del código que utilizas para manejar los eventos, pero ahora con el ID proporcionado
-            var facturaInput = document.getElementById(id);
-            var nullInput = document.getElementById(nombre);
-            var downloadFacturaButton = document.getElementById("downloadButton" + id);
-            var removeFacturaButton = document.getElementById("removeButton" + id);
-            var omitirFacturaButton = document.getElementById("omitirButton" + id);
-            var cancelarOmitirButton = document.getElementById("cancelarOmitirButton" + id);
-            var iconContainer = document.getElementById("iconContainer" + id);
-            var checkboxInput = document.getElementById("check" + id);
-
-            facturaInput.addEventListener("click", function(event) {
-                // if (!alertShown) {
-                //     event.stopPropagation(); // Prevent the file explorer from opening immediately
-                //     event.preventDefault(); // Prevent any default behavior
-
-                //     Swal.fire({
-                //         title: "¿Estás seguro?",
-                //         text: "Se reemplazará la imagen actual por una nueva. ¿Deseas continuar?",
-                //         icon: "warning",
-                //         showCancelButton: true,
-                //         confirmButtonColor: "#3085d6",
-                //         cancelButtonColor: "#d33",
-                //         confirmButtonText: "Continuar",
-                //         cancelButtonText: "Cancelar",
-                //     }).then((result) => {
-                //         if (result.isConfirmed) {
-                //             alertShown =
-                //                 true; // Set the flag to true to prevent the alert from showing again
-                //             facturaInput.click();
-                //         }
-                //     });
-                // }
-            });
-
-            facturaInput.addEventListener("change", function(event) {
-                if (event.target.files.length > 0) {
-                    var file = event.target.files[0];
-                    var fileURL = URL.createObjectURL(file);
-                    downloadFacturaButton.setAttribute("href", fileURL);
-                    downloadFacturaButton.style.display = "block";
-                    removeFacturaButton.style.display = "block";
-                    omitirFacturaButton.style.display = "none";
-                    cancelarOmitirButton.style.display = "none";
-                    nullInput.value = id + '-1';
-                    alertShown = false;
-                    FechaInput.disabled = false;
-                    checkboxInput.checked = true;
-                    checkboxInput.style.visibility = "visible";
-                    iconContainer.innerHTML =
-                        '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
-                } else {
-                    downloadFacturaButton.style.display = "none";
-                    removeFacturaButton.style.display = "none";
-                    omitirFacturaButton.style.display = "block";
-                    cancelarOmitirButton.style.display = "none";
-                    alertShown = true;
-                    FechaInput.disabled = true;
-                    checkboxInput.style.visibility = "hidden";
-                    iconContainer.innerHTML =
-                        '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
-                }
-            });
-
-            removeFacturaButton.addEventListener("click", function() {
-                facturaInput.value = null;
-                downloadFacturaButton.removeAttribute("href");
-                downloadFacturaButton.style.display = "none";
-                removeFacturaButton.style.display = "none";
-                omitirFacturaButton.style.display = "block";
-                cancelarOmitirButton.style.display = "none";
-                FechaInput.disabled = true;
-                checkboxInput.style.visibility = "hidden";
-                FechaInput.value = null;
-                nullInput.value = id;
-                alertShown = true;
-                iconContainer.innerHTML =
-                    '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
-            });
-        }
-    </script>
+    <script src="{{ asset('js/cardArchivos.js') }}"></script>
 
     <script type="application/javascript">
     jQuery('input[type=file]').change(function(){

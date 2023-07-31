@@ -1293,6 +1293,9 @@
                                             @php
                                                 $contador++;
                                             @endphp
+                                            @php 
+                                                echo <script>evaluar('KDN');</script>;
+                                            @endphp
                                         @empty
                                             sin registro
                                         @endforelse
