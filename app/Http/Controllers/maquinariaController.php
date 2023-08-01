@@ -40,7 +40,7 @@ class maquinariaController extends Controller
     public function create()
     {
         abort_if(Gate::denies('maquinaria_create'), 403);
-        $doc = docs::where('tipoId', '2')->get();
+        $doc = docs::where('tipoId', '2')->orderBy('nombre', 'asc')->get();
         $bitacora = bitacoras::all();
 
         return view('maquinaria.altaDeMaquinaria', compact('bitacora', 'doc'));
@@ -131,7 +131,7 @@ class maquinariaController extends Controller
         $maquinaria = $request->all();
 
         //** Generamos el identificador de la maquinaria */
-        $maquinaria[ 'identificador' ] = $this->generaCodigoIdentificacion( $maquinaria[ 'categoria' ] );
+        $maquinaria['identificador'] = $this->generaCodigoIdentificacion($maquinaria['categoria']);
         $maquinaria['estatusId'] = 1;
         // dd( $maquinaria[ 'identificador' ] );
 
@@ -193,7 +193,7 @@ class maquinariaController extends Controller
         //     $documento = new maqdocs();
         //     $documento->maquinariaId = $maquinaria->id;
         //     $tipoDocumento = $request->tipoDocs[$i];
-        
+
         //     if (strpos($tipoDocumento, '-0') !== false) {
         //         $documento->tipo = substr($tipoDocumento, 0, -2);
         //         $documento->estatus = 'omitido';
@@ -221,19 +221,20 @@ class maquinariaController extends Controller
     public function show(maquinaria $maquinaria)
     {
         abort_if(Gate::denies('maquinaria_show'), 403);
-        
+
         $bitacora = bitacoras::all();
+        //$maquinaria = maquinaria::all();
         $docs = maqdocs::where('maquinariaId', $maquinaria->id)->get();
         $doc = maqdocs::join('docs', "maqdocs.tipoId", "docs.id")
             ->select(
-                'docs.id as tipoDocId',
-                'docs.nombre as docNombre',
-                'maqdocs.id',
+                'docs.id',
+                'docs.nombre',
                 'maqdocs.fechaVencimiento',
                 'maqdocs.estatus',
                 'maqdocs.comentarios',
                 'maqdocs.ruta',
-                'maqdocs.requerido'
+                'maqdocs.requerido',
+                'maqdocs.id as idDoc'
             )
             ->where('maquinariaId', $maquinaria->id)->get();
         $fotos = maqimagen::where('maquinariaId', $maquinaria->id)->get();
@@ -254,7 +255,7 @@ class maquinariaController extends Controller
         $bitacora = bitacoras::all();
         $doc = docs::where('tipoId', '2')->get();
         //$docs = maqdocs::where( 'maquinariaId', $maquinaria->id )->first();
-        return view( 'maquinaria.detalleMaquinaria', compact( 'maquinaria', 'bitacora','doc'));
+        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'bitacora', 'doc'));
     }
 
     /**
@@ -270,76 +271,76 @@ class maquinariaController extends Controller
         abort_if(Gate::denies('maquinaria_edit'), 403);
 
         // dd( $request );
-        $request->validate([
-            'nombre' => 'required|max:250',
-            // 'identificador' => 'required|max:8',
-            'marca' => 'required|max:250',
-            'modelo' => 'required|max:250',
-            'horometro' => 'nullable|numeric',
-            'kilometraje' => 'nullable|numeric',
-            'submarca' => 'nullable|max:200',
-            'categoria' => 'nullable|max:200',
-            'ano' => 'nullable|max:9999|numeric',
-            'color' => 'nullable|max:200',
-            'placas' => 'nullable|max:200',
-            'motor' => 'nullable|max:200',
-            'nummotor' => 'nullable|max:200',
-            'numserie' => 'nullable|max:200',
-            'vin' => 'nullable|max:200',
-            'combustible' => 'nullable|max:200',
-            'capacidad' => 'nullable|numeric',
-            'tanque' => 'nullable|numeric',
-            'ejes' => 'nullable|numeric',
-            'rinD' => 'nullable|numeric',
-            'rinT' => 'nullable|numeric',
-            'llantaD' => 'nullable|numeric',
-            'llantaT' => 'nullable|numeric',
-            'aceitemotor' => 'nullable|numeric',
-            'aceitetras' => 'nullable|numeric',
-            'aceitehidra' => 'nullable|numeric',
-            'aceitedirec' => 'nullable|numeric',
-            'filtroaceite' => 'nullable|numeric',
-            'filtroaire' => 'nullable|numeric',
-            'bujias' => 'nullable|numeric',
-            'tipobujia' => 'nullable|max:200',
-        ], [
-            'nombre.required' => 'El campo nombre es obligatorio.',
-            'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
-            // 'identificador.required' => 'El campo identificador es obligatorio.',
-            // 'identificador.max' => 'El campo identificador excede el límite de caracteres permitidos.',
-            'marca.required' => 'El campo marca es obligatorio.',
-            'marca.max' => 'El campo marca excede el límite de caracteres permitidos.',
-            'modelo.required' => 'El campo modelo es obligatorio.',
-            'modelo.max' => 'El campo modelo excede el límite de caracteres permitidos.',
-            'horometro.numeric' => 'El campo horómetro debe de ser numérico.',
-            'kilometraje.numeric' => 'El campo kilometraje debe de ser numérico.',
-            'submarca.max' => 'El campo submarca excede el límite de caracteres permitidos.',
-            'categoria.max' => 'El campo categoria excede el límite de caracteres permitidos.',
-            'ano.numeric' => 'El campo año debe ser numérico.',
-            'ano.max' => 'El campo serie excede el límite de caracteres permitidos.',
-            'color.max' => 'El campo color excede el límite de caracteres permitidos.',
-            'placas.max' => 'El campo placas excede el límite de caracteres permitidos.',
-            'motor.max' => 'El campo motor excede el límite de caracteres permitidos.',
-            'nummotor.max' => 'El número de motor placas excede el límite de caracteres permitidos.',
-            'numserie.max' => 'El número de serie placas excede el límite de caracteres permitidos.',
-            'vin.max' => 'El campo VIN excede el límite de caracteres permitidos.',
-            'combustible.max' => 'El campo combustible excede el límite de caracteres permitidos.',
-            'capacidad.numeric' => 'El campo capacidad debe ser numérico.',
-            'tanque.numeric' => 'El campo tanque debe ser numérico.',
-            'ejes.numeric' => 'El campo ejes debe ser numérico.',
-            'rinD.numeric' => 'El campo rin delatero debe ser numérico.',
-            'rinT.numeric' => 'El campo rin trasero debe ser numérico.',
-            'llantaD.numeric' => 'El campo llanta delantera debe ser numérico.',
-            'llantaT.numeric' => 'El campo llanta trasera debe ser numérico.',
-            'aceitemotor.numeric' => 'El campo aceite de motor debe ser numérico.',
-            'aceitetras.numeric' => 'El campo aceite de transmisión debe ser numérico.',
-            'aceitehidra.numeric' => 'El campo aceite hidráulico debe ser numérico.',
-            'aceitedirec.numeric' => 'El campo aceite de dirección debe ser numérico.',
-            'filtroaceite.numeric' => 'El campo filtro de aceite debe ser numérico.',
-            'filtroaire.numeric' => 'El campo filtro de aire debe ser numérico.',
-            'bujias.numeric' => 'El campo bujias trasera debe ser numérico.',
-            'tipobujia.max' => 'El campo tipo de bujía excede el límite de caracteres permitidos.',
-        ]);
+        // $request->validate([
+        //     'nombre' => 'required|max:250',
+        //     // 'identificador' => 'required|max:8',
+        //     'marca' => 'required|max:250',
+        //     'modelo' => 'required|max:250',
+        //     'horometro' => 'nullable|numeric',
+        //     'kilometraje' => 'nullable|numeric',
+        //     'submarca' => 'nullable|max:200',
+        //     'categoria' => 'nullable|max:200',
+        //     'ano' => 'nullable|max:9999|numeric',
+        //     'color' => 'nullable|max:200',
+        //     'placas' => 'nullable|max:200',
+        //     'motor' => 'nullable|max:200',
+        //     'nummotor' => 'nullable|max:200',
+        //     'numserie' => 'nullable|max:200',
+        //     'vin' => 'nullable|max:200',
+        //     'combustible' => 'nullable|max:200',
+        //     'capacidad' => 'nullable|numeric',
+        //     'tanque' => 'nullable|numeric',
+        //     'ejes' => 'nullable|numeric',
+        //     'rinD' => 'nullable|numeric',
+        //     'rinT' => 'nullable|numeric',
+        //     'llantaD' => 'nullable|numeric',
+        //     'llantaT' => 'nullable|numeric',
+        //     'aceitemotor' => 'nullable|numeric',
+        //     'aceitetras' => 'nullable|numeric',
+        //     'aceitehidra' => 'nullable|numeric',
+        //     'aceitedirec' => 'nullable|numeric',
+        //     'filtroaceite' => 'nullable|numeric',
+        //     'filtroaire' => 'nullable|numeric',
+        //     'bujias' => 'nullable|numeric',
+        //     'tipobujia' => 'nullable|max:200',
+        // ], [
+        //     'nombre.required' => 'El campo nombre es obligatorio.',
+        //     'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
+        //     // 'identificador.required' => 'El campo identificador es obligatorio.',
+        //     // 'identificador.max' => 'El campo identificador excede el límite de caracteres permitidos.',
+        //     'marca.required' => 'El campo marca es obligatorio.',
+        //     'marca.max' => 'El campo marca excede el límite de caracteres permitidos.',
+        //     'modelo.required' => 'El campo modelo es obligatorio.',
+        //     'modelo.max' => 'El campo modelo excede el límite de caracteres permitidos.',
+        //     'horometro.numeric' => 'El campo horómetro debe de ser numérico.',
+        //     'kilometraje.numeric' => 'El campo kilometraje debe de ser numérico.',
+        //     'submarca.max' => 'El campo submarca excede el límite de caracteres permitidos.',
+        //     'categoria.max' => 'El campo categoria excede el límite de caracteres permitidos.',
+        //     'ano.numeric' => 'El campo año debe ser numérico.',
+        //     'ano.max' => 'El campo serie excede el límite de caracteres permitidos.',
+        //     'color.max' => 'El campo color excede el límite de caracteres permitidos.',
+        //     'placas.max' => 'El campo placas excede el límite de caracteres permitidos.',
+        //     'motor.max' => 'El campo motor excede el límite de caracteres permitidos.',
+        //     'nummotor.max' => 'El número de motor placas excede el límite de caracteres permitidos.',
+        //     'numserie.max' => 'El número de serie placas excede el límite de caracteres permitidos.',
+        //     'vin.max' => 'El campo VIN excede el límite de caracteres permitidos.',
+        //     'combustible.max' => 'El campo combustible excede el límite de caracteres permitidos.',
+        //     'capacidad.numeric' => 'El campo capacidad debe ser numérico.',
+        //     'tanque.numeric' => 'El campo tanque debe ser numérico.',
+        //     'ejes.numeric' => 'El campo ejes debe ser numérico.',
+        //     'rinD.numeric' => 'El campo rin delatero debe ser numérico.',
+        //     'rinT.numeric' => 'El campo rin trasero debe ser numérico.',
+        //     'llantaD.numeric' => 'El campo llanta delantera debe ser numérico.',
+        //     'llantaT.numeric' => 'El campo llanta trasera debe ser numérico.',
+        //     'aceitemotor.numeric' => 'El campo aceite de motor debe ser numérico.',
+        //     'aceitetras.numeric' => 'El campo aceite de transmisión debe ser numérico.',
+        //     'aceitehidra.numeric' => 'El campo aceite hidráulico debe ser numérico.',
+        //     'aceitedirec.numeric' => 'El campo aceite de dirección debe ser numérico.',
+        //     'filtroaceite.numeric' => 'El campo filtro de aceite debe ser numérico.',
+        //     'filtroaire.numeric' => 'El campo filtro de aire debe ser numérico.',
+        //     'bujias.numeric' => 'El campo bujias trasera debe ser numérico.',
+        //     'tipobujia.max' => 'El campo tipo de bujía excede el límite de caracteres permitidos.',
+        // ]);
 
         $data = $request->all();
 
@@ -348,46 +349,91 @@ class maquinariaController extends Controller
         $data['nummotor'] = strtoupper($data['nummotor']);
         $data['numserie'] = strtoupper($data['numserie']);
 
+
         /*** directorio contenedor de su información */
         $pathMaquinaria = str_pad($data['identificador'], 4, '0', STR_PAD_LEFT);
 
         $maquinaria->update($data);
-        if ($request->hasFile('factura')) {
-            $docs['factura'] = time() . '_' . $request->file('factura')->getClientOriginalName();
-            $request->file('factura')->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos', $docs['factura']);
+
+
+        for ($i = 0; $i < count($request->archivo); $i++) {
+            $documento = null;
+            $documento['maquinariaId'] = $maquinaria->id;
+            $documento['tipoId'] = $request->archivo[$i]['tipoDocs']; // Obtenemos el tipo de documento
+            $tipoDocumentoNombre = $request->archivo[$i]['tipoDocsNombre']; // Obtenemos el tipo de documento
+
+            if ($request->archivo[$i]['omitido'] == 0) {
+                // OBLIGATORIO
+                $documento['requerido'] = '1';
+                $documento['estatus'] = '0';
+                if (isset(($request->archivo[$i]['docs']))) {
+                    $file = $request->file('archivo')[$i]['docs'];
+                    $documento['ruta'] = time() . '_' . $file->getClientOriginalName();
+                    $file->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos/' .  $tipoDocumentoNombre, $documento['ruta']);
+                    $documento['estatus'] = '2'; //Si es 2 Esta  OK
+                }
+
+                if ((isset($request->archivo[$i]['check']) && $request->archivo[$i]['check'] == 'on')) {
+                    $documento['vencimiento'] = 1; //Si es 1 SI vence el documento
+                    $documento['estatus'] = '0'; //Si esta en 0 Esta MAL
+                    if (isset($request->archivo[$i]['fecha'])) {
+                        $documento['fechaVencimiento'] = $request->archivo[$i]['fecha'];
+                        // Evaluar fecha de vencimiento
+                        $documento['estatus'] = '1'; //Si es 1 Esta proximo a vencer
+                    }
+                } else {
+                    $documento['vencimiento'] = 0; //Si es 0 no vence el documento
+                    // $documento->estatus = '1';
+                }
+            } else {
+                // NO REQUERIDO
+                $documento['requerido'] = '0';
+                $documento['estatus'] = '2'; //Si es 2 Esta  OK
+            }
+
+            $documento['comentarios'] = $request->archivo[$i]['comentario'];
+
+            $docu = maqdocs::where('id', $request->archivo[$i]['idDoc'])->first();
+            // dd($request->archivo[$i]['idDoc']);
+            $docu->update($documento);
         }
-        if ($request->hasFile('circulacion')) {
-            $docs['circulacion'] = time() . '_' . $request->file('circulacion')->getClientOriginalName();
-            $request->file('circulacion')->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos', $docs['circulacion']);
-        }
-        if ($request->hasFile('verificacion')) {
-            $docs['verificacion'] = time() . '_' . $request->file('verificacion')->getClientOriginalName();
-            $request->file('verificacion')->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos', $docs['verificacion']);
-        }
-        if ($request->hasFile('ficha')) {
-            $docs['ficha'] = time() . '_' . $request->file('ficha')->getClientOriginalName();
-            $request->file('ficha')->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos', $docs['ficha']);
-        }
-        if ($request->hasFile('manual')) {
-            $docs['manual'] = time() . '_' . $request->file('manual')->getClientOriginalName();
-            $request->file('manual')->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos', $docs['manual']);
-        }
-        if ($request->hasFile('seguro')) {
-            $docs['seguro'] = time() . '_' . $request->file('seguro')->getClientOriginalName();
-            $request->file('seguro')->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos', $docs['seguro']);
-        }
-        if ($request->hasFile('registro')) {
-            $docs['registro'] = time() . '_' . $request->file('registro')->getClientOriginalName();
-            $request->file('registro')->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos', $docs['registro']);
-        }
-        if ($request->hasFile('especial')) {
-            $docs['especial'] = time() . '_' . $request->file('especial')->getClientOriginalName();
-            $request->file('especial')->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos', $docs['especial']);
-        }
-        $docu = maqdocs::where('maquinariaId', $maquinaria->id);
-        if (isset($docs)) {
-            $docu->update($docs);
-        }
+
+        // if ($request->hasFile('factura')) {
+        //     $docs['factura'] = time() . '_' . $request->file('factura')->getClientOriginalName();
+        //     $request->file('factura')->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos', $docs['factura']);
+        // }
+        // if ($request->hasFile('circulacion')) {
+        //     $docs['circulacion'] = time() . '_' . $request->file('circulacion')->getClientOriginalName();
+        //     $request->file('circulacion')->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos', $docs['circulacion']);
+        // }
+        // if ($request->hasFile('verificacion')) {
+        //     $docs['verificacion'] = time() . '_' . $request->file('verificacion')->getClientOriginalName();
+        //     $request->file('verificacion')->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos', $docs['verificacion']);
+        // }
+        // if ($request->hasFile('ficha')) {
+        //     $docs['ficha'] = time() . '_' . $request->file('ficha')->getClientOriginalName();
+        //     $request->file('ficha')->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos', $docs['ficha']);
+        // }
+        // if ($request->hasFile('manual')) {
+        //     $docs['manual'] = time() . '_' . $request->file('manual')->getClientOriginalName();
+        //     $request->file('manual')->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos', $docs['manual']);
+        // }
+        // if ($request->hasFile('seguro')) {
+        //     $docs['seguro'] = time() . '_' . $request->file('seguro')->getClientOriginalName();
+        //     $request->file('seguro')->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos', $docs['seguro']);
+        // }
+        // if ($request->hasFile('registro')) {
+        //     $docs['registro'] = time() . '_' . $request->file('registro')->getClientOriginalName();
+        //     $request->file('registro')->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos', $docs['registro']);
+        // }
+        // if ($request->hasFile('especial')) {
+        //     $docs['especial'] = time() . '_' . $request->file('especial')->getClientOriginalName();
+        //     $request->file('especial')->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos', $docs['especial']);
+        // }
+        // $docu = maqdocs::where('maquinariaId', $maquinaria->id);
+        // if (isset($docs)) {
+        //     $docu->update($docs);
+        // }
 
         if ($request->hasFile('ruta')) {
             foreach ($request->file('ruta') as $ruta) {
