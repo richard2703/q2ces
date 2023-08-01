@@ -15,7 +15,7 @@
 
         <div class="container-fluid mb-2">
             <div class="row justify-content-center">
-                <div class="col-11 align-self-center">
+                <div class="col-12 align-self-center">
                     <div class="col-12">
 
                         <div class="card-body contCart">
@@ -40,7 +40,7 @@
 
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-11 align-self-center">
+                <div class="col-12 align-self-center">
                     <div class="card col-12">
 
                         <div class="card-body contCart">
@@ -337,12 +337,12 @@
                                                             </div>
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                    <label class="labelTitulo">Combustible:</label></br>
-                                                                    <input type="text" class="inputCaja" id="combustible"
-                                                                        name="combustible"
-                                                                        placeholder="Diesel / Gasolina / Especificar"
-                                                                        value="{{ $maquinaria->combustible }}">
-                                                                </div>-->
+                                                                                <label class="labelTitulo">Combustible:</label></br>
+                                                                                <input type="text" class="inputCaja" id="combustible"
+                                                                                    name="combustible"
+                                                                                    placeholder="Diesel / Gasolina / Especificar"
+                                                                                    value="{{ $maquinaria->combustible }}">
+                                                                            </div>-->
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Motor:</label></br>
@@ -430,7 +430,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="accordion-item">
+                                    <div class="accordion-item" id="AccordionSecondary">
                                         <h2 class="accordion-header" id="headingThree">
                                             <button class="accordion-button bacTituloPrincipal" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#documentos"
@@ -441,499 +441,255 @@
                                         <div id="documentos" class="accordion-collapse collapse"
                                             aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
-                                                <div class="row">
-                                                    <div class="col-12 text-right">
-                                                        <a href="" data-bs-toggle="modal"
-                                                            data-bs-target="#modal-documentos">
-                                                            <button type="button" class="btn botonGral">Añadir
-                                                                documento</button>
-
-                                                        </a>
-                                                    </div>
-                                                </div>
                                                 <div class="row mt-3">
+                                                    @php
+                                                        $count = 0;
+                                                    @endphp
+                                                    @forelse ($doc as $item)
+                                                        <div
+                                                            class="card-group col-12 col-md-6 col-lg-4 col-xl-3 small-card-date my-1">
+                                                            <div class="card border-green">
+                                                                <div class="card-body">
+                                                                    <div>
+                                                                        <label
+                                                                            class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                            for="flexCheckDefault">
+                                                                            <i class="fas fa-times-circle semaforo{{ $item->estatus }}"
+                                                                                style="display: {{ $item->estatus != '0' ? ' none' : '' }};"></i>
+                                                                            <i class="fa fa-exclamation-circle semaforo{{ $item->estatus }}"
+                                                                                style="display: {{ $item->estatus != '1' ? ' none' : '' }};"
+                                                                                title="Proximo a vencer"></i>
+                                                                            <i class="fa fa-check-circle semaforo{{ $item->estatus }}"
+                                                                                style="display: {{ $item->estatus != '2' ? ' none' : '' }};"></i>
+                                                                            {{ ucwords(trans($item->nombre)) }} </label>
+                                                                    </div>
+                                                                    @if ($item->ruta != null)
+                                                                        <div
+                                                                            class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
+                                                                            <input type="hidden"
+                                                                                id='{{ $item->idDoc }}'
+                                                                                name='archivo[{{ $count }}][idDoc]'
+                                                                                value='{{ $item->idDoc }}'>
+                                                                            <input type="hidden"
+                                                                                id='{{ $item->nombre }}'
+                                                                                name='archivo[{{ $count }}][tipoDocs]'
+                                                                                value='{{ $item->id }}'>
+                                                                            <input type="hidden"
+                                                                                id='nombre{{ $item->nombre }}'
+                                                                                name='archivo[{{ $count }}][tipoDocsNombre]'
+                                                                                value='{{ $item->nombre }}'>
+                                                                            <input type="hidden"
+                                                                                id='omitido{{ $item->id }}'
+                                                                                name='archivo[{{ $count }}][omitido]'
+                                                                                value='0'>
+                                                                            <label class="custom-file-upload"
+                                                                                onclick='handleDocumento("{{ $item->id }}","{{ $item->nombre }}","{{ true }}","{{ $item->ruta }}")'>
+                                                                                <input class="mb-4" type="file"
+                                                                                    name='archivo[{{ $count }}][docs]'
+                                                                                    id='{{ $item->id }}'
+                                                                                    accept=".pdf"
+                                                                                    value="{{ $item->ruta }}">
+                                                                                <div
+                                                                                    id='iconContainer{{ $item->id }}'>
+                                                                                    <lord-icon
+                                                                                        src="https://cdn.lordicon.com/nxaaasqe.json"
+                                                                                        trigger="hover"
+                                                                                        colors="primary:#86c716,secondary:#e8e230"
+                                                                                        stroke="65"
+                                                                                        style="width:50px;height:70px">
+                                                                                    </lord-icon>
 
-                                                    <!-- FACTURA -->
+                                                                                </div>
+                                                                            </label>
+                                                                            <a id='downloadButton{{ $item->id }}'
+                                                                                class="btnViewDescargar btn btn-outline-success btnView"
+                                                                                download
+                                                                                href="{{ asset('/storage/maquinaria/' . str_pad($maquinaria->identificador, 4, '0', STR_PAD_LEFT) . '/documentos/' . $item->nombre . '/' . $item->ruta) }}">
+                                                                                <span class="btn-text">Descargar</span>
+                                                                                <span class="icon">
+                                                                                    <i class="far fa-eye mt-2"></i>
+                                                                                </span>
+                                                                            </a>
+                                                                            <button id='removeButton{{ $item->id }}'
+                                                                                onclick='eliminarBotonera("{{ $item->id }}")'
+                                                                                type="button"
+                                                                                class="btnViewDelete btn btn-outline-danger btnView"
+                                                                                style="width: 2.4em; height: 2.4em;"><i
+                                                                                    class="fa fa-times"></i></button>
+                                                                            <!-- Botón Omitir -->
+                                                                            <button id='omitirButton{{ $item->id }}'
+                                                                                class="btnSinFondo float-end mt-3"
+                                                                                style="margin-left: 20px" rel="tooltip"
+                                                                                type="button"
+                                                                                onclick='omitir("{{ $item->id }}","{{ $item->nombre }}")'>
+                                                                                <P class="fs-5" style="display: none">
+                                                                                    Omitir</P>
+                                                                            </button>
+                                                                            <button
+                                                                                id='cancelarOmitirButton{{ $item->id }}'
+                                                                                class="btnSinFondo float-end mt-3"
+                                                                                style="margin-left: 20px; display: none;"
+                                                                                rel="tooltip" type="button"
+                                                                                onclick='cancelarOmitir("{{ $item->id }}","{{ $item->nombre }}")'>
+                                                                                <P class="fs-5"> Cancelar</P>
+                                                                            </button>
+                                                                            <div class="text-center">
+                                                                                <div
+                                                                                    class="form-check d-flex justify-content-between">
+                                                                                    <div class="text-center"></div>
+                                                                                    <label
+                                                                                        class="text-start fs-5 textTitulo text-break mb-2"
+                                                                                        style="margin-left:-33px!important; font-size: 18px !important">
+                                                                                        Expiración:
+                                                                                    </label>
+                                                                                    <input
+                                                                                        class="form-check-input is-invalid align-self-end mb-2"
+                                                                                        type="checkbox"
+                                                                                        name='archivo[{{ $count }}][check]'
+                                                                                        id='check{{ $item->id }}'
+                                                                                        checked style="font-size: 20px;"
+                                                                                        onchange='handleCheckboxChange("{{ $item->id }}")'>
+                                                                                    <!--<input type="hidden" class="form-check-input is-invalid align-self-end mb-2"  id='checkHidden{{ $item->id }}' value='false'> -->
+                                                                                </div>
+                                                                                <div class="col-12">
+                                                                                    <input type="date"
+                                                                                        id='fecha{{ $item->id }}'
+                                                                                        class="inputCaja text-center"
+                                                                                        name='archivo[{{ $count }}][fecha]'
+                                                                                        style="display: block;" disabled
+                                                                                        value="{{ $item->fechaVencimiento }}">
+                                                                                </div>
+                                                                                <div class="col-12">
+                                                                                    <label
+                                                                                        class="text-start fs-5 textTitulo text-break mb-2"
+                                                                                        style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
+                                                                                    <textarea id='comentario{{ $item->id }}' name='archivo[{{ $count }}][comentario]'
+                                                                                        class="form-control-textarea inputCaja" rows="2" maxlength="1000" placeholder="Escribe Un Comentario">{{ $item->comentarios }}</textarea>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    @else
+                                                                        <div
+                                                                            class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
+                                                                            <input type="hidden"
+                                                                                id='{{ $item->idDoc }}'
+                                                                                name='archivo[{{ $count }}][idDoc]'
+                                                                                value='{{ $item->idDoc }}'>
+                                                                            <input type="hidden"
+                                                                                id='{{ $item->nombre }}'
+                                                                                name='archivo[{{ $count }}][tipoDocs]'
+                                                                                value='{{ $item->id }}'>
+                                                                            <input type="hidden"
+                                                                                id='nombre{{ $item->nombre }}'
+                                                                                name='archivo[{{ $count }}][tipoDocsNombre]'
+                                                                                value='{{ $item->nombre }}'>
+                                                                            <input type="hidden"
+                                                                                id='omitido{{ $item->id }}'
+                                                                                name='archivo[{{ $count }}][omitido]'
+                                                                                value='0'>
+                                                                            <label class="custom-file-upload"
+                                                                                onclick='handleDocumento("{{ $item->id }}","{{ $item->nombre }}")'>
+                                                                                <input class="mb-4" type="file"
+                                                                                    name='archivo[{{ $count }}][docs]'
+                                                                                    id='{{ $item->id }}'
+                                                                                    accept=".pdf"
+                                                                                    value="{{ $item->ruta }}">
+                                                                                <div
+                                                                                    id='iconContainer{{ $item->id }}'>
+                                                                                    <lord-icon
+                                                                                        src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                        trigger="hover"
+                                                                                        colors="primary:#86c716,secondary:#e8e230"
+                                                                                        stroke="65"
+                                                                                        style="width:50px;height:70px">
+                                                                                    </lord-icon>
 
-                                                    <div class="col-12 col-md-4 col-lg-3">
-                                                        <div class="card h-99 contDocumentos">
-                                                            <div class="card-body m-2">
-                                                                <div>
-                                                                    <label
-                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                        for="flexCheckDefault">
-                                                                        {{-- <i class="fa  {{ $docs->factura != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i> --}}
-                                                                        Factura
-                                                                    </label>
-                                                                </div>
-                                                                <div
-                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end">
-                                                                    <button id="downloadButton" class="btn btn-primary"
-                                                                        style="display: none">Descargar</button>
-                                                                    <label class="custom-file-upload">
-                                                                        <ul>
-                                                                            @forelse ($docs as $item)
-                                                                                @if ($item->tipo == 'Factura')
-                                                                                    <li>
-                                                                                        <a href="{{ route('maquinaria.download', [$item->id, 'factura']) }}"
-                                                                                            class="document-link"
-                                                                                            title="{{ $item->comentarios ? $item->comentarios : 'Sin comentarios' }}"
-                                                                                            target="blank">
-                                                                                            {{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('Y-m-d') : 'Sin comentarios' }}
-                                                                                            <lord-icon
-                                                                                                src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                                                trigger="hover"
-                                                                                                colors="primary:#86c716,secondary:#e8e230"
-                                                                                                stroke="65"
-                                                                                                style="width:35px;height:45px">
-                                                                                            </lord-icon>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                @endif
-                                                                            @empty
-                                                                                <li>
-                                                                                    <label>Sin documentos
-                                                                                        registrados.</label>
-                                                                                </li>
-                                                                            @endforelse
-                                                                        </ul>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
-
-                                                    <!-- MANUAL DE USO -->
-                                                    <div class="col-12 col-md-4 col-lg-3">
-                                                        <div class="card contDocumentos">
-                                                            <div class="card-body m-2">
-
-                                                                <div>
-                                                                    <label
-                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                        for="flexCheckDefault">
-                                                                        {{-- <i
-                                                                            class="fa {{ $docs->manual != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i> --}}
-                                                                        Manual de Uso
-                                                                    </label>
-                                                                </div>
-                                                                <div
-                                                                    class="contIconosDocumentos d-flex flex-wrap  align-items-end">
-                                                                    <label class="custom-file-upload">
-                                                                        <ul>
-                                                                            @forelse ($docs as $item)
-                                                                                @if ($item->tipo == 'Manual_de_Uso')
-                                                                                    <li>
-                                                                                        <a href="{{ route('maquinaria.download', [$item->id, 'factura']) }}"
-                                                                                            class=""
-                                                                                            title="{{ $item->comentarios ? $item->comentarios : 'Sin comentarios' }}"
-                                                                                            target="blank">{{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('Y-m-d') : 'Sin comentarios' }}
-                                                                                            <lord-icon
-                                                                                                src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                                                trigger="hover"
-                                                                                                colors="primary:#86c716,secondary:#e8e230"
-                                                                                                stroke="65"
-                                                                                                style="width:35px;height:45px">
-                                                                                            </lord-icon>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                @endif
-
-                                                                            @empty
-                                                                                <li>
-                                                                                    <label>Sin documentos
-                                                                                        registrados.</label>
-                                                                                </li>
-                                                                            @endforelse
-                                                                        </ul>
-                                                                    </label>
-                                                                </div>
-
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- REGISTRO -->
-                                                    <div class="col-12 col-md-4 col-lg-3">
-                                                        <div class="card contDocumentos">
-                                                            <div class="card-body m-2">
-
-                                                                <div>
-                                                                    <label
-                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                        for="flexCheckDefault">
-                                                                        {{-- <i
-                                                                            class="fa {{ $docs->registro != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i> --}}
-                                                                        Registro
-                                                                    </label>
-
-                                                                </div>
-                                                                <div
-                                                                    class="contIconosDocumentos d-flex flex-wrap  align-items-end">
-                                                                    <label class="custom-file-upload">
-                                                                        <ul>
-                                                                            @forelse ($docs as $item)
-                                                                                @if ($item->tipo == 'Registro')
-                                                                                    <li>
-                                                                                        <a href="{{ route('maquinaria.download', [$item->id, 'factura']) }}"
-                                                                                            class=""
-                                                                                            title="{{ $item->comentarios ? $item->comentarios : 'Sin comentarios' }}"
-                                                                                            target="blank">{{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('Y-m-d') : 'Sin comentarios' }}
-                                                                                            <lord-icon
-                                                                                                src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                                                trigger="hover"
-                                                                                                colors="primary:#86c716,secondary:#e8e230"
-                                                                                                stroke="65"
-                                                                                                style="width:35px;height:45px">
-                                                                                            </lord-icon>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                @endif
-
-                                                                            @empty
-                                                                                <li>
-                                                                                    <label>Sin documentos
-                                                                                        registrados.</label>
-                                                                                </li>
-                                                                            @endforelse
-                                                                        </ul>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- FICHA TECNICA DEL PROVEEDOR -->
-                                                    <div class="col-12 col-md-4 col-lg-3">
-                                                        <div class="card contDocumentos">
-                                                            <div class="card-body m-2">
-
-                                                                <div>
-                                                                    <label
-                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                        for="flexCheckDefault">
-                                                                        {{-- <i
-                                                                            class="fa {{ $docs->ficha != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i> --}}
-                                                                        Ficha Técnica del Proveedor
-                                                                    </label>
-                                                                </div>
-                                                                <div
-                                                                    class="contIconosDocumentos d-flex flex-wrap  align-items-end">
-                                                                    <label class="custom-file-upload">
-                                                                        <ul>
-                                                                            @forelse ($docs as $item)
-                                                                                @if ($item->tipo == 'Ficha_Tecnica_del_Proveedor')
-                                                                                    <li>
-                                                                                        <a href="{{ route('maquinaria.download', [$item->id, 'factura']) }}"
-                                                                                            class=""
-                                                                                            title="{{ $item->comentarios ? $item->comentarios : 'Sin comentarios' }}"
-                                                                                            target="blank">{{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('Y-m-d') : 'Sin comentarios' }}
-                                                                                            <lord-icon
-                                                                                                src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                                                trigger="hover"
-                                                                                                colors="primary:#86c716,secondary:#e8e230"
-                                                                                                stroke="65"
-                                                                                                style="width:35px;height:45px">
-                                                                                            </lord-icon>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                @endif
-
-                                                                            @empty
-                                                                                <li>
-                                                                                    <label>Sin documentos
-                                                                                        registrados.</label>
-                                                                                </li>
-                                                                            @endforelse
-                                                                        </ul>
-                                                                    </label>
-                                                                </div>
-
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- VERIFICACION -->
-                                                    <div class="col-12 col-md-4 col-lg-3">
-                                                        <div class="card h-99 contDocumentos">
-                                                            <div class="card-body m-2">
-                                                                <div>
-                                                                    <label
-                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                        for="flexCheckDefault">
-                                                                        {{-- <i
-                                                                            class="fa {{ $docs->verificacion != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i> --}}
-                                                                        Verificación
-                                                                    </label>
-                                                                </div>
-                                                                <div
-                                                                    class="contIconosDocumentos d-flex flex-wrap  align-items-end">
-                                                                    <label class="custom-file-upload">
-                                                                        <ul>
-                                                                            @forelse ($docs as $item)
-                                                                                @if ($item->tipo == 'Verificacion')
-                                                                                    <li>
-                                                                                        <a href="{{ route('maquinaria.download', [$item->id, 'factura']) }}"
-                                                                                            class=""
-                                                                                            title="{{ $item->comentarios ? $item->comentarios : 'Sin comentarios' }}"
-                                                                                            target="blank">{{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('Y-m-d') : 'Sin comentarios' }}
-                                                                                            <lord-icon
-                                                                                                src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                                                trigger="hover"
-                                                                                                colors="primary:#86c716,secondary:#e8e230"
-                                                                                                stroke="65"
-                                                                                                style="width:35px;height:45px">
-                                                                                            </lord-icon>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                @endif
-
-                                                                            @empty
-                                                                                <li>
-                                                                                    <label>Sin documentos
-                                                                                        registrados.</label>
-                                                                                </li>
-                                                                            @endforelse
-                                                                        </ul>
-                                                                    </label>
+                                                                                </div>
+                                                                            </label>
+                                                                            <a id='downloadButton{{ $item->id }}'
+                                                                                class="btnViewDescargar btn btn-outline-success btnView"
+                                                                                style="display: none" download>
+                                                                                <span class="btn-text">Descargar</span>
+                                                                                <span class="icon">
+                                                                                    <i class="far fa-eye mt-2"></i>
+                                                                                </span>
+                                                                            </a>
+                                                                            <button id='removeButton{{ $item->id }}'
+                                                                                type="button"
+                                                                                class="btnViewDelete btn btn-outline-danger btnView"
+                                                                                style="width: 2.4em; height: 2.4em; display: none;"><i
+                                                                                    class="fa fa-times"></i></button>
+                                                                            <!-- Botón Omitir -->
+                                                                            <button id='omitirButton{{ $item->id }}'
+                                                                                class="btnSinFondo float-end mt-3"
+                                                                                style="margin-left: 20px" rel="tooltip"
+                                                                                type="button"
+                                                                                onclick='omitir("{{ $item->id }}","{{ $item->nombre }}")'>
+                                                                                <P class="fs-5"> Omitir</P>
+                                                                            </button>
+                                                                            <button
+                                                                                id='cancelarOmitirButton{{ $item->id }}'
+                                                                                class="btnSinFondo float-end mt-3"
+                                                                                style="margin-left: 20px; display: none;"
+                                                                                rel="tooltip" type="button"
+                                                                                onclick='cancelarOmitir("{{ $item->id }}","{{ $item->nombre }}")'>
+                                                                                <P class="fs-5"> Cancelar</P>
+                                                                            </button>
+                                                                            <div class="text-center">
+                                                                                <div
+                                                                                    class="form-check d-flex justify-content-between">
+                                                                                    <div class="text-center"></div>
+                                                                                    <label
+                                                                                        class="text-start fs-5 textTitulo text-break mb-2"
+                                                                                        style="margin-left:-33px!important; font-size: 18px !important">
+                                                                                        Expiración:
+                                                                                    </label>
+                                                                                    <input
+                                                                                        class="form-check-input is-invalid align-self-end mb-2"
+                                                                                        type="checkbox"
+                                                                                        name='archivo[{{ $count }}][check]'
+                                                                                        id='check{{ $item->id }}'
+                                                                                        checked
+                                                                                        style="font-size: 20px; visibility: hidden"
+                                                                                        onchange='handleCheckboxChange("{{ $item->id }}")'>
+                                                                                    <!--<input type="hidden" class="form-check-input is-invalid align-self-end mb-2"  id='checkHidden{{ $item->id }}' value='false'> -->
+                                                                                </div>
+                                                                                <div class="col-12">
+                                                                                    <input type="date"
+                                                                                        id='fecha{{ $item->id }}'
+                                                                                        class="inputCaja text-center"
+                                                                                        name='archivo[{{ $count }}][fecha]'
+                                                                                        style="display: block;" disabled
+                                                                                        value="{{ $item->fechaVencimiento }}">
+                                                                                </div>
+                                                                                <div class="col-12">
+                                                                                    <label
+                                                                                        class="text-start fs-5 textTitulo text-break mb-2"
+                                                                                        style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
+                                                                                    <textarea id='comentario{{ $item->id }}' name='archivo[{{ $count }}][comentario]'
+                                                                                        class="form-control-textarea inputCaja" rows="2" maxlength="1000" placeholder="Escribe Un Comentario">{{ $item->comentarios }}</textarea>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endif
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-
-                                                    <!-- TARJETA DE CIRCULACION -->
-                                                    <div class="col-12 col-md-4 col-lg-3">
-                                                        <div class="card contDocumentos">
-                                                            <div class="card-body m-2">
-
-                                                                <div>
-                                                                    <label
-                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                        for="flexCheckDefault">
-                                                                        {{-- <i
-                                                                            class="fa {{ $docs->circulacion != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i> --}}
-                                                                        Tarjeta de Circulación
-                                                                    </label>
-                                                                </div>
-                                                                <div
-                                                                    class="contIconosDocumentos d-flex flex-wrap  align-items-end">
-                                                                    <label class="custom-file-upload">
-                                                                        <ul>
-                                                                            @forelse ($docs as $item)
-                                                                                @if ($item->tipo == 'Tarjeta_Circulacion')
-                                                                                    <li>
-                                                                                        <a href="{{ route('maquinaria.download', [$item->id, 'factura']) }}"
-                                                                                            class=""
-                                                                                            title="{{ $item->comentarios ? $item->comentarios : 'Sin comentarios' }}"
-                                                                                            target="blank">{{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('Y-m-d') : 'Sin comentarios' }}
-                                                                                            <lord-icon
-                                                                                                src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                                                trigger="hover"
-                                                                                                colors="primary:#86c716,secondary:#e8e230"
-                                                                                                stroke="65"
-                                                                                                style="width:35px;height:45px">
-                                                                                            </lord-icon>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                @endif
-
-                                                                            @empty
-                                                                                <li>
-                                                                                    <label>Sin documentos
-                                                                                        registrados.</label>
-                                                                                </li>
-                                                                            @endforelse
-                                                                        </ul>
-                                                                    </label>
-                                                                </div>
-
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- SEGUROS -->
-                                                    <div class="col-12 col-md-4 col-lg-3">
-                                                        <div class="card contDocumentos">
-                                                            <div class="card-body m-2">
-
-                                                                <div>
-                                                                    <label
-                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                        for="flexCheckDefault">
-                                                                        {{-- <i
-                                                                            class="fa {{ $docs->seguro != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i> --}}
-                                                                        Seguros
-                                                                    </label>
-
-                                                                </div>
-                                                                <div
-                                                                    class="contIconosDocumentos d-flexflex-wrap   align-items-end">
-                                                                    <label class="custom-file-upload">
-                                                                        <ul>
-                                                                            @forelse ($docs as $item)
-                                                                                @if ($item->tipo == 'Seguros')
-                                                                                    <li>
-                                                                                        <a href="{{ route('maquinaria.download', [$item->id, 'factura']) }}"
-                                                                                            class=""
-                                                                                            title="{{ $item->comentarios ? $item->comentarios : 'Sin comentarios' }}"
-                                                                                            target="blank">{{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('Y-m-d') : 'Sin comentarios' }}
-                                                                                            <lord-icon
-                                                                                                src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                                                trigger="hover"
-                                                                                                colors="primary:#86c716,secondary:#e8e230"
-                                                                                                stroke="65"
-                                                                                                style="width:35px;height:45px">
-                                                                                            </lord-icon>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                @endif
-
-                                                                            @empty
-                                                                                <li>
-                                                                                    <label>Sin documentos
-                                                                                        registrados.</label>
-                                                                                </li>
-                                                                            @endforelse
-                                                                        </ul>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- PERMISOS ESPECIALES -->
-                                                    <div class="col-12 col-md-4 col-lg-3">
-                                                        <div class="card contDocumentos">
-                                                            <div class="card-body m-2">
-
-                                                                <div>
-                                                                    <label
-                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                        for="flexCheckDefault">
-                                                                        {{-- <i
-                                                                            class="fa {{ $docs->especial != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i> --}}
-                                                                        Permisos Especiales
-                                                                    </label>
-
-                                                                </div>
-                                                                <div
-                                                                    class="contIconosDocumentos d-flex flex-wrap  align-items-end">
-                                                                    <label class="custom-file-upload">
-                                                                        <ul>
-                                                                            @forelse ($docs as $item)
-                                                                                @if ($item->tipo == 'Permisos_Especiales')
-                                                                                    <li>
-                                                                                        <a href="{{ route('maquinaria.download', [$item->id, 'factura']) }}"
-                                                                                            class=""
-                                                                                            title="{{ $item->comentarios ? $item->comentarios : 'Sin comentarios' }}"
-                                                                                            target="blank">
-                                                                                            {{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('Y-m-d') : 'Sin comentarios' }}
-                                                                                            <lord-icon
-                                                                                                src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                                                trigger="hover"
-                                                                                                colors="primary:#86c716,secondary:#e8e230"
-                                                                                                stroke="65"
-                                                                                                style="width:35px;height:45px">
-                                                                                            </lord-icon>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                @endif
-
-                                                                            @empty
-                                                                                <li>
-                                                                                    <label>Sin documentos
-                                                                                        registrados.</label>
-                                                                                </li>
-                                                                            @endforelse
-                                                                        </ul>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <!-- OTROS -->
-                                                    <div class="col-12 col-md-4 col-lg-3">
-                                                        <div class="card contDocumentos">
-                                                            <div class="card-body m-2">
-
-                                                                <div>
-                                                                    <label
-                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                        for="flexCheckDefault">
-                                                                        {{-- <i
-                                                                            class="fa {{ $docs->especial != null ? ' fa-check-circle semaforo3' : '  fa-times-circle semaforo2' }}"></i> --}}
-                                                                        OTROS
-                                                                    </label>
-
-                                                                </div>
-                                                                <div
-                                                                    class="contIconosDocumentos d-flex flex-wrap  align-items-end">
-                                                                    <label class="custom-file-upload">
-                                                                        <ul>
-                                                                            @forelse ($docs as $item)
-                                                                                @if ($item->tipo == 'Otros')
-                                                                                    <li>
-                                                                                        <a href="{{ route('maquinaria.download', [$item->id, 'factura']) }}"
-                                                                                            class=""
-                                                                                            title="{{ $item->comentarios ? $item->comentarios : 'Sin comentarios' }}"
-                                                                                            target="blank">
-                                                                                            {{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('Y-m-d') : 'Sin comentarios' }}
-                                                                                            <lord-icon
-                                                                                                src="https://cdn.lordicon.com/tyounuzx.json"
-                                                                                                trigger="hover"
-                                                                                                colors="primary:#86c716,secondary:#e8e230"
-                                                                                                stroke="65"
-                                                                                                style="width:35px;height:45px">
-                                                                                            </lord-icon>
-                                                                                        </a>
-                                                                                        {{-- <a href="#" class=""
-                                                                                            data-bs-toggle="modal"
-                                                                                            data-bs-target="#modal-edit-documentos"
-                                                                                            onclick="loadDocument(
-                                                                                            '{{ $item->id }}'
-                                                                                            ,'{{ $item->tipo }}'
-                                                                                            ,'{{ $item->comentarios }}'
-                                                                                            ,'{{ \Carbon\Carbon::parse($item->fechaVencimiento)->format('d/m/Y') }}'
-                                                                                        )">
-                                                                                            <svg xmlns="http://www.w3.org/2000/svg "
-                                                                                                width="28"
-                                                                                                height="28"
-                                                                                                fill="currentColor"
-                                                                                                class="bi bi-pencil accionesIconos"
-                                                                                                viewBox="0 0 16 16">
-                                                                                                <path
-                                                                                                    d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                                                                            </svg>
-                                                                                        </a> --}}
-                                                                                    </li>
-                                                                                @endif
-
-                                                                            @empty
-                                                                                <li>
-                                                                                    <label>Sin documentos
-                                                                                        registrados.</label>
-                                                                                </li>
-                                                                            @endforelse
-                                                                        </ul>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
+                                                        <script>
+                                                            document.addEventListener('DOMContentLoaded', function() {
+                                                                // Llamar a la función después de que la vista haya cargado completamente
+                                                                evaluar({{ $item->id }}, {{ $item->requerido }});
+                                                            });
+                                                        </script>
+                                                        @php
+                                                            $count++;
+                                                        @endphp
+                                                    @empty
+                                                        Sin Registros
+                                                    @endforelse
                                                 </div>
-
                                             </div>
-
                                         </div>
-
                                     </div>
                                     {{--  estatus  --}}
                                     <div class="accordion-item">
@@ -994,8 +750,6 @@
 <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@accessible360/accessible-slick@1.0.1/slick/slick.min.js"></script>
 
-
-
 <script>
     function abre(T) {
         var ruta = T.src.replace("/s90-Ic42/", "/s590-Ic42/");
@@ -1048,7 +802,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn botonGral">Guardar</button>
+                    <!--<button type="submit" class="btn botonGral">Guardar</button>-->
                 </div>
             </form>
         </div>
@@ -1099,7 +853,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn botonGral">Guardar</button>
+                    <!--<button type="submit" class="btn botonGral">Guardar</button>-->
                 </div>
             </form>
         </div>
@@ -1120,6 +874,13 @@
         }
     }
 </style>
+
+<script>
+    function evaluar(param) {
+        console.log('hola', param);
+    }
+</script>
+<script src="{{ asset('js/cardArchivos.js') }}"></script>
 
 <script>
     function deleteImage(id, fotos, button) {
@@ -1216,6 +977,16 @@
         //     document.getElementById('btnTareaGuardar').disabled = true;
 
         // }
+    }
+</script>
+<script>
+    function evaluar(id, requerido) {
+        console.log(id, requerido);
+        if (requerido == 0) {
+            console.log('requerido');
+            omitir(id);
+
+        }
     }
 </script>
 

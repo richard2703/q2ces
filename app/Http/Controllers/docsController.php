@@ -21,15 +21,15 @@ class docsController extends Controller
         //$docs = docs::orderBy('created_at', 'desc')->paginate(5);
         abort_if(Gate::denies('docs_index'), 404);
         $docs = docs::join('tiposDocs', 'docs.tipoId', 'tiposDocs.id')
-        ->select(
-            'docs.id',
-            'docs.nombre',
-            'tiposDocs.nombre as nombreTipo',
-            'docs.comentario'
-        )->orderBy('docs.created_at', 'desc')->paginate(5);
+            ->select(
+                'docs.id',
+                'docs.nombre',
+                'tiposDocs.nombre as nombreTipo',
+                'docs.comentario'
+            )->orderBy('docs.created_at', 'desc')->paginate(5);
         // dd($docs);
-        
-        return view('docs.indexDocs', compact('docs'));
+
+        return view('catalogos.docs.indexDocs', compact('docs'));
     }
 
     /**
@@ -41,8 +41,8 @@ class docsController extends Controller
     {
         abort_if(Gate::denies('docs_create'), 404);
         $tiposDocs = tiposDocs::all();
-        
-        return view('docs.createDocs', compact('tiposDocs'));
+
+        return view('catalogos.docs.createDocs', compact('tiposDocs'));
     }
 
     /**
@@ -81,7 +81,7 @@ class docsController extends Controller
     {
         abort_if(Gate::denies('tiposDocs_edit'), 404);
         $tiposDocs = tiposDocs::all();
-        return view('docs.editDocs', compact('doc','tiposDocs'));
+        return view('catalogos.docs.editDocs', compact('doc', 'tiposDocs'));
     }
 
     /**
