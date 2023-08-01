@@ -1099,6 +1099,9 @@
                                                         @if ($doc->ruta != null)
                                                             <div
                                                                 class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
+                                                                <input type="hidden" id='{{ $doc->idDoc }}'
+                                                                    name='archivo[{{ $contador }}][idDoc]'
+                                                                    value='{{ $doc->idDoc }}'>
                                                                 <input type="hidden" id='{{ $doc->nombre }}'
                                                                     name='archivo[{{ $contador }}][tipoDocs]'
                                                                     value='{{ $doc->id }}'>
@@ -1126,24 +1129,26 @@
                                                                 </label>
                                                                 <a id='downloadButton{{ $doc->id }}'
                                                                     class="btnViewDescargar btn btn-outline-success btnView"
-                                                                    style="" download>
+                                                                    download
+                                                                    href="{{ asset('/storage/personal/' . str_pad($personal->id, 4, '0', STR_PAD_LEFT) . '/documentos/' . $doc->nombre . '/' . $doc->ruta) }}">
                                                                     <span class="btn-text">Descargar</span>
                                                                     <span class="icon">
                                                                         <i class="far fa-eye mt-2"></i>
                                                                     </span>
                                                                 </a>
                                                                 <button id='removeButton{{ $doc->id }}'
-                                                                    class="btnViewDelete btn btn-outline-danger btnView"
+                                                                    onclick='eliminarBotonera("{{ $doc->id }}")'
                                                                     type="button"
-                                                                    style="width: 2.4em; height: 2.4em; "><i
+                                                                    class="btnViewDelete btn btn-outline-danger btnView"
+                                                                    style="width: 2.4em; height: 2.4em;"><i
                                                                         class="fa fa-times"></i></button>
                                                                 <!-- Botón Omitir -->
                                                                 <button id='omitirButton{{ $doc->id }}'
                                                                     class="btnSinFondo float-end mt-3"
-                                                                    style="margin-left: 20px display: none;"
-                                                                    rel="tooltip" type="button"
+                                                                    style="margin-left: 20px" rel="tooltip"
+                                                                    type="button"
                                                                     onclick='omitir("{{ $doc->id }}","{{ $doc->nombre }}")'>
-                                                                    <P class="fs-5" style="display: none;"> Omitir</P>
+                                                                    <P class="fs-5" style="display: none"> Omitir</P>
                                                                 </button>
                                                                 <button id='cancelarOmitirButton{{ $doc->id }}'
                                                                     class="btnSinFondo float-end mt-3"
@@ -1190,6 +1195,9 @@
                                                         @else
                                                             <div
                                                                 class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
+                                                                <input type="hidden" id='{{ $doc->idDoc }}'
+                                                                    name='archivo[{{ $contador }}][idDoc]'
+                                                                    value='{{ $doc->idDoc }}'>
                                                                 <input type="hidden" id='{{ $doc->nombre }}'
                                                                     name='archivo[{{ $contador }}][tipoDocs]'
                                                                     value='{{ $doc->id }}'>
