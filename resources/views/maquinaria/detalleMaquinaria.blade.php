@@ -337,12 +337,12 @@
                                                             </div>
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                    <label class="labelTitulo">Combustible:</label></br>
-                                                                    <input type="text" class="inputCaja" id="combustible"
-                                                                        name="combustible"
-                                                                        placeholder="Diesel / Gasolina / Especificar"
-                                                                        value="{{ $maquinaria->combustible }}">
-                                                                </div>-->
+                                                                                <label class="labelTitulo">Combustible:</label></br>
+                                                                                <input type="text" class="inputCaja" id="combustible"
+                                                                                    name="combustible"
+                                                                                    placeholder="Diesel / Gasolina / Especificar"
+                                                                                    value="{{ $maquinaria->combustible }}">
+                                                                            </div>-->
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Motor:</label></br>
@@ -442,203 +442,251 @@
                                             aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
                                                 <div class="row mt-3">
-                                                @php 
-                                                    $count = 0;
-                                                @endphp
-                                                @forelse ($doc as $item)
-                                                    <div
-                                                        class="card-group col-12 col-md-6 col-lg-4 col-xl-3 small-card-date my-1">
-                                                        <div class="card border-green">
-                                                            <div class="card-body">
-                                                                <div>
-                                                                    <label
-                                                                        class="form-check-label text-start fs-5 textTitulo text-break mb-2"
-                                                                        for="flexCheckDefault">
-                                                                        <i class="fas fa-times-circle semaforo{{ $item->estatus }}"
-                                                                            style="display: {{ $item->estatus != '0' ? ' none' : '' }};"></i>
-                                                                        <i class="fa fa-exclamation-circle semaforo{{ $item->estatus }}"
-                                                                            style="display: {{ $item->estatus != '1' ? ' none' : '' }};"
-                                                                            title="Proximo a vencer"></i>
-                                                                        <i class="fa fa-check-circle semaforo{{ $item->estatus }}"
-                                                                            style="display: {{ $item->estatus != '2' ? ' none' : '' }};"></i>
-                                                                        {{ ucwords(trans($item->nombre)) }} </label>
-                                                                </div>
-                                                                @if ($item->ruta != null)
-                                                                <div
-                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
-                                                                    <input type="hidden" id='{{ $item->nombre }}'
-                                                                        name='archivo[{{$count}}][tipoDocs]'
-                                                                        value='{{ $item->id }}'>
-                                                                    <input type="hidden" id='nombre{{ $item->nombre }}'
-                                                                        name='archivo[{{$count}}][tipoDocsNombre]'
-                                                                        value='{{ $item->nombre }}'>
-                                                                    <input type="hidden" id='omitido{{ $item->id }}'
-                                                                        name='archivo[{{$count}}][omitido]'
-                                                                        value='0'>
-                                                                    <label class="custom-file-upload"
-                                                                        onclick='handleDocumento("{{ $item->id }}","{{ $item->nombre }}","{{true}}","{{$item->ruta}}")'>
-                                                                        <input class="mb-4" type="file"
-                                                                            name='archivo[{{$count}}][docs]' id='{{ $item->id }}' accept=".pdf" value="{{ $item->ruta }}">
-                                                                        <div id='iconContainer{{ $item->id }}'>
-                                                                            <lord-icon
-                                                                                src="https://cdn.lordicon.com/nxaaasqe.json"
-                                                                                trigger="hover"
-                                                                                colors="primary:#86c716,secondary:#e8e230"
-                                                                                stroke="65"
-                                                                                style="width:50px;height:70px">
-                                                                            </lord-icon>
-
-                                                                        </div>
-                                                                    </label>
-                                                                    <a id='downloadButton{{ $item->id }}'
-                                                                        class="btnViewDescargar btn btn-outline-success btnView"
-                                                                        download href="{{asset('/storage/maquinaria/' . str_pad($maquinaria->identificador, 4, '0', STR_PAD_LEFT) . '/documentos/' . $item->nombre . '/' . $item->ruta) }}">
-                                                                        <span class="btn-text">Descargar</span>
-                                                                        <span class="icon">
-                                                                            <i class="far fa-eye mt-2"></i>
-                                                                        </span>
-                                                                    </a>
-                                                                    <button id='removeButton{{ $item->id }}' onclick='eliminarBotonera("{{ $item->id }}")' type="button"
-                                                                        class="btnViewDelete btn btn-outline-danger btnView"
-                                                                        style="width: 2.4em; height: 2.4em;"><i
-                                                                        class="fa fa-times"></i></button>
-                                                                    <!-- Botón Omitir -->
-                                                                    <button id='omitirButton{{ $item->id }}'
-                                                                        class="btnSinFondo float-end mt-3"
-                                                                        style="margin-left: 20px" rel="tooltip"
-                                                                        type="button"
-                                                                        onclick='omitir("{{ $item->id }}","{{ $item->nombre }}")'>
-                                                                        <P class="fs-5" style="display: none"> Omitir</P>
-                                                                    </button>
-                                                                    <button
-                                                                        id='cancelarOmitirButton{{ $item->id }}'
-                                                                        class="btnSinFondo float-end mt-3"
-                                                                        style="margin-left: 20px; display: none;"
-                                                                        rel="tooltip"
-                                                                        type="button"
-                                                                        onclick='cancelarOmitir("{{ $item->id }}","{{ $item->nombre }}")'>
-                                                                        <P class="fs-5"> Cancelar</P>
-                                                                    </button>
-                                                                    <div class="text-center">
-                                                                        <div class="form-check d-flex justify-content-between">
-                                                                        <div class="text-center"></div>
-                                                                            <label class="text-start fs-5 textTitulo text-break mb-2" style="margin-left:-33px!important; font-size: 18px !important">
-                                                                                Expiración:
-                                                                            </label>
-                                                                            <input class="form-check-input is-invalid align-self-end mb-2" type="checkbox" name='archivo[{{$count}}][check]' id='check{{ $item->id }}' checked style="font-size: 20px;" onchange='handleCheckboxChange("{{ $item->id }}")'>
-                                                                            <!--<input type="hidden" class="form-check-input is-invalid align-self-end mb-2"  id='checkHidden{{ $item->id }}' value='false'> -->
-                                                                        </div>
-                                                                        <div class="col-12">
-                                                                            <input type="date"
-                                                                                id='fecha{{ $item->id }}'
-                                                                                class="inputCaja text-center" name='archivo[{{$count}}][fecha]'
-                                                                                style="display: block;" disabled value="{{ $item->fechaVencimiento }}">
-                                                                        </div>
-                                                                        <div class="col-12">
-                                                                            <label
-                                                                                class="text-start fs-5 textTitulo text-break mb-2"
-                                                                                style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
-                                                                            <textarea id='comentario{{ $item->id }}' name='archivo[{{$count}}][comentario]' class="form-control-textarea inputCaja" rows="2" maxlength="1000"
-                                                                                placeholder="Escribe Un Comentario">{{ $item->comentarios }}</textarea>
-                                                                        </div>
+                                                    @php
+                                                        $count = 0;
+                                                    @endphp
+                                                    @forelse ($doc as $item)
+                                                        <div
+                                                            class="card-group col-12 col-md-6 col-lg-4 col-xl-3 small-card-date my-1">
+                                                            <div class="card border-green">
+                                                                <div class="card-body">
+                                                                    <div>
+                                                                        <label
+                                                                            class="form-check-label text-start fs-5 textTitulo text-break mb-2"
+                                                                            for="flexCheckDefault">
+                                                                            <i class="fas fa-times-circle semaforo{{ $item->estatus }}"
+                                                                                style="display: {{ $item->estatus != '0' ? ' none' : '' }};"></i>
+                                                                            <i class="fa fa-exclamation-circle semaforo{{ $item->estatus }}"
+                                                                                style="display: {{ $item->estatus != '1' ? ' none' : '' }};"
+                                                                                title="Proximo a vencer"></i>
+                                                                            <i class="fa fa-check-circle semaforo{{ $item->estatus }}"
+                                                                                style="display: {{ $item->estatus != '2' ? ' none' : '' }};"></i>
+                                                                            {{ ucwords(trans($item->nombre)) }} </label>
                                                                     </div>
-                                                                </div>
-                                                                @else
-                                                                <div
-                                                                    class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
-                                                                    <input type="hidden" id='{{ $item->nombre }}'
-                                                                        name='archivo[{{$count}}][tipoDocs]'
-                                                                        value='{{ $item->id }}'>
-                                                                    <input type="hidden" id='nombre{{ $item->nombre }}'
-                                                                        name='archivo[{{$count}}][tipoDocsNombre]'
-                                                                        value='{{ $item->nombre }}'>
-                                                                    <input type="hidden" id='omitido{{ $item->id }}'
-                                                                        name='archivo[{{$count}}][omitido]'
-                                                                        value='0'>
-                                                                    <label class="custom-file-upload"
-                                                                        onclick='handleDocumento("{{ $item->id }}","{{ $item->nombre }}")'>
-                                                                        <input class="mb-4" type="file"
-                                                                            name='archivo[{{$count}}][docs]' id='{{ $item->id }}' accept=".pdf" value="{{ $item->ruta }}">
-                                                                        <div id='iconContainer{{ $item->id }}'>
-                                                                            <lord-icon
-                                                                                src="https://cdn.lordicon.com/koyivthb.json"
-                                                                                trigger="hover"
-                                                                                colors="primary:#86c716,secondary:#e8e230"
-                                                                                stroke="65"
-                                                                                style="width:50px;height:70px">
-                                                                            </lord-icon>
+                                                                    @if ($item->ruta != null)
+                                                                        <div
+                                                                            class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
+                                                                            <input type="hidden"
+                                                                                id='{{ $item->idDoc }}'
+                                                                                name='archivo[{{ $count }}][idDoc]'
+                                                                                value='{{ $item->idDoc }}'>
+                                                                            <input type="hidden"
+                                                                                id='{{ $item->nombre }}'
+                                                                                name='archivo[{{ $count }}][tipoDocs]'
+                                                                                value='{{ $item->id }}'>
+                                                                            <input type="hidden"
+                                                                                id='nombre{{ $item->nombre }}'
+                                                                                name='archivo[{{ $count }}][tipoDocsNombre]'
+                                                                                value='{{ $item->nombre }}'>
+                                                                            <input type="hidden"
+                                                                                id='omitido{{ $item->id }}'
+                                                                                name='archivo[{{ $count }}][omitido]'
+                                                                                value='0'>
+                                                                            <label class="custom-file-upload"
+                                                                                onclick='handleDocumento("{{ $item->id }}","{{ $item->nombre }}","{{ true }}","{{ $item->ruta }}")'>
+                                                                                <input class="mb-4" type="file"
+                                                                                    name='archivo[{{ $count }}][docs]'
+                                                                                    id='{{ $item->id }}'
+                                                                                    accept=".pdf"
+                                                                                    value="{{ $item->ruta }}">
+                                                                                <div
+                                                                                    id='iconContainer{{ $item->id }}'>
+                                                                                    <lord-icon
+                                                                                        src="https://cdn.lordicon.com/nxaaasqe.json"
+                                                                                        trigger="hover"
+                                                                                        colors="primary:#86c716,secondary:#e8e230"
+                                                                                        stroke="65"
+                                                                                        style="width:50px;height:70px">
+                                                                                    </lord-icon>
 
-                                                                        </div>
-                                                                    </label>
-                                                                    <a id='downloadButton{{ $item->id }}'
-                                                                        class="btnViewDescargar btn btn-outline-success btnView"
-                                                                        style="display: none" download>
-                                                                        <span class="btn-text">Descargar</span>
-                                                                        <span class="icon">
-                                                                            <i class="far fa-eye mt-2"></i>
-                                                                        </span>
-                                                                    </a>
-                                                                    <button id='removeButton{{ $item->id }}' type="button"
-                                                                        class="btnViewDelete btn btn-outline-danger btnView"
-                                                                        style="width: 2.4em; height: 2.4em; display: none;"><i
-                                                                        class="fa fa-times"></i></button>
-                                                                    <!-- Botón Omitir -->
-                                                                    <button id='omitirButton{{ $item->id }}'
-                                                                        class="btnSinFondo float-end mt-3"
-                                                                        style="margin-left: 20px" rel="tooltip"
-                                                                        type="button"
-                                                                        onclick='omitir("{{ $item->id }}","{{ $item->nombre }}")'>
-                                                                        <P class="fs-5"> Omitir</P>
-                                                                    </button>
-                                                                    <button
-                                                                        id='cancelarOmitirButton{{ $item->id }}'
-                                                                        class="btnSinFondo float-end mt-3"
-                                                                        style="margin-left: 20px; display: none;"
-                                                                        rel="tooltip"
-                                                                        type="button"
-                                                                        onclick='cancelarOmitir("{{ $item->id }}","{{ $item->nombre }}")'>
-                                                                        <P class="fs-5"> Cancelar</P>
-                                                                    </button>
-                                                                    <div class="text-center">
-                                                                        <div class="form-check d-flex justify-content-between">
-                                                                        <div class="text-center"></div>
-                                                                            <label class="text-start fs-5 textTitulo text-break mb-2" style="margin-left:-33px!important; font-size: 18px !important">
-                                                                                Expiración:
+                                                                                </div>
                                                                             </label>
-                                                                            <input class="form-check-input is-invalid align-self-end mb-2" type="checkbox" name='archivo[{{$count}}][check]' id='check{{ $item->id }}' checked style="font-size: 20px; visibility: hidden" onchange='handleCheckboxChange("{{ $item->id }}")'>
-                                                                            <!--<input type="hidden" class="form-check-input is-invalid align-self-end mb-2"  id='checkHidden{{ $item->id }}' value='false'> -->
+                                                                            <a id='downloadButton{{ $item->id }}'
+                                                                                class="btnViewDescargar btn btn-outline-success btnView"
+                                                                                download
+                                                                                href="{{ asset('/storage/maquinaria/' . str_pad($maquinaria->identificador, 4, '0', STR_PAD_LEFT) . '/documentos/' . $item->nombre . '/' . $item->ruta) }}">
+                                                                                <span class="btn-text">Descargar</span>
+                                                                                <span class="icon">
+                                                                                    <i class="far fa-eye mt-2"></i>
+                                                                                </span>
+                                                                            </a>
+                                                                            <button id='removeButton{{ $item->id }}'
+                                                                                onclick='eliminarBotonera("{{ $item->id }}")'
+                                                                                type="button"
+                                                                                class="btnViewDelete btn btn-outline-danger btnView"
+                                                                                style="width: 2.4em; height: 2.4em;"><i
+                                                                                    class="fa fa-times"></i></button>
+                                                                            <!-- Botón Omitir -->
+                                                                            <button id='omitirButton{{ $item->id }}'
+                                                                                class="btnSinFondo float-end mt-3"
+                                                                                style="margin-left: 20px" rel="tooltip"
+                                                                                type="button"
+                                                                                onclick='omitir("{{ $item->id }}","{{ $item->nombre }}")'>
+                                                                                <P class="fs-5" style="display: none">
+                                                                                    Omitir</P>
+                                                                            </button>
+                                                                            <button
+                                                                                id='cancelarOmitirButton{{ $item->id }}'
+                                                                                class="btnSinFondo float-end mt-3"
+                                                                                style="margin-left: 20px; display: none;"
+                                                                                rel="tooltip" type="button"
+                                                                                onclick='cancelarOmitir("{{ $item->id }}","{{ $item->nombre }}")'>
+                                                                                <P class="fs-5"> Cancelar</P>
+                                                                            </button>
+                                                                            <div class="text-center">
+                                                                                <div
+                                                                                    class="form-check d-flex justify-content-between">
+                                                                                    <div class="text-center"></div>
+                                                                                    <label
+                                                                                        class="text-start fs-5 textTitulo text-break mb-2"
+                                                                                        style="margin-left:-33px!important; font-size: 18px !important">
+                                                                                        Expiración:
+                                                                                    </label>
+                                                                                    <input
+                                                                                        class="form-check-input is-invalid align-self-end mb-2"
+                                                                                        type="checkbox"
+                                                                                        name='archivo[{{ $count }}][check]'
+                                                                                        id='check{{ $item->id }}'
+                                                                                        checked style="font-size: 20px;"
+                                                                                        onchange='handleCheckboxChange("{{ $item->id }}")'>
+                                                                                    <!--<input type="hidden" class="form-check-input is-invalid align-self-end mb-2"  id='checkHidden{{ $item->id }}' value='false'> -->
+                                                                                </div>
+                                                                                <div class="col-12">
+                                                                                    <input type="date"
+                                                                                        id='fecha{{ $item->id }}'
+                                                                                        class="inputCaja text-center"
+                                                                                        name='archivo[{{ $count }}][fecha]'
+                                                                                        style="display: block;" disabled
+                                                                                        value="{{ $item->fechaVencimiento }}">
+                                                                                </div>
+                                                                                <div class="col-12">
+                                                                                    <label
+                                                                                        class="text-start fs-5 textTitulo text-break mb-2"
+                                                                                        style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
+                                                                                    <textarea id='comentario{{ $item->id }}' name='archivo[{{ $count }}][comentario]'
+                                                                                        class="form-control-textarea inputCaja" rows="2" maxlength="1000" placeholder="Escribe Un Comentario">{{ $item->comentarios }}</textarea>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="col-12">
-                                                                            <input type="date"
-                                                                                id='fecha{{ $item->id }}'
-                                                                                class="inputCaja text-center" name='archivo[{{$count}}][fecha]'
-                                                                                style="display: block;" disabled value="{{ $item->fechaVencimiento }}">
+                                                                    @else
+                                                                        <div
+                                                                            class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
+                                                                            <input type="hidden"
+                                                                                id='{{ $item->idDoc }}'
+                                                                                name='archivo[{{ $count }}][idDoc]'
+                                                                                value='{{ $item->idDoc }}'>
+                                                                            <input type="hidden"
+                                                                                id='{{ $item->nombre }}'
+                                                                                name='archivo[{{ $count }}][tipoDocs]'
+                                                                                value='{{ $item->id }}'>
+                                                                            <input type="hidden"
+                                                                                id='nombre{{ $item->nombre }}'
+                                                                                name='archivo[{{ $count }}][tipoDocsNombre]'
+                                                                                value='{{ $item->nombre }}'>
+                                                                            <input type="hidden"
+                                                                                id='omitido{{ $item->id }}'
+                                                                                name='archivo[{{ $count }}][omitido]'
+                                                                                value='0'>
+                                                                            <label class="custom-file-upload"
+                                                                                onclick='handleDocumento("{{ $item->id }}","{{ $item->nombre }}")'>
+                                                                                <input class="mb-4" type="file"
+                                                                                    name='archivo[{{ $count }}][docs]'
+                                                                                    id='{{ $item->id }}'
+                                                                                    accept=".pdf"
+                                                                                    value="{{ $item->ruta }}">
+                                                                                <div
+                                                                                    id='iconContainer{{ $item->id }}'>
+                                                                                    <lord-icon
+                                                                                        src="https://cdn.lordicon.com/koyivthb.json"
+                                                                                        trigger="hover"
+                                                                                        colors="primary:#86c716,secondary:#e8e230"
+                                                                                        stroke="65"
+                                                                                        style="width:50px;height:70px">
+                                                                                    </lord-icon>
+
+                                                                                </div>
+                                                                            </label>
+                                                                            <a id='downloadButton{{ $item->id }}'
+                                                                                class="btnViewDescargar btn btn-outline-success btnView"
+                                                                                style="display: none" download>
+                                                                                <span class="btn-text">Descargar</span>
+                                                                                <span class="icon">
+                                                                                    <i class="far fa-eye mt-2"></i>
+                                                                                </span>
+                                                                            </a>
+                                                                            <button id='removeButton{{ $item->id }}'
+                                                                                type="button"
+                                                                                class="btnViewDelete btn btn-outline-danger btnView"
+                                                                                style="width: 2.4em; height: 2.4em; display: none;"><i
+                                                                                    class="fa fa-times"></i></button>
+                                                                            <!-- Botón Omitir -->
+                                                                            <button id='omitirButton{{ $item->id }}'
+                                                                                class="btnSinFondo float-end mt-3"
+                                                                                style="margin-left: 20px" rel="tooltip"
+                                                                                type="button"
+                                                                                onclick='omitir("{{ $item->id }}","{{ $item->nombre }}")'>
+                                                                                <P class="fs-5"> Omitir</P>
+                                                                            </button>
+                                                                            <button
+                                                                                id='cancelarOmitirButton{{ $item->id }}'
+                                                                                class="btnSinFondo float-end mt-3"
+                                                                                style="margin-left: 20px; display: none;"
+                                                                                rel="tooltip" type="button"
+                                                                                onclick='cancelarOmitir("{{ $item->id }}","{{ $item->nombre }}")'>
+                                                                                <P class="fs-5"> Cancelar</P>
+                                                                            </button>
+                                                                            <div class="text-center">
+                                                                                <div
+                                                                                    class="form-check d-flex justify-content-between">
+                                                                                    <div class="text-center"></div>
+                                                                                    <label
+                                                                                        class="text-start fs-5 textTitulo text-break mb-2"
+                                                                                        style="margin-left:-33px!important; font-size: 18px !important">
+                                                                                        Expiración:
+                                                                                    </label>
+                                                                                    <input
+                                                                                        class="form-check-input is-invalid align-self-end mb-2"
+                                                                                        type="checkbox"
+                                                                                        name='archivo[{{ $count }}][check]'
+                                                                                        id='check{{ $item->id }}'
+                                                                                        checked
+                                                                                        style="font-size: 20px; visibility: hidden"
+                                                                                        onchange='handleCheckboxChange("{{ $item->id }}")'>
+                                                                                    <!--<input type="hidden" class="form-check-input is-invalid align-self-end mb-2"  id='checkHidden{{ $item->id }}' value='false'> -->
+                                                                                </div>
+                                                                                <div class="col-12">
+                                                                                    <input type="date"
+                                                                                        id='fecha{{ $item->id }}'
+                                                                                        class="inputCaja text-center"
+                                                                                        name='archivo[{{ $count }}][fecha]'
+                                                                                        style="display: block;" disabled
+                                                                                        value="{{ $item->fechaVencimiento }}">
+                                                                                </div>
+                                                                                <div class="col-12">
+                                                                                    <label
+                                                                                        class="text-start fs-5 textTitulo text-break mb-2"
+                                                                                        style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
+                                                                                    <textarea id='comentario{{ $item->id }}' name='archivo[{{ $count }}][comentario]'
+                                                                                        class="form-control-textarea inputCaja" rows="2" maxlength="1000" placeholder="Escribe Un Comentario">{{ $item->comentarios }}</textarea>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="col-12">
-                                                                            <label
-                                                                                class="text-start fs-5 textTitulo text-break mb-2"
-                                                                                style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
-                                                                            <textarea id='comentario{{ $item->id }}' name='archivo[{{$count}}][comentario]' class="form-control-textarea inputCaja" rows="2" maxlength="1000"
-                                                                                placeholder="Escribe Un Comentario">{{ $item->comentarios }}</textarea>
-                                                                        </div>
-                                                                    </div>
+                                                                    @endif
                                                                 </div>
-                                                                @endif
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <script>
-                                                        document.addEventListener('DOMContentLoaded', function() {
-                                                            // Llamar a la función después de que la vista haya cargado completamente
-                                                            evaluar({{ $item->id }}, {{ $item->requerido }});
-                                                        });
-                                                    </script>
-                                                    @php 
-                                                        $count ++;
-                                                    @endphp
-                                                @empty
-                                                    Sin Registros
-                                                @endforelse
+                                                        <script>
+                                                            document.addEventListener('DOMContentLoaded', function() {
+                                                                // Llamar a la función después de que la vista haya cargado completamente
+                                                                evaluar({{ $item->id }}, {{ $item->requerido }});
+                                                            });
+                                                        </script>
+                                                        @php
+                                                            $count++;
+                                                        @endphp
+                                                    @empty
+                                                        Sin Registros
+                                                    @endforelse
                                                 </div>
                                             </div>
                                         </div>
@@ -828,9 +876,9 @@
 </style>
 
 <script>
-        function evaluar(param) {
-            console.log('hola', param);
-        }
+    function evaluar(param) {
+        console.log('hola', param);
+    }
 </script>
 <script src="{{ asset('js/cardArchivos.js') }}"></script>
 
