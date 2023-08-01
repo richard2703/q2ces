@@ -423,7 +423,114 @@
                                                             </div>
                                                         </div>
 
+                                                    </div>
+                                                    <div class="d-flex p-3">
+                                                        <div class="col-12" id="elementos">
+                                                            <div class="d-flex">
+                                                                <div class="col-6 divBorder">
+                                                                    <h2 class="tituloEncabezado ">Refacciónes</h2>
+                                                                </div>
+                                                                <div class="col-6 divBorder pb-3 text-end">
+                                                                    <button type="button" class="btnVerde"
+                                                                        onclick="crearItems()">
+                                                                    </button>
+                                                                </div>
+                                                            </div>
 
+                                                            <div class="row opcion divBorderItems" id="opc">
+
+                                                                <input type="hidden" name="asignado[]" value="">
+                                                                <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
+                                                                    <label class="labelTitulo">Tipo de
+                                                                        Refacción:</label></br>
+                                                                    <select id="tipoRefaccion" name="tipoRefaccion[]"
+                                                                        class="form-select">
+                                                                        <option value="">Seleccione</option>
+                                                                        <option value="Aceite Primario">Aceite Primario
+                                                                        </option>
+                                                                        <option value="Aceite Secundario">Aceite Secundario
+                                                                        </option>
+                                                                        <option value="Combustible Primario">Combustible
+                                                                            Primario</option>
+                                                                        <option value="Combustible Secundario">Combustible
+                                                                            Secundario</option>
+                                                                        <option value="Aire de Motor Primario">Aire de
+                                                                            Motor Primario</option>
+                                                                        <option value="Aire de Motor Secundario">Aire de
+                                                                            Motor Secundario</option>
+                                                                        <option value="Aire de Cabina">Aire de Cabina
+                                                                        </option>
+                                                                        <option value="Transmisión">Transmisión</option>
+                                                                        <option value="Dirección">Dirección</option>
+                                                                        <option value="Bujía">Bujía</option>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
+                                                                <label class="labelTitulo">Marca:</label></br>
+                                                                <select id="marcaRefaccion" name="marcaRefaccion[]"
+                                                                    class="form-select">
+                                                                    <option value="">Seleccione</option>
+                                                                    <option value="Aceite Primario">Aceite Primario
+                                                                    </option>
+                                                                    <option value="Aceite Secundario">Aceite Secundario
+                                                                    </option>
+                                                                    <option value="Combustible Primario">Combustible
+                                                                        Primario</option>
+                                                                    <option value="Combustible Secundario">Combustible
+                                                                        Secundario</option>
+                                                                    <option value="Aire de Motor Primario">Aire de
+                                                                        Motor Primario</option>
+                                                                    <option value="Aire de Motor Secundario">Aire de
+                                                                        Motor Secundario</option>
+                                                                    <option value="Aire de Cabina">Aire de Cabina
+                                                                    </option>
+                                                                    <option value="Transmisión">Transmisión</option>
+                                                                    <option value="Dirección">Dirección</option>
+                                                                    <option value="Bujía">Bujía</option>
+                                                                </select>
+                                                                </div>
+
+                                                                <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
+                                                                    <label class="labelTitulo">Numero De
+                                                                        Parte:</label></br>
+                                                                    <input type="text" class="inputCaja"
+                                                                        id="nParteRefaccion" placeholder="Especifique..."
+                                                                        name="nParteRefaccion[]" value="">
+                                                                </div>
+
+                                                                <div class=" col-12 col-sm-6 col-lg-2 my-3 ">
+                                                                <label class="labelTitulo">Relación:</label></br>
+                                                                <select id="marcaRefaccion" name="marcaRefaccion[]"
+                                                                    class="form-select">
+                                                                    <option value="">Seleccione</option>
+                                                                    <option value="Aceite Primario">Aceite Primario
+                                                                    </option>
+                                                                    <option value="Aceite Secundario">Aceite Secundario
+                                                                    </option>
+                                                                    <option value="Combustible Primario">Combustible
+                                                                        Primario</option>
+                                                                    <option value="Combustible Secundario">Combustible
+                                                                        Secundario</option>
+                                                                    <option value="Aire de Motor Primario">Aire de
+                                                                        Motor Primario</option>
+                                                                    <option value="Aire de Motor Secundario">Aire de
+                                                                        Motor Secundario</option>
+                                                                    <option value="Aire de Cabina">Aire de Cabina
+                                                                    </option>
+                                                                    <option value="Transmisión">Transmisión</option>
+                                                                    <option value="Dirección">Dirección</option>
+                                                                    <option value="Bujía">Bujía</option>
+                                                                </select>
+                                                                </div>
+
+                                                                <div class="col-lg-1 my-3 text-end">
+                                                                    <button type="button" id="removeRow"
+                                                                        class="btnRojo"></button>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -745,7 +852,7 @@
          console.log(idname);
          jQuery('span.'+idname).next().find('span').html(filename);
         });
-        </script>
+    </script>
 @endsection
 <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@accessible360/accessible-slick@1.0.1/slick/slick.min.js"></script>
@@ -875,11 +982,6 @@
     }
 </style>
 
-<script>
-    function evaluar(param) {
-        console.log('hola', param);
-    }
-</script>
 <script src="{{ asset('js/cardArchivos.js') }}"></script>
 
 <script>
@@ -988,6 +1090,19 @@
 
         }
     }
+</script>
+
+<script>
+    function crearItems() {
+        $('.opcion:first').clone().find("input").val("").end().appendTo('#elementos');
+    }
+
+    // Borrar registro
+    $(document).on('click', '#removeRow', function() {
+        if ($('.opcion').length > 1) {
+            $(this).closest('.opcion').remove();
+        }
+    });
 </script>
 
 {{-- <!-- Modal -->

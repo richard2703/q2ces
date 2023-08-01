@@ -11,21 +11,29 @@
                         @can('maquinaria_mtq_index')
                             <div class="col-12 col-md-6 text-center my-4">
                                 <a href="{{route('mtq.index')}}">
-                                    <img src="/img/inventario/herramientas.svg" alt="Puestos" title="Puestos"
+                                    <img src="/img/inventario/herramientas.svg" alt="Equipos MTQ" title="Equipos MTQ"
                                         width="30%" class="botonIconoPrincipal">
-                                    <p class="mt-4 texticonos">Maquinaria MTQ</p>
+                                    <p class="mt-4 texticonos">Equipos MTQ</p>
                                 </a>
                             </div>
-                        @endcan
+                        
 
                             <div class="col-12 col-md-6 text-center my-4">
                                 <a href="{{route('residentes.index')}}">
-                                    <img src="/img/inventario/herramientas.svg" alt="Puestos" title="Puestos"
+                                    <img src="/img/inventario/herramientas.svg" alt="Residentes" title="Residentes"
                                         width="30%" class="botonIconoPrincipal">
                                     <p class="mt-4 texticonos">Residentes</p>
                                 </a>
                             </div>
 
+                            <div class="col-12 col-md-6 text-center my-4">
+                                <a href="{{route('calendarioMtq.index')}}">
+                                    <img src="/img/inventario/herramientas.svg" alt="Calendario" title="Calendario"
+                                        width="30%" class="botonIconoPrincipal">
+                                    <p class="mt-4 texticonos">Calendario MTQ</p>
+                                </a>
+                            </div>
+                            @endcan
                         </div>
                     </div>
                     <!--Footer-->
