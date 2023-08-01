@@ -37,36 +37,43 @@ class checkListRegistrosController extends Controller {
 
     public function store( Request $request ) {
         $i = 0;
+        $iRes = 1;
 
         //*** registramos primero el checlist */
+        $objCheckList =  new checkList();
+        $objCheckList->usuarioId = $request[ 'usuarioId' ];
+        $objCheckList->maquinariaId = $request[ 'maquinariaId' ];
+        $objCheckList->bitacoraId = $request[ 'bitacoraId' ];
+        $objCheckList->comentario = $request[ 'comentario' ];
+        $objCheckList->registrada = date( 'Y-m-d H:i:s' );
+        $objCheckList->save();
 
-        // $objCheckList =  new checkList();
-        // $objCheckList->usuarioId = $request[ 'usuarioId' ];
-        // $objCheckList->maquinariaId = $request[ 'maquinariaId' ];
-        // $objCheckList->bitacoraId = $request[ 'bitacoraId' ];
-        // $objCheckList->comentario = $request[ 'comentario' ];
-        // $objCheckList->save();
-        $objCheckList=2;
+        // dd( $request, $objCheckList, count( $request[ 'tareaId' ] ) );
 
-        // dd( $request, $objCheckList );
-
-        foreach ( $request[ 'tareaId' ] as $value ) {
+        for ( $i = 0; $i < count( $request[ 'tareaId' ] )-1 ;  $i++ ) {
 
             $objRegistro = new checkListRegistros();
-            $objRegistro->checkListId = $objCheckList ;
-            $objRegistro->usuarioId = $request[ 'usuarioId' ][ $i ];
+            $objRegistro->checkListId = $objCheckList->id ;
+            $objRegistro->usuarioId = $request[ 'usuarioId' ];
             $objRegistro->tareaId = $request[ 'tareaId' ][ $i ];
             $objRegistro->grupoId = $request[ 'grupoId' ][ $i ];
             $objRegistro->tarea = $request[ 'tarea' ][ $i ];
             $objRegistro->grupo = $request[ 'grupo' ][ $i ];
-            $objRegistro->bitacoraId = $request[ 'bitacoraId' ][ $i ];
+            $objRegistro->bitacoraId = $request[ 'bitacoraId' ];
+            $objRegistro->bitacora = $request[ 'bitacora' ];
             $objRegistro->maquinariaId = $request[ 'maquinariaId' ];
+            $objRegistro->maquinaria = $request[ 'maquinaria' ];
 
+            $objRegistro->resultado = $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ][ 0 ];
 
-            // $objRegistro->save();
-            dd( $objRegistro );
-            $i += 1;
+            $objRegistro->save();
+            // dd( $request, $objCheckList, $objRegistro, $request[ 'resultado' . $iRes ][ 0 ] );
+
+            $iRes += 1;
         }
+
+        return redirect()->route( 'checkList.index' );
+
     }
 
     /**
