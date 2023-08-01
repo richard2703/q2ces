@@ -58,6 +58,30 @@
                                     </div>
 
                                     <div class="col-12 col-md-6 text-center my-4">
+                                        <a href="{{ route('catalogoMarca.index') }}" class="">
+                                            <img src="/img/inventario/herramientas.svg" alt="Marcas" title="Marcas"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Marcas</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 text-center my-4">
+                                        <a href="{{ route('catalogoTipoRefaccion.index') }}" class="">
+                                            <img src="/img/inventario/herramientas.svg" alt="Tipos de Refacción" title="Tipos de Refacción"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Tipos de Refacción</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 text-center my-4">
+                                        <a href="{{ route('catalogoRefacciones.index') }}" class="">
+                                            <img src="/img/inventario/herramientas.svg" alt="Refacciones" title="Refacciones"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Refacciones por Maquinaría</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 text-center my-4">
                                         <a href="{{ route('tiposDocs.index') }}" class="">
                                             <img src="/img/inventario/herramientas.svg" alt="Tipos Docs" title="Tipos Docs"
                                                 width="30%" class="botonIconoPrincipal">

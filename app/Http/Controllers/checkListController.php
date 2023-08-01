@@ -11,6 +11,7 @@ use App\Models\grupoBitacoras;
 use App\Models\grupoTareas;
 use App\Models\grupo;
 use App\Models\tarea;
+use App\Models\maquinaria;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
@@ -47,8 +48,27 @@ class checkListController extends Controller {
     * @return \Illuminate\Http\Response
     */
 
-    public function create() {
-        //
+    public function create( $bitacoraId, $maquinariaId ) {
+
+        $maquinaria = maquinaria::select( 'maquinaria.*' )->where( 'id', '=', $maquinariaId )->first();
+        $bitacora = bitacoras::select( 'bitacoras.*' )->where( 'id', '=', $bitacoraId )->first();
+        //*** obtenemos las tareas */
+        $vctTareas = grupo::select(
+            DB::raw( 'tarea.id AS tareaId' ),
+            DB::raw( 'tarea.nombre AS tarea' ),
+            DB::raw( 'tarea.tipoValor AS tipoValor' ),
+            DB::raw( 'grupo.nombre AS grupo' ),
+            'grupoBitacoras.*'
+        )
+        ->join( 'grupoBitacoras', 'grupoBitacoras.grupoId', '=', 'grupo.id' )
+        ->join( 'grupoTareas', 'grupoTareas.grupoId', '=', 'grupo.id' )
+        ->join( 'tarea', 'tarea.id', '=', 'grupoTareas.tareaId' )
+        ->where( 'grupoBitacoras.bitacoraId', '=', $bitacora->id )->get();
+
+        // dd( $bitacora, $maquinaria,  $vctTareas );
+
+        return view( 'checkList.nuevoCheck', compact( 'maquinaria', 'bitacora', 'vctTareas' ) );
+
     }
 
     /**

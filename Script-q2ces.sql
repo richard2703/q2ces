@@ -1146,6 +1146,7 @@ create table tarea(
     created_at datetime NULL,
     updated_at datetime NULL,
     activa TINYINT(1) NOT NULL DEFAULT '1',
+    tipoValor INT(2) NOT NULL DEFAULT '1',
     primary key (id),
     CONSTRAINT FK_tarea_categoria foreign key (categoriaId) references tareaCategoria(id),
     CONSTRAINT FK_tarea_tipo foreign key (tipoId) references tareaTipo(id),
@@ -1204,18 +1205,8 @@ create table marca(
     primary key (id)
 );
 
+
 create table proveedorCategoria(
-    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) NULL,
-    comentario text NULL,
-    activo TINYINT(1) NOT NULL DEFAULT '1',
-    created_at datetime NULL,
-    updated_at datetime NULL,
-    primary key (id)
-);
-
-
-create table marca(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     nombre varchar(200) NULL,
     comentario text NULL,
@@ -1285,3 +1276,32 @@ create table checkListRegistros(
     CONSTRAINT FK_checkListRegistrosTarea foreign key (tareaId) references tarea(id),
     CONSTRAINT FK_checkListHistorico foreign key (checkListId) references checkList(id)
 );
+
+
+create table refaccionTipo(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) NULL,
+    comentario text NULL,
+    activo TINYINT(1) NOT NULL DEFAULT '1',
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id)
+);
+
+create table refacciones(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) NULL,
+    numeroParte varchar(200) NULL,
+    marcaId bigint(20) unsigned NOT NUll,
+    tipoRefaccionId bigint(20) unsigned NOT NUll,
+    maquinariaId bigint(20) unsigned NOT NUll,
+    comentario text NULL,
+    activo TINYINT(1) NOT NULL DEFAULT '1',
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id),
+    CONSTRAINT FK_refacciones_marca foreign key (marcaId) references marca(id),
+    CONSTRAINT FK_refacciones_maquinaria foreign key (maquinariaId) references maquinaria(id),
+    CONSTRAINT FK_refacciones_tipo foreign key (tipoRefaccionId) references refaccionTipo(id)
+);
+
