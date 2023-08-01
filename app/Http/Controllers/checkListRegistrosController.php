@@ -50,7 +50,7 @@ class checkListRegistrosController extends Controller {
 
         // dd( $request, $objCheckList, count( $request[ 'tareaId' ] ) );
 
-        for ( $i = 0; $i < count( $request[ 'tareaId' ] )-1 ;  $i++ ) {
+        for ( $i = 0; $i < count( $request[ 'tareaId' ] ) ;  $i++ ) {
 
             $objRegistro = new checkListRegistros();
             $objRegistro->checkListId = $objCheckList->id ;
