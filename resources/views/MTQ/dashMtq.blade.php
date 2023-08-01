@@ -28,7 +28,7 @@
 
                             <div class="col-12 col-md-6 text-center my-4">
                                 <a href="{{route('calendarioMtq.index')}}">
-                                    <img src="/img/inventario/herramientas.svg" alt="Calendario" title="Calendario"
+                                    <img src="/img/inventario/herramientas.svg" alt="Calendario MTQ" title="Calendario MTQ"
                                         width="30%" class="botonIconoPrincipal">
                                     <p class="mt-4 texticonos">Calendario MTQ</p>
                                 </a>

@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Tipos de Tareas')])
+@extends('layouts.main', ['activePage' => 'mtq', 'titlePage' => __('Calendario MTQ')])
 @section('content')
     <div class="content">
         <div class="container-fluid">

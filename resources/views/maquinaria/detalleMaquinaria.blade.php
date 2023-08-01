@@ -380,8 +380,8 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Uso como
-                                                                    cisterna:</label></br>
+                                                                <label class="labelTitulo">Uso Como
+                                                                    Cisterna:</label></br>
                                                                 <select class="form-select"
                                                                     aria-label="Default select example" id="cisterna"
                                                                     name="cisterna">
@@ -424,70 +424,47 @@
                                                         </div>
 
                                                     </div>
+                                                    
                                                     <div class="d-flex p-3">
                                                         <div class="col-12" id="elementos">
                                                             <div class="d-flex">
                                                                 <div class="col-6 divBorder">
                                                                     <h2 class="tituloEncabezado ">Refacciónes</h2>
                                                                 </div>
+                                                                
                                                                 <div class="col-6 divBorder pb-3 text-end">
                                                                     <button type="button" class="btnVerde"
                                                                         onclick="crearItems()">
                                                                     </button>
                                                                 </div>
                                                             </div>
-
+                                                            @forelse($refacciones as $refaccion)
                                                             <div class="row opcion divBorderItems" id="opc">
-
-                                                                <input type="hidden" name="asignado[]" value="">
+                                                                <input type="hidden" name="idRefaccion[]" value="{{$refaccion->id}}">
                                                                 <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
                                                                     <label class="labelTitulo">Tipo de
                                                                         Refacción:</label></br>
-                                                                    <select id="tipoRefaccion" name="tipoRefaccion[]"
+                                                                    <select id="tipoRefaccion" name="tipoRefaccionId[]"
                                                                         class="form-select">
                                                                         <option value="">Seleccione</option>
-                                                                        <option value="Aceite Primario">Aceite Primario
-                                                                        </option>
-                                                                        <option value="Aceite Secundario">Aceite Secundario
-                                                                        </option>
-                                                                        <option value="Combustible Primario">Combustible
-                                                                            Primario</option>
-                                                                        <option value="Combustible Secundario">Combustible
-                                                                            Secundario</option>
-                                                                        <option value="Aire de Motor Primario">Aire de
-                                                                            Motor Primario</option>
-                                                                        <option value="Aire de Motor Secundario">Aire de
-                                                                            Motor Secundario</option>
-                                                                        <option value="Aire de Cabina">Aire de Cabina
-                                                                        </option>
-                                                                        <option value="Transmisión">Transmisión</option>
-                                                                        <option value="Dirección">Dirección</option>
-                                                                        <option value="Bujía">Bujía</option>
+                                                                        @foreach ($refaccionTipo as $item)
+                                                                            <option value="{{ $item->id }}" {{ $refaccion->tipoRefaccionId == $item->id ? 'selected' : '' }}>
+                                                                                {{ $item->nombre }}
+                                                                            </option>
+                                                                        @endforeach
                                                                     </select>
                                                                 </div>
 
                                                                 <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
                                                                 <label class="labelTitulo">Marca:</label></br>
-                                                                <select id="marcaRefaccion" name="marcaRefaccion[]"
+                                                                <select id="marcaRefaccion" name="marcaId[]"
                                                                     class="form-select">
                                                                     <option value="">Seleccione</option>
-                                                                    <option value="Aceite Primario">Aceite Primario
-                                                                    </option>
-                                                                    <option value="Aceite Secundario">Aceite Secundario
-                                                                    </option>
-                                                                    <option value="Combustible Primario">Combustible
-                                                                        Primario</option>
-                                                                    <option value="Combustible Secundario">Combustible
-                                                                        Secundario</option>
-                                                                    <option value="Aire de Motor Primario">Aire de
-                                                                        Motor Primario</option>
-                                                                    <option value="Aire de Motor Secundario">Aire de
-                                                                        Motor Secundario</option>
-                                                                    <option value="Aire de Cabina">Aire de Cabina
-                                                                    </option>
-                                                                    <option value="Transmisión">Transmisión</option>
-                                                                    <option value="Dirección">Dirección</option>
-                                                                    <option value="Bujía">Bujía</option>
+                                                                    @foreach ($marcas as $item)
+                                                                        <option value="{{ $item->id }}" {{ $refaccion->marcaId == $item->id ? 'selected' : '' }}>
+                                                                            {{ $item->nombre }}
+                                                                        </option>
+                                                                    @endforeach
                                                                 </select>
                                                                 </div>
 
@@ -496,10 +473,10 @@
                                                                         Parte:</label></br>
                                                                     <input type="text" class="inputCaja"
                                                                         id="nParteRefaccion" placeholder="Especifique..."
-                                                                        name="nParteRefaccion[]" value="">
+                                                                        name="numeroParte[]" value="{{$refaccion->numeroParte}}">
                                                                 </div>
 
-                                                                <div class=" col-12 col-sm-6 col-lg-2 my-3 ">
+                                                                <!--<div class=" col-12 col-sm-6 col-lg-2 my-3 ">
                                                                 <label class="labelTitulo">Relación:</label></br>
                                                                 <select id="marcaRefaccion" name="marcaRefaccion[]"
                                                                     class="form-select">
@@ -522,7 +499,7 @@
                                                                     <option value="Dirección">Dirección</option>
                                                                     <option value="Bujía">Bujía</option>
                                                                 </select>
-                                                                </div>
+                                                                </div>-->
 
                                                                 <div class="col-lg-1 my-3 text-end">
                                                                     <button type="button" id="removeRow"
@@ -530,8 +507,12 @@
                                                                 </div>
 
                                                             </div>
+                                                            @empty
+                                                                Sin Refacciones
+                                                            @endforelse
                                                         </div>
                                                     </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
