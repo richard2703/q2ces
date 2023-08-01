@@ -176,10 +176,11 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Cantidad: <span>*</span></label></br>
+                                                <label class="labelTitulo">Cantidadd: <span>*</span></label></br>
                                                 <input type="number" class="inputCaja text-right" id="cantidad" required
-                                                    name="cantidad" maxlength="100000" step="0.01" min="1" pattern="^\d*(\.\d{0,2})?$"
-                                                    max="99999" placeholder="ej. 100" value="{{ old('calle') }}">
+                                                    name="cantidad" maxlength="100000" step="0.01" min="0.01"
+                                                    pattern="^\d*(\.\d{0,2})?$" max="99999" placeholder="ej. 100"
+                                                    value="{{ old('calle') }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">

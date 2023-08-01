@@ -765,8 +765,9 @@ CREATE TABLE descarga(
 
 CREATE TABLE residente(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    userId bigint(20) unsigned NOT NULL,
-    obraId bigint(20) unsigned NOT NULL,
+    userId bigint(20) unsigned NULL,
+    obraId bigint(20) unsigned NULL,
+    clienteId bigint(20) unsigned null,
     nombre varchar(255) NULL,
     apellido varchar(255) NULL,
     empresa varchar(255) NULL,
@@ -777,7 +778,8 @@ CREATE TABLE residente(
     comentario text NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_residente_userId foreign key (userId) references users(id),
-    CONSTRAINT FK_residente_obraId foreign key (obraId) references obras(id)
+    CONSTRAINT FK_residente_obraId foreign key (obraId) references obras(id),
+    CONSTRAINT FK_residente_clienteId foreign key (clienteId) references clientes(id)
 );
 
 create table estados(
@@ -1065,7 +1067,7 @@ create table cajaChica(
     equipo bigint(20) unsigned NOT NULL,
     personal bigint(20) unsigned NOT NULL,
     tipo varchar(200) NULL,
-    cantidad int not NULL,
+    cantidad float(10,2) not NULL,
     total float(10, 2) NULL,
     comentario text NULL,
     created_at datetime NULL,
