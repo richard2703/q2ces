@@ -18,6 +18,9 @@ use App\Models\tipoUniforme;
 use App\Models\marca;
 use App\Models\proveedor;
 use App\Models\proveedorCategoria;
+use App\Models\refaccionTipo;
+use App\Models\refacciones;
+use App\Models\maquinaria;
 
 class catalogosController extends Controller {
     /**
@@ -80,6 +83,30 @@ class catalogosController extends Controller {
         $records = tipoUniforme::orderBy( 'nombre', 'asc' )->paginate( 10 );
         // dd( $puestos );
         return view( 'catalogos.uniformeTipos', compact( 'records' ) );
+    }
+
+    public function indexCatalogoTipoRefaccion () {
+        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+
+        $records = refaccionTipo::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        // dd( $puestos );
+        return view( 'catalogos.RefaccionTipos', compact( 'records' ) );
+    }
+
+    public function indexCatalogoRefacciones () {
+        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+
+        $records = refacciones::select( 'refacciones.*', 'marca.nombre as marca', 'maquinaria.nombre as maquinaria', 'refaccionTipo.nombre as tipo' )
+        ->leftJoin( 'marca', 'marca.id', '=', 'refacciones.marcaId' )
+        ->leftJoin( 'maquinaria', 'maquinaria.id', '=', 'refacciones.maquinariaId' )
+        ->leftJoin( 'refaccionTipo', 'refaccionTipo.id', '=', 'refacciones.tipoRefaccionId' )
+        ->orderBy( 'nombre', 'asc' )->paginate( 10 );
+
+        $vctMarcas = marca::orderBy( 'nombre', 'asc' )->get();
+        $vctMaquinaria = maquinaria::orderBy( 'nombre', 'asc' )->get();
+        $vctTipos = refaccionTipo::orderBy( 'nombre', 'asc' )->get();
+        // dd( $puestos );
+        return view( 'catalogos.Refacciones', compact( 'records','vctMarcas','vctMaquinaria','vctTipos' ) );
     }
 
     public function indexCatalogoMarca () {

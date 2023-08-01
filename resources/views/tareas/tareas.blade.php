@@ -58,7 +58,7 @@
                                                             @can('tarea_edit')
                                                                 <a href="#" class="" data-bs-toggle="modal"
                                                                     data-bs-target="#editarTarea"
-                                                                    onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->categoriaId }}','{{ $item->ubicacionId }}','{{ $item->tipoId }}','{{ $item->comentario }}','{{ $item->activa }}')">
+                                                                    onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->categoriaId }}','{{ $item->ubicacionId }}','{{ $item->tipoId }}','{{ $item->comentario }}','{{ $item->activa }}','{{ $item->tipoValor }}')">
                                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                         height="28" fill="currentColor" title="Editar"
                                                                         class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -165,6 +165,19 @@
                         </div>
 
                         <div class="mb-3">
+                            <label class="labelTitulo">Tipo de Valor a Capturar:</label></br>
+                            <select class="form-select"
+                                aria-label="Default select example" id="tipoValor"
+                                name="tipoValor">
+                                <option value="1" >
+                                    Bueno/Malo/Regular</option>
+                                <option value="2" >
+                                    Sí/No
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="exampleFormControlTextarea1" class="form-label">Comentarios</label>
                             <textarea class="form-select" placeholder="Escribe aquí tus comentarios sobre la tarea." rows="3"
                                 id="comentario" name="comentario"></textarea>
@@ -235,6 +248,19 @@
                         </div>
 
                         <div class="mb-3">
+                            <label class="labelTitulo">Tipo de Valor a Capturar:</label></br>
+                            <select class="form-select"
+                                aria-label="Default select example" id="tareaTipoValor"
+                                name="tipoValor">
+                                <option value="1" >
+                                    Bueno/Malo/Regular</option>
+                                <option value="2" >
+                                    Sí/No
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="exampleFormControlTextarea1" class="form-label">Pon tu Comentario</label>
                             <textarea class="form-select" id="tareaComentario" name="comentario" rows="3" placeholder="Escribe aquí tus comentarios sobre la tarea."></textarea>
                         </div>
@@ -288,7 +314,7 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, categoriaId, ubicacionId, tipoId, comentarios, activa) {
+        function cargaItem(id, nombre, categoriaId, ubicacionId, tipoId, comentarios, activa, tipoValor) {
 
             const txtId = document.getElementById('tareaId');
             txtId.value = id;
@@ -299,6 +325,7 @@
             const lstCategoria = document.getElementById('tareaCategoriaId').value = categoriaId;
             const lstUbicacion = document.getElementById('tareaUbicacionId').value = ubicacionId;
             const lstTipo = document.getElementById('tareaTipoId').value = tipoId;
+            const lstTipoValor = document.getElementById('tareaTipoValor').value = tipoValor;
 
             const txtComentarios = document.getElementById('tareaComentario');
             txtComentarios.value = comentarios;

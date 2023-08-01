@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Carbon;
 use App\Models\bitacoras;
 use App\Models\grupo;
+use App\Models\maquinaria;
 use App\Models\grupoBitacoras;
 use App\Helpers\Validaciones;
 
@@ -26,9 +27,27 @@ class bitacorasController extends Controller {
         abort_if ( Gate::denies( 'bitacora_index' ), 403 );
 
         $vctBitacoras = bitacoras::select( 'bitacoras.*', )
+        ->leftJoin('maquinaria', 'maquinaria.bitacoraId', '=', 'bitacoras.id')
+        ->groupBy('maquinaria.bitacoraId')
+        ->selectRaw('count(*) as total, maquinaria.bitacoraId')
         ->orderBy( 'created_at', 'desc' )->paginate( 15 );
 
         return view( 'bitacora.indexBitacora', compact( 'vctBitacoras' ) );
+    }
+
+    public function indexMaquinaria($id) {
+
+        // dd($id);
+
+        abort_if ( Gate::denies( 'bitacora_index' ), 403 );
+
+        $records = maquinaria::select( 'maquinaria.*' )
+        ->where('maquinaria.bitacoraId','=',$id)
+        ->orderBy( 'created_at', 'desc' )->paginate( 15 );
+
+        $bitacora = bitacoras::where('id','=',$id)->first();
+
+        return view( 'bitacora.porMaquinaria', compact( 'records','bitacora' ) );
     }
 
     /**

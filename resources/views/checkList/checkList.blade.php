@@ -32,10 +32,10 @@
                                                 </a>
                                             </div>
                                             <div>
-                                                <a href="#">
+                                                <a href="{{ url('/checkList/nuevo' ) }}">
                                                     <!--Agregar ruta-->
                                                     <button type="button" class="btn botonGral float-end">Añadir Nuevo
-                                                        Item</button>
+                                                        Checklist</button>
                                                 </a>
 
                                             </div>
