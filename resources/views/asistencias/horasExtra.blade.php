@@ -77,7 +77,7 @@ if ($asistencias->isEmpty() == true) {
                                             </a>
                                         </span>
                                     </h4>
-                                    {{-- <p class="card-category">Usuarios registrados</p> --}}
+                                    {{-- <p class="card-category">Usuarios Registrados</p> --}}
                                 </div>
                                 <div class="card-body">
                                     @if (session('success'))
@@ -106,8 +106,8 @@ if ($asistencias->isEmpty() == true) {
                                             <div class="col-10 col-md-8 text-center">
                                                 <a href="{{ route('asistencia.HEstore') }}"
                                                     class="combustibleLitros fw-semibold text-end"
-                                                    title="Ir al mes en curso"><b>Horas Extras del dia
-                                                        {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b>
+                                                    title="Ir al mes en curso"><b>Horas Extras Del Día
+                                                        {{ ucwords(trans($objCalendar->getFechaFormateada(date_create(date('Y-m-d'))))) }}</b>
                                                 </a>
                                             </div>
 
@@ -116,7 +116,7 @@ if ($asistencias->isEmpty() == true) {
                                                     class="botonSinFondo mx-2"title="Clic para marcar la asistencia en otro día."
                                                     data-bs-toggle="modal" data-bs-target="#modal-cliente">
                                                     <img style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}">
-                                                    <p class="botonTitulos mt-2">Otro día</p>
+                                                    <p class="botonTitulos mt-2">Otro Día</p>
                                                 </button>
                                             </div>
                                         </div>
@@ -183,8 +183,8 @@ if ($asistencias->isEmpty() == true) {
                                                 @empty
                                                     <tr>
                                                         <td colspan="2">Sin registros.<br><br> <b>Es necesario
-                                                                registrar primero la asistencia del personal antes de
-                                                                poder asignar las horas extras.</b></td>
+                                                                Registrar Primero La Asistencia Del Personal Antes De
+                                                                Poder Asignar Las Horas Extras.</b></td>
                                                     </tr>
                                                 @endforelse
 
@@ -224,7 +224,7 @@ if ($asistencias->isEmpty() == true) {
                                 <div class="nav-tabs-navigation">
                                     <div class="nav-tabs-wrapper">
                                         <span class="nav-tabs-title">
-                                            <h2 class="titulos">Seleccionar otro día para asistencia</h2>
+                                            <h2 class="titulos">Seleccionar Otro Día Para Asistencia</h2>
                                         </span>
                                     </div>
                                 </div>
@@ -250,6 +250,15 @@ if ($asistencias->isEmpty() == true) {
             </div>
         </div>
     </div>
+    <style>
+    table{
+            table-layout: fixed;
+            }
+            th, td {
+                width: 100px;
+                word-wrap: break-word;
+        }
+    </style>
     <script>
         function Guardado() {
             // alert('test');

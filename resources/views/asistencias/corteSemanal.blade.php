@@ -86,8 +86,8 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             </a>
                                             <!-- Para el mes en curso -->
                                         </span>
-                                        &nbsp;&nbsp;&nbsp; Semana {{ $semanaSeleccionada }} del
-                                        {{ $strFechaInioPeriodo }} al {{ $strFechaFinPeriodo }}
+                                        &nbsp;&nbsp;&nbsp; Semana {{ $semanaSeleccionada }} Del
+                                        {{ $strFechaInioPeriodo }} Al {{ $strFechaFinPeriodo }}
                                         &nbsp;&nbsp;&nbsp;
                                         <!-- Un dia adelante del cargado -->
                                         <span>
@@ -128,12 +128,12 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             <div class="">
                                                 <a href="{{ route('asistencia.corteSemanal') }}"
                                                     class="combustibleLitros fw-semibold text-end"
-                                                    title="Ir al mes en curso"><b>Hoy es
-                                                        {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b>
+                                                    title="Ir al mes en curso"><b>Hoy Es
+                                                        {{ ucwords(trans($objCalendar->getFechaFormateada(date_create(date('Y-m-d'))))) }}</b>
                                                 </a>
                                             </div>
                                             <div class="">
-                                                <button type="submit" class="btn botonGral ">Descargar a Excel</button>
+                                                <button type="submit" class="btn botonGral ">Descargar A Excel</button>
                                             </div>
                                         </div>
 
@@ -145,8 +145,8 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                                                                                                                                                                                                                             {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
                                                                                                                                                                                                                                                 </span>-->
                                         {{-- <h4 class="card-title">
-                                            {{ $personal->nombres }} {{ $personal->apellidoP }}
-                                            {{ $personal->apellidoM }}</h4> --}}
+                                            {{ ucwords(trans($personal->nombres)) }} {{ ucwords(trans($personal->apellidoP)) }}
+                                            {{ ucwords(trans($personal->apellidoM)) }}</h4> --}}
 
 
 
@@ -181,11 +181,11 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                     }
                                                     ?>
                                                     <th class="labelTitulo corte ">Días</th>
-                                                    <th class="labelTitulo corte ">Salario por día</th>
-                                                    <th class="labelTitulo corte  no-wrap">Importe semanal</th>
-                                                    <th class="labelTitulo corte  ">Horas extra</th>
-                                                    <th class="labelTitulo corte ">Total horas extra</th>
-                                                    <th class="labelTitulo corte no-wrap">Pago semanal</th>
+                                                    <th class="labelTitulo corte ">Salario Por Día</th>
+                                                    <th class="labelTitulo corte  no-wrap">Importe Semanal</th>
+                                                    <th class="labelTitulo corte  ">Horas Extra</th>
+                                                    <th class="labelTitulo corte ">Total Horas Extra</th>
+                                                    <th class="labelTitulo corte no-wrap">Pago Semanal</th>
                                                 </thead>
                                                 <?php
                                                 $intTotalGeneralSueldo = 0;
@@ -199,11 +199,11 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                         $intDiasPagados = count($item->pagos);
                                                         ?>
                                                         <tr>
-                                                            <td>{{ $item->puesto }}</td>
+                                                            <td>{{ ucwords(trans($item->puesto)) }}</td>
                                                             <td style="color: {{ $item->estatusColor }};">
-                                                                <strong>{{ $item->numEmpleado }}</strong>
+                                                                <strong>{{ ucwords(trans($item->numEmpleado)) }}</strong>
                                                             </td>
-                                                            <td class="text-left">{{ $item->empleado }}</td>
+                                                            <td class="text-left">{{ ucwords(trans($item->empleado)) }}</td>
                                                             <?php
                                                                 //*** recorremos el arreglo de los dias de la semana de trabajo ***************//
                                                                 for ($i = 0; $i < 7; $i++) {
@@ -271,9 +271,9 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                         </tr>
                                                     @empty
                                                         <tr>
-                                                            <td colspan="2">Sin registros.<br><br> <b>Es necesario
-                                                                    registrar primero la asistencia del personal antes de
-                                                                    poder realizar las acciones de esta semana.</b></td>
+                                                            <td colspan="2">Sin Registros.<br><br> <b>Es Necesario
+                                                                    Registrar Primero La asistencia Del personal Antes De
+                                                                    Poder Realizar Las acciones De Esta Semana.</b></td>
                                                         </tr>
                                                     @endforelse
 
@@ -307,6 +307,15 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
             </div>
         </div>
     </div>
+    <style>
+    table{
+            table-layout: fixed;
+            }
+            th, td {
+                width: 100px;
+                word-wrap: break-word;
+        }
+    </style>
     <script>
         function Guardado() {
             // alert('test');

@@ -36,9 +36,9 @@
                                         <th class="labelTitulo text-center">ID</th>
                                         <th class="labelTitulo text-center">Marca</th>
                                         <th class="labelTitulo text-center">Modelo</th>
-                                        <th class="labelTitulo text-center" style="width:120px">Categoria </th>
+                                        <th class="labelTitulo text-center" style="width:120px">Categoría</th>
                                         <th class="labelTitulo text-center">Uso</th>
-                                        <th class="labelTitulo text-center">placas</th>
+                                        <th class="labelTitulo text-center">Placas</th>
                                         <th class="labelTitulo text-center">Sub Marca</th>
                                         <th class="labelTitulo text-center">Año</th>
                                         <th class="labelTitulo text-center" style="width:120px">Acciones</th>
@@ -93,7 +93,7 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="2">Sin registros.</td>
+                                                <td colspan="2">Sin Registros.</td>
                                             </tr>
                                         @endforelse
                                     </tbody>
