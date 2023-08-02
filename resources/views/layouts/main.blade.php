@@ -210,7 +210,7 @@
                             fact_check
                         </span>
 
-                        <span>Bitacoras y Check List</span><i class="bi bi-chevron-down ms-auto"></i>
+                        <span>Bitácoras y Check List</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="bitacora-nav" class="nav-content collapse {{ $activePage == 'bitacoras' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
@@ -349,7 +349,7 @@
             @can('maquinaria_mtq_dash')
 
                 <li class="nav-item ">
-                    <a class="nav-link {{ $activePage == 'mtq' ? '' : 'collapsed' }}" data-bs-target="#obra-nav"
+                    <a class="nav-link {{ $activePage == 'mtq' ? '' : 'collapsed' }}" data-bs-target="#mtq-nav"
                         data-bs-toggle="collapse" href="#">
                         {{--  <i class="bi bi-receipt"></i>  --}}
                         <span class="material-icons">
@@ -357,7 +357,7 @@
                         </span>
                         <span>MTQ</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
-                    <ul id="obra-nav" class="nav-content collapse {{ $activePage == 'mtq' ? 'show' : '' }}"
+                    <ul id="mtq-nav" class="nav-content collapse {{ $activePage == 'mtq' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
                         @can('maquinaria_mtq_index')
                             <li>
@@ -439,7 +439,7 @@
                         <span class="material-icons">
                             print
                         </span>
-                        <span>Catalogos</span>
+                        <span>Catálogos</span>
                     </a>
                 </li>
             @endcan
