@@ -29,7 +29,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
         @if ($errors->any())
             <div class="alert alert-danger">
                 <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
-                <p>Listado de errores a corregir</p>
+                <p>Listado De Errores A Corregir</p>
                 <ul>
                     @foreach ($errors->all() as $item)
                         <li>{{ $item }}</li>
@@ -102,8 +102,8 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             <div class="col-10 col-md-8 text-center">
                                                 <a href="{{ route('asistencia.create') }}"
                                                     class="combustibleLitros fw-semibold text-end"
-                                                    title="Ir al dia en curso"><b>Asistencia del dia
-                                                        {{ $objCalendar->getFechaFormateada($fechaSeleccionada) }}
+                                                    title="Ir al dia en curso"><b>Asistencia Del Día
+                                                        {{ ucwords(trans($objCalendar->getFechaFormateada($fechaSeleccionada))) }}
                                                     </b>
                                                 </a>
                                             </div>
@@ -112,13 +112,13 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                     class="botonSinFondo mx-2"title="Clic para marcar la asistencia en otro día."
                                                     data-bs-toggle="modal" data-bs-target="#modal-cliente">
                                                     <img style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}">
-                                                    <p class="botonTitulos mt-2">Otro día</p>
+                                                    <p class="botonTitulos mt-2">Otro Día</p>
                                                 </button>
                                             </div>
                                             {{--  <div class="">
                                                 <a href="{{ route('asistencia.create') }}"
                                                     class="combustibleLitros fw-semibold text-end"
-                                                    title="Ir al mes en curso"><b>Hoy es
+                                                    title="Ir al mes en curso"><b>Hoy Es
                                                         {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b>
                                                 </a>
                                             </div>  --}}
@@ -140,13 +140,13 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             <div class="table-responsive">
                                                 <table class="table">
                                                     <thead class="labelTitulo text-center">
-                                                        <th class="labelTitulo">Codigo</th>
+                                                        <th class="labelTitulo">Código</th>
                                                         <th class="labelTitulo">Nombre</th>
-                                                        <th class="labelTitulo">Asistencia</th>
+                                                        <th class="labelTitulo" style="width:140px !important">Asistencia</th>
                                                         <th class="labelTitulo">Faltas</th>
-                                                        <th class="labelTitulo">Incapacidadades</th>
-                                                        <th class="labelTitulo">Vacaciones</th>
-                                                        <th class="labelTitulo">Descansos</th>
+                                                        <th class="labelTitulo" style="width:190px !important">Incapacidadades</th>
+                                                        <th class="labelTitulo" style="width:140px !important">Vacaciones</th>
+                                                        <th class="labelTitulo" style="width:140px !important">Descansos</th>
                                                     </thead>
                                                     <tbody class="text-center">
 
@@ -183,7 +183,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                             </tr>
                                                         @empty
                                                             <tr>
-                                                                <td colspan="2">Sin registros.</td>
+                                                                <td colspan="2">Sin Registros.</td>
                                                             </tr>
                                                         @endforelse
                                                     </tbody>
@@ -224,7 +224,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                     <div class="nav-tabs-navigation">
                                         <div class="nav-tabs-wrapper">
                                             <span class="nav-tabs-title">
-                                                <h2 class="titulos">Seleccionar otro día para asistencia</h2>
+                                                <h2 class="titulos">Seleccionar Otro día Para Asistencia</h2>
                                             </span>
                                         </div>
                                     </div>
@@ -250,6 +250,15 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                 </div>
             </div>
         </div>
+        <style>
+        table{
+            table-layout: fixed;
+            }
+            th, td {
+                width: 100px;
+                word-wrap: break-word;
+        }
+        </style>
         <script>
             function Guardado() {
                 // alert('test');

@@ -179,6 +179,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/catalogos/tiposUniforme/{tipoUniforme}', [App\Http\Controllers\tipoUniformeController::class, 'update'])->name('tipoUniforme.update');
     Route::delete('/catalogos/tiposUniforme/{tipoUniforme}', [App\Http\Controllers\tipoUniformeController::class, 'destroy'])->name('tipoUniforme.delete');
 
+    Route::get('/catalogos/tiposRefaccion', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTipoRefaccion'])->name('catalogoTipoRefaccion.index');
+    Route::get('/catalogos/tiposRefaccion/nuevo', [App\Http\Controllers\refaccionTipoController::class, 'create'])->name('refaccionTipo.create');
+    Route::post('/catalogos/tiposRefaccion', [App\Http\Controllers\refaccionTipoController::class, 'store'])->name('refaccionTipo.store');
+    Route::put('/catalogos/tiposRefaccion/{tipoRefaccion}', [App\Http\Controllers\refaccionTipoController::class, 'update'])->name('refaccionTipo.update');
+    Route::delete('/catalogos/tiposRefaccion/{tipoRefaccion}', [App\Http\Controllers\refaccionTipoController::class, 'destroy'])->name('refaccionTipo.delete');
+
+    Route::get('/catalogos/refacciones', [App\Http\Controllers\catalogosController::class, 'indexCatalogoRefacciones'])->name('catalogoRefacciones.index');
+    Route::get('/catalogos/refacciones/nuevo', [App\Http\Controllers\RefaccionesController::class, 'create'])->name('refacciones.create');
+    Route::post('/catalogos/refacciones', [App\Http\Controllers\RefaccionesController::class, 'store'])->name('refacciones.store');
+    Route::put('/catalogos/refacciones/{Refaccion}', [App\Http\Controllers\RefaccionesController::class, 'update'])->name('refacciones.update');
+    Route::delete('/catalogos/refacciones/{Refaccion}', [App\Http\Controllers\RefaccionesController::class, 'destroy'])->name('refacciones.delete');
+
     Route::get('/catalogos/marcas', [App\Http\Controllers\catalogosController::class, 'indexCatalogoMarca'])->name('catalogoMarca.index');
     Route::get('/catalogos/marca/nueva', [App\Http\Controllers\marcaController::class, 'create'])->name('marca.create');
     Route::post('/catalogos/marcas', [App\Http\Controllers\marcaController::class, 'store'])->name('marca.store');
@@ -202,6 +214,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/maquinaria', [App\Http\Controllers\maquinariaController::class, 'store'])->name('maquinaria.store');
     Route::get('/maquinaria', [App\Http\Controllers\maquinariaController::class, 'index'])->name('maquinaria.index');
     Route::get('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'show'])->name('maquinaria.show');
+    Route::get('/maquinaria/vista/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'vista'])->name('maquinaria.vista');
     Route::put('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'update'])->name('maquinaria.update');
     Route::put('/maquinaria/documento/update', [App\Http\Controllers\maquinariaController::class, 'updateDocumento'])->name('maquinaria.updateDocumento');
     Route::get('maquinaria/{id}/{doc}/download', [App\Http\Controllers\maquinariaController::class, 'download'])->name('maquinaria.download');
@@ -301,9 +314,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     //*** checklists */
     Route::get('/checkList/', [App\Http\Controllers\checkListController::class, 'index'])->name('checkList.index');
+    Route::get('/checkList/nuevo/{bitacora}/{maquinaria}', [App\Http\Controllers\checkListController::class, 'create'])->name('checkList.create');
+    Route::post('/checkList/registra/', [App\Http\Controllers\checkListRegistrosController::class, 'store'])->name('checkListRegistros.store');
     Route::get('/checkList/registros/{id}', [App\Http\Controllers\checkListController::class, 'show'])->name('checkList.show');
 
-    // Maquinaria MTQ
+    // Equipos MTQ
 
     Route::get('/dashMtq', function () {
         return view('mtq.dashMtq');
@@ -320,6 +335,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Tareas de bitacoras
 
     Route::get('/bitacoras/', [App\Http\Controllers\bitacorasController::class, 'index'])->name('bitacoras.index');
+    Route::get('/bitacoras/maquinaria/{bitacora}', [App\Http\Controllers\bitacorasController::class, 'indexMaquinaria'])->name('bitacoras.maquinaria');
     Route::get('/bitacoras/bitacora/nuevo/', [App\Http\Controllers\bitacorasController::class, 'create'])->name('bitacoras.create');
     Route::post('/bitacoras/bitacora/nuevo', [App\Http\Controllers\bitacorasController::class, 'store'])->name('bitacoras.store');
     Route::get('/bitacoras/bitacora/editar/{id}', [App\Http\Controllers\bitacorasController::class, 'edit'])->name('bitacoras.edit');
@@ -338,6 +354,7 @@ Route::group(['middleware' => 'auth'], function () {
     //*** Mtq */
     //Route::get('/mtq/', [App\Http\Controllers\mtqController::class, 'dash'])->name('mtq.dash');
     Route::resource('residentes', App\Http\Controllers\residenteController::class);
+    Route::resource('calendarioMtq', App\Http\Controllers\calendarioMtqController::class);
     // Route::get('/residentes', [App\Http\Controllers\residenteController::class, 'index'])->name('residente.index');
     // Route::get('/mtq/residentes/nuevo', [App\Http\Controllers\residenteController::class, 'create'])->name('residente.create');
     // Route::post('/mtq/residentes', [App\Http\Controllers\residenteController::class, 'store'])->name('residente.store');
