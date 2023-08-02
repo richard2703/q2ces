@@ -97,7 +97,7 @@
                                                                         type="file" name="ruta[]" id="mi-archivo"
                                                                         accept="image/*" multiple></span>
                                                                 <label for="mi-archivo">
-                                                                    <span class="">sube imagen</span>
+                                                                    <span class="">Sube Imagen</span>
                                                                 </label>
                                                             @endif
                                                         </div>
@@ -114,7 +114,7 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                                <label class="labelTitulo">Bitacora:</label></br>
+                                                                <label class="labelTitulo">Bitácora:</label></br>
                                                                 <select id="bitacoraId" name="bitacoraId"
                                                                     class="form-select" aria-label="Default select example">
                                                                     <option value="">Seleccione</option>
@@ -213,7 +213,7 @@
                                                                                 Ligero</option>
                                                                             <option
                                                                                 value="Grua"{{ $maquinaria->tipo == 'Grua' ? ' selected' : '' }}>
-                                                                                Grua</option>
+                                                                                Grúa</option>
                                                                             <option
                                                                                 value="N/A"{{ $maquinaria->tipo == 'no_aplica' ? ' selected' : '' }}>
                                                                                 N/A</option>
@@ -429,7 +429,7 @@
                                                         <div class="col-12" id="elementos">
                                                             <div class="d-flex">
                                                                 <div class="col-6 divBorder">
-                                                                    <h2 class="tituloEncabezado ">Refacciónes</h2>
+                                                                    <h2 class="tituloEncabezado ">Refacciones</h2>
                                                                 </div>
                                                                 
                                                                 <div class="col-6 divBorder pb-3 text-end">
@@ -469,37 +469,29 @@
                                                                 </div>
 
                                                                 <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
-                                                                    <label class="labelTitulo">Numero De
+                                                                    <label class="labelTitulo">Número De
                                                                         Parte:</label></br>
                                                                     <input type="text" class="inputCaja"
-                                                                        id="nParteRefaccion" placeholder="Especifique..."
+                                                                        id="numeroParte" placeholder="Especifique..."
                                                                         name="numeroParte[]" value="{{$refaccion->numeroParte}}">
                                                                 </div>
 
-                                                                <!--<div class=" col-12 col-sm-6 col-lg-2 my-3 ">
-                                                                <label class="labelTitulo">Relación:</label></br>
-                                                                <select id="marcaRefaccion" name="marcaRefaccion[]"
-                                                                    class="form-select">
-                                                                    <option value="">Seleccione</option>
-                                                                    <option value="Aceite Primario">Aceite Primario
-                                                                    </option>
-                                                                    <option value="Aceite Secundario">Aceite Secundario
-                                                                    </option>
-                                                                    <option value="Combustible Primario">Combustible
-                                                                        Primario</option>
-                                                                    <option value="Combustible Secundario">Combustible
-                                                                        Secundario</option>
-                                                                    <option value="Aire de Motor Primario">Aire de
-                                                                        Motor Primario</option>
-                                                                    <option value="Aire de Motor Secundario">Aire de
-                                                                        Motor Secundario</option>
-                                                                    <option value="Aire de Cabina">Aire de Cabina
-                                                                    </option>
-                                                                    <option value="Transmisión">Transmisión</option>
-                                                                    <option value="Dirección">Dirección</option>
-                                                                    <option value="Bujía">Bujía</option>
-                                                                </select>
-                                                                </div>-->
+                                                                <div class="col-12 col-sm-4 col-lg-2 my-3 text-center pt-3">
+                                                                    <!--<i class="fas fa-clipboard-check"></i>-->
+                                                                    <!--<span class="material-icons" style="font-size:40px; color: gray">
+                                                                        content_paste_search
+                                                                    </span>-->
+                                                                    @if ($refaccion->relacionInventarioId != null)
+                                                                    <span class="material-icons" style="font-size:40px; color: green">
+                                                                        assignment_turned_in
+                                                                    </span>
+                                                                    @else
+                                                                    <span class="material-icons" style="font-size:40px; color: red">
+                                                                        content_paste_off
+                                                                    </span>
+                                                                    @endif
+                                                                    <!--<i class="fas fa-clipboard"></i>-->
+                                                                </div>
 
                                                                 <div class="col-lg-1 my-3 text-end">
                                                                     <button type="button" id="removeRow"
@@ -851,7 +843,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bacTituloPrincipal mb-3">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Subir documento</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Subir Documento</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -1075,7 +1067,10 @@
 
 <script>
     function crearItems() {
-        $('.opcion:first').clone().find("input").val("").end().appendTo('#elementos');
+        var newOpcion = $('.opcion:first').clone();
+        newOpcion.find("select, input").val(""); // Establece los valores en blanco
+        newOpcion.find(".material-icons").text("content_paste_search").css("color", "gray"); // Establece el ícono y el color
+        newOpcion.appendTo('#elementos');
     }
 
     // Borrar registro

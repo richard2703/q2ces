@@ -18,7 +18,7 @@
                     <div class="card">
                         <div class="card-body contCart">
                             <div class="p-1 align-self-start bacTituloPrincipal">
-                                <h2 class="my-3 ms-3 texticonos ">Detalle de Obra</h2>
+                                <h2 class="my-3 ms-3 texticonos ">Detalle De Obra</h2>
                             </div>
 
                             <div class="col-4 text-left mt-3" style="margin-left:20px">
@@ -48,7 +48,7 @@
                                                 <span class="mi-archivo"> <input class="mb-4 ver" type="file"
                                                         name="foto" id="mi-archivo" accept="image/*"></span>
                                                 <label for="mi-archivo">
-                                                    <span>sube vista aérea</span>
+                                                    <span>Sube Vista Aérea</span>
                                                 </label>
                                             </div>
                                         </div>
@@ -61,7 +61,7 @@
                                                 <span class="mi-archivo"> <input class="mb-4 ver" type="file"
                                                         name="logo" id="mi-archivo2" accept="image/*"></span>
                                                 <label for="mi-archivo2">
-                                                    <span>sube Logo</span>
+                                                    <span>Sube Logo</span>
                                                 </label>
                                             </div>
                                         </div>
@@ -72,7 +72,7 @@
                                 <div class="col-12">
                                     <div class="row">
                                         <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Nombre de la Obra: <span>*</span></label></br>
+                                            <label class="labelTitulo">Nombre De La Obra: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="nombre" name="nombre" required
                                                 placeholder="Especifique..." value="{{ $obras->nombre }}">
                                         </div>
@@ -179,7 +179,7 @@
                                                     </div>
 
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                        <label class="labelTitulo">Código de Confirmación:</label></br>
+                                                        <label class="labelTitulo">Código De Confirmación:</label></br>
                                                         <input type="password" class="inputCaja" id="rfirma"
                                                             placeholder="Especifique..." name="rfirma[]"
                                                             value="{{ $residentes->firma }}">
@@ -237,7 +237,7 @@
                                                     </div>
 
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                        <label class="labelTitulo">Código de Confirmación:</label></br>
+                                                        <label class="labelTitulo">Código De Confirmación:</label></br>
                                                         <input type="text" class="inputCaja" id="rfirma"
                                                             placeholder="Especifique..." name="rfirma[]" value="">
                                                     </div>
@@ -254,7 +254,7 @@
                                         <div class="row opcionB" id="opcB">
                                             <div class="col-12 my-5 ">
                                                 <div class="">
-                                                    <h2 class="tituloEncabezado ">Detalle de Obra</h2>
+                                                    <h2 class="tituloEncabezado ">Detalle De Obra</h2>
                                                 </div>
                                                 <div class="col-12 divBorder pb-3" style="text-align: right;">
                                                     <button type="button" id="removeRow" class="btnRojo"></button>
@@ -309,14 +309,14 @@
                                                     </div>
 
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                        <label class="labelTitulo">Fecha de Inicio:</label></br>
+                                                        <label class="labelTitulo">Fecha De Inicio:</label></br>
                                                         <input type="date" class="inputCaja" id="inicio"
                                                             name="inicio[]"
                                                             value="{{ \Carbon\Carbon::parse($maquinaria->inicio)->format('Y-m-d') }}">
                                                     </div>
 
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                        <label class="labelTitulo">Fecha de Término:</label></br>
+                                                        <label class="labelTitulo">Fecha De Término:</label></br>
                                                         <input type="date" class="inputCaja" id="fin"
                                                             name="fin[]"
                                                             value="{{ \Carbon\Carbon::parse($maquinaria->fin)->format('Y-m-d') }}">
@@ -330,7 +330,7 @@
                                         <div class="row opcionB" id="opcB">
                                             <div class="col-12 my-5 ">
                                                 <div class="">
-                                                    <h2 class="tituloEncabezado ">Detalle de Obra</h2>
+                                                    <h2 class="tituloEncabezado ">Detalle De Obra</h2>
                                                 </div>
                                                 <div class="col-12 divBorder pb-3" style="text-align: right;">
                                                     <button type="button" id="removeRow" class="btnRojo"></button>
@@ -380,13 +380,13 @@
                                                     </div>
 
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                        <label class="labelTitulo">Fecha de Inicio:</label></br>
+                                                        <label class="labelTitulo">Fecha De Inicio:</label></br>
                                                         <input type="date" class="inputCaja" id="inicio"
                                                             name="inicio[]" value="">
                                                     </div>
 
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                        <label class="labelTitulo">Fecha de Término:</label></br>
+                                                        <label class="labelTitulo">Fecha De Término:</label></br>
                                                         <input type="date" class="inputCaja" id="fin"
                                                             name="fin[]" value="">
                                                     </div>

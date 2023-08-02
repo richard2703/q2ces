@@ -9,7 +9,7 @@
                             <div class="card">
                                 <div class="card-header card-header-primary">
                                     <h4 class="card-title">Usuarios</h4>
-                                    <p class="card-category">Usuarios registrados</p>
+                                    <p class="card-category">Usuarios Registrados</p>
                                 </div>
                                 <div class="card-body">
                                     @if (session('success'))
@@ -26,7 +26,7 @@
                                         <div class="col-12 text-right">
                                             @can('user_create')
                                                 <a href="{{ route('users.create') }}" class="btn btn-sm btn-facebook">Añadir
-                                                    usuario</a>
+                                                    Usuario</a>
                                             @endcan
 
                                         </div>
@@ -54,7 +54,7 @@
                                                             @forelse ($user->roles as $role)
                                                                 <span class="badge badge-info">{{ $role->name }}</span>
                                                             @empty
-                                                                <span class="badge badge-danger">No roles</span>
+                                                                <span class="badge badge-danger">No Roles</span>
                                                             @endforelse
 
                                                         </td>

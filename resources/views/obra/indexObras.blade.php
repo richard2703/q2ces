@@ -9,7 +9,7 @@
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
                                     <h4 class="card-title">Obras</h4>
-                                    {{-- <p class="card-category">Usuarios registrados</p> --}}
+                                    {{-- <p class="card-category">Usuarios Registrados</p> --}}
                                 </div>
                                 <div class="card-body">
                                     @if (session('success'))

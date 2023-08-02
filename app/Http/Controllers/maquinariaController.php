@@ -197,7 +197,7 @@ class maquinariaController extends Controller
         for ($i = 0; $i < count($request['tipoRefaccionId']); $i++) {
             //* se guarda solo si se selecciono una máquina */
             if ($request['tipoRefaccionId'][$i] != '' || $request['tipoRefaccionId'][$i] != null) {
-                $relacion = inventario::where('numparte',$request->numeroParte)->first();
+                $relacion = inventario::where('numparte',$request['numeroParte'][$i])->first();
                 $objResidente = new refacciones();
                 if($relacion != null){
                     $objResidente->relacionInventarioId = $relacion->id;
@@ -311,8 +311,11 @@ class maquinariaController extends Controller
             ->where('maquinariaId', $maquinaria->id)->get();
         $fotos = maqimagen::where('maquinariaId', $maquinaria->id)->get();
         $vctEstatus = maquinariaEstatus::all();
+        $marcas = marca::all();
+        $refacciones = refacciones::where('maquinariaId', $maquinaria->id)->get();
+        $refaccionTipo = refaccionTipo::all();
         // dd( $docs );
-        return view('maquinaria.verMaquinaria', compact('maquinaria', 'doc', 'fotos', 'bitacora', 'vctEstatus'));
+        return view('maquinaria.verMaquinaria', compact('maquinaria', 'doc', 'fotos', 'bitacora', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones'));
     }
 
     /**
@@ -478,68 +481,89 @@ class maquinariaController extends Controller
                 maqimagen::create($imagen);
             }
         }
+        $nuevaLista = collect();
+        for ($i = 0; $i < count($request['idRefaccion']); $i++) {
+            $relacion = inventario::where('numparte',$request['numeroParte'][$i])->first();
+            $numParteRelacion = null;
+            if($relacion != null){
+                $numParteRelacion = $relacion->id;
+            }
+            $array = [
+                'id' => $request['idRefaccion'][$i],
+                'marcaId' => $request['marcaId'][$i],
+                'tipoRefaccionId' => $request['tipoRefaccionId'][$i],
+                'numeroParte' => $request['numeroParte'][$i],
+                'maquinariaId' => $maquinaria->id,
+                'relacionInventarioId' => $numParteRelacion,
+            ];
+            //dd($array);
+            $objRefaccion = refacciones::updateOrCreate(['id' => $array['id']], $array);
+            // dd($objRefaccion);
+            $nuevaLista->push($objRefaccion->id);
+        }
+        $test = refacciones::where('maquinariaId', $maquinaria->id)->whereNotIn('id', $nuevaLista)->delete();
 
          //* registro de residentes */
         // dd($request['idRefaccion']);
-        $refaccionReg = refacciones::where('maquinariaId', '=', $maquinaria->id)->pluck('id')->toArray();
-        $refaccionArreglo = $request['idRefaccion'];
+        // $refaccionReg = refacciones::where('maquinariaId', '=', $maquinaria->id)->pluck('id')->toArray();
+        // $refaccionArreglo = $request['idRefaccion'];
 
-        //* Preguntamos si existen registros en el arreglo */
-        if (is_array($refaccionArreglo) && count($refaccionArreglo) > 0) {
+        // //* Preguntamos si existen registros en el arreglo */
+        // if (is_array($refaccionArreglo) && count($refaccionArreglo) > 0) {
 
-            //** buscamos si el registrado esta en el arreglo, de no ser asi se elimina */
-            if (is_array($refaccionReg) && count($refaccionReg) > 0) {
-                for ($i = 0; $i < count($refaccionReg); $i++) {
-                    $intValor = (int) $refaccionReg[$i];
+        //     //** buscamos si el registrado esta en el arreglo, de no ser asi se elimina */
+        //     if (is_array($refaccionReg) && count($refaccionReg) > 0) {
+        //         for ($i = 0; $i < count($refaccionReg); $i++) {
+        //             $intValor = (int) $refaccionReg[$i];
 
-                    if (in_array($intValor, $refaccionArreglo) == false) {
-                        /* no existe y se debe de eliminar */
-                        refacciones::destroy($refaccionReg[$i]);
-                        // dd( 'Borrando por que se quito el refacciones' );
-                    } else {
-                        /* existe el registro */
-                        // dd( 'Sigue vivo en el arreglo' );
-                    }
-                }
-            }
+        //             if (in_array($intValor, $refaccionArreglo) == false) {
+        //                 /* no existe y se debe de eliminar */
+        //                 refacciones::destroy($refaccionReg[$i]);
+        //                 // dd( 'Borrando por que se quito el refacciones' );
+        //             } else {
+        //                 /* existe el registro */
+        //                 // dd( 'Sigue vivo en el arreglo' );
+        //             }
+        //         }
+        //     }
 
-            //* trabajamos el resto */
-            for ($i = 0; $i < count($request['idRefaccion']); $i++) {
-                if ($request['idRefaccion'][$i] != '') {
-                    //** Actualizacion de registro */
-                    $objResidente =  refacciones::where('id', '=', $request['idRefaccion'][$i])->first();
+        //     //* trabajamos el resto */
+        //     for ($i = 0; $i < count($request['idRefaccion']); $i++) {
+        //         if ($request['idRefaccion'][$i] != '') {
+        //             //** Actualizacion de registro */
+        //             $objResidente =  refacciones::where('id', '=', $request['idRefaccion'][$i])->first();
 
-                    if ($objResidente && $objResidente->id > 0) {
-                        $objResidente->maquinariaId  = $maquinaria->id;
-                        $objResidente->marcaId  = $request['marcaId'][$i];
-                        $objResidente->tipoRefaccionId = $request['tipoRefaccionId'][$i];
-                        $objResidente->numeroParte = $request['numeroParte'][$i];
-                        $objResidente->save();
-                        // dd( 'Actualizando refacciones' );
-                    }
-                } else {
+        //             if ($objResidente && $objResidente->id > 0) {
+        //                 $objResidente->maquinariaId  = $maquinaria->id;
+        //                 $objResidente->marcaId  = $request['marcaId'][$i];
+        //                 $objResidente->tipoRefaccionId = $request['tipoRefaccionId'][$i];
+        //                 $objResidente->numeroParte = $request['numeroParte'][$i];
+        //                 $objResidente->save();
+        //                 // dd( 'Actualizando refacciones' );
+        //             }
+        //         } else {
 
-                    //** No existe en bd */
-                    if ($request['tipoRefaccionId'][$i] != '') {
-                        $objResidente = new refacciones();
-                        $objResidente->maquinariaId  = $maquinaria->id;
-                        $objResidente->marcaId  = $request['marcaId'][$i];
-                        $objResidente->tipoRefaccionId = $request['tipoRefaccionId'][$i];
-                        $objResidente->numeroParte = $request['numeroParte'][$i];
-                        $objResidente->save();
-                        // dd( 'Guardando refacciones' );
-                    }
-                }
-            }
-        } else {
-            //* se deben de eliminar todos los registrados */
-            if (is_array($refaccionReg) && count($refaccionReg) > 0) {
-                for ($i = 0; $i < count($refaccionReg); $i++) {
-                    refacciones::destroy($refaccionReg[$i]);
-                    // dd( 'Borrando todo refacciones' );
-                }
-            }
-        }
+        //             //** No existe en bd */
+        //             if ($request['tipoRefaccionId'][$i] != '') {
+        //                 $objResidente = new refacciones();
+        //                 $objResidente->maquinariaId  = $maquinaria->id;
+        //                 $objResidente->marcaId  = $request['marcaId'][$i];
+        //                 $objResidente->tipoRefaccionId = $request['tipoRefaccionId'][$i];
+        //                 $objResidente->numeroParte = $request['numeroParte'][$i];
+        //                 $objResidente->save();
+        //                 // dd( 'Guardando refacciones' );
+        //             }
+        //         }
+        //     }
+        // } else {
+        //     //* se deben de eliminar todos los registrados */
+        //     if (is_array($refaccionReg) && count($refaccionReg) > 0) {
+        //         for ($i = 0; $i < count($refaccionReg); $i++) {
+        //             refacciones::destroy($refaccionReg[$i]);
+        //             // dd( 'Borrando todo refacciones' );
+        //         }
+        //     }
+        // }
 
         Session::flash('message', 1);
 

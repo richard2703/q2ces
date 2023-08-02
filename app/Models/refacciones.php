@@ -12,7 +12,7 @@ class refacciones extends Model {
     public $timestamps = true;
 
     protected $fillable = [
-        'nombre', 'marcaId', 'maquinariaId', 'tipoRefaccionId', 'numeroParte', 'comentario', 'activo'
+        'nombre', 'marcaId', 'maquinariaId', 'tipoRefaccionId', 'numeroParte', 'comentario', 'activo', 'relacionInventarioId',
     ];
 
 }

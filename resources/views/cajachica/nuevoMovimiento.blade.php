@@ -19,9 +19,30 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Movimientos de Caja Chica</h4>
-                                    {{-- <p class="card-category">Usuarios registrados</p> --}}
+                                    <h4 class="card-title">Movimientos De Caja Chica</h4>
+                                    {{-- <p class="card-category">Usuarios Registrados</p> --}}
+                                    
                                 </div>
+                            
+                                <div class="d-flex p-3 divBorder">
+                                    <div class="col-6 ">
+                                        <a href="{{ route('cajaChica.index') }}">
+                                            <button class="btn regresar">
+                                                <span class="material-icons">
+                                                    reply
+                                                </span>
+                                                Regresar
+                                            </button>
+                                        </a>
+                                    {{-- @can('user_create') --}}
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <button type="button" class="btn botonGral " data-bs-toggle="modal"
+                                        data-bs-target="#modalConcepto">Nuevo Concepto</button>                                        
+                                    </div>
+                                    {{-- @endcan --}}                                
+                                </div>
+
                                 <form class="alertaGuardar" action="{{ route('cajaChica.store') }}" method="post"
                                     enctype="multipart/form-data">
                                     @csrf
@@ -36,17 +57,9 @@
                                                 {{ session('faild') }}
                                             </div>
                                         @endif
-                                        <div class="row division">
-                                            <div class="col-12 text-end ">
-                                                {{-- @can('user_create') --}}
-                                                <button type="button" class="btn botonGral " data-bs-toggle="modal"
-                                                    data-bs-target="#modalConcepto">Nuevo Concepto</button>
-                                                {{-- @endcan --}}
-                                            </div>
-                                        </div>
                                         <div class="row pt-3">
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Dia: <span>*</span></label></br>
+                                                <label class="labelTitulo">Día: <span>*</span></label></br>
                                                 <input type="date" class="inputCaja" id="dia" name="dia"
                                                     required value="{{ old('dia') }}">
 
@@ -102,7 +115,7 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Numero de comprobante:</label></br>
+                                                <label class="labelTitulo">Numero De Comprobante:</label></br>
                                                 <input type="text" class="inputCaja" id="ncomprobante"
                                                     name="ncomprobante" value="{{ old('ncomprobante') }}">
                                             </div>
@@ -124,7 +137,7 @@
                                                 <select id="cliente" name="cliente" class="form-select"
                                                     aria-label="Default select example">
                                                     <option value="">
-                                                        001-B ingreso caja chica
+                                                        001-B Ingreso Caja Chica
                                                     </option>
                                                 </select>
                                             </div>
@@ -163,7 +176,7 @@
                                                         Ingreso Servicios
                                                     </option>
                                                     <option value="4">
-                                                        Pendiente de cobro y/o factura
+                                                        Pendiente De Cobro Y/O Factura
                                                     </option>
 
                                                     {{--  @foreach ($vctTiposHoras as $tipo)
@@ -176,7 +189,7 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Cantidadd: <span>*</span></label></br>
+                                                <label class="labelTitulo">Cantidad: <span>*</span></label></br>
                                                 <input type="number" class="inputCaja text-right" id="cantidad" required
                                                     name="cantidad" maxlength="100000" step="0.01" min="0.01"
                                                     pattern="^\d*(\.\d{0,2})?$" max="99999" placeholder="ej. 100"
@@ -216,7 +229,7 @@
                         @csrf
 
                         <div class=" col-12 col-sm-6  mb-3 ">
-                            <label class="labelTitulo">Codigo:</label></br>
+                            <label class="labelTitulo">Código:</label></br>
                             <input type="text" class="inputCaja" id="codigo" name="codigo"
                                 value="{{ old('comentario') }}">
                         </div>
@@ -240,7 +253,8 @@
             </div>
         </div>
     </div>
-    <script>
+@endsection
+<script>
         function Guardado() {
             // alert('test');
             const Toast = Swal.mixin({
@@ -266,4 +280,3 @@
 
         }
     </script>
-@endsection
