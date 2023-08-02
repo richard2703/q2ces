@@ -22,6 +22,8 @@
                             <input type="hidden" name="maquinariaId" id="maquinariaId" value="{{$maquinaria->id}}">
                             <input type="hidden" name="usuarioId" id="usuarioId" value="{{ auth()->user()->id }}">
                             <input type="hidden" name="bitacoraId" id="bitacoraId" value="{{$bitacora->id}}">
+                            <input type="hidden" name="bitacora" id="bitacora" value="{{$bitacora->nombre}}">
+                            <input type="hidden" name="maquinaria" id="maquinaria" value="{{$maquinaria->nombre}}">
                             <div class="card-header bacTituloPrincipal">
                                 <h4 class="card-title">Nuevo Registro de CheckList</h4>
                             </div>
@@ -121,7 +123,7 @@
 
                                                 <tr>
                                                     <td>
-                                                        {{ $item->tarea }}
+                                                        {{ $item->tareaId }} .-  {{ $item->tarea }}
                                                         <input type="hidden" name="tarea[]" id="tarea"
                                                             value="{{ $item->tarea }}">
 
