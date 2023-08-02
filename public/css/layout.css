@@ -575,6 +575,8 @@
 .sidebar-nav .nav-link.collapsed {
   color: var(--select);
   background: var(--verde);
+  font-weight: bold; 
+  /* color: var(--texto); */
 }
 
 .sidebar-nav .nav-link.collapsed i {

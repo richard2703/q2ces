@@ -118,6 +118,98 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="d-flex p-3">
+                                    <div class="col-12" id="elementos">
+                                        <div class="d-flex">
+                                            <div class="col-6 divBorder">
+                                                <h2 class="tituloEncabezado ">Contacto</h2>
+                                            </div>
+                                            <div class="col-6 divBorder pb-3 text-end">
+                                                <button type="button" class="btnVerde" onclick="crearItems()">
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="row opcion divBorderItems" id="opc">
+
+                                            {{--  <input type="hidden" name="asignado[]" value="">  --}}
+                                            <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                <label class="labelTitulo">Nombre:</label></br>
+                                                <input type="text" class="inputCaja" id="rNombre"
+                                                    placeholder="Especifique..." name="rNombre[]" value="">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                <label class="labelTitulo">Correo:</label></br>
+                                                <input type="text" class="inputCaja" id="rEmail"
+                                                    placeholder="Especifique..." name="rEmail[]" value="">
+                                            </div>
+
+                                            <div class=" col-11 col-sm-5 col-lg-3 my-3 ">
+                                                <label class="labelTitulo">Telefono:</label></br>
+                                                <input type="text" class="inputCaja" id="rTelefono"
+                                                    placeholder="Especifique..." name="rTelefono[]" value="">
+                                            </div>
+
+                                            <div class="col-lg-1 my-3 text-end">
+                                                <button type="button" id="removeRow" class="btnRojo"></button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                {{--  <div class="row card-body" id="elementos">
+                                    <div class="row opcion" id="opc">
+                                        <div class="col-12 my-5 ">
+                                            <div class="">
+                                                <h2 class="tituloEncabezado ">Residente Responsable</h2>
+                                            </div>
+                                            <div class="col-12 divBorder pb-3" style="text-align: right;">
+                                                <button type="button" id="removeRow" class="btnRojo"></button>
+                                                <button type="button" class="btnVerde" onclick="crearItems()"> </button>
+                                            </div>
+                                            <div class="row">
+                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Nombre: <span>*</span></label></br>
+                                                    <input type="text" class="inputCaja" id="rnombre" required
+                                                        placeholder="Especifique..." name="rnombre[]" value="">
+                                                </div>
+                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Empresa:</label></br>
+                                                    <input type="text" class="inputCaja" id="rempresa"
+                                                        placeholder="Especifique..." name="rempresa[]" value="">
+                                                </div>
+
+                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Puesto:</label></br>
+                                                    <input type="text" class="inputCaja" id="rpuesto"
+                                                        placeholder="Especifique..." name="rpuesto[]" value="">
+                                                </div>
+
+                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Teléfono:</label></br>
+                                                    <input type="tel" pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}"
+                                                        placeholder="ej. 00-0000-0000" class="inputCaja" id="rtelefono"
+                                                        name="rtelefono[]"value="">
+
+                                                </div>
+
+                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">E-mail</label></br>
+                                                    <input type="email" class="inputCaja" id="remail" required
+                                                        placeholder="ej. elcorreo@delresponsable.com" min="6"
+                                                        name="remail[]" value="{{ old('remail') }}">
+                                                </div>
+
+                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Código de Confirmación:</label></br>
+                                                    <input type="text" class="inputCaja" id="rfirma"
+                                                        placeholder="Especifique..." name="rfirma[]" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>  --}}
 
                                 <div class="col-12 text-end mb-3 ">
                                     <div class="mb-5" id="spinner-container"></div>
