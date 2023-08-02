@@ -116,6 +116,73 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="d-flex p-3">
+                                    <div class="col-12" id="elementos">
+                                        <div class="d-flex">
+                                            <div class="col-6 divBorder">
+                                                <h2 class="tituloEncabezado ">Contacto</h2>
+                                            </div>
+                                            <div class="col-6 divBorder pb-3 text-end">
+                                                <button type="button" class="btnVerde" onclick="crearItems()">
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        @forelse ($residentes as $residente)
+                                            <div class="row opcion divBorderItems" id="opc">
+                                                <input type="hidden" name="idResidente[]" value="{{ $residente->id }}">
+                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Nombre:</label></br>
+                                                    <input type="text" class="inputCaja" id="rNombre"
+                                                        placeholder="Especifique..." name="rNombre[]"
+                                                        value="{{ $residente->nombre }}">
+                                                </div>
+
+                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Correo:</label></br>
+                                                    <input type="text" class="inputCaja" id="rEmail"
+                                                        placeholder="Especifique..." name="rEmail[]"
+                                                        value="{{ $residente->email }}">
+                                                </div>
+
+                                                <div class=" col-11 col-sm-5 col-lg-3 my-3 ">
+                                                    <label class="labelTitulo">Telefono:</label></br>
+                                                    <input type="text" class="inputCaja" id="rTelefono"
+                                                        placeholder="Especifique..." name="rTelefono[]"
+                                                        value="{{ $residente->telefono }}">
+                                                </div>
+
+                                                <div class="col-lg-1 my-3 text-end">
+                                                    <button type="button" id="removeRow" class="btnRojo"></button>
+                                                </div>
+                                            </div>
+                                        @empty
+                                            <div class="row opcion divBorderItems" id="opc">
+                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Nombre:</label></br>
+                                                    <input type="text" class="inputCaja" id="rNombre"
+                                                        placeholder="Especifique..." name="rNombre[]" value="">
+                                                </div>
+
+                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Correo:</label></br>
+                                                    <input type="text" class="inputCaja" id="rEmail"
+                                                        placeholder="Especifique..." name="rEmail[]" value="">
+                                                </div>
+
+                                                <div class=" col-11 col-sm-5 col-lg-3 my-3 ">
+                                                    <label class="labelTitulo">Telefono:</label></br>
+                                                    <input type="text" class="inputCaja" id="rTelefono"
+                                                        placeholder="Especifique..." name="rTelefono[]" value="">
+                                                </div>
+
+                                                <div class="col-lg-1 my-3 text-end">
+                                                    <button type="button" id="removeRow" class="btnRojo"></button>
+                                                </div>
+                                            </div>
+                                        @endforelse
+                                    </div>
+                                </div>
 
                                 <div class="col-12 text-end mb-3 ">
                                     <div class="mb-5" id="spinner-container"></div>
@@ -142,17 +209,6 @@
         $(document).on('click', '#removeRow', function() {
 
             $(this).closest('#opc').remove();
-        });
-
-        function crearItemsB() {
-
-            $('.opcionB:first').clone().find("input").val("").end().appendTo('#elementosB');
-
-        }
-        // borrar registro
-        $(document).on('click', '#removeRow', function() {
-
-            $(this).closest('#opcB').remove();
         });
     </script>
 @endsection

@@ -108,11 +108,7 @@ class obrasController extends Controller
         }
 
         //*** registro de residentes */
-        for (
-            $i = 0;
-            $i < count($request['rnombre']);
-            $i++
-        ) {
+        for ($i = 0; $i < count($request['rnombre']); $i++) {
             //*** se guarda solo si se selecciono una máquina */
             if ($request['rnombre'][$i] != '') {
                 $objResidente = new residente();
@@ -270,11 +266,7 @@ class obrasController extends Controller
 
             //** buscamos si el registrado esta en el arreglo, de no ser asi se elimina */
             if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
-                for (
-                    $i = 0;
-                    $i < count($vctRegistrados);
-                    $i++
-                ) {
+                for ($i = 0; $i < count($vctRegistrados); $i++) {
                     $intValor = (int) $vctRegistrados[$i];
 
                     if (in_array($intValor, $vctArreglo) == false) {

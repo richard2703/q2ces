@@ -117,7 +117,7 @@
             @can('calendario_show')
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'calendario' ? '' : 'collapsed' }}"
-                        href="{{ route('calendario.index') }}" style="color: black;">
+                        href="{{ route('calendario.index') }}">
                         {{--  <i class="bi bi-shop"></i>  --}}
                         <span class="material-icons ">
                             calendar_month
@@ -144,7 +144,7 @@
             @can('cajachica_show')
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'cajaChica' ? '' : 'collapsed' }}"
-                        href="{{ route('cajaChica.index') }}" style="font-weight: bold;">
+                        href="{{ route('cajaChica.index') }}">
                         {{--  <i class="bi bi-shop"></i>  --}}
                         <span class="material-icons">
                             currency_exchange
@@ -171,8 +171,7 @@
             @can('mantenimiento_index')
                 <li class="nav-item ">
                     <a class="nav-link {{ $activePage == 'mantenimiento' ? '' : 'collapsed' }}"
-                        data-bs-target="#mantenimiento-nav" data-bs-toggle="collapse" href="#"
-                        style="font-weight: bold; color: black; ">
+                        data-bs-target="#mantenimiento-nav" data-bs-toggle="collapse" href="#">
                         {{--  <i class="bi bi-receipt"></i>  --}}
                         <span class="material-icons">
                             build
@@ -222,8 +221,8 @@
                                     <i class="bi bi-circle"></i><span>Ver CheckList</span>
                                 </a>
                             </li>
-                            @endcan
-                            @can('bitacora_index')
+                        @endcan
+                        @can('bitacora_index')
                             <li>
                                 {{--  <a href="{{ url('/indexBitacora') }}"
                                     class="{{ $activeItem == 'bitacoras' ? 'active' : '' }}">  --}}
@@ -255,8 +254,7 @@
             @can('maquinaria_index')
                 <li class="nav-item ">
                     <a class="nav-link {{ $activePage == 'maquinaria' ? '' : 'collapsed' }}"
-                        data-bs-target="#maquinaria-nav" data-bs-toggle="collapse" href="#"
-                        style="color: var(--texto);">
+                        data-bs-target="#maquinaria-nav" data-bs-toggle="collapse" href="#">
                         {{--  <i class="bi bi-receipt"></i>  --}}
                         <span class="material-icons">
                             agriculture
@@ -338,7 +336,7 @@
             @can('inventario_show')
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'inventario' ? '' : 'collapsed' }}"
-                        href="{{ route('inventario.dash') }}" style="font-weight: bold; color: var(--texto); ">
+                        href="{{ route('inventario.dash') }}">
                         {{--  <i class="bi bi-shop"></i>  --}}
                         <span class="material-icons">
                             shelves
@@ -349,27 +347,46 @@
             @endcan
 
             @can('maquinaria_mtq_dash')
-                <li class="nav-item collapsed">
-                    <a class="nav-link {{ $activePage == 'mtq' ? '' : 'collapsed' }}" href="{{ url('dashMtq') }}">
-                        {{--  <i class="bi bi-shop"></i>  --}}
+
+                <li class="nav-item ">
+                    <a class="nav-link {{ $activePage == 'mtq' ? '' : 'collapsed' }}" data-bs-target="#obra-nav"
+                        data-bs-toggle="collapse" href="#">
+                        {{--  <i class="bi bi-receipt"></i>  --}}
                         <span class="material-icons">
                             apartment
                         </span>
-                        <span>MTQ</span>
+                        <span>MTQ</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
-                </li>
-            @endcan
+                    <ul id="obra-nav" class="nav-content collapse {{ $activePage == 'mtq' ? 'show' : '' }}"
+                        data-bs-parent="#sidebar-nav">
+                        @can('maquinaria_mtq_index')
+                            <li>
+                                {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
+                                {{--  <a href="{{ route('mtq.calendarioMtq') }}" class="">  --}}
+                                <a href="#" class="">
 
-            @can('catalogos_show')
-                <li class="nav-item collapsed">
-                    <a class="nav-link {{ $activePage == 'equipos' ? '' : 'collapsed' }}"
-                        href="{{ route('catalogos.index') }}">
-                        {{--  <i class="bi bi-shop"></i>  --}}
-                        <span class="material-icons">
-                            print
-                        </span>
-                        <span>Catalogos</span>
-                    </a>
+                                    <i class="bi bi-circle"></i><span>Calendario</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('maquinaria_mtq_index')
+                            <li>
+                                {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
+                                <a href="{{ route('mtq.index') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Equipo Mtq</span>
+                                </a>
+                            </li>
+                        @endcan
+
+                        @can('maquinaria_mtq_index')
+                            <li>
+                                {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
+                                <a href="{{ route('residentes.index') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Residentes</span>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
                 </li>
             @endcan
 
@@ -411,6 +428,19 @@
                             </li>
                         @endcan
                     </ul>
+                </li>
+            @endcan
+
+            @can('catalogos_show')
+                <li class="nav-item collapsed">
+                    <a class="nav-link {{ $activePage == 'equipos' ? '' : 'collapsed' }}"
+                        href="{{ route('catalogos.index') }}">
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            print
+                        </span>
+                        <span>Catalogos</span>
+                    </a>
                 </li>
             @endcan
 

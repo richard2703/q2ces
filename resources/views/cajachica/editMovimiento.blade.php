@@ -173,8 +173,9 @@
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Cantidad:</label></br>
-                                                <input type="number" class="inputCaja text-right" id="cantidad" name="cantidad"  maxlength="100000" step="1" min="1" max="99999" placeholder="ej. 100"
-                                                    value={{ $cajaChica->cantidad }}>
+                                                <input type="number" class="inputCaja text-right" id="cantidad"
+                                                    name="cantidad" maxlength="100000" step="0.01" min="1"
+                                                    max="99999" placeholder="ej. 100" value={{ $cajaChica->cantidad }}>
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
