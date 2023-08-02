@@ -39,6 +39,8 @@ class checkListRegistrosController extends Controller {
         $i = 0;
         $iRes = 1;
 
+        // dd( $request );
+
         //*** registramos primero el checlist */
         $objCheckList =  new checkList();
         $objCheckList->usuarioId = $request[ 'usuarioId' ];
@@ -48,9 +50,8 @@ class checkListRegistrosController extends Controller {
         $objCheckList->registrada = date( 'Y-m-d H:i:s' );
         $objCheckList->save();
 
-        // dd( $request, $objCheckList, count( $request[ 'tareaId' ] ) );
-
-        for ( $i = 0; $i < count( $request[ 'tareaId' ] ) ;  $i++ ) {
+        for ( $i = 0; $i < count( $request[ 'tareaId' ] ) ;
+        $i++ ) {
 
             $objRegistro = new checkListRegistros();
             $objRegistro->checkListId = $objCheckList->id ;
@@ -64,7 +65,8 @@ class checkListRegistrosController extends Controller {
             $objRegistro->maquinariaId = $request[ 'maquinariaId' ];
             $objRegistro->maquinaria = $request[ 'maquinaria' ];
 
-            $objRegistro->resultado = $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ][ 0 ];
+            $objRegistro->valor = $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ][ 0 ] ;
+            $objRegistro->resultado = $this->etiquetaValor( $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ][ 0 ] );
 
             $objRegistro->save();
             // dd( $request, $objCheckList, $objRegistro, $request[ 'resultado' . $iRes ][ 0 ] );
@@ -119,5 +121,29 @@ class checkListRegistrosController extends Controller {
 
     public function destroy( $id ) {
         //
+    }
+
+    public function etiquetaValor( $intValor ) {
+
+        $strResultado = '';
+
+        switch ( $intValor ) {
+            case 0:
+            $strResultado = 'Requiere Atención Inmediata';
+            break;
+
+            case 1:
+            $strResultado = 'Requiere Atención Futura';
+            break;
+
+            case 2:
+            $strResultado = 'Revisión Ok';
+            break;
+
+            default:
+            $strResultado = 'No Definido';
+            break;
+        }
+        return  $strResultado;
     }
 }

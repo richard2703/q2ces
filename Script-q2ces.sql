@@ -1267,6 +1267,7 @@ create table checkListRegistros(
     tareaId bigint(20) unsigned NOT NULL,
     tarea varchar(255) NOT NULL,
     resultado varchar(255) NULL,
+    valor int(8) NULL,
     usuarioId bigint(20) unsigned NOT NULL,
     created_at timestamp NULL DEFAULT NULL,
     updated_at timestamp NULL DEFAULT NULL,

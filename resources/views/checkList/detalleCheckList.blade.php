@@ -126,7 +126,7 @@
 
                                                     <tr>
                                                         <td>{{ $item->tarea }}</td>
-                                                        <td>{{ $item->resultado }} </td>
+                                                        <td> <p class="text-{{ ($item->valor==0?'danger':($item->valor==1?'warning':($item->valor==2?'success':''))) }}">{{ $item->resultado }} </p></td>
                                                     </tr>
 
                                                     <?php

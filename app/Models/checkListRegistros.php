@@ -22,6 +22,7 @@ class checkListRegistros extends Model {
         'tareaId',
         'tarea',
         'resultado' ,
+        'valor' ,
         'usuarioId',
     ];
 }
