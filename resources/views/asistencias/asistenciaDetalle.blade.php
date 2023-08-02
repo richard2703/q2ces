@@ -45,7 +45,7 @@ if ($asistencias->isEmpty() == true) {
         @if ($errors->any())
             <div class="alert alert-danger">
                 <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
-                <p>Listado de errores a corregir</p>
+                <p>Listado De Errores A Corregir</p>
                 <ul>
                     @foreach ($errors->all() as $item)
                         <li>{{ $item }}</li>
@@ -69,8 +69,8 @@ if ($asistencias->isEmpty() == true) {
                                             </a>
                                             <!-- Para el mes en curso -->
                                         </span>
-                                        &nbsp;&nbsp;&nbsp; Semana {{ $semanaSeleccionada }} del
-                                        {{ $strFechaInioPeriodo }} al {{ $strFechaFinPeriodo }}
+                                        &nbsp;&nbsp;&nbsp; Semana {{ $semanaSeleccionada }} Del
+                                        {{ $strFechaInioPeriodo }} Al {{ $strFechaFinPeriodo }}
                                         &nbsp;&nbsp;&nbsp;
                                         <!-- Un dia adelante del cargado -->
                                         <span>
@@ -80,7 +80,7 @@ if ($asistencias->isEmpty() == true) {
                                             </a>
                                         </span>
                                     </h4>
-                                    {{-- <p class="card-category">Usuarios registrados</p> --}}
+                                    {{-- <p class="card-category">Usuarios Registrados</p> --}}
                                 </div>
                                 <div class="card-body">
 
@@ -97,8 +97,8 @@ if ($asistencias->isEmpty() == true) {
                                     <div class="row">
                                         <span>
                                             <a href="{{ route('asistencia.show', $personal->id) }}"
-                                                class="display-8 mb-8 text-center" title="Ir al periodo en curso"><b>Hoy es
-                                                    {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
+                                                class="display-8 mb-8 text-center" title="Ir al periodo en curso"><b>Hoy Es
+                                                    {{ ucwords(trans($objCalendar->getFechaFormateada(date_create(date('Y-m-d'))))) }}</b></a>
                                         </span>
                                         <h4 class="card-title">
                                             {{ $personal->nombres }} {{ $personal->apellidoP }}
@@ -119,15 +119,15 @@ if ($asistencias->isEmpty() == true) {
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead class="labelTitulo text-center">
-                                                    <th class="labelTitulo">Dia</th>
+                                                    <th class="labelTitulo">Día</th>
                                                     <th class="labelTitulo">Horas Extra</th>
-                                                    <th class="labelTitulo">Tipo</th>
-                                                    <th class="labelTitulo">Asistencia</th>
+                                                    <th class="labelTitulo" style="width:140px !important">Tipo</th>
+                                                    <th class="labelTitulo" style="width:150px !important">Asistencia</th>
                                                     <th class="labelTitulo">Faltas</th>
-                                                    <th class="labelTitulo">Incapacidadades</th>
-                                                    <th class="labelTitulo">Vacaciones</th>
-                                                    <th class="labelTitulo">Descansos</th>
-                                                    <th class="labelTitulo">Observaciones</th>
+                                                    <th class="labelTitulo" style="width:170px !important">Incapacidades</th>
+                                                    <th class="labelTitulo" style="width:150px !important">Vacaciones</th>
+                                                    <th class="labelTitulo" style="width:150px !important">Descansos</th>
+                                                    <th class="labelTitulo" style="width:170px !important">Observaciones</th>
                                                 </thead>
                                                 <tbody class="text-center">
                                                     @forelse ($asistencias as $item)
@@ -181,8 +181,8 @@ if ($asistencias->isEmpty() == true) {
                                                     @empty
                                                         <tr>
                                                             <td colspan="2">Sin registros.<br><br> <b>Es necesario
-                                                                    registrar primero la asistencia del personal antes de
-                                                                    poder realizar las acciones de esta semana.</b></td>
+                                                                    Registrar Primero La Asistencia Del Personal Antes De
+                                                                    Poder Realizar Las Acciones De Esta Semana.</b></td>
                                                         </tr>
                                                     @endforelse
                                                 </tbody>
@@ -209,6 +209,15 @@ if ($asistencias->isEmpty() == true) {
             </div>
         </div>
     </div>
+    <style>
+    table{
+        table-layout: fixed;
+        }
+        th, td {
+            width: 100px;
+            word-wrap: break-word;
+    }
+    </style>
     <script>
         function Guardado() {
             // alert('test');

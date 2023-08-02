@@ -6,7 +6,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header bacTituloPrincipal">
-                            <h4 class="card-title"> Maquinaria MTQ</h4>
+                            <h4 class="card-title"> Equipos MTQ</h4>
                         </div>
                         <div class="card-body">
                             @if (session('success'))
@@ -32,7 +32,7 @@
                             </div>
                             <div class="col-8 align-end">
                                 @can('maquinaria_mtq_create')
-                                    <button data-bs-toggle="modal" data-bs-target="#nuevoItem" type="button" class="btn botonGral" onclick="cargaItem(' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','{{false}}')">Añadir Maquinaria MTQ</button>
+                                    <button data-bs-toggle="modal" data-bs-target="#nuevoItem" type="button" class="btn botonGral" onclick="cargaItem(' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','{{false}}')">Añadir Equipos MTQ</button>
                                 @endcan
                             </div>
 
@@ -126,12 +126,12 @@
                 
     </div>
 
-    <!-- Modal Nueva Maquinaria Mtq-->
+    <!-- Modal Nueva Equipos MTQ-->
     <div class="modal fade" id="nuevoItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nueva Maquinaria MTQ</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nueva Equipos MTQ</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -233,12 +233,12 @@
         </div>
     </div>
 
-    <!-- Modal Editar Maquinaria Mtq-->
+    <!-- Modal Editar Equipos MTQ-->
     <div class="modal fade" id="editarItem" tabindex="-1" aria-labelledby="exampleModalLabelEdit" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
-                    <h1 class="modal-title fs-5" id="exampleModalLabelEdit">&nbsp <span id="tituloModal">Editar</span> Maquinaria MTQ</label>
+                    <h1 class="modal-title fs-5" id="exampleModalLabelEdit">&nbsp <span id="tituloModal">Editar</span> Equipos MTQ</label>
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>

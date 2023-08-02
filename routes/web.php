@@ -214,6 +214,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/maquinaria', [App\Http\Controllers\maquinariaController::class, 'store'])->name('maquinaria.store');
     Route::get('/maquinaria', [App\Http\Controllers\maquinariaController::class, 'index'])->name('maquinaria.index');
     Route::get('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'show'])->name('maquinaria.show');
+    Route::get('/maquinaria/vista/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'vista'])->name('maquinaria.vista');
     Route::put('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'update'])->name('maquinaria.update');
     Route::put('/maquinaria/documento/update', [App\Http\Controllers\maquinariaController::class, 'updateDocumento'])->name('maquinaria.updateDocumento');
     Route::get('maquinaria/{id}/{doc}/download', [App\Http\Controllers\maquinariaController::class, 'download'])->name('maquinaria.download');
@@ -317,7 +318,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/checkList/registra/', [App\Http\Controllers\checkListRegistrosController::class, 'store'])->name('checkListRegistros.store');
     Route::get('/checkList/registros/{id}', [App\Http\Controllers\checkListController::class, 'show'])->name('checkList.show');
 
-    // Maquinaria MTQ
+    // Equipos MTQ
 
     Route::get('/dashMtq', function () {
         return view('mtq.dashMtq');
@@ -353,6 +354,7 @@ Route::group(['middleware' => 'auth'], function () {
     //*** Mtq */
     //Route::get('/mtq/', [App\Http\Controllers\mtqController::class, 'dash'])->name('mtq.dash');
     Route::resource('residentes', App\Http\Controllers\residenteController::class);
+    Route::resource('calendarioMtq', App\Http\Controllers\calendarioMtqController::class);
     // Route::get('/residentes', [App\Http\Controllers\residenteController::class, 'index'])->name('residente.index');
     // Route::get('/mtq/residentes/nuevo', [App\Http\Controllers\residenteController::class, 'create'])->name('residente.create');
     // Route::post('/mtq/residentes', [App\Http\Controllers\residenteController::class, 'store'])->name('residente.store');

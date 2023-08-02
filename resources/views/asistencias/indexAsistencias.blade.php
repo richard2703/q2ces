@@ -65,8 +65,8 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                             <div class="col-8">
                                                 <a href="{{ route('asistencia.index') }}"
                                                     class="combustibleLitros fw-semibold text-end"
-                                                    title="Ir al mes en curso"><b>Hoy es
-                                                        {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b>
+                                                    title="Ir al mes en curso"><b>Hoy Es
+                                                        {{ ucwords(trans($objCalendar->getFechaFormateada(date_create(date('Y-m-d'))))) }}</b>
                                                 </a>
                                             </div>
                                             <div class="col-4 text-end">
@@ -74,7 +74,7 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                                     class="botonSinFondo mx-2"title="Clic para marcar la asistencia en otro día."
                                                     data-bs-toggle="modal" data-bs-target="#modal-cliente">
                                                     <img style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}">
-                                                    <p class="botonTitulos mt-2">Otro día</p>
+                                                    <p class="botonTitulos mt-2">Otro Día</p>
                                                 </button>
                                             </div>
                                         </div>
@@ -109,13 +109,13 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                     <div class="table-responsive mt-4">
                                         <table class="table">
                                             <thead class="labelTitulo text-center">
-                                                <th class="labelTitulo">Codigo</th>
+                                                <th class="labelTitulo">Código</th>
                                                 <th class="labelTitulo">Nombre</th>
-                                                <th class="labelTitulo">Asistencia</th>
+                                                <th class="labelTitulo" style="width:140px !important">Asistencia</th>
                                                 <th class="labelTitulo">Faltas</th>
-                                                <th class="labelTitulo">Otros Dias</th>
+                                                <th class="labelTitulo">Otros Días</th>
                                                 <th class="labelTitulo">Horas Extra</th>
-                                                <th class="labelTitulo ">Acciones</th>
+                                                <th class="labelTitulo " style="width:140px !important">Acciones</th>
                                             </thead>
                                             <tbody class="text-center">
 
@@ -184,7 +184,7 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                 <div class="nav-tabs-navigation">
                                     <div class="nav-tabs-wrapper">
                                         <span class="nav-tabs-title">
-                                            <h2 class="titulos">Seleccionar otro día</h2>
+                                            <h2 class="titulos">Seleccionar Otro Día</h2>
                                         </span>
                                     </div>
                                 </div>
@@ -209,6 +209,15 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
             </div>
         </div>
     </div>
+    <style>
+    table{
+            table-layout: fixed;
+            }
+            th, td {
+                width: 100px;
+                word-wrap: break-word;
+        }
+    </style>
 
     <script>
         function Guardado() {
