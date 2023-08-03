@@ -157,11 +157,6 @@
                                                         <div class="row mb-5">
 
                                                             <div class="col-12 contFotoMaquinaria" id="visor">
-                                                                @if (count($fotos) > 0)
-                                                                    <button type="button"
-                                                                        class="btn btn-secondary btn-sm buttonImage"
-                                                                        onclick="deleteImage('{{ $fotos[0]->id }}','{{ $fotos }}', (this));">X</button>
-                                                                @endif
                                                                 <img src="{{ empty($fotos[0]) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $fotos[0]->ruta) }}"
                                                                     class="mx-auto d-block img-fluid imgMaquinaria">
                                                             </div>
@@ -182,15 +177,6 @@
                                                                 @empty
                                                                 @endforelse
                                                             </div>
-
-                                                            @if (count($fotos) <= 3)
-                                                                <span class="mi-archivo"> <input class="mb-4 ver "
-                                                                        type="file" name="ruta[]" id="mi-archivo"
-                                                                        accept="image/*" multiple disabled></span>
-                                                                <label for="mi-archivo">
-                                                                    <span class="">Sube Imagen</span>
-                                                                </label>
-                                                            @endif
                                                         </div>
 
                                                     </div>
