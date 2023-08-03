@@ -428,8 +428,17 @@ class maquinariaController extends Controller
         /*** directorio contenedor de su información */
         $pathMaquinaria = str_pad($data['identificador'], 4, '0', STR_PAD_LEFT);
 
+        $eliminarFotos = json_decode($request->arrayFotosPersistente);
+        // dd($eliminarFotos);
         $maquinaria->update($data);
 
+        if($eliminarFotos != null){
+            for ($i = 0; $i < count($eliminarFotos); $i++) {
+                // dd($eliminarFotos[$i]->id);
+                $test = maqimagen::where('id', $eliminarFotos[$i]->id)->delete();
+                // dd($test);
+            }
+        }
 
         for ($i = 0; $i < count($request->archivo); $i++) {
             $documento = null;

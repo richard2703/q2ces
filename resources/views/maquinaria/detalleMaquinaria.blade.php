@@ -64,28 +64,28 @@
                                                 <div class="row mt-3">
                                                     <div class="col-12 col-lg-4  my-3">
                                                         <div class="row mb-5">
-
+                                                        
                                                             <div class="col-12 contFotoMaquinaria" id="visor">
-                                                                @if (count($fotos) > 0)
+                                                                <!-- @if (count($fotos) > 0)
                                                                     <button type="button"
-                                                                        class="btn btn-secondary btn-sm buttonImage"
+                                                                        class="btn btn-secondary btn-sm"
                                                                         onclick="deleteImage('{{ $fotos[0]->id }}','{{ $fotos }}', (this));">X</button>
-                                                                @endif
+                                                                @endif -->
                                                                 <img src="{{ empty($fotos[0]) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $fotos[0]->ruta) }}"
                                                                     class="mx-auto d-block img-fluid imgMaquinaria">
                                                             </div>
 
-                                                            <div class="col-12 my-3 d-flex justify-content-around"
+                                                            <div class="col-12 my-3 d-flex justify-content-start"
                                                                 id="selectores">
                                                                 @forelse ($fotos as $foto)
                                                                     <img onclick="abre(this)"
                                                                         title="'{{ $maquinaria->nombre }}'."
                                                                         src="{{ asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $foto->ruta) }}"
-                                                                        class="img-fluid mb-5" id="{{ $foto->id }}"
-                                                                        style="margin-right:-20px;">
+                                                                        class="img-fluid mb-5" id="img{{ $foto->id }}"
+                                                                        style="margin-right:3px;">
                                                                     <div class="form-group">
-                                                                        <div class="col-md-8">
-                                                                            <!--<button type="button" class="btn btn-secondary btn-sm buttonImage" onclick="esconde_div('{{ $foto->id }}','{{ $fotos }}', (this));">X</button>-->
+                                                                        <div class="divButtonImage">
+                                                                            <button type="button" class="btn btn-secondary btn-sm buttonImage" id="btnDelete{{ $foto->id }}" onclick="esconde_div('{{ $foto->id }}','{{ $fotos }}', (this));">X</button>
                                                                         </div>
                                                                     </div>
                                                                 @empty
@@ -103,7 +103,7 @@
                                                         </div>
 
                                                     </div>
-
+                                                    <input type="hidden" name="arrayFotosPersistente" id="arrayFotosPersistente" value="">
                                                     <div class="col-12 col-lg-8">
                                                         <div class="row alin">
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -980,29 +980,42 @@
         }
     }
 
-    //let arrayFotos = JSON.parse(fotos);
-    function esconde_div(id, fotos, button) {
-        console.log('ID de imagen', id);
+    // Inicializar arrayFotosPersistente
+    let arrayFotosPersistente = [];
 
+// Función para inicializar el arreglo persistente con el arreglo original
+// function inicializarArrayFotos(fotos) {
+//     arrayFotosPersistente = JSON.parse(fotos);
+//     console.log('HOLA',arrayFotosPersistente);
+// }
+
+function esconde_div(id, fotos, button) {
+    
+    console.log('fotos', fotos);
+    let arrayFotos = JSON.parse(fotos);
+    const index = arrayFotos.findIndex((foto) => foto.id == id);
+
+    // Si se encontró el objeto con el id coincidente, eliminarlo del array
+    if (index !== -1) {
+         arrayFotosPersistente.push(arrayFotos[index]);
+        
+    } else {
+         console.log('El id no se encontró en arrayFotosPersistente.');
+    }
+    console.log('arrayFotosPersistente', arrayFotosPersistente);
         var parentDiv = button.parentNode.parentNode.parentNode;
         // Modificar el selector para que coincida con la clase de la imagen
         var imageElement = parentDiv.querySelector("img.img-fluid");
-        var parentDivButton = button.parentNode.parentNode;
-        var imageId = imageElement.id;
-        console.log('imageElement', imageElement);
-        // Eliminar el elemento de la imagen
-        if (imageElement && imageId == id) {
-            parentDiv.removeChild(imageElement);
-        }
-        var elemento = document.getElementById(id);
-        if (elemento) {
-            elemento.style.display = "none";
-        }
+        var deleteButton = document.getElementById('btnDelete'+id);
+        var imageElement = document.getElementById("img"+ id);
+        
+        
         // Ocultar el elemento padre
-        parentDiv.style.display = "none";
-        parentDivButton.style.display = "none";
-        console.log('button', button);
+        imageElement.style.visibility = "hidden";
+        deleteButton.style.visibility = "hidden";
 
+        const arrayFotosPersistenteHidden = document.getElementById('arrayFotosPersistente');
+        arrayFotosPersistenteHidden.value = JSON.stringify(arrayFotosPersistente);
     }
     // $.ajax({
     //     type: 'put',
@@ -1018,6 +1031,7 @@
     //         console.log('Error');
     //     }
     // });
+    
     function loadDocument(id, tipo, comentarios, fechaVencimiento) {
 
         const txtId = document.getElementById('docId');
@@ -1079,6 +1093,11 @@
             $(this).closest('.opcion').remove();
         }
     });
+</script>
+<script>
+    function fakeSave(){
+        console.log('arrayFotosPersistente', arrayFotosPersistente);
+    }
 </script>
 
 {{-- <!-- Modal -->
