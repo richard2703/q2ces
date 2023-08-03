@@ -21,6 +21,7 @@ class checkListRegistros extends Model {
         'grupo',
         'tareaId',
         'tarea',
+        'tareaTipoValor',
         'resultado' ,
         'valor' ,
         'usuarioId',

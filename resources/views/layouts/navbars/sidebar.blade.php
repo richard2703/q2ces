@@ -103,7 +103,7 @@
 
 
                                     <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                                        <a  href="{{ url('/nuevoCheck') }}" class="nav-link -item{{ $activePage == 'nuevoCheck' ? ' active' : '' }} ">
+                                        <a  href="{{ url('/nuevoCheckList') }}" class="nav-link -item{{ $activePage == 'nuevoCheckList' ? ' active' : '' }} ">
                                             <span class="sidebar-normal py-2 ps-5"> {{ __('Nueva Tarea') }} </span>
                                         </a>
                                     </li>
@@ -114,8 +114,8 @@
 
 
                         <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                            <a href="{{ url('/nuevoCheck') }}"
-                                class="nav-link -item{{ $activePage == 'nuevoCheck' ? ' active' : '' }} ">
+                            <a href="{{ url('/nuevoCheckList') }}"
+                                class="nav-link -item{{ $activePage == 'nuevoCheckList' ? ' active' : '' }} ">
                                 <span class="sidebar-normal py-2 ps-5"> {{ __('Nueva Tarea') }} </span>
                             </a>
                         </li>

@@ -1266,6 +1266,7 @@ create table checkListRegistros(
     grupo varchar(255) NOT NULL,
     tareaId bigint(20) unsigned NOT NULL,
     tarea varchar(255) NOT NULL,
+    tareaTipoValor INT(2) NOT NULL DEFAULT '1',
     resultado varchar(255) NULL,
     valor int(8) NULL,
     usuarioId bigint(20) unsigned NOT NULL,

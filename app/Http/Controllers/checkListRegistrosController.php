@@ -3,9 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+
 use App\Models\checkList;
 use App\Models\checkListRegistros;
-use Illuminate\Http\Request;
+use App\Models\bitacoras;
+use App\Models\grupoBitacoras;
+use App\Models\grupoTareas;
+use App\Models\grupo;
+use App\Models\tarea;
+use App\Models\maquinaria;
 
 class checkListRegistrosController extends Controller {
     /**
@@ -74,7 +85,7 @@ class checkListRegistrosController extends Controller {
             $iRes += 1;
         }
 
-        return redirect()->route( 'checkList.index' );
+        return redirect()->route( 'editarCheckList.index' );
 
     }
 
@@ -86,7 +97,35 @@ class checkListRegistrosController extends Controller {
     */
 
     public function show( $id ) {
-        //
+
+        abort_if ( Gate::denies( 'checkList_show' ), 403 );
+
+        $checkList = checkList::select(
+            'checkList.*',
+            DB::raw( 'maquinaria.nombre AS maquinaria' ),
+            DB::raw( 'users.username AS usuario' ),
+            DB::raw( 'bitacoras.nombre AS bitacora' ),
+        )
+        ->join( 'maquinaria', 'maquinaria.id', '=', 'checkList.maquinariaId' )
+        ->join( 'users', 'users.id', '=', 'checkList.usuarioId' )
+        ->leftJoin( 'bitacoras', 'bitacoras.id', '=', 'checkList.bitacoraId' )
+        ->orderBy( 'registrada', 'desc' )
+        ->where( 'checkList.id', '=', $id )->first();
+
+        $vctRecords = checkListRegistros::select(
+            'checkListRegistros.*',
+            DB::raw( 'maquinaria.nombre AS maquinaria' ),
+            DB::raw( 'users.username AS usuario' ),
+            DB::raw( 'bitacoras.nombre AS bitacora' )
+        )
+        ->join( 'maquinaria', 'maquinaria.id', '=', 'checkListRegistros.maquinariaId' )
+        ->join( 'users', 'users.id', '=', 'checkListRegistros.usuarioId' )
+        ->leftJoin( 'bitacoras', 'bitacoras.id', '=', 'checkListRegistros.bitacoraId' )
+        ->orderBy( 'grupo', 'asc' )
+        ->where( 'checkListRegistros.checkListId', '=', $id )->get();
+
+        // dd( $records );
+        return view( 'checkList.editarCheckList', compact( 'checkList', 'vctRecords' ) );
     }
 
     /**
@@ -108,8 +147,49 @@ class checkListRegistrosController extends Controller {
     * @return \Illuminate\Http\Response
     */
 
-    public function update( Request $request, $id ) {
-        //
+    public function update( Request $request ) {
+
+        $blnExito = false;
+
+        //*** actualizamos primero el checklist */
+        $objCheckList =    checkList::where( 'id', '=', $request[ 'checkListId' ] )->first();
+
+        if ( $objCheckList ) {
+
+            $objCheckList->usuarioId = $request[ 'usuarioId' ];
+            $objCheckList->maquinariaId = $request[ 'maquinariaId' ];
+            $objCheckList->bitacoraId = $request[ 'bitacoraId' ];
+            $objCheckList->comentario = $request[ 'comentario' ];
+            $objCheckList->registrada = date( 'Y-m-d H:i:s' );
+            $objCheckList->save();
+
+            // dd( $request );
+
+            $i = 0;
+            $iRes = 1;
+
+            for ( $i = 0; $i < count( $request[ 'tareaId' ] ) ;
+            $i++ ) {
+
+                $objRegistro =   checkListRegistros::where( 'id', '=', $request[ 'recordId' ][ $i ] )->first();
+
+                if ( $objRegistro ) {
+                    //*** actualizamos solo el valor de la tarea y su etiqueta */
+                    $objRegistro->valor = $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ][ 0 ] ;
+                    $objRegistro->resultado = $this->etiquetaValor( $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ][ 0 ] );
+                    $objRegistro->save();
+
+                }
+
+                $iRes += 1;
+            }
+
+            $blnExito = false;
+
+        } else {
+            $blnExito = false;
+        }
+        return redirect()->route( 'checkList.index' )->with( ( $blnExito == true?'success':'error' ), ( $blnExito == true?'Registro actualizado de forma correctamenta.':'No se pudo actualizar el registro' ) );
     }
 
     /**
