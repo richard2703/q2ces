@@ -99,9 +99,25 @@
 
                                     <div class="col-12 col-md-6 text-center my-4">
                                         <a href="{{ route('tiposServicios.index') }}" class="">
-                                            <img src="/img/inventario/herramientas.svg" alt="Tipos de Servicios" title="Tipos de Servicios"
+                                            <img src="/img/inventario/herramientas.svg" alt="Lugares" title="Lugares"
                                                 width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Tipos De Servicios</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 text-center my-4">
+                                        <a href="{{ route('lugares.index') }}" class="">
+                                            <img src="/img/inventario/herramientas.svg" alt="Lugares" title="Lugares"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Lugares</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 text-center my-4">
+                                        <a href="{{ route('ubicaciones.index') }}" class="">
+                                            <img src="/img/inventario/herramientas.svg" alt="Ubicaciones" title="Ubicaciones"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Ubicaciones</p>
                                         </a>
                                     </div>
 

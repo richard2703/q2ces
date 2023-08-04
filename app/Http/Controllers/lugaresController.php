@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\tiposServicios;
+use App\Models\lugares;
+use App\Models\ubicaciones;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
@@ -10,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
-class tiposServiciosController extends Controller
+class lugaresController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,9 +20,9 @@ class tiposServiciosController extends Controller
      */
     public function index()
     {
-        //dd('jhijsa0');
-        $tiposServicios = tiposServicios::orderBy('created_at', 'desc')->paginate(10);
-        return view('catalogos.indexTiposServicios', compact('tiposServicios'));
+        $lugares = lugares::orderBy('created_at', 'desc')->paginate(10);
+        $ubicacion = ubicaciones::all();
+        return view('catalogos.indexLugares', compact('lugares', 'ubicacion'));
     }
 
     /**
@@ -51,26 +52,27 @@ class tiposServiciosController extends Controller
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
         ]);
 
-        $tiposServicios = $request->all();
+        $lugares = $request->all();
         if ((isset($request->check) && $request->check == 'on')) {
-            $tiposServicios['activo'] = 1;
+            $lugares['activo'] = 1;
         }else{
-            $tiposServicios['activo'] = 0;
+            $lugares['activo'] = 0;
         }
-        // dd( $tiposServicios );
-        tiposServicios::create($tiposServicios);
+        // dd( $lugares );
+        
+        lugares::create($lugares);
         Session::flash('message', 1);
 
-        return redirect()->route('tiposServicios.index');
+        return redirect()->route('lugares.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\tiposServicios  $tiposServicios
+     * @param  \App\Models\lugares  $lugares
      * @return \Illuminate\Http\Response
      */
-    public function show(tiposServicios $tiposServicios)
+    public function show(lugares $lugares)
     {
         //
     }
@@ -78,10 +80,10 @@ class tiposServiciosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\tiposServicios  $tiposServicios
+     * @param  \App\Models\lugares  $lugares
      * @return \Illuminate\Http\Response
      */
-    public function edit(tiposServicios $tiposServicios)
+    public function edit(lugares $lugares)
     {
         //
     }
@@ -90,10 +92,10 @@ class tiposServiciosController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\tiposServicios  $tiposServicios
+     * @param  \App\Models\lugares  $lugares
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, tiposServicios $tiposServicios)
+    public function update(Request $request, lugares $lugares)
     {
         $request->validate([
             'nombre' => 'required|max:250',
@@ -105,28 +107,28 @@ class tiposServiciosController extends Controller
         ]);
         $data = $request->all();
 
-        $tipoServicio = tiposServicios::where('id', $data['controlId'])->first();
+        $lugares = lugares::where('id', $data['controlId'])->first();
         if ((isset($request->check) && $request->check == 'on')) {
-            $tipoServicio['activo'] = 1;
+            $lugares['activo'] = 1;
         }else{
-            $tipoServicio['activo'] = 0;
+            $lugares['activo'] = 0;
         }
-        if (is_null($tipoServicio) == false) {
+        if (is_null($lugares) == false) {
             // dd( $data );
-            $tipoServicio->update($data);
+            $lugares->update($data);
             Session::flash('message', 1);
         }
 
-        return redirect()->route('tiposServicios.index');
+        return redirect()->route('lugares.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\tiposServicios  $tiposServicios
+     * @param  \App\Models\lugares  $lugares
      * @return \Illuminate\Http\Response
      */
-    public function destroy(tiposServicios $tiposServicios)
+    public function destroy(lugares $lugares)
     {
         //
     }

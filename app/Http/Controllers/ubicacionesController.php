@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\tiposServicios;
+use App\Models\ubicaciones;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
-class tiposServiciosController extends Controller
+class ubicacionesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,9 +19,8 @@ class tiposServiciosController extends Controller
      */
     public function index()
     {
-        //dd('jhijsa0');
-        $tiposServicios = tiposServicios::orderBy('created_at', 'desc')->paginate(10);
-        return view('catalogos.indexTiposServicios', compact('tiposServicios'));
+        $ubicaciones = ubicaciones::orderBy('created_at', 'desc')->paginate(10);
+        return view('catalogos.indexUbicaciones', compact('ubicaciones'));
     }
 
     /**
@@ -51,26 +50,26 @@ class tiposServiciosController extends Controller
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
         ]);
 
-        $tiposServicios = $request->all();
+        $ubicaciones = $request->all();
         if ((isset($request->check) && $request->check == 'on')) {
-            $tiposServicios['activo'] = 1;
+            $ubicaciones['activo'] = 1;
         }else{
-            $tiposServicios['activo'] = 0;
+            $ubicaciones['activo'] = 0;
         }
-        // dd( $tiposServicios );
-        tiposServicios::create($tiposServicios);
+        // dd( $ubicaciones );
+        ubicaciones::create($ubicaciones);
         Session::flash('message', 1);
 
-        return redirect()->route('tiposServicios.index');
+        return redirect()->route('ubicaciones.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\tiposServicios  $tiposServicios
+     * @param  \App\Models\ubicaciones  $ubicaciones
      * @return \Illuminate\Http\Response
      */
-    public function show(tiposServicios $tiposServicios)
+    public function show(ubicaciones $ubicaciones)
     {
         //
     }
@@ -78,10 +77,10 @@ class tiposServiciosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\tiposServicios  $tiposServicios
+     * @param  \App\Models\ubicaciones  $ubicaciones
      * @return \Illuminate\Http\Response
      */
-    public function edit(tiposServicios $tiposServicios)
+    public function edit(ubicaciones $ubicaciones)
     {
         //
     }
@@ -90,10 +89,10 @@ class tiposServiciosController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\tiposServicios  $tiposServicios
+     * @param  \App\Models\ubicaciones  $ubicaciones
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, tiposServicios $tiposServicios)
+    public function update(Request $request, ubicaciones $ubicaciones)
     {
         $request->validate([
             'nombre' => 'required|max:250',
@@ -105,28 +104,28 @@ class tiposServiciosController extends Controller
         ]);
         $data = $request->all();
 
-        $tipoServicio = tiposServicios::where('id', $data['controlId'])->first();
+        $ubicaciones = ubicaciones::where('id', $data['controlId'])->first();
         if ((isset($request->check) && $request->check == 'on')) {
-            $tipoServicio['activo'] = 1;
+            $ubicaciones['activo'] = 1;
         }else{
-            $tipoServicio['activo'] = 0;
+            $ubicaciones['activo'] = 0;
         }
-        if (is_null($tipoServicio) == false) {
+        if (is_null($ubicaciones) == false) {
             // dd( $data );
-            $tipoServicio->update($data);
+            $ubicaciones->update($data);
             Session::flash('message', 1);
         }
 
-        return redirect()->route('tiposServicios.index');
+        return redirect()->route('ubicaciones.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\tiposServicios  $tiposServicios
+     * @param  \App\Models\ubicaciones  $ubicaciones
      * @return \Illuminate\Http\Response
      */
-    public function destroy(tiposServicios $tiposServicios)
+    public function destroy(ubicaciones $ubicaciones)
     {
         //
     }

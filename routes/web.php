@@ -131,6 +131,12 @@ Route::group(['middleware' => 'auth'], function () {
     // Crud TiposServicios
     Route::resource('tiposServicios', App\Http\Controllers\tiposServiciosController::class);
 
+    // Crud Lugares
+    Route::resource('lugares', App\Http\Controllers\lugaresController::class);
+
+    // Crud Ubicaciones
+    Route::resource('ubicaciones', App\Http\Controllers\ubicacionesController::class);
+
     //Crud personal
     Route::get('/personal/nuevo', [App\Http\Controllers\personalController::class, 'create'])->name('personal.create');
     Route::post('/personal', [App\Http\Controllers\personalController::class, 'store'])->name('personal.store');

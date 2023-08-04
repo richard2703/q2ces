@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista De Tipos Servicios')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista De Ubicaciones')])
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -6,7 +6,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header bacTituloPrincipal">
-                            <h4 class="card-title">Tipos De Servicios</h4>
+                            <h4 class="card-title">Ubicaciones</h4>
                         </div>
                         <div class="card-body">
                             @if (session('success'))
@@ -35,7 +35,7 @@
                                         @can('catalogos_create')
                                             <button class="btn botonGral float-end" data-bs-toggle="modal"
                                                 data-bs-target="#nuevoItem">
-                                                Añadir Un Tipo De Servicio
+                                                Añadir Un Ubicación
                                             </button>
                                         @endcan
                                     </div>
@@ -47,20 +47,19 @@
                                     <tr>
                                         <th class="labelTitulo text-center">Id</th>
                                         <th class="labelTitulo text-center">Nombre</th>
-                                        <th class="labelTitulo text-center">Código</th>
-                                        <th class="labelTitulo text-center">Costo</th>
-                                        <th class="labelTitulo text-center" style="width:150px">Comentario</th>
-                                        <th class="labelTitulo text-center" style="width:150px">Acciones</th>
+                                        <th class="labelTitulo text-center">Dirección</th>
+                                        <th class="labelTitulo text-center" style="width:150px">Comentarios</th>
+                                        <th class="labelTitulo text-center" style="width:140px">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($tiposServicios as $item)
+                                    @forelse ($ubicaciones as $item)
                                         <tr>
                                             <td class="text-center">{{ $item->id }}</td>
                                             <td class="text-center">{{ $item->nombre }}</td>
-                                            <td class="text-center">{{ $item->codigo }}</td>
-                                            <td class="text-center">{{ $item->costo }}</td>
+                                            <td class="text-center">{{ $item->direccion }}</td>
                                             <td class="text-center">{{ $item->comentario }}</td>
+                                            
 
                                             <td class="td-actions text-center">
                                                 {{-- @can('user_show') --}}
@@ -74,7 +73,7 @@
                                                 {{-- @can('user_edit') --}}
                                                 <a href="#" class="" data-bs-toggle="modal"
                                                     data-bs-target="#editarItem"
-                                                    onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->codigo }}','{{ $item->costo }}','{{ $item->comentario }}','{{ $item->activo }}')">
+                                                    onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->comentario }}','{{ $item->activo }}','{{ $item->direccion }}')">
                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                         height="28" fill="currentColor"
                                                         class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -112,7 +111,7 @@
                             </table>
                             </div>
                             <div class="card-footer mr-auto d-flex justify-content-center">
-                                {{ $tiposServicios->links() }}
+                                {{ $ubicaciones->links() }}
                             </div>
                         </div>
                     </div>
@@ -126,11 +125,11 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Añadir Tipo De Servicio</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Añadir Ubicación</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('tiposServicios.store') }}" method="post">
+                    <form class="row d-flex" action="{{ route('ubicaciones.store') }}" method="post">
                         @csrf
                         <div class=" col-9 col-sm-8 col-lg-10 mb-3 ">
                             <label class="labelTitulo">Nombre: <span>*</span></label></br>
@@ -144,16 +143,9 @@
                             checked style="font-size: 20px;">
                         </div>
 
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Código: <span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="codigo" name="codigo" value=""
-                                required placeholder="Especifique...">
-                        </div>
-                        
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Costo: <span>*</span></label></br>
-                            <input type="number" class="inputCaja" id="costo" name="costo" value=""
-                                required placeholder="Especifique...">
+                        <div class=" col-12 mb-3 ">
+                            <label class="labelTitulo">Dirección: <span>*</span></label></br>
+                            <input type="text" class="inputCaja" name="direccion" value="">
                         </div>
 
                         <div class=" col-12  mb-3 ">
@@ -178,12 +170,12 @@
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
 
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Tipo De Servicio</label>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Ubicación</label>
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('tiposServicios.update', 0) }}" method="post">
+                    <form class="row d-flex" action="{{ route('ubicaciones.update', 0) }}" method="post">
                         @csrf
                         @method('put')
                         <input type="hidden" name="controlId" id="controlId" value="">
@@ -198,16 +190,9 @@
                             style="font-size: 20px;">
                         </div>
 
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Código: <span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="controlCodigo" name="codigo"
-                                value="">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Costo: <span>*</span></label></br>
-                            <input type="number" class="inputCaja" id="controlCosto" name="costo"
-                                value="">
+                        <div class=" col-12 mb-3 ">
+                            <label class="labelTitulo">Dirección: <span>*</span></label></br>
+                            <input type="text" class="inputCaja" id="controlDireccion" name="direccion" value="">
                         </div>
 
                         <div class=" col-12  mb-3 ">
@@ -265,18 +250,12 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, codigo, costo, comentario, activo) {
+        function cargaItem(id, nombre, comentario, activo, direccion) {
             const txtId = document.getElementById('controlId');
             txtId.value = id;
 
             const txtNombre = document.getElementById('controlNombre');
             txtNombre.value = nombre;
-
-            const txtCodigo = document.getElementById('controlCodigo');
-            txtCodigo.value = codigo;
-
-            const txtCosto = document.getElementById('controlCosto');
-            txtCosto.value = costo;
 
             const txtComentarios = document.getElementById('controlComentarios');
             txtComentarios.value = comentario;
@@ -287,6 +266,8 @@
             }else{
                 txtActivo.checked = false;
             }
+            const txtDireccion = document.getElementById('controlDireccion');
+            txtDireccion.value = direccion;
         }
     </script>
 @endsection
