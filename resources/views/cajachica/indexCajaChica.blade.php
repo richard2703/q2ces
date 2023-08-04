@@ -19,8 +19,8 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Movimientos de Caja Chica</h4>
-                                    {{-- <p class="card-category">Usuarios registrados</p> --}}
+                                    <h4 class="card-title">Movimientos De Caja Chica</h4>
+                                    {{-- <p class="card-category">Usuarios Registrados</p> --}}
                                 </div>
                                 <div class="card-body">
                                     @if (session('success'))
@@ -35,15 +35,15 @@
                                     @endif
                                     <div class="row division">
                                         <div class="col-12 col-md-4">
-                                            <p>Semana del</br> <span
+                                            <p>Semana Del</br> <span
                                                     class="combustibleLitros">{{ \Carbon\Carbon::parse($lunes)->locale('es')->isoFormat('dddd D MMMM') }}
-                                                    al
+                                                    Al
                                                     {{ \Carbon\Carbon::parse($domingo)->locale('es')->isoFormat('dddd D MMMM') }}</span>
                                             </p>
                                         </div>
 
                                         <div class="col-3 col-md-2 text-center">
-                                            <p class="">Semana pasada</p>
+                                            <p class="">Semana Pasada</p>
                                             <p class="combustibleLitros fw-semibold text-primary ">$ {{ $lastweek }}</p>
                                         </div>
                                         <div class="col-3 col-md-2 text-center">
@@ -59,29 +59,29 @@
                                             <p class="combustibleLitros fw-semibold ">$ {{ $lastTotal }}
                                             </p>
                                         </div>
-                                        <div class="col-12 text-end pt-3">
+                                        <div class="col-12 text-end pt-3 mb-2">
                                             @can('cajachica_create')
                                                 <a href="{{ route('cajaChica.create') }}">
-                                                    <button type="button" class="btn botonGral">Nuevo movimiento</button>
+                                                    <button type="button" class="btn botonGral">Nuevo Movimiento</button>
                                                 </a>
                                             @endcan
                                         </div>
                                     </div>
-                                    <div class="table-responsive">
+                                    <div class="table-responsive mt-2">
                                         <table class="table tablaCenter">
                                             <thead class="labelTitulo">
                                                 <tr>
-                                                    <th class="labelTitulo">Dia</th>
-                                                    <th class="labelTitulo">Concepto</th>
-                                                    <th class="labelTitulo">Comprobante</th>
+                                                    <th class="labelTitulo">Día</th>
+                                                    <th class="labelTitulo" style="width: 120px !important;">Concepto</th>
+                                                    <th class="labelTitulo" style="width: 160px !important;">Comprobante</th>
                                                     {{--  <th class="labelTitulo">N. Comprobante</th>  --}}
                                                     <th class="labelTitulo">Cliente</th>
                                                     <th class="labelTitulo">Obra</th>
                                                     <th class="labelTitulo">Equipo</th>
-                                                    <th class="labelTitulo">Personal</th>
+                                                    <th class="labelTitulo" style="width: 130px !important;">Personal</th>
                                                     {{--  <th class="labelTitulo">Tipo</th>  --}}
-                                                    <th class="labelTitulo">Cantidad</th>
-                                                    <th class="labelTitulo text-right">Acciones</th>
+                                                    <th class="labelTitulo" style="width: 130px !important;">Cantidad</th>
+                                                    <th class="labelTitulo text-right" style="width: 130px !important;">Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -195,7 +195,7 @@
                                                     </tr>
                                                     @empty
                                                         <tr>
-                                                            <td colspan="2">Sin registros.</td>
+                                                            <td colspan="2">Sin Registros.</td>
                                                         </tr>
                                                     @endforelse
                                                 </tbody>
@@ -213,30 +213,30 @@
                 </div>
             </div>
         </div>
-        <script>
-            function Guardado() {
-                // alert('test');
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                })
-
-                Toast.fire({
-                    icon: 'success',
-                    title: 'Guardado con exito'
-                })
-            }
-            var slug = '1';
-            if (slug == 1) {
-                Guardado();
-
-            }
-        </script>
     @endsection
+<script>
+    function Guardado() {
+        // alert('test');
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'success',
+            title: 'Guardado con exito'
+        })
+    }
+    var slug = '1';
+    if (slug == 1) {
+        Guardado();
+
+    }
+    </script>

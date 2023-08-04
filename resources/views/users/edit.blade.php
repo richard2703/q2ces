@@ -10,7 +10,7 @@
                         <div class="card">
                             <div class="card-header bacTituloPrincipal">
                                 <h4 class="card-title">Usuario</h4>
-                                <p class="card-category">Editar datos</p>
+                                <p class="card-category">Editar Datos</p>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -25,7 +25,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label for="username" class="col-sm-2 col-form-label">Nombre de usuario</label>
+                                    <label for="username" class="col-sm-2 col-form-label">Nombre De Usuario</label>
                                     <div class="col-sm-7">
                                         <input type="text" class="inputCaja" name="username"
                                             value="{{ old('username', $user->username) }}">
@@ -97,7 +97,7 @@
                             </div>
                             <!--Footer-->
                             <div class="card-footer ml-auto mr-auto">
-                                <button type="submit" class="btn botonGral">actualizar</button>
+                                <button type="submit" class="btn botonGral">Actualizar</button>
                             </div>
                             <!--End footer-->
                         </div>

@@ -14,7 +14,7 @@
         @endif
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-11 align-self-start">
+                <div class="col-12 align-self-start">
                     <div class="card">
                         <div class="card-body contCart">
                             <div class="ml-3">
@@ -39,7 +39,7 @@
                                 method="post"class="row alertaGuardar" enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
-                                <div class="row mt-3">
+                                <div class="row mt-3" style="padding-left:35px;">
                                     <div class="col-12 col-md-4  my-3">
                                         <div class="text-center mx-auto border vistaFoto mb-4">
                                             <i><img class="imgVista img-fluid mb-2"

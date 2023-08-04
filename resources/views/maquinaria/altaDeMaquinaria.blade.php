@@ -71,7 +71,7 @@
                                                                     type="file" name="ruta[]" id="mi-archivo"
                                                                     accept="image/*" multiple></span>
                                                             <label for="mi-archivo">
-                                                                <span class="">sube imagen</span>
+                                                                <span class="">Sube Imagen</span>
                                                             </label>
                                                         </div>
                                                     </div>
@@ -88,7 +88,7 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                                <label class="labelTitulo">Bitacora:</label></br>
+                                                                <label class="labelTitulo">Bitácora:</label></br>
                                                                 <select id="bitacoraId" name="bitacoraId"
                                                                     class="form-select" aria-label="Default select example">
                                                                     <option value="">Seleccione</option>
@@ -139,9 +139,9 @@
                                                                     <option value="Accesorios">Accesorios</option>
                                                                     <option value="Campers">Campers</option>
                                                                     <option value="Cisterna">Cisterna</option>
-                                                                    <option value="Maquinaria ligera">Maquinaria ligera
+                                                                    <option value="Maquinaria ligera">Maquinaria Ligera
                                                                     </option>
-                                                                    <option value="Maquinaria pesada">Maquinaria pesada
+                                                                    <option value="Maquinaria pesada">Maquinaria Pesada
                                                                     </option>
                                                                     <option value="Retroexcavadoras">Retroexcavadoras
                                                                     </option>
@@ -204,7 +204,7 @@
                                                                     placeholder="ej: MT-00">
                                                             </div>
                                                             <div class=" col-12 col-sm-6 mb-3 ">
-                                                                <label class="labelTitulo">Numero Económico:</label></br>
+                                                                <label class="labelTitulo">Número Económico:</label></br>
                                                                 <input type="text" class="inputCaja">
                                                             </div>
 
@@ -355,8 +355,8 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Uso como
-                                                                    cisterna:</label></br>
+                                                                <label class="labelTitulo">Uso Como
+                                                                    Cisterna:</label></br>
                                                                 <select class="form-select"
                                                                     aria-label="Default select example" id="cisterna"
                                                                     name="cisterna">
@@ -399,7 +399,7 @@
                                                         <div class="col-12" id="elementos">
                                                             <div class="d-flex">
                                                                 <div class="col-6 divBorder">
-                                                                    <h2 class="tituloEncabezado ">Refacciónes</h2>
+                                                                    <h2 class="tituloEncabezado ">Refacciones</h2>
                                                                 </div>
                                                                 <div class="col-6 divBorder pb-3 text-end">
                                                                     <button type="button" class="btnVerde"
@@ -412,7 +412,7 @@
 
                                                                 <input type="hidden" name="idRefaccion[]" value="">
                                                                 <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
-                                                                    <label class="labelTitulo">Tipo de
+                                                                    <label class="labelTitulo">Tipo De
                                                                         Refacción:</label></br>
                                                                     <select id="tipoRefaccion" name='tipoRefaccionId[]'
                                                                         class="form-select">
@@ -439,13 +439,15 @@
                                                                 </div>
 
                                                                 <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
-                                                                    <label class="labelTitulo">Numero De
+                                                                    <label class="labelTitulo">Número De
                                                                         Parte:</label></br>
-                                                                    <input type="text" class="inputCaja" name='numeroParte[]'
-                                                                        id="nParteRefaccion" placeholder="Especifique..."
-                                                                        value="">
+                                                                        <input type="text" class="inputCaja" name='numeroParte[]' id="numeroParte" placeholder="Especifique..." value="">
+                                                                </div> 
+                                                                <div class="col-lg-2 my-3 text-center pt-3">
+                                                                    <span class="material-icons" style="font-size:40px; color: gray">
+                                                                        content_paste_search
+                                                                    </span>
                                                                 </div>
-
                                                                 <div class="col-lg-1 my-3 text-end">
                                                                     <button type="button" id="removeRow"
                                                                         class="btnRojo"></button>
@@ -454,8 +456,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    @php $countador ++;
-                                                        @endphp
+                                                    @php 
+                                                        $countador ++;
+                                                    @endphp
                                                 </div>
                                             </div>
                                         </div>
@@ -591,7 +594,40 @@
             </div>
         </div>
     </div>
+    <!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+    <!--<script>
+        $(document).ready(function() {
+            // Agregar el evento keyup al campo de entrada "Número De Parte"
+            $('#nParteRefaccion').keyup(function() {
+                var numeroParte = $(this).val();
+                var iconContainer = $(this).parent().next().find(".material-icons");
 
+                if (numeroParte !== "") {
+                    // Realizar la petición Ajax al controlador para buscar la relación en la base de datos
+                    $.ajax({
+                        url: '/inventario',
+                        type: 'GET',
+                        data: { '_token': '{{ csrf_token() }}',numparte: numeroParte },
+                        // headers: {
+                        //      // Agrega esto si estás usando CSRF protection en Laravel
+                        // },
+                        success: function(data) {
+                            if (data.relacionEncontrada) {
+                                iconContainer.css("color", "green"); // Cambiar el color del icono a verde
+                            } else {
+                                iconContainer.css("color", "red"); // Cambiar el color del icono a rojo
+                            }
+                        },
+                        error: function(error) {
+                            console.error('Error en la petición:', error);
+                        }
+                    });
+                } else {
+                    iconContainer.css("color", "gray"); // Cambiar el color del icono a gris
+                }
+            });
+        });
+    </script>-->
     <script src="{{ asset('js/cardArchivos.js') }}"></script>
 
     <script type="application/javascript">

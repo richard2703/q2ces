@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'users', 'titlePage' => 'Detalles del usuario'])
+@extends('layouts.main', ['activePage' => 'users', 'titlePage' => 'Detalles Del Usuario'])
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -7,7 +7,7 @@
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <div class="card-title">Usuarios</div>
-                            <p class="card-category">Vista detallada del usuario {{ $user->name }}</p>
+                            <p class="card-category">Vista Detallada Del Usuario {{ $user->name }}</p>
                         </div>
                         <!--body-->
                         <div class="card-body">
@@ -66,16 +66,16 @@
                                             </div>
                                             </p>
                                             <div class="card-description">
-                                                id: {{ $user->id }}<br>
+                                                Id: {{ $user->id }}<br>
                                                 Nombre: {{ $user->name }}<br>
                                                 Email: {{ $user->email }}<br>
-                                                nombre de usuario: {!! $user->username !!}<br>
+                                                Nombre De Usuario: {!! $user->username !!}<br>
                                                 Creado: {{ $user->created_at }} <br>
                                                 Roles: @forelse ($user->roles as $role)
                                                     <span
                                                         class="badge rounded-pill bg-dark text-white">{{ $role->name }}</span>
                                                 @empty
-                                                    <span class="badge badge-danger bg-danger">No roles</span>
+                                                    <span class="badge badge-danger bg-danger">No Roles</span>
                                                 @endforelse
 
                                             </div>
@@ -116,7 +116,7 @@
                                                         <td>{!! $user->username !!}</td>
                                                     </tr>
                                                     <tr>
-                                                        <th>Created at</th>
+                                                        <th>Created At</th>
                                                         <td><a href="#" target="_blank">{{ $user->created_at }}</a>
                                                         </td>
                                                     </tr>

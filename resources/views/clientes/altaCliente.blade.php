@@ -232,10 +232,11 @@
             $('.opcion:first').clone().find("input").val("").end().appendTo('#elementos');
 
         }
-        // borrar registro
+        // Borrar registro
         $(document).on('click', '#removeRow', function() {
-
-            $(this).closest('#opc').remove();
+            if ($('.opcion').length > 1) {
+                $(this).closest('.opcion').remove();
+            }
         });
 
         function crearItemsB() {

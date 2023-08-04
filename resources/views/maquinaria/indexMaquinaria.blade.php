@@ -7,7 +7,7 @@
                     <div class="card">
                         <div class="card-header bacTituloPrincipal">
                             <h4 class="card-title">Maquinaria</h4>
-                            {{-- <p class="card-category">Usuarios registrados</p> --}}
+                            {{-- <p class="card-category">Usuarios Registrados</p> --}}
                         </div>
                         <div class="card-body">
                             @if (session('success'))
@@ -35,7 +35,7 @@
                                     <thead class="labelTitulo">
                                         <th class="labelTitulo text-center">ID</th>
                                         <th class="labelTitulo text-center">Marca</th>
-                                        <th class="labelTitulo text-center">Modelo</th>
+                                        <th class="labelTitulo text-center">Módelo</th>
                                         <th class="labelTitulo text-center" style="width:120px">Categoría</th>
                                         <th class="labelTitulo text-center">Uso</th>
                                         <th class="labelTitulo text-center">Placas</th>

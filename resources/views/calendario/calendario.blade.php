@@ -20,12 +20,11 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
         @endif
         <div class="container-fluid">
             <div class="row justify-content-center">
-
                 <div class="col-12 align-self-center">
                     <div class="card">
                         <div class="card-body contCart">
                             <div class="p-1 align-self-start bacTituloPrincipal">
-                                <h2 class="my-3 ms-3 texticonos "> Calendario de Actividades</h2>
+                                <h2 class="my-3 ms-3 texticonos "> Calendario De Actividades</h2>
                             </div>
                             <!-- Esta es la parte para el calendario-->
                             <div class="col-11  mx-auto d-block my-4">
@@ -33,7 +32,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
 
                                     <div class="container-fluid">
                                         <header>
-                                            <h4 class="display-4 mb-4 text-center">{{ $objCalendar->getNameMonth($intMes) }}  {{ $intAnio }}</h4>
+                                            <h4 class="display-4 mb-4 text-center">{{ ucwords(trans($objCalendar->getNameMonth($intMes))) }}  {{ $intAnio }}</h4>
                                             <div class="row d-flex  d-flex align-items-start">
                                                 <div class="col-12 col-md-6 d-flex">
                                                     <div class="mx-3"><img src="/img/calendario/tarea.svg" alt="Tarea" title="Tarea" width="25px" class="botonIconoPrincipal"> Tarea</div>
@@ -57,7 +56,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                                                 <!-- Para el mes en curso -->
                                                         </span>
                                                         <span>
-                                                                <a href="{{ url('calendario/') }}" class="display-4 mb-4 text-end fs-4" title="Ir al mes en curso"><b>Hoy es {{ date('d M Y') }}</b>
+                                                                <a href="{{ url('calendario/') }}" class="display-4 mb-4 text-end fs-4" title="Ir al mes en curso"><b>Hoy Es {{ date('d M Y') }}</b>
                                                         </span>
 
                                                             <!-- Un mes adelante del cargado -->
@@ -345,7 +344,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                                                         @empty
                                                                             <tr>
                                                                                 <td colspan="7">
-                                                                                    Sin tareas registradas
+                                                                                    Sin Tareas Registradas
                                                                                 </td>
                                                                             </tr>
                                                                         @endforelse
@@ -375,7 +374,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                                                                             data-bs-target="#procesosModal">
                                                                             <img src="img/calendario/procesosverde.svg"
                                                                                 class="imgBTNcalendario">
-                                                                            Alta de Procesos
+                                                                            Alta De Procesos
                                                                         </button>
                                                                     </div>
                                                                     <div class="col-3 mb-3">

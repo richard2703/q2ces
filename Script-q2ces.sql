@@ -541,7 +541,7 @@ CREATE TABLE maquinaria(
     foto4 varchar(255) NULL,
     cisterna int(1) NULL,
     cisternaNivel float(10, 2) NULL,
-    compania varchar(200)�null,
+    compania varchar(200) NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
@@ -549,18 +549,22 @@ CREATE TABLE maquinaria(
     CONSTRAINT FK_maquinaria_bitacoraId FOREIGN KEY (bitacoraId) REFERENCES bitacoras (id)
 );
 
-CREATE TABLE maqdocs(
-    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    maquinariaId bigint(20) unsigned NOT NULL,
-    ruta varchar(255) NULL,
-    tipo varchar(255) NULL,
-    fechaVencimiento date not NULL,
-    estatus varchar(255) NULL,
-    comentarios text NULL,
-    created_at datetime NULL,
-    updated_at datetime NULL,
+CREATE TABLE maqdocs (
+    id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    maquinariaId BIGINT(20) UNSIGNED NOT NULL,
+    ruta VARCHAR(255) NULL,
+    tipo VARCHAR(255) NULL,
+    fechaVencimiento DATE NOT NULL,
+    estatus VARCHAR(255) NULL,
+    comentarios TEXT NULL,
+    tipoId BIGINT(20) UNSIGNED NULL,
+    requerido INT NULL,
+    vencimiento INT NULL,
+    created_at DATETIME NULL,
+    updated_at DATETIME NULL,
     PRIMARY KEY (id),
-    CONSTRAINT FK_maqdocs_maquinariaId foreign key (maquinariaId) references maquinaria(id)
+    CONSTRAINT FK_maqdocs_maquinariaId FOREIGN KEY (maquinariaId) REFERENCES maquinaria(id),
+    CONSTRAINT FK_maqdocs_tipoId FOREIGN KEY (tipoId) REFERENCES docs(id)
 );
 
 CREATE TABLE accesorios(
@@ -1290,20 +1294,22 @@ create table refaccionTipo(
     primary key (id)
 );
 
-create table refacciones(
-    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(200) NULL,
-    numeroParte varchar(200) NULL,
-    marcaId bigint(20) unsigned NOT NUll,
-    tipoRefaccionId bigint(20) unsigned NOT NUll,
-    maquinariaId bigint(20) unsigned NOT NUll,
-    comentario text NULL,
+create table refacciones (
+    id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR(200) NULL,
+    numeroParte VARCHAR(200) NULL,
+    marcaId BIGINT(20) UNSIGNED NOT NULL,
+    tipoRefaccionId BIGINT(20) UNSIGNED NOT NULL,
+    maquinariaId BIGINT(20) UNSIGNED NOT NULL,
+    comentario TEXT NULL,
     activo TINYINT(1) NOT NULL DEFAULT '1',
-    created_at datetime NULL,
-    updated_at datetime NULL,
-    primary key (id),
-    CONSTRAINT FK_refacciones_marca foreign key (marcaId) references marca(id),
-    CONSTRAINT FK_refacciones_maquinaria foreign key (maquinariaId) references maquinaria(id),
-    CONSTRAINT FK_refacciones_tipo foreign key (tipoRefaccionId) references refaccionTipo(id)
+    relacionInventarioId BIGINT(20) NULL,
+    created_at DATETIME NULL,
+    updated_at DATETIME NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_refacciones_marca FOREIGN KEY (marcaId) REFERENCES marca(id),
+    CONSTRAINT FK_refacciones_maquinaria FOREIGN KEY (maquinariaId) REFERENCES maquinaria(id),
+    CONSTRAINT FK_refacciones_tipo FOREIGN KEY (tipoRefaccionId) REFERENCES refaccionTipo(id),
+    CONSTRAINT FK_refacciones_inventario FOREIGN KEY (relacionInventarioId) REFERENCES inventario(id)
 );
 
