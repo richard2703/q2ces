@@ -34,7 +34,7 @@
 
                                         @can('catalogos_create')
                                             <button class="btn botonGral float-end" data-bs-toggle="modal"
-                                                data-bs-target="#nuevoItem">
+                                                data-bs-target="#nuevoItem" onclick="cargaItem(' ',' ',' ',' ',' ','')">
                                                 Añadir Un Ubicación
                                             </button>
                                         @endcan
@@ -63,17 +63,18 @@
 
                                             <td class="td-actions text-center">
                                                 {{-- @can('user_show') --}}
-                                                {{-- <!--<a href="{{ route(' puestos.show', $item->id) }}"  class="">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
-                                                            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-                                                            <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
-                                                        </svg>
-                                                    </a>--> --}}
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
+                                                    onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->comentario }}','{{ $item->activo }}','{{ $item->direccion }}','{{true}}')">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
+                                                        <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                                        <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
+                                                    </svg>
+                                                </a>
                                                 {{-- @endcan --}}
                                                 {{-- @can('user_edit') --}}
                                                 <a href="#" class="" data-bs-toggle="modal"
                                                     data-bs-target="#editarItem"
-                                                    onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->comentario }}','{{ $item->activo }}','{{ $item->direccion }}')">
+                                                    onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->comentario }}','{{ $item->activo }}','{{ $item->direccion }}','{{false}}')">
                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                         height="28" fill="currentColor"
                                                         class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -145,12 +146,12 @@
 
                         <div class=" col-12 mb-3 ">
                             <label class="labelTitulo">Dirección: <span>*</span></label></br>
-                            <input type="text" class="inputCaja" name="direccion" value="">
+                            <input type="text" class="inputCaja" name="direccion" value="" placeholder="Especifique...">
                         </div>
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
-                            <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario"
+                            <textarea class="form-control border-green" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario"
                                 spellcheck="true"></textarea>
                         </div>
 
@@ -170,7 +171,7 @@
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
 
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Ubicación</label>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp <span id="tituloModal">Editar</span> Ubicación</label>
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -197,11 +198,13 @@
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
-                            <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="controlComentarios" name="comentario"></textarea>
+                            <textarea class="form-control border-green" placeholder="Escribe tu comentario aquí" id="controlComentarios" name="comentario"></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn botonGral" id="btnTareaGuardar">Guardar cambios</button>
+                            <div id="contenedorBotonGuardar">
+                                <button type="submit" class="btn botonGral" id="btnTareaGuardar">Guardar cambios</button>
+                            </div>
                         </div>
 
                     </form>
@@ -250,15 +253,17 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, comentario, activo, direccion) {
+        function cargaItem(id, nombre, comentario, activo, direccion, modalTipo) {
             const txtId = document.getElementById('controlId');
             txtId.value = id;
 
             const txtNombre = document.getElementById('controlNombre');
             txtNombre.value = nombre;
+            txtNombre.disabled = modalTipo;
 
             const txtComentarios = document.getElementById('controlComentarios');
             txtComentarios.value = comentario;
+            txtComentarios.disabled = modalTipo;
 
             const txtActivo = document.getElementById('controlActivo');
             if(activo == 1){
@@ -266,8 +271,38 @@
             }else{
                 txtActivo.checked = false;
             }
+            txtActivo.disabled = modalTipo;
+
             const txtDireccion = document.getElementById('controlDireccion');
             txtDireccion.value = direccion;
+            txtDireccion.disabled = modalTipo;
+            
+            const contenedorBotonGuardar = document.getElementById('contenedorBotonGuardar');
+
+            if (modalTipo) {
+                contenedorBotonGuardar.style.display = 'none';
+            } else {
+                contenedorBotonGuardar.style.display = 'block';
+            }
+
+            const tituloModal = document.getElementById('tituloModal');
+            if (modalTipo) {
+                tituloModal.textContent = 'Ver';
+            } else {
+                tituloModal.textContent = 'Editar';
+            }
+
+            const campos = document.querySelectorAll('input[type="text"], select, textarea');
+            // Aplicar color gris a los campos con readonly
+            campos.forEach((campo) => {
+                if (modalTipo) {
+                    campo.disabled = true;
+                    campo.style.color = 'grey';
+                } else {
+                    campo.disabled = false;
+                    campo.style.color = 'initial';
+                }
+            });
         }
     </script>
 @endsection
