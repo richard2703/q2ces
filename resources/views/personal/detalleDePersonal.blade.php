@@ -1032,26 +1032,26 @@
                                                         placeholder="Marca y Modelo">
                                                 </div>
                                                 <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Número de IMEI:</label></br>
+                                                    <label class="labelTitulo">Número De IMEI:</label></br>
                                                     <input type="text" class="inputCaja" id=""
                                                         name="celularImei" value="{{ $equipo->celularImei }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Radio Cominicación:</label></br>
+                                                    <label class="labelTitulo">Radio Comunicación:</label></br>
                                                     <input type="text" class="inputCaja" id=""
                                                         name="radio" placeholder="Marca y Modelo"
                                                         value="{{ $equipo->radio }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Número de Serie:</label></br>
+                                                    <label class="labelTitulo">Número De Serie:</label></br>
                                                     <input type="text" class="inputCaja" id=""
                                                         name="radioSerial" value="{{ $equipo->radioSerial }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Cargador Radio Núm. de
+                                                    <label class="labelTitulo">Cargador Radio Núm. De
                                                         Serie:</label></br>
                                                     <input type="text" class="inputCaja" id=""
                                                         name="cargadorSerial" value="{{ $equipo->cargadorSerial }}">

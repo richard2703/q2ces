@@ -810,13 +810,14 @@ button.regresar:hover{
 }
 
 @media only screen and (min-width: 1200px){
-  .buttonImage {
-  margin-right: -50!important;
-  }
   .inputKilometraje{
     margin-left: -12px;
   }  
-  
+  .buttonImage {
+    margin-left: -38px !important;
+    width: 2.4em;
+    height: 2.4em;
+  }
   .spinner {
     top: -500px;
   }
@@ -904,8 +905,11 @@ Alta de maquinaria
 
   /*Este button es de editar la maquinaria*/
   .buttonImage {
-    margin-right: -45!important;
+    margin-left: -35px !important;
+    width: 2.2em;
+    height: 2.2em;
   }
+  
   .spinner {
     top: -380px;
     position: absolute;
@@ -990,6 +994,7 @@ Alta de maquinaria
     margin-left: 25px !important;
   }
   
+  
 }
 
 /* Celular grande */
@@ -1041,6 +1046,11 @@ Alta de maquinaria
   /*ALta maquinaria*/
   .inputNumberKilometraje{
     width: 55%;
+  }
+  .buttonImage {
+    margin-left: -30px !important;
+    width: 1.8em;
+    height: 1.8em;
   }
   .inputKilometraje{
     width: 45%;
@@ -1174,6 +1184,10 @@ table{
     border: #5C7C26 1px solid!important;
   }
   
+  .buttonImage {
+    margin-left: -45px;
+    margin-top: -0.5px;
+  }
 
 
 

@@ -9,7 +9,7 @@
                         <div class="card">
                             <div class="card-header card-header-primary">
                                 <h4 class="card-title">Usuario</h4>
-                                <p class="card-category">Ingresar datos</p>
+                                <p class="card-category">Ingresar Datos</p>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -24,7 +24,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label for="username" class="col-sm-2 col-form-label">Nombre de usuario</label>
+                                    <label for="username" class="col-sm-2 col-form-label">Nombre De Usuario</label>
                                     <div class="col-sm-7">
                                         <input type="text" class="form-control" name="username"
                                             placeholder="Ingrese su nombre de usuario" value="{{ old('username') }}">

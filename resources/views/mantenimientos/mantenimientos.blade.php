@@ -5,16 +5,15 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header bacTituloPrincipal">
-                        <h4 class="card-title">Bitácora de Mantenimientos</h4>
+                        <h4 class="card-title">Bitácora De Mantenimientos</h4>
                     </div>
                     <div class="col-12 text-end mt-4" style="margin-left:-20px">
-                            @can('mantenimiento_create')
-                                <a href="{{ url('/mantenimientos/nuevo') }}">
-                                    <!--Agregar ruta-->
-                                    <button type="button" class="btn botonGral">Añadir Mantenimiento</button>
-                                </a>
-                            @endcan
-                            
+                        @can('mantenimiento_create')
+                            <a href="{{ url('/mantenimientos/nuevo') }}">
+                                <!--Agregar ruta-->
+                                <button type="button" class="btn botonGral">Añadir Mantenimiento</button>
+                            </a>
+                        @endcan
                         </div>
                     <div class="d-flex p-3 divBorder w-100" style="margin-top:-10px"></div>
                     <div class="card-body">
@@ -83,7 +82,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="6">Sin registros.</td>
+                                            <td colspan="6">Sin Registros.</td>
                                         </tr>
                                     @endforelse
 

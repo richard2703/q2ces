@@ -9,10 +9,23 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title"> Editar Movimientos de Caja Chica</h4>
+                                    <h4 class="card-title"> Editar Movimientos De Caja Chica</h4>
                                     {{-- <p class="card-category">Usuarios registrados</p> --}}
                                 </div>
-                                <form class="row alertaGuardar" action="{{ route('cajaChica.update', $cajaChica->id) }}"
+                                <div class="d-flex p-3 divBorder">
+                                    <div class="col-6 ">
+                                        <a href="{{ route('cajaChica.index') }}">
+                                            <button class="btn regresar">
+                                                <span class="material-icons">
+                                                    reply
+                                                </span>
+                                                Regresar
+                                            </button>
+                                        </a>
+                                    {{-- @can('user_create') --}}
+                                    </div>
+                                </div>
+                                <form class="alertaGuardar" action="{{ route('cajaChica.update', $cajaChica->id) }}"
                                     method="post" enctype="multipart/form-data">
                                     @csrf
                                     @method('put')
@@ -28,9 +41,9 @@
                                             </div>
                                         @endif
 
-                                        <div class="row">
+                                        <div class="row pt-3">
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Dia:</label></br>
+                                                <label class="labelTitulo">Día:</label></br>
                                                 <input type="date" class="inputCaja" id="dia" name="dia"
                                                     value={{ $cajaChica->dia }}>
 
@@ -94,7 +107,7 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Numero de comprobante:</label></br>
+                                                <label class="labelTitulo">Número De Comprobante:</label></br>
                                                 <input type="text" class="inputCaja" id="ncomprobante"
                                                     name="ncomprobante" value={{ $cajaChica->ncomprobante }}>
                                             </div>
@@ -118,7 +131,7 @@
                                                 <select id="cliente" name="cliente" class="form-select"
                                                     aria-label="Default select example">
                                                     <option value="">
-                                                        001-B ingreso caja chica
+                                                        001-B Ingreso Caja Chica
                                                     </option>
                                                 </select>
                                             </div>
@@ -159,7 +172,7 @@
                                                         Ingreso Servicios
                                                     </option>
                                                     <option value="4" {{ $cajaChica->tipo == 4 ? 'selected' : '' }}>
-                                                        Pendiente de cobro y/o factura
+                                                        Pendiente De Cobro Y/O Factura
                                                     </option>
 
                                                     {{--  @foreach ($vctTiposHoras as $tipo)
@@ -212,7 +225,7 @@
                         @csrf
 
                         <div class=" col-12 col-sm-6  mb-3 ">
-                            <label class="labelTitulo">Codigo:</label></br>
+                            <label class="labelTitulo">Código:</label></br>
                             <input type="text" class="inputCaja" id="codigo" name="codigo"
                                 value="{{ old('comentario') }}">
                         </div>
@@ -236,30 +249,30 @@
             </div>
         </div>
     </div>
-    <script>
-        function Guardado() {
-            // alert('test');
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-
-            Toast.fire({
-                icon: 'success',
-                title: 'Guardado con exito'
-            })
-        }
-        var slug = '1';
-        if (slug == 1) {
-            Guardado();
-
-        }
-    </script>
 @endsection
+<script>
+    function Guardado() {
+        // alert('test');
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'success',
+            title: 'Guardado con exito'
+        })
+    }
+    var slug = '1';
+    if (slug == 1) {
+        Guardado();
+
+    }
+</script>

@@ -128,6 +128,15 @@ Route::group(['middleware' => 'auth'], function () {
     // Crud TiposDocs
     Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
 
+    // Crud TiposServicios
+    Route::resource('tiposServicios', App\Http\Controllers\tiposServiciosController::class);
+
+    // Crud Lugares
+    Route::resource('lugares', App\Http\Controllers\lugaresController::class);
+
+    // Crud Ubicaciones
+    Route::resource('ubicaciones', App\Http\Controllers\ubicacionesController::class);
+
     //Crud personal
     Route::get('/personal/nuevo', [App\Http\Controllers\personalController::class, 'create'])->name('personal.create');
     Route::post('/personal', [App\Http\Controllers\personalController::class, 'store'])->name('personal.store');
@@ -321,7 +330,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/checkList/registros/editar/', [App\Http\Controllers\checkListRegistrosController::class, 'update'])->name('checkListRegistros.update');
 
     // Equipos MTQ
-
     Route::get('/dashMtq', function () {
         return view('mtq.dashMtq');
     });
