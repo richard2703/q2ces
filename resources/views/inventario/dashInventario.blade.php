@@ -32,14 +32,14 @@
                                     </div>
                                     <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('inventario.index', 'uniformes') }}" class="">
-                                            <img src="/img/inventario/consumible.svg" alt="inventario" title="Uniformes"
+                                            <img src="/img/inventario/uniformes.svg" alt="inventario" title="Uniformes"
                                                 width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Uniformes</p>
                                         </a>
                                     </div>
                                     <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('extintores.index') }}" class="">
-                                            <img src="/img/inventario/consumible.svg" alt="inventario" title="Extintores"
+                                            <img src="/img/inventario/extintores.svg" alt="inventario" title="Extintores"
                                                 width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Extintores</p>
                                         </a>
