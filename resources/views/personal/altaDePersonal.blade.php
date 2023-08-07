@@ -566,7 +566,7 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Pago
-                                                                    (Semanal/quincenal):</label></br>
+                                                                    (Semanal/Quincenal):</label></br>
                                                                 <select class="form-select"
                                                                     aria-label="Default select example" name="pago">
                                                                     <option value="Semanal" selected>Semanal</option>
@@ -665,7 +665,7 @@
                                                                 <div class="d-flex">
                                                                     <div class="col-6 pe-1">
                                                                         <label class="labelTitulo">Horario
-                                                                            entrada:</label></br>
+                                                                            Entrada:</label></br>
 
                                                                         <input type="time" class="inputCaja "
                                                                             placeholder="Entrada" id=""
@@ -674,7 +674,7 @@
                                                                     </div>
                                                                     <div class="col-6  ps-1">
                                                                         <label class="labelTitulo">Horario
-                                                                            salida:</label></br>
+                                                                            Salida:</label></br>
 
                                                                         <input type="time" class="inputCaja "
                                                                             placeholder="Salida" id=""
@@ -740,7 +740,7 @@
                                                             </div> --}}
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Nivel de puesto:
+                                                                <label class="labelTitulo">Nivel de Puesto:
                                                                     <span>*</span></label></br>
                                                                 <select id="puestoNivelId" name="puestoNivelId"
                                                                     class="form-select" required
