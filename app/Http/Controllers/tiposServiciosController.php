@@ -20,6 +20,7 @@ class tiposServiciosController extends Controller
     public function index()
     {
         //dd('jhijsa0');
+        abort_if(Gate::denies('tipoServicios_index'), '404');
         $tiposServicios = tiposServicios::orderBy('created_at', 'desc')->paginate(10);
         return view('catalogos.indexTiposServicios', compact('tiposServicios'));
     }

@@ -124,6 +124,24 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('docs_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('docs_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('docs_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('ubicaciones_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ubicaciones_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ubicaciones_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ubicaciones_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ubicaciones_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('lugares_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('lugares_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('lugares_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('lugares_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('lugares_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('tipoServicios_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tipoServicios_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tipoServicios_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tipoServicios_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tipoServicios_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 
 CREATE TABLE users (
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,

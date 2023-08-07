@@ -19,6 +19,7 @@ class ubicacionesController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('ubicaciones_index'), '404');
         $ubicaciones = ubicaciones::orderBy('created_at', 'desc')->paginate(10);
         return view('catalogos.indexUbicaciones', compact('ubicaciones'));
     }
