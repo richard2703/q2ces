@@ -333,7 +333,7 @@
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <div id="contenedorBotonGuardar">
                                 <button type="submit" class="btn botonGral" id="btnTareaGuardar"
-                                    onclick="alertaGuardar()">Guardar Cambios</button>
+                                    onclick="alertaGuardar()">Guardar cambios</button>
                             </div>
                         </div>
                     </form>

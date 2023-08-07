@@ -1313,3 +1313,58 @@ create table refacciones (
     CONSTRAINT FK_refacciones_inventario FOREIGN KEY (relacionInventarioId) REFERENCES inventario(id)
 );
 
+  create table tiposServicios (
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) not NULL,
+    codigo varchar(200) null,
+    costo float(10, 2) not NULL,
+    comentario text NULL,
+    activo TINYINT(1) NOT NULL DEFAULT '1',
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key(id)
+);
+  
+  create table ubicaciones(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) not NULL,
+    direccion varchar(200) null,
+    comentario text NULL,
+    activo TINYINT(1) NOT NULL DEFAULT '1',
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key(id)
+);
+   
+    create table lugares(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) not NULL,
+    comentario text NULL,
+    activo TINYINT(1) NOT NULL DEFAULT '1',
+    ubicacionId bigint(20) unsigned NUll,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key(id),
+    CONSTRAINT FK_lugares_ubicacionId foreign key (ubicacionId) references ubicaciones(id)
+);
+  
+   CREATE TABLE extintores(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	identificador varchar(200) null,
+	serie varchar(200) not NULL,
+    capacidad int not null,
+    ultimaRevision date null,
+    proximaRevision date not null,
+    tipo varchar(200) not null,
+    ubicacionId bigint(20) unsigned NUll,
+    lugarId bigint(20) unsigned NUll,
+    maquinariaId bigint(20) unsigned null,
+    comentario text NULL,
+    activo TINYINT(1) NOT NULL DEFAULT '1',
+    created_at timestamp NULL DEFAULT NULL,
+    updated_at timestamp NULL DEFAULT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_extintores_ubicacionId foreign key (ubicacionId) references ubicaciones(id),
+    CONSTRAINT FK_extintores_lugarId foreign key (lugarId) references lugares(id),
+    CONSTRAINT FK_extintores_maquinariaId foreign key (maquinariaId) references maquinaria(id)
+);
