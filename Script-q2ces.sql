@@ -161,18 +161,7 @@ CREATE TABLE users (
 INSERT INTO
     `users`
 VALUES
-    (
-        1,
-        'admin',
-        'a@a.com',
-        NULL,
-        '$2y$10$xchASRodwuYH58CYgTt3r.RWshZp3BzYMd6T7pg3ZNZxd4d3fXzUy',
-        NULL,
-        NULL,
-        NULL,
-        '2022-09-26 19:48:41',
-        '2022-09-26 19:48:41',
-        NULL
+    (1,'admin','a@a.com',NULL,'$2y$10$xchASRodwuYH58CYgTt3r.RWshZp3BzYMd6T7pg3ZNZxd4d3fXzUy',NULL,NULL,NULL,'2022-09-26 19:48:41','2022-09-26 19:48:41',NULL
     );
 
 create table model_has_permissions (
@@ -1355,6 +1344,11 @@ create table refacciones (
     updated_at datetime NULL,
     primary key(id)
 );
+
+INSERT INTO
+    `ubicaciones`
+values (1,'Maquinaria','Maquinaria','Apartado para seleccionar maquinaria',1,'2022-09-26 19:48:41','2022-09-26 19:48:41'
+    );
    
     create table lugares(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,

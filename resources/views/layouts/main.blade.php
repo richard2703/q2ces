@@ -32,6 +32,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/sider.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/layout.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
+
 
 </head>
 

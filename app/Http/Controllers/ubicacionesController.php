@@ -54,7 +54,7 @@ class ubicacionesController extends Controller
         $ubicaciones = $request->all();
         if ((isset($request->check) && $request->check == 'on')) {
             $ubicaciones['activo'] = 1;
-        }else{
+        } else {
             $ubicaciones['activo'] = 0;
         }
         // dd( $ubicaciones );
@@ -108,7 +108,7 @@ class ubicacionesController extends Controller
         $ubicaciones = ubicaciones::where('id', $data['controlId'])->first();
         if ((isset($request->check) && $request->check == 'on')) {
             $ubicaciones['activo'] = 1;
-        }else{
+        } else {
             $ubicaciones['activo'] = 0;
         }
         if (is_null($ubicaciones) == false) {
