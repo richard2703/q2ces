@@ -9,55 +9,55 @@
                             <div class="row d-flex ">
 
                                 @can('catalogos_show')
-                                    <div class="col-12 col-md-6 text-center my-4">
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoPuestos.index') }}" class="">
-                                            <img src="/img/inventario/herramientas.svg" alt="Puestos" title="Puestos"
-                                                width="30%" class="botonIconoPrincipal">
+                                            <img src="/img/catalogos/puestos.svg" alt="Puestos" title="Puestos" width="30%"
+                                                class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Puestos</p>
                                         </a>
                                     </div>
 
-                                    <div class="col-12 col-md-6 text-center my-4">
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoPuestosNivel.index') }}" class="">
-                                            <img src="/img/inventario/herramientas.svg" alt="Nivel de Puestos" title="Nivel de Puestos"
-                                                width="30%" class="botonIconoPrincipal">
+                                            <img src="/img/catalogos/nivelPuestos.svg" alt="Nivel de Puestos"
+                                                title="Nivel de Puestos" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Nivel De Puestos</p>
                                         </a>
                                     </div>
 
-                                    <div class="col-12 col-md-6 text-center my-4">
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoCategoriasTareas.index') }}" class="">
-                                            <img src="/img/inventario/herramientas.svg" alt="Categoría de tareas" title="Categoría de tareas"
-                                                width="30%" class="botonIconoPrincipal">
-                                            <p class="mt-4 texticonos">Categoría De tareas</p>
+                                            <img src="/img/inventario/herramientas.svg" alt="Categoría de tareas"
+                                                title="Categoría de tareas" width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Categoría De Tareas</p>
                                         </a>
                                     </div>
 
-                                    <div class="col-12 col-md-6 text-center my-4">
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoTiposTareas.index') }}" class="">
-                                            <img src="/img/inventario/herramientas.svg" alt="Categoría de tareas" title="Tipos de tareas"
-                                                width="30%" class="botonIconoPrincipal">
-                                            <p class="mt-4 texticonos">Tipos De tareas</p>
+                                            <img src="/img/inventario/herramientas.svg" alt="Categoría de tareas"
+                                                title="Tipos de tareas" width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Tipos De Tareas</p>
                                         </a>
                                     </div>
 
-                                    <div class="col-12 col-md-6 text-center my-4">
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoUbicacionesTareas.index') }}" class="">
-                                            <img src="/img/inventario/herramientas.svg" alt="Categoría de tareas" title="Ubicaciones de tareas"
-                                                width="30%" class="botonIconoPrincipal">
-                                            <p class="mt-4 texticonos">Ubicaciones De tareas</p>
+                                            <img src="/img/catalogos/ubicacionesTareas.svg" alt="Categoría de tareas"
+                                                title="Ubicaciones de tareas" width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Ubicaciones De Tareas</p>
                                         </a>
                                     </div>
 
-                                    <div class="col-12 col-md-6 text-center my-4">
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoTipoUniforme.index') }}" class="">
-                                            <img src="/img/inventario/herramientas.svg" alt="Tipos de Uniforme" title="Tipos de Uniforme"
-                                                width="30%" class="botonIconoPrincipal">
+                                            <img src="/img/inventario/herramientas.svg" alt="Tipos de Uniforme"
+                                                title="Tipos de Uniforme" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Tipos De Uniforme</p>
                                         </a>
                                     </div>
 
-                                    <div class="col-12 col-md-6 text-center my-4">
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoMarca.index') }}" class="">
                                             <img src="/img/inventario/herramientas.svg" alt="Marcas" title="Marcas"
                                                 width="30%" class="botonIconoPrincipal">
@@ -65,15 +65,15 @@
                                         </a>
                                     </div>
 
-                                    <div class="col-12 col-md-6 text-center my-4">
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoTipoRefaccion.index') }}" class="">
-                                            <img src="/img/inventario/herramientas.svg" alt="Tipos de Refacción" title="Tipos de Refacción"
-                                                width="30%" class="botonIconoPrincipal">
+                                            <img src="/img/inventario/herramientas.svg" alt="Tipos de Refacción"
+                                                title="Tipos de Refacción" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Tipos de Refacción</p>
                                         </a>
                                     </div>
 
-                                    <div class="col-12 col-md-6 text-center my-4">
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoRefacciones.index') }}" class="">
                                             <img src="/img/inventario/herramientas.svg" alt="Refacciones" title="Refacciones"
                                                 width="30%" class="botonIconoPrincipal">
@@ -81,7 +81,7 @@
                                         </a>
                                     </div>
 
-                                    <div class="col-12 col-md-6 text-center my-4">
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('tiposDocs.index') }}" class="">
                                             <img src="/img/inventario/herramientas.svg" alt="Tipos Docs" title="Tipos Docs"
                                                 width="30%" class="botonIconoPrincipal">
@@ -89,7 +89,7 @@
                                         </a>
                                     </div>
 
-                                    <div class="col-12 col-md-6 text-center my-4">
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('docs.index') }}" class="">
                                             <img src="/img/inventario/herramientas.svg" alt="Manage Docs" title="Manage Docs"
                                                 width="30%" class="botonIconoPrincipal">
@@ -97,6 +97,29 @@
                                         </a>
                                     </div>
 
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
+                                        <a href="{{ route('tiposServicios.index') }}" class="">
+                                            <img src="/img/inventario/herramientas.svg" alt="Lugares" title="Lugares"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Tipos De Servicios</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
+                                        <a href="{{ route('lugares.index') }}" class="">
+                                            <img src="/img/inventario/herramientas.svg" alt="Lugares" title="Lugares"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Lugares</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
+                                        <a href="{{ route('ubicaciones.index') }}" class="">
+                                            <img src="/img/inventario/herramientas.svg" alt="Ubicaciones" title="Ubicaciones"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Ubicaciones</p>
+                                        </a>
+                                    </div>
                                 @endcan
 
 

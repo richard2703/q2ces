@@ -33,7 +33,7 @@
                                 <div class="col-12 col-md-8 my-3">
                                     <div class="row">
                                         <div class=" col-12 col-sm-6 col-lg-4 my-3 order-1">
-                                            <h2 class="fs-5 textTitulo">Dirección de Obra:</h2></br>
+                                            <h2 class="fs-5 textTitulo">Dirección De Obra:</h2></br>
                                             <a href="https://maps.google.com/?q={{ $obras->calle }} {{ $obras->numero }} {{ $obras->colonia }} {{ $obras->cp }} {{ $obras->estado }}"
                                                 target="blank">
                                                 <p class="txtVistaObra">{{ $obras->calle }} {{ $obras->numero }},
@@ -70,7 +70,7 @@
                                                     </li>
                                                 @empty
                                                     <li>
-                                                        <p class="txtVistaObra">Sin maquinaría y/o equipo asignado</p>
+                                                        <p class="txtVistaObra">Sin Maquinaría Y/O Equipo Asignado</p>
                                                     </li>
                                                 @endforelse
                                             </ul>

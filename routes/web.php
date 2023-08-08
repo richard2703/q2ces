@@ -128,6 +128,14 @@ Route::group(['middleware' => 'auth'], function () {
     // Crud TiposDocs
     Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
 
+    // Crud TiposServicios
+    Route::resource('tiposServicios', App\Http\Controllers\tiposServiciosController::class);
+
+    // Crud Lugares
+    Route::resource('lugares', App\Http\Controllers\lugaresController::class);
+    // Crud Ubicaciones
+    Route::resource('ubicaciones', App\Http\Controllers\ubicacionesController::class);
+
     //Crud personal
     Route::get('/personal/nuevo', [App\Http\Controllers\personalController::class, 'create'])->name('personal.create');
     Route::post('/personal', [App\Http\Controllers\personalController::class, 'store'])->name('personal.store');
@@ -321,7 +329,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/checkList/registros/editar/', [App\Http\Controllers\checkListRegistrosController::class, 'update'])->name('checkListRegistros.update');
 
     // Equipos MTQ
-
     Route::get('/dashMtq', function () {
         return view('mtq.dashMtq');
     });
@@ -354,72 +361,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/bitacoras/tareas/editar/{tarea}', [App\Http\Controllers\tareaController::class, 'update'])->name('tarea.update');
 
     //*** Mtq */
-    //Route::get('/mtq/', [App\Http\Controllers\mtqController::class, 'dash'])->name('mtq.dash');
     Route::resource('residentes', App\Http\Controllers\residenteController::class);
     Route::resource('calendarioMtq', App\Http\Controllers\calendarioMtqController::class);
-    // Route::get('/residentes', [App\Http\Controllers\residenteController::class, 'index'])->name('residente.index');
-    // Route::get('/mtq/residentes/nuevo', [App\Http\Controllers\residenteController::class, 'create'])->name('residente.create');
-    // Route::post('/mtq/residentes', [App\Http\Controllers\residenteController::class, 'store'])->name('residente.store');
-    // Route::put('/mtq/residentes/{residente}', [App\Http\Controllers\residenteController::class, 'update'])->name('residente.update');
-    // Route::delete('/mtq/residentes/{residente}', [App\Http\Controllers\residenteController::class, 'destroy'])->name('residente.delete');
-
-
-    // Route::get('/tareas', function () {
-    //     return view('tareas.tareas');
-    // });
-
-    // Docs and TiposDocs
-    // Route::get('/dashDocs', function () {
-    //     return view('docs.dashDocs');
-    // });
     Route::resource('docs', App\Http\Controllers\docsController::class);
-
-    // Route::get('/dashTiposDocs', function () {
-    //     return view('tiposDocs.dashTiposDocs');
-    // });
     Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
 
-    // Route::get('/checkList', function () {
-    //     return view('checkList.checkList');
-    // });
-
-
-    // Route::get('/nuevoCheckList', function () {
-    //     return view('checkList.nuevoCheckList');
-    // });
-
-    // Route::get('/editarTareaCheck', function () {
-    //     return view('checkList.editarTareaCheck');
-    // });
-
-    // Route::get('/nuevaTareaCheck', function () {
-    //     return view('checkList.nuevaTareaCheck');
-    // });
-
-    //    Route::get('/indexBitacora', function () {
-    //        return view('bitacora.indexBitacora');
-    //    });
-
-
-    //    Route::get('/nuevoBitacora', function () {
-    //        return view('bitacora.nuevoBitacora');
-    //    });
-
-    //    Route::get('/editarBitacora', function () {
-    //        return view('bitacora.editarBitacora');
-    //    });
-
-
-    //    Route::get('/indexgrupo', function () {
-    //        return view('grupo.indexgrupo');
-    //    });
-
-    //    Route::get('/nuevoGrupo', function () {
-    //        return view('grupo.nuevoGrupo');
-    //    });
-
-    //    Route::get('/editarGupo', function () {
-    //        return view('grupo.editarGrupo');
-    //    });
-
+    // Crud Extintores
+    Route::resource('extintores', App\Http\Controllers\extintoresController::class);
+    Route::get('/ubicaciones/lugares/{ubicacionId}', [App\Http\Controllers\extintoresController::class, 'lugares'])->name('lugares.get');
 });

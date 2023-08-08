@@ -14,101 +14,110 @@ use App\Models\inventario;
 use App\Models\tarea;
 use App\Models\grupo;
 
-class searchController extends Controller {
+class searchController extends Controller
+{
     /**
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
-    public function index() {
+    public function index()
+    {
         //
     }
 
     /**
-    * Show the form for creating a new resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
-    public function create() {
+    public function create()
+    {
         //
     }
 
     /**
-    * Store a newly created resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
-    */
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
 
-    public function store( Request $request ) {
+    public function store(Request $request)
+    {
         //
     }
 
     /**
-    * Display the specified resource.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 
-    public function show( $id ) {
+    public function show($id)
+    {
         //
     }
 
     /**
-    * Show the form for editing the specified resource.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 
-    public function edit( $id ) {
+    public function edit($id)
+    {
         //
     }
 
     /**
-    * Update the specified resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 
-    public function update( Request $request, $id ) {
+    public function update(Request $request, $id)
+    {
         //
     }
 
     /**
-    * Remove the specified resource from storage.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 
-    public function destroy( $id ) {
+    public function destroy($id)
+    {
         //
     }
 
     /**
-    * Busca equipos de maquinaria
-    *
-    * @param Request $request
-    * @return void
-    */
+     * Busca equipos de maquinaria
+     *
+     * @param Request $request
+     * @return void
+     */
 
-    public function equipos( Request $request ) {
+    public function equipos(Request $request)
+    {
         // dd( $request );
         // $term = $request->input( 'term' );
-        $term = $request->get( 'term' );
+        $term = $request->get('term');
 
-        $maquinaria = maquinaria::where( 'nombre', 'LIKE', '%' . $term . '%' )
-        ->orwhere( 'marca', 'LIKE', '%' . $term . '%' )
-        ->orwhere( 'categoria', 'LIKE', '%' . $term . '%' )->get();
+        $maquinaria = maquinaria::where('nombre', 'LIKE', '%' . $term . '%')
+            ->orwhere('marca', 'LIKE', '%' . $term . '%')
+            ->orwhere('categoria', 'LIKE', '%' . $term . '%')->get();
 
         $sugerencias = [];
-        foreach ( $maquinaria as $item ) {
+        foreach ($maquinaria as $item) {
             $sugerencias[] = [
                 'value' =>  'Equipo ' . $item->nombre . ', Marca ' . $item->marca . ', Modelo ' . $item->modelo  . ', NS ' .  $item->numserie . ', Placas ' .  $item->placas,
                 'id' => $item->id,
@@ -125,30 +134,31 @@ class searchController extends Controller {
     }
 
     /**
-    * Busca material para el mantenimiento de equipos
-    *
-    * @param Request $request
-    * @return void
-    */
+     * Busca material para el mantenimiento de equipos
+     *
+     * @param Request $request
+     * @return void
+     */
 
-    public function materialMantenimiento( Request $request ) {
+    public function materialMantenimiento(Request $request)
+    {
         // dd( $request );
         // $term = $request->input( 'term' );
-        $term = $request->get( 'term' );
+        $term = $request->get('term');
 
-        $inventario = inventario::select( 'inventario.*', DB::raw( 'marca.nombre AS marca' ) )
-        ->join( 'marca', 'marca.id', '=', 'inventario.marcaId' )
-        ->where( 'inventario.nombre', 'LIKE', '%' . $term . '%' )
-        ->whereIn ('tipo', ['refacciones', 'consumibles', 'servicios'])
-        ->orwhere( 'inventario.numparte', 'LIKE', '%' . $term . '%' )
-        ->orwhere( 'inventario.modelo', 'LIKE', '%' . $term . '%' )
-        ->orwhere( 'inventario.tipo', 'LIKE', '%' . $term . '%' )
-        ->orwhere( 'marca.nombre', 'LIKE', '%' . $term . '%' )->get();
+        $inventario = inventario::select('inventario.*', DB::raw('marca.nombre AS marca'))
+            ->join('marca', 'marca.id', '=', 'inventario.marcaId')
+            ->where('inventario.nombre', 'LIKE', '%' . $term . '%')
+            ->whereIn('tipo', ['refacciones', 'consumibles', 'servicios'])
+            ->orwhere('inventario.numparte', 'LIKE', '%' . $term . '%')
+            ->orwhere('inventario.modelo', 'LIKE', '%' . $term . '%')
+            ->orwhere('inventario.tipo', 'LIKE', '%' . $term . '%')
+            ->orwhere('marca.nombre', 'LIKE', '%' . $term . '%')->get();
 
         $sugerencias = [];
-        foreach ( $inventario as $item ) {
+        foreach ($inventario as $item) {
             $sugerencias[] = [
-                'value' => 'Artículo: ' . $item->nombre . ', Número de parte: ' . $item->numparte . ', Modelo: ' . $item->modelo . ', PU: $ '. $item->valor,
+                'value' => 'Artículo: ' . $item->nombre . ', Número de parte: ' . $item->numparte . ', Modelo: ' . $item->modelo . ', PU: $ ' . $item->valor,
                 'id' => $item->id,
                 'nombre' => $item->nombre,
                 'valor' => $item->valor,
@@ -165,24 +175,25 @@ class searchController extends Controller {
     }
 
     /**
-    * Busca material para el mantenimiento de equipos
-    *
-    * @param Request $request
-    * @return void
-    */
+     * Busca material para el mantenimiento de equipos
+     *
+     * @param Request $request
+     * @return void
+     */
 
-    public function tareasParaGrupos( Request $request ) {
+    public function tareasParaGrupos(Request $request)
+    {
         //  dd( $request );
         // $term = $request->input( 'term' );
-        $term = $request->get( 'term' );
+        $term = $request->get('term');
 
-        $tareas = tarea::where( 'nombre', 'LIKE', '%' . $term . '%' )
-        ->orwhere( 'comentario', 'LIKE', '%' . $term . '%' )->get();
+        $tareas = tarea::where('nombre', 'LIKE', '%' . $term . '%')
+            ->orwhere('comentario', 'LIKE', '%' . $term . '%')->get();
 
         $sugerencias = [];
-        foreach ( $tareas as $item ) {
+        foreach ($tareas as $item) {
             $sugerencias[] = [
-                'value' => 'Tarea: ' . $item->nombre . ', '. $item->comentario,
+                'value' => 'Tarea: ' . $item->nombre . ', ' . $item->comentario,
                 'id' => $item->id,
                 'nombre' => $item->nombre,
                 'comentario' => $item->comentario,
@@ -194,24 +205,25 @@ class searchController extends Controller {
     }
 
     /**
-    * Busca material para el mantenimiento de equipos
-    *
-    * @param Request $request
-    * @return void
-    */
+     * Busca material para el mantenimiento de equipos
+     *
+     * @param Request $request
+     * @return void
+     */
 
-    public function gruposParaBitacoras( Request $request ) {
+    public function gruposParaBitacoras(Request $request)
+    {
         //  dd( $request );
         // $term = $request->input( 'term' );
-        $term = $request->get( 'term' );
+        $term = $request->get('term');
 
-        $grupos = grupo::where( 'nombre', 'LIKE', '%' . $term . '%' )
-        ->orwhere( 'comentario', 'LIKE', '%' . $term . '%' )->get();
+        $grupos = grupo::where('nombre', 'LIKE', '%' . $term . '%')
+            ->orwhere('comentario', 'LIKE', '%' . $term . '%')->get();
 
         $sugerencias = [];
-        foreach ( $grupos as $item ) {
+        foreach ($grupos as $item) {
             $sugerencias[] = [
-                'value' => 'Grupo de Tareas: ' . $item->nombre . ', '. $item->comentario,
+                'value' => 'Grupo de Tareas: ' . $item->nombre . ', ' . $item->comentario,
                 'id' => $item->id,
                 'nombre' => $item->nombre,
                 'comentario' => $item->comentario,
@@ -221,5 +233,4 @@ class searchController extends Controller {
         return $sugerencias;
         // return response()->json( $sugerencias );
     }
-
 }

@@ -35,12 +35,10 @@
                                     <div class="d-flex p-3 divBorder" style="margin-top:-15px">
                                     </div>
                                     </div>
-                            <form class="alertaGuardar" action="{{ route('accesorios.store') }}"
-                                method="post"class="row" enctype="multipart/form-data">
+                            <form action="{{ route('accesorios.store') }}"
+                                method="post"class="row alertaGuardar" enctype="multipart/form-data">
                                 @csrf
-                                
-                                
-                                <div class="row mt-3">
+                                <div class="row mt-3" style="padding-left:35px;">
                                     <div class="col-12 col-md-4  my-3">
                                         <div class="text-center mx-auto border vistaFoto mb-4">
                                             <i><img class="imgVista img-fluid mb-2"
@@ -119,14 +117,14 @@
             </div>
         </div>
     </div>
-    <script type="application/javascript">
-        jQuery('input[type=file]').change(function(){
-         var filename = jQuery(this).val().split('\\').pop();
-         var idname = jQuery(this).attr('id');
-         console.log(jQuery(this));
-         console.log(filename);
-         console.log(idname);
-         jQuery('span.'+idname).next().find('span').html(filename);
-        });
-        </script>
 @endsection
+<script type="application/javascript">
+    jQuery('input[type=file]').change(function(){
+        var filename = jQuery(this).val().split('\\').pop();
+        var idname = jQuery(this).attr('id');
+        console.log(jQuery(this));
+        console.log(filename);
+        console.log(idname);
+        jQuery('span.'+idname).next().find('span').html(filename);
+    });
+</script>

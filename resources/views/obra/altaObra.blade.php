@@ -16,7 +16,7 @@
             <div class="justify-content-center">
                 <div class="card">
                     <div class="card-header bacTituloPrincipal">
-                        <h4 class="card-title">Alta de obras</h4>
+                        <h4 class="card-title">Alta De Obras</h4>
                         {{-- <p class="card-category">Usuarios registrados</p> --}}
                     </div>
                     <div class="card-body">
@@ -50,7 +50,7 @@
                                             <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"
                                                     id="mi-archivo" accept="image/*"></span>
                                             <label for="mi-archivo">
-                                                <span>sube vista aérea</span>
+                                                <span>Sube Vista Aérea</span>
                                             </label>
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@
                                             <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"
                                                     id="mi-archivo2" accept="image/*"></span>
                                             <label for="mi-archivo2">
-                                                <span>sube Logo</span>
+                                                <span>Sube Logo</span>
                                             </label>
                                         </div>
                                     </div>
@@ -73,7 +73,7 @@
                             <div class="col-12 ">
                                 <div class="row">
                                     <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                        <label class="labelTitulo">Nombre de la Obra: <span>*</span></label></br>
+                                        <label class="labelTitulo">Nombre De La Obra: <span>*</span></label></br>
                                         <input type="text" class="inputCaja" id="nombre" name="nombre" required
                                             placeholder="Especifique..." value="{{ old('nombre') }}">
                                     </div>
@@ -164,7 +164,7 @@
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Código de Confirmación:</label></br>
+                                                    <label class="labelTitulo">Código De Confirmación:</label></br>
                                                     <input type="text" class="inputCaja" id="rfirma"
                                                         placeholder="Especifique..." name="rfirma[]" value="">
                                                 </div>
@@ -178,7 +178,7 @@
                                     <div class="col-12 my-5 ">
                                         <div class="d-flex">
                                             <div class="col-6 divBorder">
-                                                <h2 class="tituloEncabezado ">Detalle de Obra</h2>
+                                                <h2 class="tituloEncabezado ">Detalle De Obra</h2>
                                             </div>
                                             <div class="col-6 divBorder pb-3 text-end" style="text-align: right;">
                                                 <button type="button" id="removeRow" class="btnRojo"></button>

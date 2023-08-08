@@ -128,71 +128,21 @@ class clientesController extends Controller
             $data['fiscal'] = time() . '_' . 'fiscal.' . $request->file('fiscal')->getClientOriginalExtension();
             $request->file('fiscal')->storeAs('/public/clientes/' . $pathObra, $data['fiscal']);
         }
-        // dd($data);
         $cliente->update($data);
 
-        ////////////////////////////////////////////////////////////////////////////
-        //*** registro de residentes */
-        // dd($request['idResidente']);
-        $vctRegistrados = residente::where('clienteId', '=', $cliente->id)->pluck('id')->toArray();
-        $vctArreglo = $request['idResidente'];
-
-        //*** Preguntamos si existen registros en el arreglo */
-        if (is_array($vctArreglo) && count($vctArreglo) > 0) {
-
-            //** buscamos si el registrado esta en el arreglo, de no ser asi se elimina */
-            if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
-                for ($i = 0; $i < count($vctRegistrados); $i++) {
-                    $intValor = (int) $vctRegistrados[$i];
-
-                    if (in_array($intValor, $vctArreglo) == false) {
-                        /*** no existe y se debe de eliminar */
-                        residente::destroy($vctRegistrados[$i]);
-                        // dd( 'Borrando por que se quito el residente' );
-                    } else {
-                        /*** existe el registro */
-                        // dd( 'Sigue vivo en el arreglo' );
-                    }
-                }
-            }
-
-            //*** trabajamos el resto */
-            for ($i = 0; $i < count($request['idResidente']); $i++) {
-                if ($request['idResidente'][$i] != '') {
-                    //** Actualizacion de registro */
-                    $objResidente =  residente::where('id', '=', $request['idResidente'][$i])->first();
-
-                    if ($objResidente && $objResidente->id > 0) {
-                        $objResidente->clienteId  = $cliente->id;
-                        $objResidente->nombre  = $request['rNombre'][$i];
-                        $objResidente->telefono = $request['rTelefono'][$i];
-                        $objResidente->email = $request['rEmail'][$i];
-                        $objResidente->save();
-                        // dd( 'Actualizando residente' );
-                    }
-                } else {
-
-                    //** No existe en bd */
-                    if ($request['rNombre'][$i] != '') {
-                        $objResidente = new residente();
-                        $objResidente->clienteId  = $cliente->id;
-                        $objResidente->nombre  = $request['rNombre'][$i];
-                        $objResidente->telefono = $request['rTelefono'][$i];
-                        $objResidente->email = $request['rEmail'][$i];
-                        $objResidente->save();
-                        // dd( 'Guardando residente' );
-                    }
-                }
-            }
-        } else {
-            //*** se deben de eliminar todos los registrados */
-            if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
-                for ($i = 0; $i < count($vctRegistrados); $i++) {
-                    residente::destroy($vctRegistrados[$i]);
-                    // dd( 'Borrando todo residente' );
-                }
-            }
+        $nuevaLista = collect();
+        for ($i = 0; $i < count($request['idResidente']); $i++) {
+            $array = [
+                'id' => $request['idResidente'][$i],
+                'nombre' => $request['rNombre'][$i],
+                'telefono' => $request['rTelefono'][$i],
+                'email' => $request['rEmail'][$i],
+                'clienteId' => $cliente->id,
+            ];
+            $objResidente = residente::updateOrCreate(['id' => $array['id']], $array);
+            $nuevaLista->push($objResidente->id);
         }
+        residente::where('clienteId', $cliente->id)->whereNotIn('id', $nuevaLista)->delete();
 
         return redirect()->action([clientesController::class, 'index']);
     }

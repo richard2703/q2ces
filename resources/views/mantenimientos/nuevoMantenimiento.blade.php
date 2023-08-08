@@ -16,6 +16,21 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
+                    <div class="card-header bacTituloPrincipal">
+                        <h4 class="card-title">Nuevo Registro De Mantenimiento</h4>
+                    </div>
+
+                    <div class="col-12 col-md-2 mt-4" style="margin-left:20px">
+                            <a href="{{ route('mantenimientos.index') }}">
+                                <button class="btn regresar">
+                                    <span class="material-icons">
+                                        reply
+                                    </span>
+                                    Regresar
+                                </button>
+                            </a>
+                        </div>
+                        <div class="d-flex p-3 divBorder w-100" style="margin-top:-10px"></div>
                         <form class="alertaGuardar" action="{{ route('mantenimientos.store') }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
@@ -23,9 +38,6 @@
                             <input type="hidden" name="titulo" id="titulo" value="">
                             <input type="hidden" name="estadoId" id="estadoId" value="1">
                             <input type="hidden" name="personalId" id="personalId" value="{{ auth()->user()->id }}">
-                            <div class="card-header bacTituloPrincipal">
-                                <h4 class="card-title">Nuevo Registro de Mantenimiento</h4>
-                            </div>
 
                             <div class="card-body ">
 
@@ -33,7 +45,7 @@
                                     <div class="row">
 
 
-                                        <p class="subEncabezado">Busca una Maquinaria</p>
+                                        <p class="subEncabezado">Busca Una Maquinaria</p>
                                         <div class="mb-4 mt-0" role="search" class="">
                                             <input value="" class="search-submit ">
                                             <input autofocus type="text" class="search-text" id="search"
@@ -43,7 +55,7 @@
                                     </div>
                                     <div class="d-flex p-3 divBorder w-100" style="margin-top:-10px"></div>
                                     <div class=" col-12 col-sm-6 col-lg-12 my-3 ">
-                                        <label class="labelTitulo">Descripción Equipo/Maquinaría:
+                                        <label class="labelTitulo">Descripción Equipo/Maquinaria:
                                             <span>*</span></label></br>
                                         <textarea rows="2" cols="80" class="form-control form-select" id="descripcion" readonly name="descripcion"
                                             value=""></textarea>
@@ -95,13 +107,13 @@
                                                 id="km" name="km">
                                         </div> --}}
                                     <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                        <label class="labelTitulo">Fecha de Inicio: <span>*</span> </label></br>
+                                        <label class="labelTitulo">Fecha De Inicio: <span>*</span> </label></br>
                                         <input type="date" class="inputCaja" placeholder="Especifique..." required
                                             id="fechaInicio" name="fechaInicio">
                                     </div>
 
                                     <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                        <label class="labelTitulo">Tipo de Mantenimiento: <span>*</span></label></br>
+                                        <label class="labelTitulo">Tipo De Mantenimiento: <span>*</span></label></br>
                                         <select class="form-select form-select-lg mb-3 inputCaja" name="tipo" required
                                             id="tipo" aria-label=".form-select-lg example">
 

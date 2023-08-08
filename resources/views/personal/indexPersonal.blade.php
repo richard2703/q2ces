@@ -9,7 +9,7 @@
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
                                     <h4 class="card-title">Personal</h4>
-                                    {{-- <p class="card-category">Usuarios registrados</p> --}}
+                                    {{-- <p class="card-category">Usuarios Registrados</p> --}}
                                 </div>
 
                                 <div class="card-body">
@@ -27,7 +27,7 @@
                                         <div class="col-12 pb-3 text-end">
                                             @can('personal_create')
                                                 <a href="{{ route('personal.create') }}">
-                                                    <button type="button" class="btn botonGral">Añadir personal</button>
+                                                    <button type="button" class="btn botonGral">Añadir Personal</button>
                                                 </a>
                                             @endcan
                                         </div>
@@ -40,7 +40,7 @@
                                                 <th class="labelTitulo text-center">Apellido</th>
                                                 <th class="labelTitulo text-center">Puesto </th>
                                                 <th class="labelTitulo text-center">Teléfono</th>
-                                                <th class="labelTitulo text-center">Correo electrónico</th>
+                                                <th class="labelTitulo text-center">Correo Electrónico</th>
                                                 <th class="labelTitulo text-center">Estatus</th>
                                                 <th class="labelTitulo text-center">Acciones</th>
                                             </thead>
@@ -93,7 +93,7 @@
                                                     </tr>
                                                 @empty
                                                     <tr>
-                                                        <td colspan="2">Sin registros.</td>
+                                                        <td colspan="2">Sin Registros.</td>
                                                     </tr>
                                                 @endforelse
                                             </tbody>

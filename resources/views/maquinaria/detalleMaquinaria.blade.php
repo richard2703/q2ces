@@ -64,28 +64,28 @@
                                                 <div class="row mt-3">
                                                     <div class="col-12 col-lg-4  my-3">
                                                         <div class="row mb-5">
-
+                                                        
                                                             <div class="col-12 contFotoMaquinaria" id="visor">
-                                                                @if (count($fotos) > 0)
+                                                                <!-- @if (count($fotos) > 0)
                                                                     <button type="button"
-                                                                        class="btn btn-secondary btn-sm buttonImage"
+                                                                        class="btn btn-secondary btn-sm"
                                                                         onclick="deleteImage('{{ $fotos[0]->id }}','{{ $fotos }}', (this));">X</button>
-                                                                @endif
+                                                                @endif -->
                                                                 <img src="{{ empty($fotos[0]) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $fotos[0]->ruta) }}"
                                                                     class="mx-auto d-block img-fluid imgMaquinaria">
                                                             </div>
 
-                                                            <div class="col-12 my-3 d-flex justify-content-around"
+                                                            <div class="col-12 my-3 d-flex justify-content-start"
                                                                 id="selectores">
                                                                 @forelse ($fotos as $foto)
                                                                     <img onclick="abre(this)"
                                                                         title="'{{ $maquinaria->nombre }}'."
                                                                         src="{{ asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $foto->ruta) }}"
-                                                                        class="img-fluid mb-5" id="{{ $foto->id }}"
-                                                                        style="margin-right:-20px;">
+                                                                        class="img-fluid mb-5" id="img{{ $foto->id }}"
+                                                                        style="margin-right:3px;">
                                                                     <div class="form-group">
-                                                                        <div class="col-md-8">
-                                                                            <!--<button type="button" class="btn btn-secondary btn-sm buttonImage" onclick="esconde_div('{{ $foto->id }}','{{ $fotos }}', (this));">X</button>-->
+                                                                        <div class="divButtonImage">
+                                                                            <button type="button" class="btn btn-secondary btn-sm buttonImage" id="btnDelete{{ $foto->id }}" onclick="esconde_div('{{ $foto->id }}','{{ $fotos }}', (this));">X</button>
                                                                         </div>
                                                                     </div>
                                                                 @empty
@@ -97,13 +97,13 @@
                                                                         type="file" name="ruta[]" id="mi-archivo"
                                                                         accept="image/*" multiple></span>
                                                                 <label for="mi-archivo">
-                                                                    <span class="">sube imagen</span>
+                                                                    <span class="">Sube Imagen</span>
                                                                 </label>
                                                             @endif
                                                         </div>
 
                                                     </div>
-
+                                                    <input type="hidden" name="arrayFotosPersistente" id="arrayFotosPersistente" value="">
                                                     <div class="col-12 col-lg-8">
                                                         <div class="row alin">
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -114,7 +114,7 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                                <label class="labelTitulo">Bitacora:</label></br>
+                                                                <label class="labelTitulo">Bitácora:</label></br>
                                                                 <select id="bitacoraId" name="bitacoraId"
                                                                     class="form-select" aria-label="Default select example">
                                                                     <option value="">Seleccione</option>
@@ -213,7 +213,7 @@
                                                                                 Ligero</option>
                                                                             <option
                                                                                 value="Grua"{{ $maquinaria->tipo == 'Grua' ? ' selected' : '' }}>
-                                                                                Grua</option>
+                                                                                Grúa</option>
                                                                             <option
                                                                                 value="N/A"{{ $maquinaria->tipo == 'no_aplica' ? ' selected' : '' }}>
                                                                                 N/A</option>
@@ -429,7 +429,7 @@
                                                         <div class="col-12" id="elementos">
                                                             <div class="d-flex">
                                                                 <div class="col-6 divBorder">
-                                                                    <h2 class="tituloEncabezado ">Refacciónes</h2>
+                                                                    <h2 class="tituloEncabezado ">Refacciones</h2>
                                                                 </div>
                                                                 
                                                                 <div class="col-6 divBorder pb-3 text-end">
@@ -469,37 +469,29 @@
                                                                 </div>
 
                                                                 <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
-                                                                    <label class="labelTitulo">Numero De
+                                                                    <label class="labelTitulo">Número De
                                                                         Parte:</label></br>
                                                                     <input type="text" class="inputCaja"
-                                                                        id="nParteRefaccion" placeholder="Especifique..."
+                                                                        id="numeroParte" placeholder="Especifique..."
                                                                         name="numeroParte[]" value="{{$refaccion->numeroParte}}">
                                                                 </div>
 
-                                                                <!--<div class=" col-12 col-sm-6 col-lg-2 my-3 ">
-                                                                <label class="labelTitulo">Relación:</label></br>
-                                                                <select id="marcaRefaccion" name="marcaRefaccion[]"
-                                                                    class="form-select">
-                                                                    <option value="">Seleccione</option>
-                                                                    <option value="Aceite Primario">Aceite Primario
-                                                                    </option>
-                                                                    <option value="Aceite Secundario">Aceite Secundario
-                                                                    </option>
-                                                                    <option value="Combustible Primario">Combustible
-                                                                        Primario</option>
-                                                                    <option value="Combustible Secundario">Combustible
-                                                                        Secundario</option>
-                                                                    <option value="Aire de Motor Primario">Aire de
-                                                                        Motor Primario</option>
-                                                                    <option value="Aire de Motor Secundario">Aire de
-                                                                        Motor Secundario</option>
-                                                                    <option value="Aire de Cabina">Aire de Cabina
-                                                                    </option>
-                                                                    <option value="Transmisión">Transmisión</option>
-                                                                    <option value="Dirección">Dirección</option>
-                                                                    <option value="Bujía">Bujía</option>
-                                                                </select>
-                                                                </div>-->
+                                                                <div class="col-12 col-sm-4 col-lg-2 my-3 text-center pt-3">
+                                                                    <!--<i class="fas fa-clipboard-check"></i>-->
+                                                                    <!--<span class="material-icons" style="font-size:40px; color: gray">
+                                                                        content_paste_search
+                                                                    </span>-->
+                                                                    @if ($refaccion->relacionInventarioId != null)
+                                                                    <span class="material-icons" style="font-size:40px; color: green">
+                                                                        assignment_turned_in
+                                                                    </span>
+                                                                    @else
+                                                                    <span class="material-icons" style="font-size:40px; color: red">
+                                                                        content_paste_off
+                                                                    </span>
+                                                                    @endif
+                                                                    <!--<i class="fas fa-clipboard"></i>-->
+                                                                </div>
 
                                                                 <div class="col-lg-1 my-3 text-end">
                                                                     <button type="button" id="removeRow"
@@ -851,7 +843,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bacTituloPrincipal mb-3">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Subir documento</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Subir Documento</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -988,29 +980,42 @@
         }
     }
 
-    //let arrayFotos = JSON.parse(fotos);
-    function esconde_div(id, fotos, button) {
-        console.log('ID de imagen', id);
+    // Inicializar arrayFotosPersistente
+    let arrayFotosPersistente = [];
 
+// Función para inicializar el arreglo persistente con el arreglo original
+// function inicializarArrayFotos(fotos) {
+//     arrayFotosPersistente = JSON.parse(fotos);
+//     console.log('HOLA',arrayFotosPersistente);
+// }
+
+function esconde_div(id, fotos, button) {
+    
+    console.log('fotos', fotos);
+    let arrayFotos = JSON.parse(fotos);
+    const index = arrayFotos.findIndex((foto) => foto.id == id);
+
+    // Si se encontró el objeto con el id coincidente, eliminarlo del array
+    if (index !== -1) {
+         arrayFotosPersistente.push(arrayFotos[index]);
+        
+    } else {
+         console.log('El id no se encontró en arrayFotosPersistente.');
+    }
+    console.log('arrayFotosPersistente', arrayFotosPersistente);
         var parentDiv = button.parentNode.parentNode.parentNode;
         // Modificar el selector para que coincida con la clase de la imagen
         var imageElement = parentDiv.querySelector("img.img-fluid");
-        var parentDivButton = button.parentNode.parentNode;
-        var imageId = imageElement.id;
-        console.log('imageElement', imageElement);
-        // Eliminar el elemento de la imagen
-        if (imageElement && imageId == id) {
-            parentDiv.removeChild(imageElement);
-        }
-        var elemento = document.getElementById(id);
-        if (elemento) {
-            elemento.style.display = "none";
-        }
+        var deleteButton = document.getElementById('btnDelete'+id);
+        var imageElement = document.getElementById("img"+ id);
+        
+        
         // Ocultar el elemento padre
-        parentDiv.style.display = "none";
-        parentDivButton.style.display = "none";
-        console.log('button', button);
+        imageElement.style.visibility = "hidden";
+        deleteButton.style.visibility = "hidden";
 
+        const arrayFotosPersistenteHidden = document.getElementById('arrayFotosPersistente');
+        arrayFotosPersistenteHidden.value = JSON.stringify(arrayFotosPersistente);
     }
     // $.ajax({
     //     type: 'put',
@@ -1026,6 +1031,7 @@
     //         console.log('Error');
     //     }
     // });
+    
     function loadDocument(id, tipo, comentarios, fechaVencimiento) {
 
         const txtId = document.getElementById('docId');
@@ -1075,7 +1081,10 @@
 
 <script>
     function crearItems() {
-        $('.opcion:first').clone().find("input").val("").end().appendTo('#elementos');
+        var newOpcion = $('.opcion:first').clone();
+        newOpcion.find("select, input").val(""); // Establece los valores en blanco
+        newOpcion.find(".material-icons").text("content_paste_search").css("color", "gray"); // Establece el ícono y el color
+        newOpcion.appendTo('#elementos');
     }
 
     // Borrar registro
@@ -1084,6 +1093,11 @@
             $(this).closest('.opcion').remove();
         }
     });
+</script>
+<script>
+    function fakeSave(){
+        console.log('arrayFotosPersistente', arrayFotosPersistente);
+    }
 </script>
 
 {{-- <!-- Modal -->
