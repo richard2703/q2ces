@@ -325,6 +325,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/checkList/nuevo/{bitacora}/{maquinaria}', [App\Http\Controllers\checkListController::class, 'create'])->name('checkList.create');
     Route::post('/checkList/registra/', [App\Http\Controllers\checkListRegistrosController::class, 'store'])->name('checkListRegistros.store');
     Route::get('/checkList/registros/{id}', [App\Http\Controllers\checkListController::class, 'show'])->name('checkList.show');
+    Route::get('/checkList/registros/editar/{id}', [App\Http\Controllers\checkListRegistrosController::class, 'show'])->name('checkListRegistros.show');
+    Route::put('/checkList/registros/editar/', [App\Http\Controllers\checkListRegistrosController::class, 'update'])->name('checkListRegistros.update');
 
     // Equipos MTQ
     Route::get('/dashMtq', function () {

@@ -1,6 +1,6 @@
 @extends('layouts.main', ['activePage' => ' bitacoras', 'titlePage' => __('Editar Bitácoras')])
 @section('content')
-<div class="content">
+    <div class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -24,7 +24,8 @@
 
                                                     <input type="text" required maxlength="250" id="nombre"
                                                         name="nombre" value="{{ $bitacora->nombre }}"
-                                                        placeholder="Especifique el nombre de la bitácora." class="inputCaja">
+                                                        placeholder="Especifique el nombre de la bitácora."
+                                                        class="inputCaja">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
@@ -42,8 +43,9 @@
                                                         <p class="subEncabezado">Busca un Grupo de Tareas </p>
                                                         <div class="mb-6 mt-0" role="search" class="inputCaja">
                                                             <input value="" class="search-submit ">
-                                                            <input autofocus type="text" class=""
-                                                                id="search" name="search" placeholder="Escribe aquí el texto a buscar..."
+                                                            <input autofocus type="text" class="" id="search"
+                                                                name="search"
+                                                                placeholder="Escribe aquí el texto a buscar..."
                                                                 title="Escriba la(s) palabra(s) a buscar.">
                                                         </div>
                                                     </div>
@@ -70,15 +72,16 @@
                                                                     <input type="hidden" name="grupoId[]" id="grupoId"
                                                                         value="{{ $item->grupoId }}">
 
-                                                                    <input type="hidden" name="bitacoraId[]" id="bitacoraId"
-                                                                        value="{{ $item->bitacoraId }}">
+                                                                    <input type="hidden" name="bitacoraId[]"
+                                                                        id="bitacoraId" value="{{ $item->bitacoraId }}">
 
                                                                     <div class="col-5 ">
-                                                                        <label for="nombreGrupo"
-                                                                            class="">Grupo de Tareas</label></br></br>
+                                                                        <label for="nombreGrupo" class="">Grupo de
+                                                                            Tareas</label></br></br>
                                                                         <input type="text" maxlength="250" readonly
-                                                                            class="inputCaja" id="nombreGrupo" disabled="true"
-                                                                            placeholder="Ej. Tarea 1" name="nombreGrupo[]"
+                                                                            class="inputCaja" id="nombreGrupo"
+                                                                            disabled="true" placeholder="Ej. Tarea 1"
+                                                                            name="nombreGrupo[]"
                                                                             value="{{ $item->grupo }}">
                                                                     </div>
 

@@ -19,6 +19,7 @@ class ubicacionesController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('ubicaciones_index'), '404');
         $ubicaciones = ubicaciones::orderBy('created_at', 'desc')->paginate(10);
         return view('catalogos.indexUbicaciones', compact('ubicaciones'));
     }
@@ -53,7 +54,7 @@ class ubicacionesController extends Controller
         $ubicaciones = $request->all();
         if ((isset($request->check) && $request->check == 'on')) {
             $ubicaciones['activo'] = 1;
-        }else{
+        } else {
             $ubicaciones['activo'] = 0;
         }
         // dd( $ubicaciones );
@@ -107,7 +108,7 @@ class ubicacionesController extends Controller
         $ubicaciones = ubicaciones::where('id', $data['controlId'])->first();
         if ((isset($request->check) && $request->check == 'on')) {
             $ubicaciones['activo'] = 1;
-        }else{
+        } else {
             $ubicaciones['activo'] = 0;
         }
         if (is_null($ubicaciones) == false) {

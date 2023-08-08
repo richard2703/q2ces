@@ -124,6 +124,24 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('docs_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('docs_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('docs_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('ubicaciones_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ubicaciones_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ubicaciones_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ubicaciones_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ubicaciones_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('lugares_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('lugares_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('lugares_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('lugares_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('lugares_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('tipoServicios_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tipoServicios_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tipoServicios_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tipoServicios_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tipoServicios_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 
 CREATE TABLE users (
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -143,18 +161,7 @@ CREATE TABLE users (
 INSERT INTO
     `users`
 VALUES
-    (
-        1,
-        'admin',
-        'a@a.com',
-        NULL,
-        '$2y$10$xchASRodwuYH58CYgTt3r.RWshZp3BzYMd6T7pg3ZNZxd4d3fXzUy',
-        NULL,
-        NULL,
-        NULL,
-        '2022-09-26 19:48:41',
-        '2022-09-26 19:48:41',
-        NULL
+    (1,'admin','a@a.com',NULL,'$2y$10$xchASRodwuYH58CYgTt3r.RWshZp3BzYMd6T7pg3ZNZxd4d3fXzUy',NULL,NULL,NULL,'2022-09-26 19:48:41','2022-09-26 19:48:41',NULL
     );
 
 create table model_has_permissions (
@@ -1270,7 +1277,9 @@ create table checkListRegistros(
     grupo varchar(255) NOT NULL,
     tareaId bigint(20) unsigned NOT NULL,
     tarea varchar(255) NOT NULL,
+    tareaTipoValor INT(2) NOT NULL DEFAULT '1',
     resultado varchar(255) NULL,
+    valor int(8) NULL,
     usuarioId bigint(20) unsigned NOT NULL,
     created_at timestamp NULL DEFAULT NULL,
     updated_at timestamp NULL DEFAULT NULL,
@@ -1335,6 +1344,11 @@ create table refacciones (
     updated_at datetime NULL,
     primary key(id)
 );
+
+INSERT INTO
+    `ubicaciones`
+values (1,'Maquinaria','Maquinaria','Apartado para seleccionar maquinaria',1,'2022-09-26 19:48:41','2022-09-26 19:48:41'
+    );
    
     create table lugares(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,

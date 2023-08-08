@@ -20,6 +20,7 @@ class lugaresController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('lugares_index'), '404');
         $lugares = lugares::orderBy('created_at', 'desc')->paginate(10);
         $ubicacion = ubicaciones::all();
         return view('catalogos.indexLugares', compact('lugares', 'ubicacion'));
