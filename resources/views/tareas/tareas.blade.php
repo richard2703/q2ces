@@ -170,10 +170,12 @@
                                 aria-label="Default select example" id="tipoValor"
                                 name="tipoValor">
                                 <option value="1" >
-                                    Bueno/Malo/Regular</option>
+                                    Bueno / Malo / Regular</option>
                                 <option value="2" >
-                                    Sí/No
+                                    Sí / No
                                 </option>
+                                <option value="3" >
+                                    50% o más de Vida / Menos del 20% de Vida / 20% al 50% de Vida</option>
                             </select>
                         </div>
 
@@ -253,10 +255,12 @@
                                 aria-label="Default select example" id="tareaTipoValor"
                                 name="tipoValor">
                                 <option value="1" >
-                                    Bueno/Malo/Regular</option>
+                                    Bueno / Malo / Regular</option>
                                 <option value="2" >
-                                    Sí/No
+                                    Sí / No
                                 </option>
+                                <option value="3" >
+                                    50% o más de Vida / 20% al 50% de Vida / Menos del 20% de Vida</option>
                             </select>
                         </div>
 
