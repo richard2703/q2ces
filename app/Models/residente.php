@@ -13,6 +13,6 @@ class residente extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'userId','obraId', 'nombre', 'email', 'empresa','puesto','telefono','firma','publicado','comentario'
+        'userId', 'obraId', 'nombre', 'email', 'empresa', 'puesto', 'telefono', 'firma', 'publicado', 'comentario', 'clienteId'
     ];
 }

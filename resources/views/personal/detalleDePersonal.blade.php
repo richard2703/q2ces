@@ -720,7 +720,7 @@
                                                     <div class="d-flex">
                                                         <div class="col-6 pe-1">
                                                             <label class="labelTitulo">Horario
-                                                                entrada:</label></br>
+                                                                Entrada:</label></br>
 
                                                             <input type="time" class="inputCaja "
                                                                 placeholder="Entrada" id="" name="hEntrada"
@@ -728,7 +728,7 @@
                                                         </div>
                                                         <div class="col-6  ps-1">
                                                             <label class="labelTitulo">Horario
-                                                                salida:</label></br>
+                                                                Salida:</label></br>
 
                                                             <input type="time" class="inputCaja " placeholder="Salida"
                                                                 id="" name="hSalida"
@@ -760,7 +760,7 @@
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                    <label class="labelTitulo">Salario diario integrado:</label></br>
+                                                    <label class="labelTitulo">Salario diario Integrado:</label></br>
                                                     <input type="number" class="inputCaja text-right" id=""
                                                         name="" value="{{ $nomina->decSalarioDiarioIntegrado }}">
                                                 </div>
@@ -801,7 +801,7 @@
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                    <label class="labelTitulo">Fecha de pago prima vacacional:</label></br>
+                                                    <label class="labelTitulo">Fecha de Pago Prima Vacacional:</label></br>
                                                     <input type="date" class="inputCaja" id="fechaPagoPrimaVac"
                                                         name="fechaPagoPrimaVac"
                                                         value="{{ $nomina->fechaPagoPrimaVac ? \Carbon\Carbon::parse($nomina->fechaPagoPrimaVac)->format('Y-m-d') : '' }}">
@@ -975,94 +975,7 @@
                                 </div>
                             </div>
                         </div>
-                        {{--  Asignacion de Equipo  --}}
-                        <div class="accordion-item">
-                            <h6 class="accordion-header" id="headingThree">
-                                <button class="accordion-button bacTituloPrincipal" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#equipoAsignado" aria-expanded="true"
-                                    aria-controls="collapseOne">
-                                    Equipo Asignado
-                                </button>
-                            </h6>
-                            <div id="equipoAsignado" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                                data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <div class="row mt-3">
 
-                                        <div class="col-12 border-end">
-                                            <div class="row alin">
-
-                                                {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Automóvil 1
-                                                        Asignado:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle1" value="" placeholder="Marca">
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Automóvil 2
-                                                        Asignado:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle1" value="">
-                                                </div>  --}}
-
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Equipo de Cómputo:</label></br>
-                                                    <input type="text" class="inputCaja" id="pc"
-                                                        name="pc" value="{{ $equipo->pc }}"
-                                                        placeholder="Marca y Modelo">
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Número de Serie:</label></br>
-                                                    <input type="text" class="inputCaja" id="pcSerial"
-                                                        name="pcSerial" value="{{ $equipo->pcSerial }}">
-                                                </div>
-
-                                                {{--  <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Accesorios:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="calle1" value="">
-                                                </div>  --}}
-
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Teléfono Celular:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="celularEquipo" value="{{ $equipo->celular }}"
-                                                        placeholder="Marca y Modelo">
-                                                </div>
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Número De IMEI:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="celularImei" value="{{ $equipo->celularImei }}">
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Radio Comunicación:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="radio" placeholder="Marca y Modelo"
-                                                        value="{{ $equipo->radio }}">
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Número De Serie:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="radioSerial" value="{{ $equipo->radioSerial }}">
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6 col-lg-3 mb-3 ">
-                                                    <label class="labelTitulo">Cargador Radio Núm. De
-                                                        Serie:</label></br>
-                                                    <input type="text" class="inputCaja" id=""
-                                                        name="cargadorSerial" value="{{ $equipo->cargadorSerial }}">
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         {{--  Documentacion  --}}
                         <div class="accordion-item">
                             <h6 class="accordion-header" id="headingThree">
@@ -1337,9 +1250,9 @@
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Nivel de puesto: <span>*</span></label></br>
-                                            <select id="puestoNivelId" name="puestoNivelId" class="form-select"
-                                                required aria-label="Default select example">
+                                            <label class="labelTitulo">Nivel de Puesto: <span>*</span></label></br>
+                                            <select id="puestoNivelId" name="puestoNivelId" class="form-select" required
+                                                aria-label="Default select example">
                                                 <option value="">Seleccione</option>
                                                 @foreach ($vctNiveles as $item)
                                                     <option value="{{ $item->id }}"
