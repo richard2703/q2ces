@@ -82,6 +82,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead class="labelTitulo">
@@ -139,6 +140,7 @@
                                                     <td>
                                                         <?php
                                                         switch ($item->tipoValor) {
+                                                            //*** CASO 1
                                                             case 1:
                                                             ?>
                                                         <div>
@@ -164,7 +166,7 @@
                                                         </div>
                                                         <?php
                                                                 break;
-
+//*** CASO 2
                                                                 case 2:
                                                                 ?>
                                                         <div>
@@ -184,6 +186,7 @@
                                                         <?php
                                                     break;
 
+                                                    //*** CASO 3
                                                     case 3:
                                                     ?>
                                                         <div>
@@ -234,12 +237,17 @@ break;
                                     </table>
                                 </div>
 
-
                             </div>
-
-                            <div class="col-12 text-center mt-5 pt-5">
-                                <button type="submit" class="btn botonGral mb-3">Guardar</button>
-                            </div>
+                            @if ($vctTareas->isEmpty() === false)
+                                <div class="col-12 text-center mt-5 pt-5">
+                                    <button type="submit" class="btn botonGral mb-3">Guardar</button>
+                                </div>
+                            @else
+                                <div class="col-12 text-center mt-5 pt-5">
+                                    <p>La bitácora no cuenta con grupos de tareas asignados. Verifique que se asignen los
+                                        grupos de tareas correspondientes antes de continuar.</p>
+                                </div>
+                            @endif
 
                         </form>
                     </div>
