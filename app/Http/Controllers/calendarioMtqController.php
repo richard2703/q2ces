@@ -17,8 +17,10 @@ class calendarioMtqController extends Controller
     public function index()
     {
         abort_if ( Gate::denies( 'puesto_index' ), 403 );
+        $eventos = calendarioMtq::all();
+        $eventosJson = $eventos->toJson();
         // dd( $puestos );
-        return view( 'mtq.calendario');
+        return view( 'mtq.calendario', compact('eventosJson'));
     }
 
     /**
@@ -28,7 +30,6 @@ class calendarioMtqController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -40,6 +41,11 @@ class calendarioMtqController extends Controller
     public function store(Request $request)
     {
         //
+        $events = $request->all();
+        dd($events);
+        $events = calendarioMtq::create($events);
+        Session::flash('message', 1);
+        return redirect()->route('calendarioMtq.index');
     }
 
     /**
