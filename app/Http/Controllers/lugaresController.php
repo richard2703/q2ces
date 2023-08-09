@@ -56,11 +56,11 @@ class lugaresController extends Controller
         $lugares = $request->all();
         if ((isset($request->check) && $request->check == 'on')) {
             $lugares['activo'] = 1;
-        }else{
+        } else {
             $lugares['activo'] = 0;
         }
         // dd( $lugares );
-        
+
         lugares::create($lugares);
         Session::flash('message', 1);
 
@@ -111,7 +111,7 @@ class lugaresController extends Controller
         $lugares = lugares::where('id', $data['controlId'])->first();
         if ((isset($request->check) && $request->check == 'on')) {
             $lugares['activo'] = 1;
-        }else{
+        } else {
             $lugares['activo'] = 0;
         }
         if (is_null($lugares) == false) {
