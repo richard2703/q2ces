@@ -103,10 +103,11 @@
                                                                             alt="" style="width:40px;">
                                                                     </div>
                                                                     <div>
-                                                                        <label class="labelTitulo">Litros: <span>*</span></label></br>
-                                                                        <input type="number" step="0.01" min="0.01" required
-                                                                            class="inputCaja" id="litros" name="litros"
-                                                                            value="{{ old('litros') }}">
+                                                                        <label class="labelTitulo">Litros:
+                                                                            <span>*</span></label></br>
+                                                                        <input type="number" step="0.01" min="0.01"
+                                                                            required class="inputCaja" id="litros"
+                                                                            name="litros" value="{{ old('litros') }}">
                                                                     </div>
                                                                 </div>
 
@@ -117,10 +118,11 @@
                                                                             alt="" style="width:40px;">
                                                                     </div>
                                                                     <div>
-                                                                        <label class="labelTitulo">Precio: <span>*</span></label></br>
-                                                                        <input type="number" step="0.01" min="0.01" required
-                                                                            class="inputCaja" id="precio" name="precio"
-                                                                            value="{{ old('precio') }}">
+                                                                        <label class="labelTitulo">Precio:
+                                                                            <span>*</span></label></br>
+                                                                        <input type="number" step="0.01" min="0.01"
+                                                                            required class="inputCaja" id="precio"
+                                                                            name="precio" value="{{ old('precio') }}">
                                                                     </div>
                                                                 </div>
 
@@ -259,10 +261,11 @@
                                                                             alt="" style="width:40px;">
                                                                     </div>
                                                                     <div>
-                                                                        <label class="labelTitulo">Litros: <span>*</span></label></br>
-                                                                        <input type="number" step="0.01" min="0.01" required
-                                                                            class="inputCaja" id="litros" name="litros"
-                                                                            value="{{ old('litros') }}">
+                                                                        <label class="labelTitulo">Litros:
+                                                                            <span>*</span></label></br>
+                                                                        <input type="number" step="0.01" min="0.01"
+                                                                            required class="inputCaja" id="litros"
+                                                                            name="litros" value="{{ old('litros') }}">
                                                                     </div>
                                                                 </div>
                                                                 <div class=" col-12 col-md-6 d-flex mb-4">
@@ -331,7 +334,7 @@
                                                 <div class="col mb-3">
                                                     <div class="row">
                                                         <div class="col-6">
-                                                            <p class=" ">Útima carga</p>
+                                                            <p class=" ">Última carga</p>
                                                             <p class="combustiblefecha fw-semibold mb-3">
                                                                 {{ \Carbon\Carbon::parse($gasolina->created_at)->format('Y-m-d') }}
                                                             </p>
@@ -403,9 +406,9 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <!-- <div class="card-header bacTituloPrincipal">
-                                                                                                                                                                                                                                                                        <h4 class="card-title">Carga y descarga de combustible</h4>
+                                                                                                                                                                                                                                                                                    <h4 class="card-title">Carga y descarga de combustible</h4>
 
-                                                                                                                                                                                                                                                                    </div>-->
+                                                                                                                                                                                                                                                                                </div>-->
                                     <div class="card-body mb-3">
                                         <div class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
                                             <button
@@ -436,8 +439,8 @@
                                                                             <th class="fw-bolder">Despachador</th>
                                                                             <th class="fw-bolder">Litros</th>
                                                                             <th class="fw-bolder">Precio</th>
-                                                                            <th class="fw-bolder">fecha</th>
-                                                                            <th class="fw-bolder">hora</th>
+                                                                            <th class="fw-bolder">Fecha</th>
+                                                                            <th class="fw-bolder">Hora</th>
                                                                             <th class="fw-bolder text-right">Acciones</th>
                                                                         </thead>
                                                                         <tbody>
@@ -560,7 +563,7 @@
                                                                                     <td>{{ $descarga->servicio }}</td>
                                                                                     <td>{{ $descarga->receptor }}</td>
                                                                                     <td>{{ $descarga->km }}</td>
-                                                                                    <td>{{ $descarga->horas }}</td>
+                                                                                    {{--  <td>{{ $descarga->horas }}</td>  --}}
                                                                                     <td>
                                                                                         {{ number_format($descarga->litros, 2, '.', ',') }}
                                                                                     </td>

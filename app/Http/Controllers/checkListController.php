@@ -67,7 +67,7 @@ class checkListController extends Controller {
 
         // dd( $bitacora, $maquinaria,  $vctTareas );
 
-        return view( 'checkList.nuevoCheck', compact( 'maquinaria', 'bitacora', 'vctTareas' ) );
+        return view( 'checkList.nuevoCheckList', compact( 'maquinaria', 'bitacora', 'vctTareas' ) );
 
     }
 

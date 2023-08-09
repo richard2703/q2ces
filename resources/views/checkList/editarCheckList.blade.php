@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'mantenimiento', 'titlePage' => __('Nuevo Mantenimiento')])
+@extends('layouts.main', ['activePage' => 'mantenimiento', 'titlePage' => __('Editar CheckList')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -16,14 +16,17 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <form class="alertaGuardar" action="{{ route('checkListRegistros.store') }}" method="post"
+                        <form class="alertaGuardar" action="{{ route('checkListRegistros.update') }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
-                            <input type="hidden" name="maquinariaId" id="maquinariaId" value="{{$maquinaria->id}}">
+                            @method('put')
+                            <input type="hidden" name="maquinariaId" id="maquinariaId"
+                                value="{{ $checkList->maquinariaId }}">
                             <input type="hidden" name="usuarioId" id="usuarioId" value="{{ auth()->user()->id }}">
-                            <input type="hidden" name="bitacoraId" id="bitacoraId" value="{{$bitacora->id}}">
-                            <input type="hidden" name="bitacora" id="bitacora" value="{{$bitacora->nombre}}">
-                            <input type="hidden" name="maquinaria" id="maquinaria" value="{{$maquinaria->nombre}}">
+                            <input type="hidden" name="bitacoraId" id="bitacoraId" value="{{ $checkList->bitacoraId }}">
+                            <input type="hidden" name="bitacora" id="bitacora" value="{{ $checkList->bitacora }}">
+                            <input type="hidden" name="maquinaria" id="maquinaria" value="{{ $checkList->maquinaria }}">
+                            <input type="hidden" name="checkListId" id="checkListId" value="{{ $checkList->id }}">
                             <div class="card-header bacTituloPrincipal">
                                 <h4 class="card-title">Nuevo Registro de CheckList</h4>
                             </div>
@@ -50,23 +53,21 @@
                                             <div class=" col-12  ">
                                                 <label class="labelTitulo">Equipo:
                                                     <span>*</span></label></br>
-                                                <input type="text" class="inputCaja" id="nombre" readonly
-                                                    disabled="true" required name="nombre"
-                                                    value="{{ $maquinaria->nombre }}">
+                                                <input type="text" class="inputCaja" id="maquinaria1" readonly
+                                                    disabled="true" required name="maquinaria1"
+                                                    value="{{ $checkList->maquinaria }}">
                                             </div>
-
 
                                             <div class=" col-12   ">
                                                 <label class="labelTitulo">Bitácora:</label></br>
-                                                <input type="text" class="inputCaja" id="marca" name="marca"
-                                                    readonly disabled="true" value="{{ $bitacora->nombre }}">
+                                                <input type="text" class="inputCaja" id="bitacora1" name="bitacora1"
+                                                    readonly disabled="true" value="{{ $checkList->bitacora }}">
                                             </div>
-
 
                                             <div class=" col-12">
                                                 <label class="labelTitulo">Comentarios:</label></br>
-                                                <textarea class="form-control" placeholder="Escribe tu comentario aquí sobre la revisión del CheckList" id="comentario" name="comentario"
-                                                    spellcheck="true"></textarea>
+                                                <textarea class="form-control" placeholder="Escribe tu comentario aquí sobre la revisión del CheckList" id="comentario"
+                                                    name="comentario" spellcheck="true">{{ $checkList->comentario }}</textarea>
                                             </div>
                                         </div>
 
@@ -96,7 +97,7 @@
                                             $intCont = 0;
                                             $blnNuevaSeccion = false;
                                             ?>
-                                            @forelse ($vctTareas as $item)
+                                            @forelse ($vctRecords as $item)
                                                 <?php
                                                 if ($strNombreGrupo == '') {
                                                     //*** es la primera vez
@@ -123,9 +124,12 @@
 
                                                 <tr>
                                                     <td>
-                                                        {{ $item->tareaId }} .-  {{ $item->tarea }}
+                                                        {{-- {{ $item->tareaId }} .- --}}
+                                                         {{ $item->tarea }}
                                                         <input type="hidden" name="tarea[]" id="tarea"
                                                             value="{{ $item->tarea }}">
+                                                            <input type="hidden" name="recordId[]" id="recordId"
+                                                                value="{{ $item->id }}">
 
                                                         <input type="hidden" name="tareaId[]" id="tareaId"
                                                             value="{{ $item->tareaId }}">
@@ -138,23 +142,23 @@
                                                     </td>
                                                     <td>
                                                         <?php
-                                                        if ($item->tipoValor == 1) {
+                                                        if ($item->tareaTipoValor == 1) {
                                                             ?>
                                                         <div>
                                                             <input type="radio" id="control{{ $intCont }}1"
                                                                 name="resultado{{ $item->tareaId }}[]" value="2"
-                                                                checked>
+                                                                {{ ($item->valor == 2? 'checked':'') }}>
                                                             <label for="control{{ $intCont }}1">Revisión Ok</label>
                                                         </div>
                                                         <div>
                                                             <input type="radio" id="control{{ $intCont }}2"
-                                                                name="resultado{{ $item->tareaId }}[]" value="1">
+                                                                name="resultado{{ $item->tareaId }}[]" value="1" {{ ($item->valor == 1? 'checked':'') }}>
                                                             <label for="control{{ $intCont }}2">Requiere Atención
                                                                 Futura</label>
                                                         </div>
                                                         <div>
                                                             <input type="radio" id="control{{ $intCont }}3"
-                                                                name="resultado{{ $item->tareaId }}[]" value="0">
+                                                                name="resultado{{ $item->tareaId }}[]" value="0" {{ ($item->valor == 0? 'checked':'') }}>
                                                             <label for="control{{ $intCont }}3">Requiere Atención
                                                                 Inmediata</label>
                                                         </div>
@@ -165,12 +169,12 @@
                                                         <div>
                                                             <input type="radio" id="control{{ $intCont }}1"
                                                                 name="resultado{{ $item->tareaId }}[]" value="2"
-                                                                checked>
+                                                                {{ ($item->valor == 2? 'checked':'') }}>
                                                             <label for="control{{ $intCont }}1">Revisión Ok</label>
                                                         </div>
                                                         <div>
                                                             <input type="radio" id="control{{ $intCont }}3"
-                                                                name="resultado{{ $item->tareaId }}[]" value="0">
+                                                                name="resultado{{ $item->tareaId }}[]" value="0" {{ ($item->valor == 0? 'checked':'') }}>
                                                             <label for="control{{ $intCont }}3">Requiere Atención
                                                                 Inmediata</label>
                                                         </div>
