@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'bitacoras', 'activeItem' => 'bitacoras'])
+@extends('layouts.main', ['activePage' => ' checkList', 'titlePage' => __('Agregar Nuevo Registro de Revision')])
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -8,43 +8,34 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">{{ $bitacora->nombre }}</h4>
-
+                                    <h4 class="card-title">Seleccionar Equipo Para CheckList</h4>
                                 </div>
-                                <div class="card-body">
-                                    @if (session('success'))
-                                        <div class="alert alert-success" role="success">
-                                            {{ session('success') }}
-                                        </div>
-                                    @endif
-                                    @if (session('faild'))
-                                        <div class="alert alert-danger" role="faild">
-                                            {{ session('faild') }}
-                                        </div>
-                                    @endif
+                                <div class="card-body ">
+
 
 
                                     <div class="table-responsive">
                                         <table class="table">
-                                            <caption>Maquinaria Asignada</caption>
                                             <thead class="labelTitulo">
                                                 <tr>
-                                                    <th class="labelTitulo">ID</th>
-                                                    <th class="labelTitulo">Nombre</th>
+                                                    <th class="labelTitulo">Folio</th>
+                                                    <th class="labelTitulo">Equipo</th>
+                                                    <th class="labelTitulo">Bitácora</th>
+
                                                     <th class="labelTitulo text-right">Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @forelse ($records as $item)
                                                     <tr>
-
                                                         <td>{{ $item->id }}</td>
-                                                        <td>{{ $item->nombre }}</td>
+                                                        <td>{{ $item->maquinaria }} </td>
+                                                        <td>{{ $item->bitacora }}</td>
 
                                                         <td class="td-actions text-right">
 
                                                             @can('bitacora_edit')
-                                                                <a href="{{ url('/checkList/nuevo/'. $bitacora->id .'/' . $item->id ) }}" class="">
+                                                                <a href="{{ url('/checkList/nuevo/'. $item->bitacoraId .'/' . $item->maquinariaId ) }}" class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                         height="28" fill="currentColor" title="Editar"
                                                                         class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -55,22 +46,23 @@
                                                             @endcan
                                                         </td>
                                                     </tr>
+
                                                 @empty
                                                     <tr>
-                                                        <td colspan="4">Sin registros.</td>
+                                                        <td colspan="2">Sin registros.</td>
                                                     </tr>
                                                 @endforelse
-
                                             </tbody>
                                         </table>
-                                    </div>
-                                    <div class="card-footer mr-auto">
-                                        {{ $records->links() }}
+                                        <div class="card-footer mr-auto">
+                                            {{ $records->links() }}
+                                        </div>
                                     </div>
                                 </div>
 
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

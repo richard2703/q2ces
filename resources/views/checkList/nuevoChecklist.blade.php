@@ -19,11 +19,11 @@
                         <form class="alertaGuardar" action="{{ route('checkListRegistros.store') }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
-                            <input type="hidden" name="maquinariaId" id="maquinariaId" value="{{$maquinaria->id}}">
+                            <input type="hidden" name="maquinariaId" id="maquinariaId" value="{{ $maquinaria->id }}">
                             <input type="hidden" name="usuarioId" id="usuarioId" value="{{ auth()->user()->id }}">
-                            <input type="hidden" name="bitacoraId" id="bitacoraId" value="{{$bitacora->id}}">
-                            <input type="hidden" name="bitacora" id="bitacora" value="{{$bitacora->nombre}}">
-                            <input type="hidden" name="maquinaria" id="maquinaria" value="{{$maquinaria->nombre}}">
+                            <input type="hidden" name="bitacoraId" id="bitacoraId" value="{{ $bitacora->id }}">
+                            <input type="hidden" name="bitacora" id="bitacora" value="{{ $bitacora->nombre }}">
+                            <input type="hidden" name="maquinaria" id="maquinaria" value="{{ $maquinaria->nombre }}">
                             <div class="card-header bacTituloPrincipal">
                                 <h4 class="card-title">Nuevo Registro de CheckList</h4>
                             </div>
@@ -65,8 +65,8 @@
 
                                             <div class=" col-12">
                                                 <label class="labelTitulo">Comentarios:</label></br>
-                                                <textarea class="form-control" placeholder="Escribe tu comentario aquí sobre la revisión del CheckList" id="comentario" name="comentario"
-                                                    spellcheck="true"></textarea>
+                                                <textarea class="form-control" placeholder="Escribe tu comentario aquí sobre la revisión del CheckList" id="comentario"
+                                                    name="comentario" spellcheck="true"></textarea>
                                             </div>
                                         </div>
 
@@ -82,6 +82,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead class="labelTitulo">
@@ -123,7 +124,7 @@
 
                                                 <tr>
                                                     <td>
-                                                        {{ $item->tareaId }} .-  {{ $item->tarea }}
+                                                        {{ $item->tareaId }} .- {{ $item->tarea }}
                                                         <input type="hidden" name="tarea[]" id="tarea"
                                                             value="{{ $item->tarea }}">
 
@@ -138,43 +139,86 @@
                                                     </td>
                                                     <td>
                                                         <?php
-                                                        if ($item->tipoValor == 1) {
+                                                        switch ($item->tipoValor) {
+                                                            //*** CASO 1
+                                                            case 1:
                                                             ?>
                                                         <div>
                                                             <input type="radio" id="control{{ $intCont }}1"
                                                                 name="resultado{{ $item->tareaId }}[]" value="2"
                                                                 checked>
-                                                            <label for="control{{ $intCont }}1">Revisión Ok</label>
+                                                            <label class="form-check-label labelProrrogable"
+                                                                for="control{{ $intCont }}1">Revisión Ok</label>
                                                         </div>
                                                         <div>
                                                             <input type="radio" id="control{{ $intCont }}2"
                                                                 name="resultado{{ $item->tareaId }}[]" value="1">
-                                                            <label for="control{{ $intCont }}2">Requiere Atención
+                                                            <label class="form-check-label labelDeseable"
+                                                                for="control{{ $intCont }}2">Requiere Atención
                                                                 Futura</label>
                                                         </div>
                                                         <div>
                                                             <input type="radio" id="control{{ $intCont }}3"
                                                                 name="resultado{{ $item->tareaId }}[]" value="0">
-                                                            <label for="control{{ $intCont }}3">Requiere Atención
+                                                            <label class="form-check-label labelUrgente"
+                                                                for="control{{ $intCont }}3">Requiere Atención
                                                                 Inmediata</label>
                                                         </div>
-
                                                         <?php
-                                                        } else {
-                                                            ?>
+                                                                break;
+//*** CASO 2
+                                                                case 2:
+                                                                ?>
                                                         <div>
                                                             <input type="radio" id="control{{ $intCont }}1"
                                                                 name="resultado{{ $item->tareaId }}[]" value="2"
                                                                 checked>
-                                                            <label for="control{{ $intCont }}1">Revisión Ok</label>
+                                                            <label class="form-check-label labelProrrogable"
+                                                                for="control{{ $intCont }}1">Revisión Ok</label>
                                                         </div>
                                                         <div>
                                                             <input type="radio" id="control{{ $intCont }}3"
                                                                 name="resultado{{ $item->tareaId }}[]" value="0">
-                                                            <label for="control{{ $intCont }}3">Requiere Atención
+                                                            <label class="form-check-label labelUrgente"
+                                                                for="control{{ $intCont }}3">Requiere Atención
                                                                 Inmediata</label>
                                                         </div>
                                                         <?php
+                                                    break;
+
+                                                    //*** CASO 3
+                                                    case 3:
+                                                    ?>
+                                                        <div>
+                                                            <input type="radio" id="control{{ $intCont }}1"
+                                                                name="resultado{{ $item->tareaId }}[]" value="2"
+                                                                checked>
+                                                            <label class="form-check-label labelProrrogable"
+                                                                for="control{{ $intCont }}1">50%
+                                                                o más de
+                                                                Vida</label>
+                                                        </div>
+                                                        <div>
+                                                            <input type="radio" id="control{{ $intCont }}2"
+                                                                name="resultado{{ $item->tareaId }}[]" value="1">
+                                                            <label class="form-check-label labelDeseable"
+                                                                for="control{{ $intCont }}2">20% al 50% de
+                                                                Vida</label>
+                                                        </div>
+                                                        <div>
+                                                            <input type="radio" id="control{{ $intCont }}3"
+                                                                name="resultado{{ $item->tareaId }}[]" value="0">
+                                                            <label class="form-check-label labelUrgente"
+                                                                for="control{{ $intCont }}3">Menos del 20% de
+                                                                Vida</label>
+                                                        </div>
+
+                                                        <?php
+break;
+
+                                                            default:
+                                                                # code...
+                                                                break;
                                                         }
 
                                                         ?>
@@ -193,12 +237,17 @@
                                     </table>
                                 </div>
 
-
                             </div>
-
-                            <div class="col-12 text-center mt-5 pt-5">
-                                <button type="submit" class="btn botonGral mb-3">Guardar</button>
-                            </div>
+                            @if ($vctTareas->isEmpty() === false)
+                                <div class="col-12 text-center mt-5 pt-5">
+                                    <button type="submit" class="btn botonGral mb-3">Guardar</button>
+                                </div>
+                            @else
+                                <div class="col-12 text-center mt-5 pt-5">
+                                    <p>La bitácora no cuenta con grupos de tareas asignados. Verifique que se asignen los
+                                        grupos de tareas correspondientes antes de continuar.</p>
+                                </div>
+                            @endif
 
                         </form>
                     </div>
