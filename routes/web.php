@@ -131,6 +131,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Crud TiposServicios
     Route::resource('tiposServicios', App\Http\Controllers\tiposServiciosController::class);
 
+    // Crud ServiciosMtq
+    Route::resource('serviciosMtq', App\Http\Controllers\serviciosMtqController::class);
+
     // Crud Lugares
     Route::resource('lugares', App\Http\Controllers\lugaresController::class);
     // Crud Ubicaciones

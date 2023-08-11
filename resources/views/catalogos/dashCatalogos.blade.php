@@ -120,6 +120,14 @@
                                             <p class="mt-4 texticonos">Ubicaciones</p>
                                         </a>
                                     </div>
+
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
+                                        <a href="{{ route('serviciosMtq.index') }}" class="">
+                                            <img src="/img/inventario/herramientas.svg" alt="Servicios MTQ"
+                                                title="Servicios MTQ" width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Servicios MTQ</p>
+                                        </a>
+                                    </div>
                                 @endcan
 
 

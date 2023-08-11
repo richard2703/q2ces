@@ -1382,3 +1382,15 @@ values (1,'Maquinaria','Maquinaria','Apartado para seleccionar maquinaria',1,'20
     CONSTRAINT FK_extintores_lugarId foreign key (lugarId) references lugares(id),
     CONSTRAINT FK_extintores_maquinariaId foreign key (maquinariaId) references maquinaria(id)
 );
+
+  create table serviciosMtq (
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) not NULL,
+    codigo varchar(200) null,
+    color varchar(15) not NULL,
+    comentario text NULL,
+    activo TINYINT(1) NOT NULL DEFAULT '1',
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key(id)
+);

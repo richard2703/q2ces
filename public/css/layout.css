@@ -234,6 +234,10 @@
 	.logo {
 	  width: 260px;
 	}
+  /* Calendario en dispositivos grandes */
+  /* .fc-daygrid-day-frame {
+    margin-bottom: 88px;
+} */
   }
   
   .logo img {
@@ -1141,7 +1145,7 @@ table{
   table-layout: fixed;
   }
   th, td {
-    width: 100px;
+    /* width: 100px; */
     word-wrap: break-word;
   }
 
@@ -1189,6 +1193,11 @@ table{
     margin-top: -0.5px;
   }
 
-
+  .fc .fc-toolbar-title {
+    font-size: 2em !important;
+    font-weight: bold; /* Negritas */
+    font-family: "Nunito", sans-serif;
+    color: #444444;
+  }
 
 

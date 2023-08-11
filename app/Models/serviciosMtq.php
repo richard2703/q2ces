@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class calendarioMtq extends Model
+class serviciosMtq extends Model
 {
     use HasFactory;
-    protected $table = "mtqEventos";
 
+    protected $table = "serviciosMtq";
     public $timestamps = true;
 
     protected $fillable = [
-        'title', 'maquina','fecha', 'descripcion','estatus', 'color', 'start', 'end', 
+        'nombre', 'codigo', 'color', 'comentario', 'activo'
     ];
 }
