@@ -62,7 +62,7 @@
 
                             <div class="mb-3">
                               <label for="color" class="labelTitulo">Estatus</label>
-                              <input type="color" disabled
+                              <input type="color"
                                 class="inputCaja" name="color" id="color" aria-describedby="helpId" placeholder="Color">
                             </div>
 
@@ -218,7 +218,6 @@
         .single-day-event {
         border-top: 2px solid blue; /* Cambia el estilo de la línea según tus preferencias */
         border-bottom: 2px solid blue; /* Agrega un borde inferior para mejorar la apariencia */
-        background-color: #5c7c26;
         color: white;
         pointer-events:none;
         font-weight: bold;
@@ -244,20 +243,32 @@ integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6
     var eventosJson = {!! $eventosJson !!};
     // Agregar la clase single-day-event a los eventos con la misma fecha (ignorando la hora)
     for (var i = 0; i < eventosJson.length; i++) {
-        var evento = eventosJson[i];
+    var evento = eventosJson[i];
+    // evento.textColor = evento.color;
+    var start = new Date(evento.start);
+    var end = new Date(evento.end);
+    evento.backgroundColor = evento.color;
+
+    if (
+        start.getFullYear() === end.getFullYear() &&
+        start.getMonth() === end.getMonth() &&
+        start.getDate() === end.getDate()
+    ) {
+        // Agrega la clase "single-day-event" al evento
+        // evento.className = 'single-day-event';
+        // evento.allDay = true;
+        // Agrega el atributo data-color al objeto evento
+        // evento.extendedProps: {
+        // backgroundColor: '#f7c90d'
+        // },
+        // Agrega la información de estilo al evento
+        // evento.styleInfo = {
+        //     backgroundColor: evento.color
+        // };
         
-        var start = new Date(evento.start);
-        var end = new Date(evento.end);
-        
-        // Compara las fechas sin tener en cuenta la hora
-        if (
-            start.getFullYear() === end.getFullYear() &&
-            start.getMonth() === end.getMonth() &&
-            start.getDate() === end.getDate()
-        ) {
-            evento.className = 'single-day-event';
-        }
     }
+    }
+
     console.log('$eventosJson',eventosJson);
     var calendar = new FullCalendar.Calendar(calendarEl, {
         // height: 850,
