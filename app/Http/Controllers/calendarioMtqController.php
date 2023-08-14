@@ -6,6 +6,8 @@ use App\Models\calendarioMtq;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class calendarioMtqController extends Controller
 {
@@ -42,7 +44,8 @@ class calendarioMtqController extends Controller
     {
         //
         $events = $request->all();
-        dd($events);
+        $events['start'] = strtoupper($events['fecha'].' '.$events['hora']);
+        //dd($events);
         $events = calendarioMtq::create($events);
         Session::flash('message', 1);
         return redirect()->route('calendarioMtq.index');
