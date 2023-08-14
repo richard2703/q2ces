@@ -85,7 +85,7 @@ class checkListRegistrosController extends Controller {
             $iRes += 1;
         }
 
-        return redirect()->route( 'editarCheckList.index' );
+        return redirect()->route( 'checkList.index' );
 
     }
 

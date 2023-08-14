@@ -25,14 +25,13 @@
                                     <div class="row">
                                         <div class="col-12 text-right">
                                             <div>
-                                                <a href="{{ url('/nuevaTareaCheck') }}">
+                                                <a href="{{ url('/bitacoras/') }}">
                                                     <!--Agregar ruta-->
-                                                    <button type="button" class="btn botonGral float-end">Añadir Nueva
-                                                        Revisión</button>
+                                                    <button type="button" class="btn botonGral float-end">Bitácoras</button>
                                                 </a>
                                             </div>
                                             <div>
-                                                <a href="{{ url('/checkList/nuevo' ) }}">
+                                                <a href="{{ url('/checkList/seleccionar/' ) }}">
                                                     <!--Agregar ruta-->
                                                     <button type="button" class="btn botonGral float-end">Añadir Nuevo
                                                         Checklist</button>
