@@ -173,7 +173,9 @@ class maquinariaMtqController extends Controller
         // abort_if(Gate::denies('maquinaria_mtq_destroy'), 403);
 
         $maquinaria = usoMaquinarias::join('maquinaria', 'maquinaria.id', 'usoMaquinarias.maquinariaId')
-            ->whereNotNull('compania')->paginate(15);
+            ->select('identificador', 'nombre', 'marca', 'modelo', 'placas', 'usoMaquinarias.uso')
+            ->where('compania', 'mtq')->orderBy('usoMaquinarias.created_at', 'desc')
+            ->paginate(15);
         // dd($maquinaria);
 
 

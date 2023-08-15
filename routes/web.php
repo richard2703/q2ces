@@ -369,6 +369,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('calendarioMtq', App\Http\Controllers\calendarioMtqController::class);
     Route::resource('docs', App\Http\Controllers\docsController::class);
     Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
+    Route::resource('uso', App\Http\Controllers\usoMaquinariasController::class);
 
     // Crud Extintores
     Route::resource('extintores', App\Http\Controllers\extintoresController::class);

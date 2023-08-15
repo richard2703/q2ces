@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\usoMaquinarias;
 use App\Http\Controllers\Controller;
+use App\Models\maquinaria;
 use Illuminate\Http\Request;
 
 class usoMaquinariasController extends Controller
@@ -25,9 +26,13 @@ class usoMaquinariasController extends Controller
      */
     public function create()
     {
-        //
+        // dd('create')
+        $maquinaria = maquinaria::where('compania', 'mtq')->get();
+        // dd($maquinaria);
+        return view('mtq.createUsoMaquinariaMtq', compact('maquinaria'));
     }
-
+    // "kilometraje" => null
+    // "kom" => null
     /**
      * Store a newly created resource in storage.
      *
@@ -36,7 +41,22 @@ class usoMaquinariasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        for ($i = 0; $i < count($request['id']); $i++) {
+            if ($request['valor'][$i] != '' || $request['valor'][$i] != null) {
+                $maquina  = maquinaria::find($request['id'][$i]);
+                $objUso = new usoMaquinarias();
+                $objUso->maquinariaId  = $request['id'][$i];
+                $objUso->anterior  = $maquina->kilometraje;
+                $objUso->uso = $request['valor'][$i];
+                $objUso->comentario = null;
+                $objUso->foto = null;
+                $objUso->save();
+                $maquina->kilometraje = $request['valor'][$i];
+                $maquina->save();
+            }
+        }
+        return redirect()->action([maquinariaMtqController::class, 'uso']);
     }
 
     /**
