@@ -4,14 +4,37 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/locales/es.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.css">
-    
+    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <!-- Bootstrap CSS v5.2.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 </head>
     <div class="content">
+    <div class="row">
+        <div class="col-4 text-left mb-1" style="margin-left: 12px">
+            <a href="{{ url('dashMtq') }}" id="regresarId">
+                <button class="btn regresar" style="background-color: var(--select);
+                color: #fff;
+                display: inline-flex;">
+                    <span class="material-icons">
+                        reply
+                    </span>
+                    Regresar
+                </button>
+            </a>
+            </div>
+            <div class="col-8 text-end mb-1" style="margin-left: -25px">
+                @can('maquinaria_mtq_create')
+                    <button data-bs-toggle="modal" data-bs-target="#modalEvento" type="button"
+                        class="btn botonGral">Añadir
+                        Evento</button>
+                @endcan
+            </div>
+        </div>
         <div class="container-fluid">
-
+        
         <div id='calendar'></div>
         
         <!-- Modal Body-->
@@ -33,14 +56,28 @@
                                 class="form-control" name="id" id="id" aria-describedby="helpId" placeholder="ID">
                             </div> -->
 
+                            <div class="mb-3" role="search">
+                                <label for="title" class="labelTitulo">Buscador:</label>
+                                <input autofocus type="text" class="inputCaja" id="searchS" name="search"
+                                    placeholder="Buscar Equipo..." title="Escriba la(s) palabra(s) a buscar.">
+                            </div>
+
+
                             <div class="mb-3">
-                              <label for="title" class="labelTitulo">Mantenimiento:</label>
-                              <select name="title" id="title" required class="form-select">
-                                <option value="Seleccione">Seleccione</option>
-                                <option value="Reparacion">Reparacion</option>
-                                <option value="Afinacion">Afinacion</option>
-                                <option value="Revision">Revision</option>
-                              </select>
+                                <label for="title" class="labelTitulo">Mantenimiento:</label>
+                                <select name="title" id="titleSelect" required class="form-select">
+                                    <option value="">Seleccione</option>
+                                    @foreach ($servicios as $item)
+                                        <option value="{{ $item->id }}" data-color="{{ $item->color }}">
+                                            {{ $item->nombre }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                            <label for="color" class="labelTitulo">Color:</label>
+                                <div id="colorBox" class="color-box w-100" style="margin-left:-0.5px"></div>
                             </div>
 
                             <div class="mb-3">
@@ -56,14 +93,8 @@
                             </div>
 
                             <div class="mb-3">
-                              <label for="descripcion" class="labelTitulo">Descripción</label>
+                              <label for="descripcion" class="labelTitulo">Descripción:</label>
                               <textarea class="form-control border-green" name="descripcion" id="descripcion" rows="3" placeholder="Especifique..."></textarea>
-                            </div>
-
-                            <div class="mb-3">
-                              <label for="color" class="labelTitulo">Estatus</label>
-                              <input type="color"
-                                class="inputCaja" name="color" id="color" aria-describedby="helpId" placeholder="Color">
                             </div>
 
                         </div>
@@ -117,6 +148,14 @@
         </div>
     </div>
     <style>
+        .color-box {
+            width: 30px; /* Ajusta el ancho según tus preferencias */
+            height: 30px; /* Ajusta la altura según tus preferencias */
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 10px; /* Ajusta el margen según tus preferencias */
+            border: 1px solid #ccc;
+        }
         .fc-toolbar { text-transform: capitalize; }
         .fc-scroller { text-transform: capitalize; }
         .fc-daygrid-day-top {
@@ -222,10 +261,47 @@
         pointer-events:none;
         font-weight: bold;
         }
+        #regresarId:hover button{
+            color: black !important;
+        }
     </style>
-@endsection
-<script>
     
+<script>
+    $('#searchS').autocomplete({
+        
+        source: function(request, response) {
+        $.ajax({
+            url: "{{ route('search.equipos') }}",
+            dataType: 'json',
+            data: {
+                term: request.term,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(data) {
+                var limitedResults = data.slice(0, 16);
+                response(limitedResults);
+            }
+        });
+    },
+    minChars: 1,
+    width: 402,
+    matchContains: "word",
+    autoFill: true,
+    minLength: 1,
+    select: function(event, ui) {
+
+        // Rellenar los campos con los datos de la persona seleccionada
+        $('#maquinariaId').val(ui.item.id);
+        // $('#descripcion').val(ui.item.value);
+        $('#titulo').val('Mantenimiento ' + ui.item.nombre);
+        // $('#nombre').val(ui.item.nombre);
+        // $('#marca').val(ui.item.marca);
+        // $('#modelo').val(ui.item.modelo);
+        // $('#numserie').val(ui.item.numserie);
+        // $('#placas').val(ui.item.placas);
+    }
+    });
+
 </script>
 <!-- Bootstrap JavaScript Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
@@ -258,9 +334,9 @@ integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6
         // evento.className = 'single-day-event';
         // evento.allDay = true;
         // Agrega el atributo data-color al objeto evento
-        // evento.extendedProps: {
-        // backgroundColor: '#f7c90d'
-        // },
+        evento.extendedProps = {
+            backgroundColor: evento.color
+        };
         // Agrega la información de estilo al evento
         // evento.styleInfo = {
         //     backgroundColor: evento.color
@@ -276,7 +352,12 @@ integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6
     views: {
             timeGrid: {
                 dayMaxEventRows: 5,
-                eventMaxStack: 2
+            },
+            week: {
+                eventMaxStack: 1,
+            },
+            day: {
+                eventMaxStack: 5,
             }
         },
         eventMaxStack: true,
@@ -290,7 +371,7 @@ integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6
         dateClick:function(informacion){
             //alert("DATE: " + informacion.dateStr);
             document.getElementById('fecha').value = informacion.dateStr;
-            document.getElementById('color').value= '#f7c90d';
+            //document.getElementById('color').value= '#f7c90d';
             modalEvento.show();
             
         },
@@ -321,3 +402,20 @@ integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6
     calendar.render();
     });
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var titleSelect = document.getElementById("titleSelect");
+    var colorBox = document.getElementById("colorBox");
+
+    titleSelect.addEventListener("change", function() {
+        var selectedColor = this.options[this.selectedIndex].getAttribute("data-color");
+        colorBox.style.backgroundColor = selectedColor;
+    });
+});
+</script>
+@endsection
+    
+
+
+
