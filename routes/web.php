@@ -131,6 +131,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Crud TiposServicios
     Route::resource('tiposServicios', App\Http\Controllers\tiposServiciosController::class);
 
+    // Crud ServiciosMtq
+    Route::resource('serviciosMtq', App\Http\Controllers\serviciosMtqController::class);
+
     // Crud Lugares
     Route::resource('lugares', App\Http\Controllers\lugaresController::class);
     // Crud Ubicaciones
@@ -231,6 +234,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'destroy'])->name('maquinaria.delete');
     // Maquinaria Imagen Borrar
     Route::put('/maquinaria/imagen/delete', [App\Http\Controllers\maquinariaController::class, 'destroyImage'])->name('maquinaria.destroyImage');
+    Route::get('maquinaria/uso', [App\Http\Controllers\maquinariaController::class, 'uso'])->name('maquinaria.uso');
 
     //Crud accesorios
     Route::get('/accesorios/nuevo', [App\Http\Controllers\accesoriosController::class, 'create'])->name('accesorios.create');
@@ -330,13 +334,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/checkList/registros/editar/', [App\Http\Controllers\checkListRegistrosController::class, 'update'])->name('checkListRegistros.update');
 
     // Equipos MTQ
-    Route::get('/dashMtq', function () {
-        return view('mtq.dashMtq');
-    });
+    // Route::get('/dashMtq', function () {
+    //     return view('mtq.dashMtq');
+    // });
     Route::resource('mtq', App\Http\Controllers\maquinariaMtqController::class);
-
+    Route::get('checkList/uso', [App\Http\Controllers\maquinariaMtqController::class, 'uso'])->name('mtq.uso');
 
     Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');
+    Route::get('search/equiposMTQ', [App\Http\Controllers\searchController::class, 'equiposMTQ'])->name('search.equiposMTQ');
     Route::get('search/materialMantenimiento', [App\Http\Controllers\searchController::class, 'materialMantenimiento'])->name('search.materialMantenimiento');
     Route::get('search/tareasParaGrupos', [App\Http\Controllers\searchController::class, 'tareasParaGrupos'])->name('search.tareasParaGrupos');
     Route::get('search/gruposParaBitacoras', [App\Http\Controllers\searchController::class, 'gruposParaBitacoras'])->name('search.gruposParaBitacoras');
@@ -366,6 +371,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('calendarioMtq', App\Http\Controllers\calendarioMtqController::class);
     Route::resource('docs', App\Http\Controllers\docsController::class);
     Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
+    Route::resource('uso', App\Http\Controllers\usoMaquinariasController::class);
 
     // Crud Extintores
     Route::resource('extintores', App\Http\Controllers\extintoresController::class);

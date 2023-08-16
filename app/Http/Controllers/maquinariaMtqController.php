@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Helpers\Validaciones;
 use Illuminate\Support\Facades\Session;
 use App\Models\maqimagen;
+use App\Models\usoMaquinarias;
 
 class maquinariaMtqController extends Controller
 {
@@ -68,19 +69,19 @@ class maquinariaMtqController extends Controller
 
         //*** se guarda la maquinaria */
         //dd($request);
-        
+
         $maquinaria = maquinaria::create($maquinaria);
-        
+
         //**Imagenes de la maquinaria */
-        
+
         if ($request->hasFile('foto')) {
             // dd($request);
-                $maquinaria->foto = time() . '_' . $request->file('foto')->getClientOriginalName();
-                //$maqimagen = maqimagen::create($imagen); 
-                $request->file('foto')->storeAs('/public/maquinaria/' . $pathMaquinaria, $maquinaria->foto);
-                $maquinaria->save();
+            $maquinaria->foto = time() . '_' . $request->file('foto')->getClientOriginalName();
+            //$maqimagen = maqimagen::create($imagen); 
+            $request->file('foto')->storeAs('/public/maquinaria/' . $pathMaquinaria, $maquinaria->foto);
+            $maquinaria->save();
         }
-        
+
 
         Session::flash('message', 1);
         return redirect()->route('mtq.index');
@@ -97,7 +98,7 @@ class maquinariaMtqController extends Controller
         abort_if(Gate::denies('maquinaria_mtq_show'), 403);
 
         // dd( $docs );
-//        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'docs', 'fotos', 'vctEstatus'));
+        //        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'docs', 'fotos', 'vctEstatus'));
     }
 
     /**
@@ -124,10 +125,10 @@ class maquinariaMtqController extends Controller
     {
         abort_if(Gate::denies('maquinaria_mtq_edit'), 403);
 
-        $maquinariaMtq = maquinaria::where('id',$request->id)->first();
+        $maquinariaMtq = maquinaria::where('id', $request->id)->first();
         // dd($request, $maquinaria, $maquinariaMtq);
         $data = $request->all();
-        
+
         $data['identificador'] = strtoupper($data['identificador']);
         $data['placas'] = strtoupper($data['placas']);
         $data['nummotor'] = strtoupper($data['nummotor']);
@@ -139,7 +140,7 @@ class maquinariaMtqController extends Controller
 
         $maquinariaMtq->update($data);
 
-        
+
         if ($request->hasFile('foto')) {
             //dd($request);    
             $maquinariaMtq->foto = time() . '_' . $request->file('foto')->getClientOriginalName();
@@ -164,6 +165,20 @@ class maquinariaMtqController extends Controller
     {
         abort_if(Gate::denies('maquinaria_mtq_destroy'), 403);
 
-        $this->cambiaEstatusMaquinaria($id, $estatusId);
+        // $this->cambiaEstatusMaquinaria($id, $estatusId);
+    }
+
+    public function uso()
+    {
+        // abort_if(Gate::denies('maquinaria_mtq_destroy'), 403);
+
+        $maquinaria = usoMaquinarias::join('maquinaria', 'maquinaria.id', 'usoMaquinarias.maquinariaId')
+            ->select('identificador', 'nombre', 'marca', 'modelo', 'placas', 'usoMaquinarias.uso')
+            ->where('compania', 'mtq')->orderBy('usoMaquinarias.created_at', 'desc')
+            ->paginate(15);
+        // dd($maquinaria);
+
+
+        return view('mtq.indexUsoMaquinariaMtq', compact('maquinaria'));
     }
 }

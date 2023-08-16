@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\lugares;
-use App\Models\ubicaciones;
+use App\Models\serviciosMtq;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
-class lugaresController extends Controller
+class serviciosMtqController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,10 +16,10 @@ class lugaresController extends Controller
      */
     public function index()
     {
-        abort_if(Gate::denies('lugares_index'), '404');
-        $lugares = lugares::orderBy('created_at', 'desc')->paginate(10);
-        $ubicacion = ubicaciones::all();
-        return view('catalogos.indexLugares', compact('lugares', 'ubicacion'));
+        // dd('index Servicios MTQ');
+        // abort_if(Gate::denies('ubicaciones_index'), '404');
+        $servicios = serviciosMtq::orderBy('created_at', 'desc')->paginate(15);
+        return view('catalogos.indexServiciosMtq', compact('servicios'));
     }
 
     /**
@@ -44,6 +40,7 @@ class lugaresController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
             'nombre' => 'required|max:250',
             'comentario' => 'nullable|max:500',
@@ -53,50 +50,37 @@ class lugaresController extends Controller
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
         ]);
 
-        $lugares = $request->all();
-        if ((isset($request->check) && $request->check == 'on')) {
-            $lugares['activo'] = 1;
-        } else {
-            $lugares['activo'] = 0;
-        }
-        // dd( $lugares );
-
-        lugares::create($lugares);
+        $servicios = $request->all();
+        // dd( $ubicaciones );
+        serviciosMtq::create($servicios);
         Session::flash('message', 1);
 
-        return redirect()->route('lugares.index');
+        return redirect()->route('serviciosMtq.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\lugares  $lugares
+     * @param  \App\Models\serviciosMtq  $serviciosMtq
      * @return \Illuminate\Http\Response
      */
-    public function show(lugares $lugares)
+    public function show(serviciosMtq $serviciosMtq)
     {
-        //
+        dd('show');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\lugares  $lugares
+     * @param  \App\Models\serviciosMtq  $serviciosMtq
      * @return \Illuminate\Http\Response
      */
-    public function edit(lugares $lugares)
+    public function edit(serviciosMtq $serviciosMtq)
     {
-        //
+        dd('edit');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\lugares  $lugares
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, lugares $lugares)
+    public function update(Request $request)
     {
         $request->validate([
             'nombre' => 'required|max:250',
@@ -107,29 +91,18 @@ class lugaresController extends Controller
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
         ]);
         $data = $request->all();
+        $servicio = serviciosMtq::where('id', $data['servicioId'])->first();
 
-        $lugares = lugares::where('id', $data['controlId'])->first();
-        if ((isset($request->check) && $request->check == 'on')) {
-            $lugares['activo'] = 1;
-        } else {
-            $lugares['activo'] = 0;
-        }
-        if (is_null($lugares) == false) {
+        if (is_null($servicio) == false) {
             // dd( $data );
-            $lugares->update($data);
+            $servicio->update($data);
             Session::flash('message', 1);
         }
 
-        return redirect()->route('lugares.index');
+        return redirect()->route('serviciosMtq.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\lugares  $lugares
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(lugares $lugares)
+    public function destroy(serviciosMtq $serviciosMtq)
     {
         //
     }

@@ -364,13 +364,23 @@
                         @can('maquinaria_mtq_index')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
-                                {{--  <a href="{{ route('mtq.calendarioMtq') }}" class="">  --}}
-                                <a href="#" class="">
+                                <a href="{{ route('calendarioMtq.index') }}" class="">
+                                    {{--  <a href="#" class="">  --}}
 
                                     <i class="bi bi-circle"></i><span>Calendario</span>
                                 </a>
                             </li>
                         @endcan
+
+                        @can('maquinaria_mtq_index')
+                            <li>
+                                {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
+                                <a href="{{ route('mtq.uso') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Uso de Equipo</span>
+                                </a>
+                            </li>
+                        @endcan
+
                         @can('maquinaria_mtq_index')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
