@@ -1410,3 +1410,14 @@ create table mtqEventos (
     updated_at timestamp NULL DEFAULT NULL,
     PRIMARY KEY (id)
 );
+
+  create table usoMaquinarias (
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    maquinariaId bigint(20) unsigned not null,
+    uso float(10, 2) not null,
+    comentario text NULL,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key(id),
+    CONSTRAINT FK_usoMaquinarias_maquinariaId foreign key (maquinariaId) references maquinaria(id)
+);

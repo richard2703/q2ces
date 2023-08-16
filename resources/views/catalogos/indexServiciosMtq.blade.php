@@ -68,7 +68,7 @@
                                                 <td class="td-actions text-center">
                                                     @can('ubicaciones_show')
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
-                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->comentario }}','{{ $item->activo }}','{{ $item->direccion }}','{{ true }}')">
+                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->codigo }}','{{ $item->nombre }}','{{ $item->color }}','{{ $item->comentario }}','{{ true }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                 height="28" fill="currentColor"
                                                                 class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
@@ -82,7 +82,7 @@
                                                     @can('ubicaciones_edit')
                                                         <a href="#" class="" data-bs-toggle="modal"
                                                             data-bs-target="#editarItem"
-                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->comentario }}','{{ $item->activo }}','{{ $item->direccion }}','{{ false }}')">
+                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->codigo }}','{{ $item->nombre }}','{{ $item->color }}','{{ $item->comentario }}','{{ false }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                 height="28" fill="currentColor"
                                                                 class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -184,31 +184,32 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('ubicaciones.update', 0) }}" method="post">
+                    <form class="row d-flex" action="{{ route('serviciosMtq.update', 0) }}" method="post"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('put')
-                        <input type="hidden" name="controlId" id="controlId" value="">
-                        <div class=" col-9 col-sm-8 col-lg-10 mb-3 ">
-                            <label class="labelTitulo">Nombre: <span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="controlNombre" name="nombre" value="">
+                        <input type="hidden" name="servicioId" id="servicioId" value="">
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Codigo:<span>*</span></label></br>
+                            <input type="text" class="inputCaja" name="codigo" id="codigo"
+                                value="{{ old('codigo') }}" placeholder="ej: MT-00">
                         </div>
 
-                        <div class=" col-3 col-sm-4 col-lg-2 mb-3 ">
-                            <label class="labelTitulo">Activo: <span>*</span></label></br>
-                            <input class="form-check-input is-valid align-self-end mb-2" type="checkbox" name="check"
-                                id="controlActivo" style="font-size: 20px;">
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Nombre:<span>*</span></label></br>
+                            <input type="text" class="inputCaja" name="nombre" id="nombre"
+                                value="{{ old('nombre') }}" placeholder="Especifique...">
+                        </div>
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Color:<span>*</span></label></br>
+                            <input type="color" class="inputCaja" name="color" id="color"
+                                value="{{ old('color') }}">
                         </div>
 
-                        <div class=" col-12 mb-3 ">
-                            <label class="labelTitulo">Dirección: <span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="controlDireccion" name="direccion"
-                                value="">
-                        </div>
-
-                        <div class=" col-12  mb-3 ">
-                            <label class="labelTitulo">Comentarios:</label></br>
-                            <textarea class="form-control border-green" placeholder="Escribe tu comentario aquí" id="controlComentarios"
-                                name="comentario"></textarea>
+                        <div class=" col-12  my-3 ">
+                            <label class="labelTitulo">Comentario: <span>*</span></label>
+                            <textarea class="form-select" id="controlcomentario" rows="3" maxlength="1000" required name="comentario"
+                                value="" placeholder="Escribe aquí tus comentario."></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -225,16 +226,6 @@
     </div>
 
     <script src="{{ asset('js/alertas.js') }}"></script>
-    <script type="application/javascript">
-        jQuery('input[type=file]').change(function(){
-         var filename = jQuery(this).val().split('\\').pop();
-         var idname = jQuery(this).attr('id');
-         console.log(jQuery(this));
-         console.log(filename);
-         console.log(idname);
-         jQuery('span.'+idname).next().find('span').html(filename);
-        });
-        </script>
 
     <script>
         function Guardado() {
@@ -264,32 +255,31 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, comentario, activo, direccion, modalTipo) {
-            const txtId = document.getElementById('controlId');
+        function cargaItem(id, codigo, nombre, color, comentario, modalTipo) {
+
+            const txtId = document.getElementById('servicioId');
             txtId.value = id;
 
-            const txtNombre = document.getElementById('controlNombre');
+            const txtCodigo = document.getElementById('codigo');
+            txtCodigo.value = codigo;
+            txtCodigo.disabled = modalTipo;
+
+            const txtNombre = document.getElementById('nombre');
             txtNombre.value = nombre;
             txtNombre.disabled = modalTipo;
 
-            const txtComentarios = document.getElementById('controlComentarios');
-            txtComentarios.value = comentario;
-            txtComentarios.disabled = modalTipo;
+            const txtColor = document.getElementById('color');
+            txtColor.value = color;
+            txtColor.disabled = modalTipo;
 
-            const txtActivo = document.getElementById('controlActivo');
-            if (activo == 1) {
-                txtActivo.checked = true;
-            } else {
-                txtActivo.checked = false;
-            }
-            txtActivo.disabled = modalTipo;
 
-            const txtDireccion = document.getElementById('controlDireccion');
-            txtDireccion.value = direccion;
-            txtDireccion.disabled = modalTipo;
+            const txtComentario = document.getElementById('controlcomentario');
+            txtComentario.value = comentario;
+            txtComentario.readOnly = modalTipo;
 
             const contenedorBotonGuardar = document.getElementById('contenedorBotonGuardar');
 
+            console.log(modalTipo);
             if (modalTipo) {
                 contenedorBotonGuardar.style.display = 'none';
             } else {
