@@ -1141,6 +1141,23 @@ Alta de maquinaria
   z-index: 9999;
 }
 
+/* Estilos para el autocompletado */
+.ui-autocomplete {
+  position: absolute !important;
+  z-index: 9999 !important; 
+  overflow-y: auto !important;
+}
+.ui-menu-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+/* Estilos para el elemento que hagas hover */
+.ui-state-focus,
+.ui-autocomplete .ui-state-active {
+  background-color: #f0f0f0;
+}
+
 table{
   table-layout: fixed;
   }

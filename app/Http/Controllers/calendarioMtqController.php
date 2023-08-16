@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use App\Models\serviciosMtq;
 
 class calendarioMtqController extends Controller
 {
@@ -21,8 +22,10 @@ class calendarioMtqController extends Controller
         abort_if ( Gate::denies( 'puesto_index' ), 403 );
         $eventos = calendarioMtq::all();
         $eventosJson = $eventos->toJson();
+        $servicios = serviciosMtq::all();
+        
         // dd( $puestos );
-        return view( 'mtq.calendario', compact('eventosJson'));
+        return view( 'mtq.calendario', compact('eventosJson', 'servicios'));
     }
 
     /**
@@ -45,7 +48,7 @@ class calendarioMtqController extends Controller
         //
         $events = $request->all();
         $events['start'] = strtoupper($events['fecha'].' '.$events['hora']);
-        //dd($events);
+        $events['title'] = strtoupper($events['mantenimiento'].' '.$events['placas']);
         $events = calendarioMtq::create($events);
         Session::flash('message', 1);
         return redirect()->route('calendarioMtq.index');
