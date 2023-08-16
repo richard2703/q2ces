@@ -95,7 +95,7 @@
                                     <div class="col-12" id="elementos">
                                         <div class="d-flex">
                                             <div class="col-6 divBorder">
-                                                <h2 class="tituloEncabezado ">Equipo asignado</h2>
+                                                <h2 class="tituloEncabezado ">Equipo Asignado</h2>
                                             </div>
                                             <div class="col-6 divBorder pb-3 text-end">
                                                 <button type="button" class="btnVerde" onclick="crearItems()">
@@ -111,7 +111,7 @@
                                                 <div class="col-12 col-sm-6 col-lg-2 my-3 ">
                                                     <label class="labelTitulo">Cantidad:
                                                         <span>*</span></label></br>
-                                                    <input type="number" class="inputCaja" id="cantidad" name="cantidad[]"
+                                                    <input type="number" class="inputCaja" id="cantidad" name="cantidad[]" required
                                                         value="{{ $asignado->cantidad }}">
                                                 </div>
 
@@ -221,7 +221,7 @@
 
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
 
 
@@ -240,7 +240,7 @@
                 $(this).closest('.opcion').remove();
             }
         });
-        
+
     </script>
 
     <script type="application/javascript">

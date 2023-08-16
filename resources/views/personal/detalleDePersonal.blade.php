@@ -49,6 +49,11 @@
                                     <a href="{{ route('personal.equipo', $personal->id) }}" method="get">
                                         <button class="btn botonGral">Asignar Equipo</button>
                                     </a>
+
+
+                                    <a href="{{ route('personal.uniforme', $personal->id) }}" method="get">
+                                        <button class="btn botonGral">Asignar Uniforme</button>
+                                    </a>
                                     {{--  @endcan  --}}
 
 
@@ -68,7 +73,7 @@
                                             <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"
                                                     id="mi-archivo" accept="image/*"></span>
                                             <label for="mi-archivo">
-                                                <span>sube imagen</span>
+                                                <span>Sube Imagen</span>
                                             </label>
                                         </div>
                                     </div>
@@ -76,8 +81,8 @@
                                     <div class="col-12 col-md-8 px-2">
                                         <div class="row alin">
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                <label class="labelTitulo">Número del Empleado:</label></br>
-                                                <input type="text" class="inputCaja" id="" name="calle"
+                                                <label class="labelTitulo">Número de Empleado:</label></br>
+                                                <input type="text" class="inputCaja" id="numEmpleado" name="numEmpleado"
                                                     value="">
                                             </div>
 

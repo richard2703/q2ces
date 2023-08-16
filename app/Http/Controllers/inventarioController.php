@@ -720,4 +720,23 @@ class inventarioController extends Controller
 
         return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
     }
+
+
+
+    /**
+     * Obtiene los uniformes registrados por el tipo de uniforme
+     *
+     * @param [type] $uniformeTipoId
+     * @return void
+     */
+    public function uniformesPorTipo($uniformeTipoId)
+    {
+            $data =  inventario::orderby("nombre", "asc")
+                ->select('id', 'nombre', 'uniformeTalla','cantidad' )
+                ->where('tipo', '=','uniformes')
+                ->where('uniformeTipoId','=', $uniformeTipoId)
+                ->get();
+        // dd($data);
+        return response()->json($data);
+    }
 }
