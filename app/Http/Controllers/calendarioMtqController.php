@@ -48,7 +48,7 @@ class calendarioMtqController extends Controller
         //
         $events = $request->all();
         $events['start'] = strtoupper($events['fecha'].' '.$events['hora']);
-        //dd($events);
+        $events['title'] = strtoupper($events['mantenimiento'].' '.$events['placas']);
         $events = calendarioMtq::create($events);
         Session::flash('message', 1);
         return redirect()->route('calendarioMtq.index');
