@@ -43,6 +43,29 @@ class checkListController extends Controller {
     }
 
     /**
+    * Show the form for seleccionar sobre que equipo se realizará un checklist.
+    *
+    * @return \Illuminate\Http\Response
+    */
+
+    public function seleccionar() {
+        // dd( 'Hola' );
+        abort_if ( Gate::denies( 'checkList_index' ), 403 );
+
+        $records = bitacoras::select(
+            'bitacoras.*',
+            DB::raw( 'maquinaria.nombre AS maquinaria' ),
+            DB::raw( 'maquinaria.id AS maquinariaId' ),
+            DB::raw( 'bitacoras.nombre AS bitacora' ),
+            DB::raw( 'bitacoras.id AS bitacoraId' )
+        )
+        ->join( 'maquinaria', 'maquinaria.bitacoraId', '=', 'bitacoras.id' )
+        ->orderBy( 'bitacoras.nombre', 'desc' )->paginate( 15 );
+
+        return view( 'checkList.seleccionarCheckList', compact( 'records' ) );
+    }
+
+    /**
     * Show the form for creating a new resource.
     *
     * @return \Illuminate\Http\Response

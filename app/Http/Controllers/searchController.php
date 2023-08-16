@@ -133,6 +133,39 @@ class searchController extends Controller
         // return response()->json( $sugerencias );
     }
 
+    public function equiposMTQ(Request $request)
+    {
+        //dd( $request );
+        // $term = $request->input( 'term' );
+        $term = $request->get('term');
+
+        $maquinaria = Maquinaria::whereNotNull('compania')
+        ->where(function ($query) use ($term) {
+            $query->where('nombre', 'LIKE', '%' . $term . '%')
+                ->orWhere('marca', 'LIKE', '%' . $term . '%')
+                ->orWhere('categoria', 'LIKE', '%' . $term . '%');
+        })
+        ->get();
+
+        $sugerencias = [];
+        foreach ($maquinaria as $item) {
+
+            $sugerencias[] = [
+                'value' =>  'Equipo ' . $item->nombre . ', Marca ' . $item->marca . ', Modelo ' . $item->modelo  . ', NS ' .  $item->numserie . ', Placas ' .  $item->placas,
+                'id' => $item->id,
+                'nombre' => $item->nombre,
+                'marca' => $item->marca,
+                'numserie' => $item->numserie,
+                'placas' => $item->placas,
+                'modelo' => $item->modelo,
+                'identificador' => $item->identificador,
+            ];
+        }
+
+        return $sugerencias;
+        // return response()->json( $sugerencias );
+    }
+
     /**
      * Busca material para el mantenimiento de equipos
      *

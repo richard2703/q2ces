@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class calendarioMtq extends Model
 {
     use HasFactory;
-    protected $table = "calendarioMtq";
+    protected $table = "mtqEventos";
 
     public $timestamps = true;
 
     protected $fillable = [
-        'dia', 'concepto', 
+        'title', 'maquina','fecha', 'descripcion','estatus', 'color', 'start', 'end', 
     ];
 }
