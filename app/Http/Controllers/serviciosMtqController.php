@@ -66,7 +66,7 @@ class serviciosMtqController extends Controller
      */
     public function show(serviciosMtq $serviciosMtq)
     {
-        //
+        dd('show');
     }
 
     /**
@@ -77,27 +77,31 @@ class serviciosMtqController extends Controller
      */
     public function edit(serviciosMtq $serviciosMtq)
     {
-        //
+        dd('edit');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\serviciosMtq  $serviciosMtq
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, serviciosMtq $serviciosMtq)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|max:250',
+            'comentario' => 'nullable|max:500',
+        ], [
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
+            'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+        ]);
+        $data = $request->all();
+        $servicio = serviciosMtq::where('id', $data['servicioId'])->first();
+
+        if (is_null($servicio) == false) {
+            // dd( $data );
+            $servicio->update($data);
+            Session::flash('message', 1);
+        }
+
+        return redirect()->route('serviciosMtq.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\serviciosMtq  $serviciosMtq
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(serviciosMtq $serviciosMtq)
     {
         //
