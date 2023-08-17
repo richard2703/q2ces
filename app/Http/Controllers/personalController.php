@@ -25,6 +25,7 @@ use App\Models\puesto;
 use App\Models\puestoNivel;
 use App\Models\tipoEquipo;
 use App\Models\inventario;
+use App\Models\inventarioMovimientos;
 use App\Models\tipoUniforme;
 
 class personalController extends Controller {
@@ -534,6 +535,7 @@ class personalController extends Controller {
     }
 
     public function asignacionUniforme( Request $request, $personal ) {
+        // dd( $request );
         $nuevaLista = collect();
         for ( $i = 0; $i < count( $request[ 'asignado' ] );
         $i++ ) {
@@ -558,8 +560,24 @@ class personalController extends Controller {
                 $asiEquipo->comentario  = $request[ 'comentario' ][ $i ];
                 $asiEquipo->save();
                 $nuevaLista->push( $asiEquipo->id );
+
+                $objMovimiento = new inventarioMovimientos();
+                $objMovimiento->movimiento = 2; //*** resta al inventario  */
+                $objMovimiento->inventarioId = $request[ 'inventarioId' ][ $i ];
+                $objMovimiento->cantidad = $request[ 'cantidad' ][ $i ];
+                $objMovimiento->precioUnitario = 0;
+                $objMovimiento->total = 0;
+                $objMovimiento->usuarioId = $request['usuarioId'];
+                $objMovimiento->Save();
+
+                $objInventario = inventario::where('id','=', $request[ 'inventarioId' ][ $i ])->first();
+                if ( $objInventario ) {
+                    $objInventario->cantidad = $objInventario->cantidad - $request[ 'cantidad' ][ $i ];
+                    $objInventario->save();
+                }
             }
-            asignacionUniforme::where( 'personalId', $personal )->whereNotIn( 'id', $nuevaLista )->delete();
+
+            // asignacionUniforme::where( 'personalId', $personal )->whereNotIn( 'id', $nuevaLista )->delete();
         }
         return redirect()->back();
     }

@@ -59,6 +59,7 @@
 
                                 <div class="col-12 col-md-8 my-3 ">
                                     <div class="row alin">
+                                        <input type="hidden" name="usuarioId" id="usuarioId" value="{{  auth()->user()->id }}">
 
                                         <div class=" col-12 col-sm-6 col-lg-8 mb-3 ">
                                             <label class="labelTitulo">Tipo:</label></br>
@@ -70,13 +71,14 @@
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Número de Parte: <span>*</span></label></br>
-                                            <input type="text" class="inputCaja" id="numparte" name="numparte" required
-                                                value="{{ old('numparte') }}">
+                                            <input type="number" class="inputCaja text-right" required class="inputCaja"
+                                                id="numparte" name="numparte" value="{{ old('numparte') }}" maxlength="10"
+                                                step="1" min="0">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-8 mb-3 ">
                                             <label class="labelTitulo">Nombre: <span>*</span></label></br>
-                                            <input type="text" class="inputCaja" id="nombre" name="nombre"
+                                            <input type="text" class="inputCaja" id="nombre" name="nombre" required
                                                 value="{{ old('nombre') }}">
                                         </div>
 
@@ -95,7 +97,7 @@
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Modelo: <span>*</span></label></br>
-                                            <input type="text" class="inputCaja" id="modelo" name="modelo"
+                                            <input type="text" class="inputCaja" id="modelo" name="modelo" required
                                                 value="{{ old('modelo') }}">
                                         </div>
 
@@ -115,13 +117,14 @@
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Cantidad: <span>*</span></label></br>
                                             <input type="number" step="1" min="1" class="inputCaja text-end"
-                                                id="cantidad" name="cantidad" value="{{ old('cantidad') }}">
+                                                required id="cantidad" name="cantidad" value="{{ old('cantidad') }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Mínimo:</label></br>
-                                            <input type="number" step="1" min="1" class="inputCaja text-end"
-                                                id="reorden" name="reorden" value="{{ old('reorden') }}">
+                                            <input type="number" step="1" min="1"
+                                                class="inputCaja text-end" id="reorden" name="reorden"
+                                                value="{{ old('reorden') }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -134,7 +137,7 @@
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Costo Unitario: <span>*</span></label></br>
                                             <input type="number" step="0.01" min="0.01"
-                                                class="inputCaja text-end" id="valor" name="valor"
+                                                class="inputCaja text-end" id="valor" name="valor" required
                                                 value="{{ old('valor') }}">
                                         </div>
 
@@ -252,5 +255,3 @@
 
 
 @endsection
-
-

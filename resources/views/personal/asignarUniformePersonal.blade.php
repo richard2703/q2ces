@@ -163,6 +163,7 @@
                                         <div class="row opcion divBorderItems" id="opc">
                                             <?php $intCount = 0; ?>
                                             <input type="hidden" name="asignado[]">
+                                            <input type="hidden" name="usuarioId" id="usuarioId" value="{{  auth()->user()->id }}">
 
                                             <div class="col-12 col-sm-6 col-lg-2 my-3 ">
                                                 <label class="labelTitulo">Cantidad:
@@ -177,6 +178,7 @@
                                                     onchange="cargar({{ $intCount }})"
                                                     id="uniformeTipoId{{ $intCount }}[]" name="uniformeTipoId[]">
 
+                                                    <option value="">Seleccione</option>
                                                     @foreach ($inventario as $item)
                                                         <option value="{{ $item->id }}">
                                                             {{ $item->nombre }}

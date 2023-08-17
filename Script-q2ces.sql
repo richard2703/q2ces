@@ -1434,3 +1434,18 @@ create table mtqEventos (
     primary key(id),
     CONSTRAINT FK_usoMaquinarias_maquinariaId foreign key (maquinariaId) references maquinaria(id)
 );
+
+CREATE TABLE inventarioMovimientos(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    inventarioId bigint(20) unsigned NOT NULL,
+    usarioId bigint(20) unsigned NOT NULL,
+    movimiento int(4) NOT NULL,
+    cantidad float(10, 2) NOT NULL,
+    precioUnitario float(10, 2) NOT NULL,
+    total float(10, 2) NOT NULL,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_inventarioMovimiento_inventario foreign key (inventarioId) references inventario(id),
+    CONSTRAINT FK_inventarioMovimiento_usuario foreign key (usarioId) references users(id)
+);

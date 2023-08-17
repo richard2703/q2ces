@@ -49,9 +49,11 @@
                                         <table class="table">
                                             <thead class="labelTitulo">
                                                 <th class="labelTitulo text-center">Imagen</th>
+                                                <th class="labelTitulo text-center">No. Parte</th>
                                                 <th class="labelTitulo text-center">Nombre</th>
-                                                <th class="labelTitulo text-center">Taller</th>
-                                                <th class="labelTitulo text-center">Maquinaria</th>
+                                                <th class="labelTitulo text-center">Existencias</th>
+                                                <th class="labelTitulo text-center">Min.</th>
+                                                <th class="labelTitulo text-center">Máx.</th>
                                                 <th class="labelTitulo text-center">Acciones</th>
                                             </thead>
                                             <tbody>
@@ -60,9 +62,12 @@
                                                         <td class="text-center"><img class="" style="width: 100px;"
                                                                 src="{{ $inventario->imagen == '' ? '/img/general/default.jpg' : '/storage/inventario/' . $inventario->tipo . '/' . $inventario->imagen }}">
                                                         </td>
+                                                        <td class="text-center align-middle">{{ $inventario->numparte }}
+                                                        </td>
                                                         <td class="text-center align-middle">{{ $inventario->nombre }}</td>
                                                         <td class="text-center align-middle">{{ $inventario->cantidad }}
                                                         </td>
+                                                        <td class="text-center align-middle">{{ $inventario->reorden }}</td>
                                                         <td class="text-center align-middle">{{ $inventario->maximo }}</td>
                                                         <td class="td-actions text-center align-middle">
                                                             @can('inventario_restock')
@@ -143,6 +148,8 @@
                                 <div class="row card-body" style="
                          text-align: center;">
                                     <input type="hidden" name="productoid" id="productoid" value="">
+                                    <input type="hidden" name="usuarioId" id="usuarioId" value="{{ auth()->user()->id }}">
+
                                     <div class="col-12 ">
                                         <img style="width: 100px;" id="imagenM">
                                     </div>
@@ -151,8 +158,8 @@
                                     </div>
                                     <div class="col-12 col-lg-6">
                                         <label class="labelTitulo" for="">Cantidad:</label></br>
-                                        <input class="inputCaja" type="number" step="0.01" min="0.01" id="cantidad"
-                                            name="cantidad" value="" required></br>
+                                        <input class="inputCaja" type="number" step="0.01" min="0.01"
+                                            id="cantidad" name="cantidad" value="" required></br>
                                     </div>
                                     <div class="col-12 col-lg-6">
                                         <label class="labelTitulo" for="">Costo unitario:</label></br>

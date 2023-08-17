@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\inventario;
+use App\Models\inventarioMovimientos;
 use App\Models\personal;
 use App\Models\restock;
 use App\Models\invconsu;
@@ -22,6 +23,7 @@ use App\Models\maquinaria;
 use App\Models\proveedorCategoria;
 use App\Models\tipoEquipo;
 use App\Models\tipoUniforme;
+
 
 class inventarioController extends Controller
 {
@@ -161,6 +163,8 @@ class inventarioController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
+
         abort_if(Gate::denies('inventario_create'), 403);
 
         $request->validate([
@@ -192,7 +196,19 @@ class inventarioController extends Controller
             $request->file('imagen')->storeAs('/public/inventario/' . $producto['tipo'], $producto['imagen']);
         }
 
-        inventario::create($producto);
+       $objProducto = inventario::create($producto);
+
+        if($objProducto->id > 0){
+            $objMovimiento = new inventarioMovimientos();
+            $objMovimiento->movimiento = 1; //*** agrega al inventario */
+            $objMovimiento->inventarioId = $objProducto->id;
+            $objMovimiento->cantidad = $objProducto->cantidad;
+            $objMovimiento->precioUnitario = $objProducto->valor;
+            $objMovimiento->total = ($objProducto->valor * $objProducto->cantidad);
+            $objMovimiento->usuarioId = $request['usuarioId'];
+            $objMovimiento->Save();
+        }
+
         Session::flash('message', 1);
 
         return redirect()->route('inventario.index', $producto['tipo']);
@@ -319,12 +335,13 @@ class inventarioController extends Controller
     public function restock(Request $request)
     {
         abort_if(Gate::denies('inventario_restock'), 403);
-        // dd($request);
         $restock = $request->only(
             'productoid',
             'cantidad',
-            'costo'
+            'costo',
+            'usuarioId'
         );
+        // dd($request, $restock);
 
         //*** existe el producto en inventario */
         $producto = inventario::where("id", $request['productoid'])->first();
@@ -335,6 +352,17 @@ class inventarioController extends Controller
 
             $producto->cantidad = ($producto->cantidad + $restock->cantidad);
             $producto->save();
+
+            $objMovimiento = new inventarioMovimientos();
+            $objMovimiento->movimiento = 1; //*** agrega al inventario */
+            $objMovimiento->inventarioId = $restock->productoid;
+            $objMovimiento->cantidad = $restock->cantidad;
+            $objMovimiento->precioUnitario = $restock->costo;
+            $objMovimiento->total = ($restock->costo * $restock->cantidad);
+            $objMovimiento->usuarioId = $request['usuarioId'];
+            $objMovimiento->Save();
+
+
             Session::flash('message', 1);
             return redirect()->route('inventario.index', $producto->tipo);
         } else {
