@@ -13,6 +13,6 @@ class calendarioMtq extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'title', 'maquina','fecha', 'descripcion','estatus', 'color', 'start', 'end', 
+        'title', 'maquinariaId', 'fecha', 'descripcion', 'estatus', 'color', 'start', 'end', 'mantenimientoId',
     ];
 }
