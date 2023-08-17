@@ -368,12 +368,14 @@ Route::group(['middleware' => 'auth'], function () {
 
     //*** Mtq */
     Route::resource('residentes', App\Http\Controllers\residenteController::class);
-    Route::resource('calendarioMtq', App\Http\Controllers\calendarioMtqController::class);
     Route::resource('docs', App\Http\Controllers\docsController::class);
     Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
     Route::resource('uso', App\Http\Controllers\usoMaquinariasController::class);
+    Route::resource('calendarioMtq', App\Http\Controllers\calendarioMtqController::class);
+    Route::put('calendarioMtq/editar/{evento}', [App\Http\Controllers\calendarioMtqController::class, 'update'])->name('calendarioMtq.update');
 
     // Crud Extintores
     Route::resource('extintores', App\Http\Controllers\extintoresController::class);
     Route::get('/ubicaciones/lugares/{ubicacionId}', [App\Http\Controllers\extintoresController::class, 'lugares'])->name('lugares.get');
+    
 });
