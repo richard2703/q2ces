@@ -19,7 +19,7 @@ class mtqController extends Controller
      */
     public function index()
     {
-        return view('mtq.dashMtq');
+        return view('MTQ.dashMtq');
     }
 
     public function indexMtqs()
@@ -28,7 +28,7 @@ class mtqController extends Controller
 
         $maquinaria = maquinaria::paginate(15);
         // dd( 'test' );
-        return view('mtq.indexMtq', compact('maquinaria'));
+        return view('MTQ.indexMtq', compact('maquinaria'));
     }
 
     public function indexResidentes()
@@ -37,7 +37,7 @@ class mtqController extends Controller
 
         $maquinaria = maquinaria::paginate(15);
         // dd( 'test' );
-        return view('mtq.indexMtq', compact('maquinaria'));
+        return view('MTQ.indexMtq', compact('maquinaria'));
     }
 
     /**

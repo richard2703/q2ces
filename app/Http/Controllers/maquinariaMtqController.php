@@ -26,7 +26,7 @@ class maquinariaMtqController extends Controller
         // Filtrar maquinarias donde el campo 'compania' no sea nulo
         $maquinaria = maquinaria::whereNotNull('compania')->paginate(15);
         // dd( 'test' );
-        return view('mtq.indexMaquinariaMtq', compact('maquinaria'));
+        return view('MTQ.indexMaquinariaMtq', compact('maquinaria'));
     }
 
     /**
@@ -38,7 +38,7 @@ class maquinariaMtqController extends Controller
     {
         abort_if(Gate::denies('maquinaria_mtq_create'), 403);
 
-        return view('mtq.altaDeMaquinariaMtq');
+        return view('MTQ.altaDeMaquinariaMtq');
     }
 
     /**
@@ -84,7 +84,7 @@ class maquinariaMtqController extends Controller
 
 
         Session::flash('message', 1);
-        return redirect()->route('mtq.index');
+        return redirect()->route('MTQ.index');
     }
 
     /**
@@ -154,7 +154,7 @@ class maquinariaMtqController extends Controller
 
         Session::flash('message', 1);
 
-        return redirect()->route('mtq.index');
+        return redirect()->route('MTQ.index');
     }
 
     /**
@@ -184,6 +184,6 @@ class maquinariaMtqController extends Controller
         // dd($maquinaria);
 
 
-        return view('mtq.indexUsoMaquinariaMtq', compact('maquinaria'));
+        return view('MTQ.indexUsoMaquinariaMtq', compact('maquinaria'));
     }
 }
