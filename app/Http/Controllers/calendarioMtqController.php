@@ -24,7 +24,7 @@ class calendarioMtqController extends Controller
         //$eventos = calendarioMtq::all();
         $servicios = serviciosMtq::all();
         $eventos = calendarioMtq::join('maquinaria', "maquinaria.id", "mtqEventos.maquinariaId")
-            ->join('serviciosMtq', 'serviciosMTQ.id', 'mtqEventos.mantenimientoId')
+            ->join('serviciosMtq', 'serviciosMtq.id', 'mtqEventos.mantenimientoId')
             ->select(
                 'mtqEventos.id',
                 'mtqEventos.title',
@@ -40,7 +40,7 @@ class calendarioMtqController extends Controller
                 'maquinaria.identificador as numeconomico',
                 'maquinaria.placas',
                 'maquinaria.marca',
-                'serviciosMTQ.nombre as nombreServicio'
+                'serviciosMtq.nombre as nombreServicio'
                 // 'maquinaria.id as idDoc'
             )
             ->get();
