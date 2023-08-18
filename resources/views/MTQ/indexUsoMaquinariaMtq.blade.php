@@ -63,22 +63,9 @@
                                                 <td class="text-center">{{ number_format($maquina->uso) }}</td>
 
                                                 <td class="td-actions text-center">
-                                                    @can('maquinaria_mtq_show')
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
-                                                            onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marca }}','{{ $maquina->modelo }}','{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}','{{ $maquina->foto }}','{{ true }}')">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="28"
-                                                                height="28" fill="currentColor"
-                                                                class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                                                                <path
-                                                                    d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
-                                                            </svg>
-                                                        </a>
-                                                    @endcan
                                                     @can('maquinaria_mtq_edit')
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
-                                                            onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marca }}','{{ $maquina->modelo }}','{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}','{{ $maquina->foto }}','{{ false }}')">
+                                                            onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marca }}','{{ $maquina->modelo }}','{{ $maquina->uso }}','{{ false }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                 height="28" fill="currentColor"
                                                                 class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -87,20 +74,6 @@
                                                             </svg>
                                                         </a>
                                                     @endcan
-                                                    {{-- @can('maquinaria_mtq_destroy') --}}
-                                                    {{-- <form action="{{ route('mtq.delete', $maquina->id) }}"
-                                                    method="POST" style="display: inline-block;"
-                                                    onsubmit="return confirm('Seguro?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btnSinFondo" type="submit" rel="tooltip">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"  width="28" height="28"  fill="currentColor"  class="bi bi-x-circle"  viewBox="0 0 16 16">
-                                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                        </svg>
-                                                    </button>
-                                                </form> --}}
-                                                    {{-- @endcan --}}
                                                 </td>
                                             </tr>
                                         @empty
@@ -124,173 +97,58 @@
     </div>
 
     <!-- Modal Nueva Equipos MTQ-->
-    <div class="modal fade" id="nuevoItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editarItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nueva Equipos MTQ</h1>
+                    <h1 class="modal-title fs-5" id="tituloModal">&nbsp Nueva Equipos MTQ</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('mtq.store') }}" method="post"
+                    <form class="row d-flex" action="{{ route('uso.update', 0) }}" method="post"
                         enctype="multipart/form-data">
                         @csrf
-
-                        <input type="hidden" name="maquinariaId" id="maquinariaId" value="" required>
-
-                        <div class=" col-12 mb-3 ">
-                            <label class="labelTitulo">Buscador:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="search" name="search"
-                                value="{{ old('identificador') }}" placeholder="ej: MT-00">
-                        </div>
+                        @method('put')
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Numero Económico:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" name="identificador"
-                                value="{{ old('identificador') }}" placeholder="ej: MT-00" readonly>
+                            <input type="text" class="inputCaja" name="identificador" id="identificador"
+                                value="{{ old('identificador') }}" placeholder="ej: MT-00" readonly id="identificador">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Equipo:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" name="nombre" value="{{ old('nombre') }}"
-                                readonly="true">
+                            <input type="text" class="inputCaja" name="nombre" id="nombre"
+                                value="{{ old('nombre') }}" readonly id="nombre">
                         </div>
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Marca:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" name="marca" value="{{ old('marca') }}"
-                                readonly="true">
+                            <input type="text" class="inputCaja" name="marca" id="marca"
+                                value="{{ old('marca') }}" readonly id="marca">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Modelo:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" name="modelo" value="{{ old('modelo') }}"
-                                required>
+                            <input type="text" class="inputCaja" name="modelo" id="modelo"
+                                value="{{ old('modelo') }}" required id="modelo">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Uso actual:</label></br>
-                            <input type="text" class="inputCaja" name="placas" value="" readonly>
+                            <input type="text" class="inputCaja" name="km" value="" readonly
+                                id="km">
                         </div>
 
                         <div class=" col-12 col-sm-6  mb-3 ">
-                            <label class="labelTitulo">Nuevo Uso:</label></br>
-                            <input type="text" class="inputCaja" placeholder="Ej. NS01234ABCD" name="numserie"
-                                value="{{ old('numserie') }}">
+                            <label class="labelTitulo">Edicion de Uso:</label></br>
+                            <input type="hidden" name="id" id="id" value="" id="idmaq">
+                            <input type="text" class="inputCaja" placeholder="Ej. NS01234ABCD" name="valor"
+                                value="{{ old('numserie') }}" id="valor">
                         </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <button type="submit" class="btn botonGral">Guardar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Editar Equipos MTQ-->
-    <div class="modal fade" id="editarItem" tabindex="-1" aria-labelledby="exampleModalLabelEdit" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bacTituloPrincipal">
-                    <h1 class="modal-title fs-5" id="exampleModalLabelEdit">&nbsp <span id="tituloModal">Editar</span>
-                        Equipos MTQ</label>
-                    </h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('mtq.update', 0) }}" method="post"
-                        enctype="multipart/form-data">
-                        @csrf
-                        @method('put')
-                        <input type="hidden" name="id" value="" id="id">
-                        <div class="row d-flex justify-content-center">
-                            <div class="col-12 col-sm-6 align-items-center">
-                                <div class="text-center mx-auto border vistaFoto mb-4">
-                                    <i><img id="fotoImg" class="imgVista img-fluid mb-5"
-                                            src="{{ asset('/img/general/default.jpg') }}"></i>
-                                    <span class="mi-archivo">
-                                        <input class="mb-4 ver" type="file" name="foto" id="mi-archivo"
-                                            accept="image/*">
-                                    </span>
-                                    <div id="contenedorBotonSubirImagen">
-                                        <label for="mi-archivo">
-                                            <span>sube Imagen</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <input type="hidden" name="puestoId" id="puestoId" value="">
-                        <div class=" col-12 col-sm-6 mb-3 ">
-
-                            <label class="labelTitulo">Numero Económico:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="identificador" name="identificador"
-                                value="" placeholder="ej: MT-00" required>
-                        </div>
-
-                        <div class=" col-12 col-sm-6  mb-3 ">
-                            <label class="labelTitulo">Equipo:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="nombre" placeholder="Especifique..." required
-                                name="nombre" value="">
-                        </div>
-
-                        <div class=" col-12 col-sm-6  mb-3 ">
-                            <label class="labelTitulo">Marca:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="marca" placeholder="Especifique..." required
-                                name="marca" value="">
-                        </div>
-
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Modelo:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="modelo" placeholder="Especifique..." required
-                                name="modelo" value="">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Sub Marca:</label></br>
-                            <input type="text" class="inputCaja" id="submarca" placeholder="Especifique..."
-                                name="submarca" value="">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Año:</label></br>
-                            <input type="text" class="inputCaja" id="ano" maxlength="4"
-                                placeholder="Ej. 2000" name="ano" value="">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Color:</label></br>
-                            <input type="text" class="inputCaja" id="color" placeholder="Ej. Amarillo"
-                                name="color" value="">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Placas:</label></br>
-                            <input type="text" class="inputCaja" id="placas" placeholder="Ej. JAL-0000"
-                                name="placas" value="">
-                        </div>
-
-                        <div class="col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Número Serie -VIN:</label></br>
-                            <input type="text" class="inputCaja" id="numserie" placeholder="Ej. NS01234ABCD"
-                                name="numserie" value="">
-                        </div>
-
-                        <div class=" col-12 col-sm-6  mb-3 ">
-                            <label class="labelTitulo">Número Motor:</label></br>
-                            <input type="text" class="inputCaja" id="nummotor" placeholder="Ej. NUM0123ABCD"
-                                name="nummotor" value="">
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <div id="contenedorBotonGuardar">
-                                <button type="submit" class="btn botonGral" id="btnTareaGuardar"
-                                    onclick="alertaGuardar()">Guardar cambios</button>
-                            </div>
                         </div>
                     </form>
                 </div>
@@ -313,25 +171,21 @@
     </style>
 
     <script>
-        function cargaItem(id, identificador, nombre, marca, modelo, submarca, ano, color, placas, numserie, nummotor, img,
-            modalTipo) {
+        function cargaItem(id, identificador, nombre, marca, modelo, km, modalTipo) {
+            console.log(id);
 
             const txtId = document.getElementById('id');
             txtId.value = id;
 
             const contenedorBotonGuardar = document.getElementById('contenedorBotonGuardar');
             const contenedorBotonSubirImagen = document.getElementById('contenedorBotonSubirImagen');
-            if (modalTipo) {
-                contenedorBotonSubirImagen.style.display = 'none';
-            } else {
-                contenedorBotonSubirImagen.style.display = 'block';
-            }
 
-            if (modalTipo) {
-                contenedorBotonGuardar.style.display = 'none';
-            } else {
-                contenedorBotonGuardar.style.display = 'block';
-            }
+
+            //if (modalTipo) {
+            //    contenedorBotonGuardar.style.display = 'none';
+            //} else {
+            //    contenedorBotonGuardar.style.display = 'block';
+            // }
 
             const tituloModal = document.getElementById('tituloModal');
             if (modalTipo) {
@@ -342,61 +196,38 @@
 
             const txtIdentificador = document.getElementById('identificador');
             txtIdentificador.value = identificador;
-            txtIdentificador.readOnly = modalTipo;
+            //txtIdentificador.readOnly = modalTipo;
 
             const txtNombre = document.getElementById('nombre');
             txtNombre.value = nombre;
-            txtNombre.readOnly = modalTipo;
+            //txtNombre.readOnly = modalTipo;
 
             const txtMarca = document.getElementById('marca');
             txtMarca.value = marca;
-            txtMarca.readOnly = modalTipo;
+            //txtMarca.readOnly = modalTipo;
 
             const txtModelo = document.getElementById('modelo');
             txtModelo.value = modelo;
-            txtModelo.readOnly = modalTipo;
+            //txtModelo.readOnly = modalTipo;
 
-            const txtSubmarca = document.getElementById('submarca');
-            txtSubmarca.value = submarca;
-            txtSubmarca.readOnly = modalTipo;
+            const txtkm = document.getElementById('km');
+            txtkm.value = km;
+            //txtkm.readOnly = modalTipo;
 
-            const txtAno = document.getElementById('ano');
-            txtAno.value = ano;
-            txtAno.readOnly = modalTipo;
+            const txtValor = document.getElementById('valor');
+            txtValor.value = km;
+            txtValor.readOnly = modalTipo;
 
-            const txtColor = document.getElementById('color');
-            txtColor.value = color;
-            txtColor.readOnly = modalTipo;
-
-            const txtPlacas = document.getElementById('placas');
-            txtPlacas.value = placas;
-            txtPlacas.readOnly = modalTipo;
-
-            const txtNumserie = document.getElementById('numserie');
-            txtNumserie.value = numserie;
-            txtNumserie.readOnly = modalTipo;
-
-            const txtNummotor = document.getElementById('nummotor');
-            txtNummotor.value = nummotor;
-            txtNummotor.readOnly = modalTipo;
-
-            const imagenVista = document.getElementById('fotoImg');
-            console.log('imagen 1', img);
-            if (img != "" && img != null) {
-                imagenVista.src = "{{ asset('/storage/maquinaria/') }}/" + identificador + "/" + img;
-            } else {
-                imagenVista.src = "{{ asset('/img/general/default.jpg') }}"
-            }
             // Obtener todos los campos del formulario
             const campos = document.querySelectorAll('input[type="text"], textarea');
 
             // Aplicar color gris a los campos con readonly
             campos.forEach((campo) => {
                 if (modalTipo) {
-                    campo.readOnly = true;
+                    //campo.readOnly = true;
                     campo.style.color = 'grey';
                 } else {
-                    campo.readOnly = false;
+                    //ampo.readOnly = false;
                     campo.style.color = 'initial';
                 }
             });
