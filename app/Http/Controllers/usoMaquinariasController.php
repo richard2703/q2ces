@@ -16,7 +16,14 @@ class usoMaquinariasController extends Controller
      */
     public function index()
     {
-        //
+        $maquinaria = usoMaquinarias::join('maquinaria', 'maquinaria.id', 'usoMaquinarias.maquinariaId')
+            ->select('usoMaquinarias.id', 'identificador', 'nombre', 'marca', 'modelo', 'placas', 'usoMaquinarias.uso')
+            ->where('compania', 'mtq')->orderBy('usoMaquinarias.created_at', 'desc')
+            ->paginate(15);
+        // dd($maquinaria);
+
+
+        return view('mtq.indexUsoMaquinariaMtq', compact('maquinaria'));
     }
 
     /**
@@ -56,7 +63,7 @@ class usoMaquinariasController extends Controller
                 $maquina->save();
             }
         }
-        return redirect()->action([maquinariaMtqController::class, 'uso']);
+        return redirect()->action([usoMaquinariasController::class, 'index']);
     }
 
     /**
@@ -88,9 +95,13 @@ class usoMaquinariasController extends Controller
      * @param  \App\Models\usoMaquinarias  $usoMaquinarias
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, usoMaquinarias $usoMaquinarias)
+    public function update(Request $request, usoMaquinarias $usoMaquinaria)
     {
-        //
+        // dd($usoMaquinaria, $request);
+        $uso  = usoMaquinarias::find($request->id);
+        $uso->uso = $request->valor;
+        $uso->save();
+        return redirect()->action([usoMaquinariasController::class, 'index']);
     }
 
     /**

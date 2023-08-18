@@ -375,7 +375,7 @@
                         @can('maquinaria_mtq_index')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
-                                <a href="{{ route('mtq.uso') }}" class="">
+                                <a href="{{ route('uso.index') }}" class="">
                                     <i class="bi bi-circle"></i><span>Uso de Equipo</span>
                                 </a>
                             </li>
