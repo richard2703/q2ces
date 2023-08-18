@@ -354,6 +354,15 @@
                 width: 120px !important;
             }
         }
+        select[readonly], input[readonly], textarea[readonly]{
+            color: grey;
+            cursor:no-drop;
+        }
+        
+
+        select[readonly] option{
+            display:none;
+        }
     </style>
 
     <script>
@@ -439,9 +448,11 @@
                 if (modalTipo) {
                     campo.readOnly = true;
                     campo.style.color = 'grey';
+                    // campo.style.cursor:no-drop;
                 } else {
                     campo.readOnly = false;
                     campo.style.color = 'initial';
+                    // campo.style.cursor:no-drop;
                 }
             });
         }
