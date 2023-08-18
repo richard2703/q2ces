@@ -225,7 +225,7 @@
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Número de Parte: <span>*</span></label></br>
+                            <label class="labelTitulo">Número De Parte: <span>*</span></label></br>
                             <input type="text" class="inputCaja" id="controlNumeroParte" name="NumeroParte"
                                 value="">
                         </div>
@@ -244,7 +244,7 @@
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Tipo de Refacción: <span>*</span></label></br>
+                            <label class="labelTitulo">Tipo De Refacción: <span>*</span></label></br>
                             <select id="controlTipoRefaccionId" name="tipoRefaccionId" class="form-select" required
                                 aria-label="Default select example">
                                 <option value="">Seleccione</option>

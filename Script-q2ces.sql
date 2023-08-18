@@ -1408,15 +1408,15 @@ values (1,'Maquinaria','Maquinaria','Apartado para seleccionar maquinaria',1,'20
     primary key(id)
 );
 
-create table mtqEventos (
+CREATE TABLE mtqEventos (
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     title varchar(255) NOT NULL,
+    mantenimientoId bigint(20) unsigned NOT NULL,
     maquinariaId bigint(20) unsigned NOT NULL,
     fecha date NOT NULL,
     descripcion text NULL,
     estatus bigint(20) unsigned NOT NULL,
     color varchar(255) NOT NULL,
-    backgroundColor varchar(100) NULL,
     start datetime NULL,
     end datetime NULL,
     created_at timestamp NULL DEFAULT NULL,
