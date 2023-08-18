@@ -259,6 +259,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/inventario/producto/{inventario}/edit', [App\Http\Controllers\inventarioController::class, 'edit'])->name('inventario.edit');
     Route::put('/inventario/{inventario}', [App\Http\Controllers\inventarioController::class, 'update'])->name('inventario.update');
     Route::get('/inventario/uniformes/tipo/{uniformeTipoId}', [App\Http\Controllers\inventarioController::class, 'uniformesPorTipo'])->name('uniformesPorTipo.get');
+    Route::put('/inventario/uniformes/ajuste/{producto}', [App\Http\Controllers\inventarioController::class, 'ajusteDeUniforme'])->name('inventario.ajusteDeUniforme');
 
     Route::post('/inventario/combustible', [App\Http\Controllers\inventarioController::class, 'dashCombustible'])->name('inventario.dashCombustible');
     Route::post('/inventario/combustible/carga', [App\Http\Controllers\inventarioController::class, 'cargaCombustible'])->name('inventario.cargaCombustible');
