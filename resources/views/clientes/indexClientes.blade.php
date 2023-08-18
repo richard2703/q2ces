@@ -37,7 +37,7 @@
                                             <thead class="labelTitulo">
                                                 <th class="labelTitulo text-center">ID</th>
                                                 <th class="labelTitulo text-center">Nombre</th>
-                                                <th class="labelTitulo text-center">Razon Social</th>
+                                                <th class="labelTitulo text-center">Razón Social</th>
                                                 <th class="labelTitulo text-center">Colonia</th>
                                                 <th class="labelTitulo text-center">Ciudad</th>
                                                 <th class="labelTitulo text-center">Estado</th>

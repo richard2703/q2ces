@@ -66,6 +66,22 @@
                                     </div>
 
                                     <div class="col-12 col-sm-6 col-md-4 text-center my-4">
+                                        <a href="{{ route('catalogoProveedor.index') }}" class="">
+                                            <img src="/img/inventario/herramientas.svg" alt="Proveedores" title="Proveedores"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Proveedores</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
+                                        <a href="{{ route('catalogoProveedorCategoria.index') }}" class="">
+                                            <img src="/img/inventario/herramientas.svg" alt="Categorías de Proveedores" title="Categorías de Proveedores"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Categorías de Proveedores</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoTipoRefaccion.index') }}" class="">
                                             <img src="/img/inventario/herramientas.svg" alt="Tipos de Refacción"
                                                 title="Tipos de Refacción" width="30%" class="botonIconoPrincipal">

@@ -8,40 +8,40 @@
                         <div class="card-header bacTituloPrincipal">
                             <h4 class="card-title"> Registro de Uso MTQ</h4>
                         </div>
-                        <form action="{{ route('uso.store') }}" method="post">
-                            @csrf
-                            <div class="card-body">
-                                @if (session('success'))
-                                    <div class="alert alert-success" role="success">
-                                        {{ session('success') }}
-                                    </div>
-                                @endif
-                                @if (session('faild'))
-                                    <div class="alert alert-danger" role="faild">
-                                        {{ session('faild') }}
-                                    </div>
-                                @endif
-                                <div class="row">
-                                    <div class="col-4 text-left">
-                                        <a href="{{ url('dashMtq') }}">
-                                            <button class="btn regresar">
-                                                <span class="material-icons">
-                                                    reply
-                                                </span>
-                                                Regresar
-                                            </button>
-                                        </a>
-                                    </div>
-                                    <div class="col-8 align-end">
-                                        @can('maquinaria_mtq_create')
-                                            <button data-bs-toggle="modal" data-bs-target="#nuevoItem" type="button"
-                                                class="btn botonGral">Registrar Uso</button>
-                                        @endcan
-                                    </div>
 
-                                    <div class="d-flex p-3 divBorder"></div>
+                        <div class="card-body">
+                            @if (session('success'))
+                                <div class="alert alert-success" role="success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+                            @if (session('faild'))
+                                <div class="alert alert-danger" role="faild">
+                                    {{ session('faild') }}
+                                </div>
+                            @endif
+                            <div class="row">
+                                <div class="col-4 text-left">
+                                    <a href="{{ route('uso.index') }}">
+                                        <button class="btn regresar">
+                                            <span class="material-icons">
+                                                reply
+                                            </span>
+                                            Regresar
+                                        </button>
+                                    </a>
+                                </div>
+                                <div class="col-8 align-end">
+                                    @can('maquinaria_mtq_create')
+                                        <button data-bs-toggle="modal" data-bs-target="#nuevoItem" type="button"
+                                            class="btn botonGral">Registrar Uso</button>
+                                    @endcan
                                 </div>
 
+                                <div class="d-flex p-3 divBorder"></div>
+                            </div>
+                            <form action="{{ route('uso.store') }}" method="post">
+                                @csrf
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead class="labelTitulo">
@@ -77,20 +77,17 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
-                            <div class="text-center pb-2">
-                                {{--  {{ $maquinaria->links() }}  --}}
-                                <button type="submit" class="btn botonGral" id="btnTareaGuardar"
-                                    onclick="alertaGuardar()">Guardar</button>
-                            </div>
-                        </form>
-
+                                <div class="text-center pb-2">
+                                    {{--  {{ $maquinaria->links() }}  --}}
+                                    <button type="submit" class="btn botonGral" id="btnTareaGuardar"
+                                        onclick="alertaGuardar()">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
 
     <!-- Modal Nueva Equipos MTQ-->
@@ -102,11 +99,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('mtq.store') }}" method="post"
+                    <form class="row d-flex" action="{{ route('uso.store') }}" method="post"
                         enctype="multipart/form-data">
                         @csrf
 
-                        <input type="hidden" name="maquinariaId" id="maquinariaId" value="" required>
+                        {{--  <input type="hidden" name="maquinariaId" id="maquinariaId" value="" required>  --}}
 
                         <div class=" col-12 mb-3 ">
                             <label class="labelTitulo">Buscador:<span>*</span></label></br>
@@ -117,150 +114,42 @@
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Numero Económico:<span>*</span></label></br>
                             <input type="text" class="inputCaja" name="identificador" value="{{ old('identificador') }}"
-                                placeholder="ej: MT-00" readonly>
+                                placeholder="ej: MT-00" readonly id="identificador">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Equipo:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" name="nombre" value="{{ old('nombre') }}"
-                                readonly="true">
+                            <input type="text" class="inputCaja" name="nombre" value="{{ old('nombre') }}" readonly
+                                id="nombre">
                         </div>
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Marca:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" name="marca" value="{{ old('marca') }}"
-                                readonly="true">
+                            <input type="text" class="inputCaja" name="marca" value="{{ old('marca') }}" readonly
+                                id="marca">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Modelo:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" name="modelo" value="{{ old('modelo') }}"
-                                required>
+                            <input type="text" class="inputCaja" name="modelo" value="{{ old('modelo') }}" required
+                                id="modelo">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Uso actual:</label></br>
-                            <input type="text" class="inputCaja" name="placas" value="" readonly>
+                            <input type="text" class="inputCaja" name="placas" value="" readonly
+                                id="kilometraje">
                         </div>
 
                         <div class=" col-12 col-sm-6  mb-3 ">
                             <label class="labelTitulo">Nuevo Uso:</label></br>
-                            <input type="text" class="inputCaja" placeholder="Ej. NS01234ABCD" name="numserie"
-                                value="{{ old('numserie') }}">
+                            <input type="hidden" name="id[]" value="" id="idmaq">
+                            <input type="text" class="inputCaja" placeholder="Ej. NS01234ABCD" name="valor[]"
+                                value="{{ old('numserie') }}" id="valor">
                         </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <button type="submit" class="btn botonGral">Guardar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Editar Equipos MTQ-->
-    <div class="modal fade" id="editarItem" tabindex="-1" aria-labelledby="exampleModalLabelEdit" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bacTituloPrincipal">
-                    <h1 class="modal-title fs-5" id="exampleModalLabelEdit">&nbsp <span id="tituloModal">Editar</span>
-                        Equipos MTQ</label>
-                    </h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('mtq.update', 0) }}" method="post"
-                        enctype="multipart/form-data">
-                        @csrf
-                        @method('put')
-                        <input type="hidden" name="id" value="" id="id">
-                        <div class="row d-flex justify-content-center">
-                            <div class="col-12 col-sm-6 align-items-center">
-                                <div class="text-center mx-auto border vistaFoto mb-4">
-                                    <i><img id="fotoImg" class="imgVista img-fluid mb-5"
-                                            src="{{ asset('/img/general/default.jpg') }}"></i>
-                                    <span class="mi-archivo">
-                                        <input class="mb-4 ver" type="file" name="foto" id="mi-archivo"
-                                            accept="image/*">
-                                    </span>
-                                    <div id="contenedorBotonSubirImagen">
-                                        <label for="mi-archivo">
-                                            <span>sube Imagen</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <input type="hidden" name="puestoId" id="puestoId" value="">
-                        <div class=" col-12 col-sm-6 mb-3 ">
-
-                            <label class="labelTitulo">Numero Económico:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="identificador" name="identificador"
-                                value="" placeholder="ej: MT-00" required>
-                        </div>
-
-                        <div class=" col-12 col-sm-6  mb-3 ">
-                            <label class="labelTitulo">Equipo:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="nombre" placeholder="Especifique..." required
-                                name="nombre" value="">
-                        </div>
-
-                        <div class=" col-12 col-sm-6  mb-3 ">
-                            <label class="labelTitulo">Marca:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="marca" placeholder="Especifique..." required
-                                name="marca" value="">
-                        </div>
-
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Modelo:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="modelo" placeholder="Especifique..." required
-                                name="modelo" value="">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Sub Marca:</label></br>
-                            <input type="text" class="inputCaja" id="submarca" placeholder="Especifique..."
-                                name="submarca" value="">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Año:</label></br>
-                            <input type="text" class="inputCaja" id="ano" maxlength="4"
-                                placeholder="Ej. 2000" name="ano" value="">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Color:</label></br>
-                            <input type="text" class="inputCaja" id="color" placeholder="Ej. Amarillo"
-                                name="color" value="">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Placas:</label></br>
-                            <input type="text" class="inputCaja" id="placas" placeholder="Ej. JAL-0000"
-                                name="placas" value="">
-                        </div>
-
-                        <div class="col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Número Serie -VIN:</label></br>
-                            <input type="text" class="inputCaja" id="numserie" placeholder="Ej. NS01234ABCD"
-                                name="numserie" value="">
-                        </div>
-
-                        <div class=" col-12 col-sm-6  mb-3 ">
-                            <label class="labelTitulo">Número Motor:</label></br>
-                            <input type="text" class="inputCaja" id="nummotor" placeholder="Ej. NUM0123ABCD"
-                                name="nummotor" value="">
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <div id="contenedorBotonGuardar">
-                                <button type="submit" class="btn botonGral" id="btnTareaGuardar"
-                                    onclick="alertaGuardar()">Guardar cambios</button>
-                            </div>
                         </div>
                     </form>
                 </div>
@@ -411,7 +300,7 @@
 
             source: function(request, response) {
                 $.ajax({
-                    url: "{{ route('search.equipos') }}",
+                    url: "{{ route('search.equiposMTQ') }}",
 
                     dataType: 'json',
                     data: {
@@ -431,12 +320,12 @@
             select: function(event, ui) {
 
                 // Rellenar los campos con los datos de la persona seleccionada
-                $('#maquinariaId').val(ui.item.id);
-                $('#descripcion').val(ui.item.value);
-                $('#titulo').val('Mantenimiento ' + ui.item.nombre);
-                // $('#nombre').val(ui.item.nombre);
-                // $('#marca').val(ui.item.marca);
-                // $('#modelo').val(ui.item.modelo);
+                $('#identificador').val(ui.item.identificador);
+                $('#nombre').val(ui.item.nombre);
+                $('#marca').val(ui.item.marca);
+                $('#modelo').val(ui.item.modelo);
+                $('#kilometraje').val(ui.item.kilometraje);
+                $('#idmaq').val(ui.item.id);
                 // $('#numserie').val(ui.item.numserie);
                 // $('#placas').val(ui.item.placas);
             }

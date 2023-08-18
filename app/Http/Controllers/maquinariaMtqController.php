@@ -26,7 +26,7 @@ class maquinariaMtqController extends Controller
         // Filtrar maquinarias donde el campo 'compania' no sea nulo
         $maquinaria = maquinaria::whereNotNull('compania')->paginate(15);
         // dd( 'test' );
-        return view('mtq.indexMaquinariaMtq', compact('maquinaria'));
+        return view('MTQ.indexMaquinariaMtq', compact('maquinaria'));
     }
 
     /**
@@ -38,7 +38,7 @@ class maquinariaMtqController extends Controller
     {
         abort_if(Gate::denies('maquinaria_mtq_create'), 403);
 
-        return view('mtq.altaDeMaquinariaMtq');
+        return view('MTQ.altaDeMaquinariaMtq');
     }
 
     /**
@@ -84,7 +84,7 @@ class maquinariaMtqController extends Controller
 
 
         Session::flash('message', 1);
-        return redirect()->route('mtq.index');
+        return redirect()->route('MTQ.index');
     }
 
     /**
@@ -95,6 +95,8 @@ class maquinariaMtqController extends Controller
      */
     public function show(maquinaria $maquinaria)
     {
+        dd('show');
+
         abort_if(Gate::denies('maquinaria_mtq_show'), 403);
 
         // dd( $docs );
@@ -152,7 +154,7 @@ class maquinariaMtqController extends Controller
 
         Session::flash('message', 1);
 
-        return redirect()->route('mtq.index');
+        return redirect()->route('MTQ.index');
     }
 
     /**
@@ -163,6 +165,8 @@ class maquinariaMtqController extends Controller
      */
     public function destroy(maquinaria $maquinaria)
     {
+        dd($maquinaria);
+
         abort_if(Gate::denies('maquinaria_mtq_destroy'), 403);
 
         // $this->cambiaEstatusMaquinaria($id, $estatusId);
@@ -170,15 +174,16 @@ class maquinariaMtqController extends Controller
 
     public function uso()
     {
+        dd('uso');
         // abort_if(Gate::denies('maquinaria_mtq_destroy'), 403);
 
         $maquinaria = usoMaquinarias::join('maquinaria', 'maquinaria.id', 'usoMaquinarias.maquinariaId')
-            ->select('identificador', 'nombre', 'marca', 'modelo', 'placas', 'usoMaquinarias.uso')
+            ->select('usoMaquinarias.id', 'identificador', 'nombre', 'marca', 'modelo', 'placas', 'usoMaquinarias.uso')
             ->where('compania', 'mtq')->orderBy('usoMaquinarias.created_at', 'desc')
             ->paginate(15);
         // dd($maquinaria);
 
 
-        return view('mtq.indexUsoMaquinariaMtq', compact('maquinaria'));
+        return view('MTQ.indexUsoMaquinariaMtq', compact('maquinaria'));
     }
 }

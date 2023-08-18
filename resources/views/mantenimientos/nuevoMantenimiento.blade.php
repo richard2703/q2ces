@@ -261,7 +261,7 @@
             html += '    </div>';
             html += '</li>';
 
-            $('#newRow').append(html);
+            $('#" + $intCount + "').append(html);
         }
 
         // borrar registro

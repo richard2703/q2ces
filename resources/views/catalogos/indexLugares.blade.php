@@ -48,7 +48,7 @@
                                         <th class="labelTitulo text-center">Id</th>
                                         <th class="labelTitulo text-center">Nombre</th>
                                         <th class="labelTitulo text-center" style="width:150px">Comentarios</th>
-                                        <th class="labelTitulo text-center" style="width:145px">Ubicacion</th>
+                                        <th class="labelTitulo text-center" style="width:145px">Ubicación</th>
                                         <th class="labelTitulo text-center" style="width:140px">Acciones</th>
                                     </tr>
                                 </thead>
@@ -59,7 +59,7 @@
                                             <td class="text-center">{{ $item->nombre }}</td>
                                             <td class="text-center">{{ $item->comentario }}</td>
                                             <td class="text-center">{{ $item->ubicacionId }}</td>
-                                            
+
 
                                             <td class="td-actions text-center">
                                                 @can('lugares_show')
