@@ -156,25 +156,25 @@
 
 
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Ultima Revision:<span>*</span></label></br>
+                            <label class="labelTitulo">Última Revisión:<span>*</span></label></br>
                             <input type="date" class="inputCaja" placeholder="Especifique..." name="ultimaRevision"
                                 value="{{ old('ultimaRevision') }}">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Proxima Revision:</label></br>
+                            <label class="labelTitulo">Próxima Revisión:</label></br>
                             <input type="date" class="inputCaja" placeholder="Especifique..." name="proximaRevision"
                                 value="{{ old('proximaRevision') }}">
                         </div>
 
                         <div class="col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">tipo:</label></br>
+                            <label class="labelTitulo">Tipo:</label></br>
                             <input type="text" class="inputCaja" placeholder="A, B, C, D, K" name="tipo"
                                 value="{{ old('tipo') }}">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Ubicacion:</label></br>
+                            <label class="labelTitulo">Ubicación:</label></br>
                             <select id="ubicaciontest" onchange="cargar()" name="ubicacionId" class="form-select">
                                 <option value="">Seleccione</option>
                                 @foreach ($ubicaciones as $ubicacion)
@@ -186,7 +186,7 @@
                         </div>
 
                         <div class=" col-12 col-sm-6  mb-3 ">
-                            <label class="labelTitulo">Lugar o Maquinaria:</label></br>
+                            <label class="labelTitulo">Lugar o Maquinaría:</label></br>
                             <select id="lugar" name="lugarId" class="form-select">
                                 <option value="">Seleccione</option>
                                 {{--  @foreach ($ubicaciones as $ubicacion)
@@ -248,25 +248,25 @@
 
 
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Ultima Revision:<span>*</span></label></br>
+                            <label class="labelTitulo">Última Revisión:<span>*</span></label></br>
                             <input type="date" class="inputCaja" placeholder="Especifique..." id="ultimaRevision"
                                 name="ultimaRevision" value="">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Proxima Revision:</label></br>
+                            <label class="labelTitulo">Próxima Revisión:</label></br>
                             <input type="date" class="inputCaja" placeholder="Especifique..." id="proximaRevision"
                                 name="proximaRevision" value="">
                         </div>
 
                         <div class="col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">tipo:</label></br>
+                            <label class="labelTitulo">Tipo:</label></br>
                             <input type="text" class="inputCaja" placeholder="A, B, C, D, K" name="tipo"
                                 id="tipo" value="">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Ubicacion:</label></br>
+                            <label class="labelTitulo">Ubicación:</label></br>
                             <select id="ubicacionId" onchange="cargar()" name="ubicacionId" class="form-select">
                                 <option value="">Seleccione</option>
                                 @foreach ($ubicaciones as $ubicacion)
@@ -278,7 +278,7 @@
                         </div>
 
                         <div class=" col-12 col-sm-6  mb-3 ">
-                            <label class="labelTitulo">Lugar o Maquinaria:</label></br>
+                            <label class="labelTitulo">Lugar o Maquinaría:</label></br>
                             <select id="lugarId" name="lugarId" class="form-select">
                                 <option value="">Seleccione</option>
                             </select>

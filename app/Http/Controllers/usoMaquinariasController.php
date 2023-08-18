@@ -23,7 +23,7 @@ class usoMaquinariasController extends Controller
         // dd($maquinaria);
 
 
-        return view('mtq.indexUsoMaquinariaMtq', compact('maquinaria'));
+        return view('MTQ.indexUsoMaquinariaMtq', compact('maquinaria'));
     }
 
     /**
@@ -36,7 +36,7 @@ class usoMaquinariasController extends Controller
         // dd('create')
         $maquinaria = maquinaria::where('compania', 'mtq')->get();
         // dd($maquinaria);
-        return view('mtq.createUsoMaquinariaMtq', compact('maquinaria'));
+        return view('MTQ.createUsoMaquinariaMtq', compact('maquinaria'));
     }
     // "kilometraje" => null
     // "kom" => null

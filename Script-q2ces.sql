@@ -419,6 +419,19 @@ CREATE TABLE asignacionEquipo(
     CONSTRAINT FK_asignacionEquipo_equipoId foreign key (equipoId) references tipoEquipo(id)
 );
 
+CREATE TABLE asignacionUniforme(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    personalId bigint(20) unsigned NOT NULL,
+    inventarioId bigint(20) unsigned NOT NULL,
+    cantidad int not NULL,
+    comentario text NULL,
+    created_at timestamp NULL DEFAULT NULL,
+    updated_at timestamp NULL DEFAULT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_asignacionUniforme_personalId foreign key (personalId) references personal(id),
+    CONSTRAINT FK_asignacionUniforme_inventarioId foreign key (inventarioId) references inventario(id)
+);
+
 CREATE TABLE userdocs(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     personalId bigint(20) unsigned NOT NULL,
@@ -1333,7 +1346,7 @@ create table refacciones (
     updated_at datetime NULL,
     primary key(id)
 );
-  
+
   create table ubicaciones(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     nombre varchar(200) not NULL,
@@ -1349,7 +1362,7 @@ INSERT INTO
     `ubicaciones`
 values (1,'Maquinaria','Maquinaria','Apartado para seleccionar maquinaria',1,'2022-09-26 19:48:41','2022-09-26 19:48:41'
     );
-   
+
     create table lugares(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     nombre varchar(200) not NULL,
@@ -1361,7 +1374,7 @@ values (1,'Maquinaria','Maquinaria','Apartado para seleccionar maquinaria',1,'20
     primary key(id),
     CONSTRAINT FK_lugares_ubicacionId foreign key (ubicacionId) references ubicaciones(id)
 );
-  
+
    CREATE TABLE extintores(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 	identificador varchar(200) null,
@@ -1395,15 +1408,15 @@ values (1,'Maquinaria','Maquinaria','Apartado para seleccionar maquinaria',1,'20
     primary key(id)
 );
 
-create table mtqEventos (
+CREATE TABLE mtqEventos (
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     title varchar(255) NOT NULL,
+    mantenimientoId bigint(20) unsigned NOT NULL,
     maquinariaId bigint(20) unsigned NOT NULL,
     fecha date NOT NULL,
     descripcion text NULL,
     estatus bigint(20) unsigned NOT NULL,
     color varchar(255) NOT NULL,
-    backgroundColor varchar(100) NULL,
     start datetime NULL,
     end datetime NULL,
     created_at timestamp NULL DEFAULT NULL,
@@ -1420,4 +1433,19 @@ create table mtqEventos (
     updated_at datetime NULL,
     primary key(id),
     CONSTRAINT FK_usoMaquinarias_maquinariaId foreign key (maquinariaId) references maquinaria(id)
+);
+
+CREATE TABLE inventarioMovimientos(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    inventarioId bigint(20) unsigned NOT NULL,
+    usuarioId bigint(20) unsigned NOT NULL,
+    movimiento int(4) NOT NULL,
+    cantidad float(10, 2) NOT NULL,
+    precioUnitario float(10, 2) NOT NULL,
+    total float(10, 2) NOT NULL,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_inventarioMovimiento_inventario foreign key (inventarioId) references inventario(id),
+    CONSTRAINT FK_inventarioMovimiento_usuario foreign key (usuarioId) references users(id)
 );

@@ -107,9 +107,9 @@
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Cantidad: <span>*</span></label></br>
+                                            <label class="labelTitulo">Cantidad: </label></br>
                                             <input type="number" step="1" min="1" class="inputCaja text-end"
-                                                required id="cantidad" name="cantidad"
+                                                required id="cantidad" name="cantidad" readonly
                                                 value="{{ $inventario->cantidad }}">
                                         </div>
 
@@ -244,8 +244,9 @@
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-5 ">
                                                 <label class="labelTitulo">Asignado :</label></br>
-                                                <select id="extintorAsignadoMaquinariaId" name="extintorAsignadoMaquinariaId" class="form-select"
-                                                      aria-label="Default select example">
+                                                <select id="extintorAsignadoMaquinariaId"
+                                                    name="extintorAsignadoMaquinariaId" class="form-select"
+                                                    aria-label="Default select example">
                                                     <option value="">Seleccione</option>
                                                     @foreach ($vctMaquinaria as $item)
                                                         <option value="{{ $item->id }}"
@@ -257,16 +258,16 @@
                                             </div>
                                         @endif
 
+                                        @if ($inventario->tipo == 'herramientas')
+                                            <div class="col-12 text-center mt-5">
 
+                                                <button type="button" class="btn btn-primary botonGral"
+                                                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                    Mover
+                                                </button>
 
-                                        <div class="col-12 text-center mt-5">
-
-                                            <button type="button" class="btn btn-primary botonGral"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                                Mover
-                                            </button>
-
-                                        </div>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -341,6 +342,7 @@
 </script>
 
     <!-- Modal -->
+    <!--
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -361,7 +363,7 @@
                     </select>
 
                     <label class="labelTitulo mt-3">Cantidad:</label></br>
-                    <input type="number" step="0.01" min="0.01" class="inputCaja" id="cantidad"
+                    <input type="number"  class="inputCaja" id="cantidad"
                         name="cantidad" value="">
 
                     <label class="labelTitulo mt-3">Origen:</label></br>
@@ -394,5 +396,5 @@
             </div>
         </div>
     </div>
-
+-->
 @endsection
