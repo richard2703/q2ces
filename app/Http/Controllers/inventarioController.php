@@ -351,6 +351,7 @@ class inventarioController extends Controller
             $restock = restock::create($restock);
 
             $producto->cantidad = ($producto->cantidad + $restock->cantidad);
+            $producto->valor =  $restock->costo;
             $producto->save();
 
             $objMovimiento = new inventarioMovimientos();
@@ -766,5 +767,58 @@ class inventarioController extends Controller
                 ->get();
         // dd($data);
         return response()->json($data);
+    }
+
+
+    /**
+     * Agrega mas stock a un producto, crea registro y actualiza el inventario del mismo
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function ajusteDeUniforme(Request $request)
+    {
+        abort_if(Gate::denies('inventario_restock'), 403);
+        $restock = $request->only(
+            'movimientoId',
+            'productoId',
+            'cantidad',
+            'cantidadAnterior',
+            'usuarioId'
+        );
+
+        //*** existe el producto en inventario */
+        $producto = inventario::where("id", $request['productoId'])->first();
+
+        //*** existe el producto en inventario */
+        $movimiento = inventarioMovimientos::where("id", $request['movimientoId'])->first();
+
+        dd($request, $restock, $producto, $movimiento);
+
+        return redirect()->back()->with('failed', 'No se ha implementado!');
+
+        if ($producto) {
+            //*** creamos el registro del stock */
+            $restock = restock::create($restock);
+
+            $producto->cantidad = ($producto->cantidad + $restock->cantidad);
+            // $producto->save();
+
+            $objMovimiento = new inventarioMovimientos();
+            $objMovimiento->movimiento = 1; //*** agrega al inventario */
+            $objMovimiento->inventarioId = $restock->productoid;
+            $objMovimiento->cantidad = $restock->cantidad;
+            $objMovimiento->precioUnitario = $restock->costo;
+            $objMovimiento->total = ($restock->costo * $restock->cantidad);
+            $objMovimiento->usuarioId = $request['usuarioId'];
+            // $objMovimiento->Save();
+
+
+            Session::flash('message', 1);
+            return redirect()->route('inventario.index', $producto->tipo);
+        } else {
+            Session::flash('message', 0);
+            return redirect()->back()->with('failed', 'No se encuentra en el inventario!');
+        }
     }
 }
