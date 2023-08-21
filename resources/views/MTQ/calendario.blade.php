@@ -27,10 +27,10 @@
             </a>
             </div>
             <div class="col-8 text-end mb-1" style="margin-left: -25px">
-                @can('maquinaria_mtq_create')
+                @can('calendarioMtq_create')
                     <button data-bs-toggle="modal" data-bs-target="#modalEvento" type="button"
                         class="btn botonGral">Añadir
-                        Evento</button>
+                        Mantenimiento</button>
                 @endcan
             </div>
         </div>
@@ -43,7 +43,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header bacTituloPrincipal">
-                        <h5 class="modal-title fs-5" id="modalTitleId">Añadir Evento</h5>
+                        <h5 class="modal-title fs-5" id="modalTitleId">Añadir Mantenimiento</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -169,11 +169,13 @@
                                         placeholder="Buscar Equipo..." title="Escriba la(s) palabra(s) a buscar." readonly>
                                 </div>
                                 <div class="col-1 mt-4">
+                                @can('calendarioMtq_edit')
                                     <div id="editarCampos">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
                                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                     </svg>
                                     </div>
+                                @endcan
                                 </div>
                             </div>
 
@@ -646,11 +648,13 @@ integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6
             },
             week: {
                 eventMaxStack: 1,
+                titleFormat: { month: 'long', year: 'numeric', day: 'numeric' }
             },
             day: {
                 eventMaxStack: 5,
             }
         },
+        
         eventMaxStack: true,
         initialView: 'dayGridMonth',
         locale: 'es',
@@ -660,16 +664,37 @@ integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
         dateClick:function(informacion){
-            //alert("DATE: " + informacion.dateStr);
-            document.getElementById('fecha').value = informacion.dateStr;
-            //document.getElementById('color').value= '#f7c90d';
-            modalEvento.show();
+            var permissionName = 'calendarioMtq_create';
+            fetch(`/check-permission/${permissionName}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.hasPermission) {
+                    document.getElementById('fecha').value = informacion.dateStr;
+                    modalEvento.show();
+                } else {
+                alertaNoPermission();
+                }
+            })
+            .catch(error => {
+                console.error("Error al verificar permisos:", error);
+            });
             
         },
         eventClick:function(informacion){
-            modalEventoEdit.show();
-            
-            recuperarDatosEvento(informacion.event);
+            var permissionName = 'calendarioMtq_show';
+            fetch(`/check-permission/${permissionName}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.hasPermission) {
+                    modalEventoEdit.show();
+                    recuperarDatosEvento(informacion.event);
+                } else {
+                alertaNoPermission();
+                }
+            })
+            .catch(error => {
+                console.error("Error al verificar permisos:", error);
+            });
         },
         events: eventosJson,
         

@@ -378,4 +378,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('extintores', App\Http\Controllers\extintoresController::class);
     Route::get('/ubicaciones/lugares/{ubicacionId}', [App\Http\Controllers\extintoresController::class, 'lugares'])->name('lugares.get');
     
+    // Permisos Desde Javascript
+    Route::get('/check-permission/{permission}', 'App\Http\Controllers\calendarioMtqController@checkPermission');
+
 });
