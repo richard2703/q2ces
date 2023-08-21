@@ -144,7 +144,6 @@ class maquinariaController extends Controller
         /*** directorio contenedor de su información */
         $pathMaquinaria = str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT);
 
-
         $maquinaria['placas'] = strtoupper($maquinaria['placas']);
         $maquinaria['nummotor'] = strtoupper($maquinaria['nummotor']);
         $maquinaria['numserie'] = strtoupper($maquinaria['numserie']);
@@ -192,58 +191,26 @@ class maquinariaController extends Controller
             $documento->save();
         }
 
-        // dd($request->refaccion);
-        /* registro de residentes */
         for ($i = 0; $i < count($request['tipoRefaccionId']); $i++) {
             //* se guarda solo si se selecciono una máquina */
-            if ($request['tipoRefaccionId'][$i] != '' || $request['tipoRefaccionId'][$i] != null) {
-                $relacion = inventario::where('numparte',$request['numeroParte'][$i])->first();
-                $objResidente = new refacciones();
-                if($relacion != null){
-                    $objResidente->relacionInventarioId = $relacion->id;
+            if ($request['marcaId'][$i] && $request['tipoRefaccionId'][$i]) {
+                if ($request['tipoRefaccionId'][$i] != '' || $request['tipoRefaccionId'][$i] != null) {
+                    
+                    $relacion = inventario::where('numparte',$request['numeroParte'][$i])->first();
+                    
+                    $objResidente = new refacciones();
+                    if($relacion != null){
+                        $objResidente->relacionInventarioId = $relacion->id;
+                    }
+                    $objResidente->maquinariaId = $maquinaria->id;
+                    $objResidente->marcaId  = $request['marcaId'][$i];
+                    $objResidente->tipoRefaccionId = $request['tipoRefaccionId'][$i];
+                    // $objResidente->puesto = $request['rpuesto'][$i];
+                    $objResidente->numeroParte = $request['numeroParte'][$i];
+                    $objResidente->save();
                 }
-                $objResidente->maquinariaId = $maquinaria->id;
-                $objResidente->marcaId  = $request['marcaId'][$i];
-                $objResidente->tipoRefaccionId = $request['tipoRefaccionId'][$i];
-                // $objResidente->puesto = $request['rpuesto'][$i];
-                $objResidente->numeroParte = $request['numeroParte'][$i];
-                $objResidente->save();
             }
         }
-        // for ($i = 0; $i < count($request->refaccion); $i++) {
-        //     $ref = new refacciones();
-        //     $ref->maquinariaId = $maquinaria->id;
-        //     
-        //     $ref->tipoRefaccionId = $request->refaccion[$i]['tipoRefaccionId'];
-        //     $ref->marcaId = $request->refaccion[$i]['marcaId'];
-        //     //$activo = $request->refaccion[$i]['activo']; 
-        //     //$ref->comentario = $request->refaccion[$i]['comentario'];
-        //     //$ref->nombre = 'prueba';
-        //     $ref->numeroParte = $request->refaccion[$i]['numeroParte'];
-            
-        //     $ref->save();
-        // }
-
-        // dd($request->docs[$cont]);
-        // Bucle para procesar los documentos
-        //dd($request->tipoDocs);
-        // for ($i = 0; $i < count($request->tipoDocs); $i++) {
-        //     $documento = new maqdocs();
-        //     $documento->maquinariaId = $maquinaria->id;
-        //     $tipoDocumento = $request->tipoDocs[$i];
-
-        //     if (strpos($tipoDocumento, '-0') !== false) {
-        //         $documento->tipo = substr($tipoDocumento, 0, -2);
-        //         $documento->estatus = 'omitido';
-        //         $documento->save();
-        //     } elseif (strpos($tipoDocumento, '-1') !== false) {
-        //         $documento->tipo = substr($tipoDocumento, 0, -2);
-        //         $documento->estatus = 'activo';
-        //         $documento->ruta = time() . '_' . $request->file('docs')[$cont]->getClientOriginalName();
-        //         $request->file('docs')[$cont]->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos/' .  $documento->tipo, $documento->ruta);
-        //         $documento->save();
-        //     }
-        // }
 
         Session::flash('message', 1);
         return redirect()->route('maquinaria.index');
@@ -491,8 +458,10 @@ class maquinariaController extends Controller
             }
         }
         $nuevaLista = collect();
+        
         for ($i = 0; $i < count($request['idRefaccion']); $i++) {
-            $relacion = inventario::where('numparte',$request['numeroParte'][$i])->first();
+            $relacion = inventario::where('numparte',$request['numeroParte'][$i])->first(); 
+            if ($request['marcaId'][$i] && $request['tipoRefaccionId'][$i]) {
             $numParteRelacion = null;
             if($relacion != null){
                 $numParteRelacion = $relacion->id;
@@ -509,6 +478,7 @@ class maquinariaController extends Controller
             $objRefaccion = refacciones::updateOrCreate(['id' => $array['id']], $array);
             // dd($objRefaccion);
             $nuevaLista->push($objRefaccion->id);
+            }
         }
         $test = refacciones::where('maquinariaId', $maquinaria->id)->whereNotIn('id', $nuevaLista)->delete();
 
