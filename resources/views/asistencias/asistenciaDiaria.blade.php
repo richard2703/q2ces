@@ -20,6 +20,7 @@ $dtTrabajar = date('Ymd', strtotime("$intAnio-$intMes-$intDia"));
 
 //*** bloqueamos fecha mayor al dia actual
 $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? false : true;
+$blnAsistenciaTomada = $dtTrabajar == $dtToday && $asistencias->isEmpty() == false ? true : false;
 
 // dd($asistencias, $diaAnterior, $diaSiguiente, $fechaSeleccionada, $diaSeleccionado, $dtToday, $dtTrabajar);
 
@@ -142,11 +143,15 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                     <thead class="labelTitulo text-center">
                                                         <th class="labelTitulo">Código</th>
                                                         <th class="labelTitulo">Nombre</th>
-                                                        <th class="labelTitulo" style="width:140px !important">Asistencia</th>
+                                                        <th class="labelTitulo" style="width:140px !important">Asistencia
+                                                        </th>
                                                         <th class="labelTitulo">Faltas</th>
-                                                        <th class="labelTitulo" style="width:190px !important">Incapacidadades</th>
-                                                        <th class="labelTitulo" style="width:140px !important">Vacaciones</th>
-                                                        <th class="labelTitulo" style="width:140px !important">Descansos</th>
+                                                        <th class="labelTitulo" style="width:190px !important">
+                                                            Incapacidadades</th>
+                                                        <th class="labelTitulo" style="width:140px !important">Vacaciones
+                                                        </th>
+                                                        <th class="labelTitulo" style="width:140px !important">Descansos
+                                                        </th>
                                                     </thead>
                                                     <tbody class="text-center">
 
@@ -173,7 +178,8 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                                         id="Asistencia_{{ $item->id }}" value="3">
                                                                 </td>
                                                                 <td><input type="radio" name="{{ $item->id }}[]"
-                                                                        id="Asistencia_{{ $item->id }}" value="4">
+                                                                        id="Asistencia_{{ $item->id }}"
+                                                                        value="4">
                                                                 </td>
                                                                 <td><input type="radio" name="{{ $item->id }}[]"
                                                                         id="Asistencia_{{ $item->id }}"
@@ -199,7 +205,17 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                     <button type="submit" class="btn botonGral">Guardar</button>
                                                 </a>
                                                 {{--  {{ $personal->links() }}  --}}
-                                                <?php } ?>
+                                                <?php }else{
+                                                    if($blnAsistenciaTomada==true){
+                                                        ?>
+                                                <p class="botonTitulos mt-2">La asistencia ya fue registrada, si requiere
+                                                    realizar un cambio deberá hacerlo de forma individual por cada empleado.
+                                                </p>
+                                                <?php
+                                                    }else{
+
+                                                    }
+                                                } ?>
                                             </div>
                                         </form>
                                     </div>
@@ -251,13 +267,15 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
             </div>
         </div>
         <style>
-        table{
-            table-layout: fixed;
+            table {
+                table-layout: fixed;
             }
-            th, td {
+
+            th,
+            td {
                 width: 100px;
                 word-wrap: break-word;
-        }
+            }
         </style>
         <script>
             function Guardado() {

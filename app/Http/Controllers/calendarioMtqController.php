@@ -25,7 +25,7 @@ class calendarioMtqController extends Controller
         //$eventos = calendarioMtq::all();
         $servicios = serviciosMtq::all();
         $eventos = calendarioMtq::join('maquinaria', "maquinaria.id", "mtqEventos.maquinariaId")
-        ->join('serviciosMtq', 'serviciosMtq.id', 'mtqEventos.mantenimientoId')
+            ->join('serviciosMtq', 'serviciosMtq.id', 'mtqEventos.mantenimientoId')
             ->select(
                 'mtqEventos.id',
                 'mtqEventos.title',
@@ -47,7 +47,7 @@ class calendarioMtqController extends Controller
             ->get();
         $eventosJson = $eventos->toJson();
         // dd($eventos);
-        return view( 'mtq.calendario', compact('eventosJson', 'servicios'));
+        return view('MTQ.calendario', compact('eventosJson', 'servicios'));
     }
 
     /**
@@ -69,12 +69,12 @@ class calendarioMtqController extends Controller
     {
         abort_if(Gate::denies('calendarioMtq_create'), 404);
         $events = $request->all();
-        $events['start'] = strtoupper($events['fecha'].' '.$events['hora']);
-        $events['title'] = strtoupper($events['placas'].' '.$events['nombre'].' '.$events['marca'].' '.$events['numeconomico'].' '.$events['descripcion']);
+        $events['start'] = strtoupper($events['fecha'] . ' ' . $events['hora']);
+        $events['title'] = strtoupper($events['placas'] . ' ' . $events['nombre'] . ' ' . $events['marca'] . ' ' . $events['numeconomico'] . ' ' . $events['descripcion']);
         // dd($events);
         $events = calendarioMtq::create($events);
         Session::flash('message', 1);
-        return redirect()->route('calendarioMtq.index');
+        return redirect()->route('calendarioMTQ.index');
     }
 
     /**
@@ -114,11 +114,11 @@ class calendarioMtqController extends Controller
         $data = $request->all();
         // dd($calendarioMtq, $data);
         $data['estatus'] = 1;
-        if($data['fecha'] != null && $data['hora'] != null){
-            $data['start'] = strtoupper($data['fecha'].' '.$data['hora']);
+        if ($data['fecha'] != null && $data['hora'] != null) {
+            $data['start'] = strtoupper($data['fecha'] . ' ' . $data['hora']);
         }
-        if($data['fechaSalida'] != null && $data['horaSalida'] != null){
-            $data['end'] = strtoupper($data['fechaSalida'].' '.$data['horaSalida']);    
+        if ($data['fechaSalida'] != null && $data['horaSalida'] != null) {
+            $data['end'] = strtoupper($data['fechaSalida'] . ' ' . $data['horaSalida']);
         }
         if ($data['color'] === null) {
             unset($data['color']);
@@ -126,12 +126,12 @@ class calendarioMtqController extends Controller
         if ($data['maquinariaId'] === null) {
             unset($data['maquinariaId']);
         }
-        $data['title'] = strtoupper($data['placas'].' '.$data['nombre'].' '.$data['marca'].' '.$data['numeconomico'].' '.$data['descripcion']);
+        $data['title'] = strtoupper($data['placas'] . ' ' . $data['nombre'] . ' ' . $data['marca'] . ' ' . $data['numeconomico'] . ' ' . $data['descripcion']);
         $calendarioMtq->update($data);
 
         Session::flash('message', 1);
 
-        return redirect()->route('calendarioMtq.index');
+        return redirect()->route('calendarioMTQ.index');
     }
 
     /**

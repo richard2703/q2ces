@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\mtq;
-use App\Models\maquinaria;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
-use App\Helpers\Validaciones;
 
-class mtqController extends Controller
+class inventarioMovimientosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,25 +14,7 @@ class mtqController extends Controller
      */
     public function index()
     {
-        return view('MTQ.dashMtq');
-    }
-
-    public function indexMtqs()
-    {
-        abort_if(Gate::denies('maquinaria_index'), 403);
-
-        $maquinaria = maquinaria::paginate(15);
-        // dd( 'test' );
-        return view('MTQ.indexMtq', compact('maquinaria'));
-    }
-
-    public function indexResidentes()
-    {
-        abort_if(Gate::denies('maquinaria_index'), 403);
-
-        $maquinaria = maquinaria::paginate(15);
-        // dd( 'test' );
-        return view('MTQ.indexMtq', compact('maquinaria'));
+        //
     }
 
     /**
@@ -64,10 +41,10 @@ class mtqController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\mtq  $mtq
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(mtq $mtq)
+    public function show($id)
     {
         //
     }
@@ -75,10 +52,10 @@ class mtqController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\mtq  $mtq
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(mtq $mtq)
+    public function edit($id)
     {
         //
     }
@@ -87,10 +64,10 @@ class mtqController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\mtq  $mtq
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, mtq $mtq)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -98,10 +75,10 @@ class mtqController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\mtq  $mtq
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(mtq $mtq)
+    public function destroy($id)
     {
         //
     }

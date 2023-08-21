@@ -139,13 +139,13 @@ class searchController extends Controller
         // $term = $request->input( 'term' );
         $term = $request->get('term');
 
-        $maquinaria = Maquinaria::whereNotNull('compania')
-        ->where(function ($query) use ($term) {
-            $query->where('nombre', 'LIKE', '%' . $term . '%')
-                ->orWhere('marca', 'LIKE', '%' . $term . '%')
-                ->orWhere('categoria', 'LIKE', '%' . $term . '%');
-        })
-        ->get();
+        $maquinaria = Maquinaria::where('compania', 'mtq')
+            ->where(function ($query) use ($term) {
+                $query->where('nombre', 'LIKE', '%' . $term . '%')
+                    ->orWhere('marca', 'LIKE', '%' . $term . '%')
+                    ->orWhere('categoria', 'LIKE', '%' . $term . '%');
+            })
+            ->get();
 
         $sugerencias = [];
         foreach ($maquinaria as $item) {
@@ -159,6 +159,7 @@ class searchController extends Controller
                 'placas' => $item->placas,
                 'modelo' => $item->modelo,
                 'identificador' => $item->identificador,
+                'kilometraje' => $item->kilometraje,
             ];
         }
 

@@ -69,7 +69,7 @@
                                                 placeholder="Especifique..." value="{{ $cliente->nombre }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Razon Social: <span>*</span></label></br>
+                                            <label class="labelTitulo">Razón Social: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="rasonSocial" name="razonSocial"
                                                 required placeholder="Especifique..." value="{{ $cliente->razonSocial }}">
                                         </div>
@@ -84,12 +84,12 @@
                                                 placeholder="Especifique..." value="{{ $cliente->calle }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">N. Exterior:</label></br>
+                                            <label class="labelTitulo">No. Exterior:</label></br>
                                             <input type="text" class="inputCaja" id="exterior" name="exterior"
                                                 value="{{ $cliente->exterior }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">N. Interior: <span>*</span></label></br>
+                                            <label class="labelTitulo">No. Interior: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="interior" name="interior" required
                                                 placeholder="Especifique..." value="{{ $cliente->interior }}">
                                         </div>
@@ -146,7 +146,7 @@
                                                 </div>
 
                                                 <div class=" col-11 col-sm-5 col-lg-3 my-3 ">
-                                                    <label class="labelTitulo">Telefono:</label></br>
+                                                    <label class="labelTitulo">Teléfono:</label></br>
                                                     <input type="text" class="inputCaja" id="rTelefono"
                                                         placeholder="Especifique..." name="rTelefono[]"
                                                         value="{{ $residente->telefono }}">
