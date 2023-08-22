@@ -64,13 +64,13 @@
                                                 <div class="row mt-3">
                                                     <div class="col-12 col-lg-4  my-3">
                                                         <div class="row mb-5">
-                                                        
+
                                                             <div class="col-12 contFotoMaquinaria" id="visor">
                                                                 <!-- @if (count($fotos) > 0)
-                                                                    <button type="button"
-                                                                        class="btn btn-secondary btn-sm"
-                                                                        onclick="deleteImage('{{ $fotos[0]->id }}','{{ $fotos }}', (this));">X</button>
-                                                                @endif -->
+    <button type="button"
+                                                                            class="btn btn-secondary btn-sm"
+                                                                            onclick="deleteImage('{{ $fotos[0]->id }}','{{ $fotos }}', (this));">X</button>
+    @endif -->
                                                                 <img src="{{ empty($fotos[0]) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $fotos[0]->ruta) }}"
                                                                     class="mx-auto d-block img-fluid imgMaquinaria">
                                                             </div>
@@ -85,7 +85,10 @@
                                                                         style="margin-right:3px;">
                                                                     <div class="form-group">
                                                                         <div class="divButtonImage">
-                                                                            <button type="button" class="btn btn-secondary btn-sm buttonImage" id="btnDelete{{ $foto->id }}" onclick="esconde_div('{{ $foto->id }}','{{ $fotos }}', (this));">X</button>
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary btn-sm buttonImage"
+                                                                                id="btnDelete{{ $foto->id }}"
+                                                                                onclick="esconde_div('{{ $foto->id }}','{{ $fotos }}', (this));">X</button>
                                                                         </div>
                                                                     </div>
                                                                 @empty
@@ -103,7 +106,8 @@
                                                         </div>
 
                                                     </div>
-                                                    <input type="hidden" name="arrayFotosPersistente" id="arrayFotosPersistente" value="">
+                                                    <input type="hidden" name="arrayFotosPersistente"
+                                                        id="arrayFotosPersistente" value="">
                                                     <div class="col-12 col-lg-8">
                                                         <div class="row alin">
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -129,9 +133,16 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Marca:</label></br>
-                                                                <input type="text" class="inputCaja" id="marca"
-                                                                    placeholder="Especifique..." name="marca"
-                                                                    value="{{ $maquinaria->marca }}">
+                                                                <select id="bitacoraId" name="bitacoraId"
+                                                                    class="form-select" aria-label="Default select example">
+                                                                    <option value="">Seleccione</option>
+                                                                    @foreach ($marcas as $item)
+                                                                        <option value="{{ $item->id }}"
+                                                                            {{ $item->id == $maquinaria->marcaId ? ' selected' : '' }}>
+                                                                            {{ $item->nombre }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
                                                             </div>
 
 
@@ -151,36 +162,16 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Categoría:</label></br>
-                                                                <select class="form-select"
-                                                                    aria-label="Default select example" id="categoria"
-                                                                    required name="categoria">
-                                                                    <option value="Accesorios"
-                                                                        {{ $maquinaria->categoria == 'Accesorios' ? ' selected' : '' }}>
-                                                                        Accesorios</option>
-                                                                    <option value="Campers"
-                                                                        {{ $maquinaria->categoria == 'Campers' ? ' selected' : '' }}>
-                                                                        Campers</option>
-                                                                    <option value="Cisterna"
-                                                                        {{ $maquinaria->categoria == 'Cisterna' ? ' selected' : '' }}>
-                                                                        Cisterna</option>
-                                                                    <option value="Maquinaria ligera"
-                                                                        {{ $maquinaria->categoria == 'Maquinaria ligera' ? ' selected' : '' }}>
-                                                                        Maquinaria ligera</option>
-                                                                    <option value="Maquinaria pesada"
-                                                                        {{ $maquinaria->categoria == 'Maquinaria pesada' ? ' selected' : '' }}>
-                                                                        Maquinaria pesada</option>
-                                                                    <option value="Retroexcavadoras"
-                                                                        {{ $maquinaria->categoria == 'Retroexcavadoras' ? ' selected' : '' }}>
-                                                                        Retroexcavadoras</option>
-                                                                    <option value="Tractocamiones"
-                                                                        {{ $maquinaria->categoria == 'Tractocamiones' ? ' selected' : '' }}>
-                                                                        Tractocamiones</option>
-                                                                    <option value="Otros"
-                                                                        {{ $maquinaria->categoria == 'Otros' ? ' selected' : '' }}>
-                                                                        Otros</option>
-                                                                    <option value="Utilitarios"
-                                                                        {{ $maquinaria->categoria == 'Utilitarios' ? ' selected' : '' }}>
-                                                                        Utilitarios</option>
+                                                                <select id="categoriaId" name="categoriaId"
+                                                                    class="form-select"
+                                                                    aria-label="Default select example">
+                                                                    <option value="">Seleccione</option>
+                                                                    @foreach ($categorias as $item)
+                                                                        <option value="{{ $item->id }}"
+                                                                            {{ $item->id == $maquinaria->categoriaId ? ' selected' : '' }}>
+                                                                            {{ $item->nombre }}
+                                                                        </option>
+                                                                    @endforeach
                                                                 </select>
                                                             </div>
 
@@ -195,6 +186,9 @@
                                                                     <option
                                                                         value="Completo"{{ $maquinaria->uso == 'Completo' ? ' selected' : '' }}>
                                                                         Completo</option>
+                                                                    <option
+                                                                        value="Utilitario"{{ $maquinaria->uso == 'Utilitario' ? ' selected' : '' }}>
+                                                                        Utilitario</option>
                                                                 </select>
                                                             </div>
 
@@ -202,22 +196,17 @@
                                                                 <div class="row align-items-end">
                                                                     <div class="pl-2">
                                                                         <label class="labelTitulo">Tipo:</label></br>
-                                                                        <select class="form-select"
-                                                                            aria-label="Default select example"
-                                                                            id="tipo" name="tipo">
-                                                                            <option
-                                                                                value="Pesada"{{ $maquinaria->tipo == 'Pesada' ? ' selected' : '' }}>
-                                                                                Pesada</option>
-                                                                            <option
-                                                                                value="Ligero"{{ $maquinaria->tipo == 'Ligero' ? ' selected' : '' }}>
-                                                                                Ligero</option>
-                                                                            <option
-                                                                                value="Grua"{{ $maquinaria->tipo == 'Grua' ? ' selected' : '' }}>
-                                                                                Grúa</option>
-                                                                            <option
-                                                                                value="N/A"{{ $maquinaria->tipo == 'no_aplica' ? ' selected' : '' }}>
-                                                                                N/A</option>
-                                                                        </select>
+                                                                        <select id="tipoId" name="tipoId"
+                                                                        class="form-select"
+                                                                        aria-label="Default select example">
+                                                                        <option value="">Seleccione</option>
+                                                                        @foreach ($tipos as $item)
+                                                                            <option value="{{ $item->id }}"
+                                                                                {{ $item->id == $maquinaria->tipoId ? ' selected' : '' }}>
+                                                                                {{ $item->nombre }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
 
                                                                     </div>
                                                                 </div>
@@ -337,12 +326,12 @@
                                                             </div>
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                                <label class="labelTitulo">Combustible:</label></br>
-                                                                                <input type="text" class="inputCaja" id="combustible"
-                                                                                    name="combustible"
-                                                                                    placeholder="Diesel / Gasolina / Especificar"
-                                                                                    value="{{ $maquinaria->combustible }}">
-                                                                            </div>-->
+                                                                                    <label class="labelTitulo">Combustible:</label></br>
+                                                                                    <input type="text" class="inputCaja" id="combustible"
+                                                                                        name="combustible"
+                                                                                        placeholder="Diesel / Gasolina / Especificar"
+                                                                                        value="{{ $maquinaria->combustible }}">
+                                                                                </div>-->
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Motor:</label></br>
@@ -424,14 +413,14 @@
                                                         </div>
 
                                                     </div>
-                                                    
+
                                                     <div class="d-flex p-3">
                                                         <div class="col-12" id="elementos">
                                                             <div class="d-flex">
                                                                 <div class="col-6 divBorder">
                                                                     <h2 class="tituloEncabezado ">Refacciones</h2>
                                                                 </div>
-                                                                
+
                                                                 <div class="col-6 divBorder pb-3 text-end">
                                                                     <button type="button" class="btnVerde"
                                                                         onclick="crearItems()">
@@ -439,72 +428,79 @@
                                                                 </div>
                                                             </div>
                                                             @forelse($refacciones as $refaccion)
-                                                            <div class="row opcion divBorderItems" id="opc">
-                                                                <input type="hidden" name="idRefaccion[]" value="{{$refaccion->id}}">
-                                                                <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
-                                                                    <label class="labelTitulo">Tipo de
-                                                                        Refacción:</label></br>
-                                                                    <select id="tipoRefaccion" name="tipoRefaccionId[]"
-                                                                        class="form-select">
-                                                                        <option value="">Seleccione</option>
-                                                                        @foreach ($refaccionTipo as $item)
-                                                                            <option value="{{ $item->id }}" {{ $refaccion->tipoRefaccionId == $item->id ? 'selected' : '' }}>
-                                                                                {{ $item->nombre }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
+                                                                <div class="row opcion divBorderItems" id="opc">
+                                                                    <input type="hidden" name="idRefaccion[]"
+                                                                        value="{{ $refaccion->id }}">
+                                                                    <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
+                                                                        <label class="labelTitulo">Tipo de
+                                                                            Refacción:</label></br>
+                                                                        <select id="tipoRefaccion"
+                                                                            name="tipoRefaccionId[]" class="form-select">
+                                                                            <option value="">Seleccione</option>
+                                                                            @foreach ($refaccionTipo as $item)
+                                                                                <option value="{{ $item->id }}"
+                                                                                    {{ $refaccion->tipoRefaccionId == $item->id ? 'selected' : '' }}>
+                                                                                    {{ $item->nombre }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
 
-                                                                <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
-                                                                <label class="labelTitulo">Marca:</label></br>
-                                                                <select id="marcaRefaccion" name="marcaId[]"
-                                                                    class="form-select">
-                                                                    <option value="">Seleccione</option>
-                                                                    @foreach ($marcas as $item)
-                                                                        <option value="{{ $item->id }}" {{ $refaccion->marcaId == $item->id ? 'selected' : '' }}>
-                                                                            {{ $item->nombre }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                                </div>
+                                                                    <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
+                                                                        <label class="labelTitulo">Marca:</label></br>
+                                                                        <select id="marcaRefaccion" name="marca[]"
+                                                                            class="form-select">
+                                                                            <option value="">Seleccione</option>
+                                                                            @foreach ($marcas as $item)
+                                                                                <option value="{{ $item->id }}"
+                                                                                    {{ $refaccion->marcaId == $item->id ? 'selected' : '' }}>
+                                                                                    {{ $item->nombre }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
 
-                                                                <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
-                                                                    <label class="labelTitulo">Número De
-                                                                        Parte:</label></br>
-                                                                    <input type="text" class="inputCaja"
-                                                                        id="numeroParte" placeholder="Especifique..."
-                                                                        name="numeroParte[]" value="{{$refaccion->numeroParte}}">
-                                                                </div>
+                                                                    <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
+                                                                        <label class="labelTitulo">Número De
+                                                                            Parte:</label></br>
+                                                                        <input type="text" class="inputCaja"
+                                                                            id="numeroParte" placeholder="Especifique..."
+                                                                            name="numeroParte[]"
+                                                                            value="{{ $refaccion->numeroParte }}">
+                                                                    </div>
 
-                                                                <div class="col-12 col-sm-4 col-lg-2 my-3 text-center pt-3">
-                                                                    <!--<i class="fas fa-clipboard-check"></i>-->
-                                                                    <!--<span class="material-icons" style="font-size:40px; color: gray">
-                                                                        content_paste_search
-                                                                    </span>-->
-                                                                    @if ($refaccion->relacionInventarioId != null)
-                                                                    <span class="material-icons" style="font-size:40px; color: green">
-                                                                        assignment_turned_in
-                                                                    </span>
-                                                                    @else
-                                                                    <span class="material-icons" style="font-size:40px; color: red">
-                                                                        content_paste_off
-                                                                    </span>
-                                                                    @endif
-                                                                    <!--<i class="fas fa-clipboard"></i>-->
-                                                                </div>
+                                                                    <div
+                                                                        class="col-12 col-sm-4 col-lg-2 my-3 text-center pt-3">
+                                                                        <!--<i class="fas fa-clipboard-check"></i>-->
+                                                                        <!--<span class="material-icons" style="font-size:40px; color: gray">
+                                                                            content_paste_search
+                                                                        </span>-->
+                                                                        @if ($refaccion->relacionInventarioId != null)
+                                                                            <span class="material-icons"
+                                                                                style="font-size:40px; color: green">
+                                                                                assignment_turned_in
+                                                                            </span>
+                                                                        @else
+                                                                            <span class="material-icons"
+                                                                                style="font-size:40px; color: red">
+                                                                                content_paste_off
+                                                                            </span>
+                                                                        @endif
+                                                                        <!--<i class="fas fa-clipboard"></i>-->
+                                                                    </div>
 
-                                                                <div class="col-lg-1 my-3 text-end">
-                                                                    <button type="button" id="removeRow"
-                                                                        class="btnRojo"></button>
-                                                                </div>
+                                                                    <div class="col-lg-1 my-3 text-end">
+                                                                        <button type="button" id="removeRow"
+                                                                            class="btnRojo"></button>
+                                                                    </div>
 
-                                                            </div>
+                                                                </div>
                                                             @empty
                                                                 Sin Refacciones
                                                             @endforelse
                                                         </div>
                                                     </div>
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>
@@ -805,7 +801,7 @@
                                 </div>
                                 <div class="col-12 text-center mb-3 ">
                                     <button type="submit" class="btn botonGral" onclick="alertaGuardar()">Guardar
-                                        Edicion</button>
+                                        Edición</button>
                                 </div>
 
                             </form>
@@ -983,33 +979,33 @@
     // Inicializar arrayFotosPersistente
     let arrayFotosPersistente = [];
 
-// Función para inicializar el arreglo persistente con el arreglo original
-// function inicializarArrayFotos(fotos) {
-//     arrayFotosPersistente = JSON.parse(fotos);
-//     console.log('HOLA',arrayFotosPersistente);
-// }
+    // Función para inicializar el arreglo persistente con el arreglo original
+    // function inicializarArrayFotos(fotos) {
+    //     arrayFotosPersistente = JSON.parse(fotos);
+    //     console.log('HOLA',arrayFotosPersistente);
+    // }
 
-function esconde_div(id, fotos, button) {
-    
-    console.log('fotos', fotos);
-    let arrayFotos = JSON.parse(fotos);
-    const index = arrayFotos.findIndex((foto) => foto.id == id);
+    function esconde_div(id, fotos, button) {
 
-    // Si se encontró el objeto con el id coincidente, eliminarlo del array
-    if (index !== -1) {
-         arrayFotosPersistente.push(arrayFotos[index]);
-        
-    } else {
-         console.log('El id no se encontró en arrayFotosPersistente.');
-    }
-    console.log('arrayFotosPersistente', arrayFotosPersistente);
+        console.log('fotos', fotos);
+        let arrayFotos = JSON.parse(fotos);
+        const index = arrayFotos.findIndex((foto) => foto.id == id);
+
+        // Si se encontró el objeto con el id coincidente, eliminarlo del array
+        if (index !== -1) {
+            arrayFotosPersistente.push(arrayFotos[index]);
+
+        } else {
+            console.log('El id no se encontró en arrayFotosPersistente.');
+        }
+        console.log('arrayFotosPersistente', arrayFotosPersistente);
         var parentDiv = button.parentNode.parentNode.parentNode;
         // Modificar el selector para que coincida con la clase de la imagen
         var imageElement = parentDiv.querySelector("img.img-fluid");
-        var deleteButton = document.getElementById('btnDelete'+id);
-        var imageElement = document.getElementById("img"+ id);
-        
-        
+        var deleteButton = document.getElementById('btnDelete' + id);
+        var imageElement = document.getElementById("img" + id);
+
+
         // Ocultar el elemento padre
         imageElement.style.visibility = "hidden";
         deleteButton.style.visibility = "hidden";
@@ -1031,7 +1027,7 @@ function esconde_div(id, fotos, button) {
     //         console.log('Error');
     //     }
     // });
-    
+
     function loadDocument(id, tipo, comentarios, fechaVencimiento) {
 
         const txtId = document.getElementById('docId');
@@ -1083,7 +1079,8 @@ function esconde_div(id, fotos, button) {
     function crearItems() {
         var newOpcion = $('.opcion:first').clone();
         newOpcion.find("select, input").val(""); // Establece los valores en blanco
-        newOpcion.find(".material-icons").text("content_paste_search").css("color", "gray"); // Establece el ícono y el color
+        newOpcion.find(".material-icons").text("content_paste_search").css("color",
+        "gray"); // Establece el ícono y el color
         newOpcion.appendTo('#elementos');
     }
 
@@ -1095,7 +1092,7 @@ function esconde_div(id, fotos, button) {
     });
 </script>
 <script>
-    function fakeSave(){
+    function fakeSave() {
         console.log('arrayFotosPersistente', arrayFotosPersistente);
     }
 </script>

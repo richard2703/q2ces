@@ -21,6 +21,9 @@ use App\Models\proveedorCategoria;
 use App\Models\refaccionTipo;
 use App\Models\refacciones;
 use App\Models\maquinaria;
+use App\Models\maquinariaCategoria;
+use App\Models\maquinariaTipo;
+use App\Models\tipoEquipo;
 
 class catalogosController extends Controller {
     /**
@@ -61,6 +64,22 @@ class catalogosController extends Controller {
         return view( 'catalogos.tareaCategorias', compact( 'records' ) );
     }
 
+    public function indexCatalogoCategoriasMaquinaria() {
+        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+
+        $records = maquinariaCategoria::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        // dd( $puestos );
+        return view( 'catalogos.maquinariaCategorias', compact( 'records' ) );
+    }
+
+    public function indexCatalogoTiposMaquinaria() {
+        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+
+        $records = maquinariaTipo::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        // dd( $puestos );
+        return view( 'catalogos.maquinariaTipos', compact( 'records' ) );
+    }
+
     public function indexCatalogoTiposTareas() {
         abort_if ( Gate::denies( 'catalogos_index' ), 403 );
 
@@ -83,6 +102,14 @@ class catalogosController extends Controller {
         $records = tipoUniforme::orderBy( 'nombre', 'asc' )->paginate( 10 );
         // dd( $puestos );
         return view( 'catalogos.uniformeTipos', compact( 'records' ) );
+    }
+
+    public function indexCatalogoTiposEquipo () {
+        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+
+        $records = tipoEquipo::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        // dd( $puestos );
+        return view( 'catalogos.equiposTipos', compact( 'records' ) );
     }
 
     public function indexCatalogoTipoRefaccion () {

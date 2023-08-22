@@ -23,6 +23,7 @@ use App\Models\maquinaria;
 use App\Models\proveedorCategoria;
 use App\Models\tipoEquipo;
 use App\Models\tipoUniforme;
+use App\Models\asignacionUniforme;
 
 
 class inventarioController extends Controller
@@ -780,10 +781,13 @@ class inventarioController extends Controller
     {
         abort_if(Gate::denies('inventario_restock'), 403);
         $restock = $request->only(
+            'asignacionId',
             'movimientoId',
             'productoId',
-            'cantidad',
-            'cantidadAnterior',
+            'productoCantidad',
+            'productoNombre',
+            'productoComentario',
+            'productoCantidadNueva',
             'usuarioId'
         );
 
@@ -791,34 +795,112 @@ class inventarioController extends Controller
         $producto = inventario::where("id", $request['productoId'])->first();
 
         //*** existe el producto en inventario */
-        $movimiento = inventarioMovimientos::where("id", $request['movimientoId'])->first();
+        $asignacion = asignacionUniforme::where("id", $request['asignacionId'])->first();
 
-        dd($request, $restock, $producto, $movimiento);
-
-        return redirect()->back()->with('failed', 'No se ha implementado!');
-
-        if ($producto) {
-            //*** creamos el registro del stock */
-            $restock = restock::create($restock);
-
-            $producto->cantidad = ($producto->cantidad + $restock->cantidad);
-            // $producto->save();
-
-            $objMovimiento = new inventarioMovimientos();
-            $objMovimiento->movimiento = 1; //*** agrega al inventario */
-            $objMovimiento->inventarioId = $restock->productoid;
-            $objMovimiento->cantidad = $restock->cantidad;
-            $objMovimiento->precioUnitario = $restock->costo;
-            $objMovimiento->total = ($restock->costo * $restock->cantidad);
-            $objMovimiento->usuarioId = $request['usuarioId'];
-            // $objMovimiento->Save();
+        //*** existe el producto en inventario */
+        // $movimiento = inventarioMovimientos::where("id", $request['movimientoId'])->first();
 
 
-            Session::flash('message', 1);
-            return redirect()->route('inventario.index', $producto->tipo);
-        } else {
+        // return redirect()->back()->with('failed', 'No se ha implementado!');
+
+        // dd($request, $restock, $asignacion, $producto);
+
+        if ($asignacion) {
+            if ($producto) {
+
+                $intCantidad=0;
+                $intDiferencia=0;
+                $blnModificar=false;
+                $blnAgregar=false;
+                $intOperacion=0;
+
+                //*** determinamos si hay diferencia */
+                if($restock['productoCantidad'] == $restock['productoCantidadNueva']){
+                    //*** misma cantidad, no hay cambios */
+                }elseif($restock['productoCantidad'] < $restock['productoCantidadNueva']){
+                    //*** se agrega más cantidad */
+                    $intDiferencia = $restock['productoCantidadNueva'] - $restock['productoCantidad'];
+                    $blnAgregar=true;
+                    $intOperacion=1;
+
+                    //*** restamos a inventario */
+                     $producto->cantidad = ($producto->cantidad - $intDiferencia);
+                     $producto->save();
+
+                    //*** editamos la asignación */
+                    $asignacion->cantidad = $restock['productoCantidadNueva'];
+                    $asignacion->comentario = $restock['productoComentario'];
+                    $asignacion->Save();
+
+                    //*** creamos el movimiento */
+                    $objMovimiento = new inventarioMovimientos();
+                    $objMovimiento->movimiento = 2; //*** descuenta al inventario */
+                    $objMovimiento->inventarioId = $restock['productoId'];
+                    $objMovimiento->cantidad = $intDiferencia;
+                    $objMovimiento->precioUnitario = 0;
+                    $objMovimiento->total = 0;
+                    $objMovimiento->usuarioId = $request['usuarioId'];
+                    $objMovimiento->Save();
+
+                    // dd('Ejecutado...');
+
+                }if($restock['productoCantidad'] > $restock['productoCantidadNueva']){
+                    //***  se quita mas cantidad */
+                    $intDiferencia =$restock['productoCantidad'] - $restock['productoCantidadNueva']   ;
+                    $blnAgregar=false;
+                    $intOperacion=2;
+
+                    //*** sumamos a inventario */
+                    $producto->cantidad = ($producto->cantidad + $intDiferencia);
+                    $producto->save();
+
+                   //*** editamos la asignación */
+                   $asignacion->cantidad = $restock['productoCantidadNueva'];
+                   $asignacion->comentario = $restock['productoComentario'];
+                   $asignacion->Save();
+
+                   //*** creamos el movimiento */
+                   $objMovimiento = new inventarioMovimientos();
+                   $objMovimiento->movimiento = 1; //*** descuenta al inventario */
+                   $objMovimiento->inventarioId = $restock['productoId'];
+                   $objMovimiento->cantidad = $intDiferencia;
+                   $objMovimiento->precioUnitario = $producto->valor;
+                   $objMovimiento->total = ($producto->valor + $intDiferencia);
+                   $objMovimiento->usuarioId = $request['usuarioId'];
+                   $objMovimiento->Save();
+
+                }
+
+
+                //*** creamos el registro del stock */
+                // $restock = restock::create($restock);
+
+                // $producto->cantidad = ($producto->cantidad + $restock->cantidad);
+                // // $producto->save();
+
+                // $objMovimiento = new inventarioMovimientos();
+                // $objMovimiento->movimiento = 1; //*** agrega al inventario */
+                // $objMovimiento->inventarioId = $restock->productoid;
+                // $objMovimiento->cantidad = $restock->cantidad;
+                // $objMovimiento->precioUnitario = $restock->costo;
+                // $objMovimiento->total = ($restock->costo * $restock->cantidad);
+                // $objMovimiento->usuarioId = $request['usuarioId'];
+                // $objMovimiento->Save();
+
+
+                Session::flash('message', 1);
+                return redirect()->back()->with('success', 'Actualizado correctamente!');
+
+
+
+            } else {
+                Session::flash('message', 0);
+                return redirect()->back()->with('failed', 'No se encuentra el producto especificado!');
+            }
+        }
+        else {
             Session::flash('message', 0);
-            return redirect()->back()->with('failed', 'No se encuentra en el inventario!');
+            return redirect()->back()->with('failed', 'No se encuentra el movimiento especificado!');
         }
     }
 }

@@ -21,7 +21,7 @@
                                         <a href="{{ route('catalogoPuestosNivel.index') }}" class="">
                                             <img src="/img/catalogos/nivelPuestos.svg" alt="Nivel de Puestos"
                                                 title="Nivel de Puestos" width="30%" class="botonIconoPrincipal">
-                                            <p class="mt-4 texticonos">Nivel De Puestos</p>
+                                            <p class="mt-4 texticonos">Nivel de Puestos</p>
                                         </a>
                                     </div>
 
@@ -29,23 +29,39 @@
                                         <a href="{{ route('catalogoCategoriasTareas.index') }}" class="">
                                             <img src="/img/inventario/herramientas.svg" alt="Categoría de tareas"
                                                 title="Categoría de tareas" width="30%" class="botonIconoPrincipal">
-                                            <p class="mt-4 texticonos">Categoría De Tareas</p>
+                                            <p class="mt-4 texticonos">Categoría de Tareas</p>
                                         </a>
                                     </div>
 
                                     <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoTiposTareas.index') }}" class="">
-                                            <img src="/img/inventario/herramientas.svg" alt="Categoría de tareas"
+                                            <img src="/img/inventario/herramientas.svg" alt="Tipos de tareas"
                                                 title="Tipos de tareas" width="30%" class="botonIconoPrincipal">
-                                            <p class="mt-4 texticonos">Tipos De Tareas</p>
+                                            <p class="mt-4 texticonos">Tipos de Tareas</p>
                                         </a>
                                     </div>
 
                                     <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoUbicacionesTareas.index') }}" class="">
-                                            <img src="/img/catalogos/ubicacionesTareas.svg" alt="Categoría de tareas"
+                                            <img src="/img/catalogos/ubicacionesTareas.svg" alt="Ubicaciones de tareas"
                                                 title="Ubicaciones de tareas" width="30%" class="botonIconoPrincipal">
-                                            <p class="mt-4 texticonos">Ubicaciones De Tareas</p>
+                                            <p class="mt-4 texticonos">Ubicaciones de Tareas</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
+                                        <a href="{{ route('catalogoCategoriasMaquinaria.index') }}" class="">
+                                            <img src="/img/catalogos/ubicacionesTareas.svg" alt="Categoría de Maquinaría"
+                                                title="Categorias de Maquinaría" width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Categorias de Maquinaría</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
+                                        <a href="{{ route('catalogoTiposMaquinaria.index') }}" class="">
+                                            <img src="/img/catalogos/ubicacionesTareas.svg" alt="Tipos de Uso de Maquinaría"
+                                                title="Tipos de Uso de tareas" width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Tipos de Uso de Maquinaría</p>
                                         </a>
                                     </div>
 
@@ -53,7 +69,7 @@
                                         <a href="{{ route('catalogoTipoUniforme.index') }}" class="">
                                             <img src="/img/inventario/herramientas.svg" alt="Tipos de Uniforme"
                                                 title="Tipos de Uniforme" width="30%" class="botonIconoPrincipal">
-                                            <p class="mt-4 texticonos">Tipos De Uniforme</p>
+                                            <p class="mt-4 texticonos">Tipos de Uniforme</p>
                                         </a>
                                     </div>
 
@@ -90,6 +106,14 @@
                                     </div>
 
                                     <div class="col-12 col-sm-6 col-md-4 text-center my-4">
+                                        <a href="{{ route('catalogoTiposEquipo.index') }}" class="">
+                                            <img src="/img/inventario/herramientas.svg" alt="Tipos de Equipo"
+                                                title="Tipos de Refacción" width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Tipos de Equipo</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoRefacciones.index') }}" class="">
                                             <img src="/img/inventario/herramientas.svg" alt="Refacciones" title="Refacciones"
                                                 width="30%" class="botonIconoPrincipal">
@@ -101,7 +125,7 @@
                                         <a href="{{ route('tiposDocs.index') }}" class="">
                                             <img src="/img/inventario/herramientas.svg" alt="Tipos Docs" title="Tipos Docs"
                                                 width="30%" class="botonIconoPrincipal">
-                                            <p class="mt-4 texticonos">Tipos De Documentos</p>
+                                            <p class="mt-4 texticonos">Tipos de Documentos</p>
                                         </a>
                                     </div>
 
@@ -109,7 +133,7 @@
                                         <a href="{{ route('docs.index') }}" class="">
                                             <img src="/img/inventario/herramientas.svg" alt="Manage Docs" title="Manage Docs"
                                                 width="30%" class="botonIconoPrincipal">
-                                            <p class="mt-4 texticonos">Administración De Documentos</p>
+                                            <p class="mt-4 texticonos">Administración de Documentos</p>
                                         </a>
                                     </div>
 
@@ -117,7 +141,7 @@
                                         <a href="{{ route('tiposServicios.index') }}" class="">
                                             <img src="/img/inventario/herramientas.svg" alt="Lugares" title="Lugares"
                                                 width="30%" class="botonIconoPrincipal">
-                                            <p class="mt-4 texticonos">Tipos De Servicios</p>
+                                            <p class="mt-4 texticonos">Tipos de Servicios</p>
                                         </a>
                                     </div>
 
