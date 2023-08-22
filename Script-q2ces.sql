@@ -1194,7 +1194,7 @@ CREATE TABLE mtqEventos (
     mantenimientoId bigint(20) unsigned NOT NULL,
     maquinariaId bigint(20) unsigned NOT NULL,
     fecha date NOT NULL,
-    Descripción text NULL,
+    descripcion text NULL,
     estatus bigint(20) unsigned NOT NULL,
     color varchar(255) NOT NULL,
     start datetime NULL,
