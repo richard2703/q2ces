@@ -1,7 +1,38 @@
 document.write('<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>');
-
 //Alertas 
 function alertaGuardar()
+{
+	$('.alertaGuardar').submit(function(e) {
+		e.preventDefault();
+	
+		Swal.fire({
+			title: 'Estas seguro?',
+			text: "¡Se guardaran los cambios!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			cancelButtonText: 'Cancelar',
+			confirmButtonText: 'Si, Guardalo!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				mostrarSpinner(true);
+				this.submit();
+			}
+		})
+	
+	})
+}
+
+function alertaNoPermission(){
+	Swal.fire({
+		icon: 'error',
+		title: 'Permisos',
+		text: '¡No Tienes Los Permisos Necesarios!'
+	})
+}
+
+function alertaGuardarMaquinaria(fotos)
 {
 	$('.alertaGuardar').submit(function(e) {
 		e.preventDefault();
