@@ -497,6 +497,20 @@ CREATE TABLE tiposDocs(
     PRIMARY KEY (id)
 );
 
+create table maquinariaCategoria(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) not NULL,
+    comentario text NULL,
+    primary key (id)
+);
+
+create table maquinariaTipo(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) not NULL,
+    comentario text NULL,
+    primary key (id)
+);
+
 /***************************************FIN Tablas de Sin FK*/
 
 /***************************************DATOS Tablas de Sin FK*/
@@ -562,6 +576,23 @@ VALUES
     (1, 'Revision', 'MT-01', '#2db512', 'Para equipos que necesiten ser revisados', 1, '2023-08-15 09:06:58', '2023-08-15 09:06:58'),
     (2, 'Afinacion', 'MT-02', '#f7c90d', 'Para equipos que necesiten ser afinados', 1, '2023-08-15 09:07:31', '2023-08-17 13:36:41'),
     (3, 'Reparacion', 'MT-03', '#be2727', 'Para equipos que necesiten ser reparados', 1, '2023-08-15 11:03:57', '2023-08-15 11:03:57');
+   
+INSERT into `maquinariaCategoria` (`id`, `nombre`, `comentario`) values 
+(1, 'Accesorios', 'Accesorios de Maquinaría'),
+(2, 'Camperes', 'Campers'),
+(3, 'Cisterna', 'Cisterna'),
+(4, 'Maquinaría Ligera', 'Maquinaría Ligera'),
+(5, 'Maquinaría Pesada', 'Maquinaría Pesada'),
+(6, 'Retroexcavadoras', 'Retroexcavadoras'),
+(7, 'Tractocamiones', 'Tractocamiones'),
+(8, 'Otros', 'Otros'),
+(9, 'Utilitarios','Utilitarios');
+
+INSERT INTO `maquinariaTipo` (`id`, `nombre`, `comentario`) VALUES
+(1, 'Pesada', 'Maquinaría Pesada'),
+(2, 'Ligera', 'Maquinaría Ligera'),
+(3, 'Grua', 'Gruas y montacargas'),
+(4, 'No Aplica', 'No aplica para ningun tipo');
    
 /***************************************FIN DATOS Tablas de Sin FK*/
 
@@ -985,9 +1016,9 @@ CREATE TABLE maquinaria(
     bitacoraId bigint(20) unsigned NULL,
     nombre varchar(255) NULL,
     identificador varchar(32) NULL,
-    tipo varchar(255) NULL,
-    categoria varchar(255) NULL,
-    marca varchar(255) NULL,
+    tipoId bigint(20) unsigned NULL,
+    categoriaId bigint(20) unsigned NULL,
+    marcaId bigint(20) unsigned NULL,
     submarca varchar(255) NULL,
     modelo varchar(255) NULL,
     ano int NULL,
@@ -1028,7 +1059,10 @@ CREATE TABLE maquinaria(
     updated_at datetime NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_maquinaria_maquinariaEstatusId foreign key (estatusId) references maquinariaEstatus(id),
-    CONSTRAINT FK_maquinaria_bitacoraId FOREIGN KEY (bitacoraId) REFERENCES bitacoras (id)
+    CONSTRAINT FK_maquinaria_bitacoraId FOREIGN KEY (bitacoraId) REFERENCES bitacoras (id),
+    CONSTRAINT FK_maquinaria_categoriaId foreign key (categoriaId) references maquinariaCategoria(id),
+    constraint FK_maquinaria_marcaId foreign key (marcaId) references marca(id),
+    CONSTRAINT FK_maquinaria_tipoId foreign key (tipoId) references maquinariaTipo(id)
 );
 
 CREATE TABLE maqdocs (
