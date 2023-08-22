@@ -1280,7 +1280,7 @@ CREATE TABLE solicitudes(
     userId bigint(20) unsigned NOT NULL,
     responsable bigint(20) unsigned NOT NULL,
     maquinariaId bigint(20) unsigned NOT NULL,
-    serviciosId bigint(20) unsigned NOT NULL,
+    servicioId bigint(20) unsigned NOT NULL,
     titulo varchar(255) not NULL,
     fechaSolicitud date not NULL,
     fechaRequerimiento date not NULL,
