@@ -409,14 +409,15 @@ CREATE TABLE asignacionEquipo(
     personalId bigint(20) unsigned NOT NULL,
     equipoId bigint(20) unsigned NOT NULL,
     cantidad int not NULL,
-    marca varchar(200) NULL,
+    marcaId bigint(20) unsigned NOT NULL,
     serial varchar(200) NULL,
     comentario text NULL,
     created_at timestamp NULL DEFAULT NULL,
     updated_at timestamp NULL DEFAULT NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_asignacionEquipo_personalId foreign key (personalId) references personal(id),
-    CONSTRAINT FK_asignacionEquipo_equipoId foreign key (equipoId) references tipoEquipo(id)
+    CONSTRAINT FK_asignacionEquipo_equipoId foreign key (equipoId) references tipoEquipo(id),
+    CONSTRAINT FK_asignacionEquipo_maquinaId foreign key (marcaId) references marca(id)
 );
 
 CREATE TABLE asignacionUniforme(
@@ -517,15 +518,23 @@ CREATE TABLE nomina(
     CONSTRAINT FK_nomina_jefeId foreign key (jefeId) references personal(id)
 );
 
+
+create table maquinariaCategoria(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) not NULL,
+    comentario text NULL,
+    primary key (id)
+);
+
 CREATE TABLE maquinaria(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     estatusId bigint(20) unsigned NULL,
     bitacoraId bigint(20) unsigned NULL,
     nombre varchar(255) NULL,
     identificador varchar(32) NULL,
-    tipo varchar(255) NULL,
-    categoria varchar(255) NULL,
-    marca varchar(255) NULL,
+    tipoId bigint(20) unsigned NULL,
+    categoriaId unsigned NOT NULL,
+    marcaId bigint(20) unsigned NULL,
     submarca varchar(255) NULL,
     modelo varchar(255) NULL,
     ano int NULL,
@@ -566,6 +575,7 @@ CREATE TABLE maquinaria(
     updated_at datetime NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_maquinaria_maquinariaEstatusId foreign key (estatusId) references maquinariaEstatus(id),
+    CONSTRAINT FK_maquinaria_categoriaId foreign key (maquinariaId) references maquinariaCategoria(id),
     CONSTRAINT FK_maquinaria_bitacoraId FOREIGN KEY (bitacoraId) REFERENCES bitacoras (id)
 );
 
@@ -1449,3 +1459,4 @@ CREATE TABLE inventarioMovimientos(
     CONSTRAINT FK_inventarioMovimiento_inventario foreign key (inventarioId) references inventario(id),
     CONSTRAINT FK_inventarioMovimiento_usuario foreign key (usuarioId) references users(id)
 );
+

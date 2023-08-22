@@ -102,9 +102,18 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4  mb-3 ">
                                                                 <label class="labelTitulo">Marca:</label></br>
-                                                                <input type="text" class="inputCaja" id="marca"
+                                                                {{-- <input type="text" class="inputCaja" id="marca"
                                                                     placeholder="Especifique..." name="marca"
-                                                                    value="{{ old('marca') }}">
+                                                                    value="{{ old('marca') }}"> --}}
+                                                                    <select class="form-select" aria-label="Default select example"
+                                                                    id="marcaId" name="marcaId">
+                                                                    <option value="">Seleccione</option>
+                                                                    @foreach ($marcas as $marca)
+                                                                        <option value="{{ $marca->id }}" >
+                                                                            {{ $marca->nombre }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
                                                             </div>
 
 
@@ -132,7 +141,7 @@
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label
                                                                     class="labelTitulo">Categoría:</label><span>*</span></br>
-                                                                <select class="form-select"
+                                                                {{-- <select class="form-select"
                                                                     aria-label="Default select example" id="categoria"
                                                                     required name="categoria">
                                                                     <option value="">Seleccione</option>
@@ -148,7 +157,16 @@
                                                                     <option value="Tractocamiones">Tractocamiones</option>
                                                                     <option value="Otros">Otros</option>
                                                                     <option value="Utilitarios">Utilitarios</option>
-                                                                </select>
+                                                                </select> --}}
+                                                                <select class="form-select" aria-label="Default select example"
+                                                                id="categoriaId" name="categoriaId">
+                                                                <option value="">Seleccione</option>
+                                                                @foreach ($categorias as $cat)
+                                                                    <option value="{{ $cat->id }}" >
+                                                                        {{ $cat->nombre }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -158,21 +176,30 @@
                                                                     name="uso">
                                                                     <option value="Mov. Tierras">Mov. Tierras</option>
                                                                     <option value="Completo">Completo</option>
+                                                                    <option value="Utilitario">Utilitario</option>
                                                                 </select>
                                                             </div>
 
                                                             <div class="col-12 col-sm-6 col-lg-4 mb-3">
 
                                                                 <label class="labelTitulo">Tipo:</label></br>
-                                                                <select class="form-select"
+                                                                {{-- <select class="form-select"
                                                                     aria-label="Default select example" id="tipo"
                                                                     name="tipo">
                                                                     <option value="Pesada">Pesada</option>
                                                                     <option value="Ligero">Ligero</option>
                                                                     <option value="Grua">Grua</option>
                                                                     <option value="no_aplica">N/A</option>
-                                                                </select>
-
+                                                                </select> --}}
+                                                                <select class="form-select" aria-label="Default select example"
+                                                                id="tipoId" name="tipoId">
+                                                                <option value="">Seleccione</option>
+                                                                @foreach ($tipos as $tipo)
+                                                                    <option value="{{ $tipo->id }}" >
+                                                                        {{ $tipo->nombre }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
                                                             </div>
 
                                                             <div class="col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -427,7 +454,7 @@
 
                                                                 <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
                                                                 <label class="labelTitulo">Marca:</label></br>
-                                                                <select id="marcaRefaccion" name='marcaId[]'
+                                                                <select id="marcaRefaccion" name='marca[]'
                                                                     class="form-select">
                                                                     <option value="">Seleccione</option>
                                                                     @foreach ($marcas as $item)
@@ -442,7 +469,7 @@
                                                                     <label class="labelTitulo">Número De
                                                                         Parte:</label></br>
                                                                         <input type="text" class="inputCaja" name='numeroParte[]' id="numeroParte" placeholder="Especifique..." value="">
-                                                                </div> 
+                                                                </div>
                                                                 <div class="col-lg-2 my-3 text-center pt-3">
                                                                     <span class="material-icons" style="font-size:40px; color: gray">
                                                                         content_paste_search
@@ -456,7 +483,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    @php 
+                                                    @php
                                                         $countador ++;
                                                     @endphp
                                                 </div>
