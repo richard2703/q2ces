@@ -1,64 +1,78 @@
-@extends('layouts.main', ['activePage' => 'users', 'titlePage' => 'Nuevo usuario'])
+@extends('layouts.main', ['activePage' => 'usuarios', 'titlePage' => 'Nuevo usuario'])
 @section('content')
     <div class="content">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <form action="{{ route('users.store') }}" method="post" class="form-horizontal">
-                        @csrf
-                        <div class="card">
-                            <div class="card-header card-header-primary">
-                                <h4 class="card-title">Usuario</h4>
-                                <p class="card-category">Ingresar Datos</p>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bacTituloPrincipal">
+                        <h4 class="card-title">Crear Usuario</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4 text-left">
+                                <a href="{{ url('usuarios') }}">
+                                    <button class="btn regresar">
+                                        <span class="material-icons">
+                                            reply
+                                        </span>
+                                        Regresar
+                                    </button>
+                                </a>
                             </div>
+
+                            <div class="d-flex p-3 divBorder"></div>
+                        </div>
+                        <form action="{{ route('users.store') }}" method="post" class="form-horizontal">
+                            @csrf
                             <div class="card-body">
                                 <div class="row">
-                                    <label for="name" class="col-sm-2 col-form-label">Nombre</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="name"
-                                            placeholder="Ingrese su nombre" value="{{ old('name') }}" autofocus required>
+                                    <div class="col-6">
+                                        <label for="name" class="labelTitulo">Nombre:</label>
+
+                                        <input class="inputCaja" type="text" class="form-control" name="name"
+                                            placeholder="Ingrese Su Nombre" value="{{ old('name') }}" autofocus required>
                                         @if ($errors->has('name'))
                                             <span class="error text-danger"
                                                 for="input-name">{{ $errors->first('name') }}</span>
                                         @endif
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <label for="username" class="col-sm-2 col-form-label">Nombre De Usuario</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="username"
-                                            placeholder="Ingrese su nombre de usuario" value="{{ old('username') }}">
-                                        @if ($errors->has('username'))
-                                            <span class="error text-danger"
-                                                for="input-username">{{ $errors->first('username') }}</span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <label for="email" class="col-sm-2 col-form-label">Correo</label>
-                                    <div class="col-sm-7">
-                                        <input type="email" class="form-control" name="email"
+                                    <div class="col-6">
+                                        <label for="email" class="labelTitulo">Correo:</label>
+                                        <input class="inputCaja" type="email" class="form-control" name="email"
                                             placeholder="Ingrese su correo" value="{{ old('email') }}" required>
                                         @if ($errors->has('email'))
                                             <span class="error text-danger"
                                                 for="input-email">{{ $errors->first('email') }}</span>
                                         @endif
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <label for="password" class="col-sm-2 col-form-label">Contraseña</label>
-                                    <div class="col-sm-7">
-                                        <input type="password" class="form-control" name="password" placeholder="Contraseña"
-                                            required>
+                                    <div class="col-6 mt-3">
+                                        <label for="username" class="labelTitulo">Nombre De
+                                            Usuario:</label>
+
+                                        <input class="inputCaja" type="text" class="form-control" name="username"
+                                            placeholder="Ingrese su nombre de usuario" value="{{ old('username') }}">
+                                        @if ($errors->has('username'))
+                                            <span class="error text-danger"
+                                                for="input-username">{{ $errors->first('username') }}</span>
+                                        @endif
+                                    </div>
+
+                                    <div class="col-6 mt-3">
+                                        <label for="password" class="labelTitulo">Contraseña:</label>
+                                        <input class="inputCaja" type="password" class="form-control" name="password"
+                                            placeholder="Contraseña" required>
                                         @if ($errors->has('password'))
                                             <span class="error text-danger"
                                                 for="input-password">{{ $errors->first('password') }}</span>
                                         @endif
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <label for="roles" class="col-sm-2 col-form-label">Roles</label>
-                                    <div class="col-sm-7">
+
+                                <div class="row mt-3 d-flex justify-content-end">
+                                    <label for="roles"
+                                        class="labelTitulo col-sm-2 col-form-label d-flex align-items-center mb-3"
+                                        style="justify-content: flex-end !important;">Roles:</label>
+                                    <div class="col-6">
                                         <div class="form-group">
                                             <div class="tab-content">
                                                 <div class="tab-pane active">
@@ -69,18 +83,20 @@
                                                                     <td>
                                                                         <div class="form-check">
                                                                             <label class="form-check-label">
-                                                                                <input class="form-check-input"
+                                                                                <input
+                                                                                    class="form-check-input is-invalid align-self-end"
                                                                                     type="checkbox" name="roles[]"
                                                                                     value="{{ $id }}">
                                                                                 <span class="form-check-sign">
                                                                                     <span class="check"></span>
                                                                                 </span>
                                                                             </label>
+                                                                            {{ $role }}
                                                                         </div>
+
                                                                     </td>
-                                                                    <td>
-                                                                        {{ $role }}
-                                                                    </td>
+
+
                                                                 </tr>
                                                             @endforeach
                                                         </tbody>
@@ -92,11 +108,11 @@
                                 </div>
                             </div>
                             <!--Footer-->
-                            <div class="card-footer ml-auto mr-auto">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            <div class="card-footer d-flex justify-content-center">
+                                <button type="submit" class="btn botonGral">Guardar</button>
                             </div>
                             <!--End footer-->
-                        </div>
+                    </div>
                     </form>
                 </div>
             </div>

@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Role;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -15,7 +16,7 @@ class UserController extends Controller
     {
         abort_if(Gate::denies('user_index'), '403');
         // $users = User::all();
-        $users = User::paginate(5);
+        $users = User::paginate(15);
         return view('users.index', compact('users'));
     }
     public function create()
@@ -38,7 +39,9 @@ class UserController extends Controller
             ]);
         $roles = $request->input('roles', 'id');
         $user->syncRoles($roles);
-        return redirect()->route('users.index', $user->id)->with('success', 'Usuario Guardado');
+        Session::flash('message', 1);
+        // return redirect()->route('users.index', $user->id)->with('success', 'Usuario Guardado');
+        return redirect()->route('users.index');
     }
 
     public function show(User $user)
@@ -73,7 +76,9 @@ class UserController extends Controller
         $user->update($data);
         $roles = $request->input('roles', []);
         $user->syncRoles($roles);
+        Session::flash('message', 1);
         return redirect()->route('users.show', $user->id)->with('success', 'Usuario actualizado correctamente');
+        // return redirect()->route('users.show');
     }
 
     public function destroy(User $user)
@@ -84,12 +89,13 @@ class UserController extends Controller
         }
         $user->delete();
 
-        return redirect()->back()->with('success', 'Usuario Eliminado correctamente');;
+        return redirect()->back()->with('success', 'Usuario Eliminado correctamente');
+        // return redirect()->route('users.index');
+
     }
 
     public function export()
     {
         return Excel::download(new UserExport, 'users.xlsx');
-
     }
 }
