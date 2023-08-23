@@ -93,7 +93,6 @@ class PermissionController extends Controller
         Session::flash('message', 1);
         return redirect()->route('permissions.index');
     }
-
     /**
      * Remove the specified resource from storage.
      *
