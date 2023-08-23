@@ -16,7 +16,7 @@ class PermissionController extends Controller
     public function index()
     {
         abort_if(Gate::denies('permission_index'), 403);
-
+        // sfsdf
         $permissions = Permission::paginate(5);
 
         return view('permissions.index', compact('permissions'));
