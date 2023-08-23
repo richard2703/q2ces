@@ -27,6 +27,7 @@ use App\Models\tipoEquipo;
 use App\Models\inventario;
 use App\Models\inventarioMovimientos;
 use App\Models\tipoUniforme;
+use App\Models\marca;
 
 class personalController extends Controller {
     /**
@@ -476,9 +477,10 @@ class personalController extends Controller {
 
     public function edit( personal $personal ) {
         $equipos = tipoEquipo::orderBy( 'nombre', 'asc' )->get();
+        $marcas = marca::orderBy( 'nombre', 'asc' )->get();
         $asignados = asignacionEquipo::where( 'personalId', $personal->id )->get();
         // dd( $asignados );
-        return view( 'personal.asignarEquipoPersonal', compact( 'personal', 'equipos', 'asignados' ) );
+        return view( 'personal.asignarEquipoPersonal', compact( 'personal', 'equipos', 'asignados','marcas' ) );
     }
 
     public function asignacion( Request $request, $personal ) {
@@ -490,7 +492,7 @@ class personalController extends Controller {
                 // Registro existente, se debe actualizar
                 $registroExistente->cantidad = $request[ 'cantidad' ][ $i ];
                 $registroExistente->equipoId  = $request[ 'equipoId' ][ $i ];
-                $registroExistente->marca  = $request[ 'marca' ][ $i ];
+                $registroExistente->marcaId  = $request[ 'marcaId' ][ $i ];
                 $registroExistente->serie  = $request[ 'serie' ][ $i ];
                 $registroExistente->comentario  = $request[ 'comentario' ][ $i ];
                 $registroExistente->save();
@@ -501,7 +503,7 @@ class personalController extends Controller {
                 $asiEquipo->personalId  = $personal;
                 $asiEquipo->cantidad = $request[ 'cantidad' ][ $i ];
                 $asiEquipo->equipoId  = $request[ 'equipoId' ][ $i ];
-                $asiEquipo->marca  = $request[ 'marca' ][ $i ];
+                $asiEquipo->marcaId  = $request[ 'marcaId' ][ $i ];
                 $asiEquipo->serie  = $request[ 'serie' ][ $i ];
                 $asiEquipo->comentario  = $request[ 'comentario' ][ $i ];
                 $asiEquipo->save();

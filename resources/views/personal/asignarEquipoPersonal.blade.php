@@ -111,8 +111,8 @@
                                                 <div class="col-12 col-sm-6 col-lg-2 my-3 ">
                                                     <label class="labelTitulo">Cantidad:
                                                         <span>*</span></label></br>
-                                                    <input type="number" class="inputCaja" id="cantidad" name="cantidad[]" required
-                                                        value="{{ $asignado->cantidad }}">
+                                                    <input type="number" class="inputCaja" id="cantidad" name="cantidad[]"
+                                                        required value="{{ $asignado->cantidad }}">
                                                 </div>
 
                                                 <div class="col-12 col-sm-6 col-lg-4 my-3 ">
@@ -131,9 +131,16 @@
 
                                                 <div class="col-12 col-sm-6 col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Marca:</label></br>
-                                                    <input type="text" class="inputCaja" id="marca"
-                                                        placeholder="Especifique..." name="marca[]"
-                                                        value="{{ $asignado->marca }}">
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        id="marcaId[]" name="marcaId[]">
+                                                        <option value="">Seleccione</option>
+                                                        @foreach ($marcas as $marca)
+                                                            <option value="{{ $marca->id }}"
+                                                                {{ $marca->id == $asignado->marcaId ? 'selected' : '' }}>
+                                                                {{ $marca->nombre }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
 
                                                 <div class="col-lg-2 my-3 text-end">
@@ -240,7 +247,6 @@
                 $(this).closest('.opcion').remove();
             }
         });
-
     </script>
 
     <script type="application/javascript">
