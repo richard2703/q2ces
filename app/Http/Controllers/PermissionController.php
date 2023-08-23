@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Session;
 
 class PermissionController extends Controller
 {
@@ -16,8 +17,8 @@ class PermissionController extends Controller
     public function index()
     {
         abort_if(Gate::denies('permission_index'), 403);
-        // sfsdf
-        $permissions = Permission::paginate(5);
+
+        $permissions = Permission::paginate(15);
 
         return view('permissions.index', compact('permissions'));
     }
@@ -42,8 +43,14 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        Permission::create($request->only('name'));
-
+        // dd($request);
+        $objUso = new Permission();
+        $objUso->name  = $request['name'];
+        $objUso->apodo = $request['apodo'];
+        $objUso->comentario = $request['comentario'];
+        $objUso->save();
+        // Permission::create($objUso);
+        Session::flash('message', 1);
         return redirect()->route('permissions.index');
     }
 
@@ -82,8 +89,8 @@ class PermissionController extends Controller
      */
     public function update(Request $request, Permission $permission)
     {
-        $permission->update($request->only('name'));
-
+        $permission->update($request->all());
+        Session::flash('message', 1);
         return redirect()->route('permissions.index');
     }
 

@@ -45,7 +45,7 @@
                                 <table class="table">
                                     <thead class="labelTitulo">
                                         <tr>
-                                            <th class="labelTitulo text-center">Codigo</th>
+                                            <th class="labelTitulo text-center">Código</th>
                                             <th class="labelTitulo text-center">Nombre</th>
                                             <th class="labelTitulo text-center">Color</th>
                                             <th class="labelTitulo text-center" style="width:150px">Comentarios</th>
@@ -141,7 +141,7 @@
                     <form class="row d-flex" action="{{ route('serviciosMtq.store') }}" method="post">
                         @csrf
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Codigo:<span>*</span></label></br>
+                            <label class="labelTitulo">Código:<span>*</span></label></br>
                             <input type="text" class="inputCaja" name="codigo" value="{{ old('codigo') }}"
                                 placeholder="ej: MT-00">
                         </div>
@@ -158,8 +158,8 @@
 
                         <div class=" col-12  my-3 ">
                             <label class="labelTitulo">Comentario: <span>*</span></label>
-                            <textarea class="form-select" id="exampleFormControlTextarea1" rows="3" maxlength="1000" required
-                                name="comentario" placeholder="Escribe aquí tus comentario."></textarea>
+                            <textarea class="form-select form-control-textarea border-green" id="exampleFormControlTextarea1" rows="3"
+                                maxlength="1000" required name="comentario" placeholder="Escribe Aquí Tu comentario..."></textarea>
                         </div>
 
                         <div class="modal-footer">
@@ -190,7 +190,7 @@
                         @method('put')
                         <input type="hidden" name="servicioId" id="servicioId" value="">
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Codigo:<span>*</span></label></br>
+                            <label class="labelTitulo">Código:<span>*</span></label></br>
                             <input type="text" class="inputCaja" name="codigo" id="codigo"
                                 value="{{ old('codigo') }}" placeholder="ej: MT-00">
                         </div>
@@ -208,8 +208,8 @@
 
                         <div class=" col-12  my-3 ">
                             <label class="labelTitulo">Comentario: <span>*</span></label>
-                            <textarea class="form-select" id="controlcomentario" rows="3" maxlength="1000" required name="comentario"
-                                value="" placeholder="Escribe aquí tus comentario."></textarea>
+                            <textarea class="form-select form-control-textarea border-green" id="controlcomentario" rows="3"
+                                maxlength="1000" required name="comentario" value="" placeholder="Escribe aquí tus comentario."></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

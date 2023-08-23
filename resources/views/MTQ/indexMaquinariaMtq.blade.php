@@ -354,14 +354,17 @@
                 width: 120px !important;
             }
         }
-        select[readonly], input[readonly], textarea[readonly]{
-            color: grey;
-            cursor:no-drop;
-        }
-        
 
-        select[readonly] option{
-            display:none;
+        select[readonly],
+        input[readonly],
+        textarea[readonly] {
+            color: grey;
+            cursor: no-drop;
+        }
+
+
+        select[readonly] option {
+            display: none;
         }
     </style>
 

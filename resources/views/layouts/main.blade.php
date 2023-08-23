@@ -487,8 +487,8 @@
                         @can('permission_create')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
-                                <a href="{{ route('roles.index') }}" class="">
-                                    <i class="bi bi-circle"></i><span>Ver Roles</span>
+                                <a href="{{ route('permissions.index') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Ver Permisos</span>
                                 </a>
                             </li>
                         @endcan
