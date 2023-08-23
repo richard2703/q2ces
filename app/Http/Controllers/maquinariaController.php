@@ -53,7 +53,7 @@ class maquinariaController extends Controller
         $tipos = maquinariaTipo::all();
         $refaccionTipo = refaccionTipo::all();
 
-        return view('maquinaria.altaDeMaquinaria', compact('bitacora', 'doc', 'marcas','categorias','tipos','refaccionTipo'));
+        return view('maquinaria.altaDeMaquinaria', compact('bitacora', 'doc', 'marcas', 'categorias', 'tipos', 'refaccionTipo'));
     }
 
     /**
@@ -149,7 +149,8 @@ class maquinariaController extends Controller
         $pathMaquinaria = str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT);
 
 
-        $maquinaria['marcaId'] = strtoupper($maquinaria['marcaId']);
+        // $maquinaria['marcaId'] = strtoupper($maquinaria['marcaId']);
+        $maquinaria['marcaId'] = $request->marca[0];
         $maquinaria['placas'] = strtoupper($maquinaria['placas']);
         $maquinaria['nummotor'] = strtoupper($maquinaria['nummotor']);
         $maquinaria['numserie'] = strtoupper($maquinaria['numserie']);
@@ -199,17 +200,17 @@ class maquinariaController extends Controller
 
         for ($i = 0; $i < count($request['tipoRefaccionId']); $i++) {
             //* se guarda solo si se selecciono una máquina */
-            if ($request['marcaId'][$i] && $request['tipoRefaccionId'][$i]) {
+            if ($request['marca'][$i] && $request['tipoRefaccionId'][$i]) {
                 if ($request['tipoRefaccionId'][$i] != '' || $request['tipoRefaccionId'][$i] != null) {
-                    
-                    $relacion = inventario::where('numparte',$request['numeroParte'][$i])->first();
-                    
+
+                    $relacion = inventario::where('numparte', $request['numeroParte'][$i])->first();
+
                     $objResidente = new refacciones();
-                    if($relacion != null){
+                    if ($relacion != null) {
                         $objResidente->relacionInventarioId = $relacion->id;
                     }
                     $objResidente->maquinariaId = $maquinaria->id;
-                    $objResidente->marcaId  = $request['marcaId'][$i];
+                    $objResidente->marcaId  = $request['marca'][$i];
                     $objResidente->tipoRefaccionId = $request['tipoRefaccionId'][$i];
                     // $objResidente->puesto = $request['rpuesto'][$i];
                     $objResidente->numeroParte = $request['numeroParte'][$i];
@@ -275,7 +276,7 @@ class maquinariaController extends Controller
         $categorias = maquinariaCategoria::all();
         $tipos = maquinariaTipo::all();
         // dd( $docs );
-        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'doc', 'fotos', 'bitacora', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones','categorias','tipos'));
+        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'doc', 'fotos', 'bitacora', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos'));
     }
 
     /**
@@ -311,7 +312,7 @@ class maquinariaController extends Controller
         $categorias = maquinariaCategoria::all();
         $tipos = maquinariaTipo::all();
         // dd( $docs );
-        return view('maquinaria.verMaquinaria', compact('maquinaria', 'doc', 'fotos', 'bitacora', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones','categorias','tipos'));
+        return view('maquinaria.verMaquinaria', compact('maquinaria', 'doc', 'fotos', 'bitacora', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos'));
     }
 
     /**
@@ -419,7 +420,7 @@ class maquinariaController extends Controller
         $data['placas'] = strtoupper($data['placas']);
         $data['nummotor'] = strtoupper($data['nummotor']);
         $data['numserie'] = strtoupper($data['numserie']);
-
+        $data['marcaId'] = $request->marca[0];
 
         /*** directorio contenedor de su información */
         $pathMaquinaria = str_pad($data['identificador'], 4, '0', STR_PAD_LEFT);
@@ -428,7 +429,7 @@ class maquinariaController extends Controller
         // dd($eliminarFotos);
         $maquinaria->update($data);
 
-        if($eliminarFotos != null){
+        if ($eliminarFotos != null) {
             for ($i = 0; $i < count($eliminarFotos); $i++) {
                 // dd($eliminarFotos[$i]->id);
                 $test = maqimagen::where('id', $eliminarFotos[$i]->id)->delete();
@@ -487,31 +488,32 @@ class maquinariaController extends Controller
             }
         }
         $nuevaLista = collect();
-        
+
         for ($i = 0; $i < count($request['idRefaccion']); $i++) {
-            $relacion = inventario::where('numparte',$request['numeroParte'][$i])->first(); 
-            if ($request['marcaId'][$i] && $request['tipoRefaccionId'][$i]) {
-            $numParteRelacion = null;
-            if($relacion != null){
-                $numParteRelacion = $relacion->id;
-            }
-            $array = [
-                'id' => $request['idRefaccion'][$i],
-                'marcaId' => $request['marca'][$i],
-                'tipoRefaccionId' => $request['tipoRefaccionId'][$i],
-                'numeroParte' => $request['numeroParte'][$i],
-                'maquinariaId' => $maquinaria->id,
-                'relacionInventarioId' => $numParteRelacion,
-            ];
-            //dd($array);
-            $objRefaccion = refacciones::updateOrCreate(['id' => $array['id']], $array);
-            // dd($objRefaccion);
-            $nuevaLista->push($objRefaccion->id);
+            $relacion = inventario::where('numparte', $request['numeroParte'][$i])->first();
+
+            if ($request['marca'][$i] && $request['tipoRefaccionId'][$i]) {
+                $numParteRelacion = null;
+                if ($relacion != null) {
+                    $numParteRelacion = $relacion->id;
+                }
+                $array = [
+                    'id' => $request['idRefaccion'][$i],
+                    'marcaId' => $request['marca'][$i],
+                    'tipoRefaccionId' => $request['tipoRefaccionId'][$i],
+                    'numeroParte' => $request['numeroParte'][$i],
+                    'maquinariaId' => $maquinaria->id,
+                    'relacionInventarioId' => $numParteRelacion,
+                ];
+                //dd($array);
+                $objRefaccion = refacciones::updateOrCreate(['id' => $array['id']], $array);
+                // dd($objRefaccion);
+                $nuevaLista->push($objRefaccion->id);
             }
         }
         $test = refacciones::where('maquinariaId', $maquinaria->id)->whereNotIn('id', $nuevaLista)->delete();
 
-         //* registro de residentes */
+        //* registro de residentes */
         // dd($request['idRefaccion']);
         // $refaccionReg = refacciones::where('maquinariaId', '=', $maquinaria->id)->pluck('id')->toArray();
         // $refaccionArreglo = $request['idRefaccion'];
@@ -711,39 +713,39 @@ class maquinariaController extends Controller
         /*** buscamos el tipo para crear el tipo */
         switch (strtolower($categoria)) {
             case 'campers':
-                case '2':
+            case '2':
                 $strCodigo = 'CAM-' . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
                 break;
 
             case 'retroexcavadoras':
-                case '6':
+            case '6':
                 $strCodigo = 'RET-' . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
                 break;
 
             case 'maquinaria pesada':
-                case '5':
+            case '5':
                 $strCodigo = 'MP-' . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
                 break;
 
             case 'maquinaria ligera':
-                case '4':
+            case '4':
                 $strCodigo = 'ML-' . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
                 break;
 
             case 'tractocamiones':
-                case '7':
+            case '7':
                 $strCodigo = 'TRA-' . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
                 break;
 
             case 'accesorios':
-                case '1':
+            case '1':
                 $strCodigo = 'ACC-' . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
                 break;
 
             case 'otros':
             case 'cisterna':
             case 'utilitarios':
-                case '3':
+            case '3':
                 $strCodigo = 'Q2S-' . str_pad($intEquipos + 1, 2, 0, STR_PAD_LEFT);
                 break;
 
