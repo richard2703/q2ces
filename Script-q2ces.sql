@@ -386,6 +386,7 @@ create table marca(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     nombre varchar(200) NULL,
     comentario text NULL,
+    tipo VARCHAR(255) null,
     activo TINYINT(1) NOT NULL DEFAULT '1',
     created_at datetime NULL,
     updated_at datetime NULL,
