@@ -25,14 +25,13 @@
                         </span>
                         Regresar
                     </button>
-                </a>
+                  </a>
                 </div>
                 <div class="col-8 d-flex justify-content-end">
                 </div>
 
-
                 <div class="d-flex p-3 divBorder"></div>
-            </div>
+              </div>
               <div class="row mt-2">
                 <label for="name" class="col-sm-2 col-form-label labelTitulo">Nombre del rol:</label>
                 <div class="col-sm-7">
@@ -43,44 +42,35 @@
               </div>
               <div class="row">
                 <label for="name" class="col-sm-2 col-form-label labelTitulo">Permisos:</label>
-                <div class="col-sm-7">
+                <div class="col-sm-8">
                   <div class="form-group">
-                    <div class="tab-content">
-                      <div class="tab-pane active">
-                        <table class="table">
-                          <tbody>
-                            @foreach ($permissions as $id => $permission)
-                            <tr>
-                              <td>
-                                <div class="form-check">
-                                  <label class="form-check-label">
-                                    <input class="form-check-input is-invalid align-self-end"
-                                    type="checkbox" type="checkbox" name="permissions[]"
-                                      value="{{ $id }}">
-                                    <span class="form-check-sign">
-                                      <span class="check"></span>
-                                    </span>
-                                  </label>
-                                  {{ $permission }}
-                                </div>
-                              </td>
-                            </tr>
-                          @endforeach
-                          </tbody>
-                        </table>
-                      </div>
+                    <div class="row">
+                      @foreach ($permissions as $id => $permission)
+                        <div class="col-md-6 col-lg-4 col-12 mb-2"> <!-- Use col-md-4 for three columns, col-12 for mobile -->
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input class="form-check-input is-invalid align-self-end"
+                                type="checkbox" name="permissions[]"
+                                value="{{ $id }}">
+                              <span class="form-check-sign">
+                                <span class="check"></span>
+                              </span>
+                            </label>
+                            {{ $permission }}
+                          </div>
+                        </div>
+                      @endforeach
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
             <!--End body-->
 
             <!--Footer-->
             <div class="card-footer d-flex justify-content-center">
               <button type="submit" class="btn botonGral">Guardar</button>
-          </div>
+            </div>
             <!--End footer-->
           </div>
         </form>

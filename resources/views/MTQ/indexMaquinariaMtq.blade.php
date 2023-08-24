@@ -21,14 +21,14 @@
                             @endif
                             <div class="row">
                                 <div class="col-4 text-left">
-                                    <a href="{{ url('dashMtq') }}">
+                                    {{--  <a href="{{ url('dashMtq') }}">
                                         <button class="btn regresar">
                                             <span class="material-icons">
                                                 reply
                                             </span>
                                             Regresar
                                         </button>
-                                    </a>
+                                    </a>  --}}
                                 </div>
                                 <div class="col-8 align-end">
                                     @can('maquinaria_mtq_create')
@@ -466,14 +466,18 @@
 
             // Aplicar color gris a los campos con readonly
             campos.forEach((campo) => {
-                if (modalTipo) {
+                if (modalTipo ) {
                     campo.readOnly = true;
-                    //campo.style.color = 'grey';
+                    
                     // campo.style.cursor:no-drop;
                 } else {
                     campo.readOnly = false;
                     campo.style.color = 'initial';
                     // campo.style.cursor:no-drop;
+                }
+                if(campo == txtIdentificador){
+                    campo.readOnly = true;
+                    campo.style.color = 'grey';
                 }
             });
         }
