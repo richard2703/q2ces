@@ -144,7 +144,7 @@ class maquinariaMtqController extends Controller
         $data['placas'] = strtoupper($data['placas']);
         $data['nummotor'] = strtoupper($data['nummotor']);
         $data['numserie'] = strtoupper($data['numserie']);
-        $maquinaria['marcaId'] = $request->marca[0];
+        $data['marcaId'] = $request->marca[0];
 
         /*** directorio contenedor de su información */
         $pathMaquinaria = str_pad($data['identificador'], 4, '0', STR_PAD_LEFT);
