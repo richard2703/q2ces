@@ -601,7 +601,7 @@ INSERT INTO `maquinariaTipo` (`id`, `nombre`, `comentario`) VALUES
 (3, 'Grua', 'Gruas y montacargas'),
 (4, 'No Aplica', 'No aplica paraï¿½ningunï¿½tipo');
    
-INSERT INTO tiposdocs  (`id`, `nombre`, `comentario`) VALUES
+INSERT INTO tiposDocs  (`id`, `nombre`, `comentario`) VALUES
 (1, 'Personal', 'Documentos de Personal'),
 (2, 'Maquinaria', 'Documentos de Personal');
 /***************************************FIN DATOS Tablas de Sin FK*/
@@ -1302,7 +1302,7 @@ CREATE TABLE solicitudes(
     PRIMARY KEY (id),
     CONSTRAINT FK_solicitudes_userId foreign key (userId) references users(id),
     CONSTRAINT FK_solicitudes_maquinariaId foreign key (maquinariaId) references maquinaria(id),
-    CONSTRAINT FK_solicitudes_serviciosId foreign key (serviciosId) references solicitudes(id),
+    CONSTRAINT FK_solicitudes_serviciosId foreign key (servicioId) references solicitudes(id),
     CONSTRAINT FK_solicitudes_prioridadId foreign key (prioridadId) references prioridades(id),
     CONSTRAINT FK_solicitudes_estadoId foreign key (estadoId) references estados(id)
 );
@@ -1446,27 +1446,27 @@ CREATE TABLE extintores(
 INSERT INTO
     `puesto` (`id`, `nombre`, `comentario`)
 VALUES
-    (NULL, 'Almacenista', 'Descripciï¿½n del puesto'),
-    (NULL,'Auxiliar General','Descripciï¿½n del puesto'),
-    (NULL, 'Carpintero', 'Descripciï¿½n del puesto'),
-    (NULL,'Gerente de Operaciones','Descripciï¿½n del puesto'),
-    (NULL, 'Chofer', 'Descripciï¿½n del puesto'),
-    (NULL,'Chofer de Tractocamion','Descripciï¿½n del puesto'),
-    (NULL,'Coordinador de Operaciones','Descripciï¿½n del puesto'),
-    (NULL,'Capturista de Datos','Descripciï¿½n del puesto'),
-    (NULL, 'Jefe de Taller', 'Descripciï¿½n del puesto'),
-    (NULL, 'Electrico', 'Descripciï¿½n del puesto'),
-    (NULL,'Guardia de Seguridad','Descripciï¿½n del puesto'),
-    (NULL, 'Herrero', 'Descripciï¿½n del puesto'),
-    (NULL, 'Inventarios', 'Descripciï¿½n del puesto'),
-    (NULL,'Operador de Maquinaria','Descripciï¿½n del puesto'),
-    (NULL, 'Pintor', 'Descripciï¿½n del puesto'),
-    (NULL, 'Plomero', 'Descripciï¿½n del puesto'),
-    (NULL, 'Velador', 'Descripciï¿½n del puesto'),
-    (NULL, 'Vigilante', 'Descripciï¿½n del puesto'),
-    (NULL, 'MecÃ¡nica', 'Descripciï¿½n del puesto'),
-    (NULL,'Electromecanico','Descripciï¿½n del puesto'),
-    (NULL, 'Laminero', 'Descripciï¿½n del puesto'),
-    (NULL, 'Sistemas', 'Descripciï¿½n del puesto');
+    (NULL, 'Almacenista', 'Descripción del puesto'),
+    (NULL,'Auxiliar General','Descripción del puesto'),
+    (NULL, 'Carpintero', 'Descripción del puesto'),
+    (NULL,'Gerente de Operaciones','Descripción del puesto'),
+    (NULL, 'Chofer', 'Descripción del puesto'),
+    (NULL,'Chofer de Tractocamion','Descripción del puesto'),
+    (NULL,'Coordinador de Operaciones','Descripción del puesto'),
+    (NULL,'Capturista de Datos','Descripción del puesto'),
+    (NULL, 'Jefe de Taller', 'Descripción del puesto'),
+    (NULL, 'Electrico', 'Descripción del puesto'),
+    (NULL,'Guardia de Seguridad','Descripción del puesto'),
+    (NULL, 'Herrero', 'Descripción del puesto'),
+    (NULL, 'Inventarios', 'Descripción del puesto'),
+    (NULL,'Operador de Maquinaria','Descripción del puesto'),
+    (NULL, 'Pintor', 'Descripción del puesto'),
+    (NULL, 'Plomero', 'Descripción del puesto'),
+    (NULL, 'Velador', 'Descripción del puesto'),
+    (NULL, 'Vigilante', 'Descripción del puesto'),
+    (NULL, 'MecÃ¡nica', 'Descripción del puesto'),
+    (NULL,'Electromecanico','Descripción del puesto'),
+    (NULL, 'Laminero', 'Descripción del puesto'),
+    (NULL, 'Sistemas', 'Descripción del puesto');
    
 /***************************************FIN DATOS Tablas Relacionadas*/
