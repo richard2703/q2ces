@@ -31,7 +31,7 @@
                             enctype="multipart/form-data">
                             @csrf
                             @method('put')
-                            <div class="d-md-flex p-3">
+                            {{--  <div class="d-md-flex p-3">
                                 <div class="col-12 col-md-4 px-2 ">
                                     <div class="text-center mx-auto border  mb-4">
                                         <i><img class="imgPersonal img-fluid"
@@ -114,8 +114,8 @@
 
                                     </div>
                                 </div>
-                            </div>
-                            {{--  <div class="card-body">
+                            </div>  --}}
+                            <div class="card-body">
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="name" class="labelTitulo">Nombre:</label>
@@ -199,7 +199,7 @@
                                     </div>
                                 </div>
 
-                            </div>  --}}
+                            </div>
                             <!--Footer-->
                             <div class="card-footer d-flex justify-content-center">
                                 <button type="submit" class="btn botonGral">Guardar</button>
