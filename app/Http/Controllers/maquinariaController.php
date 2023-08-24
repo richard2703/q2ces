@@ -19,6 +19,8 @@ use App\Models\refaccionTipo;
 use App\Models\inventario;
 use App\Models\maquinariaCategoria;
 use App\Models\maquinariaTipo;
+use Carbon\Carbon;
+
 
 class maquinariaController extends Controller
 {
@@ -252,11 +254,13 @@ class maquinariaController extends Controller
     public function show(maquinaria $maquinaria)
     {
         abort_if(Gate::denies('maquinaria_show'), 403);
-
+        // dd($maquinaria);
         $bitacora = bitacoras::all();
         //$maquinaria = maquinaria::all();
-        $docs = maqdocs::where('maquinariaId', $maquinaria->id)->get();
-        $doc = maqdocs::join('docs', "maqdocs.tipoId", "docs.id")
+        // $docs = maqdocs::where('maquinariaId', $maquinaria->id)->get();
+        // $doc = docs::where('tipoId', '2')->orderBy('nombre', 'asc')->get();
+
+        $doc = maqdocs::rightJoin('docs', "maqdocs.tipoId", "docs.id")
             ->select(
                 'docs.id',
                 'docs.nombre',
@@ -267,7 +271,10 @@ class maquinariaController extends Controller
                 'maqdocs.requerido',
                 'maqdocs.id as idDoc'
             )
-            ->where('maquinariaId', $maquinaria->id)->get();
+            // ->where('maquinariaId', $maquinaria->id)
+            ->where('docs.tipoId', '2')
+            ->get();
+        // dd($doc);
         $fotos = maqimagen::where('maquinariaId', $maquinaria->id)->get();
         $vctEstatus = maquinariaEstatus::all();
         $marcas = marca::all();
@@ -415,18 +422,19 @@ class maquinariaController extends Controller
         ]);
 
         $data = $request->all();
+        // dd($data);
 
         $data['identificador'] = strtoupper($data['identificador']);
         $data['placas'] = strtoupper($data['placas']);
         $data['nummotor'] = strtoupper($data['nummotor']);
         $data['numserie'] = strtoupper($data['numserie']);
-        $data['marcaId'] = $request->marca[0];
+        // $data['marcaId'] = $request->marca[0];
 
         /*** directorio contenedor de su información */
         $pathMaquinaria = str_pad($data['identificador'], 4, '0', STR_PAD_LEFT);
 
         $eliminarFotos = json_decode($request->arrayFotosPersistente);
-        // dd($eliminarFotos);
+        // dd($data['bitacoraId']);
         $maquinaria->update($data);
 
         if ($eliminarFotos != null) {
@@ -439,6 +447,10 @@ class maquinariaController extends Controller
 
         for ($i = 0; $i < count($request->archivo); $i++) {
             $documento = null;
+            // dd($request->archivo[$i]['idDoc']);
+            if ($request->archivo[$i]['idDoc'] == null) {
+                $documento = new maqdocs();
+            }
             $documento['maquinariaId'] = $maquinaria->id;
             $documento['tipoId'] = $request->archivo[$i]['tipoDocs']; // Obtenemos el tipo de documento
             $tipoDocumentoNombre = $request->archivo[$i]['tipoDocsNombre']; // Obtenemos el tipo de documento
@@ -457,10 +469,21 @@ class maquinariaController extends Controller
                 if ((isset($request->archivo[$i]['check']) && $request->archivo[$i]['check'] == 'on')) {
                     $documento['vencimiento'] = 1; //Si es 1 SI vence el documento
                     $documento['estatus'] = '0'; //Si esta en 0 Esta MAL
+                    // dd('check', $request->archivo[$i]['fecha']);
                     if (isset($request->archivo[$i]['fecha'])) {
                         $documento['fechaVencimiento'] = $request->archivo[$i]['fecha'];
                         // Evaluar fecha de vencimiento
-                        $documento['estatus'] = '1'; //Si es 1 Esta proximo a vencer
+                        $fechaActual = Carbon::now();
+                        // Obtén la fecha que deseas evaluar (por ejemplo, desde una base de datos)
+                        $fechaProximaAVencer = Carbon::parse($request->archivo[$i]['fecha']);
+                        // Calcula la diferencia en meses entre las dos fechas
+                        $mesesRestantes = $fechaActual->diffInMonths($fechaProximaAVencer, false);
+                        if ($mesesRestantes <= 1) {
+                            $documento['estatus'] = '1'; //Si es 1 Esta proximo a vencer
+                        } else {
+                            $documento['estatus'] = '2'; //Si es 2 Esta Bien
+                        }
+                        // dd('entro');
                     }
                 } else {
                     $documento['vencimiento'] = 0; //Si es 0 no vence el documento
@@ -474,9 +497,13 @@ class maquinariaController extends Controller
 
             $documento['comentarios'] = $request->archivo[$i]['comentario'];
 
-            $docu = maqdocs::where('id', $request->archivo[$i]['idDoc'])->first();
-            // dd($request->archivo[$i]['idDoc']);
-            $docu->update($documento);
+            if ($request->archivo[$i]['idDoc'] == null) {
+                $documento->save();
+            } else {
+                $docu = maqdocs::where('id', $request->archivo[$i]['idDoc'])->first();
+                // dd($request->archivo[$i]['idDoc']);
+                $docu->update($documento);
+            }
         }
 
         if ($request->hasFile('ruta')) {
@@ -505,75 +532,11 @@ class maquinariaController extends Controller
                     'maquinariaId' => $maquinaria->id,
                     'relacionInventarioId' => $numParteRelacion,
                 ];
-                //dd($array);
                 $objRefaccion = refacciones::updateOrCreate(['id' => $array['id']], $array);
-                // dd($objRefaccion);
                 $nuevaLista->push($objRefaccion->id);
             }
         }
-        $test = refacciones::where('maquinariaId', $maquinaria->id)->whereNotIn('id', $nuevaLista)->delete();
-
-        //* registro de residentes */
-        // dd($request['idRefaccion']);
-        // $refaccionReg = refacciones::where('maquinariaId', '=', $maquinaria->id)->pluck('id')->toArray();
-        // $refaccionArreglo = $request['idRefaccion'];
-
-        // //* Preguntamos si existen registros en el arreglo */
-        // if (is_array($refaccionArreglo) && count($refaccionArreglo) > 0) {
-
-        //     //** buscamos si el registrado esta en el arreglo, de no ser asi se elimina */
-        //     if (is_array($refaccionReg) && count($refaccionReg) > 0) {
-        //         for ($i = 0; $i < count($refaccionReg); $i++) {
-        //             $intValor = (int) $refaccionReg[$i];
-
-        //             if (in_array($intValor, $refaccionArreglo) == false) {
-        //                 /* no existe y se debe de eliminar */
-        //                 refacciones::destroy($refaccionReg[$i]);
-        //                 // dd( 'Borrando por que se quito el refacciones' );
-        //             } else {
-        //                 /* existe el registro */
-        //                 // dd( 'Sigue vivo en el arreglo' );
-        //             }
-        //         }
-        //     }
-
-        //     //* trabajamos el resto */
-        //     for ($i = 0; $i < count($request['idRefaccion']); $i++) {
-        //         if ($request['idRefaccion'][$i] != '') {
-        //             //** Actualizacion de registro */
-        //             $objResidente =  refacciones::where('id', '=', $request['idRefaccion'][$i])->first();
-
-        //             if ($objResidente && $objResidente->id > 0) {
-        //                 $objResidente->maquinariaId  = $maquinaria->id;
-        //                 $objResidente->marcaId  = $request['marcaId'][$i];
-        //                 $objResidente->tipoRefaccionId = $request['tipoRefaccionId'][$i];
-        //                 $objResidente->numeroParte = $request['numeroParte'][$i];
-        //                 $objResidente->save();
-        //                 // dd( 'Actualizando refacciones' );
-        //             }
-        //         } else {
-
-        //             //** No existe en bd */
-        //             if ($request['tipoRefaccionId'][$i] != '') {
-        //                 $objResidente = new refacciones();
-        //                 $objResidente->maquinariaId  = $maquinaria->id;
-        //                 $objResidente->marcaId  = $request['marcaId'][$i];
-        //                 $objResidente->tipoRefaccionId = $request['tipoRefaccionId'][$i];
-        //                 $objResidente->numeroParte = $request['numeroParte'][$i];
-        //                 $objResidente->save();
-        //                 // dd( 'Guardando refacciones' );
-        //             }
-        //         }
-        //     }
-        // } else {
-        //     //* se deben de eliminar todos los registrados */
-        //     if (is_array($refaccionReg) && count($refaccionReg) > 0) {
-        //         for ($i = 0; $i < count($refaccionReg); $i++) {
-        //             refacciones::destroy($refaccionReg[$i]);
-        //             // dd( 'Borrando todo refacciones' );
-        //         }
-        //     }
-        // }
+        // $test = refacciones::where('maquinariaId', $maquinaria->id)->whereNotIn('id', $nuevaLista)->delete();
 
         Session::flash('message', 1);
 
