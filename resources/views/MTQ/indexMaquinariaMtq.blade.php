@@ -276,7 +276,7 @@
                         <div class=" col-12 col-sm-6 mb-3 ">
 
                             <label class="labelTitulo">Numero Económico:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="identificador" name="identificador"
+                            <input type="text" class="inputCaja" id="identificador" name="identificador" readonly
                                 value="" placeholder="ej: MT-00" required>
                         </div>
 
@@ -410,7 +410,7 @@
 
             const txtIdentificador = document.getElementById('identificador');
             txtIdentificador.value = identificador;
-            txtIdentificador.readOnly = modalTipo;
+            txtIdentificador.readOnly = true;
 
             const txtNombre = document.getElementById('nombre');
             txtNombre.value = nombre;
