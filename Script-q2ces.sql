@@ -190,6 +190,12 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('docs_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('docs_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('tiposDocs_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tiposDocs_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tiposDocs_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tiposDocs_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tiposDocs_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('ubicaciones_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('ubicaciones_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('ubicaciones_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -594,6 +600,9 @@ INSERT INTO `maquinariaTipo` (`id`, `nombre`, `comentario`) VALUES
 (3, 'Grua', 'Gruas y montacargas'),
 (4, 'No Aplica', 'No aplica paraï¿½ningunï¿½tipo');
    
+INSERT INTO tiposdocs  (`id`, `nombre`, `comentario`) VALUES
+(1, 'Personal', 'Documentos de Personal'),
+(2, 'Maquinaria', 'Documentos de Personal');
 /***************************************FIN DATOS Tablas de Sin FK*/
 
 /***************************************Tablas Relacionadas*/
