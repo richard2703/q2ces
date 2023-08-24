@@ -8,7 +8,7 @@
                     <div class="card">
                         <div class="card-header bacTituloPrincipal">
                             <h4 class="card-title">Roles</h4>
-                        </div>
+                        </div> 
                         <div class="card-body">
                             @if (session('success'))
                                 <div class="alert alert-success" role="success">
