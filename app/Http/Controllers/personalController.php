@@ -356,7 +356,7 @@ class personalController extends Controller
         $newnomina->pago = $request->pago;
         $newnomina->tarjeta = $request->tarjeta;
         $newnomina->banco = $request->banco;
-        $newnomina->puesto = $request->puesto;
+        // $newnomina->puesto = $request->puesto;
         $newnomina->ingreso = $request->ingreso;
         $newnomina->horario = $request->horario;
         $newnomina->hEntrada = $request->hEntrada;
