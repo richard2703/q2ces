@@ -133,7 +133,7 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Marca:</label></br>
-                                                                <select id="bitacoraId" name="bitacoraId"
+                                                                <select id="marcaId" name="marcaId"
                                                                     class="form-select" aria-label="Default select example">
                                                                     <option value="">Seleccione</option>
                                                                     @foreach ($marcas as $item)
