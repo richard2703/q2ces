@@ -5,8 +5,6 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <form method="POST" action="{{ route('roles.store') }}" class="form-horizontal">
-          @csrf
           <div class="card">
             <!--Header--> 
             <div class="card-header bacTituloPrincipal">
@@ -19,7 +17,7 @@
 
                 <div class="col-4 text-left">
                   <a href="{{ route('roles.index') }}">
-                    <button class="btn regresar">
+                    <button class="btn regresar" type="button">
                         <span class="material-icons">
                             reply
                         </span>
@@ -32,46 +30,48 @@
 
                 <div class="d-flex p-3 divBorder"></div>
               </div>
-              <div class="row mt-2">
-                <label for="name" class="col-sm-2 col-form-label labelTitulo">Nombre del rol:</label>
+              <form method="POST" action="{{ route('roles.store') }}" class="form-horizontal">
+                @csrf
+              <div class="row mt-3">
+                <label for="name" class="col-sm-2 col-form-label labelTitulo">Nombre Del rol:</label>
                 <div class="col-sm-7">
                   <div class="form-group">
                     <input type="text" class="form-control inputCaja" name="name" autocomplete="off" autofocus>
                   </div>
                 </div>
               </div>
-              <div class="row">
+              <div class="row mt-2">
                 <label for="name" class="col-sm-2 col-form-label labelTitulo">Permisos:</label>
                 <div class="col-sm-8">
                   <div class="form-group">
                     <div class="row">
                       @foreach ($permissions as $id => $permission)
-                        <div class="col-md-6 col-lg-4 col-12 mb-2"> <!-- Use col-md-4 for three columns, col-12 for mobile -->
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <input class="form-check-input is-invalid align-self-end"
-                                type="checkbox" name="permissions[]"
-                                value="{{ $id }}">
-                              <span class="form-check-sign">
-                                <span class="check"></span>
-                              </span>
-                            </label>
-                            {{ $permission }}
+                          <div class="col-md-4 col-12 mb-2">
+                              <div class="form-check">
+                                
+                                  
+                                  <label class="form-check-label">
+                                    <input class="form-check-input permission-checkbox is-invalid align-self-end"
+                                      type="checkbox" name="permissions[]" value="{{ $id }}">
+                                      {{ $permission }}
+                                      <span class="form-check-sign">
+                                          <span class="check"></span>
+                                      </span>
+                                      
+                                  </label>
+                              </div>
                           </div>
-                        </div>
                       @endforeach
-                    </div>
+                  </div>
+                </div>
                   </div>
                 </div>
               </div>
-
-            <!--End body-->
-
-            <!--Footer-->
+            
             <div class="card-footer d-flex justify-content-center">
               <button type="submit" class="btn botonGral">Guardar</button>
             </div>
-            <!--End footer-->
+            
           </div>
         </form>
       </div>

@@ -4,62 +4,71 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <form method="POST" action="{{ route('roles.update', $role->id) }}" class="form-horizontal">
-          @csrf
-          @method('PUT')
           <div class="card">
             <!--Header-->
-            <div class="card-header card-header-primary">
-              <h4 class="card-title">Editar rol</h4>
-              <p class="card-category">Editar datos del rol</p>
+            <div class="card-header bacTituloPrincipal">
+              <h4 class="card-title">Editar Rol</h4>
             </div>
             <!--End header-->
             <!--Body-->
             <div class="card-body">
               <div class="row">
-                <label for="name" class="col-sm-2 col-form-label">Nombre del rol</label>
-                <div class="col-sm-7">
-                  <input type="text" class="form-control" name="name" value="{{ old('name', $role->name) }}" autocomplete="off" autofocus>
+
+                <div class="col-4 text-left">
+                  <a href="{{ route('roles.index') }}">
+                    <button class="btn regresar" type="button">
+                        <span class="material-icons">
+                            reply
+                        </span>
+                        Regresar
+                    </button>
+                  </a>
                 </div>
+                <div class="col-8 d-flex justify-content-end">
+                </div>
+
+                <div class="d-flex p-3 divBorder"></div>
               </div>
-              <div class="row">
-                <label for="name" class="col-sm-2 col-form-label">Permisos</label>
+              <form method="POST" action="{{ route('roles.update', $role->id) }}" class="form-horizontal">
+                @csrf
+                @method('PUT')
+              <div class="row mt-3">
+                <label for="name" class="col-sm-2 col-form-label labelTitulo">Nombre Del Rol:</label>
                 <div class="col-sm-7">
                   <div class="form-group">
-                    <div class="tab-content">
-                      <div class="tab-pane active" id="profile">
-                        <table class="table">
-                          <tbody>
-                            @foreach ($permissions as $id => $permission)
-                            <tr>
-                              <td>
+                    <input type="text" class="form-control inputCaja" name="name" value="{{ old('name', $role->name) }}" autocomplete="off" autofocus>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <label for="name" class="col-sm-2 col-form-label labelTitulo">Permisos:</label>
+                <div class="col-sm-8">
+                  <div class="form-group">
+                      <div class="row">
+                        @foreach ($permissions as $id => $permission)
+                            <div class="col-md-4 col-12 mb-2">
                                 <div class="form-check">
-                                  <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" name="permissions[]"
+                                    <label class="form-check-label">
+                                      <input class="form-check-input permission-checkbox is-invalid align-self-end" type="checkbox" name="permissions[]"
                                       value="{{ $id }}" {{ $role->permissions->contains($id) ? 'checked' : '' }}>
-                                    <span class="form-check-sign">
-                                      <span class="check" value=""></span>
-                                    </span>
-                                  </label>
+                                        {{ $permission }}
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                        
+                                    </label>
                                 </div>
-                              </td>
-                              <td>
-                                {{ $permission }}
-                              </td>
-                            </tr>
-                            @endforeach
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
+                            </div>
+                        @endforeach
+                    
                   </div>
                 </div>
               </div>
             </div>
             <!--End body-->
             <!--Footer-->
-            <div class="card-footer ml-auto mr-auto">
-              <button type="submit" class="btn btn-primary">Actualizar</button>
+            <div class="card-footer d-flex justify-content-center">
+              <button type="submit" class="btn botonGral">Guardar</button>
             </div>
           </div>
           <!--End footer-->

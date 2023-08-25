@@ -47,8 +47,9 @@ class UserController extends Controller
     public function show(User $user)
     {
         abort_if(Gate::denies('user_show'), '403');
+        $roles = Role::all()->pluck('name', 'id');
         $user->load('roles');
-        return view('users.show', compact('user'));
+        return view('users.show', compact('user', 'roles'));
     }
 
     // public function show($id)
@@ -81,11 +82,25 @@ class UserController extends Controller
         // return redirect()->route('users.show');
     }
 
+    public function updatePassword(Request $request, User $user)
+    {
+        dd('Hola');
+        $password = $request->input('password');
+        if ($password)
+            $data['password'] = bcrypt($password);
+        $user->update($data);
+        $roles = $request->input('roles', []);
+        $user->syncRoles($roles);
+        Session::flash('message', 1);
+        return redirect()->route('users.show', $user->id)->with('success', 'Usuario actualizado correctamente');
+        // return redirect()->route('users.show');
+    }
+
     public function destroy(User $user)
     {
         abort_if(Gate::denies('user_destroy'), '403');
         if (auth()->user()->id = $user->id) {
-            return redirect()->route('users.index', $user->id)->with('faild', 'El suicidio no es la opcion');
+            return redirect()->route('users.index', $user->id)->with('faild', 'No Puedes Eliminar El Tu Mismo Usuario');
         }
         $user->delete();
 
