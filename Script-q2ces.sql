@@ -1269,6 +1269,7 @@ CREATE TABLE proveedor(
     fiscal varchar(255) NULL,
     estatus varchar(255) NULL,
     categoriaId bigint(20) unsigned NOT NULL,
+    comentario text NULL,
     created_at timestamp NULL DEFAULT NULL,
     updated_at timestamp NULL DEFAULT NULL,
     PRIMARY KEY (id),
