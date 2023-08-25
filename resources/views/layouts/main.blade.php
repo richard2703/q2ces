@@ -138,7 +138,7 @@
                             event_available
                         </span>
 
-                        <span>Asistencia</span>
+                        <span>Nomina/Asistencia</span>
                     </a>
                 </li>
             @endcan
