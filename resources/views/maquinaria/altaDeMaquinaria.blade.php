@@ -374,12 +374,12 @@
                                                                                                                                                                                                                                 value="{{ old('tipobujia') }}">
                                                                                                                                                                                                                         </div>-->
 
-                                                            <div class="col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                            {{--  <div class="col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Horómetro Inicial:</label></br>
                                                                 <input type="number" class="inputCaja" id="horometro"
                                                                     placeholder="Numérico" name="horometro"
                                                                     value="{{ old('horometro') }}">
-                                                            </div>
+                                                            </div>  --}}
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Uso Como
@@ -394,10 +394,9 @@
                                                                     name="cisternaNivel" value="0">
                                                             </div>
 
-                                                            <div class="col-12 col-lg-4 col-xl-5  mb-3">
+                                                            <div class="col-12 col-sm-6  mb-3">
                                                                 <div class="row align-items-end">
-                                                                    <label class="labelTitulo">Kilometraje / Millaje
-                                                                        Inicial:</label></br>
+                                                                    <label class="labelTitulo">Medicion de uso</label></br>
                                                                     <div
                                                                         class="col-6 col-md-6 col-lg-4 col-xl-7 inputNumberKilometraje">
 
@@ -413,6 +412,7 @@
                                                                             name="kom">
                                                                             <option value="Km">Km</option>
                                                                             <option value="Ml">Ml</option>
+                                                                            <option value="Hr">Hr</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
