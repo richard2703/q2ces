@@ -464,18 +464,17 @@
                         <span class="material-icons">
                             pan_tool
                         </span>
-                        <span>Usuarios y Permisos</span><i class="bi bi-chevron-down ms-auto"></i>
+                        <span>Roles y Permisos</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="user-nav" class="nav-content collapse {{ $activePage == 'usuarios' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
-                        @can('user_create')
+                        {{--  @can('user_create')
                             <li>
-                                {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('users.index') }}" class="">
                                     <i class="bi bi-circle"></i><span>Ver Usuario</span>
                                 </a>
                             </li>
-                        @endcan
+                        @endcan  --}}
                         @can('user_create')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
