@@ -287,7 +287,7 @@ create table puestoNivel(
 
 CREATE TABLE tipoEquipo(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    Nombre int not NULL,
+    nombre varchar(255) not NULL,
     tipo varchar(200) not NULL,
     comentario text NULL,
     PRIMARY KEY (id)
