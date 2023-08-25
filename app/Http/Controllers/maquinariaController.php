@@ -444,75 +444,70 @@ class maquinariaController extends Controller
                 // dd($test);
             }
         }
-if($request->archivo) {
-    for ($i = 0; $i < count($request->archivo); $i++) {
-        $documento = null;
-        $documento['maquinariaId'] = $maquinaria->id;
-        $documento['tipoId'] = $request->archivo[$i]['tipoDocs']; // Obtenemos el tipo de documento
-        $tipoDocumentoNombre = $request->archivo[$i]['tipoDocsNombre']; // Obtenemos el tipo de documento
 
-        for ($i = 0; $i < count($request->archivo); $i++) {
-            $documento = null;
-            // dd($request->archivo[$i]['idDoc']);
-            if ($request->archivo[$i]['idDoc'] == null) {
-                $documento = new maqdocs();
-            }
-            $documento['maquinariaId'] = $maquinaria->id;
-            $documento['tipoId'] = $request->archivo[$i]['tipoDocs']; // Obtenemos el tipo de documento
-            $tipoDocumentoNombre = $request->archivo[$i]['tipoDocsNombre']; // Obtenemos el tipo de documento
-
-            if ((isset($request->archivo[$i]['check']) && $request->archivo[$i]['check'] == 'on')) {
-                $documento['vencimiento'] = 1; //Si es 1 SI vence el documento
-                $documento['estatus'] = '0'; //Si esta en 0 Esta MAL
-                if (isset($request->archivo[$i]['fecha'])) {
-                    $documento['fechaVencimiento'] = $request->archivo[$i]['fecha'];
-                    // Evaluar fecha de vencimiento
-                    $documento['estatus'] = '1'; //Si es 1 Esta proximo a vencer
+        if ($request->archivo) {
+            for ($i = 0; $i < count($request->archivo); $i++) {
+                $documento = null;
+                // dd($request->archivo[$i]['idDoc']);
+                if ($request->archivo[$i]['idDoc'] == null) {
+                    $documento = new maqdocs();
                 }
+                $documento['maquinariaId'] = $maquinaria->id;
+                $documento['tipoId'] = $request->archivo[$i]['tipoDocs']; // Obtenemos el tipo de documento
+                $tipoDocumentoNombre = $request->archivo[$i]['tipoDocsNombre']; // Obtenemos el tipo de documento
 
-                if ((isset($request->archivo[$i]['check']) && $request->archivo[$i]['check'] == 'on')) {
-                    $documento['vencimiento'] = 1; //Si es 1 SI vence el documento
-                    $documento['estatus'] = '0'; //Si esta en 0 Esta MAL
-                    // dd('check', $request->archivo[$i]['fecha']);
-                    if (isset($request->archivo[$i]['fecha'])) {
-                        $documento['fechaVencimiento'] = $request->archivo[$i]['fecha'];
-                        // Evaluar fecha de vencimiento
-                        $fechaActual = Carbon::now();
-                        // Obtén la fecha que deseas evaluar (por ejemplo, desde una base de datos)
-                        $fechaProximaAVencer = Carbon::parse($request->archivo[$i]['fecha']);
-                        // Calcula la diferencia en meses entre las dos fechas
-                        $mesesRestantes = $fechaActual->diffInMonths($fechaProximaAVencer, false);
-                        if ($mesesRestantes <= 1) {
-                            $documento['estatus'] = '1'; //Si es 1 Esta proximo a vencer
-                        } else {
-                            $documento['estatus'] = '2'; //Si es 2 Esta Bien
+                if ($request->archivo[$i]['omitido'] == 0) {
+                    // OBLIGATORIO
+                    $documento['requerido'] = '1';
+                    $documento['estatus'] = '0';
+                    if (isset(($request->archivo[$i]['docs']))) {
+                        $file = $request->file('archivo')[$i]['docs'];
+                        $documento['ruta'] = time() . '_' . $file->getClientOriginalName();
+                        $file->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos/' .  $tipoDocumentoNombre, $documento['ruta']);
+                        $documento['estatus'] = '2'; //Si es 2 Esta  OK
+                    }
+
+                    if ((isset($request->archivo[$i]['check']) && $request->archivo[$i]['check'] == 'on')) {
+                        $documento['vencimiento'] = 1; //Si es 1 SI vence el documento
+                        $documento['estatus'] = '0'; //Si esta en 0 Esta MAL
+                        // dd('check', $request->archivo[$i]['fecha']);
+                        if (isset($request->archivo[$i]['fecha'])) {
+                            $documento['fechaVencimiento'] = $request->archivo[$i]['fecha'];
+                            // Evaluar fecha de vencimiento
+                            $fechaActual = Carbon::now();
+                            // Obtén la fecha que deseas evaluar (por ejemplo, desde una base de datos)
+                            $fechaProximaAVencer = Carbon::parse($request->archivo[$i]['fecha']);
+                            // Calcula la diferencia en meses entre las dos fechas
+                            $mesesRestantes = $fechaActual->diffInMonths($fechaProximaAVencer, false);
+                            if ($mesesRestantes <= 1) {
+                                $documento['estatus'] = '1'; //Si es 1 Esta proximo a vencer
+                            } else {
+                                $documento['estatus'] = '2'; //Si es 2 Esta Bien
+                            }
+                            // dd('entro');
                         }
-                        // dd('entro');
+                    } else {
+                        $documento['vencimiento'] = 0; //Si es 0 no vence el documento
+                        // $documento->estatus = '1';
                     }
                 } else {
-                    $documento['vencimiento'] = 0; //Si es 0 no vence el documento
-                    // $documento->estatus = '1';
+                    // NO REQUERIDO
+                    $documento['requerido'] = '0';
+                    $documento['estatus'] = '2'; //Si es 2 Esta  OK
                 }
-            } else {
-                $documento['vencimiento'] = 0; //Si es 0 no vence el documento
-                // $documento->estatus = '1';
-            }
-        } else {
-            // NO REQUERIDO
-            $documento['requerido'] = '0';
-            $documento['estatus'] = '2'; //Si es 2 Esta  OK
-        }
 
-        $documento['comentarios'] = $request->archivo[$i]['comentario'];
+                $documento['comentarios'] = $request->archivo[$i]['comentario'];
 
-            if ($request->archivo[$i]['idDoc'] == null) {
-                $documento->save();
-            } else {
-                $docu = maqdocs::where('id', $request->archivo[$i]['idDoc'])->first();
-                // dd($request->archivo[$i]['idDoc']);
-                $docu->update($documento);
+                if ($request->archivo[$i]['idDoc'] == null) {
+                    $documento->save();
+                } else {
+                    $docu = maqdocs::where('id', $request->archivo[$i]['idDoc'])->first();
+                    // dd($request->archivo[$i]['idDoc']);
+                    $docu->update($documento);
+                }
             }
         }
+
 
         if ($request->hasFile('ruta')) {
             foreach ($request->file('ruta') as $ruta) {
@@ -522,14 +517,7 @@ if($request->archivo) {
                 maqimagen::create($imagen);
             }
         }
-
         $nuevaLista = collect();
-if($request['idRefaccion']) {
-    for ($i = 0; $i < count($request['idRefaccion']); $i++) {
-        $relacion = inventario::where('numparte', $request['numeroParte'][$i])->first();
-        $numParteRelacion = null;
-        if($relacion != null) {
-            $numParteRelacion = $relacion->id;
 
         for ($i = 0; $i < count($request['idRefaccion']); $i++) {
             $relacion = inventario::where('numparte', $request['numeroParte'][$i])->first();
@@ -551,21 +539,6 @@ if($request['idRefaccion']) {
                 $nuevaLista->push($objRefaccion->id);
             }
         }
-        $array = [
-            'id' => $request['idRefaccion'][$i],
-            'marcaId' => $request['marca'][$i],
-            'tipoRefaccionId' => $request['tipoRefaccionId'][$i],
-            'numeroParte' => $request['numeroParte'][$i],
-            'maquinariaId' => $maquinaria->id,
-            'relacionInventarioId' => $numParteRelacion,
-        ];
-        //dd($array);
-        $objRefaccion = refacciones::updateOrCreate(['id' => $array['id']], $array);
-        // dd($objRefaccion);
-        $nuevaLista->push($objRefaccion->id);
-    }
-}
-        $test = refacciones::where('maquinariaId', $maquinaria->id)->whereNotIn('id', $nuevaLista)->delete();
         // $test = refacciones::where('maquinariaId', $maquinaria->id)->whereNotIn('id', $nuevaLista)->delete();
 
         Session::flash('message', 1);
