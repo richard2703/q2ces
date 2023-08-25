@@ -21,8 +21,8 @@
                                 </a>
                             </div>
                             <div class="col-8 text-end">
-                                <button data-bs-toggle="modal" data-bs-target="#modalContraseña" type="button"
-                                    class="btn botonGral">Cambiar Contraseña</button>
+                                {{--  <button data-bs-toggle="modal" data-bs-target="#modalContraseña" type="button"
+                                onclick="cargaItem('{{ $user->id }}')" class="btn botonGral">Cambiar Contraseña</button>  --}}
                             </div>
 
                             <div class="d-flex p-3 divBorder"></div>
@@ -31,7 +31,7 @@
                             enctype="multipart/form-data">
                             @csrf
                             @method('put')
-                            <div class="d-md-flex p-3">
+                            {{--  <div class="d-md-flex p-3">
                                 <div class="col-12 col-md-4 px-2 ">
                                     <div class="text-center mx-auto border  mb-4">
                                         <i><img class="imgPersonal img-fluid"
@@ -114,10 +114,59 @@
 
                                     </div>
                                 </div>
-                            </div>
-                            {{--  <div class="card-body">
+                            </div>  --}}
+                            <div class="card-body">
+                                <div class="row mt-3 d-flex justify-content-end">
+                                    <div class="col-12 col-md-6 px-2 ">
+                                        <div class="text-center mx-auto border  mb-4">
+                                            <i><img class="imgPersonal img-fluid"
+                                                    src="{{ $user->foto == '' ? ' /img/general/default.jpg' : asset('/storage/user/' . str_pad($user->id, 4, '0', STR_PAD_LEFT) . '/' . $user->foto) }}"></i>
+    
+                                            <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"
+                                                    id="mi-archivo" accept="image/*"></span>
+                                            <label for="mi-archivo">
+                                                <span>Sube Imagen</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <div class="tab-content">
+                                                <div class="tab-pane active">
+                                                    <table class="table">
+                                                        <tbody>
+                                                            <label for="roles"
+                                                                class="labelTitulo col-sm-2 col-form-label d-flex align-items-center mb-3"
+                                                                style="">Roles:</label>
+                                                            @foreach ($roles as $id => $role)
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="form-check">
+                                                                            <label class="form-check-label" style="color: grey">
+                                                                                <input
+                                                                                    class="form-check-input is-invalid align-self-end"
+                                                                                    type="checkbox" name="roles[]"
+                                                                                    value="{{ $id }}"
+                                                                                    {{ $user->roles->contains($id) ? 'checked' : '' }}>
+                                                                                    {{ $role }}
+                                                                                <span class="form-check-sign">
+                                                                                    <span class="check"
+                                                                                        value=""></span>
+                                                                                </span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12 col-md-6">
                                         <label for="name" class="labelTitulo">Nombre:</label>
 
                                         <input class="inputCaja" type="text" class="form-control" name="name"
@@ -128,7 +177,7 @@
                                                 for="input-name">{{ $errors->first('name') }}</span>
                                         @endif
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-12 col-md-6">
                                         <label for="email" class="labelTitulo">Correo:</label>
                                         <input class="inputCaja" type="email" class="form-control" name="email"
                                             placeholder="Ingrese su correo" value="{{ old('email', $user->email) }}"
@@ -138,7 +187,7 @@
                                                 for="input-email">{{ $errors->first('email') }}</span>
                                         @endif
                                     </div>
-                                    <div class="col-6 mt-3">
+                                    <div class="col-12 col-md-6 mt-3">
                                         <label for="username" class="labelTitulo">Nombre De
                                             Usuario:</label>
 
@@ -151,7 +200,14 @@
                                         @endif
                                     </div>
 
-                                    <div class="col-6 mt-3">
+                                    {{--  <div class="col-12 col-md-6 mt-3">
+                                        <label for="username" class="labelTitulo">Fecha De Alta:</label>
+
+                                        <input class="inputCaja" type="text"
+                                            value="{{ old('created_at', $user->created_at->formatLocalized('%d-%B-%Y')) }}" disabled>
+                                    </div>  --}}
+
+                                    <div class="col-12 col-md-6 mt-3">
                                         <label for="password" class="labelTitulo">Contraseña:</label>
                                         <input class="inputCaja" type="password" class="form-control" name="password"
                                             placeholder="Contraseña">
@@ -161,45 +217,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="row mt-3 d-flex justify-content-end">
-                                    <label for="roles"
-                                        class="labelTitulo col-sm-2 col-form-label d-flex align-items-center mb-3"
-                                        style="justify-content: flex-end !important;">Roles:</label>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <div class="tab-content">
-                                                <div class="tab-pane active">
-                                                    <table class="table">
-                                                        <tbody>
-                                                            @foreach ($roles as $id => $role)
-                                                                <tr>
-                                                                    <td>
-                                                                        <div class="form-check">
-                                                                            <label class="form-check-label">
-                                                                                <input
-                                                                                    class="form-check-input is-invalid align-self-end"
-                                                                                    type="checkbox" name="roles[]"
-                                                                                    value="{{ $id }}"
-                                                                                    {{ $user->roles->contains($id) ? 'checked' : '' }}>
-                                                                                <span class="form-check-sign">
-                                                                                    <span class="check"
-                                                                                        value=""></span>
-                                                                                </span>
-                                                                            </label>
-                                                                            {{ $role }}
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>  --}}
+                            </div>
                             <!--Footer-->
                             <div class="card-footer d-flex justify-content-center">
                                 <button type="submit" class="btn botonGral">Guardar</button>
@@ -223,28 +241,37 @@
 
                     <div class="modal-body">
                         <div class="container-fluid">
-                            <form action="" method="post">
+                            <form action="{{ route('users.updatePassword', 0) }}" method="post" onsubmit="return validarContraseñas()">
                                 @csrf
-                                @method('post')
-
+                                @method('put')
+                                <input type="hidden" name="id" value="" id="id">
                                 <div class="row">
-                                    <div class="mb-3 col-12">
+                                    {{--  <div class="mb-3 col-12">
                                         <label for="title" class="labelTitulo">Contraseña Actual:</label>
                                         <input autofocus type="text" class="inputCaja" id="nombre" name="nombre"
                                             placeholder="Nombre Equipo..." readonly>
-                                    </div>
+                                    </div>  --}}
 
                                     <div class="mb-3 col-12">
                                         <label for="title" class="labelTitulo">Nueva Contraseña:</label>
-                                        <input autofocus type="text" class="inputCaja" id="numeconomico"
-                                            name="numeconomico" placeholder="Del Equipo..." readonly>
+                                        <div class="input-group">
+                                            <input autofocus type="password" class="form-control border-green" style="box-shadow: none;" id="password" name="password" placeholder="Contraseña...">
+                                            <button class="btnViewDescargar btn btn-outline-success btnView" style="border-left: none; margin-left: 0 !important;"  type="button" id="togglePassword">
+                                                <i class="fas fa-eye" id="eyeIconPassword"></i>
+                                            </button>
+                                        </div>
                                     </div>
-
+                                    
                                     <div class="mb-3 col-12">
                                         <label for="title" class="labelTitulo">Repetir Nueva Contraseña:</label>
-                                        <input autofocus type="text" class="inputCaja" id="numeconomico"
-                                            name="numeconomico" placeholder="Del Equipo..." readonly>
+                                        <div class="input-group">
+                                            <input autofocus type="password" class="form-control border-green" style="box-shadow: none;" id="newPassword" name="newPassword" placeholder="Contraseña...">
+                                            <button class="btnViewDescargar btn btn-outline-success btnView" style="border-left: none; margin-left: 0 !important;" type="button" id="toggleNewPassword">
+                                                <i class="fas fa-eye" id="eyeIconNewPassword"></i>
+                                            </button>
+                                        </div>
                                     </div>
+                                    
                                 </div>
 
                         </div>
@@ -257,4 +284,65 @@
                 </div>
             </div>
         </div>
-    @endsection
+    <style>
+        #password[type="password"],
+        #newPassword[type="password"] {
+            -webkit-text-security: disc !important;
+        }
+
+        #password[type="text"],
+        #newPassword[type="text"] {
+            -webkit-text-security: none !important;
+        }
+
+        #eyeIconPassword.crossed,
+        #eyeIconNewPassword.crossed {
+            text-decoration: line-through;
+            color: red;
+        }
+    </style>
+
+    <script>
+        const passwordInput = document.getElementById("password");
+        const toggleButton = document.getElementById("togglePassword");
+        const eyeIconPassword = document.getElementById("eyeIconPassword");
+
+        toggleButton.addEventListener("click", function() {
+            passwordInput.type = (passwordInput.type === "password") ? "text" : "password";
+            eyeIconPassword.classList.toggle("crossed", passwordInput.type === "text");
+        });
+
+        const newPasswordInput = document.getElementById("newPassword");
+        const toggleNewButton = document.getElementById("toggleNewPassword");
+        const eyeIconNewPassword = document.getElementById("eyeIconNewPassword");
+
+        toggleNewButton.addEventListener("click", function() {
+            newPasswordInput.type = (newPasswordInput.type === "password") ? "text" : "password";
+            eyeIconNewPassword.classList.toggle("crossed", newPasswordInput.type === "text");
+        });
+    </script>
+    <script>
+        function validarContraseñas() {
+            const passwordInput = document.getElementById("password");
+            const newPasswordInput = document.getElementById("newPassword");
+        
+            if (passwordInput.value !== newPasswordInput.value || passwordInput.value == null || newPasswordInput.value == null ) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Las contraseñas no coinciden',
+                });
+                return false; // Evita que se envíe el formulario
+            }
+        
+            return true; // Permite enviar el formulario si las contraseñas coinciden
+        }
+        
+    </script>
+    <script>
+        function cargaItem(id) {
+            const txtId = document.getElementById('id');
+            txtId.value = id;
+        }
+    </script>
+@endsection

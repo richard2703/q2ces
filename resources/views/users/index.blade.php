@@ -25,9 +25,9 @@
                                 </div>
                                 <div class="col-8 d-flex justify-content-end">
                                     @can('user_create')
-                                        {{--  <button type="button" class="btn botonGral"
+                                        <button type="button" class="btn botonGral"
                                         onclick="window.location.href = '{{ route('users.create') }}'">Añadir
-                                        Usuario</button>  --}}
+                                        Usuario</button>
                                     @endcan
                                 </div>
 
