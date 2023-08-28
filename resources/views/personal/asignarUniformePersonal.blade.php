@@ -263,7 +263,7 @@
                                                                     <button type="button"
                                                                         class="botonSinFondo mx-2"title="Ajustar"
                                                                         data-bs-toggle="modal" data-bs-target="#modal-cliente"
-                                                                        onclick="loadItem('{{ $asignado->id }}','{{ $asignado->inventarioId }}','{{ $asignado->uniformeTipo }}','{{ $asignado->cantidad }}')">
+                                                                        onclick="loadItem('{{ $asignado->id }}','{{ $asignado->inventarioId }}','{{ $asignado->uniformeTipo }}','{{ $asignado->cantidad }}','{{ $asignado->comentario }}')">
                                                                         <img
                                                                             style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}"></button>
                                                                 @endcan
@@ -317,55 +317,60 @@
             </div>
         </div>
     </div>
-      {{-- //Modales --}}
-      <div class="modal fade" id="modal-cliente" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-cliente"
-      aria-hidden="true">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="col-12">
-                  <div class="card ">
-                      <form action="{{ route('inventario.ajusteDeUniforme',0) }}" method="post">
-                          @csrf
-                          @method('put')
-                          <div class="card-header bacTituloPrincipal ">
-                              <div class="nav-tabs-navigation">
-                                  <div class="nav-tabs-wrapper">
-                                      <span class="nav-tabs-title">
-                                          <h2 class="titulos">Editar </h2>
-                                      </span>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row  card-body">
-                              <div class="row card-body" style="
-                       text-align: center;">
-                                  <input type="hidden" name="productoId" id="productoId" value="">
-                                  <input type="hidden" name="movimientoId" id="movimientoId" value="">
-                                  <input type="hidden" name="productoCantidad" id="productoCantidad" value="">
-                                  <input type="hidden" name="usuarioId" id="usuarioId" value="{{ auth()->user()->id }}">
-
-                                  <div class="col-12 col-lg-8">
-                                    <label class="labelTitulo" for="">Producto:</label></br>
-                                    <input type="text" class="inputCaja" id="nombreProducto" name="nombreProducto"
-                                     value="">
+    {{-- //Modales --}}
+    <div class="modal fade" id="modal-cliente" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-cliente"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="col-12">
+                    <div class="card ">
+                        <form action="{{ route('inventario.ajusteDeUniforme', 0) }}" method="post">
+                            @csrf
+                            @method('put')
+                            <div class="card-header bacTituloPrincipal ">
+                                <div class="nav-tabs-navigation">
+                                    <div class="nav-tabs-wrapper">
+                                        <span class="nav-tabs-title">
+                                            <h2 class="titulos">Editar </h2>
+                                        </span>
+                                    </div>
                                 </div>
-                                  <div class="col-12 col-lg-4">
-                                      <label class="labelTitulo" for="">Cantidad:</label></br>
-                                      <input class="inputCaja" type="number" step="1" min="1"
-                                          id="productoCantidadNueva" name="productoCantidadNueva" value="" required></br>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="col-12  mb-3 d-flex  justify-content-center align-self-end">
-                              <button type="submit" class="btn botonGral ">Guardar</button>
-                          </div>
-                      </form>
+                            </div>
+                            <div class="row  card-body">
+                                <div class="row card-body" style="
+                       text-align: center;">
+                                    <input type="hidden" name="usuarioId" id="usuarioId" value="{{ auth()->user()->id }}">
+                                    <input type="hidden" name="asignacionId" id="asignacionId" value="">
+                                    <input type="hidden" name="productoId" id="productoId" value="">
+                                    <input type="hidden" name="productoCantidad" id="productoCantidad" value="">
 
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+                                    <div class="col-12 col-lg-8">
+                                        <label class="labelTitulo" for="">Producto:</label></br>
+                                        <input type="text" class="inputCaja" id="productoNombre"
+                                            name="productoNombre" value="">
+                                    </div>
+                                    <div class="col-12 col-lg-4">
+                                        <label class="labelTitulo" for="">Cantidad:</label></br>
+                                        <input class="inputCaja" type="number" step="1" min="1"
+                                            id="productoCantidadNueva" name="productoCantidadNueva" value=""
+                                            required></br>
+                                    </div>
+                                    <div class="col-12 col-sm-12  my-6 ">
+                                        <label class="labelTitulo">Comentario:</label></br>
+                                        <textarea class="inputComent" id="productoComentario" name="productoComentario" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12  mb-3 d-flex  justify-content-center align-self-end">
+                                <button type="submit" class="btn botonGral ">Guardar</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -431,17 +436,17 @@
     </script>
 
     <script>
-        function loadItem(id, productoId, producto, cantidad) {
+        function loadItem(id, productoId, producto, cantidad, comentario) {
 
-            console.log(id, productoId, producto, cantidad);
+            console.log(id, productoId, producto, cantidad, comentario);
 
             const productoid = document.getElementById('productoId');
             productoid.value = productoId;
 
-            const movId = document.getElementById('movimientoId');
-            movId.value = id;
+            const a1 = document.getElementById('asignacionId');
+            a1.value = id;
 
-            const p1 = document.getElementById('nombreProducto');
+            const p1 = document.getElementById('productoNombre');
             p1.value = producto;
 
             const p2 = document.getElementById('productoCantidad');
@@ -449,6 +454,10 @@
 
             const p3 = document.getElementById('productoCantidadNueva');
             p3.value = cantidad;
+
+            const p4 = document.getElementById('productoComentario');
+            p4.value = comentario;
+
         }
     </script>
 

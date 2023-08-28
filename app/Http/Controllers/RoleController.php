@@ -63,8 +63,10 @@ class RoleController extends Controller
     {
         abort_if(Gate::denies('role_show'), 403);
 
+        $permissions = Permission::whereIn('id', $role->permissions->pluck('id'))->pluck('name', 'id');
         $role->load('permissions');
-        return view('roles.show', compact('role'));
+
+        return view('roles.show', compact('role', 'permissions'));
     }
 
     /**
@@ -78,6 +80,7 @@ class RoleController extends Controller
         abort_if(Gate::denies('role_edit'), 403);
 
         $permissions = Permission::all()->pluck('name', 'id');
+
         $role->load('permissions');
         // dd($role);
         return view('roles.edit', compact('role', 'permissions'));

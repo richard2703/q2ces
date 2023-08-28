@@ -11,6 +11,7 @@ use App\Helpers\Validaciones;
 use Illuminate\Support\Facades\Session;
 use App\Models\maqimagen;
 use App\Models\usoMaquinarias;
+use App\Models\marca;
 
 class maquinariaMtqController extends Controller
 {
@@ -24,9 +25,16 @@ class maquinariaMtqController extends Controller
         abort_if(Gate::denies('maquinaria_mtq_index'), 403);
 
         // Filtrar maquinarias donde el campo 'compania' no sea nulo
-        $maquinaria = maquinaria::whereNotNull('compania')->paginate(15);
+        // $maquinaria = maquinaria::whereNotNull('compania')->paginate(15);
+
+        $maquinaria = maquinaria::whereNotNull('compania')
+            ->leftJoin('marca', 'marca.id', 'maquinaria.marcaId')
+            ->select('maquinaria.*', 'marca.nombre as nombreMarca')
+            ->paginate(15);
+
+        $marcas = marca::all();
         // dd( 'test' );
-        return view('MTQ.indexMaquinariaMtq', compact('maquinaria'));
+        return view('MTQ.indexMaquinariaMtq', compact('maquinaria', 'marcas'));
     }
 
     /**
@@ -51,7 +59,7 @@ class maquinariaMtqController extends Controller
     {
         abort_if(Gate::denies('maquinaria_mtq_create'), 403);
 
-        // dd( $request );
+
 
         $maquinaria = $request->all();
 
@@ -59,7 +67,8 @@ class maquinariaMtqController extends Controller
         $maquinaria['estatusId'] = 1;
         $maquinaria['compania'] = 'mtq';
         // dd( $maquinaria[ 'identificador' ] );
-
+        $maquinaria['marcaId'] = $request->marca[0];
+        // dd($maquinaria['marcaId']);
         /*** directorio contenedor de su información */
         $pathMaquinaria = str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT);
 
@@ -84,7 +93,7 @@ class maquinariaMtqController extends Controller
 
 
         Session::flash('message', 1);
-        return redirect()->route('MTQ.index');
+        return redirect()->route('mtq.index');
     }
 
     /**
@@ -135,6 +144,7 @@ class maquinariaMtqController extends Controller
         $data['placas'] = strtoupper($data['placas']);
         $data['nummotor'] = strtoupper($data['nummotor']);
         $data['numserie'] = strtoupper($data['numserie']);
+        $data['marcaId'] = $request->marca[0];
 
         /*** directorio contenedor de su información */
         $pathMaquinaria = str_pad($data['identificador'], 4, '0', STR_PAD_LEFT);
@@ -154,7 +164,7 @@ class maquinariaMtqController extends Controller
 
         Session::flash('message', 1);
 
-        return redirect()->route('MTQ.index');
+        return redirect()->route('mtq.index');
     }
 
     /**

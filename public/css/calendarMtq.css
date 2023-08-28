@@ -1,0 +1,219 @@
+th, td {
+    width: max-content !important;
+    word-wrap: break-word;
+}
+#regresarId button{
+    align-items: center;
+}
+.color-box {
+    width: 30px; /* Ajusta el ancho según tus preferencias */
+    height: 30px; /* Ajusta la altura según tus preferencias */
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px; /* Ajusta el margen según tus preferencias */
+    border: 1px solid #ccc;
+}
+.fc-toolbar { text-transform: capitalize; }
+.fc-scroller { text-transform: capitalize; }
+.fc-daygrid-day-top {
+    justify-content: center;
+}
+#calendar {
+    border: 2px solid #f7cd22; /* Cambia el color y el grosor del borde según tus preferencias */
+    border-radius: 10px; /* Opcional: Añadir esquinas redondeadas */
+    padding: 10px; /* Opcional: Agregar espacio interno alrededor del calendario */
+}
+.fc-day, .fc-view-harness {
+    border: 1px solid #5c7c26 !important; /* Cambia el color y el grosor del borde según tus preferencias */
+    
+}
+.fc {
+    border: 2px solid #e74c3c; /* Cambia el color y el grosor del borde según tus preferencias */
+    border-radius: 10px; /* Opcional: Añadir esquinas redondeadas */
+    padding: 20px; /* Opcional: Agregar espacio interno alrededor del calendario */
+}
+/* .fc-daygrid-dot-event .fc-event-title {
+    font-weight: normal;
+} */
+
+.fc-daygrid-day-top a {
+    color: black !important;
+    text-decoration: none; 
+    cursor: pointer;
+    font-size: 18px !important;
+
+}
+/* En vista por month texto de los eventos */
+.fc-direction-ltr .fc-daygrid-event.fc-event-end, .fc-direction-rtl .fc-daygrid-event.fc-event-start{
+    font-size: 12px;
+}
+.fc-timegrid-event .fc-event-time{
+    font-size: 12px;
+    white-space: nowrap !important;
+}
+.fc-v-event .fc-event-title{
+    font-size: 12px;
+}
+.fc-direction-ltr .fc-daygrid-event .fc-event-time{
+    min-width: 64.5px !important;
+}
+@media screen and (max-width: 620px) {
+.fc-timegrid-event .fc-event-time{
+    font-size: 4px;
+    white-space: nowrap !important;
+}
+.fc-v-event .fc-event-title{
+    font-size: 6px;
+}
+.fc .fc-col-header-cell-cushion {
+    font-size: 10px !important;
+}
+.fc .fc-toolbar-title {
+    font-size: 1em !important;
+}
+.fc .fc-daygrid-more-link {
+    font-size: 12px !important;
+}
+[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+    font-size: 12px !important; 
+}
+.fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
+    font-size: 12px !important;
+}
+}
+@media only screen and (min-width: 620px) and (max-width: 768px){
+    .fc-timegrid-event .fc-event-time{
+    font-size: 6px;
+    white-space: nowrap !important;
+}
+.fc-v-event .fc-event-title{
+    font-size: 8px;
+}
+.fc .fc-col-header-cell-cushion {
+    font-size: 10px !important;
+}
+.fc .fc-toolbar-title {
+    font-size: 1em !important;
+}
+.fc .fc-daygrid-more-link {
+    font-size: 12px !important;
+}
+[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+    font-size: 12px !important; 
+}
+.fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
+    font-size: 12px !important;
+}
+}
+@media only screen and (min-width: 768px) and (max-width: 991px){
+.fc-timegrid-event .fc-event-time{
+    font-size: 8px;
+    white-space: nowrap !important;
+}
+.fc-v-event .fc-event-title{
+    font-size: 10px;
+}
+.fc .fc-col-header-cell-cushion {
+    font-size: 14px !important;
+}
+}
+@media only screen and (min-width: 992px) and (max-width: 1440px){
+.fc-timegrid-event .fc-event-time{
+    font-size: 9px;
+    white-space: nowrap !important;
+}
+.fc-v-event .fc-event-title{
+    font-size: 9px;
+} 
+.fc .fc-col-header-cell-cushion {
+    font-size: 15px !important;
+}
+}
+
+.fc .fc-col-header-cell-cushion {
+    color: white !important;
+    text-decoration: none;
+    font-size: 18px;
+    overflow-wrap: normal !important;
+}
+.fc-theme-standard th{
+    /*border: 2px solid #5c7c26 !important;*/
+    background-color: #5c7c26 !important;
+    /* padding-top: -1px; */
+    padding-left: -5px !important;
+    border-right: 1px solid #5c7c26 !important;
+}
+.fc-button .fc-button-active{
+    background: #5c7c26 !important;
+}
+.fc .fc-button-primary:not(:disabled):active, .fc .fc-button-primary:not(:disabled).fc-button-active {
+    background-color: #8eb322; /* Cambia el color de fondo del botón activo */
+    border-color: #5c7c26; /* Cambia el color del borde del botón activo */
+    color: #ffffff; /* Cambia el color del texto del botón activo */
+}
+
+.fc .fc-scrollgrid-liquid {
+    border-top: none;
+    border-left: none;
+}
+
+/* Estilos para botones inactivos */
+.fc-button:not(.fc-button-active) {
+    background-color: #5c7c26; 
+    border-color: #5c7c26; 
+    color: #ffffff;
+}
+.fc .fc-button:hover {
+    background-color: #8eb322; 
+    border-color: #5c7c26; 
+    color: #ffffff;
+}
+.fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
+    color: #fff !important;
+    color: var(--fc-button-text-color, #fff) !important;
+    background-color: #2C3E50 !important;
+    background-color: var(--fc-button-bg-color, #727176) !important;
+    border-color: #2C3E50 !important;
+    border-color: var(--fc-button-border-color, #2C3E50) !important;
+}
+.fc-event {
+    margin-bottom: 4px; /* Ajusta este valor según tus preferencias */
+    font-weight: bold;
+}
+/* .fc .fc-daygrid-day-frame {
+    position: relative;
+    min-height: 100% !important;
+} */
+
+/* .fc-daygrid-day-events {
+    padding-bottom: -20px;
+} */
+.fc .fc-daygrid-more-link {
+    font-size: 16px;
+    font-weight: bold;
+    justify-content: center ;
+    display: flex;   
+}
+.fc .fc-daygrid-day.fc-day-today {
+    background-color: rgba(255, 220, 40, 0.15);
+    background-color: var(--fc-today-bg-color, rgba(255, 220, 40, 0.15));
+    border: 2px solid #f7cd22 !important;
+}
+.single-day-event {
+border-top: 2px solid blue; /* Cambia el estilo de la línea según tus preferencias */
+border-bottom: 2px solid blue; /* Agrega un borde inferior para mejorar la apariencia */
+color: white;
+pointer-events:none;
+font-weight: bold;
+}
+#regresarId:hover button{
+    color: black !important;
+}
+select[readonly], input[readonly], textarea[readonly]{
+    color: grey;
+    cursor:no-drop;
+}
+
+select[readonly] option{
+    display:none;
+}

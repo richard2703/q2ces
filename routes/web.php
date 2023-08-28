@@ -101,6 +101,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/usuarios/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('users.show');
     Route::get('/users/{user}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+    Route::put('/users/password/{user}/', [App\Http\Controllers\UserController::class, 'updatePassword'])->name('users.updatePassword');
     Route::delete('/users/{user}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.delete');
 
     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
@@ -175,6 +176,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/catalogos/categoriasTareas/{tarea}', [App\Http\Controllers\tareaCategoriaController::class, 'update'])->name('tareaCategoria.update');
     Route::delete('/catalogos/categoriasTareas/{tarea}', [App\Http\Controllers\tareaCategoriaController::class, 'destroy'])->name('tareaCategoria.delete');
 
+    Route::get('/catalogos/categoriasMaquinaria', [App\Http\Controllers\catalogosController::class, 'indexCatalogoCategoriasMaquinaria'])->name('catalogoCategoriasMaquinaria.index');
+    Route::get('/catalogos/categoriasMaquinaria/nuevo', [App\Http\Controllers\maquinariaCategoriaController::class, 'create'])->name('maquinariaCategoria.create');
+    Route::post('/catalogos/categoriasMaquinaria', [App\Http\Controllers\maquinariaCategoriaController::class, 'store'])->name('maquinariaCategoria.store');
+    Route::put('/catalogos/categoriasMaquinaria/{tarea}', [App\Http\Controllers\maquinariaCategoriaController::class, 'update'])->name('maquinariaCategoria.update');
+    Route::delete('/catalogos/categoriasMaquinaria/{tarea}', [App\Http\Controllers\maquinariaCategoriaController::class, 'destroy'])->name('maquinariaCategoria.delete');
+
+    Route::get('/catalogos/tiposMaquinaria', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposMaquinaria'])->name('catalogoTiposMaquinaria.index');
+    Route::get('/catalogos/tiposMaquinaria/nuevo', [App\Http\Controllers\maquinariaTipoController::class, 'create'])->name('maquinariaTipo.create');
+    Route::post('/catalogos/tiposMaquinaria', [App\Http\Controllers\maquinariaTipoController::class, 'store'])->name('maquinariaTipo.store');
+    Route::put('/catalogos/tiposMaquinaria/{tarea}', [App\Http\Controllers\maquinariaTipoController::class, 'update'])->name('maquinariaTipo.update');
+    Route::delete('/catalogos/tiposMaquinaria/{tarea}', [App\Http\Controllers\maquinariaTipoController::class, 'destroy'])->name('maquinariaTipo.delete');
+
     Route::get('/catalogos/tiposTareas', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposTareas'])->name('catalogoTiposTareas.index');
     Route::get('/catalogos/tiposTareas/nuevo', [App\Http\Controllers\tareaTipoController::class, 'create'])->name('tareaTipo.create');
     Route::post('/catalogos/tiposTareas', [App\Http\Controllers\tareaTipoController::class, 'store'])->name('tareaTipo.store');
@@ -192,6 +205,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/catalogos/tiposUniforme', [App\Http\Controllers\tipoUniformeController::class, 'store'])->name('tipoUniforme.store');
     Route::put('/catalogos/tiposUniforme/{tipoUniforme}', [App\Http\Controllers\tipoUniformeController::class, 'update'])->name('tipoUniforme.update');
     Route::delete('/catalogos/tiposUniforme/{tipoUniforme}', [App\Http\Controllers\tipoUniformeController::class, 'destroy'])->name('tipoUniforme.delete');
+
+    Route::get('/catalogos/tiposEquipo', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposEquipo'])->name('catalogoTiposEquipo.index');
+    Route::get('/catalogos/tiposEquipo/nuevo', [App\Http\Controllers\tipoEquipoController::class, 'create'])->name('tipoEquipo.create');
+    Route::post('/catalogos/tiposEquipo', [App\Http\Controllers\tipoEquipoController::class, 'store'])->name('tipoEquipo.store');
+    Route::put('/catalogos/tiposEquipo/{tipoEquipo}', [App\Http\Controllers\tipoEquipoController::class, 'update'])->name('tipoEquipo.update');
+    Route::delete('/catalogos/tiposEquipo/{tipoEquipo}', [App\Http\Controllers\tipoEquipoController::class, 'destroy'])->name('tipoEquipo.delete');
 
     Route::get('/catalogos/tiposRefaccion', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTipoRefaccion'])->name('catalogoTipoRefaccion.index');
     Route::get('/catalogos/tiposRefaccion/nuevo', [App\Http\Controllers\refaccionTipoController::class, 'create'])->name('refaccionTipo.create');
@@ -380,4 +399,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Crud Extintores
     Route::resource('extintores', App\Http\Controllers\extintoresController::class);
     Route::get('/ubicaciones/lugares/{ubicacionId}', [App\Http\Controllers\extintoresController::class, 'lugares'])->name('lugares.get');
+
+    // Permisos Desde Javascript
+    Route::get('/check-permission/{permission}', 'App\Http\Controllers\calendarioMtqController@checkPermission');
 });

@@ -21,14 +21,14 @@
                             @endif
                             <div class="row">
                                 <div class="col-4 text-left">
-                                    <a href="{{ url('dashMtq') }}">
+                                    {{--  <a href="{{ url('dashMtq') }}">
                                         <button class="btn regresar">
                                             <span class="material-icons">
                                                 reply
                                             </span>
                                             Regresar
                                         </button>
-                                    </a>
+                                    </a>  --}}
                                 </div>
                                 <div class="col-8 align-end">
                                     @can('maquinaria_mtq_create')
@@ -62,7 +62,7 @@
                                             <tr>
                                                 <td class="text-center">{{ $maquina->identificador }}</td>
                                                 <td class="text-center">{{ $maquina->nombre }}</td>
-                                                <td class="text-center">{{ $maquina->marca }}</td>
+                                                <td class="text-center">{{ $maquina->nombreMarca }}</td>
                                                 <td class="text-center">{{ $maquina->modelo }}</td>
                                                 <td class="text-center">{{ $maquina->submarca }}</td>
                                                 <td class="text-center">{{ $maquina->ano }}</td>
@@ -74,7 +74,7 @@
                                                 <td class="td-actions text-center">
                                                     @can('maquinaria_mtq_show')
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
-                                                            onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marca }}','{{ $maquina->modelo }}','{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}','{{ $maquina->foto }}','{{ true }}')">
+                                                            onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marcaId }}','{{ $maquina->modelo }}','{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}','{{ $maquina->foto }}','{{ true }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                 height="28" fill="currentColor"
                                                                 class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
@@ -87,7 +87,7 @@
                                                     @endcan
                                                     @can('maquinaria_mtq_edit')
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
-                                                            onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marca }}','{{ $maquina->modelo }}','{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}','{{ $maquina->foto }}','{{ false }}')">
+                                                            onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marcaId }}','{{ $maquina->modelo }}','{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}','{{ $maquina->foto }}','{{ false }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                 height="28" fill="currentColor"
                                                                 class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -165,7 +165,7 @@
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Numero Económico:<span>*</span></label></br>
                             <input type="text" class="inputCaja" name="identificador"
-                                value="{{ old('identificador') }}" placeholder="ej: MT-00" required readonly="false">
+                                value="{{ old('identificador') }}" placeholder="ej: MT-00" required>
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
@@ -174,9 +174,15 @@
                                 placeholder="Especifique...">
                         </div>
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Marca:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" placeholder="Especifique..." name="marca"
-                                value="{{ old('marca') }}" required>
+                            <label class="labelTitulo">Marca:</label></br>
+                            <select name='marca[]' class="form-select">
+                                <option value="">Seleccione</option>
+                                @foreach ($marcas as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
 
@@ -270,7 +276,7 @@
                         <div class=" col-12 col-sm-6 mb-3 ">
 
                             <label class="labelTitulo">Numero Económico:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="identificador" name="identificador"
+                            <input type="text" class="inputCaja" id="identificador" name="identificador" readonly
                                 value="" placeholder="ej: MT-00" required>
                         </div>
 
@@ -281,9 +287,15 @@
                         </div>
 
                         <div class=" col-12 col-sm-6  mb-3 ">
-                            <label class="labelTitulo">Marca:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="marca" placeholder="Especifique..." required
-                                name="marca" value="">
+                            <label class="labelTitulo">Marca:</label></br>
+                            <select id="marca" name='marca[]' class="form-select">
+                                <option value="">Seleccione</option>
+                                @foreach ($marcas as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
 
@@ -354,14 +366,17 @@
                 width: 120px !important;
             }
         }
-        select[readonly], input[readonly], textarea[readonly]{
-            color: grey;
-            cursor:no-drop;
-        }
-        
 
-        select[readonly] option{
-            display:none;
+        select[readonly],
+        input[readonly],
+        textarea[readonly] {
+            color: grey;
+            cursor: no-drop;
+        }
+
+
+        select[readonly] option {
+            display: none;
         }
     </style>
 
@@ -395,15 +410,21 @@
 
             const txtIdentificador = document.getElementById('identificador');
             txtIdentificador.value = identificador;
-            txtIdentificador.readOnly = modalTipo;
+            txtIdentificador.readOnly = true;
 
             const txtNombre = document.getElementById('nombre');
             txtNombre.value = nombre;
             txtNombre.readOnly = modalTipo;
 
             const txtMarca = document.getElementById('marca');
-            txtMarca.value = marca;
-            txtMarca.readOnly = modalTipo;
+            //txtMarca.readOnly = modalTipo;
+            console.log("marca", marca);
+            for (let i = 0; i < txtMarca.options.length; i++) {
+                if (txtMarca.options[i].value == marca) {
+                    // txtMarca.options[i].selected = true;
+                    txtMarca.selectedIndex = i;
+                }
+            }
 
             const txtModelo = document.getElementById('modelo');
             txtModelo.value = modelo;
@@ -445,14 +466,18 @@
 
             // Aplicar color gris a los campos con readonly
             campos.forEach((campo) => {
-                if (modalTipo) {
+                if (modalTipo ) {
                     campo.readOnly = true;
-                    campo.style.color = 'grey';
+                    
                     // campo.style.cursor:no-drop;
                 } else {
                     campo.readOnly = false;
                     campo.style.color = 'initial';
                     // campo.style.cursor:no-drop;
+                }
+                if(campo == txtIdentificador){
+                    campo.readOnly = true;
+                    campo.style.color = 'grey';
                 }
             });
         }

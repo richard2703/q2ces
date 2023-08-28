@@ -60,10 +60,11 @@ class grupoController extends Controller {
         abort_if ( Gate::denies( 'grupo_create' ), 403 );
 
         $request->validate( [
-            'nombre' => 'required|max:250',
+            'nombre' => 'required|max:250|unique:grupo,nombre,' . $request['nombre'],
             'comentario' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.unique' => 'El campo nombre ya esta en uso.',
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
         ] );
@@ -126,10 +127,11 @@ class grupoController extends Controller {
 
         $objValida = new Validaciones();
         $request->validate( [
-            'nombre' => 'required|max:250',
+            'nombre' => 'required|max:250|unique:grupo,nombre,' . $request['id'] ,
             'comentario' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.unique' => 'El campo nombre ya esta en uso.',
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
         ] );

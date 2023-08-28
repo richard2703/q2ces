@@ -1,96 +1,96 @@
 @extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Ver Equipos')])
 @section('content')
     <!--<div class="content">
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col-md-10 align-self-center">
-                    <div class="card">
-                        <div class="card-body contCart">
-                            <div class="p-1 align-self-start bacTituloPrincipal">     
-                                <h2 class="my-3 ms-3 texticonos ">Ver Equipos</h2>   
-                            </div> 
-                            
-                            <div class="col-10  mx-auto d-block my-4">   
-                                <div class="row d-flex ">
-                                    <div class="col-10 col-md-5  mx-auto d-block my-4 ">
-                                        <div class="row d-flex border">
-                                                <div class="col-4 text-center colIcono p-2">
-                                                    <img src="{{ asset('img/equipos/maquinariaPesada.svg') }}" class="mx-auto d-block" width="65%">
-                                                </div>
-                                                <div class="col-8  p-2">
-                                                    <h2 class="text-start fs-5 textTitulo">Maquinaria Pesada</h2>
-                                                    <ul>
-                                                        <a class="textEquipo" href="{{ url('detalleEquipo', session('id')) }}"><li class="text-start my-3">Retroexcavadora</li></a>
-                                                        <a class="textEquipo" href="#"><li class="text-start my-3">Camión de Volteo</li></a>
-                                                        <a class="textEquipo" href="#"><li class="text-start my-3">Pipa de Agua</li></a>
-                                                        <a class="textEquipo" href="#"><li class="text-start my-3">Camión Orquesta</li></a>
-                                                    </ul>
-                                                    
-                                                </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-10 col-md-5  mx-auto d-block my-4 ">
-                                        <div class="row d-flex border">
-                                                <div class="col-4 text-center colIcono p-2">
-                                                    <img src="{{ asset('img/equipos/maquinariaLigera.svg') }}" class="mx-auto d-block" width="65%" >
-                                                </div>
-                                                <div class="col-8  p-2">
-                                                    <h2 class="text-start fs-5 textTitulo">Maquinaria Ligera</h2>
-                                                    <ul>
-                                                        <a class="textEquipo" href="#"><li class="text-start my-3">Rodillo</li></a>
-                                                        <a class="textEquipo" href="#"><li class="text-start my-3">Bobcat</li></a>
-                                                        <a class="textEquipo" href="#"><li class="text-start my-3">Torre de Luz</li></a>                                                       
-                                                    </ul>
-                                                    
-                                                </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-10 col-md-5  mx-auto d-block my-4">
-                                        <div class="row d-flex border">
-                                                <div class="col-4 text-center colIcono p-2">
-                                                    <img src="{{ asset('img/equipos/gruas.svg') }}" class="mx-auto d-block"width="65%">
-                                                </div>
-                                                <div class="col-8  p-2">
-                                                    <h2 class="text-start fs-5 textTitulo">Grúas</h2>
-                                                    <ul>
-                                                        <a class="textEquipo" href="#"><li class="text-start my-3">Grúa 1</li></a>
-                                                        <a class="textEquipo" href="#"><li class="text-start my-3">Grúa 2</li></a>
-                                                        <a class="textEquipo"  href="#"><li class="text-start my-3">Grúa 3</li></a>
-                                                        <a class="textEquipo" href="#"><li class="text-start my-3">Grúa 4</li></a>
-                                                    </ul>
-                                                    
-                                                </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-10 col-md-5  mx-auto d-block my-4">
-                                        <div class="row d-flex border">
-                                                <div class="col-4 text-center colIcono p-2">
-                                                    <img src="{{ asset('img/equipos/accesorios.svg') }}" class="mx-auto d-block" width="70%" >
-                                                </div>
-                                                <div class="col-8  p-2">
-                                                    <h2 class="text-start fs-5 textTitulo">Accesorios</h2>
-                                                    <ul>
-                                                        <a class="textEquipo" href="#"><li class="text-start my-3">Accesorio 1</li></a>
-                                                        <a class="textEquipo" href="#"><li class="text-start my-3">Accesorio 2</li></a>
-                                                        <a class="textEquipo" href="#"><li class="text-start my-3">Accesorio 3</li></a>
-                                                        <a class="textEquipo"  href="#"><li class="text-start my-3">Accesorio 4</li></a>
-                                                    </ul>
-                                                    
-                                                </div>
-                                        </div>
-                                    </div>   
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-md-10 align-self-center">
+                        <div class="card">
+                            <div class="card-body contCart">
+                                <div class="p-1 align-self-start bacTituloPrincipal">
+                                    <h2 class="my-3 ms-3 texticonos ">Ver Equipos</h2>
                                 </div>
-                            </div>   
-                            
-                        </div>   
+
+                                <div class="col-10  mx-auto d-block my-4">
+                                    <div class="row d-flex ">
+                                        <div class="col-10 col-md-5  mx-auto d-block my-4 ">
+                                            <div class="row d-flex border">
+                                                    <div class="col-4 text-center colIcono p-2">
+                                                        <img src="{{ asset('img/equipos/maquinariaPesada.svg') }}" class="mx-auto d-block" width="65%">
+                                                    </div>
+                                                    <div class="col-8  p-2">
+                                                        <h2 class="text-start fs-5 textTitulo">Maquinaria Pesada</h2>
+                                                        <ul>
+                                                            <a class="textEquipo" href="{{ url('detalleEquipo', session('id')) }}"><li class="text-start my-3">Retroexcavadora</li></a>
+                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Camión de Volteo</li></a>
+                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Pipa de Agua</li></a>
+                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Camión Orquesta</li></a>
+                                                        </ul>
+
+                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-10 col-md-5  mx-auto d-block my-4 ">
+                                            <div class="row d-flex border">
+                                                    <div class="col-4 text-center colIcono p-2">
+                                                        <img src="{{ asset('img/equipos/maquinariaLigera.svg') }}" class="mx-auto d-block" width="65%" >
+                                                    </div>
+                                                    <div class="col-8  p-2">
+                                                        <h2 class="text-start fs-5 textTitulo">Maquinaria Ligera</h2>
+                                                        <ul>
+                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Rodillo</li></a>
+                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Bobcat</li></a>
+                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Torre de Luz</li></a>
+                                                        </ul>
+
+                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-10 col-md-5  mx-auto d-block my-4">
+                                            <div class="row d-flex border">
+                                                    <div class="col-4 text-center colIcono p-2">
+                                                        <img src="{{ asset('img/equipos/gruas.svg') }}" class="mx-auto d-block"width="65%">
+                                                    </div>
+                                                    <div class="col-8  p-2">
+                                                        <h2 class="text-start fs-5 textTitulo">Grúas</h2>
+                                                        <ul>
+                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Grúa 1</li></a>
+                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Grúa 2</li></a>
+                                                            <a class="textEquipo"  href="#"><li class="text-start my-3">Grúa 3</li></a>
+                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Grúa 4</li></a>
+                                                        </ul>
+
+                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-10 col-md-5  mx-auto d-block my-4">
+                                            <div class="row d-flex border">
+                                                    <div class="col-4 text-center colIcono p-2">
+                                                        <img src="{{ asset('img/equipos/accesorios.svg') }}" class="mx-auto d-block" width="70%" >
+                                                    </div>
+                                                    <div class="col-8  p-2">
+                                                        <h2 class="text-start fs-5 textTitulo">Accesorios</h2>
+                                                        <ul>
+                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Accesorio 1</li></a>
+                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Accesorio 2</li></a>
+                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Accesorio 3</li></a>
+                                                            <a class="textEquipo"  href="#"><li class="text-start my-3">Accesorio 4</li></a>
+                                                        </ul>
+
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>-->
+        </div>-->
     <div class="content">
         @if ($errors->any())
             <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
@@ -193,7 +193,8 @@
                                                             <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                                                 <label class="labelTitulo">Bitácora:</label></br>
                                                                 <select id="bitacoraId" name="bitacoraId" disabled
-                                                                    class="form-select" aria-label="Default select example">
+                                                                    class="form-select"
+                                                                    aria-label="Default select example">
                                                                     <option value="">Seleccione</option>
                                                                     @foreach ($bitacora as $item)
                                                                         <option value="{{ $item->id }}"
@@ -206,9 +207,16 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Marca:</label></br>
-                                                                <input type="text" class="inputCaja" id="marca"
-                                                                    placeholder="Especifique..." name="marca"
-                                                                    value="{{ $maquinaria->marca }}" disabled>
+                                                                <select id="marcaId" name="marcaId" class="form-select" disabled
+                                                                    aria-label="Default select example">
+                                                                    <option value="">Seleccione</option>
+                                                                    @foreach ($marcas as $item)
+                                                                        <option value="{{ $item->id }}"
+                                                                            {{ $item->id == $maquinaria->marcaId ? ' selected' : '' }}>
+                                                                            {{ $item->nombre }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
                                                             </div>
 
 
@@ -228,36 +236,16 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Categoría:</label></br>
-                                                                <select class="form-select" disabled
-                                                                    aria-label="Default select example" id="categoria"
-                                                                    required name="categoria">
-                                                                    <option value="Accesorios"
-                                                                        {{ $maquinaria->categoria == 'Accesorios' ? ' selected' : '' }}>
-                                                                        Accesorios</option>
-                                                                    <option value="Campers"
-                                                                        {{ $maquinaria->categoria == 'Campers' ? ' selected' : '' }}>
-                                                                        Campers</option>
-                                                                    <option value="Cisterna"
-                                                                        {{ $maquinaria->categoria == 'Cisterna' ? ' selected' : '' }}>
-                                                                        Cisterna</option>
-                                                                    <option value="Maquinaria ligera"
-                                                                        {{ $maquinaria->categoria == 'Maquinaria ligera' ? ' selected' : '' }}>
-                                                                        Maquinaria ligera</option>
-                                                                    <option value="Maquinaria pesada"
-                                                                        {{ $maquinaria->categoria == 'Maquinaria pesada' ? ' selected' : '' }}>
-                                                                        Maquinaria pesada</option>
-                                                                    <option value="Retroexcavadoras"
-                                                                        {{ $maquinaria->categoria == 'Retroexcavadoras' ? ' selected' : '' }}>
-                                                                        Retroexcavadoras</option>
-                                                                    <option value="Tractocamiones"
-                                                                        {{ $maquinaria->categoria == 'Tractocamiones' ? ' selected' : '' }}>
-                                                                        Tractocamiones</option>
-                                                                    <option value="Otros"
-                                                                        {{ $maquinaria->categoria == 'Otros' ? ' selected' : '' }}>
-                                                                        Otros</option>
-                                                                    <option value="Utilitarios"
-                                                                        {{ $maquinaria->categoria == 'Utilitarios' ? ' selected' : '' }}>
-                                                                        Utilitarios</option>
+                                                                <select id="categoriaId" name="categoriaId" disabled
+                                                                    class="form-select"
+                                                                    aria-label="Default select example">
+                                                                    <option value="">Seleccione</option>
+                                                                    @foreach ($categorias as $item)
+                                                                        <option value="{{ $item->id }}"
+                                                                            {{ $item->id == $maquinaria->categoriaId ? ' selected' : '' }}>
+                                                                            {{ $item->nombre }}
+                                                                        </option>
+                                                                    @endforeach
                                                                 </select>
                                                             </div>
 
@@ -272,6 +260,9 @@
                                                                     <option
                                                                         value="Completo"{{ $maquinaria->uso == 'Completo' ? ' selected' : '' }}>
                                                                         Completo</option>
+                                                                    <option
+                                                                        value="Utilitario"{{ $maquinaria->uso == 'Utilitario' ? ' selected' : '' }}>
+                                                                        Utilitario</option>
                                                                 </select>
                                                             </div>
 
@@ -279,21 +270,16 @@
                                                                 <div class="row align-items-end">
                                                                     <div class="pl-2">
                                                                         <label class="labelTitulo">Tipo:</label></br>
-                                                                        <select class="form-select" disabled
-                                                                            aria-label="Default select example"
-                                                                            id="tipo" name="tipo">
-                                                                            <option
-                                                                                value="Pesada"{{ $maquinaria->tipo == 'Pesada' ? ' selected' : '' }}>
-                                                                                Pesada</option>
-                                                                            <option
-                                                                                value="Ligero"{{ $maquinaria->tipo == 'Ligero' ? ' selected' : '' }}>
-                                                                                Ligero</option>
-                                                                            <option
-                                                                                value="Grua"{{ $maquinaria->tipo == 'Grua' ? ' selected' : '' }}>
-                                                                                Grúa</option>
-                                                                            <option
-                                                                                value="N/A"{{ $maquinaria->tipo == 'no_aplica' ? ' selected' : '' }}>
-                                                                                N/A</option>
+                                                                        <select id="tipoId" name="tipoId" disabled
+                                                                            class="form-select"
+                                                                            aria-label="Default select example">
+                                                                            <option value="">Seleccione</option>
+                                                                            @foreach ($categorias as $item)
+                                                                                <option value="{{ $item->id }}"
+                                                                                    {{ $item->id == $maquinaria->tipoId ? ' selected' : '' }}>
+                                                                                    {{ $item->nombre }}
+                                                                                </option>
+                                                                            @endforeach
                                                                         </select>
 
                                                                     </div>
@@ -354,7 +340,8 @@
                                                                 <label class="labelTitulo">Capacidad En KW:</label></br>
                                                                 <input type="number" class="inputCaja" id="capacidad"
                                                                     placeholder="Capacidad" name="capacidad"
-                                                                    value="{{ $maquinaria->capacidad }}" placeholder="" disabled>
+                                                                    value="{{ $maquinaria->capacidad }}" placeholder=""
+                                                                    disabled>
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -414,12 +401,12 @@
                                                             </div>
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                                <label class="labelTitulo">Combustible:</label></br>
-                                                                                <input type="text" class="inputCaja" id="combustible"
-                                                                                    name="combustible"
-                                                                                    placeholder="Diesel / Gasolina / Especificar"
-                                                                                    value="{{ $maquinaria->combustible }}">
-                                                                            </div>-->
+                                                                                    <label class="labelTitulo">Combustible:</label></br>
+                                                                                    <input type="text" class="inputCaja" id="combustible"
+                                                                                        name="combustible"
+                                                                                        placeholder="Diesel / Gasolina / Especificar"
+                                                                                        value="{{ $maquinaria->combustible }}">
+                                                                                </div>-->
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Motor:</label></br>
@@ -480,7 +467,8 @@
                                                                         <input type="number" class="inputCaja"
                                                                             id="kilometraje" name="kilometraje"
                                                                             placeholder="Numérico"
-                                                                            value="{{ $maquinaria->kilometraje }}" disabled>
+                                                                            value="{{ $maquinaria->kilometraje }}"
+                                                                            disabled>
 
                                                                     </div>
                                                                     <div class="col-5 inputKilometrajeEdit">
@@ -507,73 +495,81 @@
                                                                 <div class="col-6 divBorder">
                                                                     <h2 class="tituloEncabezado ">Refacciones</h2>
                                                                 </div>
-                                                                
+
                                                                 <div class="col-6 divBorder pb-3 text-end">
                                                                     <button type="button" class="btnVerde">
                                                                     </button>
                                                                 </div>
                                                             </div>
                                                             @forelse($refacciones as $refaccion)
-                                                            <div class="row opcion divBorderItems" id="opc">
-                                                                <input type="hidden" name="idRefaccion[]" value="{{$refaccion->id}}">
-                                                                <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
-                                                                    <label class="labelTitulo">Tipo De
-                                                                        Refacción:</label></br>
-                                                                    <select id="tipoRefaccion" name="tipoRefaccionId[]" disabled
-                                                                        class="form-select">
-                                                                        <option value="">Seleccione</option>
-                                                                        @foreach ($refaccionTipo as $item)
-                                                                            <option value="{{ $item->id }}" {{ $refaccion->tipoRefaccionId == $item->id ? 'selected' : '' }}>
-                                                                                {{ $item->nombre }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
+                                                                <div class="row opcion divBorderItems" id="opc">
+                                                                    <input type="hidden" name="idRefaccion[]"
+                                                                        value="{{ $refaccion->id }}">
+                                                                    <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
+                                                                        <label class="labelTitulo">Tipo De
+                                                                            Refacción:</label></br>
+                                                                        <select id="tipoRefaccion"
+                                                                            name="tipoRefaccionId[]" disabled
+                                                                            class="form-select">
+                                                                            <option value="">Seleccione</option>
+                                                                            @foreach ($refaccionTipo as $item)
+                                                                                <option value="{{ $item->id }}"
+                                                                                    {{ $refaccion->tipoRefaccionId == $item->id ? 'selected' : '' }}>
+                                                                                    {{ $item->nombre }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
 
-                                                                <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
-                                                                <label class="labelTitulo">Marca:</label></br>
-                                                                <select id="marcaRefaccion" name="marcaId[]" disabled
-                                                                    class="form-select">
-                                                                    <option value="">Seleccione</option>
-                                                                    @foreach ($marcas as $item)
-                                                                        <option value="{{ $item->id }}" {{ $refaccion->marcaId == $item->id ? 'selected' : '' }}>
-                                                                            {{ $item->nombre }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                                </div>
+                                                                    <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
+                                                                        <label class="labelTitulo">Marca:</label></br>
+                                                                        <select id="marcaRefaccion" name="marca[]"
+                                                                            disabled class="form-select">
+                                                                            <option value="">Seleccione</option>
+                                                                            @foreach ($marcas as $item)
+                                                                                <option value="{{ $item->id }}"
+                                                                                    {{ $refaccion->marcaId == $item->id ? 'selected' : '' }}>
+                                                                                    {{ $item->nombre }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
 
-                                                                <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
-                                                                    <label class="labelTitulo">Número De
-                                                                        Parte:</label></br>
-                                                                    <input type="text" class="inputCaja" disabled
-                                                                        id="numeroParte" placeholder="Especifique..."
-                                                                        name="numeroParte[]" value="{{$refaccion->numeroParte}}">
-                                                                </div>
+                                                                    <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
+                                                                        <label class="labelTitulo">Número De
+                                                                            Parte:</label></br>
+                                                                        <input type="text" class="inputCaja" disabled
+                                                                            id="numeroParte" placeholder="Especifique..."
+                                                                            name="numeroParte[]"
+                                                                            value="{{ $refaccion->numeroParte }}">
+                                                                    </div>
 
-                                                                <div class="col-12 col-sm-4 col-lg-2 my-3 text-center pt-3">
-                                                                    <!--<i class="fas fa-clipboard-check"></i>-->
-                                                                    <!--<span class="material-icons" style="font-size:40px; color: gray">
-                                                                        content_paste_search
-                                                                    </span>-->
-                                                                    @if ($refaccion->relacionInventarioId != null)
-                                                                    <span class="material-icons" style="font-size:40px; color: green">
-                                                                        assignment_turned_in
-                                                                    </span>
-                                                                    @else
-                                                                    <span class="material-icons" style="font-size:40px; color: red">
-                                                                        content_paste_off
-                                                                    </span>
-                                                                    @endif
-                                                                    <!--<i class="fas fa-clipboard"></i>-->
-                                                                </div>
+                                                                    <div
+                                                                        class="col-12 col-sm-4 col-lg-2 my-3 text-center pt-3">
+                                                                        <!--<i class="fas fa-clipboard-check"></i>-->
+                                                                        <!--<span class="material-icons" style="font-size:40px; color: gray">
+                                                                            content_paste_search
+                                                                        </span>-->
+                                                                        @if ($refaccion->relacionInventarioId != null)
+                                                                            <span class="material-icons"
+                                                                                style="font-size:40px; color: green">
+                                                                                assignment_turned_in
+                                                                            </span>
+                                                                        @else
+                                                                            <span class="material-icons"
+                                                                                style="font-size:40px; color: red">
+                                                                                content_paste_off
+                                                                            </span>
+                                                                        @endif
+                                                                        <!--<i class="fas fa-clipboard"></i>-->
+                                                                    </div>
 
-                                                                <div class="col-lg-1 my-3 text-end">
-                                                                    <button type="button" id="removeRow"
-                                                                        class="btnRojo"></button>
-                                                                </div>
+                                                                    <div class="col-lg-1 my-3 text-end">
+                                                                        <button type="button" id="removeRow"
+                                                                            class="btnRojo"></button>
+                                                                    </div>
 
-                                                            </div>
+                                                                </div>
                                                             @empty
                                                                 Sin Refacciones
                                                             @endforelse
@@ -638,7 +634,8 @@
                                                                                 value='0'>
                                                                             <label class="custom-file-upload"
                                                                                 onclick='handleDocumento("{{ $item->id }}","{{ $item->nombre }}","{{ true }}","{{ $item->ruta }}")'>
-                                                                                <input class="mb-4" type="file" disabled
+                                                                                <input class="mb-4" type="file"
+                                                                                    disabled
                                                                                     name='archivo[{{ $count }}][docs]'
                                                                                     id='{{ $item->id }}'
                                                                                     accept=".pdf"
@@ -655,7 +652,7 @@
 
                                                                                 </div>
                                                                             </label>
-                                                                            <a id='downloadButton{{ $item->id }}' 
+                                                                            <a id='downloadButton{{ $item->id }}'
                                                                                 class="btnViewDescargar btn btn-outline-success btnView"
                                                                                 download
                                                                                 href="{{ asset('/storage/maquinaria/' . str_pad($maquinaria->identificador, 4, '0', STR_PAD_LEFT) . '/documentos/' . $item->nombre . '/' . $item->ruta) }}">
@@ -664,15 +661,16 @@
                                                                                     <i class="far fa-eye mt-2"></i>
                                                                                 </span>
                                                                             </a>
-                                                                            <button id='removeButton{{ $item->id }}' disabled
+                                                                            <button id='removeButton{{ $item->id }}'
+                                                                                disabled
                                                                                 onclick='eliminarBotonera("{{ $item->id }}")'
                                                                                 type="button"
                                                                                 class="btnViewDelete btn btn-outline-danger btnView"
                                                                                 style="width: 2.4em; height: 2.4em;"><i
                                                                                     class="fa fa-times"></i></button>
                                                                             <!-- Botón Omitir -->
-                                                                            <button id='omitirButton{{ $item->id }}' disabled
-                                                                                class="btnSinFondo float-end mt-3"
+                                                                            <button id='omitirButton{{ $item->id }}'
+                                                                                disabled class="btnSinFondo float-end mt-3"
                                                                                 style="margin-left: 20px" rel="tooltip"
                                                                                 type="button"
                                                                                 onclick='omitir("{{ $item->id }}","{{ $item->nombre }}")'>
@@ -680,8 +678,8 @@
                                                                                     Omitir</P>
                                                                             </button>
                                                                             <button
-                                                                                id='cancelarOmitirButton{{ $item->id }}' disabled
-                                                                                class="btnSinFondo float-end mt-3"
+                                                                                id='cancelarOmitirButton{{ $item->id }}'
+                                                                                disabled class="btnSinFondo float-end mt-3"
                                                                                 style="margin-left: 20px; display: none;"
                                                                                 rel="tooltip" type="button"
                                                                                 onclick='cancelarOmitir("{{ $item->id }}","{{ $item->nombre }}")'>
@@ -696,9 +694,9 @@
                                                                                         style="margin-left:-33px!important; font-size: 18px !important">
                                                                                         Expiración:
                                                                                     </label>
-                                                                                    <input 
-                                                                                        class="form-check-input is-invalid align-self-end mb-2" disabled
-                                                                                        type="checkbox"
+                                                                                    <input
+                                                                                        class="form-check-input is-invalid align-self-end mb-2"
+                                                                                        disabled type="checkbox"
                                                                                         name='archivo[{{ $count }}][check]'
                                                                                         id='check{{ $item->id }}'
                                                                                         checked style="font-size: 20px;"
@@ -717,8 +715,9 @@
                                                                                     <label
                                                                                         class="text-start fs-5 textTitulo text-break mb-2"
                                                                                         style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
-                                                                                    <textarea id='comentario{{ $item->id }}' disabled name='archivo[{{ $count }}][comentario]' style="resize:none !important;"
-                                                                                        class="form-control-textarea inputCaja" rows="2" maxlength="1000" placeholder="Escribe Un Comentario">{{ $item->comentarios }}</textarea>
+                                                                                    <textarea id='comentario{{ $item->id }}' disabled name='archivo[{{ $count }}][comentario]'
+                                                                                        style="resize:none !important;" class="form-control-textarea inputCaja" rows="2" maxlength="1000"
+                                                                                        placeholder="Escribe Un Comentario">{{ $item->comentarios }}</textarea>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -743,7 +742,8 @@
                                                                                 value='0'>
                                                                             <label class="custom-file-upload"
                                                                                 onclick='handleDocumento("{{ $item->id }}","{{ $item->nombre }}")'>
-                                                                                <input class="mb-4" type="file" disabled
+                                                                                <input class="mb-4" type="file"
+                                                                                    disabled
                                                                                     name='archivo[{{ $count }}][docs]'
                                                                                     id='{{ $item->id }}'
                                                                                     accept=".pdf"
@@ -768,22 +768,22 @@
                                                                                     <i class="far fa-eye mt-2"></i>
                                                                                 </span>
                                                                             </a>
-                                                                            <button id='removeButton{{ $item->id }}' disabled
-                                                                                type="button"
+                                                                            <button id='removeButton{{ $item->id }}'
+                                                                                disabled type="button"
                                                                                 class="btnViewDelete btn btn-outline-danger btnView"
                                                                                 style="width: 2.4em; height: 2.4em; display: none;"><i
                                                                                     class="fa fa-times"></i></button>
                                                                             <!-- Botón Omitir -->
-                                                                            <button id='omitirButton{{ $item->id }}' disabled
-                                                                                class="btnSinFondo float-end mt-3"
+                                                                            <button id='omitirButton{{ $item->id }}'
+                                                                                disabled class="btnSinFondo float-end mt-3"
                                                                                 style="margin-left: 20px" rel="tooltip"
                                                                                 type="button"
                                                                                 onclick='omitir("{{ $item->id }}","{{ $item->nombre }}")'>
                                                                                 <P class="fs-5"> Omitir</P>
                                                                             </button>
                                                                             <button
-                                                                                id='cancelarOmitirButton{{ $item->id }}' disabled
-                                                                                class="btnSinFondo float-end mt-3"
+                                                                                id='cancelarOmitirButton{{ $item->id }}'
+                                                                                disabled class="btnSinFondo float-end mt-3"
                                                                                 style="margin-left: 20px; display: none;"
                                                                                 rel="tooltip" type="button"
                                                                                 onclick='cancelarOmitir("{{ $item->id }}","{{ $item->nombre }}")'>
@@ -799,8 +799,8 @@
                                                                                         Expiración:
                                                                                     </label>
                                                                                     <input
-                                                                                        class="form-check-input is-invalid align-self-end mb-2" disabled
-                                                                                        type="checkbox"
+                                                                                        class="form-check-input is-invalid align-self-end mb-2"
+                                                                                        disabled type="checkbox"
                                                                                         name='archivo[{{ $count }}][check]'
                                                                                         id='check{{ $item->id }}'
                                                                                         checked
@@ -820,8 +820,9 @@
                                                                                     <label
                                                                                         class="text-start fs-5 textTitulo text-break mb-2"
                                                                                         style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
-                                                                                    <textarea id='comentario{{ $item->id }}' disabled name='archivo[{{ $count }}][comentario]' style="resize:none !important;"
-                                                                                        class="form-control-textarea inputCaja" rows="2" maxlength="1000" placeholder="Escribe Un Comentario">{{ $item->comentarios }}</textarea>
+                                                                                    <textarea id='comentario{{ $item->id }}' disabled name='archivo[{{ $count }}][comentario]'
+                                                                                        style="resize:none !important;" class="form-control-textarea inputCaja" rows="2" maxlength="1000"
+                                                                                        placeholder="Escribe Un Comentario">{{ $item->comentarios }}</textarea>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -862,8 +863,8 @@
                                                     <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                         <label class="labelTitulo">Estatus:</label></br>
 
-                                                        <select class="form-select" aria-label="Default select example" disabled
-                                                            id="estatusId" name="estatusId">
+                                                        <select class="form-select" aria-label="Default select example"
+                                                            disabled id="estatusId" name="estatusId">
                                                             @foreach ($vctEstatus as $item)
                                                                 <option value="{{ $item->id }}"
                                                                     {{ $item->id == $maquinaria->estatusId ? ' selected' : '' }}>
@@ -931,4 +932,3 @@
         }
     }
 </script>
-

@@ -190,6 +190,12 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('docs_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('docs_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('tiposDocs_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tiposDocs_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tiposDocs_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tiposDocs_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tiposDocs_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('ubicaciones_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('ubicaciones_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('ubicaciones_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -281,7 +287,7 @@ create table puestoNivel(
 
 CREATE TABLE tipoEquipo(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    Nombre int not NULL,
+    nombre varchar(255) not NULL,
     tipo varchar(200) not NULL,
     comentario text NULL,
     PRIMARY KEY (id)
@@ -380,6 +386,7 @@ create table marca(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     nombre varchar(200) NULL,
     comentario text NULL,
+    tipo VARCHAR(255) null,
     activo TINYINT(1) NOT NULL DEFAULT '1',
     created_at datetime NULL,
     updated_at datetime NULL,
@@ -518,12 +525,12 @@ create table maquinariaTipo(
 INSERT INTO
     `puestoNivel` (`id`,`nombre`,`comentario`,`requiereAsistencia`)
 VALUES
-    (NULL,'Administrativo','Descripción del puesto',0),
-    (NULL, 'Gerente', 'Descripción del puesto', 0),
-    (NULL, 'Coordinador', 'Descripción del puesto', 0),
-    (NULL, 'Mecánico', 'Descripción del puesto', 1),
-    (NULL, 'Operador', 'Descripción del puesto', 1),
-    (NULL, 'Auxiliar', 'Descripción del puesto', 1);
+    (NULL,'Administrativo','Descripciï¿½n del puesto',0),
+    (NULL, 'Gerente', 'Descripciï¿½n del puesto', 0),
+    (NULL, 'Coordinador', 'Descripciï¿½n del puesto', 0),
+    (NULL, 'Mecï¿½nico', 'Descripciï¿½n del puesto', 1),
+    (NULL, 'Operador', 'Descripciï¿½n del puesto', 1),
+    (NULL, 'Auxiliar', 'Descripciï¿½n del puesto', 1);
 
 INSERT INTO
     tipoAsistencia
@@ -578,22 +585,25 @@ VALUES
     (3, 'Reparacion', 'MT-03', '#be2727', 'Para equipos que necesiten ser reparados', 1, '2023-08-15 11:03:57', '2023-08-15 11:03:57');
    
 INSERT into `maquinariaCategoria` (`id`, `nombre`, `comentario`) values 
-(1, 'Accesorios', 'Accesorios de Maquinaría'),
+(1, 'Accesorios', 'Accesorios de Maquinarï¿½a'),
 (2, 'Camperes', 'Campers'),
 (3, 'Cisterna', 'Cisterna'),
-(4, 'Maquinaría Ligera', 'Maquinaría Ligera'),
-(5, 'Maquinaría Pesada', 'Maquinaría Pesada'),
+(4, 'Maquinarï¿½a Ligera', 'Maquinarï¿½a Ligera'),
+(5, 'Maquinarï¿½a Pesada', 'Maquinarï¿½a Pesada'),
 (6, 'Retroexcavadoras', 'Retroexcavadoras'),
 (7, 'Tractocamiones', 'Tractocamiones'),
 (8, 'Otros', 'Otros'),
 (9, 'Utilitarios','Utilitarios');
 
 INSERT INTO `maquinariaTipo` (`id`, `nombre`, `comentario`) VALUES
-(1, 'Pesada', 'Maquinaría Pesada'),
-(2, 'Ligera', 'Maquinaría Ligera'),
+(1, 'Pesada', 'Maquinarï¿½a Pesada'),
+(2, 'Ligera', 'Maquinarï¿½a Ligera'),
 (3, 'Grua', 'Gruas y montacargas'),
-(4, 'No Aplica', 'No aplica para ningun tipo');
+(4, 'No Aplica', 'No aplica paraï¿½ningunï¿½tipo');
    
+INSERT INTO tiposDocs  (`id`, `nombre`, `comentario`) VALUES
+(1, 'Personal', 'Documentos de Personal'),
+(2, 'Maquinaria', 'Documentos de Personal');
 /***************************************FIN DATOS Tablas de Sin FK*/
 
 /***************************************Tablas Relacionadas*/
@@ -1280,7 +1290,7 @@ CREATE TABLE solicitudes(
     userId bigint(20) unsigned NOT NULL,
     responsable bigint(20) unsigned NOT NULL,
     maquinariaId bigint(20) unsigned NOT NULL,
-    serviciosId bigint(20) unsigned NOT NULL,
+    servicioId bigint(20) unsigned NOT NULL,
     titulo varchar(255) not NULL,
     fechaSolicitud date not NULL,
     fechaRequerimiento date not NULL,
@@ -1292,7 +1302,7 @@ CREATE TABLE solicitudes(
     PRIMARY KEY (id),
     CONSTRAINT FK_solicitudes_userId foreign key (userId) references users(id),
     CONSTRAINT FK_solicitudes_maquinariaId foreign key (maquinariaId) references maquinaria(id),
-    CONSTRAINT FK_solicitudes_serviciosId foreign key (serviciosId) references solicitudes(id),
+    CONSTRAINT FK_solicitudes_serviciosId foreign key (servicioId) references solicitudes(id),
     CONSTRAINT FK_solicitudes_prioridadId foreign key (prioridadId) references prioridades(id),
     CONSTRAINT FK_solicitudes_estadoId foreign key (estadoId) references estados(id)
 );

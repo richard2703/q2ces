@@ -13,6 +13,6 @@ class asignacionEquipo extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'personalId', 'equipoId', 'cantidad', 'marca', 'serial', 'comentario'
+        'personalId', 'equipoId', 'cantidad', 'marcaId', 'serial', 'comentario'
     ];
 }

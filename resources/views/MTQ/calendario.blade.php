@@ -1,865 +1,703 @@
 @extends('layouts.main', ['activePage' => 'mtq', 'titlePage' => __('Calendario MTQ')])
 @section('content')
 
-<head>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/locales/es.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.css">
-    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
-        crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <!-- Bootstrap CSS v5.2.1 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-</head>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/locales/es.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.css">
+        <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+            crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+        <!-- Bootstrap CSS v5.2.1 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <!-- CSS Personalizado MTQ -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/calendarMtq.css') }}">
+    </head>
     <div class="content">
-    <div class="row">
-        <div class="col-4 text-left mb-1" style="margin-left: 12px">
-            <a href="{{ url('dashMtq') }}" id="regresarId">
-                <button class="btn regresar" style="background-color: var(--select);
+        <div class="row">
+            <div class="col-4 text-left mb-1" style="margin-left: 12px">
+                <a href="{{ url('dashMtq') }}" id="regresarId">
+                    <button class="btn regresar"
+                        style="background-color: var(--select);
                 color: #fff;
                 display: inline-flex;">
-                    <span class="material-icons">
-                        reply
-                    </span>
-                    Regresar
-                </button>
-            </a>
+                        <span class="material-icons">
+                            reply
+                        </span>
+                        Regresar
+                    </button>
+                </a>
             </div>
             <div class="col-8 text-end mb-1" style="margin-left: -25px">
-                @can('maquinaria_mtq_create')
-                    <button data-bs-toggle="modal" data-bs-target="#modalEvento" type="button"
-                        class="btn botonGral">Añadir
-                        Evento</button>
+                @can('calendarioMtq_create')
+                    <button data-bs-toggle="modal" data-bs-target="#modalEvento" type="button" class="btn botonGral">Añadir
+                        Mantenimiento</button>
                 @endcan
             </div>
         </div>
         <div class="container-fluid">
-        
-        <div id='calendar'></div>
-        
-        <!-- Modal Body-->
-        <div class="modal fade" id="modalEvento" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header bacTituloPrincipal">
-                        <h5 class="modal-title fs-5" id="modalTitleId">Añadir Evento</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container-fluid">
-                        <form action="{{route('calendarioMtq.store')}}" method="post">
-                            @csrf
-                            @method('post')
-                            <!-- <div class="mb-3">
-                              <label for="id" class="form-label">ID:</label>
-                              <input type="text"
-                                class="form-control" name="id" id="id" aria-describedby="helpId" placeholder="ID">
-                            </div> -->
 
-                            <input type="hidden" name="maquinariaId" id="maquinariaId">
-                            <input type="hidden" id="colorBoxHidden" name="color" value="">
+            <div id='calendar'></div>
 
-                            <div class="mb-3" role="search">
-                                <label for="title" class="labelTitulo">Buscador:</label>
-                                <input autofocus type="text" class="inputCaja" id="searchS" name="search"
-                                    placeholder="Buscar Equipo..." title="Escriba la(s) palabra(s) a buscar.">
-                            </div>
-
-                            <div class="row">
-                                <div class="mb-3 col-6">
-                                    <label for="title" class="labelTitulo">Nombre:</label>
-                                    <input autofocus type="text" class="inputCaja" id="nombre" name="nombre"
-                                        placeholder="Nombre Equipo..." readonly>
-                                </div>
-
-                                <div class="mb-3 col-6">
-                                    <label for="title" class="labelTitulo">Número Economico:</label>
-                                    <input autofocus type="text" class="inputCaja" id="numeconomico" name="numeconomico"
-                                        placeholder="Del Equipo..." readonly>
-                                </div>
-
-                                <div class="mb-3 col-6">
-                                    <label for="title" class="labelTitulo">Placas:</label>
-                                    <input autofocus type="text" class="inputCaja" id="placas" name="placas"
-                                        placeholder="Placas Equipo..." readonly>
-                                </div>
-
-                                <div class="mb-3 col-6">
-                                    <label for="title" class="labelTitulo">Marca:</label>
-                                    <input autofocus type="text" class="inputCaja" id="marca" name="marca"
-                                        placeholder="Marca Equipo..." readonly>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="title" class="labelTitulo">Mantenimiento:</label>
-                                <select name="mantenimientoId" id="titleSelect" required class="form-select">
-                                    <option value="">Seleccione</option>
-                                    @foreach ($servicios as $item)
-                                        <option value="{{ $item->id }}" data-color="{{ $item->color }}">
-                                            {{ $item->nombre }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                            <label for="color" class="labelTitulo">Color:</label>
-                                <div id="colorBox" class="color-box w-100" style="margin-left:-0.5px"></div>
-                            </div>
-
-                            <div class="row">
-                            <div class="mb-3 col-6">
-                              <label for="fecha" class="labelTitulo">Fecha De Llegada:</label>
-                              <input type="date"
-                                class="inputCaja" name="fecha" id="fecha" aria-describedby="helpId" placeholder="Fecha">
-                            </div>
-
-                            <div class="mb-3 col-6">
-                              <label for="hora" class="labelTitulo">Hora De Llegada:</label>
-                              <input type="time"
-                                class="inputCaja" name="hora" id="hora" aria-describedby="helpId" placeholder="Fecha">
-                            </div>
-                            </div>
-                            
-                            <div class="mb-3">
-                              <label for="descripcion" class="labelTitulo">Descripción:</label>
-                              <textarea class="form-control-textarea border-green" name="descripcion" id="descripcion" rows="3" placeholder="Especifique..."></textarea>
-                            </div>
-
+            <!-- Modal Body-->
+            <div class="modal fade" id="modalEvento" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bacTituloPrincipal">
+                            <h5 class="modal-title fs-5" id="modalTitleId">Añadir Mantenimiento</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn botonGral">Guardar</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <form action="{{ route('calendarioMtq.store') }}" method="post">
+                                    @csrf
+                                    @method('post')
+                                    <!-- <div class="mb-3">
+                                                                      <label for="id" class="form-label">ID:</label>
+                                                                      <input type="text"
+                                                                        class="form-control" name="id" id="id" aria-describedby="helpId" placeholder="ID">
+                                                                    </div> -->
 
-        <!-- Modal Body-->
-        <div class="modal fade" id="modalEventoEdit" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header bacTituloPrincipal">
-                        <h5 class="modal-title fs-5" id="modalTitleId">&nbsp <span id="tituloModal">Ver Mantenimiento</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container-fluid">
-                        <form action="{{ route('calendarioMtq.update', 0) }}" method="post">
-                            @csrf
-                            @method('put')
-                            <!-- <div class="mb-3">
-                              <label for="id" class="form-label">ID:</label>
-                              <input type="text"
-                                class="form-control" name="id" id="id" aria-describedby="helpId" placeholder="ID">
-                            </div> -->
-                            <input type="hidden" name="id" value="" id="id">
-                            <input type="hidden" id="maquinariaIdEdit" name="maquinariaId">
-                            <input type="hidden" id="colorBoxHiddenEdit" name="color" value="">
+                                    <input type="hidden" name="maquinariaId" id="maquinariaId">
+                                    <input type="hidden" id="colorBoxHidden" name="color" value="">
 
-                            <div class="row">
-                                
-                                <div class="mb-3 col-11" role="search">
-                                    <label for="title" class="labelTitulo">Buscador:</label>
-                                    <input autofocus type="text" class="inputCaja" id="searchSEdit" name="search"
-                                        placeholder="Buscar Equipo..." title="Escriba la(s) palabra(s) a buscar." readonly>
-                                </div>
-                                <div class="col-1 mt-4">
-                                    <div id="editarCampos">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
-                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                    </svg>
+                                    <div class="mb-3" role="search">
+                                        <label for="title" class="labelTitulo">Buscador:</label>
+                                        <input autofocus type="text" class="inputCaja" id="searchS" name="search"
+                                            placeholder="Buscar Equipo..." title="Escriba la(s) palabra(s) a buscar.">
                                     </div>
-                                </div>
+
+                                    <div class="row">
+                                        <div class="mb-3 col-6">
+                                            <label for="title" class="labelTitulo">Nombre:</label>
+                                            <input autofocus type="text" class="inputCaja" id="nombre" name="nombre"
+                                                placeholder="Nombre Equipo..." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6">
+                                            <label for="title" class="labelTitulo">Número Economico:</label>
+                                            <input autofocus type="text" class="inputCaja" id="numeconomico"
+                                                name="numeconomico" placeholder="Del Equipo..." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6">
+                                            <label for="title" class="labelTitulo">Placas:</label>
+                                            <input autofocus type="text" class="inputCaja" id="placas" name="placas"
+                                                placeholder="Placas Equipo..." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6">
+                                            <label for="title" class="labelTitulo">Marca:</label>
+                                            <input autofocus type="text" class="inputCaja" id="marca"
+                                                name="marca" placeholder="Marca Equipo..." readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="title" class="labelTitulo">Mantenimiento:</label>
+                                        <select name="mantenimientoId" id="titleSelect" required class="form-select">
+                                            <option value="">Seleccione</option>
+                                            @foreach ($servicios as $item)
+                                                <option value="{{ $item->id }}" data-color="{{ $item->color }}">
+                                                    {{ $item->nombre }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="color" class="labelTitulo">Color:</label>
+                                        <div id="colorBox" class="color-box w-100" style="margin-left:-0.5px"></div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="mb-3 col-6">
+                                            <label for="fecha" class="labelTitulo">Fecha De Llegada:</label>
+                                            <input type="date" class="inputCaja" name="fecha" id="fecha"
+                                                aria-describedby="helpId" placeholder="Fecha">
+                                        </div>
+
+                                        <div class="mb-3 col-6">
+                                            <label for="hora" class="labelTitulo">Hora De Llegada:</label>
+                                            <input type="time" class="inputCaja" name="hora" id="hora"
+                                                aria-describedby="helpId" placeholder="Fecha">
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="descripcion" class="labelTitulo">Descripción:</label>
+                                        <textarea class="form-control-textarea border-green" name="descripcion" id="descripcion" rows="3"
+                                            placeholder="Especifique..."></textarea>
+                                    </div>
+
                             </div>
-
-                            <div class="row">
-                                <div class="mb-3 col-6">
-                                    <label for="title" class="labelTitulo">Nombre:</label>
-                                    <input autofocus type="text" class="inputCaja" id="nombreEdit" name="nombre"
-                                        placeholder="Nombre Equipo..." readonly>
-                                </div>
-
-                                <div class="mb-3 col-6">
-                                    <label for="title" class="labelTitulo">Número Economico:</label>
-                                    <input autofocus type="text" class="inputCaja" id="numeconomicoEdit" name="numeconomico"
-                                        placeholder="Del Equipo..." readonly>
-                                </div>
-
-                                <div class="mb-3 col-6">
-                                    <label for="title" class="labelTitulo">Placas:</label>
-                                    <input autofocus type="text" class="inputCaja" id="placasEdit" name="placas"
-                                        placeholder="Placas Equipo..." readonly>
-                                </div>
-
-                                <div class="mb-3 col-6">
-                                    <label for="title" class="labelTitulo">Marca:</label>
-                                    <input autofocus type="text" class="inputCaja" id="marcaEdit" name="marca"
-                                        placeholder="Marca Equipo..." readonly>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="title" class="labelTitulo">Mantenimiento:</label>
-                                <select name="mantenimientoId" id="titleSelectEdit" required class="form-select" readonly>
-                                    <option value="" readonly>Seleccione</option>
-                                    @foreach ($servicios as $item)
-                                        <option value="{{ $item->id }}" data-color="{{ $item->color }}" readonly> 
-                                            {{ $item->nombre }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                            <label for="color" class="labelTitulo">Color:</label>
-                                <div id="colorBoxEdit" class="color-box w-100" style="margin-left:-0.5px"></div>
-                            </div>
-
-                            <div class="row">
-                                <div class="mb-3 col-6">
-                                <label for="fecha" class="labelTitulo">Fecha De Llegada:</label>
-                                <input type="date"
-                                    class="inputCaja" name="fecha" id="fechaEdit" aria-describedby="helpId" placeholder="Fecha" readonly>
-                                </div>
-
-                                <div class="mb-3 col-6">
-                                <label for="hora" class="labelTitulo">Hora De Llegada:</label>
-                                <input type="time"
-                                    class="inputCaja" name="hora" id="horaEdit" aria-describedby="helpId" placeholder="Fecha" readonly>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="mb-3 col-6">
-                                <label for="fecha" class="labelTitulo">Fecha De Salida:</label>
-                                <input type="date"
-                                    class="inputCaja" name="fechaSalida" id="fechaSalida" aria-describedby="helpId" placeholder="Fecha" readonly>
-                                </div>
-
-                                <div class="mb-3 col-6">
-                                <label for="hora" class="labelTitulo">Hora De Salida:</label>
-                                <input type="time"
-                                    class="inputCaja" name="horaSalida" id="horaSalida" aria-describedby="helpId" placeholder="Fecha" readonly>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-3">
-                              <label for="descripcion" class="labelTitulo">Descripción:</label>
-                              <textarea class="form-control-textarea border-green" name="descripcion" id="descripcionEdit" rows="3" placeholder="Especifique..." readonly></textarea>
-                            </div>
-
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <div id="contenedorBotonGuardar" style="display:none">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <button type="submit" class="btn botonGral">Guardar</button>
                         </div>
+                        </form>
                     </div>
-                    </form>
                 </div>
             </div>
-        </div>
-      
-            <!--<div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header bacTituloPrincipal">
-                            <h4 class="card-title">Calendario MTQ</h4>
 
+            <!-- Modal Body-->
+            <div class="modal fade" id="modalEventoEdit" tabindex="-1" aria-labelledby="modalTitleId"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bacTituloPrincipal">
+                            <h5 class="modal-title fs-5" id="modalTitleId">&nbsp <span id="tituloModal">Ver Mantenimiento
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
-                        <div class="card-body">
-                            @if (session('success'))
-                                <div class="alert alert-success" role="success">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
-                            @if (session('faild'))
-                                <div class="alert alert-danger" role="faild">
-                                    {{ session('faild') }}
-                                </div>
-                            @endif
-                            <div class="row">
-                                <div class="col-12 text-right">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <form action="{{ route('calendarioMtq.update', 0) }}" method="post">
+                                    @csrf
+                                    @method('put')
+                                    <!-- <div class="mb-3">
+                                                                      <label for="id" class="form-label">ID:</label>
+                                                                      <input type="text"
+                                                                        class="form-control" name="id" id="id" aria-describedby="helpId" placeholder="ID">
+                                                                    </div> -->
+                                    <input type="hidden" name="id" value="" id="id">
+                                    <input type="hidden" id="maquinariaIdEdit" name="maquinariaId">
+                                    <input type="hidden" id="colorBoxHiddenEdit" name="color" value="">
 
-                                    <a href="{{ url('dashMtq') }}">
-                                        <button class="btn regresar">
-                                            <span class="material-icons">
-                                                reply
-                                            </span>
-                                            Regresar
-                                        </button>
-                                    </a>
+                                    <div class="row">
 
-                                </div>
+                                        <div class="mb-3 col-11" role="search">
+                                            <label for="title" class="labelTitulo">Buscador:</label>
+                                            <input autofocus type="text" class="inputCaja" id="searchSEdit"
+                                                name="search" placeholder="Buscar Equipo..."
+                                                title="Escriba la(s) palabra(s) a buscar." readonly>
+                                        </div>
+                                        <div class="col-1 mt-4">
+                                            @can('calendarioMtq_edit')
+                                                <div id="editarCampos">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                                                        fill="currentColor" class="bi bi-pencil accionesIconos"
+                                                        viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                    </svg>
+                                                </div>
+                                            @endcan
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="mb-3 col-6">
+                                            <label for="title" class="labelTitulo">Nombre:</label>
+                                            <input autofocus type="text" class="inputCaja" id="nombreEdit"
+                                                name="nombre" placeholder="Nombre Equipo..." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6">
+                                            <label for="title" class="labelTitulo">Número Economico:</label>
+                                            <input autofocus type="text" class="inputCaja" id="numeconomicoEdit"
+                                                name="numeconomico" placeholder="Del Equipo..." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6">
+                                            <label for="title" class="labelTitulo">Placas:</label>
+                                            <input autofocus type="text" class="inputCaja" id="placasEdit"
+                                                name="placas" placeholder="Placas Equipo..." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6">
+                                            <label for="title" class="labelTitulo">Marca:</label>
+                                            <input autofocus type="text" class="inputCaja" id="marcaEdit"
+                                                name="marca" placeholder="Marca Equipo..." readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="title" class="labelTitulo">Mantenimiento:</label>
+                                        <select name="mantenimientoId" id="titleSelectEdit" required class="form-select"
+                                            readonly>
+                                            <option value="" readonly>Seleccione</option>
+                                            @foreach ($servicios as $item)
+                                                <option value="{{ $item->id }}" data-color="{{ $item->color }}"
+                                                    readonly>
+                                                    {{ $item->nombre }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="color" class="labelTitulo">Color:</label>
+                                        <div id="colorBoxEdit" class="color-box w-100" style="margin-left:-0.5px"></div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="mb-3 col-6">
+                                            <label for="fecha" class="labelTitulo">Fecha De Llegada:</label>
+                                            <input type="date" class="inputCaja" name="fecha" id="fechaEdit"
+                                                aria-describedby="helpId" placeholder="Fecha" readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6">
+                                            <label for="hora" class="labelTitulo">Hora De Llegada:</label>
+                                            <input type="time" class="inputCaja" name="hora" id="horaEdit"
+                                                aria-describedby="helpId" placeholder="Fecha" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="mb-3 col-6">
+                                            <label for="fecha" class="labelTitulo">Fecha De Salida:</label>
+                                            <input type="date" class="inputCaja" name="fechaSalida" id="fechaSalida"
+                                                aria-describedby="helpId" placeholder="Fecha" readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6">
+                                            <label for="hora" class="labelTitulo">Hora De Salida:</label>
+                                            <input type="time" class="inputCaja" name="horaSalida" id="horaSalida"
+                                                aria-describedby="helpId" placeholder="Fecha" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="descripcion" class="labelTitulo">Descripción:</label>
+                                        <textarea class="form-control-textarea border-green" name="descripcion" id="descripcionEdit" rows="3"
+                                            placeholder="Especifique..." readonly></textarea>
+                                    </div>
+
                             </div>
-
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <div id="contenedorBotonGuardar" style="display:none">
+                                <button type="submit" class="btn botonGral">Guardar</button>
+                            </div>
+                        </div>
+                        </form>
                     </div>
                 </div>
-            </div> -->
+            </div>
+
+            <!--<div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="card">
+                                                                <div class="card-header bacTituloPrincipal">
+                                                                    <h4 class="card-title">Calendario MTQ</h4>
+
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    @if (session('success'))
+    <div class="alert alert-success" role="success">
+                                                                            {{ session('success') }}
+                                                                        </div>
+    @endif
+                                                                    @if (session('faild'))
+    <div class="alert alert-danger" role="faild">
+                                                                            {{ session('faild') }}
+                                                                        </div>
+    @endif
+                                                                    <div class="row">
+                                                                        <div class="col-12 text-right">
+
+                                                                            <a href="{{ url('dashMtq') }}">
+                                                                                <button class="btn regresar">
+                                                                                    <span class="material-icons">
+                                                                                        reply
+                                                                                    </span>
+                                                                                    Regresar
+                                                                                </button>
+                                                                            </a>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div> -->
         </div>
     </div>
-    <style>
-        #regresarId button{
-            align-items: center;
-        }
-        .color-box {
-            width: 30px; /* Ajusta el ancho según tus preferencias */
-            height: 30px; /* Ajusta la altura según tus preferencias */
-            display: inline-block;
-            vertical-align: middle;
-            margin-left: 10px; /* Ajusta el margen según tus preferencias */
-            border: 1px solid #ccc;
-        }
-        .fc-toolbar { text-transform: capitalize; }
-        .fc-scroller { text-transform: capitalize; }
-        .fc-daygrid-day-top {
-            justify-content: center;
-        }
-        #calendar {
-            border: 2px solid #f7cd22; /* Cambia el color y el grosor del borde según tus preferencias */
-            border-radius: 10px; /* Opcional: Añadir esquinas redondeadas */
-            padding: 10px; /* Opcional: Agregar espacio interno alrededor del calendario */
-        }
-        .fc-day, .fc-view-harness {
-            border: 1px solid #5c7c26 !important; /* Cambia el color y el grosor del borde según tus preferencias */
-            
-        }
-        .fc {
-            border: 2px solid #e74c3c; /* Cambia el color y el grosor del borde según tus preferencias */
-            border-radius: 10px; /* Opcional: Añadir esquinas redondeadas */
-            padding: 20px; /* Opcional: Agregar espacio interno alrededor del calendario */
-        }
-        /* .fc-daygrid-dot-event .fc-event-title {
-            font-weight: normal;
-        } */
 
-        .fc-daygrid-day-top a {
-            color: black !important;
-            text-decoration: none; 
-            cursor: pointer;
-            font-size: 18px !important;
-
-        }
-        /* En vista por month texto de los eventos */
-        .fc-direction-ltr .fc-daygrid-event.fc-event-end, .fc-direction-rtl .fc-daygrid-event.fc-event-start{
-            font-size: 12px;
-        }
-        .fc-timegrid-event .fc-event-time{
-            font-size: 12px;
-            white-space: nowrap !important;
-        }
-        .fc-v-event .fc-event-title{
-            font-size: 12px;
-        }
-        .fc-direction-ltr .fc-daygrid-event .fc-event-time{
-            min-width: 64.5px !important;
-        }
-        @media screen and (max-width: 620px) {
-        .fc-timegrid-event .fc-event-time{
-            font-size: 4px;
-            white-space: nowrap !important;
-        }
-        .fc-v-event .fc-event-title{
-            font-size: 6px;
-        }
-        .fc .fc-col-header-cell-cushion {
-            font-size: 10px !important;
-        }
-        .fc .fc-toolbar-title {
-            font-size: 1em !important;
-        }
-        .fc .fc-daygrid-more-link {
-            font-size: 12px !important;
-        }
-        [type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
-            font-size: 12px !important; 
-        }
-        .fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
-            font-size: 12px !important;
-        }
-        }
-        @media only screen and (min-width: 620px) and (max-width: 768px){
-            .fc-timegrid-event .fc-event-time{
-            font-size: 6px;
-            white-space: nowrap !important;
-        }
-        .fc-v-event .fc-event-title{
-            font-size: 8px;
-        }
-        .fc .fc-col-header-cell-cushion {
-            font-size: 10px !important;
-        }
-        .fc .fc-toolbar-title {
-            font-size: 1em !important;
-        }
-        .fc .fc-daygrid-more-link {
-            font-size: 12px !important;
-        }
-        [type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
-            font-size: 12px !important; 
-        }
-        .fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
-            font-size: 12px !important;
-        }
-        }
-        @media only screen and (min-width: 768px) and (max-width: 991px){
-        .fc-timegrid-event .fc-event-time{
-            font-size: 8px;
-            white-space: nowrap !important;
-        }
-        .fc-v-event .fc-event-title{
-            font-size: 10px;
-        }
-        .fc .fc-col-header-cell-cushion {
-            font-size: 14px !important;
-        }
-        }
-        @media only screen and (min-width: 992px) and (max-width: 1440px){
-        .fc-timegrid-event .fc-event-time{
-            font-size: 9px;
-            white-space: nowrap !important;
-        }
-        .fc-v-event .fc-event-title{
-            font-size: 9px;
-        } 
-        .fc .fc-col-header-cell-cushion {
-            font-size: 15px !important;
-        }
-        }
-
-        .fc .fc-col-header-cell-cushion {
-            color: white !important;
-            text-decoration: none;
-            font-size: 18px;
-            overflow-wrap: normal !important;
-        }
-        .fc-theme-standard th{
-            /*border: 2px solid #5c7c26 !important;*/
-            background-color: #5c7c26 !important;
-            /* padding-top: -1px; */
-            padding-left: -5px !important;
-            border-right: 1px solid #5c7c26 !important;
-        }
-        .fc-button .fc-button-active{
-            background: #5c7c26 !important;
-        }
-        .fc .fc-button-primary:not(:disabled):active, .fc .fc-button-primary:not(:disabled).fc-button-active {
-            background-color: #8eb322; /* Cambia el color de fondo del botón activo */
-            border-color: #5c7c26; /* Cambia el color del borde del botón activo */
-            color: #ffffff; /* Cambia el color del texto del botón activo */
-        }
-
-        .fc .fc-scrollgrid-liquid {
-            border-top: none;
-            border-left: none;
-        }
-        
-        /* Estilos para botones inactivos */
-        .fc-button:not(.fc-button-active) {
-            background-color: #5c7c26; 
-            border-color: #5c7c26; 
-            color: #ffffff;
-        }
-        .fc .fc-button:hover {
-            background-color: #8eb322; 
-            border-color: #5c7c26; 
-            color: #ffffff;
-        }
-        .fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
-            color: #fff !important;
-            color: var(--fc-button-text-color, #fff) !important;
-            background-color: #2C3E50 !important;
-            background-color: var(--fc-button-bg-color, #727176) !important;
-            border-color: #2C3E50 !important;
-            border-color: var(--fc-button-border-color, #2C3E50) !important;
-        }
-        .fc-event {
-            margin-bottom: 4px; /* Ajusta este valor según tus preferencias */
-            font-weight: bold;
-        }
-        /* .fc .fc-daygrid-day-frame {
-            position: relative;
-            min-height: 100% !important;
-        } */
-
-        /* .fc-daygrid-day-events {
-            padding-bottom: -20px;
-        } */
-        .fc .fc-daygrid-more-link {
-            font-size: 16px;
-            font-weight: bold;
-            justify-content: center ;
-            display: flex;   
-        }
-        .fc .fc-daygrid-day.fc-day-today {
-            background-color: rgba(255, 220, 40, 0.15);
-            background-color: var(--fc-today-bg-color, rgba(255, 220, 40, 0.15));
-            border: 2px solid #f7cd22 !important;
-        }
-        .single-day-event {
-        border-top: 2px solid blue; /* Cambia el estilo de la línea según tus preferencias */
-        border-bottom: 2px solid blue; /* Agrega un borde inferior para mejorar la apariencia */
-        color: white;
-        pointer-events:none;
-        font-weight: bold;
-        }
-        #regresarId:hover button{
-            color: black !important;
-        }
-        select[readonly], input[readonly], textarea[readonly]{
-            color: grey;
-            cursor:no-drop;
-        }
-
-        select[readonly] option{
-            display:none;
-        }
-    </style>
-    
-<script>
-    $('#searchS').autocomplete({
-        source: function(request, response) {
-        $.ajax({
-            url: "{{ route('search.equiposMTQ') }}",
-            dataType: 'json',
-            data: {
-                term: request.term,
-                _token: $('meta[name="csrf-token"]').attr('content')
+    <script>
+        $('#searchS').autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('search.equiposMTQ') }}",
+                    dataType: 'json',
+                    data: {
+                        term: request.term,
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        var limitedResults = data.slice(0, 16);
+                        response(limitedResults);
+                    }
+                });
             },
-            success: function(data) {
-                var limitedResults = data.slice(0, 16);
-                response(limitedResults);
+            minChars: 1,
+            width: 402,
+            matchContains: "word",
+            autoFill: true,
+            minLength: 1,
+            select: function(event, ui) {
+
+                // Rellenar los campos con los datos de la persona seleccionada
+                $('#maquinariaId').val(ui.item.id);
+                // $('#descripcion').val(ui.item.value);
+                $('#nombre').val(ui.item.nombre);
+                $('#marca').val(ui.item.marca);
+                // $('#modelo').val(ui.item.modelo);
+                $('#numeconomico').val(ui.item.identificador);
+                $('#placas').val(ui.item.placas);
             }
         });
-    },
-    minChars: 1,
-    width: 402,
-    matchContains: "word",
-    autoFill: true,
-    minLength: 1,
-    select: function(event, ui) {
-
-        // Rellenar los campos con los datos de la persona seleccionada
-        $('#maquinariaId').val(ui.item.id);
-        // $('#descripcion').val(ui.item.value);
-        $('#nombre').val(ui.item.nombre);
-        $('#marca').val(ui.item.marca);
-        // $('#modelo').val(ui.item.modelo);
-        $('#numeconomico').val(ui.item.identificador);
-        $('#placas').val(ui.item.placas);
-    }
-    });
-    $('#searchSEdit').autocomplete({
-        source: function(request, response) {
-        $.ajax({
-            url: "{{ route('search.equiposMTQ') }}",
-            dataType: 'json',
-            data: {
-                term: request.term,
-                _token: $('meta[name="csrf-token"]').attr('content')
+        $('#searchSEdit').autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('search.equiposMTQ') }}",
+                    dataType: 'json',
+                    data: {
+                        term: request.term,
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        var limitedResults = data.slice(0, 16);
+                        response(limitedResults);
+                    }
+                });
             },
-            success: function(data) {
-                var limitedResults = data.slice(0, 16);
-                response(limitedResults);
+            minChars: 1,
+            width: 402,
+            matchContains: "word",
+            autoFill: true,
+            minLength: 1,
+            select: function(event, ui) {
+
+                // Rellenar los campos con los datos de la persona seleccionada
+                $('#maquinariaIdEdit').val(ui.item.id);
+                // $('#descripcion').val(ui.item.value);
+                $('#nombreEdit').val(ui.item.nombre);
+                $('#marcaEdit').val(ui.item.marca);
+                // $('#modelo').val(ui.item.modelo);
+                $('#numeconomicoEdit').val(ui.item.identificador);
+                $('#placasEdit').val(ui.item.placas);
             }
         });
-    },
-    minChars: 1,
-    width: 402,
-    matchContains: "word",
-    autoFill: true,
-    minLength: 1,
-    select: function(event, ui) {
+    </script>
 
-        // Rellenar los campos con los datos de la persona seleccionada
-        $('#maquinariaIdEdit').val(ui.item.id);
-        // $('#descripcion').val(ui.item.value);
-        $('#nombreEdit').val(ui.item.nombre);
-        $('#marcaEdit').val(ui.item.marca);
-        // $('#modelo').val(ui.item.modelo);
-        $('#numeconomicoEdit').val(ui.item.identificador);
-        $('#placasEdit').val(ui.item.placas);
-    }
-    });
-    
-</script>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+    </script>
 
-<!-- Bootstrap JavaScript Libraries -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
-</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let modalEvento = new bootstrap.Modal(document.getElementById('modalEvento'), {
+                keyboard: false
+            });
+            let modalEventoEdit = new bootstrap.Modal(document.getElementById('modalEventoEdit'), {
+                keyboard: false
+            });
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
-integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-    let modalEvento = new bootstrap.Modal(document.getElementById('modalEvento'), { keyboard: false });
-    let modalEventoEdit = new bootstrap.Modal(document.getElementById('modalEventoEdit'), { keyboard: false });
-    
-    var calendarEl = document.getElementById('calendar');
-    var eventosJson = {!! $eventosJson !!};
-    // Agregar la clase single-day-event a los eventos con la misma fecha (ignorando la hora)
-    for (var i = 0; i < eventosJson.length; i++) {
-    var evento = eventosJson[i];
-    // evento.textColor = evento.color;
-    var start = new Date(evento.start);
-    var end = new Date(evento.end);
-    evento.backgroundColor = evento.color;
-    evento.title = evento.nombreServicio +' '+ evento.title;
+            var calendarEl = document.getElementById('calendar');
+            var eventosJson = {!! $eventosJson !!};
+            // Agregar la clase single-day-event a los eventos con la misma fecha (ignorando la hora)
+            for (var i = 0; i < eventosJson.length; i++) {
+                var evento = eventosJson[i];
+                // evento.textColor = evento.color;
+                var start = new Date(evento.start);
+                var end = new Date(evento.end);
+                evento.backgroundColor = evento.color;
+                evento.title = evento.nombreServicio + ' ' + evento.title;
 
-    if (
-        start.getFullYear() === end.getFullYear() &&
-        start.getMonth() === end.getMonth() &&
-        start.getDate() === end.getDate()
-    ) {
-        // Agrega la clase "single-day-event" al evento
-        // evento.className = 'single-day-event';
-        // evento.allDay = true;
-        // Agrega el atributo data-color al objeto evento
-        evento.extendedProps = {
-            backgroundColor: evento.color
-        };
-        // Agrega la información de estilo al evento
-        // evento.styleInfo = {
-        //     backgroundColor: evento.color
-        // };
-        
-    }
-    }
+                if (
+                    start.getFullYear() === end.getFullYear() &&
+                    start.getMonth() === end.getMonth() &&
+                    start.getDate() === end.getDate()
+                ) {
+                    // Agrega la clase "single-day-event" al evento
+                    // evento.className = 'single-day-event';
+                    // evento.allDay = true;
+                    // Agrega el atributo data-color al objeto evento
+                    evento.extendedProps = {
+                        backgroundColor: evento.color
+                    };
+                    // Agrega la información de estilo al evento
+                    // evento.styleInfo = {
+                    //     backgroundColor: evento.color
+                    // };
 
-    console.log('$eventosJson',eventosJson);
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        // height: 850,
-    dayMaxEventRows: true, // for all non-TimeGrid views
-    views: {
-            timeGrid: {
-                dayMaxEventRows: 5,
-            },
-            week: {
-                eventMaxStack: 1,
-            },
-            day: {
-                eventMaxStack: 5,
+                }
             }
-        },
-        eventMaxStack: true,
-        initialView: 'dayGridMonth',
-        locale: 'es',
-        headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
-        },
-        dateClick:function(informacion){
-            //alert("DATE: " + informacion.dateStr);
-            document.getElementById('fecha').value = informacion.dateStr;
-            //document.getElementById('color').value= '#f7c90d';
-            modalEvento.show();
-            
-        },
-        eventClick:function(informacion){
-            modalEventoEdit.show();
-            
-            recuperarDatosEvento(informacion.event);
-        },
-        events: eventosJson,
-        
-        dayHeaderFormat: { weekday: 'long', capitalized: true },
-        datesSet: function(info) {
-            console.log('Vista cambió a:', info.view.type);
-            // if (info.view.type === 'timeGridDay') {
-            //     calendar.setOption('views', {
-            //         timeGrid: {
-            //             eventMaxStack: 10
-            //         }
-            //     });
-            // } else {
-            //     calendar.setOption('views', {
-            //         timeGrid: {
-            //             eventMaxStack: 2
-            //         }
-            //     });
-            // }
-        },
-        // right: 'dayGridMonth,timeGridWeek,listWeek'
-        eventTimeFormat: { // like '14:30:00'
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true
-        },
-        slotLabelFormat: {
-        hour: 'numeric',
-        minute: '2-digit',
-        meridiem: 'short'
+
+            console.log('$eventosJson', eventosJson);
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                // height: 850,
+                dayMaxEventRows: true, // for all non-TimeGrid views
+                views: {
+                    timeGrid: {
+                        dayMaxEventRows: 5,
+                    },
+                    week: {
+                        eventMaxStack: 1,
+                        titleFormat: {
+                            month: 'long',
+                            year: 'numeric',
+                            day: 'numeric'
+                        }
+                    },
+                    day: {
+                        eventMaxStack: 5,
+                    }
+                },
+
+                eventMaxStack: true,
+                initialView: 'dayGridMonth',
+                locale: 'es',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                dateClick: function(informacion) {
+                    var permissionName = 'calendarioMtq_create';
+                    fetch(`/check-permission/${permissionName}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.hasPermission) {
+                                document.getElementById('fecha').value = informacion.dateStr;
+                                modalEvento.show();
+                            } else {
+                                alertaNoPermission();
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error al verificar permisos:", error);
+                        });
+
+                },
+                eventClick: function(informacion) {
+                    var permissionName = 'calendarioMtq_show';
+                    fetch(`/check-permission/${permissionName}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.hasPermission) {
+                                modalEventoEdit.show();
+                                recuperarDatosEvento(informacion.event);
+                            } else {
+                                alertaNoPermission();
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error al verificar permisos:", error);
+                        });
+                },
+                events: eventosJson,
+
+                dayHeaderFormat: {
+                    weekday: 'long',
+                    capitalized: true
+                },
+                datesSet: function(info) {
+                    console.log('Vista cambió a:', info.view.type);
+                    // if (info.view.type === 'timeGridDay') {
+                    //     calendar.setOption('views', {
+                    //         timeGrid: {
+                    //             eventMaxStack: 10
+                    //         }
+                    //     });
+                    // } else {
+                    //     calendar.setOption('views', {
+                    //         timeGrid: {
+                    //             eventMaxStack: 2
+                    //         }
+                    //     });
+                    // }
+                },
+                // right: 'dayGridMonth,timeGridWeek,listWeek'
+                eventTimeFormat: { // like '14:30:00'
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                },
+                slotLabelFormat: {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    meridiem: 'short'
+                }
+
+            });
+            if (window.innerWidth > 1200) {
+                calendar.setOption('contentHeight', 770);
+            }
+            calendar.render();
+        });
+    </script>
+
+
+
+    <script>
+        function recuperarDatosEvento(evento) {
+            //console.log('info Modal', evento);
+
+            let fecha = evento._instance.range.start;
+            let fechaObj = new Date(fecha);
+            let fechaFormateada = fechaObj.toISOString().split("T")[0];
+            let horaFormateada = fechaObj.toLocaleTimeString("es-MX", {
+                hour12: false
+            });
+            let stringFecha = fechaFormateada + ' ' + horaFormateada;
+            // Convertir al objeto DateTime con formato personalizado
+            var startObj = luxon.DateTime.fromFormat(stringFecha, "yyyy-MM-dd HH:mm:ss");
+
+            // Restar 6 horas
+            var start6Hours = startObj.plus({
+                hours: 6
+            });
+
+            // Obtener la hora local de México
+            var startLocal = start6Hours.setZone("America/Mexico_City").toLocal();
+            var formattedTime = startLocal.toFormat("HH:mm:ss");
+            // var horaModal = startLocal.c.
+            console.log('start', startLocal);
+            console.log('fechaObj', fechaObj);
+            //fechaEdit = evento._def.extendedProps.fecha;
+            let fechaEdit = evento._instance.range.end;
+            let fechaEditObj = new Date(fechaEdit);
+            let fechaEditFormateada = evento._def.extendedProps.estatus != 0 ? fechaEditObj.toISOString().split("T")[0] :
+                null;
+            let horaEditFormateada = fechaEditObj.toLocaleTimeString("es-MX", {
+                hour12: false
+            });
+            let stringFechaEdit = fechaEditFormateada + ' ' + horaEditFormateada;
+            // Convertir al objeto DateTime con formato personalizado
+            var startObjEdit = luxon.DateTime.fromFormat(stringFechaEdit, "yyyy-MM-dd HH:mm:ss");
+
+            // Restar 6 horas
+            var start6HoursEdit = startObjEdit.plus({
+                hours: 6
+            });
+
+            // Obtener la hora local de México
+            var startLocalEdit = start6HoursEdit.setZone("America/Mexico_City").toLocal();
+            var formattedTimeEdit = startLocalEdit.toFormat("HH:mm:ss");
+            console.log('fechaSalida', evento);
+
+            document.getElementById('fechaEdit').value = fechaFormateada;
+            document.getElementById('horaEdit').value = formattedTime;
+            // if(fechaSalida)
+            document.getElementById('fechaSalida').value = fechaEditFormateada;
+            document.getElementById('horaSalida').value = formattedTimeEdit;
+            //fechaEdit = evento._def.extendedProps.fecha;
+
+            document.getElementById('titleSelectEdit').value = evento._def.extendedProps.mantenimientoId;
+            document.getElementById("colorBoxEdit").style.backgroundColor = evento._def.ui.backgroundColor;
+            document.getElementById('descripcionEdit').value = evento._def.extendedProps.descripcion;
+
+            let marca = evento._def.extendedProps.marca;
+            let nombre = evento._def.extendedProps.nombre;
+            let numeconomico = evento._def.extendedProps.numeconomico;
+            let placas = evento._def.extendedProps.placas;
+
+            document.getElementById('marcaEdit').value = marca;
+            document.getElementById('nombreEdit').value = nombre;
+            document.getElementById('numeconomicoEdit').value = numeconomico;
+            document.getElementById('placasEdit').value = placas;
+            //document.getElementById('searchSEdit').value =  'Equipo ' . nombre . ', Marca ' . marca . ', N. ECO. ' . numeconomico . ', Placas ' .  placas;
+            document.getElementById('id').value = evento._def.publicId;
+            // document.getElementById('editarCampos').id =  "editarCampos" + evento._def.publicId;
         }
-        
-    });
-    if (window.innerWidth > 1200) {
-        calendar.setOption('contentHeight', 770);
-    }
-    calendar.render();
-    });
-</script>
+    </script>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let titleSelect = document.getElementById("titleSelect");
+            let colorBox = document.getElementById("colorBox");
+            let color = document.getElementById("colorBoxHidden");
+            let colorEdit = document.getElementById("colorBoxHiddenEdit");
 
+            titleSelect.addEventListener("change", function() {
+                let selectedColor = this.options[this.selectedIndex].getAttribute("data-color");
+                colorBox.style.backgroundColor = selectedColor;
 
-<script>
-    
-    function recuperarDatosEvento(evento){
-        //console.log('info Modal', evento);
-        
-        let fecha = evento._instance.range.start;
-        let fechaObj = new Date(fecha);
-        let fechaFormateada = fechaObj.toISOString().split("T")[0];
-        let horaFormateada = fechaObj.toLocaleTimeString("es-MX", { hour12: false });
-        let stringFecha = fechaFormateada +' '+horaFormateada;
-        // Convertir al objeto DateTime con formato personalizado
-        var startObj = luxon.DateTime.fromFormat(stringFecha, "yyyy-MM-dd HH:mm:ss");
+                console.log('selectedColor', selectedColor)
+                color.value = selectedColor;
+            });
 
-        // Restar 6 horas
-        var start6Hours = startObj.plus({ hours: 6 });
+            let titleSelectEdit = document.getElementById("titleSelectEdit");
+            let colorBoxEdit = document.getElementById("colorBoxEdit");
 
-        // Obtener la hora local de México
-        var startLocal = start6Hours.setZone("America/Mexico_City").toLocal();
-        var formattedTime = startLocal.toFormat("HH:mm:ss");
-        // var horaModal = startLocal.c.
-        console.log('start',startLocal);
-        console.log('fechaObj', fechaObj);
-        //fechaEdit = evento._def.extendedProps.fecha;
-        let fechaEdit = evento._instance.range.end;
-        let fechaEditObj = new Date(fechaEdit);
-        let fechaEditFormateada = evento._def.extendedProps.estatus != 0 ? fechaEditObj.toISOString().split("T")[0] : null;
-        let horaEditFormateada = fechaEditObj.toLocaleTimeString("es-MX", { hour12: false });
-        let stringFechaEdit = fechaEditFormateada +' '+horaEditFormateada;
-        // Convertir al objeto DateTime con formato personalizado
-        var startObjEdit = luxon.DateTime.fromFormat(stringFechaEdit, "yyyy-MM-dd HH:mm:ss");
+            titleSelectEdit.addEventListener("change", function() {
+                let selectedColor = this.options[this.selectedIndex].getAttribute("data-color");
+                colorBoxEdit.style.backgroundColor = selectedColor;
+                colorEdit.value = selectedColor;
+            });
+        });
+    </script>
 
-        // Restar 6 horas
-        var start6HoursEdit = startObjEdit.plus({ hours: 6 });
+    <script>
+        let vista = false;
+        document.addEventListener('DOMContentLoaded', function() {
+            let idModal = document.getElementById('id');
+            let editarCamposLink = document.getElementById('editarCampos' + idModal.value);
+            let campos = document.querySelectorAll('.inputCaja, .form-select, .form-control-textarea');
+            const tituloModal = document.getElementById('tituloModal');
+            const contenedorBotonGuardar = document.getElementById('contenedorBotonGuardar');
+            console.log('editarCamposLink', editarCamposLink);
+            editarCamposLink.addEventListener('click', function(event) {
 
-        // Obtener la hora local de México
-        var startLocalEdit = start6HoursEdit.setZone("America/Mexico_City").toLocal();
-        var formattedTimeEdit = startLocalEdit.toFormat("HH:mm:ss");
-        console.log('fechaSalida',evento);
-        
-        document.getElementById('fechaEdit').value = fechaFormateada;
-        document.getElementById('horaEdit').value = formattedTime;
-        // if(fechaSalida)
-        document.getElementById('fechaSalida').value = fechaEditFormateada;
-        document.getElementById('horaSalida').value = formattedTimeEdit;
-        //fechaEdit = evento._def.extendedProps.fecha;
-
-        document.getElementById('titleSelectEdit').value = evento._def.extendedProps.mantenimientoId;
-        document.getElementById("colorBoxEdit").style.backgroundColor = evento._def.ui.backgroundColor;
-        document.getElementById('descripcionEdit').value = evento._def.extendedProps.descripcion;
-
-        let marca = evento._def.extendedProps.marca;
-        let nombre = evento._def.extendedProps.nombre;
-        let numeconomico = evento._def.extendedProps.numeconomico;
-        let placas = evento._def.extendedProps.placas;
-
-        document.getElementById('marcaEdit').value = marca;
-        document.getElementById('nombreEdit').value = nombre;
-        document.getElementById('numeconomicoEdit').value = numeconomico;
-        document.getElementById('placasEdit').value = placas;
-        //document.getElementById('searchSEdit').value =  'Equipo ' . nombre . ', Marca ' . marca . ', N. ECO. ' . numeconomico . ', Placas ' .  placas;
-        document.getElementById('id').value = evento._def.publicId;
-        // document.getElementById('editarCampos').id =  "editarCampos" + evento._def.publicId;
-    }
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    let titleSelect = document.getElementById("titleSelect");
-    let colorBox = document.getElementById("colorBox");
-    let color = document.getElementById("colorBoxHidden");
-    let colorEdit = document.getElementById("colorBoxHiddenEdit");
-
-    titleSelect.addEventListener("change", function() {
-        let selectedColor = this.options[this.selectedIndex].getAttribute("data-color");
-        colorBox.style.backgroundColor = selectedColor;
-        
-        console.log('selectedColor',selectedColor)
-        color.value = selectedColor;
-    });
-
-    let titleSelectEdit = document.getElementById("titleSelectEdit");
-    let colorBoxEdit = document.getElementById("colorBoxEdit");
-
-    titleSelectEdit.addEventListener("change", function() {
-        let selectedColor = this.options[this.selectedIndex].getAttribute("data-color");
-        colorBoxEdit.style.backgroundColor = selectedColor;
-        colorEdit.value = selectedColor;
-    });
-});
-</script>
-
-<script>
-    let vista = false;
-    document.addEventListener('DOMContentLoaded', function() {
-    let idModal = document.getElementById('id');
-    let editarCamposLink = document.getElementById('editarCampos' + idModal.value);
-    let campos = document.querySelectorAll('.inputCaja, .form-select, .form-control-textarea');
-    const tituloModal = document.getElementById('tituloModal');
-    const contenedorBotonGuardar = document.getElementById('contenedorBotonGuardar');
-    console.log('editarCamposLink',editarCamposLink);
-    editarCamposLink.addEventListener('click', function(event) {
-        
-        event.stopPropagation();
-        if(!vista){
-            editarCamposLink.innerHTML = `
+                event.stopPropagation();
+                if (!vista) {
+                    editarCamposLink.innerHTML = `
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
                     <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
                     <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>  
                 </svg>
             `;
-            tituloModal.textContent = 'Editar Mantenimiento';
-            contenedorBotonGuardar.style.display = 'block';
-            vista=true;
-            campos.forEach(function(campo) {
-                if (campo.id !== 'nombreEdit' && campo.id !== 'numeconomicoEdit' && campo.id !== 'placasEdit' && campo.id !== 'marcaEdit') {
-                campo.removeAttribute('readonly');
-                }
-                if(campo.id !== 'nombreEdit' || campo.id !== 'numeconomicoEdit' || campo.id !== 'placasEdit' || campo.id !== 'marcaEdit') {
-                    campo.style.color = 'initial';
-                }
-            });
+                    tituloModal.textContent = 'Editar Mantenimiento';
+                    contenedorBotonGuardar.style.display = 'block';
+                    vista = true;
+                    campos.forEach(function(campo) {
+                        if (campo.id !== 'nombreEdit' && campo.id !== 'numeconomicoEdit' && campo
+                            .id !== 'placasEdit' && campo.id !== 'marcaEdit') {
+                            campo.removeAttribute('readonly');
+                        }
+                        if (campo.id !== 'nombreEdit' || campo.id !== 'numeconomicoEdit' || campo
+                            .id !== 'placasEdit' || campo.id !== 'marcaEdit') {
+                            campo.style.color = 'initial';
+                        }
+                    });
 
-        }else{
-            vista=false;
-            editarCamposLink.innerHTML = `
+                } else {
+                    vista = false;
+                    editarCamposLink.innerHTML = `
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
                 <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
             </svg>
             `;
-            tituloModal.textContent = 'Ver Mantenimiento';
-            contenedorBotonGuardar.style.display = 'none';
-            campos.forEach(function(campo) {
-                if (campo.id !== 'nombreEdit' && campo.id !== 'numeconomicoEdit' && campo.id !== 'placasEdit' && campo.id !== 'marcaEdit') {
-                    campo.setAttribute('readonly', 'readonly');
+                    tituloModal.textContent = 'Ver Mantenimiento';
+                    contenedorBotonGuardar.style.display = 'none';
+                    campos.forEach(function(campo) {
+                        if (campo.id !== 'nombreEdit' && campo.id !== 'numeconomicoEdit' && campo
+                            .id !== 'placasEdit' && campo.id !== 'marcaEdit') {
+                            campo.setAttribute('readonly', 'readonly');
+                        }
+                        if (campo.id !== 'nombreEdit' || campo.id !== 'numeconomicoEdit' || campo
+                            .id !== 'placasEdit' || campo.id !== 'marcaEdit') {
+                            campo.style.color = 'gray';
+                        }
+                    });
                 }
-                if(campo.id !== 'nombreEdit' || campo.id !== 'numeconomicoEdit' || campo.id !== 'placasEdit' || campo.id !== 'marcaEdit') {
-                    campo.style.color = 'gray';
-                }
+
             });
-        }
-        
-    });
-        
-    });
 
-</script>
+        });
+    </script>
 @endsection
-    
-
-
-
