@@ -911,6 +911,7 @@ CREATE TABLE beneficiario(
     particular varchar(255) NULL,
     celular varchar(255) NULL,
     nacimiento datetime NULL,
+    emailB varchar(255) NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_beneficiario_personalId foreign key (personalId) references personal(id)
 );

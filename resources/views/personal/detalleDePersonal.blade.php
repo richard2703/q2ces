@@ -568,6 +568,12 @@
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                    <label class="labelTitulo">Correo Electrónico:</label></br>
+                                                    <input type="email" class="inputCaja" id="emailB"
+                                                        name="emailB" value="{{ $beneficiario->emailB }}">
+                                                </div>
+
+                                                <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                     <label class="labelTitulo">Apellido Paterno:</label></br>
                                                     <input type="text" class="inputCaja" id="apellidoP"
                                                         name="apellidoPB" value="{{ $beneficiario->apellidoP }}">
