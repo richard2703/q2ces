@@ -13,6 +13,6 @@ class proveedor extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nombre', 'razonSocial', 'rfc', 'calle', 'exterior', 'interior', 'colonia', 'estado', 'ciudad', 'cp', 'logo', 'estatus', 'categoriaId'
+        'nombre', 'razonSocial', 'rfc', 'calle', 'exterior', 'interior', 'colonia', 'estado', 'ciudad', 'cp', 'logo', 'estatus', 'categoriaId', 'comentario'
     ];
 }

@@ -194,7 +194,7 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('tiposDocs_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('tiposDocs_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('tiposDocs_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('tiposDocs_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	 ('tiposDocs_destroy','web','2022-07-25 19:54:16','2022-07-25ï¿½19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('ubicaciones_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('ubicaciones_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -1446,27 +1446,27 @@ CREATE TABLE extintores(
 INSERT INTO
     `puesto` (`id`, `nombre`, `comentario`)
 VALUES
-    (NULL, 'Almacenista', 'Descripción del puesto'),
-    (NULL,'Auxiliar General','Descripción del puesto'),
-    (NULL, 'Carpintero', 'Descripción del puesto'),
-    (NULL,'Gerente de Operaciones','Descripción del puesto'),
-    (NULL, 'Chofer', 'Descripción del puesto'),
-    (NULL,'Chofer de Tractocamion','Descripción del puesto'),
-    (NULL,'Coordinador de Operaciones','Descripción del puesto'),
-    (NULL,'Capturista de Datos','Descripción del puesto'),
-    (NULL, 'Jefe de Taller', 'Descripción del puesto'),
-    (NULL, 'Electrico', 'Descripción del puesto'),
-    (NULL,'Guardia de Seguridad','Descripción del puesto'),
-    (NULL, 'Herrero', 'Descripción del puesto'),
-    (NULL, 'Inventarios', 'Descripción del puesto'),
-    (NULL,'Operador de Maquinaria','Descripción del puesto'),
-    (NULL, 'Pintor', 'Descripción del puesto'),
-    (NULL, 'Plomero', 'Descripción del puesto'),
-    (NULL, 'Velador', 'Descripción del puesto'),
-    (NULL, 'Vigilante', 'Descripción del puesto'),
-    (NULL, 'MecÃ¡nica', 'Descripción del puesto'),
-    (NULL,'Electromecanico','Descripción del puesto'),
-    (NULL, 'Laminero', 'Descripción del puesto'),
-    (NULL, 'Sistemas', 'Descripción del puesto');
+    (NULL, 'Almacenista', 'Descripciï¿½n del puesto'),
+    (NULL,'Auxiliar General','Descripciï¿½n del puesto'),
+    (NULL, 'Carpintero', 'Descripciï¿½n del puesto'),
+    (NULL,'Gerente de Operaciones','Descripciï¿½n del puesto'),
+    (NULL, 'Chofer', 'Descripciï¿½n del puesto'),
+    (NULL,'Chofer de Tractocamion','Descripciï¿½n del puesto'),
+    (NULL,'Coordinador de Operaciones','Descripciï¿½n del puesto'),
+    (NULL,'Capturista de Datos','Descripciï¿½n del puesto'),
+    (NULL, 'Jefe de Taller', 'Descripciï¿½n del puesto'),
+    (NULL, 'Electrico', 'Descripciï¿½n del puesto'),
+    (NULL,'Guardia de Seguridad','Descripciï¿½n del puesto'),
+    (NULL, 'Herrero', 'Descripciï¿½n del puesto'),
+    (NULL, 'Inventarios', 'Descripciï¿½n del puesto'),
+    (NULL,'Operador de Maquinaria','Descripciï¿½n del puesto'),
+    (NULL, 'Pintor', 'Descripciï¿½n del puesto'),
+    (NULL, 'Plomero', 'Descripciï¿½n del puesto'),
+    (NULL, 'Velador', 'Descripciï¿½n del puesto'),
+    (NULL, 'Vigilante', 'Descripciï¿½n del puesto'),
+    (NULL, 'MecÃ¡nica', 'Descripciï¿½n del puesto'),
+    (NULL,'Electromecanico','Descripciï¿½n del puesto'),
+    (NULL, 'Laminero', 'Descripciï¿½n del puesto'),
+    (NULL, 'Sistemas', 'Descripciï¿½n del puesto');
    
 /***************************************FIN DATOS Tablas Relacionadas*/
