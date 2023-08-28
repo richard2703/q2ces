@@ -14,16 +14,18 @@ use App\Models\tareaCategoria;
 use App\Models\tareaTipo;
 use App\Models\tareaUbicacion;
 
-class tareaController extends Controller {
+class tareaController extends Controller
+{
     /**
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
-    public function index() {
+    public function index()
+    {
 
-        abort_if ( Gate::denies( 'tarea_index' ), 403 );
+        abort_if(Gate::denies('tarea_index'), 403);
 
         $vctCategorias = tareaCategoria::all();
         $vctTipos = tareaTipo::all();
@@ -31,38 +33,39 @@ class tareaController extends Controller {
 
         $vctTareas = tarea::select(
             'tarea.*',
-            DB::raw( 'tareaCategoria.nombre AS categoria' ),
-            DB::raw( 'tareaTipo.nombre AS tipo' ),
-            DB::raw( 'tareaUbicacion.nombre AS ubicacion' ),
+            DB::raw('tareaCategoria.nombre AS categoria'),
+            DB::raw('tareaTipo.nombre AS tipo'),
+            DB::raw('tareaUbicacion.nombre AS ubicacion'),
         )
-        ->leftJoin( 'tareaCategoria', 'tareaCategoria.id', '=', 'tarea.categoriaId' )
-        ->leftJoin( 'tareaTipo', 'tareaTipo.id', '=', 'tarea.tipoId' )
-        ->leftJoin( 'tareaUbicacion', 'tareaUbicacion.id', '=', 'tarea.ubicacionId' )
-        ->orderBy( 'created_at', 'desc' )->paginate( 15 );
-        ;
+            ->leftJoin('tareaCategoria', 'tareaCategoria.id', '=', 'tarea.categoriaId')
+            ->leftJoin('tareaTipo', 'tareaTipo.id', '=', 'tarea.tipoId')
+            ->leftJoin('tareaUbicacion', 'tareaUbicacion.id', '=', 'tarea.ubicacionId')
+            ->orderBy('created_at', 'desc')->paginate(15);;
 
-        return view( 'tareas.tareas', compact( 'vctTareas', 'vctCategorias', 'vctTipos', 'vctUbicaciones' ) );
+        return view('tareas.tareas', compact('vctTareas', 'vctCategorias', 'vctTipos', 'vctUbicaciones'));
     }
 
     /**
-    * Show the form for creating a new resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
-    public function create() {
+    public function create()
+    {
         //
     }
 
     /**
-    * Store a newly created resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
-    */
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
 
-    public function store( Request $request ) {
-        abort_if ( Gate::denies( 'tarea_create' ), 403 );
+    public function store(Request $request)
+    {
+        abort_if(Gate::denies('tarea_create'), 403);
 
         $request->validate( [
             'nombre' => 'required|max:250|unique:tarea,nombre,' . $request['nombre'],
@@ -72,49 +75,52 @@ class tareaController extends Controller {
             'nombre.unique' => 'El campo nombre ya esta en uso.',
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
-        ] );
+        ]);
         $tarea = $request->all();
 
-        tarea::create( $tarea );
-        Session::flash( 'message', 1 );
+        tarea::create($tarea);
+        Session::flash('message', 1);
 
-        return redirect()->route( 'tarea.index' );
+        return redirect()->route('tarea.index');
     }
 
     /**
-    * Display the specified resource.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 
-    public function show( $id ) {
+    public function show($id)
+    {
         //
     }
 
     /**
-    * Show the form for editing the specified resource.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 
-    public function edit( $id ) {
+    public function edit($id)
+    {
 
         // dd( $request );
     }
 
     /**
-    * Update the specified resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 
-    public function update( Request $request, $id ) {
+    public function update(Request $request, $id)
+    {
 
-        abort_if ( Gate::denies( 'tarea_edit' ), 403 );
+        abort_if(Gate::denies('tarea_edit'), 403);
 
         // dd( $request );
 
@@ -126,29 +132,30 @@ class tareaController extends Controller {
             'nombre.unique' => 'El campo nombre ya esta en uso.',
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
-        ] );
+        ]);
 
         $data = $request->all();
 
-        $tarea = tarea::where( 'id', $data[ 'tareaId' ] )->first();
+        $tarea = tarea::where('id', $data['tareaId'])->first();
 
-        if ( is_null( $tarea ) == false ) {
+        if (is_null($tarea) == false) {
             // dd( $data );
-            $tarea->update( $data );
-            Session::flash( 'message', 1 );
+            $tarea->update($data);
+            Session::flash('message', 1);
         }
 
-        return redirect()->route( 'tarea.index' );
+        return redirect()->route('tarea.index');
     }
 
     /**
-    * Remove the specified resource from storage.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 
-    public function destroy( $id ) {
+    public function destroy($id)
+    {
         //
     }
 }

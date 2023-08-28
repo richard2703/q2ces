@@ -64,7 +64,7 @@
                                                         <td>{{ $item->tipo }}</td>
                                                         <td>{{ $item->comentario }}</td>
 
-                                                        <td class="td-actions text-right">
+                                                        <td class="td-actions text-center">
 
                                                             @can('tarea_edit')
                                                                 <a href="#" class="" data-bs-toggle="modal"
@@ -78,9 +78,9 @@
                                                                     </svg>
                                                                 </a>
                                                             @endcan
-
+                                                            {{--  
                                                             @can('tarea_destroy')
-                                                                <form action="" method="POST"
+                                                                <form action="#" method="POST"
                                                                     style="display: inline-block;"
                                                                     onsubmit="return confirm('¿Estás Seguro?')">
                                                                     @csrf
@@ -96,7 +96,7 @@
                                                                         </svg>
                                                                     </button>
                                                                 </form>
-                                                            @endcan
+                                                            @endcan  --}}
                                                         </td>
                                                     </tr>
                                                 @empty
@@ -140,8 +140,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="labelTitulo">Categoría: <span>*</span></label>
-                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" required
-                                id="categoriaId" name="categoriaId">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                                required id="categoriaId" name="categoriaId">
                                 <option selected value="">Selecciona una opción</option>
                                 @foreach ($vctCategorias as $item)
                                     <option value="{{ $item->id }}">
@@ -152,8 +152,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="labelTitulo">Ubicación: <span>*</span></label>
-                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" required
-                                id="ubicacionId" name="ubicacionId">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                                required id="ubicacionId" name="ubicacionId">
                                 <option selected value="">Selecciona una opción</option>
                                 @foreach ($vctUbicaciones as $item)
                                     <option value="{{ $item->id }}">
@@ -164,8 +164,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="labelTitulo">Tipo: <span>*</span></label>
-                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" required
-                                id="tipoId" name="tipoId">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                                required id="tipoId" name="tipoId">
                                 <option selected value="">Selecciona una opción</option>
                                 @foreach ($vctTipos as $item)
                                     <option value="{{ $item->id }}">
@@ -177,15 +177,14 @@
 
                         <div class="mb-3">
                             <label class="labelTitulo">Tipo de Valor a Capturar:</label></br>
-                            <select class="form-select"
-                                aria-label="Default select example" id="tipoValor"
+                            <select class="form-select" aria-label="Default select example" id="tipoValor"
                                 name="tipoValor">
-                                <option value="1" >
+                                <option value="1">
                                     Bueno / Malo / Regular</option>
-                                <option value="2" >
+                                <option value="2">
                                     Sí / No
                                 </option>
-                                <option value="3" >
+                                <option value="3">
                                     50% o más de Vida / Menos del 20% de Vida / 20% al 50% de Vida</option>
                             </select>
                         </div>
@@ -262,22 +261,22 @@
 
                         <div class="mb-3">
                             <label class="labelTitulo">Tipo de Valor a Capturar:</label></br>
-                            <select class="form-select"
-                                aria-label="Default select example" id="tareaTipoValor"
+                            <select class="form-select" aria-label="Default select example" id="tareaTipoValor"
                                 name="tipoValor">
-                                <option value="1" >
+                                <option value="1">
                                     Bueno / Malo / Regular</option>
-                                <option value="2" >
+                                <option value="2">
                                     Sí / No
                                 </option>
-                                <option value="3" >
+                                <option value="3">
                                     50% o más de Vida / 20% al 50% de Vida / Menos del 20% de Vida</option>
                             </select>
                         </div>
 
                         <div class="mb-3">
                             <label for="exampleFormControlTextarea1" class="form-label">Pon tu Comentario</label>
-                            <textarea class="form-select" id="tareaComentario" name="comentario" rows="3" placeholder="Escribe aquí tus comentarios sobre la tarea."></textarea>
+                            <textarea class="form-select" id="tareaComentario" name="comentario" rows="3"
+                                placeholder="Escribe aquí tus comentarios sobre la tarea."></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">

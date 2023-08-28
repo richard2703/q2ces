@@ -60,8 +60,8 @@
                                 </div>
                             </div>
 
-                            <form action="{{ route('personal.update', $personal->id) }}" method="post"class="alertaGuardar"
-                                enctype="multipart/form-data">
+                            <form action="{{ route('personal.update', $personal->id) }}" method="post"
+                                class="alertaGuardar" enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
                                 <div class="d-md-flex p-3">

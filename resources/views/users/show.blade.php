@@ -1,155 +1,218 @@
-@extends('layouts.main', ['activePage' => 'users', 'titlePage' => 'Detalles Del Usuario'])
+@extends('layouts.main', ['activePage' => 'usuarios', 'titlePage' => 'Detalles Del Usuario'])
 @section('content')
     <div class="content">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header card-header-primary">
-                            <div class="card-title">Usuarios</div>
-                            <p class="card-category">Vista Detallada Del Usuario {{ $user->name }}</p>
-                        </div>
-                        <!--body-->
-                        <div class="card-body">
-                            @if (session('success'))
-                                <div class="alert alert-success" role="success">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
-                            <div class="row">
-                                {{-- <div class="col-md-4">
-                                    <div class="card card-user">
-                                        <div class="card-body">
-                                            <p class="card-text">
-                                            <div class="author">
-                                                <a href="#">
-                                                    <img src="{{ asset('/img/faces/avatar.jpg') }}" alt="image"
-                                                        class="avatar">
-                                                    <h5 class="title mt-3">{{ $user->name }}</h5>
-                                                </a>
-                                                <p class="description">
-                                                    {{ $user->username }} <br>
-                                                    {{ $user->email }} <br>
-                                                    {{ $user->created_at }}
-                                                </p>
-                                            </div>
-                                            </p>
-                                            <div class="card-description">
-                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam officia
-                                                corporis molestiae aliquid provident placeat.
-                                            </div>
-                                        </div>
-                                        <div class="card-footer">
-                                            <div class="button-container">
-                                                <button class="btn btn-sm btn-primary">Editar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                <!--end card user-->
 
-                                <div class="col-md-4">
-                                    <div class="card card-user">
-                                        <div class="card-body">
-                                            <p class="card-text">
-                                            <div class="author">
-                                                <a href="#" class="d-flex">
-                                                    <img src="{{ asset('/img/faces/avatar.jpg') }}" alt="image"
-                                                        class="avatar">
-                                                    <h5 class="title mx-3">{{ $user->name }}</h5>
-                                                </a>
-                                                <p class="description">
-                                                    {{ $user->username }} <br>
-                                                    {{ $user->email }} <br>
-                                                    {{ $user->created_at }}
-                                                </p>
-                                            </div>
-                                            </p>
-                                            <div class="card-description">
-                                                Id: {{ $user->id }}<br>
-                                                Nombre: {{ $user->name }}<br>
-                                                Email: {{ $user->email }}<br>
-                                                Nombre De Usuario: {!! $user->username !!}<br>
-                                                Creado: {{ $user->created_at }} <br>
-                                                Roles: @forelse ($user->roles as $role)
-                                                    <span
-                                                        class="badge rounded-pill bg-dark text-white">{{ $role->name }}</span>
-                                                @empty
-                                                    <span class="badge badge-danger bg-danger">No Roles</span>
-                                                @endforelse
-
-                                            </div>
-                                        </div>
-                                        <div class="card-footer">
-                                            <div class="button-container">
-                                                <a href="{{ route('users.index') }}" class="btn btn-sm btn-success mr-3">
-                                                    Volver </a>
-                                                <button class="btn btn-sm btn-primary">Editar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--end card user 2-->
-
-                                <!--Start third-->
-                                {{-- <div class="col-md-4">
-                                    <div class="card card-user">
-                                        <div class="card-body">
-                                            <table class="table table-bordered table-striped">
-                                                <tbody>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <td>{{ $user->id }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Name</th>
-                                                        <td>{{ $user->name }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Email</th>
-                                                        <td><span class="badge badge-primary">{{ $user->email }}</span>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Username</th>
-                                                        <td>{!! $user->username !!}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Created At</th>
-                                                        <td><a href="#" target="_blank">{{ $user->created_at }}</a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Roles</th>
-                                                        <td>
-                                                            @forelse ($user->roles as $role)
-                                                                <span
-                                                                    class="badge rounded-pill bg-dark text-white">{{ $role->name }}</span>
-                                                            @empty
-                                                                <span class="badge badge-danger bg-danger">No roles</span>
-                                                            @endforelse
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="card-footer">
-                                            <div class="button-container">
-                                                <a href="{{ route('users.index') }}" class="btn btn-sm btn-success mr-3">
-                                                    Volver </a>
-                                                <a href="#" class="btn btn-sm btn-twitter"> Editar </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                <!--end third-->
-
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bacTituloPrincipal">
+                        <h4 class="card-title">Ver Usuario</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4 text-left">
+                                <a href="{{ url('usuarios') }}">
+                                    <button class="btn regresar">
+                                        <span class="material-icons">
+                                            reply
+                                        </span>
+                                        Regresar
+                                    </button>
+                                </a>
                             </div>
+                            <div class="col-8 text-end">
+                                
+                            </div>
+
+                            <div class="d-flex p-3 divBorder"></div>
                         </div>
+                            {{--  <div class="d-md-flex p-3">
+                                <div class="col-12 col-md-4 px-2 ">
+                                    <div class="text-center mx-auto border  mb-4">
+                                        <i><img class="imgPersonal img-fluid"
+                                                src="{{ $user->foto == '' ? ' /img/general/default.jpg' : asset('/storage/user/' . str_pad($user->id, 4, '0', STR_PAD_LEFT) . '/' . $user->foto) }}"></i>
+
+                                        <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"
+                                                id="mi-archivo" accept="image/*"></span>
+                                        <label for="mi-archivo">
+                                            <span>Sube Imagen</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-8 px-2">
+                                    <div class="row alin">
+                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <label class="labelTitulo">Número de Empleado:</label></br>
+                                            <input type="text" class="inputCaja" id="numEmpleado" name="numEmpleado"
+                                                value="">
+                                        </div>
+
+                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <label class="labelTitulo">Nombre(s): <span>*</span></label></br>
+                                            <input type="text" class="inputCaja" id="nombres" name="nombres" required
+                                                value="{{ $user->name }}">
+                                        </div>
+
+                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <label class="labelTitulo">Apellido Paterno: <span>*</span></label></br>
+                                            <input type="text" class="inputCaja" id="apellidoP" name="apellidoP" required
+                                                value="{{ $user->apellidoP }}">
+                                        </div>
+
+                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <label class="labelTitulo">Apellio Materno:</label></br>
+                                            <input type="text" class="inputCaja" id="apellidoM" name="apellidoM"
+                                                value="{{ $user->apellidoM }}">
+                                        </div>
+
+                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <label class="labelTitulo">Tipo de Sangre:</label></br>
+                                            <select class="form-select" aria-label="Default select example" id="sangre"
+                                                name="sangre">
+                                                <option value="A+" {{ $user->sangre == 'A+' ? ' selected' : '' }}>A+
+                                                </option>
+                                                <option value="A-"{{ $user->sangre == 'A-' ? ' selected' : '' }}>A-
+                                                </option>
+                                                <option value="B+"{{ $user->sangre == 'B+' ? ' selected' : '' }}>B+
+                                                </option>
+                                                <option value="B-"{{ $user->sangre == 'B-' ? ' selected' : '' }}>B-
+                                                </option>
+                                                <option value="AB+"{{ $user->sangre == 'AB+' ? ' selected' : '' }}>
+                                                    AB+</option>
+                                                <option value="AB-"{{ $user->sangre == 'AB-' ? ' selected' : '' }}>
+                                                    AB-</option>
+                                                <option value="O+"{{ $user->sangre == 'O+' ? ' selected' : '' }}>O+
+                                                </option>
+                                                <option value="O-"{{ $user->sangre == 'O-' ? ' selected' : '' }}>O-
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <label class="labelTitulo">Alergias:</label></br>
+                                            <input type="text" class="inputCaja" id="aler" name="aler"
+                                                value="{{ $user->aler }}">
+                                        </div>
+
+                                        <div class=" col-12 col-sm-6 mb-3 ">
+                                            <label class="labelTitulo">Correo Electrónico Empresa:</label></br>
+                                            <input type="text" class="inputCaja" id="mailEmpresarial"
+                                                name="mailEmpresarial" value="{{ $user->email }}">
+                                        </div>
+
+                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <label class="labelTitulo">Celular:</label></br>
+                                            <input type="text" class="inputCaja" id="celular" name="celular"
+                                                value="{{ $user->celular }}">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>  --}}
+                            <div class="card-body">
+                                <div class="row mt-3 d-flex justify-content-end">
+                                    <div class="col-12 col-md-6 px-2 ">
+                                        <div class="text-center mx-auto border  mb-4">
+                                            <i><img class="imgPersonal img-fluid"
+                                                    src="{{ $user->foto == '' ? ' /img/general/default.jpg' : asset('/storage/user/' . str_pad($user->id, 4, '0', STR_PAD_LEFT) . '/' . $user->foto) }}"></i>
+    
+                                            <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"
+                                                    id="mi-archivo" accept="image/*"></span>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <div class="tab-content">
+                                                <div class="tab-pane active">
+                                                    <table class="table">
+                                                        <tbody>
+                                                            <label for="roles"
+                                                                class="labelTitulo col-sm-2 col-form-label d-flex align-items-center mb-3"
+                                                                style="">Roles:</label>
+                                                            @foreach ($roles as $id => $role)
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="form-check" style="color: grey !important">
+                                                                            <label class="form-check-label">
+                                                                                <input
+                                                                                    class="form-check-input is-invalid align-self-end"
+                                                                                    type="checkbox" name="roles[]"
+                                                                                    value="{{ $id }}" disabled
+                                                                                    {{ $user->roles->contains($id) ? 'checked' : '' }}>
+                                                                                <span class="form-check-sign">
+                                                                                    <span class="check"
+                                                                                        value=""></span>
+                                                                                </span>
+                                                                            </label>
+                                                                            {{ $role }}
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <label for="name" class="labelTitulo">Nombre:</label>
+
+                                        <input class="inputCaja" type="text" class="form-control" name="name"
+                                            placeholder="Ingrese Su Nombre" value="{{ old('name', $user->name) }}" autofocus
+                                            required readonly>
+                                        @if ($errors->has('name'))
+                                            <span class="error text-danger"
+                                                for="input-name">{{ $errors->first('name') }}</span>
+                                        @endif
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <label for="email" class="labelTitulo">Correo:</label>
+                                        <input class="inputCaja" type="email" class="form-control" name="email"
+                                            placeholder="Ingrese su correo" value="{{ old('email', $user->email) }}"
+                                            required readonly>
+                                        @if ($errors->has('email'))
+                                            <span class="error text-danger"
+                                                for="input-email">{{ $errors->first('email') }}</span>
+                                        @endif
+                                    </div>
+                                    <div class="col-12 col-md-6 mt-3">
+                                        <label for="username" class="labelTitulo">Nombre De
+                                            Usuario:</label>
+
+                                        <input class="inputCaja" type="text" class="form-control" name="username"
+                                            placeholder="Ingrese su nombre de usuario"
+                                            value="{{ old('username', $user->username) }}" readonly>
+                                        @if ($errors->has('username'))
+                                            <span class="error text-danger"
+                                                for="input-username">{{ $errors->first('username') }}</span>
+                                        @endif
+                                    </div>
+
+                                    <div class="col-12 col-md-6 mt-3">
+                                        <label for="password" class="labelTitulo">Contraseña:</label>
+                                        <input class="inputCaja" type="password" class="form-control" name="password"
+                                            placeholder="Contraseña" readonly>
+                                        @if ($errors->has('password'))
+                                            <span class="error text-danger"
+                                                for="input-password">{{ $errors->first('password') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                 </div>
+
             </div>
         </div>
-    </div>
-@endsection
+        <style>
+            select[readonly], input[readonly], textarea[readonly]{
+              color: grey !important;
+              cursor:no-drop;
+            }
+          </style>
+    @endsection

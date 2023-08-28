@@ -25,16 +25,17 @@
                                     <div class="row">
                                         <div class="col-12 text-right">
                                             <div>
-                                                <a href="{{ url('/bitacoras/') }}">
+                                                <a href="{{ route('bitacoras.index') }}">
                                                     <!--Agregar ruta-->
-                                                    <button type="button" class="btn botonGral float-end">Bitácoras</button>
+                                                    <button type="button"
+                                                        class="btn botonGral float-end">Bitácoras</button>
                                                 </a>
                                             </div>
                                             <div>
-                                                <a href="{{ url('/checkList/seleccionar/' ) }}">
+                                                <a href="{{ route('checkList.seleccionar') }}">
                                                     <!--Agregar ruta-->
                                                     <button type="button" class="btn botonGral float-end">Añadir Nuevo
-                                                        Checklist</button>
+                                                        Checklisddt</button>
                                                 </a>
 
                                             </div>
@@ -82,7 +83,8 @@
                                                                     </svg> </a>
                                                             @endcan
 
-                                                            <a href="{{ route('checkListRegistros.show', $item->id) }}" class="">
+                                                            <a href="{{ route('checkListRegistros.show', $item->id) }}"
+                                                                class="">
                                                                 <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                     height="28" fill="currentColor" title="Editar"
                                                                     class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">

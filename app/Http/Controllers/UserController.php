@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Role;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -15,7 +16,7 @@ class UserController extends Controller
     {
         abort_if(Gate::denies('user_index'), '403');
         // $users = User::all();
-        $users = User::paginate(5);
+        $users = User::paginate(15);
         return view('users.index', compact('users'));
     }
     public function create()
@@ -38,14 +39,17 @@ class UserController extends Controller
             ]);
         $roles = $request->input('roles', 'id');
         $user->syncRoles($roles);
-        return redirect()->route('users.index', $user->id)->with('success', 'Usuario Guardado');
+        Session::flash('message', 1);
+        // return redirect()->route('users.index', $user->id)->with('success', 'Usuario Guardado');
+        return redirect()->route('users.index');
     }
 
     public function show(User $user)
     {
         abort_if(Gate::denies('user_show'), '403');
+        $roles = Role::all()->pluck('name', 'id');
         $user->load('roles');
-        return view('users.show', compact('user'));
+        return view('users.show', compact('user', 'roles'));
     }
 
     // public function show($id)
@@ -73,23 +77,40 @@ class UserController extends Controller
         $user->update($data);
         $roles = $request->input('roles', []);
         $user->syncRoles($roles);
+        Session::flash('message', 1);
         return redirect()->route('users.show', $user->id)->with('success', 'Usuario actualizado correctamente');
+        // return redirect()->route('users.show');
+    }
+
+    public function updatePassword(Request $request, User $user)
+    {
+        dd('Hola');
+        $password = $request->input('password');
+        if ($password)
+            $data['password'] = bcrypt($password);
+        $user->update($data);
+        $roles = $request->input('roles', []);
+        $user->syncRoles($roles);
+        Session::flash('message', 1);
+        return redirect()->route('users.show', $user->id)->with('success', 'Usuario actualizado correctamente');
+        // return redirect()->route('users.show');
     }
 
     public function destroy(User $user)
     {
         abort_if(Gate::denies('user_destroy'), '403');
         if (auth()->user()->id = $user->id) {
-            return redirect()->route('users.index', $user->id)->with('faild', 'El suicidio no es la opcion');
+            return redirect()->route('users.index', $user->id)->with('faild', 'No Puedes Eliminar El Tu Mismo Usuario');
         }
         $user->delete();
 
-        return redirect()->back()->with('success', 'Usuario Eliminado correctamente');;
+        return redirect()->back()->with('success', 'Usuario Eliminado correctamente');
+        // return redirect()->route('users.index');
+
     }
 
     public function export()
     {
         return Excel::download(new UserExport, 'users.xlsx');
-
     }
 }

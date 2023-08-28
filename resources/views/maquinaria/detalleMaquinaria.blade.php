@@ -68,8 +68,8 @@
                                                             <div class="col-12 contFotoMaquinaria" id="visor">
                                                                 <!-- @if (count($fotos) > 0)
     <button type="button"
-                                                                            class="btn btn-secondary btn-sm"
-                                                                            onclick="deleteImage('{{ $fotos[0]->id }}','{{ $fotos }}', (this));">X</button>
+                                                                                        class="btn btn-secondary btn-sm"
+                                                                                        onclick="deleteImage('{{ $fotos[0]->id }}','{{ $fotos }}', (this));">X</button>
     @endif -->
                                                                 <img src="{{ empty($fotos[0]) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $fotos[0]->ruta) }}"
                                                                     class="mx-auto d-block img-fluid imgMaquinaria">
@@ -133,8 +133,8 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Marca:</label></br>
-                                                                <select id="marcaId" name="marcaId"
-                                                                    class="form-select" aria-label="Default select example">
+                                                                <select id="marcaId" name="marcaId" class="form-select"
+                                                                    aria-label="Default select example">
                                                                     <option value="">Seleccione</option>
                                                                     @foreach ($marcas as $item)
                                                                         <option value="{{ $item->id }}"
@@ -197,16 +197,16 @@
                                                                     <div class="pl-2">
                                                                         <label class="labelTitulo">Tipo:</label></br>
                                                                         <select id="tipoId" name="tipoId"
-                                                                        class="form-select"
-                                                                        aria-label="Default select example">
-                                                                        <option value="">Seleccione</option>
-                                                                        @foreach ($tipos as $item)
-                                                                            <option value="{{ $item->id }}"
-                                                                                {{ $item->id == $maquinaria->tipoId ? ' selected' : '' }}>
-                                                                                {{ $item->nombre }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
+                                                                            class="form-select"
+                                                                            aria-label="Default select example">
+                                                                            <option value="">Seleccione</option>
+                                                                            @foreach ($tipos as $item)
+                                                                                <option value="{{ $item->id }}"
+                                                                                    {{ $item->id == $maquinaria->tipoId ? ' selected' : '' }}>
+                                                                                    {{ $item->nombre }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
 
                                                                     </div>
                                                                 </div>
@@ -326,12 +326,12 @@
                                                             </div>
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                                    <label class="labelTitulo">Combustible:</label></br>
-                                                                                    <input type="text" class="inputCaja" id="combustible"
-                                                                                        name="combustible"
-                                                                                        placeholder="Diesel / Gasolina / Especificar"
-                                                                                        value="{{ $maquinaria->combustible }}">
-                                                                                </div>-->
+                                                                                                <label class="labelTitulo">Combustible:</label></br>
+                                                                                                <input type="text" class="inputCaja" id="combustible"
+                                                                                                    name="combustible"
+                                                                                                    placeholder="Diesel / Gasolina / Especificar"
+                                                                                                    value="{{ $maquinaria->combustible }}">
+                                                                                            </div>-->
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Motor:</label></br>
@@ -473,8 +473,8 @@
                                                                         class="col-12 col-sm-4 col-lg-2 my-3 text-center pt-3">
                                                                         <!--<i class="fas fa-clipboard-check"></i>-->
                                                                         <!--<span class="material-icons" style="font-size:40px; color: gray">
-                                                                            content_paste_search
-                                                                        </span>-->
+                                                                                        content_paste_search
+                                                                                    </span>-->
                                                                         @if ($refaccion->relacionInventarioId != null)
                                                                             <span class="material-icons"
                                                                                 style="font-size:40px; color: green">
@@ -496,7 +496,56 @@
 
                                                                 </div>
                                                             @empty
-                                                                Sin Refacciones
+                                                                <div class="row opcion divBorderItems" id="opc">
+
+                                                                    <input type="hidden" name="idRefaccion[]"
+                                                                        value="">
+                                                                    <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
+                                                                        <label class="labelTitulo">Tipo De
+                                                                            Refacción:</label></br>
+                                                                        <select id="tipoRefaccion"
+                                                                            name='tipoRefaccionId[]' class="form-select">
+                                                                            <option value="">Seleccione</option>
+                                                                            @foreach ($refaccionTipo as $item)
+                                                                                <option value="{{ $item->id }}">
+                                                                                    {{ $item->nombre }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+
+                                                                    <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
+                                                                        <label class="labelTitulo">Marca:</label></br>
+                                                                        <select id="marcaRefaccion" name='marca[]'
+                                                                            class="form-select">
+                                                                            <option value="">Seleccione</option>
+                                                                            @foreach ($marcas as $item)
+                                                                                <option value="{{ $item->id }}">
+                                                                                    {{ $item->nombre }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+
+                                                                    <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
+                                                                        <label class="labelTitulo">Número De
+                                                                            Parte:</label></br>
+                                                                        <input type="text" class="inputCaja"
+                                                                            name='numeroParte[]' id="numeroParte"
+                                                                            placeholder="Especifique..." value="">
+                                                                    </div>
+                                                                    <div class="col-lg-2 my-3 text-center pt-3">
+                                                                        <span class="material-icons"
+                                                                            style="font-size:40px; color: gray">
+                                                                            content_paste_search
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="col-lg-1 my-3 text-end">
+                                                                        <button type="button" id="removeRow"
+                                                                            class="btnRojo"></button>
+                                                                    </div>
+
+                                                                </div>
                                                             @endforelse
                                                         </div>
                                                     </div>
@@ -632,7 +681,7 @@
                                                                                         id='fecha{{ $item->id }}'
                                                                                         class="inputCaja text-center"
                                                                                         name='archivo[{{ $count }}][fecha]'
-                                                                                        style="display: block;" disabled
+                                                                                        style="display: block;" readonly
                                                                                         value="{{ $item->fechaVencimiento }}">
                                                                                 </div>
                                                                                 <div class="col-12">
@@ -1080,7 +1129,7 @@
         var newOpcion = $('.opcion:first').clone();
         newOpcion.find("select, input").val(""); // Establece los valores en blanco
         newOpcion.find(".material-icons").text("content_paste_search").css("color",
-        "gray"); // Establece el ícono y el color
+            "gray"); // Establece el ícono y el color
         newOpcion.appendTo('#elementos');
     }
 

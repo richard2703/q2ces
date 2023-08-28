@@ -101,6 +101,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/usuarios/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('users.show');
     Route::get('/users/{user}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+    Route::put('/users/password/{user}/', [App\Http\Controllers\UserController::class, 'updatePassword'])->name('users.updatePassword');
     Route::delete('/users/{user}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.delete');
 
     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
@@ -398,4 +399,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Crud Extintores
     Route::resource('extintores', App\Http\Controllers\extintoresController::class);
     Route::get('/ubicaciones/lugares/{ubicacionId}', [App\Http\Controllers\extintoresController::class, 'lugares'])->name('lugares.get');
+
+    // Permisos Desde Javascript
+    Route::get('/check-permission/{permission}', 'App\Http\Controllers\calendarioMtqController@checkPermission');
 });

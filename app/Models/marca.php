@@ -13,6 +13,6 @@ class marca extends Model
     public $timestamps = false;
 
     protected $fillable = [
-          'nombre', 'comentario','activo'
+        'nombre', 'comentario', 'activo', 'tipo'
     ];
 }
