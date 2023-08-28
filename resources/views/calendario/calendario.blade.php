@@ -580,7 +580,7 @@ $mesSiguiente= $objCalendar->getMesSiguiente($intMes,$intAnio);
                     <div class="modal-body">
                         <form class="row d-flex" action="{{ route('tareas.store') }}" method="post">
                             @csrf
-                            <input type="hidden" name="userId" id="userId" value="{{ $usuario->id }}">
+                            <input type="hidden" name="userId" id="userId" value="{{ auth()->user()->id }}">
                             <div class=" col-12 col-sm-6 mb-3 ">
                                 <label class="labelTitulo">Título:<span>*</span></label></br>
                                 <input type="text" class="inputCaja" id="titulo" name="titulo"

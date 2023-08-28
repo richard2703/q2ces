@@ -1,6 +1,17 @@
 @extends('layouts.main', ['activePage' => 'bitacoras', 'activeItem' => 'grupos'])
 @section('content')
     <div class="content">
+        @if ($errors->any())
+            <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+            <div class="alert alert-danger">
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -67,7 +78,7 @@
                                                                 </a>
                                                             @endcan
 
-                                                            @can('grupo_destroy')
+                                                            {{--  @can('grupo_destroy')
                                                                 <form action="" method="POST"
                                                                     style="display: inline-block;"
                                                                     onsubmit="return confirm('Seguro?')">
@@ -84,7 +95,7 @@
                                                                         </svg>
                                                                     </button>
                                                                 </form>
-                                                            @endcan
+                                                            @endcan  --}}
                                                         </td>
                                                     </tr>
                                                 @empty

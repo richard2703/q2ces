@@ -27,7 +27,7 @@
 
                                     <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoCategoriasTareas.index') }}" class="">
-                                            <img src="/img/inventario/herramientas.svg" alt="Categoría de tareas"
+                                            <img src="/img/catalogos/categoriasDeTareas.svg" alt="Categoría de tareas"
                                                 title="Categoría de tareas" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Categoría de Tareas</p>
                                         </a>
@@ -35,7 +35,7 @@
 
                                     <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoTiposTareas.index') }}" class="">
-                                            <img src="/img/inventario/herramientas.svg" alt="Tipos de tareas"
+                                            <img src="/img/catalogos/tiposDeTarea.svg" alt="Tipos de tareas"
                                                 title="Tipos de tareas" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Tipos de Tareas</p>
                                         </a>
@@ -51,7 +51,7 @@
 
                                     <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoCategoriasMaquinaria.index') }}" class="">
-                                            <img src="/img/catalogos/ubicacionesTareas.svg" alt="Categoría de Maquinaría"
+                                            <img src="/img/catalogos/categoriasDeMaquinaria.svg" alt="Categoría de Maquinaría"
                                                 title="Categorias de Maquinaría" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Categorias de Maquinaría</p>
                                         </a>
@@ -59,7 +59,7 @@
 
                                     <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoTiposMaquinaria.index') }}" class="">
-                                            <img src="/img/catalogos/ubicacionesTareas.svg" alt="Tipos de Uso de Maquinaría"
+                                            <img src="/img/catalogos/tiposUsoMaquinaria.svg" alt="Tipos de Uso de Maquinaría"
                                                 title="Tipos de Uso de tareas" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Tipos de Uso de Maquinaría</p>
                                         </a>
@@ -67,7 +67,7 @@
 
                                     <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoTipoUniforme.index') }}" class="">
-                                            <img src="/img/inventario/herramientas.svg" alt="Tipos de Uniforme"
+                                            <img src="/img/catalogos/tiposDeUniforme.svg" alt="Tipos de Uniforme"
                                                 title="Tipos de Uniforme" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Tipos de Uniforme</p>
                                         </a>
@@ -75,7 +75,7 @@
 
                                     <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoMarca.index') }}" class="">
-                                            <img src="/img/inventario/herramientas.svg" alt="Marcas" title="Marcas"
+                                            <img src="/img/catalogos/marcas.svg" alt="Marcas" title="Marcas"
                                                 width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Marcas</p>
                                         </a>
@@ -83,7 +83,7 @@
 
                                     <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoProveedor.index') }}" class="">
-                                            <img src="/img/inventario/herramientas.svg" alt="Proveedores" title="Proveedores"
+                                            <img src="/img/catalogos/proveedores.svg" alt="Proveedores" title="Proveedores"
                                                 width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Proveedores</p>
                                         </a>
@@ -91,7 +91,7 @@
 
                                     <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoProveedorCategoria.index') }}" class="">
-                                            <img src="/img/inventario/herramientas.svg" alt="Categorías de Proveedores" title="Categorías de Proveedores"
+                                            <img src="/img/catalogos/categoriasProveedores.svg" alt="Categorías de Proveedores" title="Categorías de Proveedores"
                                                 width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Categorías de Proveedores</p>
                                         </a>
@@ -99,7 +99,7 @@
 
                                     <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoTipoRefaccion.index') }}" class="">
-                                            <img src="/img/inventario/herramientas.svg" alt="Tipos de Refacción"
+                                            <img src="/img/catalogos/tiposDeRefaccion.svg" alt="Tipos de Refacción"
                                                 title="Tipos de Refacción" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Tipos de Refacción</p>
                                         </a>
@@ -107,7 +107,7 @@
 
                                     <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoTiposEquipo.index') }}" class="">
-                                            <img src="/img/inventario/herramientas.svg" alt="Tipos de Equipo"
+                                            <img src="/img/catalogos/tiposDeEquipo.svg" alt="Tipos de Equipo"
                                                 title="Tipos de Refacción" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Tipos de Equipo</p>
                                         </a>
@@ -115,7 +115,7 @@
 
                                     <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('catalogoRefacciones.index') }}" class="">
-                                            <img src="/img/inventario/herramientas.svg" alt="Refacciones" title="Refacciones"
+                                            <img src="/img/catalogos/refaccionesPorMaquinaria.svg" alt="Refacciones" title="Refacciones"
                                                 width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Refacciones por Maquinaría</p>
                                         </a>

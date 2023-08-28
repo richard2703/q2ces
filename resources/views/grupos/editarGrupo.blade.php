@@ -1,6 +1,17 @@
 @extends('layouts.main', ['activePage' => ' grupos', 'titlePage' => __('Editar Grupo')])
 @section('content')
     <div class="content">
+        @if ($errors->any())
+            <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+            <div class="alert alert-danger">
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -17,6 +28,9 @@
                                         @method('put')
                                         <div class="col-12 my-4">
                                             <div class="row">
+
+                                                <input type="hidden" name="id" id="id"
+                                                    value="{{ $grupo->id }}">
 
                                                 <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
                                                     <label class="labelTitulo">Nombre: <span>*</span></label></br>
@@ -41,8 +55,9 @@
                                                         <p class="subEncabezado">Busca una Tarea </p>
                                                         <div class="mb-6 mt-0" role="search" class="inputCaja">
                                                             <input value="" class="search-submit ">
-                                                            <input autofocus type="text" class=""
-                                                                id="search" name="search" placeholder="Escribe aquí el texto a buscar..."
+                                                            <input autofocus type="text" class="" id="search"
+                                                                name="search"
+                                                                placeholder="Escribe aquí el texto a buscar..."
                                                                 title="Escriba la(s) palabra(s) a buscar.">
                                                         </div>
                                                     </div>
@@ -76,8 +91,9 @@
                                                                         <label for="nombreTarea"
                                                                             class="">Tarea</label></br></br>
                                                                         <input type="text" maxlength="250" readonly
-                                                                            class="inputCaja" id="nombreTarea" disabled="true"
-                                                                            placeholder="Ej. Tarea 1" name="nombreTarea[]"
+                                                                            class="inputCaja" id="nombreTarea"
+                                                                            disabled="true" placeholder="Ej. Tarea 1"
+                                                                            name="nombreTarea[]"
                                                                             value="{{ $item->tarea }}">
                                                                     </div>
 
