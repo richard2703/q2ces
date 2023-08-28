@@ -339,6 +339,7 @@ class personalController extends Controller
         $newbeneficiario = new beneficiario();
         $newbeneficiario->personalId = $personal->id;
         $newbeneficiario->nombres = $request->nombreB;
+        $newbeneficiario->emailB = $request->emailB;
         $newbeneficiario->apellidoP = $request->apellidoPB;
         $newbeneficiario->apellidoM = $request->apellidoMB;
         $newbeneficiario->particular = $request->particularB;
@@ -831,6 +832,7 @@ class personalController extends Controller
 
         $beneficiario = beneficiario::where('personalId', $personal->id)->first();
         $beneficiario->nombres = $request->nombreB;
+        $beneficiario->emailB = $request->emailB;
         $beneficiario->apellidoP = $request->apellidoPB;
         $beneficiario->apellidoM = $request->apellidoMB;
         $beneficiario->particular = $request->particularB;

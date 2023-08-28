@@ -13,6 +13,6 @@ class beneficiario extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'userId', 'nombres', 'apellidoP', 'apellidoM', 'particular', 'celular', 'nacimiento'
+        'userId', 'nombres', 'apellidoP', 'apellidoM', 'particular', 'celular', 'nacimiento', 'emailB'
     ];
 }
