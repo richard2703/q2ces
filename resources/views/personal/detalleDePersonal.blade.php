@@ -1113,7 +1113,7 @@
                                                         @else
                                                             <div
                                                                 class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
-                                                                <input type="hidden" id='{{ $doc->idDoc }}'
+                                                                <input type="hidden" id=''
                                                                     name='archivo[{{ $contador }}][idDoc]'
                                                                     value='{{ $doc->idDoc }}'>
                                                                 <input type="hidden" id='{{ $doc->nombre }}'

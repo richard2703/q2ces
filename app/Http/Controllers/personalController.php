@@ -896,6 +896,7 @@ class personalController extends Controller
         if ($request->archivo) {
             for ($i = 0; $i < count($request->archivo); $i++) {
                 $documento = null;
+                dd($request->archivo[$i]);
                 if ($request->archivo[$i]['idDoc'] == null) {
                     $documento = new userdocs();
                 }
