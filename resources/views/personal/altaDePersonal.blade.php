@@ -691,8 +691,8 @@
                                                             </div> --}}
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Jefe Inmediato:</label></br>
-                                                                <select id="jefeId" name="jefeId" class="form-select"
+                                                                <label class="labelTitulo">Jefe Inmediato: <span>*</span></label></br>
+                                                                <select id="jefeId" name="jefeId" class="form-select" required
                                                                     aria-label="Default select example">
 
                                                                     <option value="">Seleccione</option>

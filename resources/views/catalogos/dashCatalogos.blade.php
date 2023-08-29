@@ -168,6 +168,22 @@
                                             <p class="mt-4 texticonos">Servicios MTQ</p>
                                         </a>
                                     </div>
+
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
+                                        <a href="{{ route('catalogoTipoHorasExtra.index') }}" class="">
+                                            <img src="/img/inventario/herramientas.svg" alt="Horas Extras"
+                                                title="Horas Extras" width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Horas Extras</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
+                                        <a href="{{ route('catalogoTiposValorTarea.index') }}" class="">
+                                            <img src="/img/inventario/herramientas.svg" alt="Tipos de Valor de Tarea"
+                                                title="Tipos de Valor de Tarea" width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Tipos de Valor de Tarea</p>
+                                        </a>
+                                    </div>
                                 @endcan
 
 
