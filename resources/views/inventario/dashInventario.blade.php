@@ -3,7 +3,7 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-md-10 align-self-center">
+                <div class="col-12 align-self-center">
                     <div class="card">
                         <div class="card-body">
                             <div class="row d-flex ">
@@ -45,13 +45,13 @@
                                         </a>
                                     </div>
 
-                                    <div class="col-12 col-sm-6 col-md-4 text-center my-4">
+                                    {{--  <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('inventario.index', 'servicios') }}" class="">
                                             <img src="/img/inventario/combustible.svg" alt="obras" title="Servicios"
                                                 width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Servicios</p>
                                         </a>
-                                    </div>
+                                    </div>  --}}
                                 @endcan
 
                             </div>

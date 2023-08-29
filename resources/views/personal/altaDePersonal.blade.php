@@ -785,7 +785,7 @@
                                             <button class="accordion-button bacTituloPrincipal" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#uniforme" aria-expanded="true"
                                                 aria-controls="collapseOne">
-                                                Uniforme
+                                                Tallas De Los Uniformes
                                             </button>
                                         </h6>
                                         <div id="uniforme" class="accordion-collapse collapse"
