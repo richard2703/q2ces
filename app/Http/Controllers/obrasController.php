@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use App\Helpers\Validaciones;
+use App\Models\clientes;
 use App\Models\obraMaqPer;
 use App\Models\residente;
 use Illuminate\Support\Facades\DB;
@@ -44,7 +45,9 @@ class obrasController extends Controller
 
         $vctMaquinaria = maquinaria::all();
         $vctPersonal = personal::all();
-        return view('obra.altaObra', compact('vctMaquinaria', 'vctPersonal'));
+        $Clientes = clientes::all();
+        // dd($Clientes);
+        return view('obra.altaObra', compact('vctMaquinaria', 'vctPersonal', 'Clientes'));
     }
 
     /**
@@ -90,6 +93,8 @@ class obrasController extends Controller
         $obra['estatus'] = 'Activa';
         $obra = obras::create($obra);
 
+        // $obraId = 1;
+
         $obraId = $obra->id;
 
         /*** directorio contenedor de su información */
@@ -108,21 +113,22 @@ class obrasController extends Controller
         }
 
         //*** registro de residentes */
-        for ($i = 0; $i < count($request['rnombre']); $i++) {
-            //*** se guarda solo si se selecciono una máquina */
-            if ($request['rnombre'][$i] != '') {
-                $objResidente = new residente();
-                $objResidente->obraid  = $obraId;
-                $objResidente->userid  = 1;
-                $objResidente->nombre  = $objValida->validaTexto($request['rnombre'][$i]);
-                $objResidente->empresa  = $objValida->validaTexto($request['rempresa'][$i]);
-                $objResidente->telefono = $objValida->validaTelefono($request['rtelefono'][$i]);
-                $objResidente->puesto = $objValida->validaTexto($request['rpuesto'][$i]);
-                $objResidente->firma = $objValida->validaTexto($request['rfirma'][$i]);
-                $objResidente->email = $objValida->validaTexto($request['remail'][$i]);
-                $objResidente->save();
-            }
-        }
+        // dd($request);
+        // for ($i = 0; $i < count($request['rnombre']); $i++) {
+        //     //*** se guarda solo si se selecciono una máquina */
+        //     if ($request['rnombre'][$i] != '') {
+        //         $objResidente = new residente();
+        //         $objResidente->obraid  = $obraId;
+        //         $objResidente->userid  = 1;
+        //         $objResidente->nombre  = $objValida->validaTexto($request['rnombre'][$i]);
+        //         $objResidente->empresa  = $objValida->validaTexto($request['rempresa'][$i]);
+        //         $objResidente->telefono = $objValida->validaTelefono($request['rtelefono'][$i]);
+        //         $objResidente->puesto = $objValida->validaTexto($request['rpuesto'][$i]);
+        //         $objResidente->firma = $objValida->validaTexto($request['rfirma'][$i]);
+        //         $objResidente->email = $objValida->validaTexto($request['remail'][$i]);
+        //         $objResidente->save();
+        //     }
+        // }
 
         //*** registro de maquinas */
         for (
@@ -189,9 +195,10 @@ class obrasController extends Controller
 
         $vctMaquinariaAsignada = obraMaqPer::select('*')->where('obraId', '=', $obras->id)->get();
         $vctResidenteAsignado = residente::select('*')->where('obraId', '=', $obras->id)->get();
+        $Clientes = clientes::all();
 
         // dd( $vctResidenteAsignado );
-        return view('obra.detalleObra', compact('obras', 'vctPersonal', 'vctMaquinaria', 'vctResidenteAsignado', 'vctMaquinariaAsignada'));
+        return view('obra.detalleObra', compact('obras', 'vctPersonal', 'vctMaquinaria', 'vctResidenteAsignado', 'vctMaquinariaAsignada', 'Clientes'));
     }
 
     /**
@@ -232,17 +239,19 @@ class obrasController extends Controller
             'estado.max' => 'El campo estado excede el límite de caracteres permitidos.',
         ]);
 
-        $data = $request->only(
-            'nombre',
-            'calle',
-            'numero',
-            'colonia',
-            'estado',
-            'ciudad',
-            'cp',
-            'foto',
-            'logo',
-        );
+        // $data = $request->only(
+        //     'nombre',
+        //     'calle',
+        //     'numero',
+        //     'colonia',
+        //     'estado',
+        //     'ciudad',
+        //     'cp',
+        //     'foto',
+        //     'logo',
+        // );
+
+        $data = $request->all();
 
         /*** directorio contenedor de su información */
         $pathObra = str_pad($obras->id, 4, '0', STR_PAD_LEFT);
@@ -258,79 +267,79 @@ class obrasController extends Controller
         $obras->update($data);
 
         //*** registro de residentes */
-        $vctRegistrados = $objValida->preparaArreglo(residente::where('obraId', '=', $obras->id)->pluck('id')->toArray());
-        $vctArreglo = $objValida->preparaArreglo($request['idResidente']);
+        // $vctRegistrados = $objValida->preparaArreglo(residente::where('obraId', '=', $obras->id)->pluck('id')->toArray());
+        // $vctArreglo = $objValida->preparaArreglo($request['idResidente']);
 
         //*** Preguntamos si existen registros en el arreglo */
-        if (is_array($vctArreglo) && count($vctArreglo) > 0) {
+        // if (is_array($vctArreglo) && count($vctArreglo) > 0) {
 
-            //** buscamos si el registrado esta en el arreglo, de no ser asi se elimina */
-            if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
-                for ($i = 0; $i < count($vctRegistrados); $i++) {
-                    $intValor = (int) $vctRegistrados[$i];
+        //     //** buscamos si el registrado esta en el arreglo, de no ser asi se elimina */
+        //     if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
+        //         for ($i = 0; $i < count($vctRegistrados); $i++) {
+        //             $intValor = (int) $vctRegistrados[$i];
 
-                    if (in_array($intValor, $vctArreglo) == false) {
-                        /*** no existe y se debe de eliminar */
-                        residente::destroy($vctRegistrados[$i]);
-                        // dd( 'Borrando por que se quito el residente' );
-                    } else {
-                        /*** existe el registro */
-                        // dd( 'Sigue vivo en el arreglo' );
-                    }
-                }
-            }
+        //             if (in_array($intValor, $vctArreglo) == false) {
+        //                 /*** no existe y se debe de eliminar */
+        //                 residente::destroy($vctRegistrados[$i]);
+        //                 // dd( 'Borrando por que se quito el residente' );
+        //             } else {
+        //                 /*** existe el registro */
+        //                 // dd( 'Sigue vivo en el arreglo' );
+        //             }
+        //         }
+        //     }
 
-            //*** trabajamos el resto */
-            for (
-                $i = 0;
-                $i < count($request['idResidente']);
-                $i++
-            ) {
-                if ($request['idResidente'][$i] != '') {
-                    //** Actualizacion de registro */
-                    $objResidente =  residente::where('id', '=', $request['idResidente'][$i])->first();
+        //     //*** trabajamos el resto */
+        //     for (
+        //         $i = 0;
+        //         $i < count($request['idResidente']);
+        //         $i++
+        //     ) {
+        //         // if ($request['idResidente'][$i] != '') {
+        //         //     //** Actualizacion de registro */
+        //         //     $objResidente =  residente::where('id', '=', $request['idResidente'][$i])->first();
 
-                    if ($objResidente && $objResidente->id > 0) {
-                        $objResidente->nombre  = $objValida->validaTexto($request['rnombre'][$i]);
-                        $objResidente->empresa  = $objValida->validaTexto($request['rempresa'][$i]);
-                        $objResidente->telefono = $objValida->validaTelefono($request['rtelefono'][$i]);
-                        $objResidente->puesto = $objValida->validaTexto($request['rpuesto'][$i]);
-                        $objResidente->firma = $objValida->validaTexto($request['rfirma'][$i]);
-                        $objResidente->email = $objValida->validaEmail($request['remail'][$i]);
-                        $objResidente->save();
-                        // dd( 'Actualizando residente' );
-                    }
-                } else {
+        //         //     if ($objResidente && $objResidente->id > 0) {
+        //         //         $objResidente->nombre  = $objValida->validaTexto($request['rnombre'][$i]);
+        //         //         $objResidente->empresa  = $objValida->validaTexto($request['rempresa'][$i]);
+        //         //         $objResidente->telefono = $objValida->validaTelefono($request['rtelefono'][$i]);
+        //         //         $objResidente->puesto = $objValida->validaTexto($request['rpuesto'][$i]);
+        //         //         $objResidente->firma = $objValida->validaTexto($request['rfirma'][$i]);
+        //         //         $objResidente->email = $objValida->validaEmail($request['remail'][$i]);
+        //         //         $objResidente->save();
+        //         //         // dd( 'Actualizando residente' );
+        //         //     }
+        //         // } else {
 
-                    //** No existe en bd */
-                    if ($request['rnombre'][$i] != '') {
-                        $objResidente = new residente();
-                        $objResidente->obraid  = $obras->id;
-                        $objResidente->userid  = 1;
-                        $objResidente->nombre  = $objValida->validaTexto($request['rnombre'][$i]);
-                        $objResidente->empresa  = $objValida->validaTexto($request['rempresa'][$i]);
-                        $objResidente->telefono = $objValida->validaTelefono($request['rtelefono'][$i]);
-                        $objResidente->puesto = $objValida->validaTexto($request['rpuesto'][$i]);
-                        $objResidente->firma = $objValida->validaTexto($request['rfirma'][$i]);
-                        $objResidente->email = $objValida->validaEmail($request['remail'][$i]);
-                        $objResidente->save();
-                        // dd( 'Guardando residente' );
-                    }
-                }
-            }
-        } else {
-            //*** se deben de eliminar todos los registrados */
-            if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
-                for (
-                    $i = 0;
-                    $i < count($vctRegistrados);
-                    $i++
-                ) {
-                    residente::destroy($vctRegistrados[$i]);
-                    // dd( 'Borrando todo residente' );
-                }
-            }
-        }
+        //         //     //** No existe en bd */
+        //         //     if ($request['rnombre'][$i] != '') {
+        //         //         $objResidente = new residente();
+        //         //         $objResidente->obraid  = $obras->id;
+        //         //         $objResidente->userid  = 1;
+        //         //         $objResidente->nombre  = $objValida->validaTexto($request['rnombre'][$i]);
+        //         //         $objResidente->empresa  = $objValida->validaTexto($request['rempresa'][$i]);
+        //         //         $objResidente->telefono = $objValida->validaTelefono($request['rtelefono'][$i]);
+        //         //         $objResidente->puesto = $objValida->validaTexto($request['rpuesto'][$i]);
+        //         //         $objResidente->firma = $objValida->validaTexto($request['rfirma'][$i]);
+        //         //         $objResidente->email = $objValida->validaEmail($request['remail'][$i]);
+        //         //         $objResidente->save();
+        //         //         // dd( 'Guardando residente' );
+        //         //     }
+        //         // }
+        //     }
+        // } else {
+        //     //*** se deben de eliminar todos los registrados */
+        //     // if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
+        //     //     for (
+        //     //         $i = 0;
+        //     //         $i < count($vctRegistrados);
+        //     //         $i++
+        //     //     ) {
+        //     //         residente::destroy($vctRegistrados[$i]);
+        //     //         // dd( 'Borrando todo residente' );
+        //     //     }
+        //     // }
+        // }
 
         //*** registro de maquinaria */
         $vctRegistrados = $objValida->preparaArreglo(obraMaqPer::where('obraId', '=', $obras->id)->pluck('id')->toArray());
@@ -421,6 +430,7 @@ class obrasController extends Controller
 
     public function destroy(obras $obras)
     {
+        // dd('test');
         return redirect()->back()->with('failed', 'No se puede eliminar');
     }
 }

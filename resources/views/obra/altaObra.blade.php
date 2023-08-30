@@ -60,7 +60,7 @@
                                         <div class="text-center mx-auto border vistaFoto mb-4">
                                             <i><img class="imgVista img-fluid mb-5"
                                                     src="{{ asset('/img/general/default.jpg') }}"></i>
-                                            <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"
+                                            <span class="mi-archivo2"> <input class="mb-4 ver" type="file" name="logo"
                                                     id="mi-archivo2" accept="image/*"></span>
                                             <label for="mi-archivo2">
                                                 <span>Sube Logo</span>
@@ -80,10 +80,12 @@
                                     <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                         <label class="labelTitulo">Empresa: <span>*</span></label></br>
                                         <select class="form-select" aria-label="Default select example" id="tipo"
-                                            required name="tipo">
-                                            <option selected>Seleccione</option>
-                                            <option value="Q2Ces">Q2Ces</option>
-                                            <option value="Externa">Externa</option>
+                                            required name="clienteId">
+                                            @foreach ($Clientes as $Cliente)
+                                                <option value="{{ $Cliente->id }}">
+                                                    {{ $Cliente->nombre }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class=" col-12 col-sm-6  col-lg-4 my-3 ">

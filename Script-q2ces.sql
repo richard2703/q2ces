@@ -247,6 +247,13 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('tarea_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('tarea_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('tarea_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('cliente_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('cliente_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('cliente_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('cliente_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('cliente_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 
 INSERT INTO
     `model_has_roles`
