@@ -8,7 +8,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Inventario de Herramientas</h4>
+                                    <h4 class="card-title">Inventario de {{ ucfirst( $tipo ) }}</h4>
                                     {{-- <p class="card-category">Usuarios registrados</p> --}}
                                 </div>
 
