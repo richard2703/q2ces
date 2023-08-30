@@ -64,7 +64,7 @@
                                                                         <img src="{{ asset('/img/inventario/equipo_1.svg') }}"
                                                                             alt="" style="width:40px;">
                                                                     </div>
-                                                                    <div>
+                                                                    <div style="width: 90%! important;">
                                                                         <label class="labelTitulo">Equipo:</label></br>
                                                                         <select id="maquinariaId" name="maquinariaId"
                                                                             class="form-select"
@@ -83,7 +83,7 @@
                                                                         <img src="{{ asset('/img/inventario/despachador.svg') }}"
                                                                             alt="" style="width:40px;">
                                                                     </div>
-                                                                    <div>
+                                                                    <div style="width: 90%! important;">
                                                                         <label class="labelTitulo">Despachador:</label></br>
                                                                         <select id="operadorId" name="operadorId"
                                                                             class="form-select"
@@ -102,7 +102,7 @@
                                                                         <img src="{{ asset('/img/inventario/litros.svg') }}"
                                                                             alt="" style="width:40px;">
                                                                     </div>
-                                                                    <div>
+                                                                    <div style="width: 90%! important;">
                                                                         <label class="labelTitulo">Litros:
                                                                             <span>*</span></label></br>
                                                                         <input type="number" step="0.01" min="0.01"
@@ -117,7 +117,7 @@
                                                                         <img src="{{ asset('/img/inventario/precio.svg') }}"
                                                                             alt="" style="width:40px;">
                                                                     </div>
-                                                                    <div>
+                                                                    <div style="width: 90%! important;">
                                                                         <label class="labelTitulo">Precio:
                                                                             <span>*</span></label></br>
                                                                         <input type="number" step="0.01" min="0.01"
@@ -184,7 +184,7 @@
                                                                         <img src="{{ asset('/img/inventario/equipo_1.svg') }}"
                                                                             alt="" style="width:40px;">
                                                                     </div>
-                                                                    <div>
+                                                                    <div style="width: 100%! important;">
                                                                         <label class="labelTitulo">Equipo:</label></br>
                                                                         <select id="maquinariaId" name="maquinariaId"
                                                                             class="form-select"
@@ -203,7 +203,7 @@
                                                                         <img src="{{ asset('/img/navs/eqiposMenu.svg') }}"
                                                                             alt="" style="width:40px;">
                                                                     </div>
-                                                                    <div>
+                                                                    <div style="width: 100%! important;">
                                                                         <label class="labelTitulo">Maquinaria:</label></br>
                                                                         <select id="servicioId" name="servicioId"
                                                                             class="form-select"
@@ -214,7 +214,7 @@
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
-                                                                    </div>
+                                                                    </div>   
                                                                 </div>
 
                                                                 <div class=" col-12 col-md-6 d-flex mb-4">
@@ -222,10 +222,10 @@
                                                                         <img src="{{ asset('/img/inventario/despachador.svg') }}"
                                                                             alt="" style="width:40px;">
                                                                     </div>
-                                                                    <div>
+                                                                    <div style="width: 100%! important;">
                                                                         <label class="labelTitulo">Despachador:</label></br>
                                                                         <select id="operadorId" name="operadorId"
-                                                                            class="form-select"
+                                                                            class="form-select" style="width: 100%! important;"
                                                                             aria-label="Default select example">
                                                                             @foreach ($despachador as $persona)
                                                                                 <option value="{{ $persona->id }}">
@@ -236,12 +236,12 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                <div class="col-12 col-md-6 d-flex mb-4">
                                                                     <div class="me-2">
                                                                         <img src="{{ asset('/img/navs/personalMenu.svg') }}"
                                                                             alt="" style="width:40px;">
                                                                     </div>
-                                                                    <div>
+                                                                    <div style="width: 100%! important;">
                                                                         <label class="labelTitulo">Operador:</label></br>
                                                                         <select id="receptorId" name="receptorId"
                                                                             class="form-select"
@@ -260,7 +260,7 @@
                                                                         <img src="{{ asset('/img/inventario/litros.svg') }}"
                                                                             alt="" style="width:40px;">
                                                                     </div>
-                                                                    <div>
+                                                                    <div style="width: 100%! important;">
                                                                         <label class="labelTitulo">Litros:
                                                                             <span>*</span></label></br>
                                                                         <input type="number" step="0.01" min="0.01"
@@ -273,7 +273,7 @@
                                                                         <img src="{{ asset('/img/inventario/iconoKm.svg') }}"
                                                                             alt="" style="width:40px;">
                                                                     </div>
-                                                                    <div>
+                                                                    <div style="width: 100%! important;">
                                                                         <label class="labelTitulo">Km/Mi:</label></br>
                                                                         <input type="number" step="1" min="0"
                                                                             class="inputCaja" id="km" name="km"
@@ -286,7 +286,7 @@
                                                                         <img src="{{ asset('/img/inventario/horometroIcono.svg') }}"
                                                                             alt="" style="width:40px;">
                                                                     </div>
-                                                                    <div>
+                                                                    <div style="width: 100%! important;">
                                                                         <label class="labelTitulo">Horómetro:</label></br>
                                                                         <input type="number" step="0.1" min="0"
                                                                             class="inputCaja" id="horas" name="horas"
@@ -781,7 +781,7 @@
 
                         <div class="col-6 my-3">
                             <label for="inputEmail4" class="form-label">Operador</label>
-                            <select id="descargaDespachador" name="descargaDespachador" class="form-select">
+                            <select id="descargaDespachador" name="descargaDespachador" class="form-select" style="width: 200px !important;">
                                 @foreach ($despachadores as $persona)
                                     <option value="{{ $persona->id }}">
                                         {{ $persona->nombres . ' ' . $persona->apellidoP }}

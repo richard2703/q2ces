@@ -45,14 +45,14 @@ class personalController extends Controller
 
         $personal = personal::select(
             'personal.*',
-            DB::raw('puesto.nombre AS puesto'),
-            DB::raw('userEstatus.nombre AS estatus')
+            'puesto.nombre as puesto',
+            'userEstatus.nombre AS estatus',
         )
             ->join('nomina', 'nomina.personalId', '=', 'personal.id')
             ->join('userEstatus', 'userEstatus.id', '=', 'personal.estatusId')
             ->leftJoin('puesto', 'puesto.id', '=', 'nomina.puestoId')
             ->orderBy('created_at', 'desc')->paginate(15);
-        // dd( $personal );
+        // dd($personal);
         return view('personal.indexPersonal', compact('personal'));
     }
 
@@ -339,6 +339,7 @@ class personalController extends Controller
         $newbeneficiario = new beneficiario();
         $newbeneficiario->personalId = $personal->id;
         $newbeneficiario->nombres = $request->nombreB;
+        $newbeneficiario->emailB = $request->emailB;
         $newbeneficiario->apellidoP = $request->apellidoPB;
         $newbeneficiario->apellidoM = $request->apellidoMB;
         $newbeneficiario->particular = $request->particularB;
@@ -449,11 +450,12 @@ class personalController extends Controller
                 'userdocs.requerido',
                 'userdocs.id as idDoc'
             )
-            // ->where( 'personalId', $personal->id )
+            // ->where('personalId', $personal->id)
             ->where('docs.tipoId', '1')
+            ->groupBy('docs.id')
             ->get();
 
-        // dd( $docs );
+        // dd($docs);
         $fiscal = fiscal::where('personalId', $personal->id)->first();
         $vctPuestos = puesto::orderBy('nombre', 'asc')->get();
         $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->get();
@@ -831,6 +833,7 @@ class personalController extends Controller
 
         $beneficiario = beneficiario::where('personalId', $personal->id)->first();
         $beneficiario->nombres = $request->nombreB;
+        $beneficiario->emailB = $request->emailB;
         $beneficiario->apellidoP = $request->apellidoPB;
         $beneficiario->apellidoM = $request->apellidoMB;
         $beneficiario->particular = $request->particularB;
@@ -847,7 +850,7 @@ class personalController extends Controller
         $nomina->pago = $request->pago;
         $nomina->tarjeta = $request->tarjeta;
         $nomina->banco = $request->banco;
-        $nomina->puesto = $request->puesto;
+        // $nomina->puesto = $request->puesto;
         $nomina->ingreso = $request->ingreso;
         $nomina->horario = $request->horario;
         $nomina->hEntrada = $request->hEntrada;

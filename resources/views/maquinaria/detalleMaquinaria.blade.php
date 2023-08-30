@@ -697,7 +697,7 @@
                                                                         <div
                                                                             class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
                                                                             <input type="hidden"
-                                                                                id='{{ $item->idDoc }}'
+                                                                                id=''
                                                                                 name='archivo[{{ $count }}][idDoc]'
                                                                                 value='{{ $item->idDoc }}'>
                                                                             <input type="hidden"

@@ -17,7 +17,7 @@
     <div class="content">
         <div class="row">
             <div class="col-4 text-left mb-1" style="margin-left: 12px">
-                <a href="{{ url('dashMtq') }}" id="regresarId">
+                {{--  <a href="{{ url('dashMtq') }}" id="regresarId">
                     <button class="btn regresar"
                         style="background-color: var(--select);
                 color: #fff;
@@ -27,7 +27,7 @@
                         </span>
                         Regresar
                     </button>
-                </a>
+                </a>  --}}
             </div>
             <div class="col-8 text-end mb-1" style="margin-left: -25px">
                 @can('calendarioMtq_create')

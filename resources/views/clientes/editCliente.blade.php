@@ -85,12 +85,12 @@
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">No. Exterior:</label></br>
-                                            <input type="text" class="inputCaja" id="exterior" name="exterior"
+                                            <input type="text" class="inputCaja" id="exterior" name="exterior" required
                                                 value="{{ $cliente->exterior }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">No. Interior: <span>*</span></label></br>
-                                            <input type="text" class="inputCaja" id="interior" name="interior" required
+                                            <input type="text" class="inputCaja" id="interior" name="interior" 
                                                 placeholder="Especifique..." value="{{ $cliente->interior }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
@@ -159,6 +159,7 @@
                                         @empty
                                             <div class="row opcion divBorderItems" id="opc">
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                    <input type="hidden" name="idResidente[]" value="">
                                                     <label class="labelTitulo">Nombre:</label></br>
                                                     <input type="text" class="inputCaja" id="rNombre"
                                                         placeholder="Especifique..." name="rNombre[]" value="">

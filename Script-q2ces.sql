@@ -247,6 +247,13 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('tarea_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('tarea_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('tarea_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('cliente_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('cliente_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('cliente_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('cliente_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('cliente_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 
 INSERT INTO
     `model_has_roles`
@@ -959,6 +966,7 @@ CREATE TABLE beneficiario(
     particular varchar(255) NULL,
     celular varchar(255) NULL,
     nacimiento datetime NULL,
+    emailB varchar(255) NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_beneficiario_personalId foreign key (personalId) references personal(id)
 );
@@ -1104,8 +1112,8 @@ CREATE TABLE maquinaria(
     bujias varchar(255) NULL,
     tipobujia varchar(255) NULL,
     horometro int NULL,
-    kilometraje int NULL,
-    kom varchar(255) NULL,
+    kilometraje int null default 0,
+    kom varchar(255) null ,
     foto varchar(255) NULL,
     foto2 varchar(255) NULL,
     foto3 varchar(255) NULL,
