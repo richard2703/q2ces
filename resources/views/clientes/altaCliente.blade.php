@@ -75,7 +75,7 @@
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">RFC: </label></br>
-                                            <input type="number" class="inputCaja" id="rfc" name="rfc"
+                                            <input type="text" class="inputCaja" id="rfc" name="rfc"
                                                 placeholder="Especifique..." value="{{ old('rfc') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
@@ -85,12 +85,12 @@
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">No. Exterior:</label></br>
-                                            <input type="text" class="inputCaja" id="exterior" name="exterior"
+                                            <input type="text" class="inputCaja" id="exterior" name="exterior" required
                                                 value="{{ old('cp') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">No. Interior: <span>*</span></label></br>
-                                            <input type="text" class="inputCaja" id="interior" name="interior" required
+                                            <input type="text" class="inputCaja" id="interior" name="interior" 
                                                 placeholder="Especifique..." value="{{ old('interior') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
