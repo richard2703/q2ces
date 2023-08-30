@@ -21,9 +21,9 @@
                                 <div class="card-header bacTituloPrincipal">
                                     <h4 class="card-title">Movimientos De Caja Chica</h4>
                                     {{-- <p class="card-category">Usuarios Registrados</p> --}}
-                                    
+
                                 </div>
-                            
+
                                 <div class="d-flex p-3 divBorder">
                                     <div class="col-6 ">
                                         <a href="{{ route('cajaChica.index') }}">
@@ -38,9 +38,9 @@
                                     </div>
                                     <div class="col-6 text-end">
                                         <button type="button" class="btn botonGral " data-bs-toggle="modal"
-                                        data-bs-target="#modalConcepto">Nuevo Concepto</button>                                        
+                                        data-bs-target="#modalConcepto">Nuevo Concepto</button>
                                     </div>
-                                    {{-- @endcan --}}                                
+                                    {{-- @endcan --}}
                                 </div>
 
                                 <form class="alertaGuardar" action="{{ route('cajaChica.store') }}" method="post"
@@ -96,33 +96,26 @@
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Comprobante: <span>*</span></label></br>
-                                                <select id="compribante" name="comprobante" class="form-select" required
+                                                <select id="comprobanteId" name="comprobanteId" class="form-select" required
                                                     aria-label="Default select example">
                                                     <option selected>Seleccione</option>
-                                                    <option value="1">
-                                                        Factura
+                                                    @foreach ($vctComprobantes as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->nombre }}
                                                     </option>
-                                                    <option value="2">
-                                                        Vale Q2Ces
-                                                    </option>
-                                                    <option value="3">
-                                                        Nota
-                                                    </option>
-                                                    <option value="4">
-                                                        Remision
-                                                    </option>
+                                                @endforeach
                                                 </select>
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Numero De Comprobante:</label></br>
+                                                <label class="labelTitulo">Número De Comprobante:</label></br>
                                                 <input type="text" class="inputCaja" id="ncomprobante"
                                                     name="ncomprobante" value="{{ old('ncomprobante') }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Obra: <span>*</span></label></br>
-                                                <select id="obra" name="obra" class="form-select" required
+                                                <select id="obra" name="obra" class="form-select"
                                                     aria-label="Default select example">
                                                     <option selected>Seleccione</option>
                                                     @forelse ($obras as $obra)
@@ -136,9 +129,12 @@
                                                 <label class="labelTitulo">Cliente:</label></br>
                                                 <select id="cliente" name="cliente" class="form-select"
                                                     aria-label="Default select example">
-                                                    <option value="">
-                                                        001-B Ingreso Caja Chica
+                                                    <option selected>Seleccione</option>
+                                                    @foreach ($vctClientes as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->nombre }}
                                                     </option>
+                                                @endforeach
                                                 </select>
                                             </div>
 

@@ -91,25 +91,7 @@
                                                         </td>
                                                         <td title={{ $registro->codigo }}>{{ $registro->cnombre }}</td>
                                                         <td title={{ $registro->ncomprobante }}>
-                                                            @switch($registro->comprobante)
-                                                                @case(1)
-                                                                    Factura
-                                                                @break
-
-                                                                @case(2)
-                                                                    Vale Q2Ces
-                                                                @break
-
-                                                                @case(3)
-                                                                    Nota
-                                                                @break
-
-                                                                @case(4)
-                                                                    Remision
-                                                                @break
-
-                                                                @default
-                                                            @endswitch
+                                                            {{ $registro->comprobante }}
                                                         </td>
                                                         {{--  <td>1234</td>  --}}
                                                         <td>{{ $registro->cliente }}</td>

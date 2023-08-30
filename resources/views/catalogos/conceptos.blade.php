@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista De Ubicaciones')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Conceptos')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -17,7 +17,8 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header bacTituloPrincipal">
-                            <h4 class="card-title">Ubicaciones</h4>
+                            <h4 class="card-title">Conceptos</h4>
+
                         </div>
                         <div class="card-body">
                             @if (session('success'))
@@ -31,61 +32,62 @@
                                 </div>
                             @endif
                             <div class="row">
-                                <div class="d-flex p-3 divBorder">
-                                    <div class="col-12 text-right">
-
-                                        <a href="{{ route('catalogos.index') }}">
-                                            <button class="btn regresar">
-                                                <span class="material-icons">
-                                                    reply
-                                                </span>
-                                                Regresar
-                                            </button>
-                                        </a>
-
-                                        @can('ubicaciones_create')
-                                            <button class="btn botonGral float-end" data-bs-toggle="modal"
-                                                data-bs-target="#nuevoItem" onclick="cargaItem(' ',' ',' ',' ',' ','')">
-                                                Añadir Un Ubicación
-                                            </button>
-                                        @endcan
-                                    </div>
+                                <div class="col-4 text-left">
+                                    <a href="{{ route('catalogos.index') }}">
+                                        <button class="btn regresar">
+                                            <span class="material-icons">
+                                                reply
+                                            </span>
+                                            Regresar
+                                        </button>
+                                    </a>
                                 </div>
+
+                                <div class="col-8 align-end">
+                                    @can('catalogos_create')
+                                        <button class="btn botonGral float-end" data-bs-toggle="modal"
+                                            data-bs-target="#nuevoItem">
+                                            Añadir Concepto
+                                        </button>
+                                    @endcan
+                                </div>
+
+                                <div class="d-flex p-3 divBorder"></div>
                             </div>
-                            <div class="table-responsive">
-                            <table class="table">
+
+
+                            <table class="table table-responsive">
                                 <thead class="labelTitulo">
                                     <tr>
-                                        <th class="labelTitulo text-center">Id</th>
-                                        <th class="labelTitulo text-center">Nombre</th>
-                                        <th class="labelTitulo text-center">Dirección</th>
-                                        <th class="labelTitulo text-center" style="width:150px">Comentarios</th>
-                                        <th class="labelTitulo text-center" style="width:140px">Acciones</th>
+                                        <th class="labelTitulo">Id</th>
+                                        <th class="labelTitulo">Código</th>
+                                        <th class="labelTitulo">Nombre</th>
+                                        <th class="labelTitulo">Comentario</th>
+                                        <th class="labelTitulo text-right">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($ubicaciones as $item)
+                                    @forelse ($records as $item)
                                         <tr>
-                                            <td class="text-center">{{ $item->id }}</td>
-                                            <td class="text-center">{{ $item->nombre }}</td>
-                                            <td class="text-center">{{ $item->direccion }}</td>
-                                            <td class="text-center">{{ $item->comentario }}</td>
+                                            <td>{{ $item->id }}</td>
+                                            <td class="text-left">{{ $item->codigo }}</td>
+                                            <td class="text-left">{{ $item->nombre }}</td>
+                                            <td class="text-left">{{ $item->comentario }}</td>
 
-
-                                            <td class="td-actions text-center">
-                                                @can('ubicaciones_show')
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
-                                                    onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->comentario }}','{{ $item->activo }}','{{ $item->direccion }}','{{true}}')">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
-                                                        <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-                                                        <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
-                                                    </svg>
-                                                </a>
-                                                @endcan
-                                                @can('ubicaciones_edit')
+                                            <td class="td-actions text-right">
+                                                {{-- @can('catalogos_show')
+                                                <a href="#"  class="" data-bs-toggle="modal"
+                                                data-bs-target="#editarItem" onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->comentario }}','{{ $item->tipo }}','{{ true }}')">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
+                                                            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                                            <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
+                                                        </svg>
+                                                    </a>
+                                                @endcan --}}
+                                                @can('catalogos_edit')
                                                 <a href="#" class="" data-bs-toggle="modal"
                                                     data-bs-target="#editarItem"
-                                                    onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->comentario }}','{{ $item->activo }}','{{ $item->direccion }}','{{false}}')">
+                                                    onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->codigo }}','{{ $item->comentario }}')">
                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                         height="28" fill="currentColor"
                                                         class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -94,7 +96,7 @@
                                                     </svg>
                                                 </a>
                                                 @endcan
-                                                {{-- @can('ubicaciones_destroy') --}}
+                                                {{-- @can('user_destroy') --}}
                                                 {{-- <form action="{{ route('puestos.delete', $item->id) }}"
                                                     method="POST" style="display: inline-block;"
                                                     onsubmit="return confirm('Seguro?')">
@@ -119,11 +121,11 @@
                                             <td colspan="2">Sin registros.</td>
                                         </tr>
                                     @endforelse
+
                                 </tbody>
                             </table>
-                            </div>
-                            <div class="card-footer mr-auto d-flex justify-content-center">
-                                {{ $ubicaciones->links() }}
+                            <div class="card-footer mr-auto">
+                                {{ $records->links() }}
                             </div>
                         </div>
                     </div>
@@ -137,32 +139,29 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Añadir Ubicación</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nuevo Concepto</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('ubicaciones.store') }}" method="post">
+                    <form class="row d-flex" action="{{ route('conceptos.store') }}" method="post">
                         @csrf
-                        <div class=" col-9 col-sm-8 col-lg-10 mb-3 ">
-                            <label class="labelTitulo">Nombre: <span>*</span></label></br>
+                        {{-- <input type="hidden" name="userId" id="userId" value="{{ $usuario->id }}"> --}}
+
+                        <div class=" col-12 col-sm-4 mb-4 ">
+                            <label class="labelTitulo">Código: <span>*</span></label></br>
+                            <input type="text" class="inputCaja" id="codigo" name="codigo" maxlength="8" required  placeholder="Ej: COD-001"
+                                value="{{ old('codigo') }}">
+                        </div>
+
+                        <div class=" col-12 col-sm-8 mb-4 ">
+                            <label class="labelTitulo">Nombre:<span>*</span></label></br>
                             <input type="text" class="inputCaja" id="nombre" name="nombre"
                                 value="{{ old('nombre') }}" required placeholder="Especifique...">
                         </div>
 
-                        <div class=" col-3 col-sm-4 col-lg-2 mb-3 ">
-                            <label class="labelTitulo">Activo: <span>*</span></label></br>
-                            <input class="form-check-input is-valid align-self-end mb-2" type="checkbox" name="check" id="controlCheckNew"
-                            checked style="font-size: 20px;">
-                        </div>
-
-                        <div class=" col-12 mb-3 ">
-                            <label class="labelTitulo">Dirección: <span>*</span></label></br>
-                            <input type="text" class="inputCaja" name="direccion" value="" placeholder="Especifique...">
-                        </div>
-
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
-                            <textarea class="form-control border-green" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario"
+                            <textarea class="form-control-textarea border-green" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario"
                                 spellcheck="true"></textarea>
                         </div>
 
@@ -182,39 +181,35 @@
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
 
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp <span id="tituloModal">Editar</span> Ubicación</label>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp <span id="tituloModal">Editar Concepto</label>
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('ubicaciones.update', 0) }}" method="post">
+                    <form class="row d-flex" action="{{ route('conceptos.update', 0) }}" method="post">
                         @csrf
                         @method('put')
                         <input type="hidden" name="controlId" id="controlId" value="">
-                        <div class=" col-9 col-sm-8 col-lg-10 mb-3 ">
-                            <label class="labelTitulo">Nombre: <span>*</span></label></br>
+
+                        <div class=" col-12 col-sm-4 mb-4 ">
+                            <label class="labelTitulo">Código: <span>*</span></label></br>
+                            <input type="text" class="inputCaja" id="controlCodigo" name="codigo" maxlength="8" required  placeholder="Ej: COD-001"
+                                value="">
+                        </div>
+
+                        <div class=" col-12 col-sm-8 mb-4 ">
+                            <label class="labelTitulo">Nombre:</label></br>
                             <input type="text" class="inputCaja" id="controlNombre" name="nombre" value="">
-                        </div>
-
-                        <div class=" col-3 col-sm-4 col-lg-2 mb-3 ">
-                            <label class="labelTitulo">Activo: <span>*</span></label></br>
-                            <input class="form-check-input is-valid align-self-end mb-2" type="checkbox" name="check" id="controlActivo"
-                            style="font-size: 20px;">
-                        </div>
-
-                        <div class=" col-12 mb-3 ">
-                            <label class="labelTitulo">Dirección: <span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="controlDireccion" name="direccion" value="">
                         </div>
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
-                            <textarea class="form-control border-green" placeholder="Escribe tu comentario aquí" id="controlComentarios" name="comentario"></textarea>
+                            <textarea class="form-control-textarea border-green" placeholder="Escribe tu comentario aquí" id="controlComentarios" name="comentario"></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <div id="contenedorBotonGuardar">
-                                <button type="submit" class="btn botonGral" id="btnTareaGuardar">Guardar cambios</button>
+                            <button type="submit" class="btn botonGral" id="btnTareaGuardar">Guardar Cambios</button>
                             </div>
                         </div>
 
@@ -223,6 +218,19 @@
             </div>
         </div>
     </div>
+    <style>
+        select[readonly],
+        input[readonly],
+        textarea[readonly] {
+            color: grey;
+            cursor: no-drop !important;
+        }
+
+
+        select[readonly] option {
+            display: none !important;
+        }
+    </style>
 
     <script src="{{ asset('js/alertas.js') }}"></script>
     <script type="application/javascript">
@@ -264,56 +272,19 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, comentario, activo, direccion, modalTipo) {
+        function cargaItem(id, nombre, codigo, comentarios) {
+
             const txtId = document.getElementById('controlId');
             txtId.value = id;
 
             const txtNombre = document.getElementById('controlNombre');
             txtNombre.value = nombre;
-            txtNombre.disabled = modalTipo;
 
             const txtComentarios = document.getElementById('controlComentarios');
-            txtComentarios.value = comentario;
-            txtComentarios.disabled = modalTipo;
+            txtComentarios.value = comentarios;
 
-            const txtActivo = document.getElementById('controlActivo');
-            if(activo == 1){
-                txtActivo.checked = true;
-            }else{
-                txtActivo.checked = false;
-            }
-            txtActivo.disabled = modalTipo;
-
-            const txtDireccion = document.getElementById('controlDireccion');
-            txtDireccion.value = direccion;
-            txtDireccion.disabled = modalTipo;
-
-            const contenedorBotonGuardar = document.getElementById('contenedorBotonGuardar');
-
-            if (modalTipo) {
-                contenedorBotonGuardar.style.display = 'none';
-            } else {
-                contenedorBotonGuardar.style.display = 'block';
-            }
-
-            const tituloModal = document.getElementById('tituloModal');
-            if (modalTipo) {
-                tituloModal.textContent = 'Ver';
-            } else {
-                tituloModal.textContent = 'Editar';
-            }
-
-            const campos = document.querySelectorAll('input[type="text"], select, textarea');
-            // Aplicar color gris a los campos con readonly
-            campos.forEach((campo) => {
-                if (modalTipo) {
-                    campo.disabled = true;
-                    campo.style.color = 'grey';
-                } else {
-                    campo.disabled = false;
-                    campo.style.color = 'initial';
-                }
-            });
+            const txtCodigo = document.getElementById('controlCodigo');
+            txtCodigo.value = codigo;
         }
     </script>
 @endsection

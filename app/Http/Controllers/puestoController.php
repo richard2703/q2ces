@@ -57,7 +57,7 @@ class puestoController extends Controller
             'comentarios' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
-            'nombre.unique' => 'El campo nombre ya esta en uso.',
+            'nombre.unique' => 'El valor del campo nombre ya esta en uso.',
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
             'comentarios.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
         ]);
@@ -112,7 +112,7 @@ class puestoController extends Controller
             'comentarios' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
-            'nombre.unique' => 'El campo nombre ya esta en uso.',
+            'nombre.unique' => 'El valor del campo nombre ya esta en uso.',
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
             'comentarios.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
         ]);
