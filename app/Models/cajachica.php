@@ -13,7 +13,7 @@ class cajaChica extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'dia', 'concepto', 'comprobante', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario',
+        'dia', 'concepto', 'comprobanteId', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario',
         'total'
     ];
 }

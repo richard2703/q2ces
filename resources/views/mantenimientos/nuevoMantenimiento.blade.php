@@ -16,11 +16,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                    <div class="card-header bacTituloPrincipal">
-                        <h4 class="card-title">Nuevo Registro De Mantenimiento</h4>
-                    </div>
+                        <div class="card-header bacTituloPrincipal">
+                            <h4 class="card-title">Nuevo Registro De Mantenimiento</h4>
+                        </div>
 
-                    <div class="col-12 col-md-2 mt-4" style="margin-left:20px">
+                        <div class="col-12 col-md-2 mt-4" style="margin-left:20px">
                             <a href="{{ route('mantenimientos.index') }}">
                                 <button class="btn regresar">
                                     <span class="material-icons">
@@ -114,7 +114,7 @@
 
                                     <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                         <label class="labelTitulo">Tipo De Mantenimiento: <span>*</span></label></br>
-                                        <select class="form-select form-select-lg mb-3 inputCaja" name="tipo" required
+                                        {{-- <select class="form-select form-select-lg mb-3 inputCaja" name="tipo" required
                                             id="tipo" aria-label=".form-select-lg example">
 
                                             <option value="">Seleccione</option>
@@ -122,6 +122,16 @@
                                             <option value="250">250</option>
                                             <option value="500">500</option>
                                             <option value="1000">1000</option>
+                                        </select> --}}
+
+                                        <select id="tipoMantenimientoId" name="tipoMantenimientoId" class="form-select form-select-lg mb-3 inputCaja" required
+                                            required aria-label="Default select example">
+                                            <option value="">Seleccione</option>
+                                            @foreach ($vctTipos as $item)
+                                                <option value="{{ $item->id }}">
+                                                    {{ $item->nombre }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class=" col-12 col-sm-6  col-lg-12 my-6 ">

@@ -11,8 +11,19 @@ class mantenimientos extends Model {
     public $timestamps = true;
 
     protected $fillable = [
-        'tipo', 'estadoId', 'titulo', 'maquinariaId', 'personalId', 'comentario', 'fechaInicio', 'fechaReal', 'adscripcion',
-        'horometro',        'kilometraje',        'subtotal',        'iva',
+        'tipoMantenimientoId',
+        'estadoId',
+        'titulo',
+        'maquinariaId',
+        'personalId',
+        'comentario',
+        'fechaInicio',
+        'fechaReal',
+        'adscripcion',
+        'horometro',
+        'kilometraje',
+        'subtotal',
+        'iva',
         'costo' ,
     ];
 }

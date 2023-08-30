@@ -4,27 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\puestoNivel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use App\Models\comprobante;
 
-class puestoNivelController extends Controller
+class comprobanteController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
     public function index()
     {
-        abort_if(Gate::denies('catalogos_index'), 403);
-
-        $records = puestoNivel::orderBy('nombre', 'asc')->paginate(15);
-
-        return view('catalogo.indexPuestosNivel', compact('records'));
+        //
     }
 
     /**
@@ -32,7 +27,6 @@ class puestoNivelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     public function create()
     {
         //
@@ -44,14 +38,14 @@ class puestoNivelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
     public function store(Request $request)
     {
+
         abort_if(Gate::denies('catalogos_create'), 403);
 
         // dd( $request );
-        $request->validate([
-            'nombre' => 'required|max:250|unique:puestoNivel,nombre,' . $request['nombre'],
+        $request->validate( [
+            'nombre' => 'required|max:250|unique:comprobante,nombre,' . $request['nombre'],
             'comentarios' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
@@ -61,10 +55,10 @@ class puestoNivelController extends Controller
         ]);
         $record = $request->all();
 
-        puestoNivel::create($record);
+        comprobante::create($record);
         Session::flash('message', 1);
 
-        return redirect()->route('catalogoPuestosNivel.index');
+        return redirect()->route('catalogoComprobantes.index');
     }
 
     /**
@@ -73,7 +67,6 @@ class puestoNivelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
     public function show($id)
     {
         //
@@ -85,7 +78,6 @@ class puestoNivelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
     public function edit($id)
     {
         //
@@ -98,33 +90,33 @@ class puestoNivelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
     public function update(Request $request, $id)
     {
-        abort_if(Gate::denies('catalogos_edit'), 403);
+
+        abort_if ( Gate::denies( 'catalogos_edit' ), 403 );
 
         // dd( $request );
 
-        $request->validate([
-            'nombre' => 'required|max:250|max:250|unique:puestoNivel,nombre,' . $request['puestoId'],
-            'comentarios' => 'nullable|max:500',
+        $request->validate( [
+            'nombre' => 'required|max:250|unique:comprobante,nombre,' . $request[ 'controlId' ],
+            'comentario' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.unique' => 'El valor del campo nombre ya esta en uso.',
-            'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
-            'comentarios.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
-        ]);
+            'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
+            'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+        ] );
         $data = $request->all();
 
-        $record = puestoNivel::where('id', $data['puestoId'])->first();
+        $record = comprobante::where( 'id', $data[ 'controlId' ] )->first();
 
-        if (is_null($record) == false) {
+        if ( is_null( $record ) == false ) {
             // dd( $data );
-            $record->update($data);
-            Session::flash('message', 1);
+            $record->update( $data );
+            Session::flash( 'message', 1 );
         }
 
-        return redirect()->route('catalogoPuestosNivel.index');
+        return redirect()->route( 'catalogoComprobantes.index' );
     }
 
     /**
@@ -133,7 +125,6 @@ class puestoNivelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
     public function destroy($id)
     {
         //
