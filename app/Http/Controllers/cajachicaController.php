@@ -12,8 +12,11 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 use App\Helpers\Calculos;
+use App\Models\clientes;
+use App\Models\comprobante;
 
 class cajaChicaController extends Controller
 {
@@ -32,12 +35,14 @@ class cajaChicaController extends Controller
             ->join('obras', 'cajaChica.obra', 'obras.id')
             ->join('maquinaria', 'cajaChica.equipo', 'maquinaria.id')
             ->join('conceptos', 'cajaChica.concepto', 'conceptos.id')
+            ->join('comprobante', 'cajaChica.comprobanteId', 'comprobante.id')
             ->select(
                 'cajaChica.id',
                 'dia',
                 'conceptos.codigo',
                 'conceptos.nombre as cnombre',
-                'comprobante',
+                'comprobanteId',
+                DB::raw("comprobante.nombre as comprobante"),
                 'ncomprobante',
                 'personal.nombres as pnombre',
                 'personal.apellidoP as papellidoP',
@@ -118,8 +123,10 @@ class cajaChicaController extends Controller
         $personal = personal::get();
         $obras = obras::get();
         $maquinaria = maquinaria::get();
+        $vctComprobantes = comprobante::select()->orderBy('nombre','asc')->get();
+        $vctClientes = clientes::select()->orderBy('nombre','asc')->get();
         // dd( $maquinaria );
-        return view('cajaChica.nuevoMovimiento', compact('conceptos', 'personal', 'obras', 'maquinaria'));
+        return view('cajaChica.nuevoMovimiento', compact('conceptos', 'personal', 'obras', 'maquinaria','vctComprobantes','vctClientes'));
     }
 
     /**
@@ -156,7 +163,7 @@ class cajaChicaController extends Controller
         }
         // dd( $decTotal, $total );
 
-        $ultimo = cajaChica::create($request->only('dia', 'concepto', 'comprobante', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario',) + ['total' => $total]);
+        $ultimo = cajaChica::create($request->only('dia', 'concepto', 'comprobanteId', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario',) + ['total' => $total]);
         Session::flash('message', 1);
         return redirect()->action([cajaChicaController::class, 'index']);
     }
@@ -190,7 +197,9 @@ class cajaChicaController extends Controller
         $personal = personal::get();
         $obras = obras::get();
         $maquinaria = maquinaria::get();
-        return view('cajaChica.editMovimiento', compact('conceptos', 'personal', 'obras', 'maquinaria', 'cajaChica'));
+        $vctComprobantes = comprobante::select()->orderBy('nombre','asc')->get();
+        $vctClientes = clientes::select()->orderBy('nombre','asc')->get();
+        return view('cajaChica.editMovimiento', compact('conceptos', 'personal', 'obras', 'maquinaria', 'cajaChica','vctComprobantes','vctClientes'));
 
         // {
         // {

@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Categorías de Proveedor')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Comprobantes')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -19,7 +19,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Categorías de Proveedor</h4>
+                                    <h4 class="card-title">Comprobantes</h4>
 
                                 </div>
                                 <div class="card-body">
@@ -34,6 +34,7 @@
                                         </div>
                                     @endif
                                     <div class="row">
+                                    <div class="d-flex p-3 divBorder">
                                         <div class="col-12 text-right">
 
                                             <a href="{{ route('catalogos.index') }}">
@@ -48,10 +49,11 @@
                                             @can('catalogos_create')
                                                 <button class="btn botonGral float-end" data-bs-toggle="modal"
                                                     data-bs-target="#nuevoItem">
-                                                    Añadir Categoría de Proveedor
+                                                    Añadir Comprobante
                                                 </button>
                                             @endcan
                                         </div>
+                                    </div>
                                     </div>
 
 
@@ -120,7 +122,7 @@
 
                                         </tbody>
                                     </table>
-                                    <div class="card-footer mr-auto">
+                                    <div class="card-footer mr-auto d-flex justify-content-center">
                                         {{ $records->links() }}
                                     </div>
                                 </div>
@@ -137,11 +139,11 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nueva Categoría de Proveedor</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nueva Comprobante</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('proveedorCategoria.store') }}" method="post">
+                    <form class="row d-flex" action="{{ route('comprobante.store') }}" method="post">
                         @csrf
                         {{-- <input type="hidden" name="userId" id="userId" value="{{ $usuario->id }}"> --}}
                         <div class=" col-12 col-sm-6 mb-3 ">
@@ -172,12 +174,12 @@
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
 
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Categoría de Proveedor</label>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Comprobante</label>
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('proveedorCategoria.update', 0) }}" method="post">
+                    <form class="row d-flex" action="{{ route('comprobante.update', 0) }}" method="post">
                         @csrf
                         @method('put')
                         <input type="hidden" name="controlId" id="controlId" value="">
@@ -241,7 +243,7 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, comentarios) {
+        function cargaItem(id, nombre,  comentarios) {
 
             const txtId = document.getElementById('controlId');
             txtId.value = id;

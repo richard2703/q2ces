@@ -225,6 +225,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/catalogos/tiposEquipo/{tipoEquipo}', [App\Http\Controllers\tipoEquipoController::class, 'update'])->name('tipoEquipo.update');
     Route::delete('/catalogos/tiposEquipo/{tipoEquipo}', [App\Http\Controllers\tipoEquipoController::class, 'destroy'])->name('tipoEquipo.delete');
 
+    Route::get('/catalogos/tiposMantenimiento', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposMantenimiento'])->name('catalogoTiposMantenimiento.index');
+    Route::get('/catalogos/tiposMantenimiento/nuevo', [App\Http\Controllers\tipoMantenimientoController::class, 'create'])->name('tipoMantenimiento.create');
+    Route::post('/catalogos/tiposMantenimiento', [App\Http\Controllers\tipoMantenimientoController::class, 'store'])->name('tipoMantenimiento.store');
+    Route::put('/catalogos/tiposMantenimiento/{tipoMantenimiento}', [App\Http\Controllers\tipoMantenimientoController::class, 'update'])->name('tipoMantenimiento.update');
+    Route::delete('/catalogos/tiposMantenimiento/{tipoMantenimiento}', [App\Http\Controllers\tipoMantenimientoController::class, 'destroy'])->name('tipoMantenimiento.delete');
+
     Route::get('/catalogos/tiposRefaccion', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTipoRefaccion'])->name('catalogoTipoRefaccion.index');
     Route::get('/catalogos/tiposRefaccion/nuevo', [App\Http\Controllers\refaccionTipoController::class, 'create'])->name('refaccionTipo.create');
     Route::post('/catalogos/tiposRefaccion', [App\Http\Controllers\refaccionTipoController::class, 'store'])->name('refaccionTipo.store');
@@ -242,6 +248,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/catalogos/marcas', [App\Http\Controllers\marcaController::class, 'store'])->name('marca.store');
     Route::put('/catalogos/marcas/{marca}', [App\Http\Controllers\marcaController::class, 'update'])->name('marca.update');
     Route::delete('/catalogos/marcas/{marca}', [App\Http\Controllers\marcaController::class, 'destroy'])->name('marca.delete');
+
+    Route::get('/catalogos/conceptos', [App\Http\Controllers\catalogosController::class, 'indexCatalogoConceptos'])->name('catalogoConceptos.index');
+    Route::get('/catalogos/concepto/nuevo', [App\Http\Controllers\conceptosController::class, 'create'])->name('conceptos.create');
+    Route::post('/catalogos/conceptos', [App\Http\Controllers\conceptosController::class, 'store'])->name('conceptos.store');
+    Route::put('/catalogos/conceptos/{concepto}', [App\Http\Controllers\conceptosController::class, 'update'])->name('conceptos.update');
+    Route::delete('/catalogos/conceptos/{concepto}', [App\Http\Controllers\conceptosController::class, 'destroy'])->name('conceptos.delete');
+
+    Route::get('/catalogos/comprobantes', [App\Http\Controllers\catalogosController::class, 'indexCatalogoComprobantes'])->name('catalogoComprobantes.index');
+    Route::get('/catalogos/comprobante/nuevo', [App\Http\Controllers\comprobanteController::class, 'create'])->name('comprobante.create');
+    Route::post('/catalogos/comprobantes', [App\Http\Controllers\comprobanteController::class, 'store'])->name('comprobante.store');
+    Route::put('/catalogos/comprobantes/{concepto}', [App\Http\Controllers\comprobanteController::class, 'update'])->name('comprobante.update');
+    Route::delete('/catalogos/comprobantes/{concepto}', [App\Http\Controllers\comprobanteController::class, 'destroy'])->name('comprobante.delete');
 
     Route::get('/catalogos/proveedores', [App\Http\Controllers\catalogosController::class, 'indexCatalogoProveedor'])->name('catalogoProveedor.index');
     Route::get('/catalogos/proveedores/nuevo', [App\Http\Controllers\proveedorController::class, 'create'])->name('proveedor.create');

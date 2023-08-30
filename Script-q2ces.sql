@@ -525,6 +525,20 @@ create table tipoValorTarea(
     primary key (id)
 );
 
+create table comprobante(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) not NULL,
+    comentario text NULL,
+    primary key (id)
+);
+
+create table tipoMantenimiento(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) not NULL,
+    comentario text NULL,
+    primary key (id)
+);
+
 /***************************************FIN Tablas de Sin FK*/
 
 /***************************************DATOS Tablas de Sin FK*/
@@ -624,6 +638,19 @@ INSERT INTO `estados` (`id`, `nombre`, `color`, `comentario`) VALUES
 (1, 'Espera', 'blue', 'En espera de antención'),
 (2, 'Realizando', 'gray', 'Ya se está trabajando'),
 (3, 'Terminado', 'navy', 'Ya se termino de ejecutar');
+
+
+INSERT INTO `comprobante` (`id`, `nombre`, `comentario`) VALUES
+(1, 'Factura', 'Facturas'),
+(2, 'Nota', 'Nota de remisión.'),
+(3, 'Remisión', 'Remisión'),
+(4, 'Vale Q2Ces', 'Vale de la empresa');
+
+INSERT INTO `tipoMantenimiento` (`id`, `nombre`, `comentario`) VALUES
+(1, 'Correctivo', 'Mantenimiento correctivo de equipo'),
+(2, '250', 'Mantenimiento preventivo de 250 horas de trabajo'),
+(3, '500', 'Mantenimiento preventivo de 500 horas de trabajo.'),
+(4, '1000', 'Mantenimiento preventivo de 1000 horas de trabajo');
 
 /***************************************FIN DATOS Tablas de Sin FK*/
 
@@ -1254,7 +1281,7 @@ CREATE TABLE mantenimientos(
     maquinariaId bigint(20) unsigned NOT NULL,
     personalId bigint(20) unsigned NOT NULL,
     titulo varchar(255) not NULL,
-    tipo varchar(255) not NULL,
+    tipoMantenimientoId bigint(20) unsigned NOT NULL,
     fechaInicio date not NULL,
     fechaReal date NULL,
     estadoId bigint(20) unsigned NOT NULL,
@@ -1270,7 +1297,8 @@ CREATE TABLE mantenimientos(
     PRIMARY KEY (id),
     CONSTRAINT FK_mantenimientos_userId foreign key (maquinariaId) references maquinaria(id),
     CONSTRAINT FK_mantenimientos_estadoId foreign key (estadoId) references estados(id),
-    CONSTRAINT FK_mantenimiento_personalId foreign key (personalId) references users(id)
+    CONSTRAINT FK_mantenimiento_personalId foreign key (personalId) references users(id),
+    CONSTRAINT FK_mantenimiento_tipoId foreign key (tipoMantenimientoId) references tipoMantenimiento(id)
 );
 
 create table gastosMantenimiento(
@@ -1365,7 +1393,7 @@ create table cajaChica(
     comprobante float(10,2) NULL,
     ncomprobante int not NULL,
     cliente varchar(200),
-    obra bigint(20) unsigned NOT NULL,
+    obra bigint(20) unsigned  NULL,
     equipo bigint(20) unsigned NOT NULL,
     personal bigint(20) unsigned NOT NULL,
     tipo varchar(200) NULL,

@@ -58,7 +58,7 @@ class marcaController extends Controller
             'tipo' => 'required|max:250',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
-            'nombre.unique' => 'El campo nombre ya esta en uso.',
+            'nombre.unique' => 'El valor del campo nombre ya esta en uso.',
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
             'tipo.required' => 'El campo tipo es obligatorio.',
             'tipo.max' => 'El campo tipo excede el límite de caracteres permitidos.',
@@ -116,7 +116,7 @@ class marcaController extends Controller
             'comentarios' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
-            'nombre.unique' => 'El campo nombre ya esta en uso.',
+            'nombre.unique' => 'El valor del campo nombre ya esta en uso.',
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
             'comentarios.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
         ]);
