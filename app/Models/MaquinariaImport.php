@@ -11,6 +11,13 @@ class MaquinariaImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         // dd('$row', $row);
+        $existingMaquinaria = Maquinaria::where('identificador', $row['n'])->first();
+
+        if ($existingMaquinaria) {
+
+            return null;
+        }
+
         return new maquinaria([
             'identificador' => $row['n'],
             'nombre' => $row['vehiculo'],
