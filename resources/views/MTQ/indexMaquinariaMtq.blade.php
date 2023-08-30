@@ -19,26 +19,58 @@
                                     {{ session('faild') }}
                                 </div>
                             @endif
-                            <div class="row">
-                                <div class="col-4 text-left">
-                                    {{--  <a href="{{ url('dashMtq') }}">
-                                        <button class="btn regresar">
+                            
+                                <form id="excel-upload-form" action="{{ route('importExcel.post') }}" method="POST" enctype="multipart/form-data">
+                                    <div class="row">
+                                    @csrf
+                                    <div class="col-6 col-md-4 col-lg-4 text-left">
+                                        <div style="display: flex; align-items: center;">
+                                            <label class="custom-file-upload" onclick='handleDocumento("excel-file-input")'>
+                                                <input class="mb-4" type="file" name="excel_file" id="excel-file-input" accept=".xlsx">
+                                                <div id='iconContainer'>
+                                                    <lord-icon src="https://cdn.lordicon.com/koyivthb.json"
+                                                               trigger="hover"
+                                                               colors="primary:#86c716,secondary:#e8e230"
+                                                               stroke="65"
+                                                               style="width:50px;height:70px">
+                                                    </lord-icon>
+                                                </div>
+                                            </label>
+                                            
+                                            <a id='downloadButton' class="btnViewDescargar btn btn-outline-success btnView" style="display: none" download>
+                                                <span class="btn-text">Descargar</span>
+                                                <span class="icon">
+                                                    <i class="far fa-eye mt-2"></i>
+                                                </span>
+                                            </a>
+                                            
+                                            <button id='removeButton' type="button" class="btnViewDelete btn btn-outline-danger btnView"
+                                                    style="width: 2.4em; height: 2.4em; display: none;">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    
+
+                                    <div class="col-6 col-md-3 col-lg-4">
+                                        <button type="button" class="btn regresar d-flex mt-4" id="submit-button">
                                             <span class="material-icons">
-                                                reply
+                                                file_upload
                                             </span>
-                                            Regresar
+                                            Importar Excel
                                         </button>
-                                    </a>  --}}
+                                    </label>
                                 </div>
-                                <div class="col-8 align-end">
+                                <div class="col-12 col-md-6 col-lg-4 align-end">
                                     @can('maquinaria_mtq_create')
-                                        <button data-bs-toggle="modal" data-bs-target="#nuevoItem" type="button"
-                                            class="btn botonGral"
+                                        <button data-bs-toggle="modal" data-bs-target="#nuevoItem" type="button" style="height: 40px"
+                                            class="btn botonGral mt-4"
                                             onclick="cargaItem(' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','{{ false }}')">Añadir
                                             Equipos MTQ</button>
                                     @endcan
                                 </div>
-
+                            </form>
                                 <div class="d-flex p-3 divBorder"></div>
                             </div>
 
@@ -355,7 +387,6 @@
     </div>
 
     <style>
-        /* Estilos personalizados para alinear el botón de hacia la derecha */
         .align-end {
             display: flex !important;
             justify-content: flex-end !important;
@@ -364,6 +395,9 @@
         @media only screen and (max-width: 500px) {
             .align-end button {
                 width: 120px !important;
+            }
+            #submit-button {
+                margin-right: 0px !important;
             }
         }
 
@@ -379,7 +413,67 @@
             display: none;
         }
     </style>
+    <script>
+        function handleDocumento(id) {
+		
+            // Resto del código que utilizas para manejar los eventos, pero ahora con el ID proporcionado
+            var facturaInput = document.getElementById(id);
+            
+            var downloadFacturaButton = document.getElementById("downloadButton");
+            var removeFacturaButton = document.getElementById("removeButton");
+            var iconContainer = document.getElementById("iconContainer");
 
+            facturaInput.addEventListener("change", function(event) {
+                let alertShownEdit = false;
+                console.log('facturaInput.value', facturaInput.value);
+                
+                if (event.target.files.length > 0) {
+                    
+                    facturaInput.addEventListener("click", createClickHandler(id));
+                    var file = event.target.files[0];
+                    var fileURL = URL.createObjectURL(file);
+                    downloadFacturaButton.setAttribute("href", fileURL);
+                    downloadFacturaButton.style.display = "block";
+                    removeFacturaButton.style.display = "block";
+                    //nullInput.value = id + '-1';
+                    alertShown = false;
+                    iconContainer.innerHTML =
+                        '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
+                } else {
+                    downloadFacturaButton.style.display = "none";
+                    removeFacturaButton.style.display = "none";
+                    alertShown = false;
+                    iconContainer.innerHTML =
+                        '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+                }
+            });
+            removeFacturaButton.addEventListener("click", function() {
+                facturaInput.value = null;
+                downloadFacturaButton.removeAttribute("href");
+                downloadFacturaButton.style.display = "none";
+                removeFacturaButton.style.display = "none";
+                
+                
+                iconContainer.innerHTML =
+                    '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+            });
+        }
+    </script>
+    <script>
+        document.getElementById('submit-button').addEventListener('click', function() {
+            // Obtener el elemento de entrada de archivo
+            var fileInput = document.getElementById('excel-file-input');
+            
+            // Verificar si se ha seleccionado un archivo
+            if (fileInput.files.length > 0) {
+                // Enviar el formulario si se ha seleccionado un archivo
+                document.getElementById('excel-upload-form').submit();
+            } else {
+                // Mostrar un mensaje o realizar otra acción si no se ha seleccionado un archivo
+                alert('Por favor, selecciona un archivo Excel para importar.');
+            }
+        });
+    </script>
     <script>
         function cargaItem(id, identificador, nombre, marca, modelo, submarca, ano, color, placas, numserie, nummotor, img,
             modalTipo) {
@@ -480,6 +574,41 @@
                     campo.style.color = 'grey';
                 }
             });
+        }
+    </script>
+
+    <script>
+        // Función para crear el manejador de eventos "click" usando el ID específico
+	function createClickHandler(id) {
+        return function (event) {
+            var facturaInput = document.getElementById(id);
+            var iconContainer = document.getElementById("iconContainer");
+            var icon = document.getElementById("icon");
+            var expectedIconHTML =
+            '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
+            console.log('expectedIconHTML',expectedIconHTML);
+    
+            if (!alertShown && iconContainer.innerHTML === expectedIconHTML) {
+            event.stopPropagation(); // Prevent the file explorer from opening immediately
+            event.preventDefault(); // Prevent any default behavior
+    
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: "Se reemplazará la imagen actual por una nueva. ¿Deseas continuar?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Continuar",
+                cancelButtonText: "Cancelar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                alertShown = true; // Set the flag to true to prevent the alert from showing again
+                facturaInput.click();
+                }
+            });
+            }
+        };
         }
     </script>
 
