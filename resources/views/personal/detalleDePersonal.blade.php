@@ -568,6 +568,12 @@
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                    <label class="labelTitulo">Correo Electrónico:</label></br>
+                                                    <input type="email" class="inputCaja" id="emailB"
+                                                        name="emailB" value="{{ $beneficiario->emailB }}">
+                                                </div>
+
+                                                <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                     <label class="labelTitulo">Apellido Paterno:</label></br>
                                                     <input type="text" class="inputCaja" id="apellidoP"
                                                         name="apellidoPB" value="{{ $beneficiario->apellidoP }}">
@@ -854,7 +860,7 @@
                                 <button class="accordion-button bacTituloPrincipal" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#uniforme" aria-expanded="true"
                                     aria-controls="collapseOne">
-                                    Uniforme
+                                    Tallas De Los Uniformes
                                 </button>
                             </h6>
                             <div id="uniforme" class="accordion-collapse collapse" aria-labelledby="headingThree"
@@ -1113,7 +1119,7 @@
                                                         @else
                                                             <div
                                                                 class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
-                                                                <input type="hidden" id='{{ $doc->idDoc }}'
+                                                                <input type="hidden" id=''
                                                                     name='archivo[{{ $contador }}][idDoc]'
                                                                     value='{{ $doc->idDoc }}'>
                                                                 <input type="hidden" id='{{ $doc->nombre }}'

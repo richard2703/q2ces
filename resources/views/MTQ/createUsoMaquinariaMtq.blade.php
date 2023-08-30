@@ -22,14 +22,14 @@
                             @endif
                             <div class="row">
                                 <div class="col-4 text-left">
-                                    <a href="{{ route('uso.index') }}">
+                                    {{--  <a href="{{ route('uso.index') }}">
                                         <button class="btn regresar">
                                             <span class="material-icons">
                                                 reply
                                             </span>
                                             Regresar
                                         </button>
-                                    </a>
+                                    </a>  --}}
                                 </div>
                                 <div class="col-8 align-end">
                                     @can('maquinaria_mtq_create')

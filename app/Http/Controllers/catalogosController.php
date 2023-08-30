@@ -24,6 +24,8 @@ use App\Models\maquinaria;
 use App\Models\maquinariaCategoria;
 use App\Models\maquinariaTipo;
 use App\Models\tipoEquipo;
+use App\Models\tipoHoraExtra;
+use App\Models\tipoValorTarea;
 
 class catalogosController extends Controller
 {
@@ -96,6 +98,15 @@ class catalogosController extends Controller
         return view('catalogos.tareaTipos', compact('records'));
     }
 
+    public function indexCatalogoTiposValorTarea()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
+
+        $records = tipoValorTarea::orderBy('nombre', 'asc')->paginate(10);
+        // dd( $puestos );
+        return view('catalogos.tareaTiposValor', compact('records'));
+    }
+
     public function indexCatalogoUbicacionesTareas()
     {
         abort_if(Gate::denies('catalogos_index'), 403);
@@ -112,6 +123,15 @@ class catalogosController extends Controller
         $records = tipoUniforme::orderBy('nombre', 'asc')->paginate(10);
         // dd( $puestos );
         return view('catalogos.uniformeTipos', compact('records'));
+    }
+
+    public function indexCatalogoTipoHorasExtra()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
+
+        $records = tipoHoraExtra::orderBy('nombre', 'asc')->paginate(10);
+        // dd( $puestos );
+        return view('catalogos.horasExtraTipos', compact('records'));
     }
 
     public function indexCatalogoTiposEquipo()

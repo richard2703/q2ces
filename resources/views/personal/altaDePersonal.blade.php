@@ -480,6 +480,12 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                                <label class="labelTitulo">Correo Electrónico:</label></br>
+                                                                <input type="email" class="inputCaja" id="emailB"
+                                                                    name="emailB" value="{{ old('emailB') }}">
+                                                            </div>
+
+                                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                                 <label class="labelTitulo">Apellido Paterno:</label></br>
                                                                 <input type="text" class="inputCaja" id="apellidoPB"
                                                                     name="apellidoPB" value="{{ old('apellidoPB') }}">
@@ -691,8 +697,8 @@
                                                             </div> --}}
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Jefe Inmediato:</label></br>
-                                                                <select id="jefeId" name="jefeId" class="form-select"
+                                                                <label class="labelTitulo">Jefe Inmediato: <span>*</span></label></br>
+                                                                <select id="jefeId" name="jefeId" class="form-select" required
                                                                     aria-label="Default select example">
 
                                                                     <option value="">Seleccione</option>
@@ -779,7 +785,7 @@
                                             <button class="accordion-button bacTituloPrincipal" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#uniforme" aria-expanded="true"
                                                 aria-controls="collapseOne">
-                                                Uniforme
+                                                Tallas De Los Uniformes
                                             </button>
                                         </h6>
                                         <div id="uniforme" class="accordion-collapse collapse"

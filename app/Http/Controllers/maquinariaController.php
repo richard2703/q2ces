@@ -273,6 +273,7 @@ class maquinariaController extends Controller
             )
             // ->where('maquinariaId', $maquinaria->id)
             ->where('docs.tipoId', '2')
+            ->groupBy('docs.id')
             ->get();
         // dd($doc);
         $fotos = maqimagen::where('maquinariaId', $maquinaria->id)->get();

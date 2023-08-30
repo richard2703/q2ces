@@ -138,7 +138,7 @@
                             event_available
                         </span>
 
-                        <span>Nomina/Asistencia</span>
+                        <span>Nómina/Asistencia</span>
                     </a>
                 </li>
             @endcan
@@ -385,7 +385,7 @@
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('mtq.index') }}" class="">
-                                    <i class="bi bi-circle"></i><span>Equipo Mtq</span>
+                                    <i class="bi bi-circle"></i><span>Equipo MTQ</span>
                                 </a>
                             </li>
                         @endcan

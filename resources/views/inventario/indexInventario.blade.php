@@ -8,7 +8,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Inventario de Herramientas</h4>
+                                    <h4 class="card-title text-capitalize">Inventario De {{$tipo}}</h4>
                                     {{-- <p class="card-category">Usuarios registrados</p> --}}
                                 </div>
 
@@ -40,7 +40,7 @@
                                         <div class="col-6 pb-3 text-end">
                                             @can('inventario_create')
                                                 <a href="{{ route('inventario.create', $tipo) }}">
-                                                    <button type="button" class="btn botonGral">Añadir al Inventario</button>
+                                                    <button type="button" class="btn botonGral text-capitalize">Añadir al Inventario</button>
                                                 </a>
                                             @endcan
                                         </div>
@@ -51,12 +51,12 @@
                                                 <th class="labelTitulo text-center">Imagen</th>
                                                 <th class="labelTitulo text-center">No. Parte</th>
                                                 <th class="labelTitulo text-center">Nombre</th>
-                                                <th class="labelTitulo text-center">Existencias</th>
+                                                <th class="labelTitulo text-center" style="width: 150px;">Existencias</th>
                                                 <th class="labelTitulo text-center">Min.</th>
                                                 <th class="labelTitulo text-center">Máx.</th>
-                                                <th class="labelTitulo text-center">Acciones</th>
+                                                <th class="labelTitulo text-center" style="width: 120px;">Acciones</th>
                                             </thead>
-                                            <tbody>
+                                            <tbody class="text-capitalize">
                                                 @forelse ($inventarios as $inventario)
                                                     <tr>
                                                         <td class="text-center"><img class="" style="width: 100px;"
@@ -139,7 +139,7 @@
                                 <div class="nav-tabs-navigation">
                                     <div class="nav-tabs-wrapper">
                                         <span class="nav-tabs-title">
-                                            <h2 class="titulos">Restock </h2>
+                                            <h2 class="titulos text-capitalize">Restock </h2>
                                         </span>
                                     </div>
                                 </div>
