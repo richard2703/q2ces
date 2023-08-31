@@ -32,7 +32,7 @@ class cajaChicaController extends Controller
 
         // $registros = cajaChica::get();
         $registros = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
-            ->join('obras', 'cajaChica.obra', 'obras.id')
+            ->leftJoin('obras', 'cajaChica.obra', 'obras.id')
             ->join('maquinaria', 'cajaChica.equipo', 'maquinaria.id')
             ->join('conceptos', 'cajaChica.concepto', 'conceptos.id')
             ->join('comprobante', 'cajaChica.comprobanteId', 'comprobante.id')
@@ -219,7 +219,7 @@ class cajaChicaController extends Controller
     {
         abort_if(Gate::denies('cajachica_edit'), 403);
 
-        $cajaChica->update($request->only('dia', 'concepto', 'comprobante', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario', 'total'));
+        $cajaChica->update($request->only('dia', 'concepto', 'comprobanteId', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario', 'total'));
 
         //*** ejecutamos el recalculo general */
         $objCalculos = new Calculos;
