@@ -36,10 +36,10 @@
                                         </a>
                                     {{-- @can('user_create') --}}
                                     </div>
-                                    <div class="col-6 text-end">
+                                    {{-- <div class="col-6 text-end">
                                         <button type="button" class="btn botonGral " data-bs-toggle="modal"
                                         data-bs-target="#modalConcepto">Nuevo Concepto</button>
-                                    </div>
+                                    </div> --}}
                                     {{-- @endcan --}}
                                 </div>
 
@@ -114,10 +114,10 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Obra: <span>*</span></label></br>
+                                                <label class="labelTitulo">Obra: </label></br>
                                                 <select id="obra" name="obra" class="form-select"
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option selected value="" >Seleccione</option>
                                                     @forelse ($obras as $obra)
                                                         <option value="{{ $obra->id }}">{{ $obra->nombre }} </option>
                                                     @empty

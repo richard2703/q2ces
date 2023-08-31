@@ -105,7 +105,7 @@
                                                 <label class="labelTitulo">Obra:</label></br>
                                                 <select id="obra" name="obra" class="form-select"
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option selected value="">Seleccione</option>
                                                     @forelse ($obras as $obra)
                                                         <option value="{{ $obra->id }}"
                                                             {{ $cajaChica->obra == $obra->id ? 'selected' : '' }}>
