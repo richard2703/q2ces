@@ -13,6 +13,6 @@ class puestoNivel extends Model
     public $timestamps = false;
 
     protected $fillable = [
-          'nombre', 'comentario','requiereAsistencia','usaCajaChica'
+        'nombre', 'comentario', 'requiereAsistencia', 'usaCajaChica', 'usoCombustible'
     ];
 }

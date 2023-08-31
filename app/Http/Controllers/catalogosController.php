@@ -30,247 +30,274 @@ use App\Models\tipoHoraExtra;
 use App\Models\tipoMantenimiento;
 use App\Models\tipoValorTarea;
 
-class catalogosController extends Controller {
+class catalogosController extends Controller
+{
     /**
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
-    public function index() {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
-        return view( 'catalogos.dashCatalogos' );
+    public function index()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
+        return view('catalogos.dashCatalogos');
     }
 
-    public function indexPuestos() {
-        abort_if ( Gate::denies( 'puesto_index' ), 403 );
+    public function indexPuestos()
+    {
+        abort_if(Gate::denies('puesto_index'), 403);
 
-        $records = puesto::select( 'puesto.*', 'puestoNivel.nombre as puestoNivel' )
-        ->leftJoin( 'puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId' )
-        ->orderBy( 'nombre', 'asc' )->paginate( 10 );
+        $records = puesto::select('puesto.*', 'puestoNivel.nombre as puestoNivel')
+            ->leftJoin('puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId')
+            ->orderBy('nombre', 'asc')->paginate(10);
 
-        $vctNiveles = puestoNivel::orderBy( 'nombre', 'asc' )->get();
+        $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->get();
         // dd( $records );
-        return view( 'catalogos.puestos', compact( 'records', 'vctNiveles' ) );
+        return view('catalogos.puestos', compact('records', 'vctNiveles'));
     }
 
-    public function indexPuestosNivel() {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+    public function indexPuestosNivel()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = puestoNivel::orderBy( 'nombre', 'asc' )->paginate( 10 );
-        return view( 'catalogos.puestosNivel', compact( 'records' ) );
+        $records = puestoNivel::orderBy('nombre', 'asc')->paginate(10);
+        return view('catalogos.puestosNivel', compact('records'));
     }
 
-    public function indexCatalogoCategoriasTareas() {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+    public function indexCatalogoCategoriasTareas()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = tareaCategoria::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        $records = tareaCategoria::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
-        return view( 'catalogos.tareaCategorias', compact( 'records' ) );
+        return view('catalogos.tareaCategorias', compact('records'));
     }
 
-    public function indexCatalogoCategoriasMaquinaria() {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+    public function indexCatalogoCategoriasMaquinaria()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = maquinariaCategoria::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        $records = maquinariaCategoria::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
-        return view( 'catalogos.maquinariaCategorias', compact( 'records' ) );
+        return view('catalogos.maquinariaCategorias', compact('records'));
     }
 
-    public function indexCatalogoTiposMaquinaria() {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+    public function indexCatalogoTiposMaquinaria()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = maquinariaTipo::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        $records = maquinariaTipo::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
-        return view( 'catalogos.maquinariaTipos', compact( 'records' ) );
+        return view('catalogos.maquinariaTipos', compact('records'));
     }
 
-    public function indexCatalogoTiposTareas() {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+    public function indexCatalogoTiposTareas()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = tareaTipo::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        $records = tareaTipo::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
-        return view( 'catalogos.tareaTipos', compact( 'records' ) );
+        return view('catalogos.tareaTipos', compact('records'));
     }
 
-    public function indexCatalogoTiposValorTarea() {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+    public function indexCatalogoTiposValorTarea()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = tipoValorTarea::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        $records = tipoValorTarea::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
-        return view( 'catalogos.tareaTiposValor', compact( 'records' ) );
+        return view('catalogos.tareaTiposValor', compact('records'));
     }
 
-    public function indexCatalogoUbicacionesTareas() {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+    public function indexCatalogoUbicacionesTareas()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = tareaUbicacion::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        $records = tareaUbicacion::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
-        return view( 'catalogos.tareaUbicaciones', compact( 'records' ) );
+        return view('catalogos.tareaUbicaciones', compact('records'));
     }
 
-    public function indexCatalogoTipoUniforme() {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+    public function indexCatalogoTipoUniforme()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = tipoUniforme::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        $records = tipoUniforme::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
-        return view( 'catalogos.uniformeTipos', compact( 'records' ) );
+        return view('catalogos.uniformeTipos', compact('records'));
     }
 
-    public function indexCatalogoTipoHorasExtra() {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+    public function indexCatalogoTipoHorasExtra()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = tipoHoraExtra::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        $records = tipoHoraExtra::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
-        return view( 'catalogos.horasExtraTipos', compact( 'records' ) );
+        return view('catalogos.horasExtraTipos', compact('records'));
     }
 
-    public function indexCatalogoTiposEquipo() {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+    public function indexCatalogoTiposEquipo()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = tipoEquipo::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        $records = tipoEquipo::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
-        return view( 'catalogos.equiposTipos', compact( 'records' ) );
+        return view('catalogos.equiposTipos', compact('records'));
     }
 
-    public function indexCatalogoTiposMantenimiento() {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+    public function indexCatalogoTiposMantenimiento()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = tipoMantenimiento::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        $records = tipoMantenimiento::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
-        return view( 'catalogos.mantenimientoTipos', compact( 'records' ) );
+        return view('catalogos.mantenimientoTipos', compact('records'));
     }
 
-    public function indexCatalogoTipoRefaccion() {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+    public function indexCatalogoTipoRefaccion()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = refaccionTipo::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        $records = refaccionTipo::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
-        return view( 'catalogos.refaccionTipos', compact( 'records' ) );
+        return view('catalogos.refaccionTipos', compact('records'));
     }
 
-    public function indexCatalogoRefacciones() {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+    public function indexCatalogoRefacciones()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = refacciones::select( 'refacciones.*', 'marca.nombre as marca', 'maquinaria.nombre as maquinaria', 'refaccionTipo.nombre as tipo' )
-        ->leftJoin( 'marca', 'marca.id', '=', 'refacciones.marcaId' )
-        ->leftJoin( 'maquinaria', 'maquinaria.id', '=', 'refacciones.maquinariaId' )
-        ->leftJoin( 'refaccionTipo', 'refaccionTipo.id', '=', 'refacciones.tipoRefaccionId' )
-        ->orderBy( 'nombre', 'asc' )->paginate( 10 );
+        $records = refacciones::select('refacciones.*', 'marca.nombre as marca', 'maquinaria.nombre as maquinaria', 'refaccionTipo.nombre as tipo')
+            ->leftJoin('marca', 'marca.id', '=', 'refacciones.marcaId')
+            ->leftJoin('maquinaria', 'maquinaria.id', '=', 'refacciones.maquinariaId')
+            ->leftJoin('refaccionTipo', 'refaccionTipo.id', '=', 'refacciones.tipoRefaccionId')
+            ->orderBy('nombre', 'asc')->paginate(10);
 
-        $vctMarcas = marca::orderBy( 'nombre', 'asc' )->get();
-        $vctMaquinaria = maquinaria::orderBy( 'nombre', 'asc' )->get();
-        $vctTipos = refaccionTipo::orderBy( 'nombre', 'asc' )->get();
+        $vctMarcas = marca::orderBy('nombre', 'asc')->get();
+        $vctMaquinaria = maquinaria::orderBy('nombre', 'asc')->get();
+        $vctTipos = refaccionTipo::orderBy('nombre', 'asc')->get();
         // dd( $records );
-        return view( 'catalogos.refacciones', compact( 'records', 'vctMarcas', 'vctMaquinaria', 'vctTipos' ) );
+        return view('catalogos.refacciones', compact('records', 'vctMarcas', 'vctMaquinaria', 'vctTipos'));
     }
 
-    public function indexCatalogoMarca() {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+    public function indexCatalogoMarca()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = marca::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        $records = marca::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
-        return view( 'catalogos.marcas', compact( 'records' ) );
+        return view('catalogos.marcas', compact('records'));
     }
 
-    public function indexCatalogoConceptos() {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+    public function indexCatalogoConceptos()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = conceptos::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        $records = conceptos::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
-        return view( 'catalogos.conceptos', compact( 'records' ) );
+        return view('catalogos.conceptos', compact('records'));
     }
 
-    public function indexCatalogoComprobantes() {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+    public function indexCatalogoComprobantes()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = comprobante::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        $records = comprobante::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
-        return view( 'catalogos.comprobantes', compact( 'records' ) );
+        return view('catalogos.comprobantes', compact('records'));
     }
 
-    public function indexCatalogoProveedorCategoria() {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+    public function indexCatalogoProveedorCategoria()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = proveedorCategoria::orderBy( 'nombre', 'asc' )->paginate( 10 );
+        $records = proveedorCategoria::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
-        return view( 'catalogos.proveedorCategoria', compact( 'records' ) );
+        return view('catalogos.proveedorCategoria', compact('records'));
     }
 
-    public function indexCatalogoProveedor() {
-        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+    public function indexCatalogoProveedor()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = proveedor::select( 'proveedor.*', 'proveedorCategoria.nombre as categoria' )
-        ->leftJoin( 'proveedorCategoria', 'proveedorCategoria.id', '=', 'proveedor.categoriaId' )
-        ->orderBy( 'nombre', 'asc' )->paginate( 10 );
-        $vctCategorias = proveedorCategoria::orderBy( 'nombre', 'asc' )->get();
+        $records = proveedor::select('proveedor.*', 'proveedorCategoria.nombre as categoria')
+            ->leftJoin('proveedorCategoria', 'proveedorCategoria.id', '=', 'proveedor.categoriaId')
+            ->orderBy('nombre', 'asc')->paginate(10);
+        $vctCategorias = proveedorCategoria::orderBy('nombre', 'asc')->get();
         // dd( $records );
-        return view( 'catalogos.proveedores', compact( 'records', 'vctCategorias' ) );
+        return view('catalogos.proveedores', compact('records', 'vctCategorias'));
     }
 
     /**
-    * Show the form for creating a new resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
-    public function create() {
+    public function create()
+    {
         //
     }
 
     /**
-    * Store a newly created resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
-    */
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
 
-    public function store( Request $request ) {
+    public function store(Request $request)
+    {
         //
     }
 
     /**
-    * Display the specified resource.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 
-    public function show( $id ) {
+    public function show($id)
+    {
         //
     }
 
     /**
-    * Show the form for editing the specified resource.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 
-    public function edit( $id ) {
+    public function edit($id)
+    {
         //
     }
 
     /**
-    * Update the specified resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 
-    public function update( Request $request, $id ) {
+    public function update(Request $request, $id)
+    {
         //
     }
 
     /**
-    * Remove the specified resource from storage.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 
-    public function destroy( $id ) {
+    public function destroy($id)
+    {
         //
     }
 }

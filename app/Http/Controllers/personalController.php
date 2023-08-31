@@ -269,6 +269,7 @@ class personalController extends Controller
             //** guardamos el id de usuario para el registro de personal */
             $personal['userId'] = $newuser->id;
         }
+        // dd($request);
 
         $personal = personal::create($personal);
 

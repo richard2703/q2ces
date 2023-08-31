@@ -13,6 +13,6 @@ class descarga extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'horas', 'imgHoras', 'imgKm', 'km', 'litros', 'maquinariaId', 'operadorId', 'receptorId', 'servicioId',
+        'horas', 'imgHoras', 'imgKm', 'km', 'litros', 'maquinariaId', 'operadorId', 'receptorId', 'servicioId', 'userId'
     ];
 }
