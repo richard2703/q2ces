@@ -694,6 +694,11 @@ button.regresar:hover{
   color: #fff;
   border: 1px solid var(--texto) !important;
 }
+a.regresar:hover{
+  background-color: whitesmoke !important;
+  color: #fff;
+  border: 1px solid var(--texto) !important;
+}
 
 .division{
   border-bottom: 3px solid var(--amarillo);

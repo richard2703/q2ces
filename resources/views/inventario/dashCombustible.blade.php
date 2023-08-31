@@ -144,7 +144,7 @@
 
                                         <div class="tab-pane fade conteDivCArgaDescarga" id="balanceDos" role="tabpanel"
                                             aria-labelledby="balanceDos-tab" tabindex="0">
-                                            <form action="{{ route('inventario.descargaCombustible') }}" method="post"
+                                            <form action="{{ route('inventario.descargaCombustible') }}" id="combustibleForm" method="post"
                                                 enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="col-12 my-5 ">
@@ -463,8 +463,9 @@
                                                                                         {{ \Carbon\Carbon::parse($carga->fecha)->format('H:m') }}
                                                                                     </td>
 
-                                                                                    <td
+                                                                                    <td style="width: 400px"
                                                                                         class="td-actions justify-content-end">
+                                                                                        
                                                                                         @can('combustible_edit')
                                                                                             <a href="#" class=""
                                                                                                 data-bs-toggle="modal"
@@ -483,6 +484,7 @@
                                                                                                 </svg>
                                                                                             </a>
                                                                                         @endcan
+                                                                                        
 
                                                                                         <form
                                                                                             action="{{ route('inventario.deleteCarga', $carga->id) }}"
@@ -551,6 +553,7 @@
                                                                             <th class="fw-bolder">Litros</th>
                                                                             <th class="fw-bolder">fecha</th>
                                                                             <th class="fw-bolder">hora</th>
+                                                                            <th class="fw-bolder text-center">Imprimir</th>
                                                                             <th class="fw-bolder text-right">Acciones</th>
                                                                         </thead>
                                                                         <tbody>
@@ -573,9 +576,30 @@
                                                                                     <td>
                                                                                         {{ \Carbon\Carbon::parse($descarga->fecha)->format('H:m') }}
                                                                                     </td>
+                                                                                    <td
+                                                                                    class="td-actions justify-content-end">
+                                                                                    <form
+                                                                                    action="{{ route('print.post',  $descarga->id )}}"
+                                                                                    method="POST"
+                                                                                    style="display: inline-block;">
+                                                                                    @csrf
+                                                                                    @method('POST')
+                                                                                    <input type="hidden" name="id" value="{{$descarga->id}}" id="id">
+                                                                                    @can('combustible_destroy')
+                                                                                        <button class=" btnSinFondo"
+                                                                                            type="submit"
+                                                                                            rel="tooltip">
+                                                                                            <span class="material-icons mt-3" style="font-size:35px; color: #727176;">
+                                                                                                print
+                                                                                            </span>
+                                                                                        </button>
+                                                                                    @endcan
 
+                                                                                </form>
+                                                                                </td>
                                                                                     <td
                                                                                         class="td-actions justify-content-end">
+                                                                                        
                                                                                         @can('combustible_edit')
                                                                                             <a href="#" class=""
                                                                                                 data-bs-toggle="modal"
@@ -595,7 +619,7 @@
                                                                                                 </svg>
                                                                                             </a>
                                                                                         @endcan
-
+                                                                                        
                                                                                         {{-- id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms, horas, imgHoras, fecha --}}
                                                                                         <form
                                                                                             action="{{ route('inventario.deleteDescarga', $descarga->id) }}"

@@ -406,4 +406,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Import Excel
     Route::get('/import-excel', 'App\Http\Controllers\ImportExcelController@index')->name('importExcel.get');
     Route::post('/import-excel', 'App\Http\Controllers\ImportExcelController@import')->name('importExcel.post');
+
+    // Imprimir
+    Route::get('/print-combustible', 'App\Http\Controllers\printController@print')->name('print.get');
+    Route::post('/print-combustible', 'App\Http\Controllers\printController@print')->name('print.post');
+    // Route::post('/import-excel', 'App\Http\Controllers\ImportExcelController@import')->name('importExcel.post');
 });
