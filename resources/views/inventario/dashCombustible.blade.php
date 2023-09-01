@@ -283,6 +283,83 @@
                                                                     </div>
                                                                 </div>
 
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/iconoKm.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Grasa:</label></br>
+                                                                        <input type="number" step="1" min="0"
+                                                                            class="inputCaja" id="grasa" name="grasa"
+                                                                            value="{{ old('grasa') }}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/iconoKm.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Aceite
+                                                                            Hidráulico:</label></br>
+                                                                        <input type="number" step="1" min="0"
+                                                                            class="inputCaja" id="hidraulico"
+                                                                            name="hidraulico"
+                                                                            value="{{ old('hidraulico') }}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/iconoKm.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Anticongelante:</label></br>
+                                                                        <input type="number" step="1" min="0"
+                                                                            class="inputCaja" id="Anticongelante"
+                                                                            name="Anticongelante"
+                                                                            value="{{ old('anticongelante') }}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/iconoKm.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Aceite Motor:</label></br>
+                                                                        <input type="number" step="1" min="0"
+                                                                            class="inputCaja" id="motor" name="motor"
+                                                                            value="{{ old('motor') }}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/iconoKm.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Otro:</label></br>
+                                                                        <input type="number" step="1" min="0"
+                                                                            class="inputCaja" id="otro" name="otro"
+                                                                            value="{{ old('otro') }}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/iconoKm.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Aceite
+                                                                            Dirección:</label></br>
+                                                                        <input type="number" step="1" min="0"
+                                                                            class="inputCaja" id="direccion" name="direccion"
+                                                                            value="{{ old('direccion') }}">
+                                                                    </div>
+                                                                </div>
+
                                                                 {{--  <div class=" col-12 col-md-6 d-flex mb-4">
                                                                     <div class="me-2">
                                                                         <img src="{{ asset('/img/inventario/horometroIcono.svg') }}"
@@ -408,9 +485,9 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <!-- <div class="card-header bacTituloPrincipal">
-                                                                                                                                                                                                                                                                                                        <h4 class="card-title">Carga y descarga de combustible</h4>
+                                                                                                                                                                                                                                                                                                                    <h4 class="card-title">Carga y descarga de combustible</h4>
 
-                                                                                                                                                                                                                                                                                                    </div>-->
+                                                                                                                                                                                                                                                                                                                </div>-->
                                     <div class="card-body mb-3">
                                         <div class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
                                             <button
