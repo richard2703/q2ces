@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\comprobante;
+use App\Models\conceptos;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Storage;
@@ -24,6 +26,9 @@ use App\Models\maquinaria;
 use App\Models\maquinariaCategoria;
 use App\Models\maquinariaTipo;
 use App\Models\tipoEquipo;
+use App\Models\tipoHoraExtra;
+use App\Models\tipoMantenimiento;
+use App\Models\tipoValorTarea;
 
 class catalogosController extends Controller
 {
@@ -48,7 +53,7 @@ class catalogosController extends Controller
             ->orderBy('nombre', 'asc')->paginate(10);
 
         $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->get();
-        // dd( $puestos );
+        // dd( $records );
         return view('catalogos.puestos', compact('records', 'vctNiveles'));
     }
 
@@ -65,7 +70,7 @@ class catalogosController extends Controller
         abort_if(Gate::denies('catalogos_index'), 403);
 
         $records = tareaCategoria::orderBy('nombre', 'asc')->paginate(10);
-        // dd( $puestos );
+        // dd( $records );
         return view('catalogos.tareaCategorias', compact('records'));
     }
 
@@ -74,7 +79,7 @@ class catalogosController extends Controller
         abort_if(Gate::denies('catalogos_index'), 403);
 
         $records = maquinariaCategoria::orderBy('nombre', 'asc')->paginate(10);
-        // dd( $puestos );
+        // dd( $records );
         return view('catalogos.maquinariaCategorias', compact('records'));
     }
 
@@ -83,7 +88,7 @@ class catalogosController extends Controller
         abort_if(Gate::denies('catalogos_index'), 403);
 
         $records = maquinariaTipo::orderBy('nombre', 'asc')->paginate(10);
-        // dd( $puestos );
+        // dd( $records );
         return view('catalogos.maquinariaTipos', compact('records'));
     }
 
@@ -92,8 +97,17 @@ class catalogosController extends Controller
         abort_if(Gate::denies('catalogos_index'), 403);
 
         $records = tareaTipo::orderBy('nombre', 'asc')->paginate(10);
-        // dd( $puestos );
+        // dd( $records );
         return view('catalogos.tareaTipos', compact('records'));
+    }
+
+    public function indexCatalogoTiposValorTarea()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
+
+        $records = tipoValorTarea::orderBy('nombre', 'asc')->paginate(10);
+        // dd( $records );
+        return view('catalogos.tareaTiposValor', compact('records'));
     }
 
     public function indexCatalogoUbicacionesTareas()
@@ -101,7 +115,7 @@ class catalogosController extends Controller
         abort_if(Gate::denies('catalogos_index'), 403);
 
         $records = tareaUbicacion::orderBy('nombre', 'asc')->paginate(10);
-        // dd( $puestos );
+        // dd( $records );
         return view('catalogos.tareaUbicaciones', compact('records'));
     }
 
@@ -110,8 +124,17 @@ class catalogosController extends Controller
         abort_if(Gate::denies('catalogos_index'), 403);
 
         $records = tipoUniforme::orderBy('nombre', 'asc')->paginate(10);
-        // dd( $puestos );
+        // dd( $records );
         return view('catalogos.uniformeTipos', compact('records'));
+    }
+
+    public function indexCatalogoTipoHorasExtra()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
+
+        $records = tipoHoraExtra::orderBy('nombre', 'asc')->paginate(10);
+        // dd( $records );
+        return view('catalogos.horasExtraTipos', compact('records'));
     }
 
     public function indexCatalogoTiposEquipo()
@@ -119,8 +142,17 @@ class catalogosController extends Controller
         abort_if(Gate::denies('catalogos_index'), 403);
 
         $records = tipoEquipo::orderBy('nombre', 'asc')->paginate(10);
-        // dd( $puestos );
+        // dd( $records );
         return view('catalogos.equiposTipos', compact('records'));
+    }
+
+    public function indexCatalogoTiposMantenimiento()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
+
+        $records = tipoMantenimiento::orderBy('nombre', 'asc')->paginate(10);
+        // dd( $records );
+        return view('catalogos.mantenimientoTipos', compact('records'));
     }
 
     public function indexCatalogoTipoRefaccion()
@@ -128,7 +160,7 @@ class catalogosController extends Controller
         abort_if(Gate::denies('catalogos_index'), 403);
 
         $records = refaccionTipo::orderBy('nombre', 'asc')->paginate(10);
-        // dd( $puestos );
+        // dd( $records );
         return view('catalogos.refaccionTipos', compact('records'));
     }
 
@@ -145,7 +177,7 @@ class catalogosController extends Controller
         $vctMarcas = marca::orderBy('nombre', 'asc')->get();
         $vctMaquinaria = maquinaria::orderBy('nombre', 'asc')->get();
         $vctTipos = refaccionTipo::orderBy('nombre', 'asc')->get();
-        // dd( $puestos );
+        // dd( $records );
         return view('catalogos.refacciones', compact('records', 'vctMarcas', 'vctMaquinaria', 'vctTipos'));
     }
 
@@ -154,8 +186,26 @@ class catalogosController extends Controller
         abort_if(Gate::denies('catalogos_index'), 403);
 
         $records = marca::orderBy('nombre', 'asc')->paginate(10);
-        // dd( $puestos );
+        // dd( $records );
         return view('catalogos.marcas', compact('records'));
+    }
+
+    public function indexCatalogoConceptos()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
+
+        $records = conceptos::orderBy('nombre', 'asc')->paginate(10);
+        // dd( $records );
+        return view('catalogos.conceptos', compact('records'));
+    }
+
+    public function indexCatalogoComprobantes()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
+
+        $records = comprobante::orderBy('nombre', 'asc')->paginate(10);
+        // dd( $records );
+        return view('catalogos.comprobantes', compact('records'));
     }
 
     public function indexCatalogoProveedorCategoria()
@@ -163,7 +213,7 @@ class catalogosController extends Controller
         abort_if(Gate::denies('catalogos_index'), 403);
 
         $records = proveedorCategoria::orderBy('nombre', 'asc')->paginate(10);
-        // dd( $puestos );
+        // dd( $records );
         return view('catalogos.proveedorCategoria', compact('records'));
     }
 
@@ -175,7 +225,7 @@ class catalogosController extends Controller
             ->leftJoin('proveedorCategoria', 'proveedorCategoria.id', '=', 'proveedor.categoriaId')
             ->orderBy('nombre', 'asc')->paginate(10);
         $vctCategorias = proveedorCategoria::orderBy('nombre', 'asc')->get();
-        // dd( $puestos );
+        // dd( $records );
         return view('catalogos.proveedores', compact('records', 'vctCategorias'));
     }
 

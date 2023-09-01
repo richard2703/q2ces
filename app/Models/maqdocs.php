@@ -13,6 +13,6 @@ class maqdocs extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'maquinariaId', 'ruta', 'tipo', 'fechaVencimiento' ,'estatus', 'comentarios'
+        'maquinariaId', 'ruta', 'tipo', 'fechaVencimiento', 'estatus', 'requerido', 'comentarios'
     ];
 }

@@ -24,16 +24,16 @@
                                 </div>
 
                                 <div class="col-12 col-md-2 mt-4" style="margin-left:20px">
-                                        <a href="{{ route('mantenimientos.index') }}">
-                                            <button class="btn regresar">
-                                                <span class="material-icons">
-                                                    reply
-                                                </span>
-                                                Regresar
-                                            </button>
-                                        </a>
-                                    </div>
-                                    <div class="d-flex p-3 divBorder w-100" style="margin-top:-10px"></div>
+                                    <a href="{{ route('mantenimientos.index') }}">
+                                        <button class="btn regresar">
+                                            <span class="material-icons">
+                                                reply
+                                            </span>
+                                            Regresar
+                                        </button>
+                                    </a>
+                                </div>
+                                <div class="d-flex p-3 divBorder w-100" style="margin-top:-10px"></div>
                                 <div class="card-body ">
 
 
@@ -64,34 +64,31 @@
 
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Fecha de Inicio: </label></br>
-                                                    <input type="date" class="inputCaja" placeholder="Especifique..." {{ ($mantenimiento->estadoId < 3? '': 'readonly')}}
-                                                        readonly id="fechaInicio" name="fechaInicio"
+                                                    <input type="date" class="inputCaja" placeholder="Especifique..."
+                                                        {{ $mantenimiento->estadoId < 3 ? '' : 'readonly' }} readonly
+                                                        id="fechaInicio" name="fechaInicio"
                                                         value="{{ $mantenimiento->fechaInicio }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Tipo de Mantenimiento:</label></br>
-                                                    <select class="form-select form-select-lg mb-3 inputCaja" name="tipo" {{ ($mantenimiento->estadoId < 3? '': 'disabled="false"')}}
-                                                        id="tipo" aria-label=".form-select-lg example">
 
+                                                    <select id="tipoMantenimientoId" name="tipoMantenimientoId" required {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
+                                                        class="form-select form-select-lg mb-3 inputCaja"
+                                                        aria-label="Default select example">
                                                         <option value="">Seleccione</option>
-                                                        <option value="Correctivo"
-                                                            {{ $mantenimiento->tipo == 'Correctivo' ? ' selected' : '' }}>
-                                                            Correctivo</option>
-                                                        <option value="250"
-                                                            {{ $mantenimiento->tipo == '250' ? ' selected' : '' }}>250
-                                                        </option>
-                                                        <option value="500"
-                                                            {{ $mantenimiento->tipo == '500' ? ' selected' : '' }}>500
-                                                        </option>
-                                                        <option value="1000"
-                                                            {{ $mantenimiento->tipo == '1000' ? ' selected' : '' }}>1000
-                                                        </option>
+                                                        @foreach ($vctTipos as $item)
+                                                            <option value="{{ $item->id }}"  {{ $mantenimiento->tipoMantenimientoId == $item->id ? ' selected' : '' }}>
+                                                                {{ $item->nombre }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
+
                                                 </div>
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Estado del Mantenimiento:</label></br>
-                                                    <select class="form-select form-select-lg mb-3 inputCaja" {{ ($mantenimiento->estadoId < 3? '': 'disabled="false"')}}
+                                                    <select class="form-select form-select-lg mb-3 inputCaja"
+                                                        {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
                                                         name="estadoId" id="estadoId" aria-label=".form-select-lg example">
 
                                                         <option value="">Seleccione</option>
@@ -111,7 +108,8 @@
                                                 </div>
                                                 <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
                                                     <label class="labelTitulo">Comentarios:</label></br>
-                                                    <textarea rows="2" cols="80" class="form-control"  {{ ($mantenimiento->estadoId < 3? '': 'disabled="false"')}}
+                                                    <textarea rows="2" cols="80" class="form-control"
+                                                        {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
                                                         placeholder="Escribe tus comentarios o información relevante sobre el mantenimiento aquí." name="comentario"
                                                         id="comentario">{{ $mantenimiento->comentario }}</textarea>
                                                 </div>
@@ -119,7 +117,8 @@
                                                 <hr>
                                                 <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
                                                     <label class="labelTitulo">Resguardatario:</label></br><input
-                                                        id="personalId2" name="personalId2" type="text"  {{ ($mantenimiento->estadoId < 3? '': 'disabled="false"')}}
+                                                        id="personalId2" name="personalId2" type="text"
+                                                        {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
                                                         value="{{ $mantenimiento->personaId }}"
                                                         placeholder="Especifique..." class="inputCaja">
                                                 </div>
@@ -131,13 +130,15 @@
                                                 </div> --}}
                                                 <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
                                                     <label class="labelTitulo">Horómetro: </label></br>
-                                                    <input type="number" class="inputCaja text-end"  {{ ($mantenimiento->estadoId < 3? '': 'disabled="false"')}}
+                                                    <input type="number" class="inputCaja text-end"
+                                                        {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
                                                         value="{{ $mantenimiento->horometro }}" placeholder="Ej. 1000"
                                                         step="1" min="0" id="horometro" name="horometro">
                                                 </div>
                                                 <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
                                                     <label class="labelTitulo">Km/m: </label></br>
-                                                    <input type="number" class="inputCaja text-end"  {{ ($mantenimiento->estadoId < 3? '': 'disabled="false"')}}
+                                                    <input type="number" class="inputCaja text-end"
+                                                        {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
                                                         value="{{ $mantenimiento->kilometraje }}" placeholder="Ej. 1000"
                                                         step="1" min="0" id="kilometraje"
                                                         name="kilometraje">
@@ -247,9 +248,9 @@
                                         </div>
 
                                         @if ($mantenimiento->estadoId < 3)
-                                        <div class="col-12 text-center mt-5 pt-5">
-                                            <button type="submit" class="btn botonGral">Guardar</button>
-                                        </div>
+                                            <div class="col-12 text-center mt-5 pt-5">
+                                                <button type="submit" class="btn botonGral">Guardar</button>
+                                            </div>
                                         @endif
                                     </form>
                                 </div>

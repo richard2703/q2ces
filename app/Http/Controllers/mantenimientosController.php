@@ -13,6 +13,7 @@ use App\Helpers\Calculos;
 use App\Models\mantenimientos;
 use App\Models\gastosMantenimiento;
 use App\Models\maquinaria;
+use App\Models\tipoMantenimiento;
 
 class mantenimientosController extends Controller {
     /**
@@ -53,7 +54,9 @@ class mantenimientosController extends Controller {
     public function create() {
         abort_if ( Gate::denies( 'mantenimiento_create' ), '404' );
 
-        return view( 'mantenimientos.nuevoMantenimiento' );
+        $vctTipos = tipoMantenimiento::select('tipoMantenimiento.*')->orderBy( 'tipoMantenimiento.nombre', 'asc' )->get();
+        // dd($vctTipos);
+        return view( 'mantenimientos.nuevoMantenimiento' , compact( 'vctTipos' ));
     }
 
     /**
@@ -70,13 +73,13 @@ class mantenimientosController extends Controller {
         $request->validate( [
             'titulo' => 'required|max:250',
             'maquinariaId' => 'required',
-            'tipo' => 'required',
+            'tipoMantenimientoId' => 'required',
             'comentario' => 'required|max:500',
             'fechaInicio' => 'required|date|date_format:Y-m-d',
 
         ], [
             'titulo.required' => 'El campo nombre es obligatorio.',
-            'tipo.required' => 'El campo tipo de mantenimiento es obligatorio.',
+            'tipoMantenimientoId.required' => 'El campo tipo de mantenimiento es obligatorio.',
             'maquinariaId.required' => 'El campo maquinaria es obligatorio.',
             'titulo.max' => 'El campo título excede el límite de caracteres permitidos.',
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
@@ -87,10 +90,10 @@ class mantenimientosController extends Controller {
 
         // dd( $mantenimiento );
 
-        mantenimientos::create( $mantenimiento );
+        $mantenimiento= mantenimientos::create( $mantenimiento );
         Session::flash( 'message', 1 );
 
-        return redirect()->route( 'mantenimientos.index' );
+        return redirect()->route( 'mantenimientos.edit', $mantenimiento->id )->with( 'success', 'Mantenimiento creado correctamente, continue con el proceso.' );
     }
 
     /**
@@ -125,10 +128,11 @@ class mantenimientosController extends Controller {
         )
         ->join( 'inventario', 'inventario.id', '=', 'gastosMantenimiento.inventarioId' )
         ->where( 'mantenimientoId', '=', $id )->get();
+        $vctTipos = tipoMantenimiento::select('tipoMantenimiento.*')->orderBy( 'tipoMantenimiento.nombre', 'asc' )->get();
 
         // dd( $mantenimiento );
 
-        return view( 'mantenimientos.editarMantenimiento', compact( 'mantenimiento', 'gastos' ) );
+        return view( 'mantenimientos.editarMantenimiento', compact( 'mantenimiento', 'gastos', 'vctTipos' ) );
     }
 
     /**
@@ -149,14 +153,14 @@ class mantenimientosController extends Controller {
         $request->validate( [
             'titulo' => 'required|max:250',
             'maquinariaId' => 'required',
-            'tipo' => 'required',
+            'tipoMantenimientoId' => 'required',
             'comentario' => 'required|max:500',
             'fechaInicio' => 'required|date|date_format:Y-m-d',
 
         ], [
             'titulo.required' => 'El campo nombre es obligatorio.',
             'titulo.max' => 'El campo título excede el límite de caracteres permitidos.',
-            'tipo.required' => 'El campo tipo de mantenimiento es obligatorio.',
+            'tipoMantenimientoId.required' => 'El campo tipo de mantenimiento es obligatorio.',
             'maquinariaId.required' => 'El campo maquinaria es obligatorio.',
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
             'fechaInicio' => 'El campo de fecha de inicio del mantenimiento es obligatorio',

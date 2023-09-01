@@ -84,25 +84,14 @@
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Comprobante:</label></br>
-                                                <select id="comprobante" name="comprobante" class="form-select"
+                                                <select id="comprobanteId" name="comprobanteId" class="form-select"
                                                     aria-label="Default select example">
                                                     <option selected>Seleccione</option>
-                                                    <option value="1"
-                                                        {{ $cajaChica->comprobante == 1 ? 'selected' : '' }}>
-                                                        Factura
+                                                    @foreach ($vctComprobantes as $item)
+                                                    <option value="{{ $item->id }}" {{ $cajaChica->comprobanteId == $item->id ? 'selected' : '' }}>
+                                                        {{ $item->nombre }}
                                                     </option>
-                                                    <option value="2"
-                                                        {{ $cajaChica->comprobante == 2 ? 'selected' : '' }}>
-                                                        Vale Q2Ces
-                                                    </option>
-                                                    <option value="3"
-                                                        {{ $cajaChica->comprobante == 3 ? 'selected' : '' }}>
-                                                        Nota
-                                                    </option>
-                                                    <option value="4"
-                                                        {{ $cajaChica->comprobante == 4 ? 'selected' : '' }}>
-                                                        Remision
-                                                    </option>
+                                                @endforeach
                                                 </select>
                                             </div>
 
@@ -116,7 +105,7 @@
                                                 <label class="labelTitulo">Obra:</label></br>
                                                 <select id="obra" name="obra" class="form-select"
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option selected value="">Seleccione</option>
                                                     @forelse ($obras as $obra)
                                                         <option value="{{ $obra->id }}"
                                                             {{ $cajaChica->obra == $obra->id ? 'selected' : '' }}>
@@ -130,9 +119,11 @@
                                                 <label class="labelTitulo">Cliente:</label></br>
                                                 <select id="cliente" name="cliente" class="form-select"
                                                     aria-label="Default select example">
-                                                    <option value="">
-                                                        001-B Ingreso Caja Chica
+                                                    @foreach ($vctClientes as $item)
+                                                    <option value="{{ $item->id }}"  {{ $cajaChica->cliente == $item->id ? 'selected' : '' }}>
+                                                        {{ $item->nombre }}
                                                     </option>
+                                                @endforeach
                                                 </select>
                                             </div>
 

@@ -1,6 +1,17 @@
 @extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Niveles de records')])
 @section('content')
     <div class="content">
+        @if ($errors->any())
+            <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+            <div class="alert alert-danger">
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -23,26 +34,26 @@
                                         </div>
                                     @endif
                                     <div class="row">
-                                    <div class="d-flex p-3 divBorder">
-                                        <div class="col-12 text-right">
+                                        <div class="d-flex p-3 divBorder">
+                                            <div class="col-12 text-right">
 
-                                            <a href="{{ route('catalogos.index') }}">
-                                                <button class="btn regresar">
-                                                    <span class="material-icons">
-                                                        reply
-                                                    </span>
-                                                    Regresar
-                                                </button>
-                                            </a>
+                                                <a href="{{ route('catalogos.index') }}">
+                                                    <button class="btn regresar">
+                                                        <span class="material-icons">
+                                                            reply
+                                                        </span>
+                                                        Regresar
+                                                    </button>
+                                                </a>
 
-                                            @can('catalogos_create')
-                                                <button class="btn botonGral float-end" data-bs-toggle="modal"
-                                                    data-bs-target="#nuevoItem">
-                                                    Añadir Nivel de Puesto
-                                                </button>
-                                            @endcan
+                                                @can('catalogos_create')
+                                                    <button class="btn botonGral float-end" data-bs-toggle="modal"
+                                                        data-bs-target="#nuevoItem">
+                                                        Añadir Nivel de Puesto
+                                                    </button>
+                                                @endcan
+                                            </div>
                                         </div>
-                                    </div>
                                     </div>
 
 
@@ -78,7 +89,7 @@
                                                         {{-- @can('user_edit') --}}
                                                         <a href="#" class="" data-bs-toggle="modal"
                                                             data-bs-target="#editarItem"
-                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->requiereAsistencia }}','{{ $item->usaCajaChica }}','{{ $item->comentario }}')">
+                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->requiereAsistencia }}','{{ $item->usaCajaChica }}','{{ $item->usoCombustible }}','{{ $item->comentario }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                 height="28" fill="currentColor"
                                                                 class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -163,6 +174,15 @@
                             </select>
                         </div>
 
+                        <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
+                            <label class="labelTitulo">Requiere Uso Combustible:</label></br>
+                            <select class="form-select" aria-label="Default select example" id=""
+                                name="usoCombustible">
+                                <option value=0>No</option>
+                                <option value=1>Sí</option>
+                            </select>
+                        </div>
+
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
                             <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario"
@@ -212,6 +232,15 @@
                             <label class="labelTitulo">Requiere Uso Caja Chica:</label></br>
                             <select class="form-select" aria-label="Default select example" id="puestoUsaCajaChica"
                                 name="usaCajaChica">
+                                <option value=0>No</option>
+                                <option value=1>Sí</option>
+                            </select>
+                        </div>
+
+                        <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
+                            <label class="labelTitulo">Requiere Uso Combustible:</label></br>
+                            <select class="form-select" aria-label="Default select example" id="usoCombustible"
+                                name="usoCombustible">
                                 <option value=0>No</option>
                                 <option value=1>Sí</option>
                             </select>
@@ -272,7 +301,7 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, asistencia, caja, comentarios) {
+        function cargaItem(id, nombre, asistencia, caja, combustible, comentarios) {
 
             const txtId = document.getElementById('puestoId');
             txtId.value = id;
@@ -282,6 +311,8 @@
 
             const lstAsistencia = document.getElementById('puestoRequiereAsistencia').value = asistencia;
             const lstCaja = document.getElementById('puestoUsaCajaChica').value = caja;
+            const lstCombustible = document.getElementById('usoCombustible').value = combustible;
+
 
             const txtComentarios = document.getElementById('puestoComentarios');
             txtComentarios.value = comentarios;

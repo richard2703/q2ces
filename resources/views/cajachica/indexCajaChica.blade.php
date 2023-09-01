@@ -73,7 +73,8 @@
                                                 <tr>
                                                     <th class="labelTitulo">Día</th>
                                                     <th class="labelTitulo" style="width: 120px !important;">Concepto</th>
-                                                    <th class="labelTitulo" style="width: 160px !important;">Comprobante</th>
+                                                    <th class="labelTitulo" style="width: 160px !important;">Comprobante
+                                                    </th>
                                                     {{--  <th class="labelTitulo">N. Comprobante</th>  --}}
                                                     <th class="labelTitulo">Cliente</th>
                                                     <th class="labelTitulo">Obra</th>
@@ -81,7 +82,8 @@
                                                     <th class="labelTitulo" style="width: 130px !important;">Personal</th>
                                                     {{--  <th class="labelTitulo">Tipo</th>  --}}
                                                     <th class="labelTitulo" style="width: 130px !important;">Cantidad</th>
-                                                    <th class="labelTitulo text-right" style="width: 130px !important;">Acciones</th>
+                                                    <th class="labelTitulo text-right" style="width: 130px !important;">
+                                                        Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -91,29 +93,11 @@
                                                         </td>
                                                         <td title={{ $registro->codigo }}>{{ $registro->cnombre }}</td>
                                                         <td title={{ $registro->ncomprobante }}>
-                                                            @switch($registro->comprobante)
-                                                                @case(1)
-                                                                    Factura
-                                                                @break
-
-                                                                @case(2)
-                                                                    Vale Q2Ces
-                                                                @break
-
-                                                                @case(3)
-                                                                    Nota
-                                                                @break
-
-                                                                @case(4)
-                                                                    Remision
-                                                                @break
-
-                                                                @default
-                                                            @endswitch
+                                                            {{ $registro->comprobante }}
                                                         </td>
                                                         {{--  <td>1234</td>  --}}
                                                         <td>{{ $registro->cliente }}</td>
-                                                        <td>{{ $registro->obra }}</td>
+                                                        <td>{{ $registro->obra ? $registro->obra : '---' }}</td>
                                                         <td>{{ $registro->identificador }} - {{ $registro->maquinaria }}
                                                         </td>
                                                         <td>{{ $registro->pnombre }} {{ $registro->papellidoP }}</td>
@@ -157,14 +141,14 @@
                                                         <td class="td-actions text-right">
                                                             @can('cajachica_show')
                                                                 <!--<a href="" class="">
-                                                                                                                                                                                                                                                                                                           <svg xmlns="http://www.w3.org/2000/svg" width="28"
-                                                                                                                                                                                                                                                                                                                height="28" fill="currentColor"
-                                                                                                                                                                                                                                                                                                                class="bi bi-card-text accionesIconos"
-                                                                                                                                                                                                                                                                                                                viewBox="0 0 16 16">
-                                                                                                                                                                                                                                                                                                                <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                                                                                                                                                                                                                                                                                                                <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
-                                                                                                                                                                                                                                                                                                            </svg>
-                                                                                                                                                                                                                                                                                                        </a>-->
+                                                                                                                                                                                                                                                                                                                   <svg xmlns="http://www.w3.org/2000/svg" width="28"
+                                                                                                                                                                                                                                                                                                                        height="28" fill="currentColor"
+                                                                                                                                                                                                                                                                                                                        class="bi bi-card-text accionesIconos"
+                                                                                                                                                                                                                                                                                                                        viewBox="0 0 16 16">
+                                                                                                                                                                                                                                                                                                                        <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                                                                                                                                                                                                                                                                                                        <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
+                                                                                                                                                                                                                                                                                                                    </svg>
+                                                                                                                                                                                                                                                                                                                </a>-->
                                                             @endcan
                                                             @can('cajachica_edit')
                                                                 <a href="{{ route('cajaChica.edit', $registro->id) }}"
@@ -193,19 +177,18 @@
                                                             {{-- @endcan --}}
                                                         </td>
                                                     </tr>
-                                                    @empty
-                                                        <tr>
-                                                            <td colspan="2">Sin Registros.</td>
-                                                        </tr>
-                                                    @endforelse
-                                                </tbody>
+                                                @empty
+                                                    <tr>
+                                                        <td colspan="2">Sin Registros.</td>
+                                                    </tr>
+                                                @endforelse
+                                            </tbody>
 
-                                            </table>
-                                        </div>
+                                        </table>
                                     </div>
-                                    <div class="card-footer mr-auto">
-                                        {{ $registros->links() }}
-                                    </div>
+                                </div>
+                                <div class="card-footer mr-auto">
+                                    {{ $registros->links() }}
                                 </div>
                             </div>
                         </div>
@@ -213,7 +196,8 @@
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
 <script>
     function Guardado() {
         // alert('test');
@@ -239,4 +223,4 @@
         Guardado();
 
     }
-    </script>
+</script>

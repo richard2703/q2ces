@@ -114,7 +114,6 @@ class clientesController extends Controller
      */
     public function update(Request $request, clientes $cliente)
     {
-        // dd($cliente);
         $data = $request->all();
         /*** directorio contenedor de su información */
         $pathObra = str_pad($cliente->id, 4, '0', STR_PAD_LEFT);
@@ -131,6 +130,7 @@ class clientesController extends Controller
         $cliente->update($data);
 
         $nuevaLista = collect();
+
         for ($i = 0; $i < count($request['idResidente']); $i++) {
             $array = [
                 'id' => $request['idResidente'][$i],

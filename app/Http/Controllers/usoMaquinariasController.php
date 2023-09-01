@@ -54,10 +54,14 @@ class usoMaquinariasController extends Controller
                 $maquina  = maquinaria::find($request['id'][$i]);
                 $objUso = new usoMaquinarias();
                 $objUso->maquinariaId  = $request['id'][$i];
-                $objUso->anterior  = $maquina->kilometraje;
+                // if ($maquina->kilometraje == "" || $maquina->kilometraje == null) {
+                //     $objUso->anterior = 0;
+                // } else {
+                //     $objUso->anterior  = $maquina->kilometraje;
+                // }
                 $objUso->uso = $request['valor'][$i];
                 $objUso->comentario = null;
-                $objUso->foto = null;
+                // $objUso->foto = null;
                 $objUso->save();
                 $maquina->kilometraje = $request['valor'][$i];
                 $maquina->save();

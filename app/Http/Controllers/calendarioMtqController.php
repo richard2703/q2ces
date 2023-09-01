@@ -21,7 +21,7 @@ class calendarioMtqController extends Controller
      */
     public function index()
     {
-        abort_if ( Gate::denies( 'calendarioMtq_index' ), 403 );
+        abort_if(Gate::denies('calendarioMtq_index'), 403);
         //$eventos = calendarioMtq::all();
         $servicios = serviciosMtq::all();
         $eventos = calendarioMtq::join('maquinaria', "maquinaria.id", "mtqEventos.maquinariaId")
@@ -74,7 +74,7 @@ class calendarioMtqController extends Controller
         // dd($events);
         $events = calendarioMtq::create($events);
         Session::flash('message', 1);
-        return redirect()->route('calendarioMTQ.index');
+        return redirect()->route('calendarioMtq.index');
     }
 
     /**
@@ -110,7 +110,7 @@ class calendarioMtqController extends Controller
     public function update(Request $request, calendarioMtq $calendarioMtq)
     {
         abort_if(Gate::denies('calendarioMtq_edit'), 404);
-        $calendarioMtq = calendarioMtq::where('id',$request->id)->first();
+        $calendarioMtq = calendarioMtq::where('id', $request->id)->first();
         $data = $request->all();
         // dd($calendarioMtq, $data);
         $data['estatus'] = 1;
@@ -131,7 +131,7 @@ class calendarioMtqController extends Controller
 
         Session::flash('message', 1);
 
-        return redirect()->route('calendarioMTQ.index');
+        return redirect()->route('calendarioMtq.index');
     }
 
     /**
@@ -144,7 +144,7 @@ class calendarioMtqController extends Controller
     {
         //
     }
-    
+
 
     public function checkPermission($permission)
     {

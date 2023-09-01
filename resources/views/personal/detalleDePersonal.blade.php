@@ -1119,7 +1119,7 @@
                                                         @else
                                                             <div
                                                                 class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
-                                                                <input type="hidden" id='{{ $doc->idDoc }}'
+                                                                <input type="hidden" id=''
                                                                     name='archivo[{{ $contador }}][idDoc]'
                                                                     value='{{ $doc->idDoc }}'>
                                                                 <input type="hidden" id='{{ $doc->nombre }}'
@@ -1260,7 +1260,7 @@
                                             </select>
                                         </div>
 
-                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                        {{--  <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Nivel de Puesto: <span>*</span></label></br>
                                             <select id="puestoNivelId" name="puestoNivelId" class="form-select" required
                                                 aria-label="Default select example">
@@ -1272,7 +1272,7 @@
                                                     </option>
                                                 @endforeach
                                             </select>
-                                        </div>
+                                        </div>  --}}
 
                                         {{-- <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Usa caja chica:</label></br>

@@ -1,6 +1,17 @@
 @extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista De Tipos Servicios')])
 @section('content')
     <div class="content">
+        @if ($errors->any())
+            <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+            <div class="alert alert-danger">
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -150,7 +161,7 @@
                             <input type="text" class="inputCaja" id="codigo" name="codigo" value=""
                                 required placeholder="Especifique...">
                         </div>
-                        
+
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Costo: <span>*</span></label></br>
                             <input type="number" class="inputCaja" id="costo" name="costo" value=""
@@ -295,7 +306,7 @@
                 txtActivo.checked = false;
             }
             txtActivo.disabled = modalTipo;
-            
+
             const tituloModal = document.getElementById('tituloModal');
             if (modalTipo) {
                 tituloModal.textContent = 'Ver';

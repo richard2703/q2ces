@@ -75,8 +75,8 @@
 
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ route('catalogoMarca.index') }}" class="">
-                                            <img src="/img/catalogos/marcas.svg" alt="Marcas" title="Marcas"
-                                                width="30%" class="botonIconoPrincipal">
+                                            <img src="/img/catalogos/marcas.svg" alt="Marcas" title="Marcas" width="30%"
+                                                class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Marcas</p>
                                         </a>
                                     </div>
@@ -91,7 +91,8 @@
 
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ route('catalogoProveedorCategoria.index') }}" class="">
-                                            <img src="/img/catalogos/categoriasProveedores.svg" alt="Categorías de Proveedores" title="Categorías de Proveedores"
+                                            <img src="/img/catalogos/categoriasProveedores.svg"
+                                                alt="Categorías de Proveedores" title="Categorías de Proveedores"
                                                 width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Categorías De Proveedores</p>
                                         </a>
@@ -115,32 +116,32 @@
 
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ route('catalogoRefacciones.index') }}" class="">
-                                            <img src="/img/catalogos/refaccionesPorMaquinaria.svg" alt="Refacciones" title="Refacciones"
-                                                width="30%" class="botonIconoPrincipal">
+                                            <img src="/img/catalogos/refaccionesPorMaquinaria.svg" alt="Refacciones"
+                                                title="Refacciones" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Refacciones Por Maquinaría</p>
                                         </a>
                                     </div>
 
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ route('tiposDocs.index') }}" class="">
-                                            <img src="/img/inventario/TIPOS DE DOCUMENTOS-01.svg" alt="Tipos Docs" title="Tipos Docs"
-                                                width="30%" class="botonIconoPrincipal">
+                                            <img src="/img/inventario/TIPOS DE DOCUMENTOS-01.svg" alt="Tipos Docs"
+                                                title="Tipos Docs" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Tipos De Documentos</p>
                                         </a>
                                     </div>
 
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ route('docs.index') }}" class="">
-                                            <img src="/img/inventario/ADMINISTRACIÓN DE DOCUMENTOS-01.svg" alt="Manage Docs" title="Manage Docs"
-                                                width="30%" class="botonIconoPrincipal">
+                                            <img src="/img/inventario/ADMINISTRACIÓN DE DOCUMENTOS-01.svg" alt="Manage Docs"
+                                                title="Manage Docs" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Administración De Documentos</p>
                                         </a>
                                     </div>
 
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ route('tiposServicios.index') }}" class="">
-                                            <img src="/img/inventario/TIPOS DE SERVICIOS-01.svg" alt="Lugares" title="Lugares"
-                                                width="30%" class="botonIconoPrincipal">
+                                            <img src="/img/inventario/TIPOS DE SERVICIOS-01.svg" alt="Lugares"
+                                                title="Lugares" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Tipos De Servicios</p>
                                         </a>
                                     </div>
@@ -155,8 +156,8 @@
 
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ route('ubicaciones.index') }}" class="">
-                                            <img src="/img/inventario/UBICACIONES-01.svg" alt="Ubicaciones" title="Ubicaciones"
-                                                width="30%" class="botonIconoPrincipal">
+                                            <img src="/img/inventario/UBICACIONES-01.svg" alt="Ubicaciones"
+                                                title="Ubicaciones" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Ubicaciones</p>
                                         </a>
                                     </div>
@@ -166,6 +167,46 @@
                                             <img src="/img/inventario/SERVICIOS MTQ-01.svg" alt="Servicios MTQ"
                                                 title="Servicios MTQ" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Servicios MTQ</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                        <a href="{{ route('catalogoTipoHorasExtra.index') }}" class="">
+                                            <img src="/img/catalogos/horasextra.svg" alt="Horas Extras" title="Horas Extras"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Horas Extras</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                        <a href="{{ route('catalogoTiposValorTarea.index') }}" class="">
+                                            <img src="/img/catalogos/valordetareas.svg" alt="Tipos de Valor de Tarea"
+                                                title="Tipos de Valor de Tarea" width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Tipos de Valor de Tarea</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                        <a href="{{ route('catalogoConceptos.index') }}" class="">
+                                            <img src="/img/catalogos/conceptos.svg" alt="Conceptos" title="Conceptos"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Conceptos</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                        <a href="{{ route('catalogoComprobantes.index') }}" class="">
+                                            <img src="/img/catalogos/comprobantes.svg" alt="Comprobantes"
+                                                title="Comprobantes" width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Comprobantes</p>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                        <a href="{{ route('catalogoTiposMantenimiento.index') }}" class="">
+                                            <img src="/img/catalogos/tiposmantenimientos.svg" alt="Tipos de Mantenimiento"
+                                                title="Tipos de Mantenimiento" width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Tipos de Mantenimiento</p>
                                         </a>
                                     </div>
                                 @endcan

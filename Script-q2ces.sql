@@ -94,7 +94,7 @@ INSERT INTO
 VALUES
     (1,'Admin','web','2022-07-25 20:54:16','2022-07-25 20:54:16'),
     (2,'User','web','2022-07-25 20:54:16','2022-07-25 20:54:16');
-   
+
 INSERT INTO
     `users`
 VALUES
@@ -218,7 +218,7 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('calendarioMtq_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('calendarioMtq_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('calendarioMtq_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('calendarioMtq_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');	
+	 ('calendarioMtq_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('checkList_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('checkList_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -247,6 +247,13 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('tarea_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('tarea_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('tarea_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('cliente_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('cliente_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('cliente_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('cliente_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('cliente_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 
 INSERT INTO
     `model_has_roles`
@@ -281,6 +288,7 @@ create table puestoNivel(
     nombre varchar(200) not NULL,
     requiereAsistencia int(1) NOT NULL DEFAULT '0',
     usaCajaChica TINYINT(1) NOT NULL DEFAULT '0',
+    usoCombustible bigint(20) unsigned NOT null,
     comentario text NULL,
     primary key (id)
 );
@@ -342,7 +350,7 @@ create table tipoAsistencia(
     color varchar(200) not NULL,
     esAsistencia int NULL,
     primary key (id)
-); 
+);
 
 create table tipoHoraExtra(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -518,6 +526,27 @@ create table maquinariaTipo(
     primary key (id)
 );
 
+create table tipoValorTarea(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) not NULL,
+    comentario text NULL,
+    primary key (id)
+);
+
+create table comprobante(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) not NULL,
+    comentario text NULL,
+    primary key (id)
+);
+
+create table tipoMantenimiento(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) not NULL,
+    comentario text NULL,
+    primary key (id)
+);
+
 /***************************************FIN Tablas de Sin FK*/
 
 /***************************************DATOS Tablas de Sin FK*/
@@ -525,12 +554,12 @@ create table maquinariaTipo(
 INSERT INTO
     `puestoNivel` (`id`,`nombre`,`comentario`,`requiereAsistencia`)
 VALUES
-    (NULL,'Administrativo','Descripci�n del puesto',0),
-    (NULL, 'Gerente', 'Descripci�n del puesto', 0),
-    (NULL, 'Coordinador', 'Descripci�n del puesto', 0),
-    (NULL, 'Mec�nico', 'Descripci�n del puesto', 1),
-    (NULL, 'Operador', 'Descripci�n del puesto', 1),
-    (NULL, 'Auxiliar', 'Descripci�n del puesto', 1);
+    (NULL,'Administrativo','Descripción del puesto',0),
+    (NULL, 'Gerente', 'Descripción del puesto', 0),
+    (NULL, 'Coordinador', 'Descripción del puesto', 0),
+    (NULL, 'Mecánico', 'Descripción del puesto', 1),
+    (NULL, 'Operador', 'Descripción del puesto', 1),
+    (NULL, 'Auxiliar', 'Descripción del puesto', 1);
 
 INSERT INTO
     tipoAsistencia
@@ -540,7 +569,7 @@ VALUES
     (3,'Incapacidad','Se encuentra con incapacidad','darkcyan','0'),
     (4,'Vacaciones','Con permiso de vacaciones','orange','1'),
     (5,'Descanso','Con permiso de descanso o feriado','purple','0');
-    
+
 INSERT INTO
     `tareaCategoria` (`id`,`nombre`,`comentario`)
 VALUES
@@ -550,15 +579,15 @@ INSERT INTO
     `tareaTipo` (`id`,`nombre`,`comentario`)
 VALUES
     (NULL,'No definido','Sin tipo definido');
-    
+
 INSERT INTO
     `tareaUbicacion` (`id`,`nombre`,`comentario`)
 VALUES
     (NULL,'No definida','Sin ubicación definida');
-    
+
 INSERT INTO
     `ubicaciones`
-values 
+values
 	(1,'Maquinaria','Maquinaria','Apartado para seleccionar maquinaria',1,'2022-09-26 19:48:41','2022-09-26 19:48:41');
 
 INSERT INTO
@@ -577,37 +606,64 @@ VALUES
     (3,'Baja','orange','La maquinaría esta fue dada de baja'),
     (4,'Borrado','red','La maquinaría fue borrada de forma definitiva');
 
-INSERT INTO 
+INSERT INTO
 serviciosMtq (id, nombre, codigo, color, comentario, activo, created_at, updated_at)
 VALUES
     (1, 'Revision', 'MT-01', '#2db512', 'Para equipos que necesiten ser revisados', 1, '2023-08-15 09:06:58', '2023-08-15 09:06:58'),
     (2, 'Afinacion', 'MT-02', '#f7c90d', 'Para equipos que necesiten ser afinados', 1, '2023-08-15 09:07:31', '2023-08-17 13:36:41'),
     (3, 'Reparacion', 'MT-03', '#be2727', 'Para equipos que necesiten ser reparados', 1, '2023-08-15 11:03:57', '2023-08-15 11:03:57');
-   
-INSERT into `maquinariaCategoria` (`id`, `nombre`, `comentario`) values 
-(1, 'Accesorios', 'Accesorios de Maquinar�a'),
+
+INSERT into `maquinariaCategoria` (`id`, `nombre`, `comentario`) values
+(1, 'Accesorios', 'Accesorios de Maquinaría'),
 (2, 'Camperes', 'Campers'),
 (3, 'Cisterna', 'Cisterna'),
-(4, 'Maquinar�a Ligera', 'Maquinar�a Ligera'),
-(5, 'Maquinar�a Pesada', 'Maquinar�a Pesada'),
+(4, 'Maquinaría Ligera', 'Maquinaría Ligera'),
+(5, 'Maquinaría Pesada', 'Maquinaría Pesada'),
 (6, 'Retroexcavadoras', 'Retroexcavadoras'),
 (7, 'Tractocamiones', 'Tractocamiones'),
 (8, 'Otros', 'Otros'),
 (9, 'Utilitarios','Utilitarios');
 
 INSERT INTO `maquinariaTipo` (`id`, `nombre`, `comentario`) VALUES
-(1, 'Pesada', 'Maquinar�a Pesada'),
-(2, 'Ligera', 'Maquinar�a Ligera'),
+(1, 'Pesada', 'Maquinaría Pesada'),
+(2, 'Ligera', 'Maquinaría Ligera'),
 (3, 'Grua', 'Gruas y montacargas'),
 (4, 'No Aplica', 'No aplica para�ningun�tipo');
-   
+
 INSERT INTO tiposDocs  (`id`, `nombre`, `comentario`) VALUES
 (1, 'Personal', 'Documentos de Personal'),
 (2, 'Maquinaria', 'Documentos de Personal');
+
+
+INSERT INTO `tipoHoraExtra` (`id`, `nombre`, `valor`, `comentario`, `color`) VALUES
+(1, 'No aplica', 0.00, 'No aplica hora extra', 'gray'),
+(2, 'De Ley', 82.14, 'De Ley', 'blue'),
+(3, 'Q2S', 100.00, 'Q2C', 'green'),
+(4, 'Otros', 120.00, 'Bonos o compensaciones', 'purple');
+
+
+INSERT INTO `estados` (`id`, `nombre`, `color`, `comentario`) VALUES
+(1, 'Espera', 'blue', 'En espera de antención'),
+(2, 'Realizando', 'gray', 'Ya se está trabajando'),
+(3, 'Terminado', 'navy', 'Ya se termino de ejecutar');
+
+
+INSERT INTO `comprobante` (`id`, `nombre`, `comentario`) VALUES
+(1, 'Factura', 'Facturas'),
+(2, 'Nota', 'Nota de remisión.'),
+(3, 'Remisión', 'Remisión'),
+(4, 'Vale Q2Ces', 'Vale de la empresa');
+
+INSERT INTO `tipoMantenimiento` (`id`, `nombre`, `comentario`) VALUES
+(1, 'Correctivo', 'Mantenimiento correctivo de equipo'),
+(2, '250', 'Mantenimiento preventivo de 250 horas de trabajo'),
+(3, '500', 'Mantenimiento preventivo de 500 horas de trabajo.'),
+(4, '1000', 'Mantenimiento preventivo de 1000 horas de trabajo');
+
 /***************************************FIN DATOS Tablas de Sin FK*/
 
 /***************************************Tablas Relacionadas*/
-   
+
 create table tarea(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     nombre varchar(255) NULL,
@@ -635,7 +691,7 @@ create table grupoTareas(
     CONSTRAINT FK_grupo_grupo foreign key (grupoId) references grupo(id),
     CONSTRAINT FK_grupo_tarea foreign key (tareaID) references tarea(id)
 );
-   
+
 CREATE TABLE tareas(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     userId bigint(20) unsigned NOT NULL,
@@ -667,7 +723,7 @@ create table grupoBitacoras(
     CONSTRAINT FK_grupoBitacora_bitacora foreign key (bitacoraId) references bitacoras(id),
     CONSTRAINT FK_grupoBitacora_tarea foreign key (grupoId) references grupo(id)
 );
-   
+
 CREATE TABLE eventos(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     userId bigint(20) unsigned NOT NULL,
@@ -682,7 +738,7 @@ CREATE TABLE eventos(
     CONSTRAINT FK_eventos_userId foreign key (userId) references users(id),
     CONSTRAINT FK_eventos_prioridadId foreign key (prioridadId) references prioridades(id)
 );
-   
+
 CREATE TABLE obras(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     nombre varchar(255) NULL,
@@ -702,7 +758,7 @@ CREATE TABLE obras(
     PRIMARY KEY (id),
     CONSTRAINT FK_obras_cliente foreign key (clienteId) references clientes(id)
 );
-   
+
 CREATE TABLE residente(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     userId bigint(20) unsigned NULL,
@@ -805,7 +861,7 @@ create table lugares(
     primary key(id),
     CONSTRAINT FK_lugares_ubicacionId foreign key (ubicacionId) references ubicaciones(id)
 );
-   
+
 create table puesto(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     nombre varchar(200) not NULL,
@@ -814,7 +870,7 @@ create table puesto(
     primary key (id),
     CONSTRAINT FK_puesto_puestoNivelId foreign key (puestoNivelId) references puestoNivel(id)
 );
-   
+
 CREATE TABLE docs(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 	nombre varchar(200) null,
@@ -825,7 +881,7 @@ CREATE TABLE docs(
     PRIMARY KEY (id),
     CONSTRAINT FK_docs_tipoId foreign key (tipoId) references tiposDocs(id)
 );
-   
+
 CREATE TABLE personal(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     userId bigint(20) unsigned NULL,
@@ -862,14 +918,16 @@ CREATE TABLE personal(
     casa varchar(255) NULL,
     foto varchar(255) NULL,
     puestoNivelId bigint(20) unsigned NULL,
+    puestoId bigint(20) unsigned NOT NULL,
     created_at timestamp NULL DEFAULT NULL,
     updated_at timestamp NULL DEFAULT NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_personal_userId foreign key (userId) references users(id),
+    CONSTRAINT FK_personal_puestoId foreign key (puestoId) references puesto(id),
     CONSTRAINT FK_personal_userEstatusId foreign key (estatusId) references userEstatus(id),
     CONSTRAINT FK_personal_puestoNivelId foreign key (puestoNivelId) references puestoNivel(id)
 );
-   
+
 CREATE TABLE equipo(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     personalId bigint(20) unsigned NOT NULL,
@@ -888,7 +946,7 @@ CREATE TABLE equipo(
     PRIMARY KEY (id),
     CONSTRAINT FK_equipo_personalId foreign key (personalId) references personal(id)
 );
-   
+
 CREATE TABLE contactos(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     personalId bigint(20) unsigned NOT NULL,
@@ -1057,8 +1115,8 @@ CREATE TABLE maquinaria(
     bujias varchar(255) NULL,
     tipobujia varchar(255) NULL,
     horometro int NULL,
-    kilometraje int NULL,
-    kom varchar(255) NULL,
+    kilometraje int null default 0,
+    kom varchar(255) null ,
     foto varchar(255) NULL,
     foto2 varchar(255) NULL,
     foto3 varchar(255) NULL,
@@ -1172,11 +1230,13 @@ CREATE TABLE carga(
     operadorId bigint(20) unsigned NOT NULL,
     precio float(10, 2) not NULL,
     litros float(10, 2) not NULL,
+    userId bigint(20) unsigned NOT null,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_carga_operadorlId foreign key (operadorId) references personal(id),
-    CONSTRAINT FK_carga_maquinariaId foreign key (maquinariaId) references maquinaria(id)
+    CONSTRAINT FK_carga_maquinariaId foreign key (maquinariaId) references maquinaria(id),
+    CONSTRAINT FK_carga_userId foreign key (userId) references users(id)
 );
 
 CREATE TABLE descarga(
@@ -1190,13 +1250,15 @@ CREATE TABLE descarga(
     imgKm varchar(255) not NULL,
     horas float(10, 2) not NULL,
     imgHoras varchar(255) not NULL,
+    userId bigint(20) unsigned NOT null,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_descarga_operadorlId foreign key (operadorId) references personal(id),
     CONSTRAINT FK_descarga_maquinariaId foreign key (maquinariaId) references maquinaria(id),
-    CONSTRAINT FK_descarga_serviciolId foreign key (operadorId) references personal(id),
-    CONSTRAINT FK_descarga_receptorId foreign key (maquinariaId) references maquinaria(id)
+    CONSTRAINT FK_descarga_serviciolId foreign key (servicioId) references personal(id),
+    CONSTRAINT FK_descarga_receptorId foreign key (receptorId) references maquinaria(id),
+    CONSTRAINT FK_descarga_userId foreign key (userId) references users(id)
 );
 
 CREATE TABLE mtqEventos (
@@ -1234,7 +1296,7 @@ CREATE TABLE mantenimientos(
     maquinariaId bigint(20) unsigned NOT NULL,
     personalId bigint(20) unsigned NOT NULL,
     titulo varchar(255) not NULL,
-    tipo varchar(255) not NULL,
+    tipoMantenimientoId bigint(20) unsigned NOT NULL,
     fechaInicio date not NULL,
     fechaReal date NULL,
     estadoId bigint(20) unsigned NOT NULL,
@@ -1250,7 +1312,8 @@ CREATE TABLE mantenimientos(
     PRIMARY KEY (id),
     CONSTRAINT FK_mantenimientos_userId foreign key (maquinariaId) references maquinaria(id),
     CONSTRAINT FK_mantenimientos_estadoId foreign key (estadoId) references estados(id),
-    CONSTRAINT FK_mantenimiento_personalId foreign key (personalId) references personal(id)
+    CONSTRAINT FK_mantenimiento_personalId foreign key (personalId) references users(id),
+    CONSTRAINT FK_mantenimiento_tipoId foreign key (tipoMantenimientoId) references tipoMantenimiento(id)
 );
 
 create table gastosMantenimiento(
@@ -1345,7 +1408,7 @@ create table cajaChica(
     comprobante float(10,2) NULL,
     ncomprobante int not NULL,
     cliente varchar(200),
-    obra bigint(20) unsigned NOT NULL,
+    obra bigint(20) unsigned  NULL,
     equipo bigint(20) unsigned NOT NULL,
     personal bigint(20) unsigned NOT NULL,
     tipo varchar(200) NULL,
@@ -1447,27 +1510,27 @@ CREATE TABLE extintores(
 INSERT INTO
     `puesto` (`id`, `nombre`, `comentario`)
 VALUES
-    (NULL, 'Almacenista', 'Descripci�n del puesto'),
-    (NULL,'Auxiliar General','Descripci�n del puesto'),
-    (NULL, 'Carpintero', 'Descripci�n del puesto'),
-    (NULL,'Gerente de Operaciones','Descripci�n del puesto'),
-    (NULL, 'Chofer', 'Descripci�n del puesto'),
-    (NULL,'Chofer de Tractocamion','Descripci�n del puesto'),
-    (NULL,'Coordinador de Operaciones','Descripci�n del puesto'),
-    (NULL,'Capturista de Datos','Descripci�n del puesto'),
-    (NULL, 'Jefe de Taller', 'Descripci�n del puesto'),
-    (NULL, 'Electrico', 'Descripci�n del puesto'),
-    (NULL,'Guardia de Seguridad','Descripci�n del puesto'),
-    (NULL, 'Herrero', 'Descripci�n del puesto'),
-    (NULL, 'Inventarios', 'Descripci�n del puesto'),
-    (NULL,'Operador de Maquinaria','Descripci�n del puesto'),
-    (NULL, 'Pintor', 'Descripci�n del puesto'),
-    (NULL, 'Plomero', 'Descripci�n del puesto'),
-    (NULL, 'Velador', 'Descripci�n del puesto'),
-    (NULL, 'Vigilante', 'Descripci�n del puesto'),
-    (NULL, 'Mecánica', 'Descripci�n del puesto'),
-    (NULL,'Electromecanico','Descripci�n del puesto'),
-    (NULL, 'Laminero', 'Descripci�n del puesto'),
-    (NULL, 'Sistemas', 'Descripci�n del puesto');
-   
+    (NULL, 'Almacenista', 'Descripción del puesto'),
+    (NULL,'Auxiliar General','Descripción del puesto'),
+    (NULL, 'Carpintero', 'Descripción del puesto'),
+    (NULL,'Gerente de Operaciones','Descripción del puesto'),
+    (NULL, 'Chofer', 'Descripción del puesto'),
+    (NULL,'Chofer de Tractocamion','Descripción del puesto'),
+    (NULL,'Coordinador de Operaciones','Descripción del puesto'),
+    (NULL,'Capturista de Datos','Descripción del puesto'),
+    (NULL, 'Jefe de Taller', 'Descripción del puesto'),
+    (NULL, 'Electrico', 'Descripción del puesto'),
+    (NULL,'Guardia de Seguridad','Descripción del puesto'),
+    (NULL, 'Herrero', 'Descripción del puesto'),
+    (NULL, 'Inventarios', 'Descripción del puesto'),
+    (NULL,'Operador de Maquinaria','Descripción del puesto'),
+    (NULL, 'Pintor', 'Descripción del puesto'),
+    (NULL, 'Plomero', 'Descripción del puesto'),
+    (NULL, 'Velador', 'Descripción del puesto'),
+    (NULL, 'Vigilante', 'Descripción del puesto'),
+    (NULL, 'Mecánica', 'Descripción del puesto'),
+    (NULL,'Electromecanico','Descripción del puesto'),
+    (NULL, 'Laminero', 'Descripción del puesto'),
+    (NULL, 'Sistemas', 'Descripción del puesto');
+
 /***************************************FIN DATOS Tablas Relacionadas*/

@@ -45,9 +45,19 @@ class inventarioController extends Controller
         abort_if(Gate::denies('inventario_index'), 403);
         if ($tipo == 'combustible') {
 
-            $despachador = personal::where("userId", auth()->user()->id)->get();
-            $despachadores = personal::all();
-            $personal = personal::all();
+            $despachador = personal::join('puesto', 'personal.puestoId', 'puesto.id')
+                ->join('puestoNivel', 'puesto.puestoNivelId', 'puestoNivel.id')
+                ->select('personal.id', 'personal.nombres', 'personal.apellidoP')
+                ->where('puestoNivel.usoCombustible', 1)->get();
+            // dd($despachador);
+            $despachadores = personal::join('puesto', 'personal.puestoId', 'puesto.id')
+                ->join('puestoNivel', 'puesto.puestoNivelId', 'puestoNivel.id')
+                ->select('personal.id', 'personal.nombres', 'personal.apellidoP')
+                ->where('puestoNivel.usoCombustible', 1)->get();
+            $personal = personal::join('puesto', 'personal.puestoId', 'puesto.id')
+                ->join('puestoNivel', 'puesto.puestoNivelId', 'puestoNivel.id')
+                ->select('personal.id', 'personal.nombres', 'personal.apellidoP')
+                ->where('puestoNivel.usoCombustible', 1)->get();
             $maquinaria = maquinaria::where("cisterna", 0)->orderBy('nombre', 'asc')->get();
             $cisternas = maquinaria::where("cisterna", 1)->orderBy('nombre', 'asc')->get();
 
@@ -122,16 +132,18 @@ class inventarioController extends Controller
                 ->join('maquinaria as m2', 'm2.id', '=', 'descarga.servicioId')
                 ->join('personal as p2', 'p2.id', '=', 'descarga.receptorId')
                 ->orderBy('descarga.created_at', 'desc')
-                ->paginate(10);
+                ->get();
 
-            // dd($cargas);
+
+
+            // dd($descargas);
 
             return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas', 'gasolinas', 'suma', 'dia', 'despachadores', 'cargas', 'descargas'));
         } else {
             $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(15);
 
-            if( $inventarios == null){
-                $inventarios=null;
+            if ($inventarios == null) {
+                $inventarios = null;
             }
 
 
@@ -144,7 +156,7 @@ class inventarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create( $tipo )
+    public function create($tipo)
     {
         abort_if(Gate::denies('inventario_create'), 403);
 
@@ -153,7 +165,7 @@ class inventarioController extends Controller
         $vctProveedores = proveedor::all();
         $vctMaquinaria = maquinaria::all();
 
-        return view('inventario.inventarioNuevo', compact('tipo','vctTipos','vctMarcas', 'vctProveedores', 'vctMaquinaria'));
+        return view('inventario.inventarioNuevo', compact('tipo', 'vctTipos', 'vctMarcas', 'vctProveedores', 'vctMaquinaria'));
     }
 
     /**
@@ -197,9 +209,9 @@ class inventarioController extends Controller
             $request->file('imagen')->storeAs('/public/inventario/' . $producto['tipo'], $producto['imagen']);
         }
 
-       $objProducto = inventario::create($producto);
+        $objProducto = inventario::create($producto);
 
-        if($objProducto->id > 0){
+        if ($objProducto->id > 0) {
             $objMovimiento = new inventarioMovimientos();
             $objMovimiento->movimiento = 1; //*** agrega al inventario */
             $objMovimiento->inventarioId = $objProducto->id;
@@ -233,7 +245,7 @@ class inventarioController extends Controller
         $vctMaquinaria = maquinaria::all();
         // dd($vctDesde);
         $inventario = inventario::where("id", $inventario->id)->first();
-        return view('inventario.detalleInventario', compact('inventario', 'vctDesde', 'vctHasta','vctTipos','vctMarcas', 'vctProveedores', 'vctMaquinaria'));
+        return view('inventario.detalleInventario', compact('inventario', 'vctDesde', 'vctHasta', 'vctTipos', 'vctMarcas', 'vctProveedores', 'vctMaquinaria'));
     }
 
     /**
@@ -297,9 +309,16 @@ class inventarioController extends Controller
             'valor',
             'reorden',
             'maximo',
-            'tipo','uniformeTipoId', 'uniformeTalla','uniformeRetornable',
-            'extintorCapacidad', 'extintorCodigo','extintorFechaVencimiento',
-            'extintorUbicacion', 'extintorTipo','extintorAsignadoMaquinariaId'
+            'tipo',
+            'uniformeTipoId',
+            'uniformeTalla',
+            'uniformeRetornable',
+            'extintorCapacidad',
+            'extintorCodigo',
+            'extintorFechaVencimiento',
+            'extintorUbicacion',
+            'extintorTipo',
+            'extintorAsignadoMaquinariaId'
         );
 
         if ($request->hasFile("imagen")) {
@@ -406,7 +425,7 @@ class inventarioController extends Controller
                 Session::flash('message', 0);
                 return redirect()->back()->with('failed', 'No se encuentra en el inventario!');
             }
-        }else{
+        } else {
             return redirect()->back()->with('failed', 'No se pueden mover!');
         }
         Session::flash('message', 1);
@@ -451,7 +470,7 @@ class inventarioController extends Controller
     public function cargaCombustible(Request $request)
     {
         abort_if(Gate::denies('combustible_create'), 403);
-
+        // dd('carga', $request);
         $request->validate([
             'litros' => 'required|numeric',
             'precio' => 'required|numeric|max:30|min:10',
@@ -469,7 +488,7 @@ class inventarioController extends Controller
             'operadorId',
             'precio',
         );
-
+        $carga['userId'] = auth()->user()->id;
         //*** guardamos el registro */
         carga::create($carga);
 
@@ -496,50 +515,50 @@ class inventarioController extends Controller
         abort_if(Gate::denies('combustible_create'), 403);
 
         $blnHayImagen = false;
-        $blnHayDatos=false;
+        $blnHayDatos = false;
 
-        $request->validate([
-            'litros' => 'required|numeric',
-            'km' => 'nullable|numeric',
-            'horas' => 'nullable|numeric',
-            'imgKm' => 'nullable',
-            'imgHoras' => 'nullable',
-        ], [
-            'litros.required' => 'El campo litros es obligatorio.',
-            'km.required' => 'El campo Km/Mi es obligatorio.',
-            'horas.required' => 'El campo horómetro es obligatorio.',
-            'imgKm.required' => 'El campo imagen de kilometraje es obligatorio.',
-            'imgHoras.required' => 'El campo imagen de horómetro es obligatorio.',
-            'litros.numeric' => 'El campo litros debe de ser numérico.',
-            // 'km.numeric' => 'El campo Km/Mi debe de ser numérico.',
-            // 'horas.numeric' => 'El campo horometro debe de ser numérico.',
-        ]);
+        // $request->validate([
+        //     'litros' => 'required|numeric',
+        //     'km' => 'nullable|numeric',
+        //     'horas' => 'nullable|numeric',
+        //     'imgKm' => 'nullable',
+        //     'imgHoras' => 'nullable',
+        // ], [
+        //     'litros.required' => 'El campo litros es obligatorio.',
+        //     'km.required' => 'El campo Km/Mi es obligatorio.',
+        //     'horas.required' => 'El campo horómetro es obligatorio.',
+        //     'imgKm.required' => 'El campo imagen de kilometraje es obligatorio.',
+        //     'imgHoras.required' => 'El campo imagen de horómetro es obligatorio.',
+        //     'litros.numeric' => 'El campo litros debe de ser numérico.',
+        //     // 'km.numeric' => 'El campo Km/Mi debe de ser numérico.',
+        //     // 'horas.numeric' => 'El campo horometro debe de ser numérico.',
+        // ]);
 
 
-        if ( is_null($request['horas']) == false && strlen(trim($request['horas'])) > 0) {
+        if (is_null($request['horas']) == false && strlen(trim($request['horas'])) > 0) {
             $blnHayDatos = true;
-        }else{
-            $request['horas']=0;
+        } else {
+            $request['horas'] = 0;
         }
 
-        if ( is_null($request['horas']) && strlen(trim($request['km'])) > 0) {
+        if (is_null($request['horas']) && strlen(trim($request['km'])) > 0) {
             $blnHayDatos = true;
-        }else{
-            $request['km']=0;
+        } else {
+            $request['km'] = 0;
         }
 
-        $descarga = $request->only(
-            'horas',
-            'km',
-            'imgKm',
-            'imgHoras',
-            'litros',
-            'maquinariaId',
-            'operadorId',
-            'receptorId',
-            'servicioId',
-        );
-
+        // $descarga = $request->only(
+        //     'horas',
+        //     'km',
+        //     'imgKm',
+        //     'imgHoras',
+        //     'litros',
+        //     'maquinariaId',
+        //     'operadorId',
+        //     'receptorId',
+        //     'servicioId',
+        // );
+        $descarga = $request->all();
 
         if ($request->hasFile("imgKm")) {
             $descarga['imgKm'] = time() . '_' . 'imgKm.' . $request->file('imgKm')->getClientOriginalExtension();
@@ -555,20 +574,21 @@ class inventarioController extends Controller
 
 
         //*** Preguntamos si hay un valor cargado de kilometraje o del horometro */
-        if ($blnHayDatos == false) {
-            return redirect()->back()->withInput()->withErrors("Se requiere al menos que registre el valor del Kilometraje o del Horometro.");
-        }
+        // if ($blnHayDatos == false) {
+        //     return redirect()->back()->withInput()->withErrors("Se requiere al menos que registre el valor del Kilometraje o del Horometro.");
+        // }
 
         //*** Preguntamos si no hay una imagen cargada */
-        if ($blnHayImagen == false) {
-            return redirect()->back()->withInput()->withErrors("Se requiere al menos una imagen de kilometraje o del homometro.");
-        }
+        // if ($blnHayImagen == false) {
+        //     return redirect()->back()->withInput()->withErrors("Se requiere al menos una imagen de kilometraje o del homometro.");
+        // }
 
         //buscamos el equipo para actulizar el nivel de la cisterna
         $cisterna =   maquinaria::where("id", $request['maquinariaId'])->first();
         $cisterna->cisternaNivel = ($cisterna->cisternaNivel - $request['litros']);
         $cisterna->update();
 
+        $descarga['userId'] = auth()->user()->id;
         descarga::create($descarga);
         Session::flash('message', 1);
 
@@ -761,11 +781,11 @@ class inventarioController extends Controller
      */
     public function uniformesPorTipo($uniformeTipoId)
     {
-            $data =  inventario::orderby("nombre", "asc")
-                ->select('id', 'nombre', 'uniformeTalla','cantidad' )
-                ->where('tipo', '=','uniformes')
-                ->where('uniformeTipoId','=', $uniformeTipoId)
-                ->get();
+        $data =  inventario::orderby("nombre", "asc")
+            ->select('id', 'nombre', 'uniformeTalla', 'cantidad')
+            ->where('tipo', '=', 'uniformes')
+            ->where('uniformeTipoId', '=', $uniformeTipoId)
+            ->get();
         // dd($data);
         return response()->json($data);
     }
@@ -808,24 +828,24 @@ class inventarioController extends Controller
         if ($asignacion) {
             if ($producto) {
 
-                $intCantidad=0;
-                $intDiferencia=0;
-                $blnModificar=false;
-                $blnAgregar=false;
-                $intOperacion=0;
+                $intCantidad = 0;
+                $intDiferencia = 0;
+                $blnModificar = false;
+                $blnAgregar = false;
+                $intOperacion = 0;
 
                 //*** determinamos si hay diferencia */
-                if($restock['productoCantidad'] == $restock['productoCantidadNueva']){
+                if ($restock['productoCantidad'] == $restock['productoCantidadNueva']) {
                     //*** misma cantidad, no hay cambios */
-                }elseif($restock['productoCantidad'] < $restock['productoCantidadNueva']){
+                } elseif ($restock['productoCantidad'] < $restock['productoCantidadNueva']) {
                     //*** se agrega más cantidad */
                     $intDiferencia = $restock['productoCantidadNueva'] - $restock['productoCantidad'];
-                    $blnAgregar=true;
-                    $intOperacion=1;
+                    $blnAgregar = true;
+                    $intOperacion = 1;
 
                     //*** restamos a inventario */
-                     $producto->cantidad = ($producto->cantidad - $intDiferencia);
-                     $producto->save();
+                    $producto->cantidad = ($producto->cantidad - $intDiferencia);
+                    $producto->save();
 
                     //*** editamos la asignación */
                     $asignacion->cantidad = $restock['productoCantidadNueva'];
@@ -844,31 +864,31 @@ class inventarioController extends Controller
 
                     // dd('Ejecutado...');
 
-                }if($restock['productoCantidad'] > $restock['productoCantidadNueva']){
+                }
+                if ($restock['productoCantidad'] > $restock['productoCantidadNueva']) {
                     //***  se quita mas cantidad */
-                    $intDiferencia =$restock['productoCantidad'] - $restock['productoCantidadNueva']   ;
-                    $blnAgregar=false;
-                    $intOperacion=2;
+                    $intDiferencia = $restock['productoCantidad'] - $restock['productoCantidadNueva'];
+                    $blnAgregar = false;
+                    $intOperacion = 2;
 
                     //*** sumamos a inventario */
                     $producto->cantidad = ($producto->cantidad + $intDiferencia);
                     $producto->save();
 
-                   //*** editamos la asignación */
-                   $asignacion->cantidad = $restock['productoCantidadNueva'];
-                   $asignacion->comentario = $restock['productoComentario'];
-                   $asignacion->Save();
+                    //*** editamos la asignación */
+                    $asignacion->cantidad = $restock['productoCantidadNueva'];
+                    $asignacion->comentario = $restock['productoComentario'];
+                    $asignacion->Save();
 
-                   //*** creamos el movimiento */
-                   $objMovimiento = new inventarioMovimientos();
-                   $objMovimiento->movimiento = 1; //*** descuenta al inventario */
-                   $objMovimiento->inventarioId = $restock['productoId'];
-                   $objMovimiento->cantidad = $intDiferencia;
-                   $objMovimiento->precioUnitario = $producto->valor;
-                   $objMovimiento->total = ($producto->valor + $intDiferencia);
-                   $objMovimiento->usuarioId = $request['usuarioId'];
-                   $objMovimiento->Save();
-
+                    //*** creamos el movimiento */
+                    $objMovimiento = new inventarioMovimientos();
+                    $objMovimiento->movimiento = 1; //*** descuenta al inventario */
+                    $objMovimiento->inventarioId = $restock['productoId'];
+                    $objMovimiento->cantidad = $intDiferencia;
+                    $objMovimiento->precioUnitario = $producto->valor;
+                    $objMovimiento->total = ($producto->valor + $intDiferencia);
+                    $objMovimiento->usuarioId = $request['usuarioId'];
+                    $objMovimiento->Save();
                 }
 
 
@@ -890,15 +910,11 @@ class inventarioController extends Controller
 
                 Session::flash('message', 1);
                 return redirect()->back()->with('success', 'Actualizado correctamente!');
-
-
-
             } else {
                 Session::flash('message', 0);
                 return redirect()->back()->with('failed', 'No se encuentra el producto especificado!');
             }
-        }
-        else {
+        } else {
             Session::flash('message', 0);
             return redirect()->back()->with('failed', 'No se encuentra el movimiento especificado!');
         }

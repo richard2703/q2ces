@@ -44,10 +44,11 @@ class tipoUniformeController extends Controller {
 
         // dd( $request );
         $request->validate( [
-            'nombre' => 'required|max:250',
+            'nombre' => 'required|max:250|unique:tipoUniforme,nombre,' . $request['nombre'],
             'comentario' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.unique' => 'El valor del campo nombre ya esta en uso.',
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
         ] );
@@ -96,10 +97,11 @@ class tipoUniformeController extends Controller {
         // dd( $request );
 
         $request->validate( [
-            'nombre' => 'required|max:250',
+            'nombre' => 'required|max:250|unique:tipoUniforme,nombre,' . $request['controlId'],
             'comentario' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.unique' => 'El valor del campo nombre ya esta en uso.',
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
         ] );

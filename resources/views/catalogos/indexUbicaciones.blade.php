@@ -1,6 +1,17 @@
 @extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista De Ubicaciones')])
 @section('content')
     <div class="content">
+        @if ($errors->any())
+            <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+            <div class="alert alert-danger">
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -59,7 +70,7 @@
                                             <td class="text-center">{{ $item->nombre }}</td>
                                             <td class="text-center">{{ $item->direccion }}</td>
                                             <td class="text-center">{{ $item->comentario }}</td>
-                                            
+
 
                                             <td class="td-actions text-center">
                                                 @can('ubicaciones_show')
@@ -276,7 +287,7 @@
             const txtDireccion = document.getElementById('controlDireccion');
             txtDireccion.value = direccion;
             txtDireccion.disabled = modalTipo;
-            
+
             const contenedorBotonGuardar = document.getElementById('contenedorBotonGuardar');
 
             if (modalTipo) {

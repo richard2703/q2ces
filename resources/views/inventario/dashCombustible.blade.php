@@ -151,7 +151,7 @@
                                                     <div class="row mt-5">
                                                         <div class="col-12 col-lg-3">
                                                             <div class="row">
-                                                                <div
+                                                                {{--  <div
                                                                     class="col-12 col-md-6 col-lg-12 text-center mx-auto border vistaFotoCombustibles mb-4">
                                                                     <i><img class="imgVistaCombustible img-fluid mb-2"
                                                                             src="{{ asset('/img/inventario/horometro.svg') }}"></i>
@@ -161,12 +161,12 @@
                                                                     <label for="mi-archivo">
                                                                         <span class="">Tomar Foto</span>
                                                                     </label>
-                                                                </div>
+                                                                </div>  --}}
 
                                                                 <div
                                                                     class="col-12 col-md-6 col-lg-12 text-center mx-auto border vistaFotoCombustibles mb-4">
                                                                     <i><img class="imgVistaCombustible img-fluid mb-2"
-                                                                            src="{{ asset('/img/inventario/kilometraje.svg') }}"></i>
+                                                                            src="{{ asset('/img/inventario/descarga.svg') }}"></i>
                                                                     <span class="mi-archivo2"> <input class="mb-4 ver "
                                                                             type="file" name="imgHoras" id="mi-archivo2"
                                                                             accept="image/*" multiple></span>
@@ -214,7 +214,7 @@
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
-                                                                    </div>   
+                                                                    </div>
                                                                 </div>
 
                                                                 <div class=" col-12 col-md-6 d-flex mb-4">
@@ -225,7 +225,8 @@
                                                                     <div style="width: 100%! important;">
                                                                         <label class="labelTitulo">Despachador:</label></br>
                                                                         <select id="operadorId" name="operadorId"
-                                                                            class="form-select" style="width: 100%! important;"
+                                                                            class="form-select"
+                                                                            style="width: 100%! important;"
                                                                             aria-label="Default select example">
                                                                             @foreach ($despachador as $persona)
                                                                                 <option value="{{ $persona->id }}">
@@ -270,11 +271,12 @@
                                                                 </div>
                                                                 <div class=" col-12 col-md-6 d-flex mb-4">
                                                                     <div class="me-2">
-                                                                        <img src="{{ asset('/img/inventario/iconoKm.svg') }}"
+                                                                        <img src="{{ asset('/img/inventario/uso.svg') }}"
                                                                             alt="" style="width:40px;">
                                                                     </div>
                                                                     <div style="width: 100%! important;">
-                                                                        <label class="labelTitulo">Km/Mi:</label></br>
+                                                                        <label class="labelTitulo">Uso en
+                                                                            Km/Mi/Hr:</label></br>
                                                                         <input type="number" step="1" min="0"
                                                                             class="inputCaja" id="km" name="km"
                                                                             value="{{ old('km') }}">
@@ -282,6 +284,84 @@
                                                                 </div>
 
                                                                 <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/grasa.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Grasas:</label></br>
+                                                                        <input type="number" min="0"
+                                                                            class="inputCaja" id="grasa" name="grasa"
+                                                                            value="{{ old('grasa') }}" step="0.01">
+                                                                    </div>
+                                                                </div>
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/hidraulico.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Aceite
+                                                                            Hidráulico:</label></br>
+                                                                        <input type="number" min="0"
+                                                                            class="inputCaja" id="hidraulico"
+                                                                            name="hidraulico" value="{{ old('hidraulico') }}"
+                                                                            step="0.01">
+                                                                    </div>
+                                                                </div>
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/anticongelante.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Anticongelante:</label></br>
+                                                                        <input type="number" min="0"
+                                                                            class="inputCaja" id="Anticongelante"
+                                                                            name="Anticongelante"
+                                                                            value="{{ old('anticongelante') }}"
+                                                                            step="0.01">
+                                                                    </div>
+                                                                </div>
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/motor.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Aceite Motor:</label></br>
+                                                                        <input type="number" min="0"
+                                                                            class="inputCaja" id="motor" name="motor"
+                                                                            value="{{ old('motor') }}" step="0.01">
+                                                                    </div>
+                                                                </div>
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/otro.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Otro:</label></br>
+                                                                        <input type="number" min="0"
+                                                                            class="inputCaja" id="otro" name="otro"
+                                                                            value="{{ old('otro') }}" step="0.01">
+                                                                    </div>
+                                                                </div>
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/direccion.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Aceite
+                                                                            Dirección:</label></br>
+                                                                        <input type="number" min="0"
+                                                                            class="inputCaja" id="direccion" name="direccion"
+                                                                            value="{{ old('direccion') }}" step="0.01">
+                                                                    </div>
+                                                                </div>
+
+                                                                {{--  <div class=" col-12 col-md-6 d-flex mb-4">
                                                                     <div class="me-2">
                                                                         <img src="{{ asset('/img/inventario/horometroIcono.svg') }}"
                                                                             alt="" style="width:40px;">
@@ -292,7 +372,7 @@
                                                                             class="inputCaja" id="horas" name="horas"
                                                                             value="{{ old('horas') }}">
                                                                     </div>
-                                                                </div>
+                                                                </div>  --}}
 
                                                             </div>
 
@@ -406,9 +486,9 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <!-- <div class="card-header bacTituloPrincipal">
-                                                                                                                                                                                                                                                                                    <h4 class="card-title">Carga y descarga de combustible</h4>
+                                                                                                                                                                                                                                                                                                                                                        <h4 class="card-title">Carga y descarga de combustible</h4>
 
-                                                                                                                                                                                                                                                                                </div>-->
+                                                                                                                                                                                                                                                                                                                                                    </div>-->
                                     <div class="card-body mb-3">
                                         <div class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
                                             <button
@@ -828,7 +908,8 @@
 
                         <div class="col-6 my-3">
                             <label for="inputEmail4" class="form-label">Operador</label>
-                            <select id="descargaDespachador" name="descargaDespachador" class="form-select" style="width: 200px !important;">
+                            <select id="descargaDespachador" name="descargaDespachador" class="form-select"
+                                style="width: 200px !important;">
                                 @foreach ($despachadores as $persona)
                                     <option value="{{ $persona->id }}">
                                         {{ $persona->nombres . ' ' . $persona->apellidoP }}
