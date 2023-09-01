@@ -21,7 +21,7 @@ class puestoNivelController extends Controller
     public function index()
     {
         abort_if(Gate::denies('catalogos_index'), 403);
-
+        // dd('test');
         $records = puestoNivel::orderBy('nombre', 'asc')->paginate(15);
 
         return view('catalogo.indexPuestosNivel', compact('records'));
@@ -49,7 +49,6 @@ class puestoNivelController extends Controller
     {
         abort_if(Gate::denies('catalogos_create'), 403);
 
-        // dd( $request );
         $request->validate([
             'nombre' => 'required|max:250|unique:puestoNivel,nombre,' . $request['nombre'],
             'comentarios' => 'nullable|max:500',
@@ -103,7 +102,7 @@ class puestoNivelController extends Controller
     {
         abort_if(Gate::denies('catalogos_edit'), 403);
 
-        // dd( $request );
+        // dd($request);
 
         $request->validate([
             'nombre' => 'required|max:250|max:250|unique:puestoNivel,nombre,' . $request['puestoId'],
@@ -117,12 +116,8 @@ class puestoNivelController extends Controller
         $data = $request->all();
 
         $record = puestoNivel::where('id', $data['puestoId'])->first();
-
-        if (is_null($record) == false) {
-            // dd( $data );
-            $record->update($data);
-            Session::flash('message', 1);
-        }
+        $record->update($data);
+        Session::flash('message', 1);
 
         return redirect()->route('catalogoPuestosNivel.index');
     }

@@ -602,8 +602,6 @@
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Puesto:
                                                                     <span>*</span></label></br>
-                                                                {{-- <input type="text" class="inputCaja" id=""
-                                                                    name="puesto" value="{{ old('puesto') }}"> --}}
                                                                 <select id="puestoId" name="puestoId"
                                                                     class="form-select" required
                                                                     aria-label="Default select example">
@@ -697,8 +695,9 @@
                                                             </div> --}}
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Jefe Inmediato: <span>*</span></label></br>
-                                                                <select id="jefeId" name="jefeId" class="form-select" required
+                                                                <label class="labelTitulo">Jefe Inmediato:
+                                                                    <span>*</span></label></br>
+                                                                <select id="jefeId" name="jefeId" class="form-select"
                                                                     aria-label="Default select example">
 
                                                                     <option value="">Seleccione</option>
@@ -745,7 +744,7 @@
                                                                 </select>
                                                             </div> --}}
 
-                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                            {{--  <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Nivel de Puesto:
                                                                     <span>*</span></label></br>
                                                                 <select id="puestoNivelId" name="puestoNivelId"
@@ -758,7 +757,7 @@
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
-                                                            </div>
+                                                            </div>  --}}
 
 
                                                             {{-- <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
