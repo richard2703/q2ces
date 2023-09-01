@@ -288,6 +288,7 @@ create table puestoNivel(
     nombre varchar(200) not NULL,
     requiereAsistencia int(1) NOT NULL DEFAULT '0',
     usaCajaChica TINYINT(1) NOT NULL DEFAULT '0',
+    usoCombustible bigint(20) unsigned NOT null,
     comentario text NULL,
     primary key (id)
 );
@@ -917,10 +918,12 @@ CREATE TABLE personal(
     casa varchar(255) NULL,
     foto varchar(255) NULL,
     puestoNivelId bigint(20) unsigned NULL,
+    puestoId bigint(20) unsigned NOT NULL,
     created_at timestamp NULL DEFAULT NULL,
     updated_at timestamp NULL DEFAULT NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_personal_userId foreign key (userId) references users(id),
+    CONSTRAINT FK_personal_puestoId foreign key (puestoId) references puesto(id),
     CONSTRAINT FK_personal_userEstatusId foreign key (estatusId) references userEstatus(id),
     CONSTRAINT FK_personal_puestoNivelId foreign key (puestoNivelId) references puestoNivel(id)
 );
@@ -1227,11 +1230,13 @@ CREATE TABLE carga(
     operadorId bigint(20) unsigned NOT NULL,
     precio float(10, 2) not NULL,
     litros float(10, 2) not NULL,
+    userId bigint(20) unsigned NOT null,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_carga_operadorlId foreign key (operadorId) references personal(id),
-    CONSTRAINT FK_carga_maquinariaId foreign key (maquinariaId) references maquinaria(id)
+    CONSTRAINT FK_carga_maquinariaId foreign key (maquinariaId) references maquinaria(id),
+    CONSTRAINT FK_carga_userId foreign key (userId) references users(id)
 );
 
 CREATE TABLE descarga(
@@ -1245,13 +1250,15 @@ CREATE TABLE descarga(
     imgKm varchar(255) not NULL,
     horas float(10, 2) not NULL,
     imgHoras varchar(255) not NULL,
+    userId bigint(20) unsigned NOT null,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_descarga_operadorlId foreign key (operadorId) references personal(id),
     CONSTRAINT FK_descarga_maquinariaId foreign key (maquinariaId) references maquinaria(id),
     CONSTRAINT FK_descarga_serviciolId foreign key (operadorId) references personal(id),
-    CONSTRAINT FK_descarga_receptorId foreign key (maquinariaId) references maquinaria(id)
+    CONSTRAINT FK_descarga_receptorId foreign key (maquinariaId) references maquinaria(id),
+    CONSTRAINT FK_descarga_userId foreign key (userId) references users(id)
 );
 
 CREATE TABLE mtqEventos (
