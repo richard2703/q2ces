@@ -1256,8 +1256,8 @@ CREATE TABLE descarga(
     PRIMARY KEY (id),
     CONSTRAINT FK_descarga_operadorlId foreign key (operadorId) references personal(id),
     CONSTRAINT FK_descarga_maquinariaId foreign key (maquinariaId) references maquinaria(id),
-    CONSTRAINT FK_descarga_serviciolId foreign key (operadorId) references personal(id),
-    CONSTRAINT FK_descarga_receptorId foreign key (maquinariaId) references maquinaria(id),
+    CONSTRAINT FK_descarga_serviciolId foreign key (servicioId) references personal(id),
+    CONSTRAINT FK_descarga_receptorId foreign key (receptorId) references maquinaria(id),
     CONSTRAINT FK_descarga_userId foreign key (userId) references users(id)
 );
 
