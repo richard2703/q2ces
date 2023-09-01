@@ -415,13 +415,13 @@
                                                 class=" nav-item col-12 col-md-6 BTNbCargaDescarga py-3 border-0 active "
                                                 role="presentation" id="home-tab" data-bs-toggle="tab"
                                                 data-bs-target="#home-tab-pane" type="button" role="tab"
-                                                aria-controls="home-tab-pane" aria-selected="true">Relación Cargas de
+                                                aria-controls="home-tab-pane" aria-selected="true">Relación Cargas De
                                                 Combustible</button>
                                             <button class="nav-item col-12 col-md-6 BTNbCargaDescarga "
                                                 role="presentation" id="profile-tab" data-bs-toggle="tab"
                                                 data-bs-target="#profile-tab-pane" type="button" role="tab"
                                                 aria-controls="profile-tab-pane" aria-selected="false"> Relación Descargas
-                                                de Combustible</button>
+                                                De Combustible</button>
                                         </div>
 
                                         <div class="tab-content contentCargas" id="myTabContent">
@@ -441,6 +441,7 @@
                                                                             <th class="fw-bolder">Precio</th>
                                                                             <th class="fw-bolder">Fecha</th>
                                                                             <th class="fw-bolder">Hora</th>
+                                                                            <th class="fw-bolder">Imprimir</th>
                                                                             <th class="fw-bolder text-right">Acciones</th>
                                                                         </thead>
                                                                         <tbody>
@@ -463,6 +464,28 @@
                                                                                         {{ \Carbon\Carbon::parse($carga->fecha)->format('H:m') }}
                                                                                     </td>
 
+                                                                                    <td
+                                                                                    class="td-actions justify-content-end">
+                                                                                    <form
+                                                                                    action="{{ route('printCarga.post',  $carga->id )}}"
+                                                                                    method="POST"
+                                                                                    style="display: inline-block;">
+                                                                                    @csrf
+                                                                                    @method('POST')
+                                                                                    <input type="hidden" name="id" value="{{$carga->id}}" id="id">
+                                                                                    @can('combustible_destroy')
+                                                                                        <button class=" btnSinFondo"
+                                                                                            type="submit"
+                                                                                            rel="tooltip">
+                                                                                            <span class="material-icons mt-3" style="font-size:35px; color: #727176;">
+                                                                                                print
+                                                                                            </span>
+                                                                                        </button>
+                                                                                    @endcan
+
+                                                                                </form>
+                                                                                </td>
+                                                                                
                                                                                     <td style="width: 400px"
                                                                                         class="td-actions justify-content-end">
                                                                                         

@@ -8,7 +8,7 @@
                 <div class="card">
                     <div class="card-header bacTituloPrincipal">
                         {{-- <p class="card-category">Usuarios registrados</p> --}}
-                        Detalles De La Descarga
+                        Detalles De La Carga
                     </div>
                     <div class="card-body">
                         <div class="row divBorder">
@@ -36,19 +36,15 @@
                         <img src="{{ asset('/img/login/002-sin-slogan.png') }}" alt="" width="100px;" class="mb-2" style="margin-left: -15px;">
                         
                         <div class="text-start">
-                            <p class="headerTicket text-center">COMBUSTIBLES Y/O FLUIDOS,<br> DESCARGA DE COMBUSTIBLE</p>
+                            <p class="headerTicket text-center">COMBUSTIBLES Y/O FLUIDOS,<br> CARGA DE COMBUSTIBLE</p>
                             <p class="text-center" id="fecha-hora" style="margin-top: -10px"></p>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">DESCARGA ID: -- </span> {{ $descarga->id }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">DESPACHADOR: -- </span> {{ $descarga->receptor_nombre }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">EQUIPO DESPACHADO: -- </span> {{ $descarga->servicio_titulo }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">OPERADOR: -- </span> {{ $descarga->operador_nombre }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">EQUIPO Y/O MAQUINARIA: -- </span> {{ $descarga->maquinaria_nombre }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">SOLICITO: -- </span> {{ $descarga->user_nombre }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">LITROS: -- </span>{{ $descarga->litros }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">KM: -- </span>{{ $descarga->km }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">MAQUINARIA: -- </span>{{ $descarga->maquinaria_nombre }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">CARGA ID: -- </span> {{ $carga->id }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">OPERADOR: -- </span> {{ $carga->operador_nombre }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">EQUIPO Y/O MAQUINARIA: -- </span> {{ $carga->maquinaria_nombre }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">SOLICITO: -- </span> {{ $carga->user_nombre }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">LITROS: -- </span>{{ $carga->litros }}</div>
                             <p class="headerTicket text-center mt-2">INFORMACIÓN EQUIPO DESPACHO</p>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">HORA LLEGADA: -- </span>{{ $descarga->horas }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">HORA LLEGADA: -- </span>{{ $carga->horas }}</div>
                             <p class="pt-5" style="margin-top: 20px; text-align: center;">
                                 ______________________________________<br>
                                 Nombre Y Firma De Recibido
@@ -57,7 +53,7 @@
                                 </div>
                             </p>
                             <p class="headerTicket text-center">COMBUSTIBLES Y/O FLUIDOS</p>
-                            
+                            <div><span style="font-weight: 1000; font-size: 14px important;">PRECIO: -- </span>{{ $carga->precio }}</div>
                         </div>
                     </div>
                 </div>
