@@ -560,7 +560,6 @@ class inventarioController extends Controller
         // );
         $descarga = $request->all();
 
-
         if ($request->hasFile("imgKm")) {
             $descarga['imgKm'] = time() . '_' . 'imgKm.' . $request->file('imgKm')->getClientOriginalExtension();
             $request->file('imgKm')->storeAs('/public/combustibles', $descarga['imgKm']);
