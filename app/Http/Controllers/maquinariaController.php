@@ -274,8 +274,8 @@ class maquinariaController extends Controller
             // ->where('maquinariaId', $maquinaria->id)
             ->where('docs.tipoId', '2')
             ->groupBy('docs.id')
+            ->orderBy('nombre', 'asc')
             ->get();
-        // dd($doc);
         $fotos = maqimagen::where('maquinariaId', $maquinaria->id)->get();
         $vctEstatus = maquinariaEstatus::all();
         $marcas = marca::all();
@@ -296,10 +296,10 @@ class maquinariaController extends Controller
     public function vista(maquinaria $maquinaria)
     {
         abort_if(Gate::denies('maquinaria_show'), 403);
-
+        // dd('vista');
         $bitacora = bitacoras::all();
         //$maquinaria = maquinaria::all();
-        $docs = maqdocs::where('maquinariaId', $maquinaria->id)->get();
+        // $docs = maqdocs::where('maquinariaId', $maquinaria->id)->get();
         $doc = maqdocs::join('docs', "maqdocs.tipoId", "docs.id")
             ->select(
                 'docs.id',
@@ -311,7 +311,11 @@ class maquinariaController extends Controller
                 'maqdocs.requerido',
                 'maqdocs.id as idDoc'
             )
-            ->where('maquinariaId', $maquinaria->id)->get();
+            ->where('maquinariaId', $maquinaria->id)
+            ->where('maqdocs.requerido', '1')
+            ->orderBy('nombre', 'asc')
+            ->get();
+        // dd($doc);
         $fotos = maqimagen::where('maquinariaId', $maquinaria->id)->get();
         $vctEstatus = maquinariaEstatus::all();
         $marcas = marca::all();
@@ -498,7 +502,6 @@ class maquinariaController extends Controller
                 }
 
                 $documento['comentarios'] = $request->archivo[$i]['comentario'];
-
                 if ($request->archivo[$i]['idDoc'] == null) {
                     $documento->save();
                 } else {
