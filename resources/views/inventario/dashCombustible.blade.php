@@ -144,7 +144,7 @@
 
                                         <div class="tab-pane fade conteDivCArgaDescarga" id="balanceDos" role="tabpanel"
                                             aria-labelledby="balanceDos-tab" tabindex="0">
-                                            <form action="{{ route('inventario.descargaCombustible') }}" method="post"
+                                            <form action="{{ route('inventario.descargaCombustible') }}" id="combustibleForm" method="post"
                                                 enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="col-12 my-5 ">
@@ -495,13 +495,13 @@
                                                 class=" nav-item col-12 col-md-6 BTNbCargaDescarga py-3 border-0 active "
                                                 role="presentation" id="home-tab" data-bs-toggle="tab"
                                                 data-bs-target="#home-tab-pane" type="button" role="tab"
-                                                aria-controls="home-tab-pane" aria-selected="true">Relación Cargas de
+                                                aria-controls="home-tab-pane" aria-selected="true">Relación Cargas De
                                                 Combustible</button>
                                             <button class="nav-item col-12 col-md-6 BTNbCargaDescarga "
                                                 role="presentation" id="profile-tab" data-bs-toggle="tab"
                                                 data-bs-target="#profile-tab-pane" type="button" role="tab"
                                                 aria-controls="profile-tab-pane" aria-selected="false"> Relación Descargas
-                                                de Combustible</button>
+                                                De Combustible</button>
                                         </div>
 
                                         <div class="tab-content contentCargas" id="myTabContent">
@@ -521,6 +521,7 @@
                                                                             <th class="fw-bolder">Precio</th>
                                                                             <th class="fw-bolder">Fecha</th>
                                                                             <th class="fw-bolder">Hora</th>
+                                                                            <th class="fw-bolder">Imprimir</th>
                                                                             <th class="fw-bolder text-right">Acciones</th>
                                                                         </thead>
                                                                         <tbody>
@@ -544,7 +545,30 @@
                                                                                     </td>
 
                                                                                     <td
+                                                                                    class="td-actions justify-content-end">
+                                                                                    <form
+                                                                                    action="{{ route('printCarga.post',  $carga->id )}}"
+                                                                                    method="POST"
+                                                                                    style="display: inline-block;">
+                                                                                    @csrf
+                                                                                    @method('POST')
+                                                                                    <input type="hidden" name="id" value="{{$carga->id}}" id="id">
+                                                                                    @can('combustible_destroy')
+                                                                                        <button class=" btnSinFondo"
+                                                                                            type="submit"
+                                                                                            rel="tooltip">
+                                                                                            <span class="material-icons mt-3" style="font-size:35px; color: #727176;">
+                                                                                                print
+                                                                                            </span>
+                                                                                        </button>
+                                                                                    @endcan
+
+                                                                                </form>
+                                                                                </td>
+                                                                                
+                                                                                    <td style="width: 400px"
                                                                                         class="td-actions justify-content-end">
+                                                                                        
                                                                                         @can('combustible_edit')
                                                                                             <a href="#" class=""
                                                                                                 data-bs-toggle="modal"
@@ -563,6 +587,7 @@
                                                                                                 </svg>
                                                                                             </a>
                                                                                         @endcan
+                                                                                        
 
                                                                                         <form
                                                                                             action="{{ route('inventario.deleteCarga', $carga->id) }}"
@@ -631,6 +656,7 @@
                                                                             <th class="fw-bolder">Litros</th>
                                                                             <th class="fw-bolder">fecha</th>
                                                                             <th class="fw-bolder">hora</th>
+                                                                            <th class="fw-bolder text-center">Imprimir</th>
                                                                             <th class="fw-bolder text-right">Acciones</th>
                                                                         </thead>
                                                                         <tbody>
@@ -653,9 +679,30 @@
                                                                                     <td>
                                                                                         {{ \Carbon\Carbon::parse($descarga->fecha)->format('H:m') }}
                                                                                     </td>
+                                                                                    <td
+                                                                                    class="td-actions justify-content-end">
+                                                                                    <form
+                                                                                    action="{{ route('print.post',  $descarga->id )}}"
+                                                                                    method="POST"
+                                                                                    style="display: inline-block;">
+                                                                                    @csrf
+                                                                                    @method('POST')
+                                                                                    <input type="hidden" name="id" value="{{$descarga->id}}" id="id">
+                                                                                    @can('combustible_destroy')
+                                                                                        <button class=" btnSinFondo"
+                                                                                            type="submit"
+                                                                                            rel="tooltip">
+                                                                                            <span class="material-icons mt-3" style="font-size:35px; color: #727176;">
+                                                                                                print
+                                                                                            </span>
+                                                                                        </button>
+                                                                                    @endcan
 
+                                                                                </form>
+                                                                                </td>
                                                                                     <td
                                                                                         class="td-actions justify-content-end">
+                                                                                        
                                                                                         @can('combustible_edit')
                                                                                             <a href="#" class=""
                                                                                                 data-bs-toggle="modal"
@@ -675,7 +722,7 @@
                                                                                                 </svg>
                                                                                             </a>
                                                                                         @endcan
-
+                                                                                        
                                                                                         {{-- id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms, horas, imgHoras, fecha --}}
                                                                                         <form
                                                                                             action="{{ route('inventario.deleteDescarga', $descarga->id) }}"
