@@ -154,7 +154,7 @@
                                 @can('maquinaria_mtq_index')
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ route('residentes.index') }}" class="">
-                                            <img src="/img/equipos/personal.svg" alt="personal" title="personal"
+                                            <img src="/img/dash/residente.svg" alt="personal" title="personal"
                                                 width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Residentes</p>
                                         </a>
