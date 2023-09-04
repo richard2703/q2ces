@@ -247,7 +247,7 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('tarea_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('tarea_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('tarea_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
-	
+
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('cliente_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('cliente_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -1431,6 +1431,8 @@ create table checkList(
     maquinariaId bigint(20) unsigned NOT NULL,
     registrada datetime NULL,
     comentario text NULL,
+    created_at datetime NULL,
+    updated_at datetime NULL
     primary key (id),
     CONSTRAINT FK_checkListBitacora foreign key (bitacoraId) references bitacoras(id),
     CONSTRAINT FK_checkListUsuario foreign key (usuarioId) references users(id),

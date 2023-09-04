@@ -236,6 +236,7 @@ return [
         'Validaciones' => App\Helpers\Validaciones::class,
         'Calculos' => App\Helpers\Calculos::class,
         'Calendario' => App\Helpers\Calendario::class,
+        'checkListPresentacion' => App\Helpers\checkListPresentacion::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 

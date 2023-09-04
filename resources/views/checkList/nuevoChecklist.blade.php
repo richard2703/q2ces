@@ -96,6 +96,7 @@
                                             $strNombreGrupo = '';
                                             $intCont = 0;
                                             $blnNuevaSeccion = false;
+                                            $objPresentacion = new checkListPresentacion();
                                             ?>
                                             @forelse ($vctTareas as $item)
                                                 <?php
@@ -138,8 +139,11 @@
                                                             value="{{ $item->grupoId }}">
                                                     </td>
                                                     <td>
+                                                        {{ '-->>' . $item->controlHtml . '<<--' }}
+
                                                         <?php
-                                                        switch ($item->tipoValor) {
+
+                                                        switch ($item->tipoValorId) {
                                                             //*** CASO 1
                                                             case 1:
                                                             ?>
