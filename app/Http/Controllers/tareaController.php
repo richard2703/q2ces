@@ -13,6 +13,7 @@ use App\Models\tarea;
 use App\Models\tareaCategoria;
 use App\Models\tareaTipo;
 use App\Models\tareaUbicacion;
+use App\Models\tipoValorTarea;
 
 class tareaController extends Controller
 {
@@ -30,6 +31,7 @@ class tareaController extends Controller
         $vctCategorias = tareaCategoria::all();
         $vctTipos = tareaTipo::all();
         $vctUbicaciones = tareaUbicacion::all();
+        $vctTipoValor = tipoValorTarea::all();
 
         $vctTareas = tarea::select(
             'tarea.*',
@@ -42,7 +44,7 @@ class tareaController extends Controller
             ->leftJoin('tareaUbicacion', 'tareaUbicacion.id', '=', 'tarea.ubicacionId')
             ->orderBy('created_at', 'desc')->paginate(15);;
 
-        return view('tareas.tareas', compact('vctTareas', 'vctCategorias', 'vctTipos', 'vctUbicaciones'));
+        return view('tareas.tareas', compact('vctTareas', 'vctCategorias', 'vctTipos', 'vctUbicaciones','vctTipoValor'));
     }
 
     /**

@@ -69,7 +69,7 @@
                                                 <label class="labelTitulo">Concepto: <span>*</span></label></br>
                                                 <select id="concepto" name="concepto" class="form-select" required
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option selected value="">Seleccione</option>
                                                     @forelse ($conceptos as $concepto)
                                                         <option value="{{ $concepto->id }}">{{ $concepto->codigo }} -
                                                             {{ $concepto->nombre }}
@@ -77,14 +77,13 @@
                                                     @empty
                                                     @endforelse
                                                 </select>
-                                                </select>
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Personal: <span>*</span></label></br>
                                                 <select id="personal" name="personal" class="form-select" required
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option selected value="">Seleccione</option>
                                                     @forelse ($personal as $persona)
                                                         <option value="{{ $persona->id }}">{{ $persona->nombres }}
                                                             {{ $persona->apellidoP }}
@@ -98,7 +97,7 @@
                                                 <label class="labelTitulo">Comprobante: <span>*</span></label></br>
                                                 <select id="comprobanteId" name="comprobanteId" class="form-select" required
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option selected value="">Seleccione</option>
                                                     @foreach ($vctComprobantes as $item)
                                                     <option value="{{ $item->id }}">
                                                         {{ $item->nombre }}
@@ -129,7 +128,7 @@
                                                 <label class="labelTitulo">Cliente:</label></br>
                                                 <select id="cliente" name="cliente" class="form-select"
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option selected value="">Seleccione</option>
                                                     @foreach ($vctClientes as $item)
                                                     <option value="{{ $item->id }}">
                                                         {{ $item->nombre }}
@@ -142,7 +141,7 @@
                                                 <label class="labelTitulo">Equipo: <span>*</span></label></br>
                                                 <select id="equipo" name="equipo" class="form-select" required
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option selected value="">Seleccione</option>
                                                     @forelse ($maquinaria as $maquina)
                                                         <option value="{{ $maquina->id }}">{{ $maquina->identificador }}
                                                             - {{ $maquina->nombre }}
@@ -162,7 +161,7 @@
                                                 <label class="labelTitulo">Movimiento: <span>*</span></label></br>
                                                 <select id="tipo" name="tipo" class="form-select" required
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option selected value="">Seleccione</option>
                                                     <option value="1">
                                                         Ingreso </option>
                                                     <option value="2">
