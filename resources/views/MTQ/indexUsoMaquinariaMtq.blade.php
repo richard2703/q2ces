@@ -45,6 +45,7 @@
                                 <table class="table">
                                     <thead class="labelTitulo">
                                         <th class="labelTitulo text-center" style="width:150px">Número Económico</th>
+                                        <th class="labelTitulo text-center">Fecha</th>
                                         <th class="labelTitulo text-center">Equipo</th>
                                         <th class="labelTitulo text-center">Marca</th>
                                         <th class="labelTitulo text-center">Modelo</th>
@@ -56,6 +57,7 @@
                                         @forelse ($maquinaria as $maquina)
                                             <tr>
                                                 <td class="text-center">{{ $maquina->identificador }}</td>
+                                                <td class="text-center">{{  \Carbon\Carbon::parse($maquina->created_at)->locale('es')->isoFormat('dddd D MMMM')  }}</td>
                                                 <td class="text-center">{{ $maquina->nombre }}</td>
                                                 <td class="text-center">{{ $maquina->marca }}</td>
                                                 <td class="text-center">{{ $maquina->modelo }}</td>
