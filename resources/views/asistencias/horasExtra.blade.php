@@ -181,11 +181,23 @@ if ($asistencias->isEmpty() == true) {
                                                     <td><input type="radio" name="Asistensia1542" value="5"></td>  --}}
                                                     </tr>
                                                 @empty
-                                                    <tr>
-                                                        <td colspan="2">Sin registros.<br><br> <b>Es necesario
-                                                                Registrar Primero La Asistencia Del Personal Antes De
-                                                                Poder Asignar Las Horas Extras.</b></td>
-                                                    </tr>
+                                                    @forelse ($listaAsistencia as $item)
+                                                        <tr>
+                                                            <td style="color: {{ $item->estatusColor }};">
+                                                                <strong>{{ str_pad( $item->numNomina, 4, '0', STR_PAD_LEFT ) }}</strong>
+                                                            </td>
+                                                            <td class="text-left">{{ $item->apellidoP }}
+                                                                {{ $item->apellidoM }}, {{ $item->nombres }}</td>
+                                                            <td>---</td>
+                                                            <td class="td-actions">---</td>
+                                                        </tr>
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="2">Sin registros.<br><br> <b>Es necesario
+                                                                    Registrar Primero La Asistencia Del Personal Antes De
+                                                                    Poder Asignar Las Horas Extras.</b></td>
+                                                        </tr>
+                                                    @endforelse
                                                 @endforelse
 
                                             </tbody>
@@ -251,12 +263,14 @@ if ($asistencias->isEmpty() == true) {
         </div>
     </div>
     <style>
-    table{
+        table {
             table-layout: fixed;
-            }
-            th, td {
-                width: 100px;
-                word-wrap: break-word;
+        }
+
+        th,
+        td {
+            width: 100px;
+            word-wrap: break-word;
         }
     </style>
     <script>
