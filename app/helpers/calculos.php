@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Models\carga;
 use App\Models\descarga;
 use App\Models\maquinaria;
+use App\Models\usoMaquinarias;
 use App\Models\cajaChica;
 use Illuminate\Support\Facades\DB;
 
@@ -198,6 +199,41 @@ class Calculos {
         // );
         return $blnExito;
 
+    }
+
+    /**
+     * Actualiza el kilometraje de una maquinaria
+     *
+     * @param int $intMaquinaria Identificador de la máquinaria
+     * @param int $intKilometraje Kilometraje que será registrado
+     * @param boolean $blnQ2ces True si es para Q2Ces
+     * @return void
+     */
+    public function updateKilometrajeMaquinaria( $intMaquinaria, $intKilometraje, $blnQ2ces = true ) {
+
+        $blnExito = false;
+
+        $maquina  = maquinaria::find( $intMaquinaria );
+        if ( $maquina ) {
+            $objUso = new usoMaquinarias();
+
+            $objUso->maquinariaId  =  $intMaquinaria;
+
+            $objUso->uso = $intKilometraje;
+            $objUso->comentario = null;
+            // $objUso->foto = null;
+            $objUso->save();
+
+            $maquina->kilometraje = $intKilometraje;
+            $maquina->save();
+
+            $blnExito = true;
+
+        } else {
+            $blnExito = false;
+        }
+
+        return $blnExito;
     }
 
 }

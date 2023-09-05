@@ -139,15 +139,15 @@
                                                             value="{{ $item->grupoId }}">
                                                     </td>
                                                     <td>
-                                                        {{ '-->>' . $item->controlHtml . '<<--' }}
 
+                                                        <?php echo $objPresentacion->getControl($item->controlHtml, $item->tarea, $item->tareaId, $intCont); ?>
                                                         <?php
 
-                                                        switch ($item->tipoValorId) {
-                                                            //*** CASO 1
-                                                            case 1:
-                                                            ?>
-                                                        <div>
+                                                        // switch ($item->tipoValorId) {
+                                                        //     //*** CASO 1
+                                                        //     case 1:
+                                                        ?>
+                                                        {{-- <div>
                                                             <input type="radio" id="control{{ $intCont }}1"
                                                                 name="resultado{{ $item->tareaId }}[]" value="2"
                                                                 checked>
@@ -167,13 +167,13 @@
                                                             <label class="form-check-label labelUrgente"
                                                                 for="control{{ $intCont }}3">Requiere Atención
                                                                 Inmediata</label>
-                                                        </div>
+                                                        </div> --}}
                                                         <?php
-                                                                break;
-//*** CASO 2
-                                                                case 2:
-                                                                ?>
-                                                        <div>
+                                                        //                                                                 break;
+                                                        // //*** CASO 2
+                                                        //                                                                 case 2:
+                                                        ?>
+                                                        {{-- <div>
                                                             <input type="radio" id="control{{ $intCont }}1"
                                                                 name="resultado{{ $item->tareaId }}[]" value="2"
                                                                 checked>
@@ -186,14 +186,14 @@
                                                             <label class="form-check-label labelUrgente"
                                                                 for="control{{ $intCont }}3">Requiere Atención
                                                                 Inmediata</label>
-                                                        </div>
+                                                        </div> --}}
                                                         <?php
-                                                    break;
+                                                        // break;
 
-                                                    //*** CASO 3
-                                                    case 3:
-                                                    ?>
-                                                        <div>
+                                                        // //*** CASO 3
+                                                        // case 3:
+                                                        ?>
+                                                        {{-- <div>
                                                             <input type="radio" id="control{{ $intCont }}1"
                                                                 name="resultado{{ $item->tareaId }}[]" value="2"
                                                                 checked>
@@ -215,16 +215,14 @@
                                                             <label class="form-check-label labelUrgente"
                                                                 for="control{{ $intCont }}3">Menos del 20% de
                                                                 Vida</label>
-                                                        </div>
+                                                        </div> --}}
 
                                                         <?php
-break;
-
-                                                            default:
-                                                                # code...
-                                                                break;
-                                                        }
-
+                                                        // break;
+                                                        //     default:
+                                                        //         # code...
+                                                        //         break;
+                                                        // }
                                                         ?>
                                                     </td>
                                                 </tr>
