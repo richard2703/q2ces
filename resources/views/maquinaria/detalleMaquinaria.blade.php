@@ -68,8 +68,8 @@
                                                             <div class="col-12 contFotoMaquinaria" id="visor">
                                                                 <!-- @if (count($fotos) > 0)
     <button type="button"
-                                                                                        class="btn btn-secondary btn-sm"
-                                                                                        onclick="deleteImage('{{ $fotos[0]->id }}','{{ $fotos }}', (this));">X</button>
+                                                                                                        class="btn btn-secondary btn-sm"
+                                                                                                        onclick="deleteImage('{{ $fotos[0]->id }}','{{ $fotos }}', (this));">X</button>
     @endif -->
                                                                 <img src="{{ empty($fotos[0]) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $fotos[0]->ruta) }}"
                                                                     class="mx-auto d-block img-fluid imgMaquinaria">
@@ -326,12 +326,12 @@
                                                             </div>
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                                                <label class="labelTitulo">Combustible:</label></br>
-                                                                                                <input type="text" class="inputCaja" id="combustible"
-                                                                                                    name="combustible"
-                                                                                                    placeholder="Diesel / Gasolina / Especificar"
-                                                                                                    value="{{ $maquinaria->combustible }}">
-                                                                                            </div>-->
+                                                                                                                <label class="labelTitulo">Combustible:</label></br>
+                                                                                                                <input type="text" class="inputCaja" id="combustible"
+                                                                                                                    name="combustible"
+                                                                                                                    placeholder="Diesel / Gasolina / Especificar"
+                                                                                                                    value="{{ $maquinaria->combustible }}">
+                                                                                                            </div>-->
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Motor:</label></br>
@@ -362,13 +362,6 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Horómetro Inicial:</label></br>
-                                                                <input type="number" class="inputCaja" id="horometro"
-                                                                    name="horometro" placeholder="Numérico"
-                                                                    value="{{ $maquinaria->horometro }}">
-                                                            </div>
-
-                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Uso Como
                                                                     Cisterna:</label></br>
                                                                 <select class="form-select"
@@ -383,30 +376,32 @@
                                                                 </select>
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6 col-lg-4   mb-3 ">
+                                                            <div class="col-12 col-sm-6  mb-3">
                                                                 <div class="row align-items-end">
-                                                                    <label class="labelTitulo">Kilometraje / Millaje
-                                                                        Inicial:</label></br>
-                                                                    <div class="col-7 inputNumberKilometrajeEdit">
+                                                                    <label class="labelTitulo">Medicion de uso</label></br>
+                                                                    <div
+                                                                        class="col-6 col-md-6 col-lg-4 col-xl-7 inputNumberKilometraje">
 
                                                                         <input type="number" class="inputCaja"
                                                                             id="kilometraje" name="kilometraje"
                                                                             placeholder="Numérico"
-                                                                            value="{{ $maquinaria->kilometraje }}">
+                                                                            value="{{ old('kilometraje') }}">
 
                                                                     </div>
-                                                                    <div class="col-5 inputKilometrajeEdit">
+                                                                    <div class="col-12 col-md-6 col-lg-4 inputKilometraje">
                                                                         <select class="form-select"
                                                                             aria-label="Default select example"
                                                                             name="kom">
-                                                                            <option
-                                                                                value="Km"{{ $maquinaria->kom == 'Km' ? ' selected' : '' }}>
+                                                                            <option value="Km"
+                                                                                {{ $maquinaria->kom == 'Km' ? ' selected' : '' }}>
                                                                                 Km</option>
-                                                                            <option
-                                                                                value="Ml"{{ $maquinaria->kom == 'Ml' ? ' selected' : '' }}>
+                                                                            <option value="Ml"
+                                                                                {{ $maquinaria->kom == 'MI' ? ' selected' : '' }}>
                                                                                 Ml</option>
+                                                                            <option value="Hr"
+                                                                                {{ $maquinaria->kom == 'Hr' ? ' selected' : '' }}>
+                                                                                Hr</option>
                                                                         </select>
-
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -473,8 +468,8 @@
                                                                         class="col-12 col-sm-4 col-lg-2 my-3 text-center pt-3">
                                                                         <!--<i class="fas fa-clipboard-check"></i>-->
                                                                         <!--<span class="material-icons" style="font-size:40px; color: gray">
-                                                                                        content_paste_search
-                                                                                    </span>-->
+                                                                                                        content_paste_search
+                                                                                                    </span>-->
                                                                         @if ($refaccion->relacionInventarioId != null)
                                                                             <span class="material-icons"
                                                                                 style="font-size:40px; color: green">
@@ -696,8 +691,7 @@
                                                                     @else
                                                                         <div
                                                                             class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
-                                                                            <input type="hidden"
-                                                                                id=''
+                                                                            <input type="hidden" id=''
                                                                                 name='archivo[{{ $count }}][idDoc]'
                                                                                 value='{{ $item->idDoc }}'>
                                                                             <input type="hidden"

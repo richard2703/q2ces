@@ -1,12 +1,14 @@
 @extends('layouts.main', ['activePage' => 'mtq', 'titlePage' => __('MTQ')])
 @section('content')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/calendarMtq.css') }}">
+
     <div class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header bacTituloPrincipal">
-                            <h4 class="card-title"> Equipos MTQ</h4>
+                            <h4 class="card-title">Uso Equipos MTQ</h4>
                         </div>
                         <div class="card-body">
                             @if (session('success'))
@@ -19,50 +21,80 @@
                                     {{ session('faild') }}
                                 </div>
                             @endif
-                            <div class="row">
-                                <div class="col-4 text-left">
-                                    {{--  <a href="{{ url('dashMtq') }}">
-                                        <button class="btn regresar">
-                                            <span class="material-icons">
-                                                reply
-                                            </span>
-                                            Regresar
-                                        </button>
-                                    </a>  --}}
-                                </div>
-                                <div class="col-8 align-end">
+                            <div class="row divBorder">
+                                {{--  <div class="col-12 col-md-6 text-left">
+                                    <form id="excel-upload-form" action="{{ route('importExcel.post') }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <div style="display: flex; align-items: center;">
+                                            <label class="custom-file-upload" onclick='handleDocumento("excel-file-input")'>
+                                                <input class="mb-4" type="file" name="excel_file" id="excel-file-input"
+                                                    accept=".xlsx">
+                                                <div id='iconContainer'>
+                                                    <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"
+                                                        colors="primary:#86c716,secondary:#e8e230" stroke="65"
+                                                        style="width:50px;height:70px">
+                                                    </lord-icon>
+                                                </div>
+                                            </label>
+
+                                            <a id='downloadButton' class="btnViewDescargar btn btn-outline-success btnView"
+                                                style="display: none" download>
+                                                <span class="btn-text">Descargar</span>
+                                                <span class="icon">
+                                                    <i class="far fa-eye mt-2"></i>
+                                                </span>
+                                            </a>
+
+                                            <button id='removeButton' type="button"
+                                                class="btnViewDelete btn btn-outline-danger btnView"
+                                                style="width: 2.4em; height: 2.4em; display: none;">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>  --}}
+                                <div class="col-12 pb-3 text-end">
+                                    @can('maquinaria_mtq_create')
+                                        <button data-bs-toggle="modal" data-bs-target="#modalEvento" type="button"
+                                            style="height: 40px" class="btn botonGral ">Agregar Mantenimiento</button>
+                                    @endcan
                                     @can('maquinaria_mtq_create')
                                         <a href="{{ route('uso.create') }}">
                                             <button type="button" class="btn botonGral">Registrar Uso</button>
                                         </a>
                                     @endcan
                                 </div>
-
-                                <div class="d-flex p-3 divBorder"></div>
                             </div>
 
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead class="labelTitulo">
-                                        <th class="labelTitulo text-center" style="width:150px">Número Económico</th>
+                                        <th class="labelTitulo text-center">N.E.</th>
                                         <th class="labelTitulo text-center">Fecha</th>
                                         <th class="labelTitulo text-center">Equipo</th>
                                         <th class="labelTitulo text-center">Marca</th>
                                         <th class="labelTitulo text-center">Modelo</th>
                                         <th class="labelTitulo text-center">Placas</th>
                                         <th class="labelTitulo text-center">Km. Actual</th>
+                                        <th class="labelTitulo text-center no-wrap">Km para Mantenimiento</th>
+                                        <th class="labelTitulo text-center no-wrap">Proximo Mantenimeinto</th>
                                         <th class="labelTitulo text-center" style="width:120px">Acciones</th>
                                     </thead>
                                     <tbody>
                                         @forelse ($maquinaria as $maquina)
                                             <tr>
                                                 <td class="text-center">{{ $maquina->identificador }}</td>
-                                                <td class="text-center">{{  \Carbon\Carbon::parse($maquina->created_at)->locale('es')->isoFormat('dddd D MMMM')  }}</td>
+                                                <td class="text-center">
+                                                    {{ \Carbon\Carbon::parse($maquina->created_at)->locale('es')->isoFormat('D/MM/YY') }}
+                                                </td>
                                                 <td class="text-center">{{ $maquina->nombre }}</td>
                                                 <td class="text-center">{{ $maquina->marca }}</td>
                                                 <td class="text-center">{{ $maquina->modelo }}</td>
                                                 <td class="text-center">{{ $maquina->placas }}</td>
                                                 <td class="text-center">{{ number_format($maquina->uso) }}</td>
+                                                <td class="text-center">{{ number_format($maquina->restantes) }}</td>
+                                                <td class="text-center">{{ number_format($maquina->mantenimiento) }}</td>
 
                                                 <td class="td-actions text-center">
                                                     @can('maquinaria_mtq_edit')
@@ -157,6 +189,166 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Body-->
+    <div class="modal fade" id="modalEvento" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bacTituloPrincipal">
+                    <h5 class="modal-title fs-5" id="modalTitleId">Añadir Mantenimiento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <form action="{{ route('calendarioMtq.store') }}" method="post">
+                            @csrf
+                            @method('post')
+
+                            <input type="hidden" name="maquinariaId" id="MmaquinariaId">
+                            <input type="hidden" id="colorBoxHidden" name="color" value="">
+
+                            <div class="mb-3" role="search">
+                                <label for="title" class="labelTitulo">Buscador:</label>
+                                <input autofocus type="text" class="inputCaja" id="searchS" name="search"
+                                    placeholder="Buscar Equipo..." title="Escriba la(s) palabra(s) a buscar.">
+                            </div>
+
+                            <div class="row">
+                                <div class="mb-3 col-6">
+                                    <label for="title" class="labelTitulo">Nombre:</label>
+                                    <input autofocus type="text" class="inputCaja" id="Mnombre" name="nombre"
+                                        placeholder="Nombre Equipo..." readonly>
+                                </div>
+
+                                <div class="mb-3 col-6">
+                                    <label for="title" class="labelTitulo">Número Economico:</label>
+                                    <input autofocus type="text" class="inputCaja" id="Mnumeconomico"
+                                        name="numeconomico" placeholder="Del Equipo..." readonly>
+                                </div>
+
+                                <div class="mb-3 col-6">
+                                    <label for="title" class="labelTitulo">Placas:</label>
+                                    <input autofocus type="text" class="inputCaja" id="Mplacas" name="placas"
+                                        placeholder="Placas Equipo..." readonly>
+                                </div>
+
+                                <div class="mb-3 col-6">
+                                    <label for="title" class="labelTitulo">Marca:</label>
+                                    <input autofocus type="text" class="inputCaja" id="Mmarca" name="marca"
+                                        placeholder="Marca Equipo..." readonly>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="title" class="labelTitulo">Mantenimiento:</label>
+                                <select name="mantenimientoId" id="titleSelect" required class="form-select">
+                                    <option value="">Seleccione</option>
+                                    @foreach ($servicios as $item)
+                                        <option value="{{ $item->id }}" data-color="{{ $item->color }}">
+                                            {{ $item->nombre }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="color" class="labelTitulo">Color:</label>
+                                <div id="colorBox" class="color-box w-100" style="margin-left:-0.5px"></div>
+                            </div>
+
+                            <div class="row">
+                                <div class="mb-3 col-6">
+                                    <label for="fecha" class="labelTitulo">Fecha De Llegada:</label>
+                                    <input type="date" class="inputCaja" name="fecha" id="fecha"
+                                        aria-describedby="helpId" placeholder="Fecha">
+                                </div>
+
+                                <div class="mb-3 col-6">
+                                    <label for="hora" class="labelTitulo">Hora De Llegada:</label>
+                                    <input type="time" class="inputCaja" name="hora" id="hora"
+                                        aria-describedby="helpId" placeholder="Fecha">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="descripcion" class="labelTitulo">Descripción:</label>
+                                <textarea class="form-control-textarea border-green" name="descripcion" id="descripcion" rows="3"
+                                    placeholder="Especifique..."></textarea>
+                            </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn botonGral">Guardar</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    <script>
+        $('#searchS').autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('search.equiposMTQ') }}",
+                    dataType: 'json',
+                    data: {
+                        term: request.term,
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        var limitedResults = data.slice(0, 16);
+                        response(limitedResults);
+                    }
+                });
+            },
+            minChars: 1,
+            width: 402,
+            matchContains: "word",
+            autoFill: true,
+            minLength: 1,
+            select: function(event, ui) {
+
+                // Rellenar los campos con los datos de la persona seleccionada
+                $('#MmaquinariaId').val(ui.item.id);
+                // $('#descripcion').val(ui.item.value);
+                $('#Mnombre').val(ui.item.nombre);
+                $('#Mmarca').val(ui.item.marca);
+                // $('#modelo').val(ui.item.modelo);
+                $('#Mnumeconomico').val(ui.item.identificador);
+                $('#Mplacas').val(ui.item.placas);
+            }
+        });
+        document.addEventListener("DOMContentLoaded", function() {
+            let titleSelect = document.getElementById("titleSelect");
+            let colorBox = document.getElementById("colorBox");
+            let color = document.getElementById("colorBoxHidden");
+            let colorEdit = document.getElementById("colorBoxHiddenEdit");
+
+            titleSelect.addEventListener("change", function() {
+                let selectedColor = this.options[this.selectedIndex].getAttribute("data-color");
+                colorBox.style.backgroundColor = selectedColor;
+
+                console.log('selectedColor', selectedColor)
+                color.value = selectedColor;
+            });
+
+            let titleSelectEdit = document.getElementById("titleSelectEdit");
+            let colorBoxEdit = document.getElementById("colorBoxEdit");
+
+            titleSelectEdit.addEventListener("change", function() {
+                let selectedColor = this.options[this.selectedIndex].getAttribute("data-color");
+                colorBoxEdit.style.backgroundColor = selectedColor;
+                colorEdit.value = selectedColor;
+            });
+        });
+    </script>
+
 
     <style>
         /* Estilos personalizados para alinear el botón de hacia la derecha */

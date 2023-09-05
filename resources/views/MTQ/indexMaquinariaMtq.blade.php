@@ -1,29 +1,6 @@
 @extends('layouts.main', ['activePage' => 'mtq', 'titlePage' => __('MTQ')])
 @section('content')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/calendarMtq.css') }}">
-
-    <style>
-        .no-wrap {
-            max-width: 150px;
-            /* Ajusta el valor según tus necesidades */
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* Estilo para el tooltip */
-        .no-wrap:hover {
-            overflow: visible;
-            white-space: normal;
-            z-index: 1;
-            position: relative;
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 5px;
-            font-size: 15px;
-        }
-    </style>
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -80,11 +57,11 @@
                                 <div class="col-12 pb-3 text-end">
                                     @can('maquinaria_mtq_create')
                                         <button data-bs-toggle="modal" data-bs-target="#modalEvento" type="button"
-                                            style="height: 40px" class="btn botonGral mt-4 mx-1">Agregar Mantenimiento</button>
+                                            style="height: 40px" class="btn botonGral mx-1">Agregar Mantenimiento</button>
                                     @endcan
                                     @can('maquinaria_mtq_create')
                                         <button data-bs-toggle="modal" data-bs-target="#nuevoItem" type="button"
-                                            style="height: 40px" class="btn botonGral mt-4 mx-1"
+                                            style="height: 40px" class="btn botonGral mx-1"
                                             onclick="cargaItem(' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','{{ false }}')">Añadir
                                             Equipos MTQ</button>
                                     @endcan
@@ -103,9 +80,6 @@
                                     <th class="labelTitulo text-center">Color</th>
                                     <th class="labelTitulo text-center">Placas</th>
                                     <th class="labelTitulo text-center">KM</th>
-                                    <th class="labelTitulo text-center no-wrap">Km para Mantenimiento</th>
-                                    <th class="labelTitulo text-center no-wrap">Proximo Mantenimeinto</th>
-
                                     <th class="labelTitulo text-center" style="width:120px">Acciones</th>
                                 </thead>
                                 <tbody>
@@ -119,9 +93,6 @@
                                             <td class="text-center">{{ $maquina->color }}</td>
                                             <td class="text-center">{{ $maquina->placas }}</td>
                                             <td class="text-center">{{ number_format($maquina->kilometraje) }}</td>
-                                            <td class="text-center">{{ number_format($maquina->kilometraje) }}</td>
-                                            <td class="text-center">{{ number_format($maquina->kilometraje) }}</td>
-
                                             <td class="td-actions text-center">
                                                 @can('maquinaria_mtq_show')
                                                     <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"

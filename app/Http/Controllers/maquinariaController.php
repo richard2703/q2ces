@@ -427,7 +427,7 @@ class maquinariaController extends Controller
         ]);
 
         $data = $request->all();
-        // dd($data);
+        dd($data);
 
         $data['identificador'] = strtoupper($data['identificador']);
         $data['placas'] = strtoupper($data['placas']);

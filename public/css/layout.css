@@ -1228,4 +1228,25 @@ table{
     color: #444444;
   }
 
+/* ///////////////////////////////Acomodo de Titulos de Tablas */
 
+.no-wrap {
+  max-width: 150px;
+  /* Ajusta el valor según tus necesidades */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Estilo para el tooltip */
+.no-wrap:hover {
+  overflow: visible;
+  white-space: normal;
+  z-index: 1;
+  position: relative;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 15px;
+}
