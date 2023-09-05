@@ -116,7 +116,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                         <div
                                             class="col-12 my-4 pb-4 d-flex align-items-center divBorder justify-content-evenly">
                                             <div>
-                                                <a href="{{ url()->previous() }}">
+                                                <a href="{{ route('asistencia.index') }}">
                                                     <button class="btn regresar">
                                                         <span class="material-icons">
                                                             reply
@@ -140,10 +140,10 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
 
 
                                         <!--<span>
-                                                                                                                                                                                                                                                    <a href="{{ route('asistencia.corteSemanal') }}"
-                                                                                                                                                                                                                                                        class="display-8 mb-8 text-center" title="Ir al periodo en curso"><b>Hoy es
-                                                                                                                                                                                                                                                            {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
-                                                                                                                                                                                                                                                </span>-->
+                                                                                                                                                                                                                                                            <a href="{{ route('asistencia.corteSemanal') }}"
+                                                                                                                                                                                                                                                                class="display-8 mb-8 text-center" title="Ir al periodo en curso"><b>Hoy es
+                                                                                                                                                                                                                                                                    {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
+                                                                                                                                                                                                                                                        </span>-->
                                         {{-- <h4 class="card-title">
                                             {{ ucwords(trans($personal->nombres)) }} {{ ucwords(trans($personal->apellidoP)) }}
                                             {{ ucwords(trans($personal->apellidoM)) }}</h4> --}}
@@ -203,7 +203,8 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                             <td style="color: {{ $item->estatusColor }};">
                                                                 <strong>{{ ucwords(trans($item->numEmpleado)) }}</strong>
                                                             </td>
-                                                            <td class="text-left">{{ ucwords(trans($item->empleado)) }}</td>
+                                                            <td class="text-left">{{ ucwords(trans($item->empleado)) }}
+                                                            </td>
                                                             <?php
                                                                 //*** recorremos el arreglo de los dias de la semana de trabajo ***************//
                                                                 for ($i = 0; $i < 7; $i++) {
@@ -270,11 +271,44 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                             </td>
                                                         </tr>
                                                     @empty
-                                                        <tr>
-                                                            <td colspan="2">Sin Registros.<br><br> <b>Es Necesario
-                                                                    Registrar Primero La asistencia Del personal Antes De
-                                                                    Poder Realizar Las acciones De Esta Semana.</b></td>
-                                                        </tr>
+
+                                                        @forelse ($listaAsistencia as $item)
+                                                            <tr>
+                                                                <td>{{ ucwords(trans($item->puesto)) }}</td>
+                                                                <td style="color: {{ $item->estatusColor }};">
+                                                                    <strong>{{ str_pad( $item->numNomina, 4, '0', STR_PAD_LEFT ) }}</strong>
+                                                                </td>
+                                                                <td class="text-left">{{ $item->apellidoP }}
+                                                                    {{ $item->apellidoM }}, {{ $item->nombres }}</td>
+                                                                <td>---</td>
+                                                                <td>---</td>
+                                                                <td>---</td>
+                                                                <td>---</td>
+                                                                <td>---</td>
+                                                                <td>---</td>
+                                                                <td>---</td>
+                                                                <td>---</td>
+                                                                <td>---</td>
+                                                                <td>---</td>
+                                                                <td>---</td>
+                                                                <td>---</td>
+                                                                <td>---</td>
+                                                                <td>---</td>
+                                                                <td>---</td>
+                                                                <td>---</td>
+                                                                <td>---</td>
+                                                                <td>---</td>
+                                                                <td>---</td>
+                                                                <td class="td-actions">---</td>
+                                                            </tr>
+                                                        @empty
+                                                            <tr>
+                                                                <td colspan="2">Sin Registros.<br><br> <b>Es Necesario
+                                                                        Registrar Primero La asistencia Del personal Antes
+                                                                        De
+                                                                        Poder Realizar Las acciones De Esta Semana.</b></td>
+                                                            </tr>
+                                                        @endforelse
                                                     @endforelse
 
                                                     <tr>
@@ -308,12 +342,14 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
         </div>
     </div>
     <style>
-    table{
+        table {
             table-layout: fixed;
-            }
-            th, td {
-                width: 100px;
-                word-wrap: break-word;
+        }
+
+        th,
+        td {
+            width: 100px;
+            word-wrap: break-word;
         }
     </style>
     <script>

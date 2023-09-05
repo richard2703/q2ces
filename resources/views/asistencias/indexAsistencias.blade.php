@@ -80,9 +80,6 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                         </div>
 
 
-
-
-
                                         <div class="col-4 text-left">
                                             @can('asistencia_cortesemanal')
                                                 <a href="{{ route('asistencia.corteSemanal') }}">
@@ -122,7 +119,7 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                                 @forelse ($personal as $item)
                                                     <tr>
                                                         <td style="color: {{ $item->estatusColor }};">
-                                                            <strong>{{ $item->numNomina }}</strong>
+                                                            <strong>{{ str_pad( $item->numNomina, 4, '0', STR_PAD_LEFT ) }}</strong>
                                                         </td>
                                                         <td class="text-left">{{ $item->apellidoP }}
                                                             {{ $item->apellidoM }}, {{ $item->nombres }}</td>
@@ -148,9 +145,24 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                                         </td>
                                                     </tr>
                                                 @empty
-                                                    <tr>
-                                                        <td colspan="2">Sin registros.</td>
-                                                    </tr>
+                                                    @forelse ($listaAsistencia as $item)
+                                                        <tr>
+                                                            <td style="color: {{ $item->estatusColor }};">
+                                                                <strong>{{ str_pad( $item->numNomina, 4, '0', STR_PAD_LEFT ) }}</strong>
+                                                            </td>
+                                                            <td class="text-left">{{ $item->apellidoP }}
+                                                                {{ $item->apellidoM }}, {{ $item->nombres }}</td>
+                                                            <td>---</td>
+                                                            <td>---</td>
+                                                            <td>---</td>
+                                                            <td>---</td>
+                                                            <td class="td-actions">---</td>
+                                                        </tr>
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="2">Sin registros.</td>
+                                                        </tr>
+                                                    @endforelse
                                                 @endforelse
 
                                             </tbody>
@@ -194,7 +206,7 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                     <input type="hidden" name="productoid" id="productoid" value="">
 
                                     <div class="col-12 col-lg-6">
-                                        <input type="month" class="inputCaja" id="fechaAsistencia"
+                                        <input type="date" class="inputCaja" id="fechaAsistencia"
                                             name="fechaAsistencia" value=""></br>
                                     </div>
                                 </div>
@@ -210,12 +222,14 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
         </div>
     </div>
     <style>
-    table{
+        table {
             table-layout: fixed;
-            }
-            th, td {
-                width: 100px;
-                word-wrap: break-word;
+        }
+
+        th,
+        td {
+            width: 100px;
+            word-wrap: break-word;
         }
     </style>
 

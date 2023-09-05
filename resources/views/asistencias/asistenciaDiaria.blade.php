@@ -157,8 +157,9 @@ $blnAsistenciaTomada = $dtTrabajar == $dtToday && $asistencias->isEmpty() == fal
 
                                                         @forelse ($personal as $item)
                                                             <tr>
-                                                                <td class="">
-                                                                    {{ $item->id }}
+                                                                <td class=""
+                                                                    style="color: {{ $item->estatusColor }};">
+                                                                    <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                                     <input type="hidden" name="asistenciaId[]"
                                                                         value="{{ $item->asistenciaId }}">
                                                                     <input type="hidden" name="personalId[]"
