@@ -19,11 +19,11 @@ class printController extends Controller
         // dd('HOLA', $request['id']);
         $descarga = descarga::join('maquinaria', 'descarga.maquinariaId', '=', 'maquinaria.id')
             ->join('users', 'descarga.userId', '=', 'users.id')
-            ->join('servicios', 'descarga.servicioId', '=', 'servicios.id')
+            // ->join('servicios', 'descarga.servicioId', '=', 'servicios.id')
             ->join('personal as operador', 'descarga.operadorId', '=', 'operador.id') // Alias 'operador' para la primera instancia de 'personal'
             ->join('personal as receptor', 'descarga.receptorId', '=', 'receptor.id') // Alias 'receptor' para la segunda instancia de 'personal'
             ->where('descarga.id', $request['id'])
-            ->select('descarga.*', 'maquinaria.nombre as maquinaria_nombre', 'users.name as user_nombre', 'operador.nombres as operador_nombre', 'receptor.nombres as receptor_nombre', 'servicios.titulo as servicio_titulo')
+            ->select('descarga.*', 'maquinaria.nombre as maquinaria_nombre', 'users.name as user_nombre', 'operador.nombres as operador_nombre', 'receptor.nombres as receptor_nombre')
             ->first();
 
 

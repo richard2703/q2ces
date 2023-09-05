@@ -76,7 +76,7 @@ class tareasController extends Controller
         tareas::create($tarea);
         Session::flash('message', 1);
 
-        return redirect()->route('calendario.index');
+        return redirect()->route('calendarioPrincipal.index');
     }
 
     /**
@@ -155,7 +155,7 @@ class tareasController extends Controller
             Session::flash('message', 1);
         }
 
-        return redirect()->route('calendario.index');
+        return redirect()->route('calendarioPrincipal.index');
     }
 
     /**

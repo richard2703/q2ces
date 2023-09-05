@@ -106,7 +106,7 @@ class solicitudesController extends Controller
         }
 
         Session::flash('message', 1);
-        return redirect()->route('calendario.index');
+        return redirect()->route('calendarioPrincipal.index');
     }
 
     /**

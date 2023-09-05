@@ -9,7 +9,7 @@
                             <div class="row d-flex ">
                                 @can('calendario_index')
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
-                                        <a href="{{ route('calendario.index') }}" class="">
+                                        <a href="{{ route('calendarioPrincipal.index') }}" class="">
                                             <img src="/img/equipos/CALENDARIO-01.svg" alt="equipos" title="equipos"
                                                 width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Calendario</p>

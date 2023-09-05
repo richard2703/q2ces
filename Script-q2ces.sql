@@ -692,7 +692,7 @@ create table grupoTareas(
     CONSTRAINT FK_grupo_tarea foreign key (tareaID) references tarea(id)
 );
 
-CREATE TABLE tareas(
+CREATE TABLE actividades(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     userId bigint(20) unsigned NOT NULL,
     responsable bigint(20) unsigned NOT NULL,
