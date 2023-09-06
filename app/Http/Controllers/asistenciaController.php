@@ -22,15 +22,20 @@ class asistenciaController extends Controller {
     public function index( $intAnio = null, $intMes = null, $intDia = null ) {
         abort_if ( Gate::denies( 'asistencia_index' ), '403' );
 
+        // dd( $intAnio, $intMes, $intDia );
+
         $objCalendario = new Calendario();
 
         $data = request()->all();
         if ( is_array( $data ) == true && count( $data ) > 0 ) {
             $intMes = $data[ 'intMes' ];
             $intAnio = $data[ 'intAnio' ];
+            $intDia = date( 'd' );
+            //$data[ 'intDia' ];
         } else {
             $intMes = date( 'm' );
             $intAnio = date( 'Y' );
+            $intDia = date( 'd' );
         }
 
         $dteMesInicio = $intAnio . '-' . $intMes . '-01';
@@ -80,12 +85,11 @@ class asistenciaController extends Controller {
         )
         ->join( 'puestoNivel', 'puestoNivel.id', '=', 'personal.puestoNivelId' )
         ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
-        ->join( 'asistencia', 'asistencia.personalId', '=', 'personal.id' )
         ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
         ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
-        ->groupBy( 'asistencia.personalId' )
         ->orderBy( 'personal.apellidoP', 'asc' )->get();
 
+        // dd( $intAnio, $intMes, $intDia , $listaAsistencia);
         return view( 'asistencias.indexAsistencias', compact( 'usuario', 'personal', 'listaAsistencia', 'intDia', 'intMes', 'intAnio' ) );
     }
 
@@ -97,7 +101,19 @@ class asistenciaController extends Controller {
     */
 
     public function reloadAsistencia( $intAnio, $intMes ) {
+        // dd( $intAnio, $intMes );
+
         return redirect()->action( [ asistenciaController::class, 'index' ], [ 'intAnio' => $intAnio, 'intMes' => $intMes ] );
+    }
+
+    public function cambioMesAsistencia( Request $request ) {
+
+        $data = request()->all();
+        if ( $data[ 'fechaAsistencia' ] != '' ) {
+            $dtFecha = date_create( date( 'Y-m-d', strtotime( '01-'.$data[ 'fechaAsistencia' ] ) ) );
+            // dd( '01-'. $data[ 'fechaAsistencia' ], $dtFecha );
+            return redirect()->action( [ asistenciaController::class, 'index' ], [ 'intAnio' => $dtFecha->format( 'Y' ), 'intMes' => $dtFecha->format( 'm' ) ] );
+        }
     }
 
     public function cambioDiaAsistencia( Request $request ) {
@@ -254,8 +270,8 @@ class asistenciaController extends Controller {
         ->where( 'asistencia.fecha', '=', $strDate )
         ->orderBy( 'personal.apellidoP', 'asc' )->get();
 
-         //*** lista de asistencia */
-         $listaAsistencia = personal::select(
+        //*** lista de asistencia */
+        $listaAsistencia = personal::select(
             'personal.id',
             'personal.nombres',
             'personal.apellidoP',
@@ -451,10 +467,8 @@ class asistenciaController extends Controller {
         )
         ->join( 'puestoNivel', 'puestoNivel.id', '=', 'personal.puestoNivelId' )
         ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
-        ->join( 'asistencia', 'asistencia.personalId', '=', 'personal.id' )
         ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
         ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
-        ->groupBy( 'asistencia.personalId' )
         ->orderBy( 'personal.apellidoP', 'asc' )->get();
 
         $dteMesInicio = $intAnio . '-' . $intMes . '-01';

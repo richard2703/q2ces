@@ -10,6 +10,7 @@ $anioAnterior = date_format($objCalendar->getDiaAnterior("$intAnio-$intMes-$intD
 $diaSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$intDia"), 'd');
 $mesSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$intDia"), 'm');
 $anioSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$intDia"), 'Y');
+
 $fechaSeleccionada = date_create(date('Y-m-d', strtotime("$intAnio-$intMes-$intDia")));
 $intDiaSeleccionado = date_format($fechaSeleccionada, 'N');
 $diaSeleccionado = $objCalendar->getNameDay(date_format($fechaSeleccionada, 'N'));
@@ -104,7 +105,7 @@ $blnAsistenciaTomada = $dtTrabajar == $dtToday && $asistencias->isEmpty() == fal
                                                 <a href="{{ route('asistencia.create') }}"
                                                     class="combustibleLitros fw-semibold text-end"
                                                     title="Ir al dia en curso"><b>Asistencia Del Día
-                                                        {{ ucwords(trans($objCalendar->getFechaFormateada($fechaSeleccionada))) }}
+                                                        {{ ucwords(trans($objCalendar->getFechaFormateada($fechaSeleccionada,true))) }}
                                                     </b>
                                                 </a>
                                             </div>

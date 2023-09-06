@@ -308,12 +308,12 @@ class Calendario
         return array($dtFechaInicialPeriodo, $dtFechaFinalPeriodo);
     }
 
-    function getFechaFormateada($dtFecha)
+    function getFechaFormateada($dtFecha, $blnUsarDiaCompleto = false)
     {
 
         $objCalendar = new Calendario();
         $intDia =  date_format($dtFecha, 'd');
-        $intDiaNombre = $objCalendar->getNameDay(date_format($dtFecha, 'N'));
+        $intDiaNombre = $objCalendar->getNameDay(date_format($dtFecha, 'N'),$blnUsarDiaCompleto);
         $intMes = $objCalendar->getNameMonth(date_format($dtFecha, 'm'));
         $intAnio =  date_format($dtFecha, 'Y');
 

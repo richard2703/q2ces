@@ -30,15 +30,13 @@ if ($asistencias->isEmpty() == true) {
 } else {
     //*** preguntamos si esta en la semana en curso para permitir el registro de horas extras ***//
     if ($fechaSeleccionada->format('Ymd') >= $vctDiasSemanaActual[0]->format('Ymd')) {
-    //*** la fecha seleccionada es mayor o igual que el día inicial del periodo
+        //*** la fecha seleccionada es mayor o igual que el día inicial del periodo
         $blnBloquearRegistro = false;
     } else {
         $blnBloquearRegistro = true;
     }
-
 }
 // dd($asistencias, $diaAnterior, $diaSiguiente, $fechaSeleccionada, $diaSeleccionado, $dtToday, $dtTrabajar);
-
 ?>
 @section('content')
     <div class="content">
@@ -94,15 +92,32 @@ if ($asistencias->isEmpty() == true) {
                                             {{ session('faild') }}
                                         </div>
                                     @endif
+
                                     <div class="row">
+
                                         <span>
                                             <a href="{{ route('asistencia.show', $personal->id) }}"
-                                                class="display-8 mb-8 text-center" title="Ir al periodo en curso"><b>Hoy Es
+                                                class="display-8 mb-8 text-center" title="Ir al periodo en curso"><b>Hoy
+                                                    Es
                                                     {{ ucwords(trans($objCalendar->getFechaFormateada(date_create(date('Y-m-d'))))) }}</b></a>
                                         </span>
                                         <h4 class="card-title">
                                             {{ $personal->nombres }} {{ $personal->apellidoP }}
                                             {{ $personal->apellidoM }}</h4>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 my-4 pb-4 d-md-flex align-items-center divBorder">
+                                            <div class="col-12 col-md-2">
+                                                <a href="{{ route('asistencia.index') }}">
+                                                    <button class="btn regresar">
+                                                        <span class="material-icons">
+                                                            reply
+                                                        </span>
+                                                        Regresar
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <form class="row alertaGuardar"
@@ -124,10 +139,12 @@ if ($asistencias->isEmpty() == true) {
                                                     <th class="labelTitulo" style="width:140px !important">Tipo</th>
                                                     <th class="labelTitulo" style="width:150px !important">Asistencia</th>
                                                     <th class="labelTitulo">Faltas</th>
-                                                    <th class="labelTitulo" style="width:170px !important">Incapacidades</th>
+                                                    <th class="labelTitulo" style="width:170px !important">Incapacidades
+                                                    </th>
                                                     <th class="labelTitulo" style="width:150px !important">Vacaciones</th>
                                                     <th class="labelTitulo" style="width:150px !important">Descansos</th>
-                                                    <th class="labelTitulo" style="width:170px !important">Observaciones</th>
+                                                    <th class="labelTitulo" style="width:170px !important">Observaciones
+                                                    </th>
                                                 </thead>
                                                 <tbody class="text-center">
                                                     @forelse ($asistencias as $item)
@@ -139,11 +156,13 @@ if ($asistencias->isEmpty() == true) {
                                                                     value="{{ $item->id }}">
                                                             </td>
                                                             <td><input type="number" class="inputCaja text-right" required
-                                                                    name="horasExtra[]" id="horasExtra"
+                                                                    name="horasExtra[]"
+                                                                    id="horasExtra"{{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                     value="{{ $item->horasExtra }}" maxlength="2"
                                                                     step="1" min="0" max="16"></td>
                                                             <td>
                                                                 <select id="tipoHoraExtraId" name="tipoHoraExtraId[]"
+                                                                    {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                     class="form-select" aria-label="Default select example">
 
                                                                     @foreach ($vctTiposHoras as $tipo)
@@ -156,25 +175,31 @@ if ($asistencias->isEmpty() == true) {
                                                             </td>
                                                             <td><input type="radio" name="{{ $item->id }}[]"
                                                                     id="Asistencia_{{ $item->id }}" value="1"
+                                                                    {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                     {{ $item->asistenciaId == 1 ? ' checked' : '' }}></td>
                                                             <td><input type="radio" name="{{ $item->id }}[]"
                                                                     id="Asistencia_{{ $item->id }}" value="2"
+                                                                    {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                     {{ $item->asistenciaId == 2 ? ' checked' : '' }}>
                                                             </td>
                                                             <td><input type="radio" name="{{ $item->id }}[]"
+                                                                    {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                     id="Asistencia_{{ $item->id }}" value="3"
                                                                     {{ $item->asistenciaId == 3 ? ' checked' : '' }}>
                                                             </td>
                                                             <td><input type="radio" name="{{ $item->id }}[]"
+                                                                    {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                     id="Asistencia_{{ $item->id }}" value="4"
                                                                     {{ $item->asistenciaId == 4 ? ' checked' : '' }}>
                                                             </td>
                                                             <td><input type="radio" name="{{ $item->id }}[]"
+                                                                    {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                     id="Asistencia_{{ $item->id }}" value="5"
                                                                     {{ $item->asistenciaId == 5 ? ' checked' : '' }}>
                                                             </td>
                                                             <td><input type="text" class="inputCaja text-left"
                                                                     name="comentario[]" id="comentario"
+                                                                    {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                     value="{{ $item->comentario }}" maxlength="500"
                                                                     placeholder="Especifique..."></td>
                                                         </tr>
@@ -197,7 +222,12 @@ if ($asistencias->isEmpty() == true) {
                                             <a href="#">
                                                 <button type="submit" class="btn botonGral">Guardar</button>
                                             </a>
-                                            <?php } ?>
+                                            <?php }else {
+                                                ?>
+                                            <p>Ya no se pueden realizar modificaciones, esta fuera del periodo permitido.
+                                            </p>
+                                            <?php
+                                            } ?>
                                             {{--  {{ $personal->links() }}  --}}
                                         </div>
                                     </form>
@@ -210,13 +240,15 @@ if ($asistencias->isEmpty() == true) {
         </div>
     </div>
     <style>
-    table{
-        table-layout: fixed;
+        table {
+            table-layout: fixed;
         }
-        th, td {
+
+        th,
+        td {
             width: 100px;
             word-wrap: break-word;
-    }
+        }
     </style>
     <script>
         function Guardado() {
