@@ -106,8 +106,8 @@ if ($asistencias->isEmpty() == true) {
                                             <div class="col-10 col-md-8 text-center">
                                                 <a href="{{ route('asistencia.HEstore') }}"
                                                     class="combustibleLitros fw-semibold text-end"
-                                                    title="Ir al mes en curso"><b>Horas Extras Del Día
-                                                        {{ ucwords(trans($objCalendar->getFechaFormateada(date_create(date('Y-m-d'))))) }}</b>
+                                                    title="Ir al día de hoy"><b>Horas Extras Del Día
+                                                        {{ ucwords(trans($objCalendar->getFechaFormateada($fechaSeleccionada, true))) }}</b>
                                                 </a>
                                             </div>
 
@@ -162,9 +162,11 @@ if ($asistencias->isEmpty() == true) {
                                                         <td><input type="number" class="inputCaja text-right" required
                                                                 name="horasExtra[]" id="horasExtra"
                                                                 value="{{ $item->horasExtra }}" maxlength="2"
+                                                                {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                 step="1" min="0" max="16"></td>
                                                         <td>
                                                             <select id="tipoHoraExtraId" name="tipoHoraExtraId[]"
+                                                                {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                 class="form-select" aria-label="Default select example">
 
                                                                 @foreach ($vctTiposHoras as $tipo)
@@ -184,7 +186,7 @@ if ($asistencias->isEmpty() == true) {
                                                     @forelse ($listaAsistencia as $item)
                                                         <tr>
                                                             <td style="color: {{ $item->estatusColor }};">
-                                                                <strong>{{ str_pad( $item->numNomina, 4, '0', STR_PAD_LEFT ) }}</strong>
+                                                                <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                             </td>
                                                             <td class="text-left">{{ $item->apellidoP }}
                                                                 {{ $item->apellidoM }}, {{ $item->nombres }}</td>
@@ -211,7 +213,11 @@ if ($asistencias->isEmpty() == true) {
                                         <a href="#">
                                             <button type="submit" class="btn botonGral">Guardar</button>
                                         </a>
-                                        <?php } ?>
+                                        <?php }else {
+                                            ?>
+                                        <p>Ya no se pueden realizar modificaciones, esta fuera del periodo permitido.</p>
+                                        <?php
+                                        } ?>
                                         {{--  {{ $personal->links() }}  --}}
                                     </div>
                             </div>
