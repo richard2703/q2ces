@@ -147,13 +147,14 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::get('/personal', [App\Http\Controllers\personalController::class, 'index'])->name('personal.indexPersonal');
     Route::get('/personal/{personal}', [App\Http\Controllers\personalController::class, 'show'])->name('personal.show');
     Route::put('/personal/{personal}', [App\Http\Controllers\personalController::class, 'update'])->name('personal.update');
-    Route::get('personal/{id}/{doc}', [App\Http\Controllers\personalController::class, 'download'])->name('personal.download');
+    // Route::get('personal/{id}/{doc}', [App\Http\Controllers\personalController::class, 'download'])->name('personal.download');
     Route::delete('/personal/{personal}', [App\Http\Controllers\personalController::class, 'destroy'])->name('personal.delete');
     Route::get('personal/asignar/{personal}/equipo', [App\Http\Controllers\personalController::class, 'edit'])->name('personal.equipo');
     Route::put('personal/asignar/{personal}/equipo', [App\Http\Controllers\personalController::class, 'asignacion'])->name('personal.equipo.asignacion');
 
     Route::get('personal/asignar/{personal}/uniforme', [App\Http\Controllers\personalController::class, 'editUniforme'])->name('personal.uniforme');
     Route::put('personal/asignar/{personal}/uniforme', [App\Http\Controllers\personalController::class, 'asignacionUniforme'])->name('personal.uniforme.asignacion');
+    Route::get('personal/show/{personal}', [App\Http\Controllers\personalController::class, 'ver'])->name('personal.ver');
 
     //*** catalogos */
     Route::get('/catalogos/', [App\Http\Controllers\catalogosController::class, 'index'])->name('catalogos.index');
@@ -356,6 +357,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/asistencia/diaria', [App\Http\Controllers\asistenciaController::class, 'create'])->name('asistencia.create');
     Route::post('/asistencia/diaria', [App\Http\Controllers\asistenciaController::class, 'store'])->name('asistencia.store');
     Route::post('/asistencia/otrodia', [App\Http\Controllers\asistenciaController::class, 'cambioDiaAsistencia'])->name('asistencia.cambioDiaAsistencia');
+    Route::post('/asistencia/otromes', [App\Http\Controllers\asistenciaController::class, 'cambioMesAsistencia'])->name('asistencia.cambioMesAsistencia');
     Route::post('/asistencia/otrodiaextras', [App\Http\Controllers\asistenciaController::class, 'cambioDiaExtras'])->name('asistencia.cambioDiaExtras');
     Route::get('/asistencia/horasExtra', [App\Http\Controllers\asistenciaController::class, 'horasExtra'])->name('asistencia.horasExtra');
     Route::post('/asistencia/horasExtra', [App\Http\Controllers\asistenciaController::class, 'HEstore'])->name('asistencia.HEstore');
@@ -377,6 +379,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Caja Chica
     Route::resource('cajaChica', App\Http\Controllers\cajaChicaController::class);
+    Route::post('cajaChica/reporte', [App\Http\Controllers\cajaChicaController::class, 'reporte'])->name('cajaChica.reporte');
 
     // Conceptos
     Route::resource('conceptos', App\Http\Controllers\conceptosController::class);

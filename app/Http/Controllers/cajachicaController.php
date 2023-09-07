@@ -42,7 +42,7 @@ class cajaChicaController extends Controller
                 'conceptos.codigo',
                 'conceptos.nombre as cnombre',
                 'comprobanteId',
-                DB::raw("comprobante.nombre as comprobante"),
+                'comprobante.nombre as comprobante',
                 'ncomprobante',
                 'personal.nombres as pnombre',
                 'personal.apellidoP as papellidoP',
@@ -83,7 +83,7 @@ class cajaChicaController extends Controller
         }
 
         $pLunes = $lunes->clone()->subDay(1);
-
+        // dd($pLunes, $lunes);
         $ingreso = cajaChica::whereBetween('dia', [$pLunes, now()])
             ->where('tipo', 1)
             ->get()
@@ -122,11 +122,11 @@ class cajaChicaController extends Controller
         $conceptos = conceptos::get();
         $personal = personal::get();
         $obras = obras::get();
-        $maquinaria = maquinaria::get();
-        $vctComprobantes = comprobante::select()->orderBy('nombre','asc')->get();
-        $vctClientes = clientes::select()->orderBy('nombre','asc')->get();
+        $maquinaria = maquinaria::where('compania', '!=', 'mtq')->orWhere('compania', null)->get();
+        $vctComprobantes = comprobante::select()->orderBy('nombre', 'asc')->get();
+        $vctClientes = clientes::select()->orderBy('nombre', 'asc')->get();
         // dd( $maquinaria );
-        return view('cajaChica.nuevoMovimiento', compact('conceptos', 'personal', 'obras', 'maquinaria','vctComprobantes','vctClientes'));
+        return view('cajaChica.nuevoMovimiento', compact('conceptos', 'personal', 'obras', 'maquinaria', 'vctComprobantes', 'vctClientes'));
     }
 
     /**
@@ -140,7 +140,7 @@ class cajaChicaController extends Controller
     {
         abort_if(Gate::denies('cajachica_create'), 403);
 
-        // dd( $request );
+        // dd($request);
 
         $last = cajaChica::orderby('dia', 'desc')->orderby('id', 'desc')->first();
 
@@ -177,7 +177,13 @@ class cajaChicaController extends Controller
 
     public function show(cajaChica $cajaChica)
     {
-        //
+        $conceptos = conceptos::get();
+        $personal = personal::get();
+        $obras = obras::get();
+        $maquinaria = maquinaria::get();
+        $vctComprobantes = comprobante::select()->orderBy('nombre', 'asc')->get();
+        $vctClientes = clientes::select()->orderBy('nombre', 'asc')->get();
+        return view('cajaChica.showMovimiento', compact('conceptos', 'personal', 'obras', 'maquinaria', 'cajaChica', 'vctComprobantes', 'vctClientes'));
     }
 
     /**
@@ -197,9 +203,9 @@ class cajaChicaController extends Controller
         $personal = personal::get();
         $obras = obras::get();
         $maquinaria = maquinaria::get();
-        $vctComprobantes = comprobante::select()->orderBy('nombre','asc')->get();
-        $vctClientes = clientes::select()->orderBy('nombre','asc')->get();
-        return view('cajaChica.editMovimiento', compact('conceptos', 'personal', 'obras', 'maquinaria', 'cajaChica','vctComprobantes','vctClientes'));
+        $vctComprobantes = comprobante::select()->orderBy('nombre', 'asc')->get();
+        $vctClientes = clientes::select()->orderBy('nombre', 'asc')->get();
+        return view('cajaChica.editMovimiento', compact('conceptos', 'personal', 'obras', 'maquinaria', 'cajaChica', 'vctComprobantes', 'vctClientes'));
 
         // {
         // {
@@ -243,5 +249,39 @@ class cajaChicaController extends Controller
         abort_if(Gate::denies('cajachica_destroy'), 403);
 
         dd('destroy');
+    }
+
+    public function reporte(Request $request)
+    {
+        // abort_if(Gate::denies('cajachica_destroy'), 403);
+        // dd($request);
+
+        $registros = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
+            ->leftJoin('obras', 'cajaChica.obra', 'obras.id')
+            ->join('maquinaria', 'cajaChica.equipo', 'maquinaria.id')
+            ->join('conceptos', 'cajaChica.concepto', 'conceptos.id')
+            ->join('comprobante', 'cajaChica.comprobanteId', 'comprobante.id')
+            ->select(
+                'cajaChica.id',
+                'dia',
+                'conceptos.codigo',
+                'conceptos.nombre as cnombre',
+                'comprobanteId',
+                'comprobante.nombre as comprobante',
+                'ncomprobante',
+                'personal.nombres as pnombre',
+                'personal.apellidoP as papellidoP',
+                'cliente',
+                'obras.nombre as obra',
+                'maquinaria.identificador',
+                'maquinaria.nombre as maquinaria',
+                'cantidad',
+                'cajaChica.tipo',
+                'cajaChica.total'
+            )->whereBetween('dia', [$request->inicio, $request->fin])
+            ->orderby('dia', 'desc')->orderby('id', 'desc')
+            ->get();
+        dd($registros);
+        return view('cajaChica.reporteCajaChica', compact('registros', 'lastTotal', 'ingreso', 'egreso', 'lastweek', 'lunes', 'domingo'));
     }
 }

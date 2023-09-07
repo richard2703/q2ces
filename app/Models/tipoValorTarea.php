@@ -14,6 +14,6 @@ class tipoValorTarea extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nombre',  'comentario'
+        'nombre', 'comentario','controlHtml','codigo'
     ];
 }

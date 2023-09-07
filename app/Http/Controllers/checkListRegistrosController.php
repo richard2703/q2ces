@@ -50,7 +50,7 @@ class checkListRegistrosController extends Controller {
         $i = 0;
         $iRes = 1;
 
-        // dd( $request );
+        dd( $request );
 
         //*** registramos primero el checlist */
         $objCheckList =  new checkList();

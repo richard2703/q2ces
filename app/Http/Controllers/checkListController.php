@@ -83,13 +83,16 @@ class checkListController extends Controller
         $vctTareas = grupo::select(
             DB::raw('tarea.id AS tareaId'),
             DB::raw('tarea.nombre AS tarea'),
-            DB::raw('tarea.tipoValor AS tipoValor'),
+            DB::raw('tarea.tipoValorId'),
+            DB::raw('tipoValorTarea.nombre AS tipoValor'),
             DB::raw('grupo.nombre AS grupo'),
-            'grupoBitacoras.*'
+            'grupoBitacoras.*',
+            'tipoValorTarea.*'
         )
             ->join('grupoBitacoras', 'grupoBitacoras.grupoId', '=', 'grupo.id')
             ->join('grupoTareas', 'grupoTareas.grupoId', '=', 'grupo.id')
             ->join('tarea', 'tarea.id', '=', 'grupoTareas.tareaId')
+            ->join('tipoValorTarea', 'tipoValorTarea.id', '=', 'tarea.tipoValorId')
             ->where('grupoBitacoras.bitacoraId', '=', $bitacora->id)->get();
 
         // dd( $bitacora, $maquinaria,  $vctTareas );

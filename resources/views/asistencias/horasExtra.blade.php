@@ -106,8 +106,8 @@ if ($asistencias->isEmpty() == true) {
                                             <div class="col-10 col-md-8 text-center">
                                                 <a href="{{ route('asistencia.HEstore') }}"
                                                     class="combustibleLitros fw-semibold text-end"
-                                                    title="Ir al mes en curso"><b>Horas Extras Del Día
-                                                        {{ ucwords(trans($objCalendar->getFechaFormateada(date_create(date('Y-m-d'))))) }}</b>
+                                                    title="Ir al día de hoy"><b>Horas Extras Del Día
+                                                        {{ ucwords(trans($objCalendar->getFechaFormateada($fechaSeleccionada, true))) }}</b>
                                                 </a>
                                             </div>
 
@@ -138,6 +138,7 @@ if ($asistencias->isEmpty() == true) {
                                         <table class="table">
                                             <thead class="labelTitulo text-center">
                                                 <th class="labelTitulo">Código</th>
+                                                <th class="labelTitulo">Puesto</th>
                                                 <th class="labelTitulo">Nombre</th>
                                                 <th class="labelTitulo">Horas Extra</th>
                                                 <th class="labelTitulo">Tipo</th>
@@ -156,15 +157,18 @@ if ($asistencias->isEmpty() == true) {
                                                             <input type="hidden" name="personalId[]"
                                                                 value="{{ $item->id }}">
                                                         </td>
+                                                        <td>{{ $item->puesto }}</td>
                                                         <td class="text-left">
                                                             {{ $item->getFullLastNameAttribute() }}
                                                         </td>
-                                                        <td><input type="number" class="inputCaja text-right" required
+                                                        <td><input type="time" class="inputCaja text-right" required
                                                                 name="horasExtra[]" id="horasExtra"
-                                                                value="{{ $item->horasExtra }}" maxlength="2"
-                                                                step="1" min="0" max="16"></td>
+                                                                value="{{ ($item->horasExtra?\Carbon\Carbon::parse($item->horasExtra)->format('H:i') : "") }}"
+                                                                {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
+                                                                 ></td>
                                                         <td>
                                                             <select id="tipoHoraExtraId" name="tipoHoraExtraId[]"
+                                                                {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                 class="form-select" aria-label="Default select example">
 
                                                                 @foreach ($vctTiposHoras as $tipo)
@@ -181,11 +185,23 @@ if ($asistencias->isEmpty() == true) {
                                                     <td><input type="radio" name="Asistensia1542" value="5"></td>  --}}
                                                     </tr>
                                                 @empty
-                                                    <tr>
-                                                        <td colspan="2">Sin registros.<br><br> <b>Es necesario
-                                                                Registrar Primero La Asistencia Del Personal Antes De
-                                                                Poder Asignar Las Horas Extras.</b></td>
-                                                    </tr>
+                                                    @forelse ($listaAsistencia as $item)
+                                                        <tr>
+                                                            <td style="color: {{ $item->estatusColor }};">
+                                                                <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
+                                                            </td>
+                                                            <td class="text-left">{{ $item->apellidoP }}
+                                                                {{ $item->apellidoM }}, {{ $item->nombres }}</td>
+                                                            <td>---</td>
+                                                            <td class="td-actions">---</td>
+                                                        </tr>
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="2">Sin registros.<br><br> <b>Es necesario
+                                                                    Registrar Primero La Asistencia Del Personal Antes De
+                                                                    Poder Asignar Las Horas Extras.</b></td>
+                                                        </tr>
+                                                    @endforelse
                                                 @endforelse
 
                                             </tbody>
@@ -199,7 +215,11 @@ if ($asistencias->isEmpty() == true) {
                                         <a href="#">
                                             <button type="submit" class="btn botonGral">Guardar</button>
                                         </a>
-                                        <?php } ?>
+                                        <?php }else {
+                                            ?>
+                                        <p>Ya no se pueden realizar modificaciones, esta fuera del periodo permitido.</p>
+                                        <?php
+                                        } ?>
                                         {{--  {{ $personal->links() }}  --}}
                                     </div>
                             </div>
@@ -251,12 +271,14 @@ if ($asistencias->isEmpty() == true) {
         </div>
     </div>
     <style>
-    table{
+        table {
             table-layout: fixed;
-            }
-            th, td {
-                width: 100px;
-                word-wrap: break-word;
+        }
+
+        th,
+        td {
+            width: 100px;
+            word-wrap: break-word;
         }
     </style>
     <script>
