@@ -1,0 +1,130 @@
+@extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Inventario')])
+
+@section('content')
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bacTituloPrincipal">
+                        {{-- <p class="card-category">Usuarios registrados</p> --}}
+                        Detalles De La Carga
+                    </div>
+                    <div class="card-body">
+                        <div class="row divBorder">
+
+                            <div class="col-6 text-right">
+
+                                <a href="{{ route('inventario.dashCombustible') }}">
+                                    <button class="btn regresar">
+                                        <span class="material-icons">
+                                            reply
+                                        </span>
+                                        Regresar
+                                    </button>
+                                </a>
+                            </div>
+
+                            <div class="col-6 pb-3 text-end">
+                                @can('inventario_create')
+                                    <button type="button" onclick="print()" class="btn botonGral text-capitalize">Volver A Imprimir</button>
+                                @endcan
+                            </div>
+                        </div>
+                    </div>
+                    <div id="print-content" class="content-print">
+                        <img src="{{ asset('/img/login/002-sin-slogan.png') }}" alt="" width="100px;" class="mb-2" style="margin-left: -15px;">
+                        
+                        <div class="text-start">
+                            <p class="headerTicket text-center">COMBUSTIBLES Y/O FLUIDOS,<br> CARGA DE COMBUSTIBLE</p>
+                            <p class="text-center" id="fecha-hora" style="margin-top: -10px"></p>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">CARGA ID: -- </span> {{ $carga->id }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">OPERADOR: -- </span> {{ $carga->operador_nombre }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">EQUIPO Y/O MAQUINARIA: -- </span> {{ $carga->maquinaria_nombre }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">SOLICITO: -- </span> {{ $carga->user_nombre }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">LITROS: -- </span>{{ $carga->litros }}</div>
+                            <p class="headerTicket text-center mt-2">INFORMACIÓN EQUIPO DESPACHO</p>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">HORA LLEGADA: -- </span>{{ $carga->horas }}</div>
+                            <p class="pt-5" style="margin-top: 20px; text-align: center;">
+                                ______________________________________<br>
+                                Nombre Y Firma De Recibido
+                                <div class="copyright text-center" style="font-size: 10px;">
+                                    &copy; Copyright <strong><span>Q2Ces</span></strong>. All Rights Reserved
+                                </div>
+                            </p>
+                            <p class="headerTicket text-center">COMBUSTIBLES Y/O FLUIDOS</p>
+                            <div><span style="font-weight: 1000; font-size: 14px important;">PRECIO: -- </span>{{ $carga->precio }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onload = function () {
+        // Obtener la fecha y hora actual
+        let now = new Date();
+        let monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+        let dayNames = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+        let formattedDateTime = now.getDate() + " De " + monthNames[now.getMonth()] + " De " + now.getFullYear() + " A Las " + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
+        document.getElementById("fecha-hora").textContent = formattedDateTime;
+        window.print();
+    };
+</script>
+<script>
+    print(){
+        window.print();
+    }
+</script>
+
+<style>
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        #print-content, #print-content * {
+            visibility:visible !important;
+        }
+        
+        @page {
+            size: 90mm 105mm; /* Tamaño ISO C7 en milímetros */
+            margin-top: 0mm; /* Ajustar según sea necesario */
+        }
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .content-print {
+            position: absolute;
+            bottom: 0mm; /* Ajusta la posición superior según sea necesario */
+            top: -8mm;
+
+            /* Otros estilos necesarios */
+        }
+    }
+    #print-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left !important;
+        font-family: Arial, sans-serif;
+        padding-top: 15px;
+        font-size: 12px;
+        font-weight: bold;
+        align-items: center;
+        margin: 0;
+    }
+    #main {
+    margin-top: 0px !important; */
+    }
+    #header {
+        display: none !important;
+    }
+    .headerTicket{
+        border: 2px solid black;
+        align-items: center;
+    }
+</style>
+@endsection

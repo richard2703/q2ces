@@ -12,6 +12,6 @@ class solicitudes extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'userId', 'responsable', 'maquinariaId', 'servicioId', 'titulo', 'prioridadId', 'estadoId', 'comentario', 'fechaSolicitud', 'fechaRequerimiento'
+        'userId', 'personalId', 'maquinariaId', 'title', 'start', 'end', 'estadoId', 'prioridad', 'funcionalidad', 'descripcion'
     ];
 }

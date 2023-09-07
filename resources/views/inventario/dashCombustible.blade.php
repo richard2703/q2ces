@@ -144,7 +144,7 @@
 
                                         <div class="tab-pane fade conteDivCArgaDescarga" id="balanceDos" role="tabpanel"
                                             aria-labelledby="balanceDos-tab" tabindex="0">
-                                            <form action="{{ route('inventario.descargaCombustible') }}" method="post"
+                                            <form action="{{ route('inventario.descargaCombustible') }}" id="combustibleForm" method="post"
                                                 enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="col-12 my-5 ">
@@ -271,7 +271,7 @@
                                                                 </div>
                                                                 <div class=" col-12 col-md-6 d-flex mb-4">
                                                                     <div class="me-2">
-                                                                        <img src="{{ asset('/img/inventario/iconoKm.svg') }}"
+                                                                        <img src="{{ asset('/img/inventario/uso.svg') }}"
                                                                             alt="" style="width:40px;">
                                                                     </div>
                                                                     <div style="width: 100%! important;">
@@ -280,6 +280,84 @@
                                                                         <input type="number" step="1" min="0"
                                                                             class="inputCaja" id="km" name="km"
                                                                             value="{{ old('km') }}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/grasa.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Grasas:</label></br>
+                                                                        <input type="number" min="0"
+                                                                            class="inputCaja" id="grasa" name="grasa"
+                                                                            value="{{ old('grasa') }}" step="0.01">
+                                                                    </div>
+                                                                </div>
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/hidraulico.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Aceite
+                                                                            Hidráulico:</label></br>
+                                                                        <input type="number" min="0"
+                                                                            class="inputCaja" id="hidraulico"
+                                                                            name="hidraulico" value="{{ old('hidraulico') }}"
+                                                                            step="0.01">
+                                                                    </div>
+                                                                </div>
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/anticongelante.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Anticongelante:</label></br>
+                                                                        <input type="number" min="0"
+                                                                            class="inputCaja" id="Anticongelante"
+                                                                            name="Anticongelante"
+                                                                            value="{{ old('anticongelante') }}"
+                                                                            step="0.01">
+                                                                    </div>
+                                                                </div>
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/motor.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Aceite Motor:</label></br>
+                                                                        <input type="number" min="0"
+                                                                            class="inputCaja" id="motor" name="motor"
+                                                                            value="{{ old('motor') }}" step="0.01">
+                                                                    </div>
+                                                                </div>
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/otro.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Otro:</label></br>
+                                                                        <input type="number" min="0"
+                                                                            class="inputCaja" id="otro" name="otro"
+                                                                            value="{{ old('otro') }}" step="0.01">
+                                                                    </div>
+                                                                </div>
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/direccion.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Aceite
+                                                                            Dirección:</label></br>
+                                                                        <input type="number" min="0"
+                                                                            class="inputCaja" id="direccion" name="direccion"
+                                                                            value="{{ old('direccion') }}" step="0.01">
                                                                     </div>
                                                                 </div>
 
@@ -408,22 +486,22 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <!-- <div class="card-header bacTituloPrincipal">
-                                                                                                                                                                                                                                                                                                        <h4 class="card-title">Carga y descarga de combustible</h4>
+                                                                                                                                                                                                                                                                                                                                                        <h4 class="card-title">Carga y descarga de combustible</h4>
 
-                                                                                                                                                                                                                                                                                                    </div>-->
+                                                                                                                                                                                                                                                                                                                                                    </div>-->
                                     <div class="card-body mb-3">
                                         <div class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
                                             <button
                                                 class=" nav-item col-12 col-md-6 BTNbCargaDescarga py-3 border-0 active "
                                                 role="presentation" id="home-tab" data-bs-toggle="tab"
                                                 data-bs-target="#home-tab-pane" type="button" role="tab"
-                                                aria-controls="home-tab-pane" aria-selected="true">Relación Cargas de
+                                                aria-controls="home-tab-pane" aria-selected="true">Relación Cargas De
                                                 Combustible</button>
                                             <button class="nav-item col-12 col-md-6 BTNbCargaDescarga "
                                                 role="presentation" id="profile-tab" data-bs-toggle="tab"
                                                 data-bs-target="#profile-tab-pane" type="button" role="tab"
                                                 aria-controls="profile-tab-pane" aria-selected="false"> Relación Descargas
-                                                de Combustible</button>
+                                                De Combustible</button>
                                         </div>
 
                                         <div class="tab-content contentCargas" id="myTabContent">
@@ -443,6 +521,7 @@
                                                                             <th class="fw-bolder">Precio</th>
                                                                             <th class="fw-bolder">Fecha</th>
                                                                             <th class="fw-bolder">Hora</th>
+                                                                            <th class="fw-bolder">Imprimir</th>
                                                                             <th class="fw-bolder text-right">Acciones</th>
                                                                         </thead>
                                                                         <tbody>
@@ -466,7 +545,30 @@
                                                                                     </td>
 
                                                                                     <td
+                                                                                    class="td-actions justify-content-end">
+                                                                                    <form
+                                                                                    action="{{ route('printCarga.post',  $carga->id )}}"
+                                                                                    method="POST"
+                                                                                    style="display: inline-block;">
+                                                                                    @csrf
+                                                                                    @method('POST')
+                                                                                    <input type="hidden" name="id" value="{{$carga->id}}" id="id">
+                                                                                    @can('combustible_destroy')
+                                                                                        <button class=" btnSinFondo"
+                                                                                            type="submit"
+                                                                                            rel="tooltip">
+                                                                                            <span class="material-icons mt-3" style="font-size:35px; color: #727176;">
+                                                                                                print
+                                                                                            </span>
+                                                                                        </button>
+                                                                                    @endcan
+
+                                                                                </form>
+                                                                                </td>
+                                                                                
+                                                                                    <td style="width: 400px"
                                                                                         class="td-actions justify-content-end">
+                                                                                        
                                                                                         @can('combustible_edit')
                                                                                             <a href="#" class=""
                                                                                                 data-bs-toggle="modal"
@@ -485,6 +587,7 @@
                                                                                                 </svg>
                                                                                             </a>
                                                                                         @endcan
+                                                                                        
 
                                                                                         <form
                                                                                             action="{{ route('inventario.deleteCarga', $carga->id) }}"
@@ -553,6 +656,7 @@
                                                                             <th class="fw-bolder">Litros</th>
                                                                             <th class="fw-bolder">fecha</th>
                                                                             <th class="fw-bolder">hora</th>
+                                                                            <th class="fw-bolder text-center">Imprimir</th>
                                                                             <th class="fw-bolder text-right">Acciones</th>
                                                                         </thead>
                                                                         <tbody>
@@ -575,9 +679,30 @@
                                                                                     <td>
                                                                                         {{ \Carbon\Carbon::parse($descarga->fecha)->format('H:m') }}
                                                                                     </td>
+                                                                                    <td
+                                                                                    class="td-actions justify-content-end">
+                                                                                    <form
+                                                                                    action="{{ route('print.post',  $descarga->id )}}"
+                                                                                    method="POST"
+                                                                                    style="display: inline-block;">
+                                                                                    @csrf
+                                                                                    @method('POST')
+                                                                                    <input type="hidden" name="id" value="{{$descarga->id}}" id="id">
+                                                                                    @can('combustible_destroy')
+                                                                                        <button class=" btnSinFondo"
+                                                                                            type="submit"
+                                                                                            rel="tooltip">
+                                                                                            <span class="material-icons mt-3" style="font-size:35px; color: #727176;">
+                                                                                                print
+                                                                                            </span>
+                                                                                        </button>
+                                                                                    @endcan
 
+                                                                                </form>
+                                                                                </td>
                                                                                     <td
                                                                                         class="td-actions justify-content-end">
+                                                                                        
                                                                                         @can('combustible_edit')
                                                                                             <a href="#" class=""
                                                                                                 data-bs-toggle="modal"
@@ -597,7 +722,7 @@
                                                                                                 </svg>
                                                                                             </a>
                                                                                         @endcan
-
+                                                                                        
                                                                                         {{-- id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms, horas, imgHoras, fecha --}}
                                                                                         <form
                                                                                             action="{{ route('inventario.deleteDescarga', $descarga->id) }}"

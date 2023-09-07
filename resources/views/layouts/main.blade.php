@@ -119,7 +119,7 @@
             @can('calendario_show')
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'calendario' ? '' : 'collapsed' }}"
-                        href="{{ route('calendario.index') }}">
+                        href="{{ route('calendarioPrincipal.index') }}">
                         {{--  <i class="bi bi-shop"></i>  --}}
                         <span class="material-icons ">
                             calendar_month

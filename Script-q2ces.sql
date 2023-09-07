@@ -544,6 +544,7 @@ create table tipoMantenimiento(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     nombre varchar(200) not NULL,
     comentario text NULL,
+    color varchar(255);
     primary key (id)
 );
 
@@ -692,7 +693,7 @@ create table grupoTareas(
     CONSTRAINT FK_grupo_tarea foreign key (tareaID) references tarea(id)
 );
 
-CREATE TABLE tareas(
+CREATE TABLE actividades(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     userId bigint(20) unsigned NOT NULL,
     responsable bigint(20) unsigned NOT NULL,
@@ -1256,8 +1257,8 @@ CREATE TABLE descarga(
     PRIMARY KEY (id),
     CONSTRAINT FK_descarga_operadorlId foreign key (operadorId) references personal(id),
     CONSTRAINT FK_descarga_maquinariaId foreign key (maquinariaId) references maquinaria(id),
-    CONSTRAINT FK_descarga_serviciolId foreign key (operadorId) references personal(id),
-    CONSTRAINT FK_descarga_receptorId foreign key (maquinariaId) references maquinaria(id),
+    CONSTRAINT FK_descarga_serviciolId foreign key (servicioId) references personal(id),
+    CONSTRAINT FK_descarga_receptorId foreign key (receptorId) references maquinaria(id),
     CONSTRAINT FK_descarga_userId foreign key (userId) references users(id)
 );
 
@@ -1349,26 +1350,93 @@ CREATE TABLE servicios(
     CONSTRAINT FK_servicios_estadoId foreign key (estadoId) references estados(id)
 );
 
+CREATE TABLE calendarioPrincipal (
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    title varchar(255) NOT NULL,
+    mantenimientoId bigint(20) unsigned NULL,
+    tipoMantenimientoId bigint(20) unsigned NULL,
+    maquinariaId bigint(20) unsigned NULL,
+    userId bigint(20) unsigned NOT NULL,
+    personalId bigint(20) unsigned NULL,
+    solicitudesId bigint(20) unsigned NULL,
+    estadoId bigint(20) unsigned NOT NULL,
+    actividadesId bigint(20) unsigned NULL,
+    fecha date NOT NULL,
+    descripcion text NULL,
+    estatus varchar(255) NOT NULL,
+    color varchar(255) NOT NULL,
+    tipoEvento varchar(255) NOT NULL,
+    start datetime NULL,
+    end datetime NULL,
+    created_at timestamp NULL DEFAULT NULL,
+    updated_at timestamp NULL DEFAULT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_calendarioPrincipal_mantenimientoId FOREIGN KEY (mantenimientoId) REFERENCES mantenimientos(id),
+    CONSTRAINT FK_calendarioPrincipal_tipoMantenimientoId FOREIGN KEY (tipoMantenimientoId) REFERENCES tipomantenimiento(id),
+    CONSTRAINT FK_calendarioPrincipal_maquinariaId FOREIGN KEY (maquinariaId) REFERENCES maquinaria(id),
+    CONSTRAINT FK_calendarioPrincipal_userId FOREIGN KEY (userId) REFERENCES users(id),
+    CONSTRAINT FK_calendarioPrincipal_personalId FOREIGN KEY (personalId) REFERENCES personal(id),
+    CONSTRAINT FK_calendarioPrincipal_solicitudesId FOREIGN KEY (solicitudesId) REFERENCES solicitudes(id),
+    CONSTRAINT FK_calendarioPrincipal_actividadesId FOREIGN KEY (actividadesId) REFERENCES actividades(id),
+    CONSTRAINT FK_calendarioPrincipal_estadoId FOREIGN KEY (estadoId) REFERENCES estados(id)
+);
+
 CREATE TABLE solicitudes(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     userId bigint(20) unsigned NOT NULL,
-    responsable bigint(20) unsigned NOT NULL,
+    personalId bigint(20) unsigned NULL,
     maquinariaId bigint(20) unsigned NOT NULL,
-    servicioId bigint(20) unsigned NOT NULL,
-    titulo varchar(255) not NULL,
-    fechaSolicitud date not NULL,
-    fechaRequerimiento date not NULL,
+    title varchar(255) not NULL,
+    start datetime NULL,
+    end datetime NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
-    prioridadId bigint(20) unsigned NOT NULL,
+    prioridad varchar(255) not NULL,
+    funcionalidad varchar(255) not NULL,
     estadoId bigint(20) unsigned NOT NULL,
-    comentario text NULL,
+    descripcion text NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_solicitudes_userId foreign key (userId) references users(id),
     CONSTRAINT FK_solicitudes_maquinariaId foreign key (maquinariaId) references maquinaria(id),
-    CONSTRAINT FK_solicitudes_serviciosId foreign key (servicioId) references solicitudes(id),
-    CONSTRAINT FK_solicitudes_prioridadId foreign key (prioridadId) references prioridades(id),
+    CONSTRAINT FK_solicitudes_personalId FOREIGN KEY (personalId) REFERENCES personal(id),
     CONSTRAINT FK_solicitudes_estadoId foreign key (estadoId) references estados(id)
+);
+
+CREATE TABLE solicitudDetalle(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    inventarioId bigint(20) unsigned NULL,
+    estadoId bigint(20) unsigned NOT NULL,
+    solicitudId bigint(20) unsigned NOT NULL,
+    tipo varchar(255) not NULL,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    cantidad bigint(20) NULL,
+    comentario text NULL,
+    carga varchar(255) NULL,
+    litros bigint(20) NULL,
+    reparacion varchar(255) NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_solicitudDetalle_solicitudId foreign key (solicitudId) references solicitudes(id),
+    CONSTRAINT FK_solicitudDetalle_inventarioId foreign key (inventarioId) references inventario(id),
+    CONSTRAINT FK_solicitudDetalle_estadoId foreign key (estadoId) references estados(id)
+);
+
+CREATE TABLE actividades(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    userId bigint(20) unsigned NOT NULL,
+    personalId bigint(20) unsigned NOT NULL,
+    title varchar(255) NOT NULL,
+    start datetime NULL,
+    end datetime NULL,
+    prioridad varchar(255) not NULL,
+    estadoId bigint(20) unsigned NOT NULL,
+    descripcion text NULL,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_actividades_userId FOREIGN KEY (userId) REFERENCES users(id),
+    CONSTRAINT FK_actividades_personalId FOREIGN KEY (personalId) REFERENCES personal(id),
+    CONSTRAINT FK_actividades_estadoId FOREIGN KEY (estadoId) REFERENCES estados(id)
 );
 
 CREATE TABLE historialServicios(
