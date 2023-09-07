@@ -322,6 +322,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Crud calendarioPrincipal
     Route::resource('calendarioPrincipal', App\Http\Controllers\calendarioPrincipalController::class);
+    Route::resource('actividades', App\Http\Controllers\actividadesController::class);
     // Route::get('/calendario', [App\Http\Controllers\calendarioController::class, 'index'])->name('calendarioPrincipal.index');
     // Route::get('/calendario2', [App\Http\Controllers\calendarioController::class, 'index2'])->name('calendarioPrincipal.index2');
     // Route::get('/calendario/{anio}/{mes}', [App\Http\Controllers\calendarioController::class, 'reloadCalendario'])->name('calendario.reloadCalendario');
@@ -347,7 +348,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::put('/calendario/reparaciones/editar', [App\Http\Controllers\reparacionesController::class, 'update'])->name('reparaciones.update');
 
     //*** operaciones con solicitudes */
-    // Route::post('/calendario/solicitudes/nuevo', [App\Http\Controllers\solicitudesController::class, 'store'])->name('solicitudes.store');
+    Route::post('/calendario/solicitudes/nuevo', [App\Http\Controllers\solicitudesController::class, 'store'])->name('solicitudes.store');
     // Route::put('/calendario/solicitudes/editar', [App\Http\Controllers\solicitudesController::class, 'update'])->name('solicitudes.update');
 
     //Crud personal

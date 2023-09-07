@@ -4,8 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\calendarioPrincipal;
 use App\Http\Controllers\Controller;
+use App\Models\inventario;
+use App\Models\mantenimientos;
+use App\Models\personal;
 use App\Models\tipoMantenimiento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Session;
 
 class calendarioPrincipalController extends Controller
 {
@@ -17,31 +22,38 @@ class calendarioPrincipalController extends Controller
     public function index()
     {
         // dd('HOLA');
+        $personal = personal::all();
         $tiposMantenimiento = tipoMantenimiento::all();
-        $eventos = calendarioPrincipal::join('maquinaria', "maquinaria.id", "calendarioPrincipal.maquinariaId")
-            ->join('serviciosMtq', 'serviciosMtq.id', 'calendarioPrincipal.mantenimientoId')
-            ->select(
-                'calendarioPrincipal.id',
-                'calendarioPrincipal.title',
-                'calendarioPrincipal.mantenimientoId',
-                'calendarioPrincipal.maquinariaId',
-                'calendarioPrincipal.fecha',
-                'calendarioPrincipal.descripcion',
-                'calendarioPrincipal.estatus',
-                'calendarioPrincipal.color',
-                'calendarioPrincipal.start',
-                'calendarioPrincipal.end',
-                'maquinaria.nombre',
-                'maquinaria.identificador as numeconomico',
-                'maquinaria.placas',
-                'maquinaria.marca',
-                'serviciosMtq.nombre as nombreServicio'
-                // 'maquinaria.id as idDoc'
-            )
-            ->get();
+        $herramientas = inventario::where('tipo', 'herramientas')->get();
+        $refacciones = inventario::where('tipo', 'refacciones')->get();
+        $eventos = calendarioPrincipal::all();
+        // $eventos = calendarioPrincipal::join('maquinaria', 'calendarioPrincipal.maquinariaId', '=', 'maquinaria.id')
+        //     ->join('users', 'calendarioPrincipal.userId', '=', 'users.id')
+        //     // ->join('serviciosMtq', 'serviciosMtq.id', 'calendarioPrincipal.mantenimientoId')
+        //     ->select(
+        //         'calendarioPrincipal.*',
+        //         // 'calendarioPrincipal.id',
+        //         // 'calendarioPrincipal.title',
+        //         // 'calendarioPrincipal.mantenimientoId',
+        //         // 'calendarioPrincipal.maquinariaId',
+        //         // 'calendarioPrincipal.fecha',
+        //         // 'calendarioPrincipal.descripcion',
+        //         // 'calendarioPrincipal.estatus',
+        //         // 'calendarioPrincipal.color',
+        //         // 'calendarioPrincipal.start',
+        //         // 'calendarioPrincipal.end',
+        //         // 'maquinaria.nombre',
+        //         // 'maquinaria.identificador as numeconomico',
+        //         // 'maquinaria.placas',
+        //         // 'maquinaria.marca',
+        //         // 'serviciosMtq.nombre as nombreServicio'
+        //         // 'maquinaria.id as idDoc'
+        //     )
+        //     ->get();
+
         $eventosJson = $eventos->toJson();
         // dd($eventos);
-        return view('calendarioPrincipal/calendarioPrincipal', compact('eventosJson', 'tiposMantenimiento'));
+        return view('calendarioPrincipal/calendarioPrincipal', compact('eventosJson', 'tiposMantenimiento', 'personal', 'herramientas', 'refacciones'));
     }
 
     /**
@@ -62,7 +74,27 @@ class calendarioPrincipalController extends Controller
      */
     public function store(Request $request)
     {
-        dd('HOLA');
+        $mantenimiento = $request->all();
+        // dd($mantenimiento);
+        $nuevoMantenimiento = mantenimientos::create($mantenimiento);
+        // dd("NO");
+        $eventoCalendario = new calendarioPrincipal();
+        $eventoCalendario->mantenimientoId = $nuevoMantenimiento->id;
+        $eventoCalendario->title = strtoupper($mantenimiento['placas'] . ' ' . $mantenimiento['nombre'] . ' ' . $mantenimiento['marca'] . ' ' . $mantenimiento['numeconomico'] . ' ' . $mantenimiento['descripcion']);
+        $eventoCalendario->start = strtoupper($mantenimiento['fecha'] . ' ' . $mantenimiento['hora']);
+        $eventoCalendario->userId = $mantenimiento['userId'];
+        $eventoCalendario->maquinariaId = $mantenimiento['maquinariaId'];
+        $eventoCalendario->personalId = $mantenimiento['personalId'];
+        $eventoCalendario->tipoMantenimientoId = $mantenimiento['tipoMantenimientoId'];
+        $eventoCalendario->estadoId = $mantenimiento['estadoId'];
+        $eventoCalendario->descripcion = $mantenimiento['descripcion'];
+        $eventoCalendario->estatus = $mantenimiento['tipo'];
+        $eventoCalendario->color = $mantenimiento['color'];
+        // dd($eventoCalendario);
+        $eventoCalendario->save();
+
+        Session::flash('message', 1);
+        return redirect()->route('calendarioPrincipal.index');
     }
 
     /**

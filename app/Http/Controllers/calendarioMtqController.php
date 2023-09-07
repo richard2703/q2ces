@@ -67,6 +67,7 @@ class calendarioMtqController extends Controller
      */
     public function store(Request $request)
     {
+        // dd('GHP', $request);
         abort_if(Gate::denies('calendarioMtq_create'), 404);
         $events = $request->all();
         $events['start'] = strtoupper($events['fecha'] . ' ' . $events['hora']);

@@ -15,6 +15,7 @@ class calendarioPrincipal extends Model
     protected $fillable = [
         'title',
         'mantenimientoId',
+        'tipoMantenimientoId',
         'maquinariaId',
         'userId',
         'personalId',

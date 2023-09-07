@@ -324,7 +324,7 @@
                     <div class="modal-body p-0">
                         <fieldset id="tab011">
                             <div class="text-center" style="color:#5C7C26; margin-top: 10px; font-weight: bold;">
-                                <h4 class="">Añadir Mantenimiento</h4>
+                                <h4 class="" style="color:#5C7C26; margin-top: 10px; font-weight: bold;">Añadir Mantenimiento</h4>
                             </div>
                             <div class="line"></div>
                             <form action="{{ route('calendarioPrincipal.store') }}" method="post">
@@ -336,12 +336,13 @@
                                         <input type="text"
                                         class="form-control" name="id" id="id" aria-describedby="helpId" placeholder="ID">
                                     </div> -->
-
+                                    <input type="hidden" name="tipo" value="En Espera">
+                                    <input type="hidden" name="userId" value="{{auth()->user()->id}}">
                                     <input type="hidden" name="maquinariaId" id="maquinariaId">
                                     <input type="hidden" id="colorBoxHidden" name="color" value="">
 
                                     <div class="mb-3" role="search">
-                                        <label for="title" class="labelTitulo">Buscador:</label>
+                                        <label for="title" class="labelTitulo">Buscador Equipo:</label>
                                         <input autofocus type="text" class="inputCaja" id="searchS" name="search"
                                             placeholder="Buscar Equipo..." title="Escriba la(s) palabra(s) a buscar.">
                                     </div>
@@ -374,7 +375,7 @@
 
                                     <div class="mb-3 col-6">
                                         <label for="title" class="labelTitulo">Mantenimiento*:</label>
-                                        <select name="mantenimientoId" id="titleSelect" required class="form-select">
+                                        <select name="tipoMantenimientoId" id="titleSelect" required class="form-select">
                                             <option value="">Seleccione</option>
                                             @foreach ($tiposMantenimiento as $item)
                                                 <option value="{{ $item->id }}" data-color="{{ $item->color }}">
@@ -383,14 +384,22 @@
                                             @endforeach
                                         </select>
                                     </div>
-
+                                    <div class="col-12 col-sm-6 mb-3 ">
+                                        <label class="labelTitulo">Responsable:</label></br>
+                                        <select class="form-select form-select-lg mb-3 inputCaja" name="personalId" id="responsable"
+                                            aria-label=".form-select-lg example">
+                                            <option value="">Seleccione</option>
+                                            @foreach ($personal as $item)
+                                                <option value="{{ $item->id }}">
+                                                    {{ $item->nombres . ' ' . $item->apellidoP }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="mb-3 col-6">
                                         <label for="title" class="labelTitulo">Estado De La Solicitud*:</label>
-                                        <select name="estatus" id="estadoSelect" required class="form-select">
-                                            <option value="">Seleccione</option>
-                                            <option value="1">En Espera</option>
-                                            <option value="2">Realizado</option>
-                                            <option value="3">Terminado</option>
+                                        <select name="estadoId" id="estadoSelectMantenimiento" required class="form-select">
+                                            <option value="1" selected>En Espera</option>
                                         </select>
                                     </div>
                                 </div>
@@ -429,15 +438,84 @@
                         </fieldset>
                         <fieldset class="show" id="tab021">
                             <div class="text-center" style="color:#5C7C26; margin-top: 10px; font-weight: bold;">
-                                <h4 class="">Añadir Tarea</h4>
+                                <h4 class="" style="color:#5C7C26; margin-top: 10px; font-weight: bold;">Añadir Tarea</h4>
                             </div>
                             
                             <div class="line"></div>
-                            <form action="{{ route('calendarioPrincipal.store') }}" method="post">
+                            <form action="{{ route('actividades.store') }}" method="post">
                             <div class="container-fluid mt-1">
-                                    @csrf
-                                    @method('post')
+                                @csrf
+                                @method('post')
+                                <div class="row">
+                                    <input type="hidden" id="colorBoxHiddenTarea" name="color" value="">
+                                    <input type="hidden" name="tipo" value="En Espera">
+                                    <input type="hidden" name="userId" value="{{auth()->user()->id}}">
+                                    <div class="col-12 col-sm-6 mb-3">
+                                        <label for="title" class="labelTitulo">Título:</label>
+                                        <input autofocus type="text" class="inputCaja" name="title"
+                                            placeholder="Título De Tarea..." title="Escriba El Título De La Tarea.">
+                                    </div>
+                                    <div class="col-12 col-sm-6 mb-3 ">
+                                        <label class="labelTitulo">Responsable:</label></br>
+                                        <select class="form-select form-select-lg mb-3 inputCaja" name="personalId" id="responsable"
+                                            aria-label=".form-select-lg example">
+                                            <option value="">Seleccione</option>
+                                            @foreach ($personal as $item)
+                                                <option value="{{ $item->id }}">
+                                                    {{ $item->nombres . ' ' . $item->apellidoP }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="prioridad" class="labelTitulo">Prioridad*:</label>
+                                        <select name="prioridad" id="prioridadSelect" required class="form-select">
+                                            <option value="">Seleccione</option>
+                                                <option value="Urgente" data-color="#ff0000">
+                                                    Urgente
+                                                </option>
+                                                <option value="Necesaria" data-color="#ffa500">
+                                                    Necesaria
+                                                </option>
+                                                <option value="Deseable" data-color="#ffff00">
+                                                    Deseable
+                                                </option>
+                                                <option value="Prorrogable" data-color="#a6ce34">
+                                                    Prorrogable
+                                                </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3 col-6">
+                                        <label for="title" class="labelTitulo">Estado De La Solicitud*:</label>
+                                        <select name="estadoId" id="estadoSelectTarea" required class="form-select">
+                                            <option value="1" selected>En Espera</option>
+                                        </select>
+                                    </div>
+                                
+                                    <div class="mb-3">
+                                        <label for="color" class="labelTitulo">Color:</label>
+                                        <div id="colorBoxTarea" class="color-box w-100" style="margin-left:-0.5px"></div>
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="fecha" class="labelTitulo">Fecha De Llegada:</label>
+                                        <input type="date" class="inputCaja" name="fechaTarea" id="fechaTarea"
+                                            aria-describedby="helpId" placeholder="Fecha">
+                                    </div>
+    
+                                    <div class="mb-3 col-6">
+                                        <label for="hora" class="labelTitulo">Hora De Llegada:</label>
+                                        <input type="time" class="inputCaja" name="horaTarea" id="horaTarea"
+                                            aria-describedby="helpId" placeholder="Fecha">
+                                    </div>
                                     
+    
+                                    <div class="mb-3">
+                                        <label for="descripcion" class="labelTitulo">Descripción:</label>
+                                        <textarea class="form-control-textarea border-green" name="descripcion" id="descripcionTarea" rows="3"
+                                            placeholder="Especifique..."></textarea>
+                                    </div>
+                                </div>
 
                             </div>
                             <div class="line"></div>
@@ -448,23 +526,314 @@
                         </form>
                         </fieldset>
                         <fieldset id="tab031">
-                            <div class="bg-light">
-                                <h5 class="text-center mb-4 mt-0 pt-4">Communities</h5>
-                                
-                                    <div class="form-group pb-5 px-3 row justify-content-center">
-                                        <button type="button" class="btn btn-primary">New Community +</button>
+                            <div class="text-center" style="color:#5C7C26; margin-top: 10px; font-weight: bold;">
+                                <h4 class="" style="color:#5C7C26; margin-top: 10px; font-weight: bold;">Añadir Solicitud</h4>
+                            </div>
+                            
+                            <div class="line"></div>
+                            <form action="{{ route('solicitudes.store') }}" method="post">
+                            <input type="hidden" name="tipo" value="En Espera">
+                            <input type="hidden" name="userId" value="{{auth()->user()->id}}">
+                            <input type="hidden" name="maquinariaId" id="maquinariaIdSolicitud">
+                            <input type="hidden" id="colorBoxHidden" name="color" value="">
+                            <div class="container-fluid mt-1">
+                                @csrf
+                                @method('post')
+                                <div class="row">
+                                    <input type="hidden" id="colorBoxHiddenSolicitud" name="color" value="">
+                                    <input type="hidden" name="tipo" value="En Espera">
+                                    <input type="hidden" name="userId" value="{{auth()->user()->id}}">
+                                    <div class="col-12 mb-3">
+                                        <label for="title" class="labelTitulo">Título:</label>
+                                        <input autofocus type="text" class="inputCaja" name="title"
+                                            placeholder="Título De Solicitud..." title="Escriba El Título De La Solicitud.">
                                     </div>
-                            </div>
-                            <div class="px-3">
-                                <div class="border border-1 box">
-                                    <h5>Community 1</h5>
-                                    <p class="text-muted mb-1">Members : <strong>27</strong></p>
+                                    
+                                    <div class="mb-3" role="search">
+                                        <label for="title" class="labelTitulo">Buscador Equipo:</label>
+                                        <input autofocus type="text" class="inputCaja" id="searchSolicitudes" name="search"
+                                            placeholder="Buscar Equipo..." title="Escriba la(s) palabra(s) a buscar.">
+                                    </div>
+
+                                        <div class="mb-3 col-6">
+                                            <label for="title" class="labelTitulo">Nombre:</label>
+                                            <input autofocus type="text" class="inputCaja" id="nombreSolicitud" name="nombre"
+                                                placeholder="Nombre Equipo..." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6">
+                                            <label for="title" class="labelTitulo">Número Economico:</label>
+                                            <input autofocus type="text" class="inputCaja" id="numeconomicoSolicitud"
+                                                name="numeconomico" placeholder="Del Equipo..." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6">
+                                            <label for="title" class="labelTitulo">Placas:</label>
+                                            <input autofocus type="text" class="inputCaja" id="placasSolicitud" name="placas"
+                                                placeholder="Placas Equipo..." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6">
+                                            <label for="title" class="labelTitulo">Marca:</label>
+                                            <input autofocus type="text" class="inputCaja" id="marcaSolicitud"
+                                                name="marca" placeholder="Marca Equipo..." readonly>
+                                        </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="prioridad" class="labelTitulo">Prioridad*:</label>
+                                        <select name="prioridad" id="prioridadSelectSolicitud" required class="form-select">
+                                            <option value="">Seleccione</option>
+                                                <option value="Urgente" data-color="#ff0000">
+                                                    Urgente
+                                                </option>
+                                                <option value="Necesaria" data-color="#ffa500">
+                                                    Necesaria
+                                                </option>
+                                                <option value="Deseable" data-color="#ffff00">
+                                                    Deseable
+                                                </option>
+                                                <option value="Prorrogable" data-color="#a6ce34">
+                                                    Prorrogable
+                                                </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3 col-6">
+                                        <label for="title" class="labelTitulo">Estado De La Solicitud*:</label>
+                                        <select name="estadoId" id="estadoSelectSolicitud" required class="form-select">
+                                            <option value="1" selected>En Espera</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3 col-6">
+                                        <label for="title" class="labelTitulo">Funcionalidad Del Equipo*:</label>
+                                        <select name="funcionalidad" id="estadoSelectSolicitud" required class="form-select">
+                                            <option value="">Seleccione</option>
+                                            <option value="No Funciona" selected>No Funciona</option>
+                                            <option value="Funciona Poco" selected>Funciona Poco</option>
+                                            <option value="Funciona" selected>Funciona</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 mb-3 ">
+                                        <label class="labelTitulo">Responsable:</label></br>
+                                        <select class="form-select form-select-lg mb-3 inputCaja" name="personalId" id="responsable"
+                                            aria-label=".form-select-lg example">
+                                            <option value="">Seleccione</option>
+                                            @foreach ($personal as $item)
+                                                <option value="{{ $item->id }}">
+                                                    {{ $item->nombres . ' ' . $item->apellidoP }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                
+                                    <div class="mb-3">
+                                        <label for="color" class="labelTitulo">Color:</label>
+                                        <div id="colorBoxSolicitud" class="color-box w-100" style="margin-left:-0.5px"></div>
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="fecha" class="labelTitulo">Fecha De Llegada:</label>
+                                        <input type="date" class="inputCaja" name="fechaSolicitud" id="fechaSolicitud"
+                                            aria-describedby="helpId" placeholder="Fecha">
+                                    </div>
+    
+                                    <div class="mb-3 col-6">
+                                        <label for="hora" class="labelTitulo">Hora De Llegada:</label>
+                                        <input type="time" class="inputCaja" name="horaSolicitud" id="horaSolicitud"
+                                            aria-describedby="helpId" placeholder="Fecha">
+                                    </div>
+                                    
+    
+                                    <div class="mb-3">
+                                        <label for="descripcion" class="labelTitulo">Descripción:</label>
+                                        <textarea class="form-control-textarea border-green" name="descripcion" id="descripcionSolicitud" rows="3"
+                                            placeholder="Especifique..."></textarea>
+                                    </div>
                                 </div>
-                                <div class="border border-1 box">
-                                    <h5>Community 2</h5>
-                                    <p class="text-muted mb-1">Members : <strong>16</strong></p>
+
+                                <div class="mb-3 text-center">
+                                    <h4 style="color:#5c7c26 !important; margin-top: 10px; font-weight: bold;">Añadir Tipos A La Solicitud</h4>
+
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" value="reparacion" id="checkbox_reparacion">
+                                        <label for="checkbox_reparacion">Reparación</label><br>
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" value="combustible" id="checkbox_combustible">
+                                        <label for="checkbox_combustible">Combustible</label><br>
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" value="herramienta" id="checkbox_herramienta">
+                                        <label for="checkbox_herramienta">Herramienta</label><br>
+                                    </div>
+                                
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" value="refaccion" id="checkbox_refaccion">
+                                        <label for="checkbox_refaccion">Refacción</label><br>
+                                    </div>
+                                </div>
+
+                                <!-- Campos tipo de solicitud -->
+                                <div id="reparacion_campos" class="campos-solicitud" style="display: none;">
+                                    <div class="row">
+                                        <div class="col-12 pb-3 text-end">
+                                            <button type="button" class="btnVerde"
+                                                onclick="crearItemsReparacion()">
+                                            </button>
+                                        </div>
+                                        <div class="opcReparacion">
+                                            <div class="row">
+                                                <div class="line"></div>
+                                                <div class="mb-3 col-11">
+                                                    <label for="reparacion" class="labelTitulo">Reparación:</label>
+                                                    <input type="text" class="inputCaja" name="reparacionSolicitud[]" id="reparacionSolicitud"
+                                                        aria-describedby="helpId" placeholder="Reparacion">
+                                                </div>
+                                                <div class="col-1 my-3 text-end">
+                                                    <button type="button" id="removeRowReparacion"
+                                                    class="btnRojo"></button>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="comentarioReparacion" class="labelTitulo">Comentario:</label>
+                                                    <textarea class="form-control-textarea border-green" name="comentarioReparacion[]" id="comentarioReparacion" rows="3"
+                                                        placeholder="Especifique..."></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+
+                                <div id="combustible_campos" class="campos-solicitud" style="display: none;">
+                                    <div class="row">
+                                        <div class="col-12 pb-3 text-end">
+                                            <button type="button" class="btnVerde"
+                                                onclick="crearItemsCombustible()">
+                                            </button>
+                                        </div>
+                                        <div class="opcCombustible">
+                                            <div class="row">
+                                                <div class="line"></div>
+                                                <div class="mb-3 col-6">
+                                                    <label for="litros" class="labelTitulo">Litros:</label>
+                                                    <input type="number" class="inputCaja" name="litrosSolicitud" id="litrosSolicitud"
+                                                        aria-describedby="helpId" placeholder="Litros">
+                                                </div>
+                                                <div class="mb-3 col-5">
+                                                    <label for="carga" class="labelTitulo">Tipo*:</label>
+                                                    <select name="carga[]" id="carga" required class="form-select">
+                                                        <option value="carga" selected>Carga</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-1 my-3 text-end">
+                                                    <button type="button" id="removeRowCombustible"
+                                                        class="btnRojo"></button>
+                                                    </div>
+            
+                                                <div class="mb-3">
+                                                    <label for="comentarioTarea" class="labelTitulo">Comentario:</label>
+                                                    <textarea class="form-control-textarea border-green" name="comentarioTarea[]" id="comentarioTarea" rows="3"
+                                                        placeholder="Especifique..."></textarea>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                                <div id="herramienta_campos" class="campos-solicitud" style="display: none;">
+                                    <div class="row">
+                                        <div class="col-12 pb-3 text-end">
+                                            <button type="button" class="btnVerde"
+                                                onclick="crearItemsHerramienta()">
+                                            </button>
+                                        </div>
+                                        <div class="opcHerramienta">
+                                            <div class="row">
+                                                <div class="line"></div>
+                                                <div class="mb-3 col-6">
+                                                    <label for="cantidad" class="labelTitulo">Herramienta:</label>
+                                                    <select name="herramientaNombre[]" id="herramientaNombre" class="form-select">
+                                                        <option value="" >Seleccione</option>
+                                                        @foreach ($herramientas as $item)
+                                                            <option value="{{ $item->id }}">
+                                                                {{ $item->nombre }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3 col-5">
+                                                    <label for="cantidad" class="labelTitulo">Cantidad:</label>
+                                                    <input type="number" class="inputCaja" name="cantidadSolicitudHerramienta[]" id="cantidadSolicitudHerramienta"
+                                                        aria-describedby="helpId" placeholder="Cantidad">
+                                                </div>
+                                                <div class="col-1 my-3 text-end">
+                                                    <button type="button" id="removeRowHerramienta"
+                                                        class="btnRojo"></button>
+                                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="comentarioHerramienta" class="labelTitulo">Comentario:</label>
+                                                    <textarea class="form-control-textarea border-green" name="comentarioHerramienta[]" id="comentarioHerramienta" rows="3"
+                                                        placeholder="Especifique..."></textarea>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                                <div id="refaccion_campos" class="campos-solicitud" style="display: none;">
+                                    <div class="row">
+                                        <div class="col-12 pb-3 text-end">
+                                            <button type="button" class="btnVerde"
+                                                onclick="crearItemsRefaccion()">
+                                            </button>
+                                        </div>
+                                        <div class="opcRefaccion">
+                                            <div class="row">
+                                                <div class="line"></div>
+                                                <div class="mb-3 col-6">
+                                                    <label for="refaccion" class="labelTitulo">Refacción:</label>
+                                                    <select name="refaccionNombre[]" id="refaccionNombre" class="form-select">
+                                                        <option value="" >Seleccione</option>
+                                                        @foreach ($refacciones as $item)
+                                                            <option value="{{ $item->id }}">
+                                                                {{ $item->nombre }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="mb-3 col-5">
+                                                    <label for="cantidad" class="labelTitulo">Cantidad:</label>
+                                                    <input type="number" class="inputCaja" name="cantidadSolicitudRefaccion[]" id="cantidadSolicitudRefaccion"
+                                                        aria-describedby="helpId" placeholder="Cantidad">
+                                                </div>
+                                                <div class="col-1 my-3 text-end">
+                                                    <button type="button" id="removeRowRefaccion"
+                                                        class="btnRojo"></button>
+                                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="comentarioRefaccion" class="labelTitulo">Comentario:</label>
+                                                    <textarea class="form-control-textarea border-green" name="comentarioRefaccion[]" id="comentarioRefaccion" rows="3"
+                                                        placeholder="Especifique..."></textarea>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="line"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn botonGral">Guardar</button>
+                            </div>
+                        </form>
                         </fieldset>
                     </div>
                     
@@ -547,6 +916,38 @@
                 $('#placas').val(ui.item.placas);
             }
         });
+        $('#searchSolicitudes').autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('search.equiposMTQ') }}",
+                    dataType: 'json',
+                    data: {
+                        term: request.term,
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        var limitedResults = data.slice(0, 16);
+                        response(limitedResults);
+                    }
+                });
+            },
+            minChars: 1,
+            width: 402,
+            matchContains: "word",
+            autoFill: true,
+            minLength: 1,
+            select: function(event, ui) {
+
+                // Rellenar los campos con los datos de la persona seleccionada
+                $('#maquinariaIdSolicitud').val(ui.item.id);
+                // $('#descripcion').val(ui.item.value);
+                $('#nombreSolicitud').val(ui.item.nombre);
+                $('#marcaSolicitud').val(ui.item.marca);
+                // $('#modelo').val(ui.item.modelo);
+                $('#numeconomicoSolicitud').val(ui.item.identificador);
+                $('#placasSolicitud').val(ui.item.placas);
+            }
+        });
         $('#searchSEdit').autocomplete({
             source: function(request, response) {
                 $.ajax({
@@ -606,7 +1007,7 @@
                 var start = new Date(evento.start);
                 var end = new Date(evento.end);
                 evento.backgroundColor = evento.color;
-                evento.title = evento.nombreServicio + ' ' + evento.title;
+                evento.title = evento.nombreServicio != undefined ? evento.nombreServicio + ' ' + evento.title : evento.title;
 
                 if (
                     start.getFullYear() === end.getFullYear() &&
@@ -731,7 +1132,61 @@
             calendar.render();
         });
     </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
 
+    <script>
+        function crearItemsReparacion() {
+            $('.opcReparacion:first').clone().find("input").val("").end().appendTo('#reparacion_campos');
+        }
+
+        // Borrar registro
+        $(document).on('click', '#removeRowReparacion', function() {
+            if ($('.opcReparacion').length > 1) {
+                $(this).closest('.opcReparacion').remove();
+            }
+        });
+       
+    </script>
+    <script>
+        function crearItemsCombustible() {
+            $('.opcCombustible:first').clone().find("input").val("").end().appendTo('#combustible_campos');
+        }
+
+        // Borrar registro
+        $(document).on('click', '#removeRowCombustible', function() {
+            if ($('.opcCombustible').length > 1) {
+                $(this).closest('.opcCombustible').remove();
+            }
+        });
+
+        
+    </script>
+    <script>
+        function crearItemsHerramienta() {
+            $('.opcHerramienta:first').clone().find("input").val("").end().appendTo('#herramienta_campos');
+        }
+
+        // Borrar registro
+        $(document).on('click', '#removeRowHerramienta', function() {
+            if ($('.opcHerramienta').length > 1) {
+                $(this).closest('.opcHerramienta').remove();
+            }
+        });
+        
+    </script>
+    <script>
+        function crearItemsRefaccion() {
+            $('.opcRefaccion:first').clone().find("input").val("").end().appendTo('#refaccion_campos');
+        }
+
+        // Borrar registro
+        $(document).on('click', '#removeRowRefaccion', function() {
+            if ($('.opcRefaccion').length > 1) {
+                $(this).closest('.opcRefaccion').remove();
+            }
+        });
+    </script>
     <style>
         body {
             color: #000;
@@ -823,6 +1278,10 @@
             .tabs h6 {
                 font-size: 12px;
             }
+        }
+        .radio-buttons input[type="radio"] {
+            display: inline-block !important;
+            margin-right: 10px !important; /* Espacio entre los radio buttons */
         }
     </style>
     <script>
@@ -941,12 +1400,36 @@
             let color = document.getElementById("colorBoxHidden");
             let colorEdit = document.getElementById("colorBoxHiddenEdit");
 
+            let prioridadSelect = document.getElementById("prioridadSelect");
+            let colorBoxTarea = document.getElementById("colorBoxTarea");
+            let colorTarea = document.getElementById("colorBoxHiddenTarea");
+
+            let prioridadSelectSolicitud = document.getElementById("prioridadSelectSolicitud");
+            let colorBoxSolicitud = document.getElementById("colorBoxSolicitud");
+            let colorSolicitud = document.getElementById("colorBoxHiddenSolicitud");
+
             titleSelect.addEventListener("change", function() {
                 let selectedColor = this.options[this.selectedIndex].getAttribute("data-color");
                 colorBox.style.backgroundColor = selectedColor;
 
                 console.log('selectedColor', selectedColor)
                 color.value = selectedColor;
+            });
+
+            prioridadSelect.addEventListener("change", function() {
+                let selectedColorTarea = this.options[this.selectedIndex].getAttribute("data-color");
+                colorBoxTarea.style.backgroundColor = selectedColorTarea;
+
+                console.log('selectedColorTarea', selectedColorTarea)
+                colorTarea.value = selectedColorTarea;
+            });
+
+            prioridadSelectSolicitud.addEventListener("change", function() {
+                let selectedColorSolicitud = this.options[this.selectedIndex].getAttribute("data-color");
+                colorBoxSolicitud.style.backgroundColor = selectedColorSolicitud;
+
+                console.log('selectedColorSolicitud', selectedColorSolicitud)
+                colorSolicitud.value = selectedColorSolicitud;
             });
 
             let titleSelectEdit = document.getElementById("titleSelectEdit");
@@ -957,6 +1440,8 @@
                 colorBoxEdit.style.backgroundColor = selectedColor;
                 colorEdit.value = selectedColor;
             });
+
+            
         });
     </script>
 
@@ -1016,6 +1501,45 @@
 
             });
 
+        });
+    </script>
+    <script>
+        // Obtén los checkboxes y los campos específicos
+        const checkboxes = document.querySelectorAll('input[name="tipo_solicitud"]');
+        const reparacionCampos = document.getElementById('reparacion_campos');
+        const combustibleCampos = document.getElementById('combustible_campos');
+        const herramientaCampos = document.getElementById('herramienta_campos');
+        const refaccionCampos = document.getElementById('refaccion_campos');
+    
+        // Escucha el evento de cambio en los checkboxes
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                // Oculta todos los campos primero
+                reparacionCampos.style.display = 'none';
+                combustibleCampos.style.display = 'none';
+                herramientaCampos.style.display = 'none';
+                refaccionCampos.style.display = 'none';
+    
+                // Muestra solo los campos correspondientes al checkbox seleccionado
+                if (checkbox.checked) {
+                    console.log('hola', checkbox.value);
+                    switch (checkbox.value) {
+                        case 'reparacion':
+                            reparacionCampos.style.display = 'block';
+                            break;
+                        case 'combustible':
+                            combustibleCampos.style.display = 'block';
+                            break;
+                        case 'herramienta':
+                            herramientaCampos.style.display = 'block';
+                            break;
+                        case 'refaccion':
+                            refaccionCampos.style.display = 'block';
+                            break;
+                        // Agrega más casos si tienes otros tipos de solicitud
+                    }
+                }
+            });
         });
     </script>
 @endsection
