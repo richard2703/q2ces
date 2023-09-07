@@ -281,7 +281,18 @@ class cajaChicaController extends Controller
             )->whereBetween('dia', [$request->inicio, $request->fin])
             ->orderby('dia', 'desc')->orderby('id', 'desc')
             ->get();
-        dd($registros);
-        return view('cajaChica.reporteCajaChica', compact('registros', 'lastTotal', 'ingreso', 'egreso', 'lastweek', 'lunes', 'domingo'));
+
+        $ingreso = cajaChica::where('tipo', 1)
+            ->whereBetween('dia', [$request->inicio, $request->fin])
+            ->sum('cantidad');
+        $egreso = cajaChica::where('tipo', 2)
+            ->whereBetween('dia', [$request->inicio, $request->fin])
+            ->sum('cantidad');
+
+        $inicio = $request->inicio;
+        $fin = $request->fin;
+        // dd($registros);
+        // return view('cajaChica.reporteCajaChica', compact('registros', 'lastTotal', 'ingreso', 'egreso', 'lastweek', 'lunes', 'domingo'));
+        return view('cajaChica.reporteCajaChica', compact('registros', 'inicio', 'fin', 'ingreso', 'egreso'));
     }
 }

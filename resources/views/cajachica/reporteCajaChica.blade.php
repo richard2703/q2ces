@@ -35,47 +35,62 @@
                                     @endif
                                     <div class="row division">
                                         <div class="col-12 col-md-4">
-                                            <p>Semana Del</br> <span
+                                            {{--  <p>Semana Del</br> <span
                                                     class="combustibleLitros">{{ \Carbon\Carbon::parse($lunes)->locale('es')->isoFormat('dddd D MMMM') }}
                                                     Al
                                                     {{ \Carbon\Carbon::parse($domingo)->locale('es')->isoFormat('dddd D MMMM') }}</span>
+                                            </p>  --}}
+                                            <p>Reporte Del</br> <span
+                                                    class="combustibleLitros">{{ \Carbon\Carbon::parse($inicio)->locale('es')->isoFormat('D MMMM') }}
+                                                    al
+                                                    {{ \Carbon\Carbon::parse($fin)->locale('es')->isoFormat('D MMMM') }}
+                                                </span>
                                             </p>
                                         </div>
 
-                                        <div class="col-3 col-md-2 text-center">
-                                            <p class="">Semana Pasada</p>
-                                            <p class="combustibleLitros fw-semibold text-black-50 ">$ {{ $lastweek }}
+                                        {{--  <div class="col-3 col-md-2 text-center">
+                                            <p class="">Pendientes de cobro</p>
+                                            <p class="combustibleLitros fw-semibold text-black-50 ">$
                                             </p>
-                                        </div>
-                                        <div class="col-3 col-md-2 text-center">
+                                        </div>  --}}
+                                        <div class="col-6 col-md-4 text-center">
                                             <p class="">Ingreso</p>
-                                            <p class="combustibleLitros fw-semibold text-success">$ {{ $ingreso }}</p>
+                                            <p class="combustibleLitros fw-semibold text-success">$
+                                                {{ number_format($ingreso, 2) }}</p>
                                         </div>
-                                        <div class="col-3 col-md-2  text-center">
+                                        <div class="col-6 col-md-4  text-center">
                                             <p class="">Egreso</p>
-                                            <p class="combustibleLitros fw-semibold text-danger">$ {{ $egreso }}</p>
+                                            <p class="combustibleLitros fw-semibold text-danger">$
+                                                {{ number_format($egreso, 2) }}</p>
                                         </div>
-                                        <div class="col-3 col-md-2 text-center">
-                                            <p class="">Saldo</p>
-                                            <p class="combustibleLitros fw-semibold ">$ {{ $lastTotal }}
+                                        {{--  <div class="col-3 col-md-2 text-center">
+                                            <p class="">Ingresos Servicios</p>
+                                            <p class="combustibleLitros fw-semibold ">$
                                             </p>
+                                        </div>  --}}
+                                        <div class="col-12 text-end">
+                                            @can('cajachica_create')
+                                                <a href="#">
+                                                    <button type="button" class="btn botonGral">Descargar Excel</button>
+                                                </a>
+                                            @endcan
                                         </div>
                                         <div class="row">
                                             <div class="col-6 text-left">
-                                                @can('cajachica_create')
+                                                {{--  @can('cajachica_create')
                                                     <button type="button" class="btn botonGral" data-bs-toggle="modal"
                                                         data-bs-target="#modal-reporte">
                                                         Reporte de Movimientos
                                                     </button>
-                                                @endcan
+                                                @endcan  --}}
                                             </div>
 
                                             <div class="col-6 text-end">
-                                                @can('cajachica_create')
-                                                    <a href="{{ route('cajaChica.create') }}">
-                                                        <button type="button" class="btn botonGral">Nuevo Movimiento</button>
+                                                {{--  @can('cajachica_create')
+                                                    <a href="#">
+                                                        <button type="button" class="btn botonGral">Descargar Excel</button>
                                                     </a>
-                                                @endcan
+                                                @endcan  --}}
                                             </div>
                                         </div>
 
@@ -203,9 +218,9 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="card-footer mr-auto">
+                                {{--  <div class="card-footer mr-auto">
                                     {{ $registros->links() }}
-                                </div>
+                                </div>  --}}
                             </div>
                         </div>
                     </div>
