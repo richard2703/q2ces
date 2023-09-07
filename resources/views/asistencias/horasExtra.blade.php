@@ -138,6 +138,7 @@ if ($asistencias->isEmpty() == true) {
                                         <table class="table">
                                             <thead class="labelTitulo text-center">
                                                 <th class="labelTitulo">Código</th>
+                                                <th class="labelTitulo">Puesto</th>
                                                 <th class="labelTitulo">Nombre</th>
                                                 <th class="labelTitulo">Horas Extra</th>
                                                 <th class="labelTitulo">Tipo</th>
@@ -156,14 +157,15 @@ if ($asistencias->isEmpty() == true) {
                                                             <input type="hidden" name="personalId[]"
                                                                 value="{{ $item->id }}">
                                                         </td>
+                                                        <td>{{ $item->puesto }}</td>
                                                         <td class="text-left">
                                                             {{ $item->getFullLastNameAttribute() }}
                                                         </td>
-                                                        <td><input type="number" class="inputCaja text-right" required
+                                                        <td><input type="time" class="inputCaja text-right" required
                                                                 name="horasExtra[]" id="horasExtra"
-                                                                value="{{ $item->horasExtra }}" maxlength="2"
+                                                                value="{{ ($item->horasExtra?\Carbon\Carbon::parse($item->horasExtra)->format('H:i') : "") }}"
                                                                 {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
-                                                                step="1" min="0" max="16"></td>
+                                                                 ></td>
                                                         <td>
                                                             <select id="tipoHoraExtraId" name="tipoHoraExtraId[]"
                                                                 {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
