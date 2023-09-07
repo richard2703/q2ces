@@ -35,7 +35,7 @@
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="labelTitulo">
-                                                <th class="labelTitulo text-center">ID</th>
+                                                {{--  <th class="labelTitulo text-center">ID</th>  --}}
                                                 <th class="labelTitulo text-center">Nombre</th>
                                                 <th class="labelTitulo text-center">Apellido</th>
                                                 <th class="labelTitulo text-center">Puesto </th>
@@ -47,8 +47,12 @@
                                             <tbody>
                                                 @forelse ($personal as $persona)
                                                     <tr>
-                                                        <td class="text-center">{{ $persona->id }}</td>
-                                                        <td class="text-center">{{ $persona->nombres }}</td>
+                                                        {{--  <td class="text-center">{{ $persona->id }}</td>  --}}
+                                                        <td class="text-center">
+                                                            <a href="{{ route('personal.ver', $persona->id) }}">
+                                                                {{ $persona->nombres }}
+                                                            </a>
+                                                        </td>
                                                         <td class="text-center">{{ $persona->apellidoP }}</td>
                                                         <td class="text-center">{{ $persona->puesto }}</td>
                                                         <td class="text-center">{{ $persona->celular }}</td>

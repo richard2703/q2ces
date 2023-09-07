@@ -147,13 +147,14 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::get('/personal', [App\Http\Controllers\personalController::class, 'index'])->name('personal.indexPersonal');
     Route::get('/personal/{personal}', [App\Http\Controllers\personalController::class, 'show'])->name('personal.show');
     Route::put('/personal/{personal}', [App\Http\Controllers\personalController::class, 'update'])->name('personal.update');
-    Route::get('personal/{id}/{doc}', [App\Http\Controllers\personalController::class, 'download'])->name('personal.download');
+    // Route::get('personal/{id}/{doc}', [App\Http\Controllers\personalController::class, 'download'])->name('personal.download');
     Route::delete('/personal/{personal}', [App\Http\Controllers\personalController::class, 'destroy'])->name('personal.delete');
     Route::get('personal/asignar/{personal}/equipo', [App\Http\Controllers\personalController::class, 'edit'])->name('personal.equipo');
     Route::put('personal/asignar/{personal}/equipo', [App\Http\Controllers\personalController::class, 'asignacion'])->name('personal.equipo.asignacion');
 
     Route::get('personal/asignar/{personal}/uniforme', [App\Http\Controllers\personalController::class, 'editUniforme'])->name('personal.uniforme');
     Route::put('personal/asignar/{personal}/uniforme', [App\Http\Controllers\personalController::class, 'asignacionUniforme'])->name('personal.uniforme.asignacion');
+    Route::get('personal/show/{personal}', [App\Http\Controllers\personalController::class, 'ver'])->name('personal.ver');
 
     //*** catalogos */
     Route::get('/catalogos/', [App\Http\Controllers\catalogosController::class, 'index'])->name('catalogos.index');
@@ -320,19 +321,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/inventario/combustible/carga/{carga}', [App\Http\Controllers\inventarioController::class, 'deleteCarga'])->name('inventario.deleteCarga');
     Route::delete('/inventario/combustible/descarga/{carga}', [App\Http\Controllers\inventarioController::class, 'deleteDescarga'])->name('inventario.deleteDescarga');
 
-    //Crud calendario
-    Route::get('/calendario', [App\Http\Controllers\calendarioController::class, 'index'])->name('calendario.index');
-    Route::get('/calendario2', [App\Http\Controllers\calendarioController::class, 'index2'])->name('calendario.index2');
-    Route::get('/calendario/{anio}/{mes}', [App\Http\Controllers\calendarioController::class, 'reloadCalendario'])->name('calendario.reloadCalendario');
+    //Crud calendarioPrincipal
+    Route::resource('calendarioPrincipal', App\Http\Controllers\calendarioPrincipalController::class);
+    Route::resource('actividades', App\Http\Controllers\actividadesController::class);
+    // Route::get('/calendario', [App\Http\Controllers\calendarioController::class, 'index'])->name('calendarioPrincipal.index');
+    // Route::get('/calendario2', [App\Http\Controllers\calendarioController::class, 'index2'])->name('calendarioPrincipal.index2');
+    // Route::get('/calendario/{anio}/{mes}', [App\Http\Controllers\calendarioController::class, 'reloadCalendario'])->name('calendario.reloadCalendario');
     //Route::put('/coordiseno/detalle/riesgos/{riesgo}/recalcular', [App\Http\Controllers\detalleRiesgoController::class, 'recalcular'])->name('detalleriesgo.recalcular');
 
     //*** operaciones con tareas */
-    Route::post('/calendario/tareas/nueva', [App\Http\Controllers\tareasController::class, 'store'])->name('tareas.store');
-    Route::put('/calendario/tareas/editar', [App\Http\Controllers\tareasController::class, 'update'])->name('tareas.update');
+    // Route::post('/calendario/tareas/nueva', [App\Http\Controllers\tareasController::class, 'store'])->name('tareas.store');
+    // Route::put('/calendario/tareas/editar', [App\Http\Controllers\tareasController::class, 'update'])->name('tareas.update');
 
     //*** operaciones con mantenimientos */
-    Route::post('/calendario/mantenimientos/nuevo', [App\Http\Controllers\mantenimientosController::class, 'store'])->name('mantenimientos.store');
-    Route::put('/calendario/mantenimientos/editar', [App\Http\Controllers\mantenimientosController::class, 'update'])->name('mantenimientos.update');
+    // Route::post('/calendario/mantenimientos/nuevo', [App\Http\Controllers\mantenimientosController::class, 'store'])->name('mantenimientos.store');
+    // Route::put('/calendario/mantenimientos/editar', [App\Http\Controllers\mantenimientosController::class, 'update'])->name('mantenimientos.update');
 
     //Mantenimiento
     Route::get('/mantenimientos', [App\Http\Controllers\mantenimientosController::class, 'index'])->name('mantenimientos.index');
@@ -342,18 +345,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/mantenimiento/editar/{id}/update', [App\Http\Controllers\mantenimientosController::class, 'update'])->name('mantenimientos.update');
 
     //*** operaciones con reparaciones */
-    Route::post('/calendario/reparaciones/nuevo', [App\Http\Controllers\reparacionesController::class, 'store'])->name('reparaciones.store');
-    Route::put('/calendario/reparaciones/editar', [App\Http\Controllers\reparacionesController::class, 'update'])->name('reparaciones.update');
+    // Route::post('/calendario/reparaciones/nuevo', [App\Http\Controllers\reparacionesController::class, 'store'])->name('reparaciones.store');
+    // Route::put('/calendario/reparaciones/editar', [App\Http\Controllers\reparacionesController::class, 'update'])->name('reparaciones.update');
 
     //*** operaciones con solicitudes */
     Route::post('/calendario/solicitudes/nuevo', [App\Http\Controllers\solicitudesController::class, 'store'])->name('solicitudes.store');
-    Route::put('/calendario/solicitudes/editar', [App\Http\Controllers\solicitudesController::class, 'update'])->name('solicitudes.update');
+    // Route::put('/calendario/solicitudes/editar', [App\Http\Controllers\solicitudesController::class, 'update'])->name('solicitudes.update');
 
     //Crud personal
     Route::get('/asistencia', [App\Http\Controllers\asistenciaController::class, 'index'])->name('asistencia.index');
     Route::get('/asistencia/diaria', [App\Http\Controllers\asistenciaController::class, 'create'])->name('asistencia.create');
     Route::post('/asistencia/diaria', [App\Http\Controllers\asistenciaController::class, 'store'])->name('asistencia.store');
     Route::post('/asistencia/otrodia', [App\Http\Controllers\asistenciaController::class, 'cambioDiaAsistencia'])->name('asistencia.cambioDiaAsistencia');
+    Route::post('/asistencia/otromes', [App\Http\Controllers\asistenciaController::class, 'cambioMesAsistencia'])->name('asistencia.cambioMesAsistencia');
     Route::post('/asistencia/otrodiaextras', [App\Http\Controllers\asistenciaController::class, 'cambioDiaExtras'])->name('asistencia.cambioDiaExtras');
     Route::get('/asistencia/horasExtra', [App\Http\Controllers\asistenciaController::class, 'horasExtra'])->name('asistencia.horasExtra');
     Route::post('/asistencia/horasExtra', [App\Http\Controllers\asistenciaController::class, 'HEstore'])->name('asistencia.HEstore');
@@ -375,6 +379,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Caja Chica
     Route::resource('cajaChica', App\Http\Controllers\cajaChicaController::class);
+    Route::post('cajaChica/reporte', [App\Http\Controllers\cajaChicaController::class, 'reporte'])->name('cajaChica.reporte');
 
     // Conceptos
     Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
@@ -437,4 +442,11 @@ Route::group(['middleware' => 'auth'], function () {
     // Import Excel
     Route::get('/import-excel', 'App\Http\Controllers\ImportExcelController@index')->name('importExcel.get');
     Route::post('/import-excel', 'App\Http\Controllers\ImportExcelController@import')->name('importExcel.post');
+
+    // Imprimir
+    Route::get('/print-combustible', 'App\Http\Controllers\printController@print')->name('print.get');
+    Route::get('/print-vista-previa', 'App\Http\Controllers\printController@print')->name('print.get');
+    Route::post('/print-combustible', 'App\Http\Controllers\printController@print')->name('print.post');
+    Route::post('/print-carga-combustible', 'App\Http\Controllers\printController@printCarga')->name('printCarga.post');
+    // Route::post('/import-excel', 'App\Http\Controllers\ImportExcelController@import')->name('importExcel.post');
 });

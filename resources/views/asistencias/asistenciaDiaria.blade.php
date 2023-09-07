@@ -10,6 +10,7 @@ $anioAnterior = date_format($objCalendar->getDiaAnterior("$intAnio-$intMes-$intD
 $diaSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$intDia"), 'd');
 $mesSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$intDia"), 'm');
 $anioSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$intDia"), 'Y');
+
 $fechaSeleccionada = date_create(date('Y-m-d', strtotime("$intAnio-$intMes-$intDia")));
 $intDiaSeleccionado = date_format($fechaSeleccionada, 'N');
 $diaSeleccionado = $objCalendar->getNameDay(date_format($fechaSeleccionada, 'N'));
@@ -18,9 +19,9 @@ $mesSeleccionado = $objCalendar->getNameMonth(date_format($fechaSeleccionada, 'm
 $dtToday = date('Ymd');
 $dtTrabajar = date('Ymd', strtotime("$intAnio-$intMes-$intDia"));
 
+$blnEsDiaActual = $dtTrabajar == $dtToday ? true : false;
 //*** bloqueamos fecha mayor al dia actual
-$blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? false : true;
-$blnAsistenciaTomada = $dtTrabajar == $dtToday && $asistencias->isEmpty() == false ? true : false;
+$blnBloquearRegistro = ( $blnEsDiaActual == true  ? false : true );
 
 // dd($asistencias, $diaAnterior, $diaSiguiente, $fechaSeleccionada, $diaSeleccionado, $dtToday, $dtTrabajar);
 
@@ -56,7 +57,7 @@ $blnAsistenciaTomada = $dtTrabajar == $dtToday && $asistencias->isEmpty() == fal
                                         </span>
                                         <span>
                                             <a href="{{ route('asistencia.create') }}" class="display-8 mb-8 text-center"
-                                                title="Ir al día en curso"><b>Hoy
+                                                title="Ir al día en curso"><b>Hoy <?php echo $blnAsistenciaRegistrada == false ? '(Apertura)' : '(Cierre)'; ?>
                                                     {{-- {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }} --}}
                                                 </b></a>
                                         </span>
@@ -104,7 +105,7 @@ $blnAsistenciaTomada = $dtTrabajar == $dtToday && $asistencias->isEmpty() == fal
                                                 <a href="{{ route('asistencia.create') }}"
                                                     class="combustibleLitros fw-semibold text-end"
                                                     title="Ir al dia en curso"><b>Asistencia Del Día
-                                                        {{ ucwords(trans($objCalendar->getFechaFormateada($fechaSeleccionada))) }}
+                                                        {{ ucwords(trans($objCalendar->getFechaFormateada($fechaSeleccionada, true))) }}
                                                     </b>
                                                 </a>
                                             </div>
@@ -116,21 +117,15 @@ $blnAsistenciaTomada = $dtTrabajar == $dtToday && $asistencias->isEmpty() == fal
                                                     <p class="botonTitulos mt-2">Otro Día</p>
                                                 </button>
                                             </div>
-                                            {{--  <div class="">
-                                                <a href="{{ route('asistencia.create') }}"
-                                                    class="combustibleLitros fw-semibold text-end"
-                                                    title="Ir al mes en curso"><b>Hoy Es
-                                                        {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b>
-                                                </a>
-                                            </div>  --}}
+
                                         </div>
-
-
 
                                         <form class="row alertaGuardar" action="{{ route('asistencia.store') }}"
                                             method="post" enctype="multipart/form-data">
                                             @csrf
 
+                                            <input type="hidden" name="blnAsistenciaRegistrada"
+                                                value="{{ $blnAsistenciaRegistrada }}">
                                             <input type="hidden" name="intAnio" value="{{ $intAnio }}">
                                             <input type="hidden" name="intMes" value="{{ $intMes }}">
                                             <input type="hidden" name="intDia" value="{{ $intDia }}">
@@ -142,6 +137,7 @@ $blnAsistenciaTomada = $dtTrabajar == $dtToday && $asistencias->isEmpty() == fal
                                                 <table class="table">
                                                     <thead class="labelTitulo text-center">
                                                         <th class="labelTitulo">Código</th>
+                                                        <th class="labelTitulo">Puesto</th>
                                                         <th class="labelTitulo">Nombre</th>
                                                         <th class="labelTitulo" style="width:140px !important">Asistencia
                                                         </th>
@@ -152,61 +148,165 @@ $blnAsistenciaTomada = $dtTrabajar == $dtToday && $asistencias->isEmpty() == fal
                                                         </th>
                                                         <th class="labelTitulo" style="width:140px !important">Descansos
                                                         </th>
+                                                        <th class="labelTitulo" style="width:140px !important">Entrada
+                                                        </th>
+                                                        <th class="labelTitulo" style="width:140px !important">Salida
+                                                        </th>
                                                     </thead>
                                                     <tbody class="text-center">
 
-                                                        @forelse ($personal as $item)
-                                                            <tr>
-                                                                <td class="">
-                                                                    {{ $item->id }}
-                                                                    <input type="hidden" name="asistenciaId[]"
-                                                                        value="{{ $item->asistenciaId }}">
-                                                                    <input type="hidden" name="personalId[]"
-                                                                        value="{{ $item->id }}">
-                                                                </td>
-                                                                <td class="text-left">
-                                                                    {{ $item->getFullLastNameAttribute() }}
-                                                                </td>
-                                                                <td><input type="radio" name="{{ $item->id }}[]"
-                                                                        id="Asistencia_{{ $item->id }}" value="1"
-                                                                        {{ $intDiaSeleccionado != 7 ? 'checked' : '' }}>
-                                                                </td>
-                                                                <td><input type="radio" name="{{ $item->id }}[]"
-                                                                        id="Asistencia_{{ $item->id }}" value="2">
-                                                                </td>
-                                                                <td><input type="radio" name="{{ $item->id }}[]"
-                                                                        id="Asistencia_{{ $item->id }}" value="3">
-                                                                </td>
-                                                                <td><input type="radio" name="{{ $item->id }}[]"
-                                                                        id="Asistencia_{{ $item->id }}"
-                                                                        value="4">
-                                                                </td>
-                                                                <td><input type="radio" name="{{ $item->id }}[]"
-                                                                        id="Asistencia_{{ $item->id }}"
-                                                                        value="5"
-                                                                        {{ $intDiaSeleccionado == 7 ? 'checked' : '' }}>
-                                                                </td>
-                                                            </tr>
-                                                        @empty
-                                                            <tr>
-                                                                <td colspan="2">Sin Registros.</td>
-                                                            </tr>
-                                                        @endforelse
+
+                                                        @if ($blnAsistenciaRegistrada == false)
+                                                            @forelse ($personal as $item)
+                                                                <tr>
+                                                                    <td class=""
+                                                                        style="color: {{ $item->estatusColor }};">
+                                                                        <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>???
+                                                                        <input type="hidden" name="asistenciaId[]"
+                                                                            value="{{ $item->asistenciaId }}">
+                                                                        <input type="hidden" name="personalId[]"
+                                                                            value="{{ $item->id }}">
+                                                                    </td>
+                                                                    <td>{{ $item->puesto }}</td>
+                                                                    <td class="text-left">
+                                                                        <a href="#"
+                                                                            title="Fecha de Ingreso {{ \Carbon\Carbon::parse($item->fechaIngreso)->format('d/m/Y') }}">
+                                                                            {{ $item->getFullLastNameAttribute() }}</a>
+                                                                    </td>
+                                                                    <td><input type="radio" name="{{ $item->id }}[]"
+                                                                            id="Asistencia_{{ $item->id }}"
+                                                                            value="1"
+                                                                            {{ $intDiaSeleccionado != 7 ? 'checked' : '' }}>
+                                                                    </td>
+                                                                    <td><input type="radio"
+                                                                            name="{{ $item->id }}[]"
+                                                                            id="Asistencia_{{ $item->id }}"
+                                                                            value="2">
+                                                                    </td>
+                                                                    <td><input type="radio"
+                                                                            name="{{ $item->id }}[]"
+                                                                            id="Asistencia_{{ $item->id }}"
+                                                                            value="3">
+                                                                    </td>
+                                                                    <td><input type="radio"
+                                                                            name="{{ $item->id }}[]"
+                                                                            id="Asistencia_{{ $item->id }}"
+                                                                            value="4">
+                                                                    </td>
+                                                                    <td><input type="radio"
+                                                                            name="{{ $item->id }}[]"
+                                                                            id="Asistencia_{{ $item->id }}"
+                                                                            value="5"
+                                                                            {{ $intDiaSeleccionado == 7 ? 'checked' : '' }}>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="time" class="inputCaja "
+                                                                            placeholder="Entrada" id=""
+                                                                            name="hEntrada[]"
+                                                                            value="{{ $item->hEntrada }}">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="time" class="inputCaja "
+                                                                            placeholder="Salida" id=""
+                                                                            name="hSalida[]"
+                                                                            value="{{ $item->hSalida }}">
+                                                                    </td>
+                                                                </tr>
+                                                            @empty
+                                                                <tr>
+                                                                    <td colspan="2">Sin Registros.</td>
+                                                                </tr>
+                                                            @endforelse
+                                                        @else
+                                                            @forelse ($asistencias as $item)
+                                                                <tr>
+                                                                    <td class=""
+                                                                        style="color: {{ $item->estatusColor }};">
+                                                                        <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
+                                                                        <input type="hidden" name="asistenciaId[]"
+                                                                            value="{{ $item->asistenciaId }}">
+                                                                        <input type="hidden" name="personalId[]"
+                                                                            value="{{ $item->id }}">
+                                                                        <input type="hidden" name="recordId[]"
+                                                                            value="{{ $item->recordId }}">
+                                                                    </td>
+                                                                    <td>{{ $item->puesto }}</td>
+                                                                    <td class="text-left">
+                                                                        <a href="#"
+                                                                            title="Fecha de Ingreso {{ \Carbon\Carbon::parse($item->fechaIngreso)->format('d/m/Y') }}">
+                                                                            {{ $item->getFullLastNameAttribute() }}</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="radio"
+                                                                            name="{{ $item->id }}[]"
+                                                                            id="Asistencia_{{ $item->id }}"
+                                                                            value="1"
+                                                                            {{ $item->asistenciaId == 1 ? ' checked' : '' }}>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="radio"
+                                                                            name="{{ $item->id }}[]"
+                                                                            id="Asistencia_{{ $item->id }}"
+                                                                            value="2"
+                                                                            {{ $item->asistenciaId == 2 ? ' checked' : '' }}>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="radio"
+                                                                            name="{{ $item->id }}[]"
+                                                                            id="Asistencia_{{ $item->id }}"
+                                                                            value="3"
+                                                                            {{ $item->asistenciaId == 3 ? ' checked' : '' }}>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="radio"
+                                                                            name="{{ $item->id }}[]"
+                                                                            id="Asistencia_{{ $item->id }}"
+                                                                            value="4"
+                                                                            {{ $item->asistenciaId == 4 ? ' checked' : '' }}>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="radio"
+                                                                            name="{{ $item->id }}[]"
+                                                                            id="Asistencia_{{ $item->id }}"
+                                                                            value="5"
+                                                                            {{ $item->asistenciaId == 5 ? ' checked' : '' }}>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="time" class="inputCaja "
+                                                                            placeholder="Entrada" id=""
+                                                                            name="hEntrada[]"
+                                                                            value="{{ $item->hEntrada }}">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="time" class="inputCaja "
+                                                                            placeholder="Salida" id=""
+                                                                            name="hSalida[]"
+                                                                            value="{{ $item->hSalida }}">
+                                                                    </td>
+                                                                </tr>
+                                                            @empty
+                                                                <tr>
+                                                                    <td colspan="2">Sin Registros.</td>
+                                                                </tr>
+                                                            @endforelse
+                                                        @endif
+
+
                                                     </tbody>
                                                 </table>
                                             </div>
 
                                             <div class="card-footer mr-auto">
-                                                <?php if( $blnBloquearRegistro == false){  ?>
+                                                <?php if( $blnBloquearRegistro == false && $blnEsDiaActual == true){  ?>
                                                 <a href="{{ route('asistencia.index') }}">
                                                     <button type="button" class="btn btn-danger">Cancelar</button>
                                                 </a>
                                                 <a href="#">
                                                     <button type="submit" class="btn botonGral">Guardar</button>
                                                 </a>
-                                                {{--  {{ $personal->links() }}  --}}
+                                                {{-- {{ $personal->links() }} --}}
                                                 <?php }else{
-                                                    if($blnAsistenciaTomada==true){
+                                                    if($blnAsistenciaRegistrada==true && $blnEsDiaActual==false){
                                                         ?>
                                                 <p class="botonTitulos mt-2">La asistencia ya fue registrada, si requiere
                                                     realizar un cambio deberá hacerlo de forma individual por cada empleado.

@@ -13,6 +13,6 @@ class tarea extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'nombre', 'categoriaId', 'ubicacionId', 'tipoId', 'comentario','activa','tipoValor'
+        'nombre', 'categoriaId', 'ubicacionId', 'tipoId', 'comentario','activa','tipoValorId'
     ];
 }

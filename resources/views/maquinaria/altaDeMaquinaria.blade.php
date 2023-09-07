@@ -105,11 +105,12 @@
                                                                 {{-- <input type="text" class="inputCaja" id="marca"
                                                                     placeholder="Especifique..." name="marca"
                                                                     value="{{ old('marca') }}"> --}}
-                                                                    <select class="form-select" aria-label="Default select example"
-                                                                    id="marcaId" name="marcaId">
+                                                                <select class="form-select"
+                                                                    aria-label="Default select example" id="marcaId"
+                                                                    name="marcaId">
                                                                     <option value="">Seleccione</option>
                                                                     @foreach ($marcas as $marca)
-                                                                        <option value="{{ $marca->id }}" >
+                                                                        <option value="{{ $marca->id }}">
                                                                             {{ $marca->nombre }}
                                                                         </option>
                                                                     @endforeach
@@ -158,15 +159,16 @@
                                                                     <option value="Otros">Otros</option>
                                                                     <option value="Utilitarios">Utilitarios</option>
                                                                 </select> --}}
-                                                                <select class="form-select" aria-label="Default select example"
-                                                                id="categoriaId" name="categoriaId">
-                                                                <option value="">Seleccione</option>
-                                                                @foreach ($categorias as $cat)
-                                                                    <option value="{{ $cat->id }}" >
-                                                                        {{ $cat->nombre }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
+                                                                <select class="form-select"
+                                                                    aria-label="Default select example" id="categoriaId"
+                                                                    name="categoriaId">
+                                                                    <option value="">Seleccione</option>
+                                                                    @foreach ($categorias as $cat)
+                                                                        <option value="{{ $cat->id }}">
+                                                                            {{ $cat->nombre }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -191,15 +193,16 @@
                                                                     <option value="Grua">Grua</option>
                                                                     <option value="no_aplica">N/A</option>
                                                                 </select> --}}
-                                                                <select class="form-select" aria-label="Default select example"
-                                                                id="tipoId" name="tipoId">
-                                                                <option value="">Seleccione</option>
-                                                                @foreach ($tipos as $tipo)
-                                                                    <option value="{{ $tipo->id }}" >
-                                                                        {{ $tipo->nombre }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
+                                                                <select class="form-select"
+                                                                    aria-label="Default select example" id="tipoId"
+                                                                    name="tipoId">
+                                                                    <option value="">Seleccione</option>
+                                                                    @foreach ($tipos as $tipo)
+                                                                        <option value="{{ $tipo->id }}">
+                                                                            {{ $tipo->nombre }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
                                                             </div>
 
                                                             <div class="col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -346,34 +349,6 @@
                                                                     value="{{ old('aceitehidra') }}">
                                                             </div>
 
-                                                            <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                                                                                                                                                                            <label class="labelTitulo">Filtro Aceite:</label></br>
-                                                                                                                                                                                                                            <input type="number" class="inputCaja" id="filtroaceite"
-                                                                                                                                                                                                                                name="filtroaceite" placeholder="Cantidad"
-                                                                                                                                                                                                                                value="{{ old('filtroaceite') }}">
-                                                                                                                                                                                                                        </div>-->
-
-                                                            <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                                                                                                                                                                            <label class="labelTitulo">Filtro Aire:</label></br>
-                                                                                                                                                                                                                            <input type="number" class="inputCaja" id="filtroaire"
-                                                                                                                                                                                                                                placeholder="Cantidad" name="filtroaire"
-                                                                                                                                                                                                                                value="{{ old('filtroaire') }}">
-                                                                                                                                                                                                                        </div>-->
-
-                                                            <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                                                                                                                                                                            <label class="labelTitulo">Bujías:</label></br>
-                                                                                                                                                                                                                            <input type="number" class="inputCaja" id="bujias"
-                                                                                                                                                                                                                                placeholder="Cantidad" name="bujias"
-                                                                                                                                                                                                                                value="{{ old('bujias') }}">
-                                                                                                                                                                                                                        </div>-->
-
-                                                            <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                                                                                                                                                                            <label class="labelTitulo">Tipo de Bujías:</label></br>
-                                                                                                                                                                                                                            <input type="text" class="inputCaja" id="tipobujia"
-                                                                                                                                                                                                                                placeholder="Especifique..." name="tipobujia"
-                                                                                                                                                                                                                                value="{{ old('tipobujia') }}">
-                                                                                                                                                                                                                        </div>-->
-
                                                             {{--  <div class="col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Horómetro Inicial:</label></br>
                                                                 <input type="number" class="inputCaja" id="horometro"
@@ -420,7 +395,7 @@
                                                         </div>
 
                                                     </div>
-                                                    @php $countador = 0;
+                                                    @php$countador = 0;
                                                     @endphp
                                                     <div class="d-flex p-3">
                                                         <div class="col-12" id="elementos">
@@ -437,7 +412,8 @@
 
                                                             <div class="row opcion divBorderItems" id="opc">
 
-                                                                <input type="hidden" name="idRefaccion[]" value="">
+                                                                <input type="hidden" name="idRefaccion[]"
+                                                                    value="">
                                                                 <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
                                                                     <label class="labelTitulo">Tipo De
                                                                         Refacción:</label></br>
@@ -453,25 +429,28 @@
                                                                 </div>
 
                                                                 <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
-                                                                <label class="labelTitulo">Marca:</label></br>
-                                                                <select id="marcaRefaccion" name='marca[]'
-                                                                    class="form-select">
-                                                                    <option value="">Seleccione</option>
-                                                                    @foreach ($marcas as $item)
-                                                                        <option value="{{ $item->id }}">
-                                                                            {{ $item->nombre }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
+                                                                    <label class="labelTitulo">Marca:</label></br>
+                                                                    <select id="marcaRefaccion" name='marca[]'
+                                                                        class="form-select">
+                                                                        <option value="">Seleccione</option>
+                                                                        @foreach ($marcas as $item)
+                                                                            <option value="{{ $item->id }}">
+                                                                                {{ $item->nombre }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
                                                                 </div>
 
                                                                 <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
                                                                     <label class="labelTitulo">Número De
                                                                         Parte:</label></br>
-                                                                        <input type="text" class="inputCaja" name='numeroParte[]' id="numeroParte" placeholder="Especifique..." value="">
+                                                                    <input type="text" class="inputCaja"
+                                                                        name='numeroParte[]' id="numeroParte"
+                                                                        placeholder="Especifique..." value="">
                                                                 </div>
                                                                 <div class="col-lg-2 my-3 text-center pt-3">
-                                                                    <span class="material-icons" style="font-size:40px; color: gray">
+                                                                    <span class="material-icons"
+                                                                        style="font-size:40px; color: gray">
                                                                         content_paste_search
                                                                     </span>
                                                                 </div>
@@ -484,7 +463,7 @@
                                                         </div>
                                                     </div>
                                                     @php
-                                                        $countador ++;
+                                                        $countador++;
                                                     @endphp
                                                 </div>
                                             </div>
@@ -503,8 +482,8 @@
                                             aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
                                                 <div class="row mt-3">
-                                                @php $count = 0;
-                                                @endphp
+                                                    @php$count = 0;
+                                                    @endphp
                                                     @foreach ($doc as $item)
                                                         <div
                                                             class="card-group col-12 col-md-6 col-lg-4 col-xl-3 small-card-date my-1">
@@ -521,19 +500,21 @@
                                                                     <div
                                                                         class="contIconosDocumentos d-flex flex-wrap align-items-end align-items-center">
                                                                         <input type="hidden" id='{{ $item->nombre }}'
-                                                                            name='archivo[{{$count}}][tipoDocs]'
+                                                                            name='archivo[{{ $count }}][tipoDocs]'
                                                                             value='{{ $item->id }}'>
-                                                                        <input type="hidden" id='nombre{{ $item->nombre }}'
-                                                                            name='archivo[{{$count}}][tipoDocsNombre]'
+                                                                        <input type="hidden"
+                                                                            id='nombre{{ $item->nombre }}'
+                                                                            name='archivo[{{ $count }}][tipoDocsNombre]'
                                                                             value='{{ $item->nombre }}'>
-                                                                        <input type="hidden" id='omitido{{ $item->id }}'
-                                                                            name='archivo[{{$count}}][omitido]'
+                                                                        <input type="hidden"
+                                                                            id='omitido{{ $item->id }}'
+                                                                            name='archivo[{{ $count }}][omitido]'
                                                                             value='0'>
                                                                         <label class="custom-file-upload"
                                                                             onclick='handleDocumento("{{ $item->id }}","{{ $item->nombre }}")'>
                                                                             <input class="mb-4" type="file"
-                                                                                name='archivo[{{$count}}][docs]' id='{{ $item->id }}'
-                                                                                accept=".pdf">
+                                                                                name='archivo[{{ $count }}][docs]'
+                                                                                id='{{ $item->id }}' accept=".pdf">
                                                                             <div id='iconContainer{{ $item->id }}'>
                                                                                 <lord-icon
                                                                                     src="https://cdn.lordicon.com/koyivthb.json"
@@ -553,7 +534,8 @@
                                                                                 <i class="far fa-eye mt-2"></i>
                                                                             </span>
                                                                         </a>
-                                                                        <button id='removeButton{{ $item->id }}' type="button"
+                                                                        <button id='removeButton{{ $item->id }}'
+                                                                            type="button"
                                                                             class="btnViewDelete btn btn-outline-danger btnView"
                                                                             style="width: 2.4em; height: 2.4em; display: none;"><i
                                                                                 class="fa fa-times"></i></button>
@@ -569,23 +551,32 @@
                                                                             id='cancelarOmitirButton{{ $item->id }}'
                                                                             class="btnSinFondo float-end mt-3"
                                                                             style="margin-left: 20px; display: none;"
-                                                                            rel="tooltip"
-                                                                            type="button"
+                                                                            rel="tooltip" type="button"
                                                                             onclick='cancelarOmitir("{{ $item->id }}","{{ $item->nombre }}")'>
                                                                             <P class="fs-5"> Cancelar</P>
                                                                         </button>
                                                                         <div class="text-center">
-                                                                            <div class="form-check d-flex justify-content-between">
-                                                                            <div class="text-center"></div>
-                                                                                <label class="text-start fs-5 textTitulo text-break mb-2" style="margin-left:-33px!important; font-size: 18px !important">
+                                                                            <div
+                                                                                class="form-check d-flex justify-content-between">
+                                                                                <div class="text-center"></div>
+                                                                                <label
+                                                                                    class="text-start fs-5 textTitulo text-break mb-2"
+                                                                                    style="margin-left:-33px!important; font-size: 18px !important">
                                                                                     Expiración:
                                                                                 </label>
-                                                                                <input class="form-check-input is-invalid align-self-end mb-2" type="checkbox" name='archivo[{{$count}}][check]' id='check{{ $item->id }}' checked style="font-size: 20px; visibility: hidden" onchange='handleCheckboxChange("{{ $item->id }}")'>
+                                                                                <input
+                                                                                    class="form-check-input is-invalid align-self-end mb-2"
+                                                                                    type="checkbox"
+                                                                                    name='archivo[{{ $count }}][check]'
+                                                                                    id='check{{ $item->id }}' checked
+                                                                                    style="font-size: 20px; visibility: hidden"
+                                                                                    onchange='handleCheckboxChange("{{ $item->id }}")'>
                                                                                 <!--<input type="hidden" class="form-check-input is-invalid align-self-end mb-2"  id='checkHidden{{ $item->id }}' value='false'> -->
                                                                             </div>
                                                                             <div class="col-12">
                                                                                 <input type="date"
-                                                                                    class="inputCaja text-center" name='archivo[{{$count}}][fecha]'
+                                                                                    class="inputCaja text-center"
+                                                                                    name='archivo[{{ $count }}][fecha]'
                                                                                     id='fecha{{ $item->id }}'
                                                                                     style="display: block;" disabled>
                                                                             </div>
@@ -593,15 +584,15 @@
                                                                                 <label
                                                                                     class="text-start fs-5 textTitulo text-break mb-2"
                                                                                     style="font-size: 18px !important; padding-top: 10px; padding-bottom: 5px; resize: horizontal !important;">Comentario:</label>
-                                                                                <textarea id='comentario{{ $item->id }}' name='archivo[{{$count}}][comentario]' class="form-control-textarea inputCaja" rows="2" maxlength="1000"
-                                                                                    placeholder="Escribe Un Comentario"></textarea>
+                                                                                <textarea id='comentario{{ $item->id }}' name='archivo[{{ $count }}][comentario]'
+                                                                                    class="form-control-textarea inputCaja" rows="2" maxlength="1000" placeholder="Escribe Un Comentario"></textarea>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        @php $count ++;
+                                                        @php$count++;
                                                         @endphp
                                                     @endforeach
                                                 </div>
@@ -634,15 +625,20 @@
                     $.ajax({
                         url: '/inventario',
                         type: 'GET',
-                        data: { '_token': '{{ csrf_token() }}',numparte: numeroParte },
+                        data: {
+                            '_token': '{{ csrf_token() }}',
+                            numparte: numeroParte
+                        },
                         // headers: {
                         //      // Agrega esto si estás usando CSRF protection en Laravel
                         // },
                         success: function(data) {
                             if (data.relacionEncontrada) {
-                                iconContainer.css("color", "green"); // Cambiar el color del icono a verde
+                                iconContainer.css("color",
+                                "green"); // Cambiar el color del icono a verde
                             } else {
-                                iconContainer.css("color", "red"); // Cambiar el color del icono a rojo
+                                iconContainer.css("color",
+                                "red"); // Cambiar el color del icono a rojo
                             }
                         },
                         error: function(error) {

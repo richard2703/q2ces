@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class mantenimientos extends Model {
+class mantenimientos extends Model
+{
     use HasFactory;
     protected $table = 'mantenimientos';
     public $timestamps = true;
@@ -24,6 +25,6 @@ class mantenimientos extends Model {
         'kilometraje',
         'subtotal',
         'iva',
-        'costo' ,
+        'costo',
     ];
 }

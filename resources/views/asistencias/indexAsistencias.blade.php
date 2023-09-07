@@ -3,6 +3,10 @@
 $objCalendar = new Calendario();
 $mesAnterior = $objCalendar->getMesAnterior($intMes, $intAnio);
 $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
+
+//*** el mes seleccionado
+$mesSeleccionado =  $intMes;
+$anioSeleccionado = $intAnio;
 ?>
 @section('content')
     <div class="content">
@@ -58,15 +62,14 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                     @endif
 
 
-
                                     <div class="row d-flex pb-4 divBorder">
 
-                                        <div class="col-12 my-4 pb-4 d-flex align-items-center divBorder">
+                                        <div class="col-12 my-4 pb-4 d-md-flex align-items-center divBorder">
                                             <div class="col-8">
                                                 <a href="{{ route('asistencia.index') }}"
                                                     class="combustibleLitros fw-semibold text-end"
-                                                    title="Ir al mes en curso"><b>Hoy Es
-                                                        {{ ucwords(trans($objCalendar->getFechaFormateada(date_create(date('Y-m-d'))))) }}</b>
+                                                    title="Ir al mes en curso"><b>Asistencia Mensual De
+                                                        {{ $objCalendar->getNameMonth($intMes) }} Del {{ $intAnio}}</br>
                                                 </a>
                                             </div>
                                             <div class="col-4 text-end">
@@ -74,35 +77,33 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                                     class="botonSinFondo mx-2"title="Clic para marcar la asistencia en otro día."
                                                     data-bs-toggle="modal" data-bs-target="#modal-cliente">
                                                     <img style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}">
-                                                    <p class="botonTitulos mt-2">Otro Día</p>
+                                                    <p class="botonTitulos mt-2">Otro Mes</p>
                                                 </button>
                                             </div>
+
                                         </div>
+                                        <div class="row">
+                                            <div class="col-4 text-left">
+                                                @can('asistencia_cortesemanal')
+                                                    <a href="{{ route('asistencia.corteSemanal') }}">
+                                                        <button type="button" class="btn botonGral">Corte Semanal</button>
+                                                    </a>
+                                                @endcan
+                                            </div>
 
+                                            <div class="col-8 text-end">
+                                                @can('asistencia_horasextra')
+                                                    <a href="{{ route('asistencia.horasExtra') }}">
+                                                        <button type="button" class="btn botonGral">Horas Extra</button>
+                                                    </a>
+                                                @endcan
+                                                @can('asistencia_create')
+                                                    <a href="{{ route('asistencia.create') }}">
+                                                        <button type="button" class="btn botonGral">Asistencia</button>
+                                                    </a>
+                                                @endcan
 
-
-
-
-                                        <div class="col-4 text-left">
-                                            @can('asistencia_cortesemanal')
-                                                <a href="{{ route('asistencia.corteSemanal') }}">
-                                                    <button type="button" class="btn botonGral">Corte Semanal</button>
-                                                </a>
-                                            @endcan
-                                        </div>
-
-                                        <div class="col-8 text-end">
-                                            @can('asistencia_horasextra')
-                                                <a href="{{ route('asistencia.horasExtra') }}">
-                                                    <button type="button" class="btn botonGral">Horas Extra</button>
-                                                </a>
-                                            @endcan
-                                            @can('asistencia_create')
-                                                <a href="{{ route('asistencia.create') }}">
-                                                    <button type="button" class="btn botonGral">Asistencia</button>
-                                                </a>
-                                            @endcan
-
+                                            </div>
 
                                         </div>
                                     </div>
@@ -110,6 +111,7 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                         <table class="table">
                                             <thead class="labelTitulo text-center">
                                                 <th class="labelTitulo">Código</th>
+                                                <th class="labelTitulo">Puesto</th>
                                                 <th class="labelTitulo">Nombre</th>
                                                 <th class="labelTitulo" style="width:140px !important">Asistencia</th>
                                                 <th class="labelTitulo">Faltas</th>
@@ -122,8 +124,9 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                                 @forelse ($personal as $item)
                                                     <tr>
                                                         <td style="color: {{ $item->estatusColor }};">
-                                                            <strong>{{ $item->numNomina }}</strong>
+                                                            <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                         </td>
+                                                        <td>{{ $item->puesto }}</td>
                                                         <td class="text-left">{{ $item->apellidoP }}
                                                             {{ $item->apellidoM }}, {{ $item->nombres }}</td>
                                                         <td>{{ $item->asistencias }}</td>
@@ -148,9 +151,25 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
                                                         </td>
                                                     </tr>
                                                 @empty
-                                                    <tr>
-                                                        <td colspan="2">Sin registros.</td>
-                                                    </tr>
+                                                    @forelse ($listaAsistencia as $item)
+                                                        <tr>
+                                                            <td style="color: {{ $item->estatusColor }};">
+                                                                <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
+                                                            </td>
+                                                            <td>{{ $item->puesto }}</td>
+                                                            <td class="text-left">{{ $item->apellidoP }}
+                                                                {{ $item->apellidoM }}, {{ $item->nombres }}</td>
+                                                            <td>---</td>
+                                                            <td>---</td>
+                                                            <td>---</td>
+                                                            <td>---</td>
+                                                            <td class="td-actions">---</td>
+                                                        </tr>
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="2">Sin registros.</td>
+                                                        </tr>
+                                                    @endforelse
                                                 @endforelse
 
                                             </tbody>
@@ -178,24 +197,24 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
             <div class="modal-content">
                 <div class="col-12">
                     <div class="card ">
-                        <form
-                            action="{{ route('asistencia.reloadAsistencia', [$mesAnterior['year'], $mesAnterior['month']]) }}">
+                        <form action="{{ url('asistencia/otromes/') }}" method="post">
+                            @csrf
                             <div class="card-header bacTituloPrincipal ">
                                 <div class="nav-tabs-navigation">
                                     <div class="nav-tabs-wrapper">
                                         <span class="nav-tabs-title">
-                                            <h2 class="titulos">Seleccionar Otro Día</h2>
+                                            <h2 class="titulos">Seleccionar Otro Mes</h2>
                                         </span>
                                     </div>
                                 </div>
                             </div>
                             <div class="row  card-body">
                                 <div class="row card-body" style=" text-align: center;">
-                                    <input type="hidden" name="productoid" id="productoid" value="">
 
                                     <div class="col-12 col-lg-6">
                                         <input type="month" class="inputCaja" id="fechaAsistencia"
-                                            name="fechaAsistencia" value=""></br>
+                                            placeholder="Ej.: 2023-01" name="fechaAsistencia"  pattern="[0-9]{4}-[0-9]{2}"
+                                            value="{{ $anioSeleccionado . '-' . $mesSeleccionado }}"></br>
                                     </div>
                                 </div>
                             </div>
@@ -210,12 +229,14 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
         </div>
     </div>
     <style>
-    table{
+        table {
             table-layout: fixed;
-            }
-            th, td {
-                width: 100px;
-                word-wrap: break-word;
+        }
+
+        th,
+        td {
+            width: 100px;
+            word-wrap: break-word;
         }
     </style>
 

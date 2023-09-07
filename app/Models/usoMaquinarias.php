@@ -14,6 +14,6 @@ class usoMaquinarias extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'maquinariaId', 'anterior', 'uso', 'comentario', 'foto'
+        'maquinariaId', 'anterior', 'uso', 'comentario', 'foto', 'restantes', 'mantenimiento', 'proviene'
     ];
 }
