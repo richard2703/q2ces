@@ -8,7 +8,7 @@ $diaSeleccionado = $objCalendar->getNameDay(date_format($fechaSeleccionada, 'N')
 $mesSeleccionado = $objCalendar->getNameMonth(date_format($fechaSeleccionada, 'm'));
 $semanaSeleccionada = date_format($fechaSeleccionada, 'W');
 
-$semanaAnterior = date('Y-m-d', strtotime($strFechaInioPeriodo . '- 6 days'));
+$semanaAnterior = date('Y-m-d', strtotime($strFechaInicioPeriodo . '- 6 days'));
 // dd( $intAnio, $intMes, $intDia );
 $diaAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'd');
 $mesAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'm');
@@ -68,7 +68,7 @@ if ($asistencias->isEmpty() == true) {
                                             <!-- Para el mes en curso -->
                                         </span>
                                         &nbsp;&nbsp;&nbsp; Semana {{ $semanaSeleccionada }} Del
-                                        {{ $strFechaInioPeriodo }} Al {{ $strFechaFinPeriodo }}
+                                        {{ $strFechaInicioPeriodo }} Al {{ $strFechaFinPeriodo }}
                                         &nbsp;&nbsp;&nbsp;
                                         <!-- Un dia adelante del cargado -->
                                         <span>
@@ -99,7 +99,7 @@ if ($asistencias->isEmpty() == true) {
                                             <a href="{{ route('asistencia.show', $personal->id) }}"
                                                 class="display-8 mb-8 text-center" title="Ir al periodo en curso"><b>Hoy
                                                     Es
-                                                    {{ ucwords(trans($objCalendar->getFechaFormateada(date_create(date('Y-m-d'))))) }}</b></a>
+                                                    {{ ucwords(trans($objCalendar->getFechaFormateada(date_create(date('Y-m-d')), true))) }}</b></a>
                                         </span>
                                         <h4 class="card-title">
                                             {{ $personal->nombres }} {{ $personal->apellidoP }}
@@ -143,6 +143,10 @@ if ($asistencias->isEmpty() == true) {
                                                     </th>
                                                     <th class="labelTitulo" style="width:150px !important">Vacaciones</th>
                                                     <th class="labelTitulo" style="width:150px !important">Descansos</th>
+                                                    <th class="labelTitulo" style="width:140px !important">Entrada
+                                                    </th>
+                                                    <th class="labelTitulo" style="width:140px !important">Salida
+                                                    </th>
                                                     <th class="labelTitulo" style="width:170px !important">Observaciones
                                                     </th>
                                                 </thead>
@@ -173,35 +177,52 @@ if ($asistencias->isEmpty() == true) {
                                                                     @endforeach
                                                                 </select>
                                                             </td>
-                                                            <td><input type="radio" name="{{ $item->id }}[]"
+                                                            <td>
+                                                                <input type="radio" name="{{ $item->id }}[]"
                                                                     id="Asistencia_{{ $item->id }}" value="1"
                                                                     {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                     {{ $item->asistenciaId == 1 ? ' checked' : '' }}></td>
-                                                            <td><input type="radio" name="{{ $item->id }}[]"
+                                                            <td>
+                                                                <input type="radio" name="{{ $item->id }}[]"
                                                                     id="Asistencia_{{ $item->id }}" value="2"
                                                                     {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                     {{ $item->asistenciaId == 2 ? ' checked' : '' }}>
                                                             </td>
-                                                            <td><input type="radio" name="{{ $item->id }}[]"
+                                                            <td>
+                                                                <input type="radio" name="{{ $item->id }}[]"
                                                                     {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                     id="Asistencia_{{ $item->id }}" value="3"
                                                                     {{ $item->asistenciaId == 3 ? ' checked' : '' }}>
                                                             </td>
-                                                            <td><input type="radio" name="{{ $item->id }}[]"
+                                                            <td>
+                                                                <input type="radio" name="{{ $item->id }}[]"
                                                                     {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                     id="Asistencia_{{ $item->id }}" value="4"
                                                                     {{ $item->asistenciaId == 4 ? ' checked' : '' }}>
                                                             </td>
-                                                            <td><input type="radio" name="{{ $item->id }}[]"
+                                                            <td>
+                                                                <input type="radio" name="{{ $item->id }}[]"
                                                                     {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                     id="Asistencia_{{ $item->id }}" value="5"
                                                                     {{ $item->asistenciaId == 5 ? ' checked' : '' }}>
                                                             </td>
-                                                            <td><input type="text" class="inputCaja text-left"
+                                                            <td>
+                                                                <input type="time" class="inputCaja "
+                                                                    placeholder="Entrada" id="hEntrada" name="hEntrada[]"
+                                                                    value="{{ ($item->hEntrada?\Carbon\Carbon::parse($item->hEntrada)->format('H:i'):"") }}">
+                                                            </td>
+                                                            <td>
+                                                                <input type="time" class="inputCaja "
+                                                                    placeholder="Salida" id="hSalida" name="hSalida[]"
+                                                                    value="{{ ($item->hSalida?\Carbon\Carbon::parse($item->hSalida)->format('H:i') : "")}}">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="inputCaja text-left"
                                                                     name="comentario[]" id="comentario"
                                                                     {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                     value="{{ $item->comentario }}" maxlength="500"
-                                                                    placeholder="Especifique..."></td>
+                                                                    placeholder="Especifique...">
+                                                            </td>
                                                         </tr>
                                                     @empty
                                                         <tr>

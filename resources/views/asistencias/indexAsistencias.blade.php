@@ -62,16 +62,14 @@ $anioSeleccionado = $intAnio;
                                     @endif
 
 
-
                                     <div class="row d-flex pb-4 divBorder">
 
                                         <div class="col-12 my-4 pb-4 d-md-flex align-items-center divBorder">
                                             <div class="col-8">
                                                 <a href="{{ route('asistencia.index') }}"
                                                     class="combustibleLitros fw-semibold text-end"
-                                                    title="Ir al mes en curso"><b>Asistencia Mensual
-                                                        {{ $mesSeleccionado }}<br>Hoy Es
-                                                        {{ ucwords(trans($objCalendar->getFechaFormateada(date_create(date('Y-m-d')), true))) }}</br>
+                                                    title="Ir al mes en curso"><b>Asistencia Mensual De
+                                                        {{ $objCalendar->getNameMonth($intMes) }} Del {{ $intAnio}}</br>
                                                 </a>
                                             </div>
                                             <div class="col-4 text-end">
@@ -113,6 +111,7 @@ $anioSeleccionado = $intAnio;
                                         <table class="table">
                                             <thead class="labelTitulo text-center">
                                                 <th class="labelTitulo">Código</th>
+                                                <th class="labelTitulo">Puesto</th>
                                                 <th class="labelTitulo">Nombre</th>
                                                 <th class="labelTitulo" style="width:140px !important">Asistencia</th>
                                                 <th class="labelTitulo">Faltas</th>
@@ -127,6 +126,7 @@ $anioSeleccionado = $intAnio;
                                                         <td style="color: {{ $item->estatusColor }};">
                                                             <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                         </td>
+                                                        <td>{{ $item->puesto }}</td>
                                                         <td class="text-left">{{ $item->apellidoP }}
                                                             {{ $item->apellidoM }}, {{ $item->nombres }}</td>
                                                         <td>{{ $item->asistencias }}</td>
@@ -156,6 +156,7 @@ $anioSeleccionado = $intAnio;
                                                             <td style="color: {{ $item->estatusColor }};">
                                                                 <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                             </td>
+                                                            <td>{{ $item->puesto }}</td>
                                                             <td class="text-left">{{ $item->apellidoP }}
                                                                 {{ $item->apellidoM }}, {{ $item->nombres }}</td>
                                                             <td>---</td>
@@ -209,12 +210,11 @@ $anioSeleccionado = $intAnio;
                             </div>
                             <div class="row  card-body">
                                 <div class="row card-body" style=" text-align: center;">
-                                    <input type="hidden" name="productoid" id="productoid" value="">
 
                                     <div class="col-12 col-lg-6">
                                         <input type="month" class="inputCaja" id="fechaAsistencia"
-                                            placeholder="Ej.: 09-2023" name="fechaAsistencia"
-                                            value="{{ $mesSeleccionado . '-' . $anioSeleccionado }}"></br>
+                                            placeholder="Ej.: 2023-01" name="fechaAsistencia"  pattern="[0-9]{4}-[0-9]{2}"
+                                            value="{{ $anioSeleccionado . '-' . $mesSeleccionado }}"></br>
                                     </div>
                                 </div>
                             </div>

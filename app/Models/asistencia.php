@@ -5,15 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class asistencia extends Model
-{
+class asistencia extends Model {
     use HasFactory;
-    protected $table = "asistencia";
+    protected $table = 'asistencia';
 
     public $timestamps = true;
 
     protected $fillable = [
-        'personalId', 'asistenciaId', 'fecha', 'horasExtra',  'tipoHoraExtraId','comentario','esAsistencia'
+        'personalId',
+        'asistenciaId',
+        'fecha',
+        'horasExtra',
+        'tipoHoraExtraId',
+        'comentario',
+        'esAsistencia',
+        'hEntrada' ,
+        'hSalida',
     ];
 
 }

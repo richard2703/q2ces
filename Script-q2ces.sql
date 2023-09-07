@@ -1461,6 +1461,8 @@ create table asistencia(
     horasExtra int NULL,
     tipoHoraExtraId bigint(20) unsigned null,
     comentario text NULL,
+    hEntrada time null,
+    hSalida time null,
     created_at datetime NULL,
     updated_at datetime NULL,
     primary key (id),

@@ -8,7 +8,7 @@ $diaSeleccionado = $objCalendar->getNameDay(date_format($fechaSeleccionada, 'N')
 $mesSeleccionado = $objCalendar->getNameMonth(date_format($fechaSeleccionada, 'm'));
 $semanaSeleccionada = date_format($fechaSeleccionada, 'W');
 
-$semanaAnterior = date('Y-m-d', strtotime($strFechaInioPeriodo . '- 6 days'));
+$semanaAnterior = date('Y-m-d', strtotime($strFechaInicioPeriodo . '- 6 days'));
 // dd( $intAnio, $intMes, $intDia );
 $diaAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'd');
 $mesAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'm');
@@ -23,7 +23,7 @@ $dtTrabajar = date('Ymd', strtotime("$intAnio-$intMes-$intDia"));
 //*** Arreglo para los dias del periodo **/
 $vctDiasSemana = [];
 for ($i = 0; $i < 7; $i++) {
-    $vctDiasSemana[] = date_create(date('Y-m-d', strtotime($strFechaInioPeriodo . '+' . $i . ' days')));
+    $vctDiasSemana[] = date_create(date('Y-m-d', strtotime($strFechaInicioPeriodo . '+' . $i . ' days')));
 }
 
 // dd($vctDiasSemana);
@@ -87,7 +87,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             <!-- Para el mes en curso -->
                                         </span>
                                         &nbsp;&nbsp;&nbsp; Semana {{ $semanaSeleccionada }} Del
-                                        {{ $strFechaInioPeriodo }} Al {{ $strFechaFinPeriodo }}
+                                        {{ $strFechaInicioPeriodo }} Al {{ $strFechaFinPeriodo }}
                                         &nbsp;&nbsp;&nbsp;
                                         <!-- Un dia adelante del cargado -->
                                         <span>
