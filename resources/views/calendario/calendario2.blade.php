@@ -36,9 +36,9 @@ $cadena_fecha_actual = $fecha_actual->format("d/m/Y");
                                     <!--espacio para iconos-->        
                                     <div class=" col-12 d-flex mt-5">
                                         
-                                            <div class""><img src="/img/calendario/tarea.svg" alt="Tarea" title="Tarea" width="15px" class="botonIconoPrincipal"> <span>Tarea</span></div>
-                                            <div class="mx-5"><img src="/img/calendario/solicitud.svg" alt="Solicitud" title="Solicitud" width="15px" class="botonIconoPrincipal"> <span>Solicitud</span></div>
-                                            <div class=""><img src="/img/calendario/mantenimiento.svg" alt="Mantenimiento" title="Mantenimiento" width="15px" class="botonIconoPrincipal"> <span>Mantenimiento</span></div>
+                                            <div class""><img src="/img/calendario/tarea.svg" alt="Tarea" title="Tarea" width="20px" class="botonIconoPrincipal"> <span>Tarea</span></div>
+                                            <div class="mx-5"><img src="/img/calendario/solicitud.svg" alt="Solicitud" title="Solicitud" width="20px" class="botonIconoPrincipal"> <span>Solicitud</span></div>
+                                            <div class=""><img src="/img/calendario/mantenimiento.svg" alt="Mantenimiento" title="Mantenimiento" width="20px" class="botonIconoPrincipal"> <span>Mantenimiento</span></div>
                                         
                                                 <!-- Un mes atras del cargado -->
                                                 

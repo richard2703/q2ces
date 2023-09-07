@@ -46,7 +46,12 @@
                             <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">SOLICITO: -- </span> {{ $descarga->user_nombre }}</div>
                             <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">LITROS: -- </span>{{ $descarga->litros }}</div>
                             <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">KM: -- </span>{{ $descarga->km }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">MAQUINARIA: -- </span>{{ $descarga->maquinaria_nombre }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">GRASA: -- </span> {{ $descarga->Grasa }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">HIDRAULICO: -- </span> {{ $descarga->hidraulico }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">ANTICONGELANTE: -- </span> {{ $descarga->anticongelante }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">MOTOR: -- </span>{{ $descarga->motor }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">OTRO: -- </span>{{ $descarga->otro }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">DIRECCION: -- </span>{{ $descarga->direccion }}</div>
                             <p class="headerTicket text-center mt-2">INFORMACIÓN EQUIPO DESPACHO</p>
                             <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">HORA LLEGADA: -- </span>{{ $descarga->horas }}</div>
                             <p class="pt-5" style="margin-top: 20px; text-align: center;">

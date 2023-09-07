@@ -13,6 +13,6 @@ class tipoMantenimiento extends Model
     public $timestamps = false;
 
     protected $fillable = [
-          'nombre', 'comentario'
+        'nombre', 'comentario', 'color'
     ];
 }
