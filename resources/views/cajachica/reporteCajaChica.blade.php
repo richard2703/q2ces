@@ -70,9 +70,12 @@
                                         </div>  --}}
                                         <div class="col-12 text-end">
                                             @can('cajachica_create')
-                                                <a href="#">
-                                                    <button type="button" class="btn botonGral">Descargar Excel</button>
-                                                </a>
+                                                <form action="{{ route('cajaChica.reporteExcel') }}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="inicio" value="{{ $inicio }}">
+                                                    <input type="hidden" name="fin" value="{{ $fin }}">
+                                                    <button type="submit" class="btn botonGral">Descargar Excel</button>
+                                                </form>
                                             @endcan
                                         </div>
                                         <div class="row">

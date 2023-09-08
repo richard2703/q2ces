@@ -380,6 +380,8 @@ Route::group(['middleware' => 'auth'], function () {
     // Caja Chica
     Route::resource('cajaChica', App\Http\Controllers\cajaChicaController::class);
     Route::post('cajaChica/reporte', [App\Http\Controllers\cajaChicaController::class, 'reporte'])->name('cajaChica.reporte');
+    Route::post('cajaChica/reporte/exportar', [App\Http\Controllers\cajaChicaController::class, 'reporteExcel'])->name('cajaChica.reporteExcel');
+
 
     // Conceptos
     Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
