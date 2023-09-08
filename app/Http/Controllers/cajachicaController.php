@@ -21,7 +21,7 @@ use App\Models\comprobante;
 use Maatwebsite\Excel\Excel as ExcelExcel;
 use Maatwebsite\Excel\Facades\Excel;
 
-class cajachicaController extends Controller
+class cajaChicaController extends Controller
 {
     /**
      * Display a listing of the resource.
