@@ -137,21 +137,6 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             </div>
                                         </div>
 
-
-
-                                        <!--<span>
-                                                                                                                                                                                                                                                            <a href="{{ route('asistencia.corteSemanal') }}"
-                                                                                                                                                                                                                                                                class="display-8 mb-8 text-center" title="Ir al periodo en curso"><b>Hoy es
-                                                                                                                                                                                                                                                                    {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
-                                                                                                                                                                                                                                                        </span>-->
-                                        {{-- <h4 class="card-title">
-                                            {{ ucwords(trans($personal->nombres)) }} {{ ucwords(trans($personal->apellidoP)) }}
-                                            {{ ucwords(trans($personal->apellidoM)) }}</h4> --}}
-
-
-
-
-
                                     </div>
 
                                     <form class="row alertaGuardar" action="{{ route('asistencia.update', 1) }}"
@@ -196,6 +181,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                         $intTotalHorasExtras = 0;
                                                         $intTotalCostoHorasExtras = 0;
                                                         $intDiasAsistidos = 0;
+                                                        $intTotalMinutosExtras = 0;
                                                         $intDiasPagados = count($item->pagos);
                                                         ?>
                                                         <tr>
@@ -220,9 +206,15 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
 
                                                                         if($intDiaSemana == $intDiaPago){
                                                                             $blnExiste = true;
-                                                                            $intTotalHorasExtras += $item->pagos[$iDay]->horasExtra;
-                                                                            $intTotalCostoHorasExtras += ( $item->pagos[$iDay]->horasExtra * $item->pagos[$iDay]->horaExtraCosto);
+                                                                            $intTotalHorasExtras += (int) ($item->pagos[$iDay]->horasExtra/60); //*** obtenemos el numero cerrado
+                                                                            $intTotalMinutosExtras += (int) $item->pagos[$iDay]->horasExtra;    //*** el total de minutos extras
+                                                                            $intTotalCostoHorasExtras +=  ( (int)($item->pagos[$iDay]->horasExtra/60) * $item->pagos[$iDay]->horaExtraCosto);
                                                                             $intDiasAsistidos += $item->pagos[$iDay]->esAsistencia;
+
+                                                                            $intHoras = (int) ($item->pagos[$iDay]->horasExtra / 60);
+                                                                            $intMinutos =$item->pagos[$iDay]->horasExtra % 60;
+                                                                            // dd($intTotalHorasExtras, $intTotalMinutosExtras, $intTotalCostoHorasExtras, $intDiasAsistidos);
+
                                                                             break;
                                                                         }
 
@@ -234,9 +226,11 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                                 style="color: {{ $item->pagos[$iDay]->tipoAsistenciaColor }};">
                                                                 <strong> {{ $item->pagos[$iDay]->esAsistencia }}</strong>
                                                             </td>
-                                                            <td title="Horas Extra"
+                                                            <td title="Tiempo Extra"
                                                                 style="color: {{ $item->pagos[$iDay]->horaExtraColor }}; background: whitesmoke;">
-                                                                <strong> {{ $item->pagos[$iDay]->horasExtra }}</strong>
+                                                                <strong>
+                                                                    {{ str_pad($intHoras, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutos, 2, '0', STR_PAD_LEFT) }}
+                                                                </strong>
                                                             </td>
                                                             <?php
                                                                     }else{
@@ -245,7 +239,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                             <td style="background: whitesmoke;"> --- </td>
                                                             <?php
                                                                     }
-                                                                }
+                                                                } // Fin del bloque de los dias de la semana
                                                             ?>
                                                             <td>{{ $intDiasAsistidos }}</td>
                                                             <td class="text-right">$ {{ number_format($item->sueldo, 2) }}
@@ -276,7 +270,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                             <tr>
                                                                 <td>{{ ucwords(trans($item->puesto)) }}</td>
                                                                 <td style="color: {{ $item->estatusColor }};">
-                                                                    <strong>{{ str_pad( $item->numNomina, 4, '0', STR_PAD_LEFT ) }}</strong>
+                                                                    <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                                 </td>
                                                                 <td class="text-left">{{ $item->apellidoP }}
                                                                     {{ $item->apellidoM }}, {{ $item->nombres }}</td>
@@ -348,7 +342,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
 
         th,
         td {
-            width: 100px;
+            width: 150px;
             word-wrap: break-word;
         }
     </style>

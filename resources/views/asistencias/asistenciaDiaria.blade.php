@@ -21,7 +21,7 @@ $dtTrabajar = date('Ymd', strtotime("$intAnio-$intMes-$intDia"));
 
 $blnEsDiaActual = $dtTrabajar == $dtToday ? true : false;
 //*** bloqueamos fecha mayor al dia actual
-$blnBloquearRegistro = ( $blnEsDiaActual == true  ? false : true );
+$blnBloquearRegistro = $blnEsDiaActual == true ? false : true;
 
 // dd($asistencias, $diaAnterior, $diaSiguiente, $fechaSeleccionada, $diaSeleccionado, $dtToday, $dtTrabajar);
 
@@ -161,11 +161,13 @@ $blnBloquearRegistro = ( $blnEsDiaActual == true  ? false : true );
                                                                 <tr>
                                                                     <td class=""
                                                                         style="color: {{ $item->estatusColor }};">
-                                                                        <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>???
+                                                                        <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                                         <input type="hidden" name="asistenciaId[]"
                                                                             value="{{ $item->asistenciaId }}">
                                                                         <input type="hidden" name="personalId[]"
                                                                             value="{{ $item->id }}">
+                                                                        <input type="hidden" name="horarioSalida[]"
+                                                                            value="{{ $item->horarioSalida }}">
                                                                     </td>
                                                                     <td>{{ $item->puesto }}</td>
                                                                     <td class="text-left">
@@ -173,7 +175,8 @@ $blnBloquearRegistro = ( $blnEsDiaActual == true  ? false : true );
                                                                             title="Fecha de Ingreso {{ \Carbon\Carbon::parse($item->fechaIngreso)->format('d/m/Y') }}">
                                                                             {{ $item->getFullLastNameAttribute() }}</a>
                                                                     </td>
-                                                                    <td><input type="radio" name="{{ $item->id }}[]"
+                                                                    <td><input type="radio"
+                                                                            name="{{ $item->id }}[]"
                                                                             id="Asistencia_{{ $item->id }}"
                                                                             value="1"
                                                                             {{ $intDiaSeleccionado != 7 ? 'checked' : '' }}>
@@ -229,6 +232,8 @@ $blnBloquearRegistro = ( $blnEsDiaActual == true  ? false : true );
                                                                             value="{{ $item->id }}">
                                                                         <input type="hidden" name="recordId[]"
                                                                             value="{{ $item->recordId }}">
+                                                                        <input type="hidden" name="horarioSalida[]"
+                                                                            value="{{ $item->horarioSalida }}">
                                                                     </td>
                                                                     <td>{{ $item->puesto }}</td>
                                                                     <td class="text-left">
@@ -275,13 +280,13 @@ $blnBloquearRegistro = ( $blnEsDiaActual == true  ? false : true );
                                                                         <input type="time" class="inputCaja "
                                                                             placeholder="Entrada" id=""
                                                                             name="hEntrada[]"
-                                                                            value="{{ $item->hEntrada }}">
+                                                                            value="{{ $item->hEntrada ? \Carbon\Carbon::parse($item->hEntrada)->format('H:i') : '' }}">
                                                                     </td>
                                                                     <td>
                                                                         <input type="time" class="inputCaja "
                                                                             placeholder="Salida" id=""
                                                                             name="hSalida[]"
-                                                                            value="{{ $item->hSalida }}">
+                                                                            value="{{ $item->hSalida ? \Carbon\Carbon::parse($item->hSalida)->format('H:i') : '' }}">
                                                                     </td>
                                                                 </tr>
                                                             @empty
