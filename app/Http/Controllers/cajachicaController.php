@@ -74,7 +74,6 @@ class cajaChicaController extends Controller
         } else {
             $lunes = new Carbon('last monday');
         }
-
         if (Carbon::parse(now())->locale('es')->isoFormat('dddd') == 'domingo') {
             $domingo = now();
             // dd(Carbon::parse($pLunes)->locale('es')->isoFormat('dddd'));
@@ -94,11 +93,11 @@ class cajaChicaController extends Controller
             ->get()
             ->sum('cantidad');
 
-        $domingo = new Carbon('last sunday');
+        $Adomingo = new Carbon('last sunday');
 
-        $lunes->subDay(7);
+        $Alunes = $lunes->clone()->subDay(7);
 
-        $semana = cajaChica::whereBetween('dia', [$lunes, $domingo])
+        $semana = cajaChica::whereBetween('dia', [$Alunes, $Adomingo])
             ->orderby('dia', 'desc')
             ->orderby('id', 'desc')->first();
         if ($semana == null) {
@@ -106,6 +105,8 @@ class cajaChicaController extends Controller
         } else {
             $lastweek = $semana->total;
         }
+        // dd($lunes, $domingo);
+
         return view('cajaChica.indexCajaChica', compact('registros', 'lastTotal', 'ingreso', 'egreso', 'lastweek', 'lunes', 'domingo'));
     }
 
