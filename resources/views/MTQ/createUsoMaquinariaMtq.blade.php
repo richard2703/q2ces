@@ -1,10 +1,23 @@
 @extends('layouts.main', ['activePage' => 'mtq', 'titlePage' => __('MTQ')])
 @section('content')
     <div class="content">
+        @if ($errors->any())
+            <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+            <div class="alert alert-danger">
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
+
+
                         <div class="card-header bacTituloPrincipal">
                             <h4 class="card-title"> Registro de Uso MTQ</h4>
                         </div>
@@ -22,14 +35,14 @@
                             @endif
                             <div class="row">
                                 <div class="col-4 text-left">
-                                    {{--  <a href="{{ route('uso.index') }}">
+                                     <a href="{{ route('uso.index') }}">
                                         <button class="btn regresar">
                                             <span class="material-icons">
                                                 reply
                                             </span>
                                             Regresar
                                         </button>
-                                    </a>  --}}
+                                    </a>
                                 </div>
                                 <div class="col-8 align-end">
                                     @can('maquinaria_mtq_create')

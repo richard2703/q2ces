@@ -69,7 +69,7 @@
                                                 <label class="labelTitulo">Concepto: <span>*</span></label></br>
                                                 <select id="concepto" name="concepto" class="form-select" required
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option selected value="">Seleccione</option>
                                                     @forelse ($conceptos as $concepto)
                                                         <option value="{{ $concepto->id }}">{{ $concepto->codigo }} -
                                                             {{ $concepto->nombre }}
@@ -77,14 +77,13 @@
                                                     @empty
                                                     @endforelse
                                                 </select>
-                                                </select>
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Personal: <span>*</span></label></br>
                                                 <select id="personal" name="personal" class="form-select" required
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option selected value="">Seleccione</option>
                                                     @forelse ($personal as $persona)
                                                         <option value="{{ $persona->id }}">{{ $persona->nombres }}
                                                             {{ $persona->apellidoP }}
@@ -98,7 +97,7 @@
                                                 <label class="labelTitulo">Comprobante: <span>*</span></label></br>
                                                 <select id="comprobanteId" name="comprobanteId" class="form-select" required
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option selected value="">Seleccione</option>
                                                     @foreach ($vctComprobantes as $item)
                                                     <option value="{{ $item->id }}">
                                                         {{ $item->nombre }}
@@ -108,9 +107,11 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Número De Comprobante:</label></br>
-                                                <input type="text" class="inputCaja" id="ncomprobante"
-                                                    name="ncomprobante" value="{{ old('ncomprobante') }}">
+                                                <label class="labelTitulo">Número De Comprobante: <span>*</span></label></br>
+                                                    <input type="number" class="inputCaja text-right" id="ncomprobante" required
+                                                    name="ncomprobante" maxlength="100000" step="1" min="1"
+                                                    pattern="^\d*(\.\d{0,2})?$" max="99999" placeholder="ej. 100"
+                                                    value="{{ old('ncomprobante') }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
@@ -129,7 +130,7 @@
                                                 <label class="labelTitulo">Cliente:</label></br>
                                                 <select id="cliente" name="cliente" class="form-select"
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option selected value="">Seleccione</option>
                                                     @foreach ($vctClientes as $item)
                                                     <option value="{{ $item->id }}">
                                                         {{ $item->nombre }}
@@ -142,7 +143,7 @@
                                                 <label class="labelTitulo">Equipo: <span>*</span></label></br>
                                                 <select id="equipo" name="equipo" class="form-select" required
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option selected value="">Seleccione</option>
                                                     @forelse ($maquinaria as $maquina)
                                                         <option value="{{ $maquina->id }}">{{ $maquina->identificador }}
                                                             - {{ $maquina->nombre }}
@@ -162,7 +163,7 @@
                                                 <label class="labelTitulo">Movimiento: <span>*</span></label></br>
                                                 <select id="tipo" name="tipo" class="form-select" required
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option selected value="">Seleccione</option>
                                                     <option value="1">
                                                         Ingreso </option>
                                                     <option value="2">

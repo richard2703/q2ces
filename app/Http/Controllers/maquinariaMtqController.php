@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\maqimagen;
 use App\Models\usoMaquinarias;
 use App\Models\marca;
+use App\Models\serviciosMtq;
 
 class maquinariaMtqController extends Controller
 {
@@ -33,8 +34,10 @@ class maquinariaMtqController extends Controller
             ->paginate(15);
 
         $marcas = marca::all();
+        $servicios = serviciosMtq::all();
+
         // dd( 'test' );
-        return view('MTQ.indexMaquinariaMtq', compact('maquinaria', 'marcas'));
+        return view('MTQ.indexMaquinariaMtq', compact('maquinaria', 'marcas', 'servicios'));
     }
 
     /**

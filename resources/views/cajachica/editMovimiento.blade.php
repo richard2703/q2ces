@@ -22,7 +22,7 @@
                                                 Regresar
                                             </button>
                                         </a>
-                                    {{-- @can('user_create') --}}
+                                        {{-- @can('user_create') --}}
                                     </div>
                                 </div>
                                 <form class="alertaGuardar" action="{{ route('cajaChica.update', $cajaChica->id) }}"
@@ -53,7 +53,7 @@
                                                 <label class="labelTitulo">Concepto:</label></br>
                                                 <select id="concepto" name="concepto" class="form-select" required
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option value="" selected>Seleccione</option>
                                                     @forelse ($conceptos as $concepto)
                                                         <option value="{{ $concepto->id }}"
                                                             {{ $cajaChica->concepto == $concepto->id ? 'selected' : '' }}>
@@ -70,7 +70,7 @@
                                                 <label class="labelTitulo">Personal:</label></br>
                                                 <select id="personal" name="personal" class="form-select"
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option value=""selected>Seleccione</option>
                                                     @forelse ($personal as $persona)
                                                         <option value="{{ $persona->id }}"
                                                             {{ $cajaChica->personal == $persona->id ? 'selected' : '' }}>
@@ -86,26 +86,30 @@
                                                 <label class="labelTitulo">Comprobante:</label></br>
                                                 <select id="comprobanteId" name="comprobanteId" class="form-select"
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option value="" selected>Seleccione</option>
                                                     @foreach ($vctComprobantes as $item)
-                                                    <option value="{{ $item->id }}" {{ $cajaChica->comprobanteId == $item->id ? 'selected' : '' }}>
-                                                        {{ $item->nombre }}
-                                                    </option>
-                                                @endforeach
+                                                        <option value="{{ $item->id }}"
+                                                            {{ $cajaChica->comprobanteId == $item->id ? 'selected' : '' }}>
+                                                            {{ $item->nombre }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Número De Comprobante:</label></br>
-                                                <input type="text" class="inputCaja" id="ncomprobante"
-                                                    name="ncomprobante" value={{ $cajaChica->ncomprobante }}>
+                                                <label class="labelTitulo">Número De Comprobante:
+                                                    <span>*</span></label></br>
+                                                <input type="number" class="inputCaja text-right" id="ncomprobante"
+                                                    required name="ncomprobante" maxlength="100000" step="1"
+                                                    min="1" pattern="^\d*(\.\d{0,2})?$" max="99999"
+                                                    placeholder="ej. 100" value="{{ $cajaChica->ncomprobante }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Obra:</label></br>
                                                 <select id="obra" name="obra" class="form-select"
                                                     aria-label="Default select example">
-                                                    <option selected value="">Seleccione</option>
+                                                    <option value="" selected>Seleccione</option>
                                                     @forelse ($obras as $obra)
                                                         <option value="{{ $obra->id }}"
                                                             {{ $cajaChica->obra == $obra->id ? 'selected' : '' }}>
@@ -120,10 +124,11 @@
                                                 <select id="cliente" name="cliente" class="form-select"
                                                     aria-label="Default select example">
                                                     @foreach ($vctClientes as $item)
-                                                    <option value="{{ $item->id }}"  {{ $cajaChica->cliente == $item->id ? 'selected' : '' }}>
-                                                        {{ $item->nombre }}
-                                                    </option>
-                                                @endforeach
+                                                        <option value="{{ $item->id }}"
+                                                            {{ $cajaChica->cliente == $item->id ? 'selected' : '' }}>
+                                                            {{ $item->nombre }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
 
@@ -131,7 +136,7 @@
                                                 <label class="labelTitulo">Equipo:</label></br>
                                                 <select id="equipo" name="equipo" class="form-select"
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option value="" selected>Seleccione</option>
                                                     @forelse ($maquinaria as $maquina)
                                                         <option value="{{ $maquina->id }}"
                                                             {{ $cajaChica->equipo == $maquina->id ? 'selected' : '' }}>
@@ -153,7 +158,7 @@
                                                 <label class="labelTitulo">Movimiento:</label></br>
                                                 <select id="tipo" name="tipo" class="form-select"
                                                     aria-label="Default select example">
-                                                    <option selected>Seleccione</option>
+                                                    <option value="" selected>Seleccione</option>
                                                     <option value="1" {{ $cajaChica->tipo == 1 ? 'selected' : '' }}>
                                                         Ingreso </option>
                                                     <option value="2" {{ $cajaChica->tipo == 2 ? 'selected' : '' }}>
@@ -179,7 +184,8 @@
                                                 <label class="labelTitulo">Cantidad:</label></br>
                                                 <input type="number" class="inputCaja text-right" id="cantidad"
                                                     name="cantidad" maxlength="100000" step="0.01" min="1"
-                                                    max="99999" placeholder="ej. 100" value={{ $cajaChica->cantidad }}>
+                                                    max="99999" placeholder="ej. 100"
+                                                    value={{ $cajaChica->cantidad }}>
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
