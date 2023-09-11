@@ -1058,8 +1058,6 @@ CREATE TABLE nomina(
     horario varchar(255) NULL,
     hEntrada time null,
     hSalida time null,
-    hEntradaSabado time null,
-    hSalidaSabado time null,
     jefeId bigint(20) unsigned NULL,
     neto float(10, 2) NULL,
     bruto float(10, 2) NULL,

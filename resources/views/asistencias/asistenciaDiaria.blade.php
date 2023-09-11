@@ -19,22 +19,12 @@ $mesSeleccionado = $objCalendar->getNameMonth(date_format($fechaSeleccionada, 'm
 $dtToday = date('Ymd');
 $dtTrabajar = date('Ymd', strtotime("$intAnio-$intMes-$intDia"));
 
-
-//*** estoy dentro del periodo de la semana de trabajo en curso
-$blnEnSemanaEnCurso = $objCalendar->getEnSemanaDeTrabajo($fechaSeleccionada, 3);
-//*** el dia actual en curso
-$blnEsDiaActual = ($dtTrabajar == $dtToday ? true : false);
+$blnEsDiaActual = $dtTrabajar == $dtToday ? true : false;
 //*** bloqueamos fecha mayor al dia actual
-$blnBloquearRegistro = ( $dtToday > $dtTrabajar  ? false : true);
+$blnBloquearRegistro = $blnEsDiaActual == true ? false : true;
 
-// dd('Asistencias',$asistencias,
-// 'Dia anterior',$diaAnterior,
-// 'Dia sisguiente', $diaSiguiente,
-// 'Fecha seleccionada', $fechaSeleccionada,
-// 'Dia seleccionado',$diaSeleccionado,
-// 'Hoy:', $dtToday,
-// 'Fecha trabajar:',$dtTrabajar,
-// 'Bloquear',$blnBloquearRegistro);
+// dd($asistencias, $diaAnterior, $diaSiguiente, $fechaSeleccionada, $diaSeleccionado, $dtToday, $dtTrabajar);
+
 ?>
 @section('content')
     <div class="content">
@@ -312,7 +302,7 @@ $blnBloquearRegistro = ( $dtToday > $dtTrabajar  ? false : true);
                                             </div>
 
                                             <div class="card-footer mr-auto">
-                                                <?php if($blnEnSemanaEnCurso == true && $blnBloquearRegistro == false ){  ?>
+                                                <?php if( $blnBloquearRegistro == false && $blnEsDiaActual == true){  ?>
                                                 <a href="{{ route('asistencia.index') }}">
                                                     <button type="button" class="btn btn-danger">Cancelar</button>
                                                 </a>

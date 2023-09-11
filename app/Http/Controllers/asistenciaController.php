@@ -319,7 +319,6 @@ class asistenciaController extends Controller {
             DB::raw( 'userEstatus.nombre AS estatus' ),
             DB::raw( 'userEstatus.color AS estatusColor' ),
             DB::raw( 'nomina.nomina AS numNomina' ),
-            DB::raw( 'nomina.hSalidaSabado AS horarioSalidaSabado' ),
             DB::raw( 'nomina.hSalida AS horarioSalida' ),
             DB::raw( 'nomina.ingreso AS fechaIngreso' ),
             DB::raw( 'asistencia.id AS recordId' ),
@@ -543,7 +542,6 @@ class asistenciaController extends Controller {
             DB::raw( 'tipoAsistencia.esAsistencia AS esAsistencia' ),
             DB::raw( 'tipoHoraExtra.color AS horaExtraColor' ),
             DB::raw( 'tipoHoraExtra.valor AS horaExtraCosto' ),
-            DB::raw( 'tipoHoraExtra.nombre AS horaExtraNombre' ),
             DB::raw( 'userEstatus.nombre AS estatus' ),
             DB::raw( 'userEstatus.color AS estatusColor' ),
         )
@@ -617,7 +615,6 @@ class asistenciaController extends Controller {
                 $objPagos->horasExtra = $item->horasExtra;
                 $objPagos->horaExtraColor = $item->horaExtraColor;
                 $objPagos->horaExtraCosto = $item->horaExtraCosto;
-                $objPagos->horaExtraNombre = $item->horaExtraNombre;
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
@@ -632,7 +629,6 @@ class asistenciaController extends Controller {
                 $objPagos->horasExtra = $item->horasExtra;
                 $objPagos->horaExtraColor = $item->horaExtraColor;
                 $objPagos->horaExtraCosto = $item->horaExtraCosto;
-                $objPagos->horaExtraNombre = $item->horaExtraNombre;
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
@@ -652,7 +648,6 @@ class asistenciaController extends Controller {
                 $objPagos->horasExtra = $item->horasExtra;
                 $objPagos->horaExtraColor = $item->horaExtraColor;
                 $objPagos->horaExtraCosto = $item->horaExtraCosto;
-                $objPagos->horaExtraNombre = $item->horaExtraNombre;
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
@@ -682,7 +677,6 @@ class asistenciaController extends Controller {
                 $objPagos->horasExtra = $item->horasExtra;
                 $objPagos->horaExtraColor = $item->horaExtraColor;
                 $objPagos->horaExtraCosto = $item->horaExtraCosto;
-                $objPagos->horaExtraNombre = $item->horaExtraNombre;
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
