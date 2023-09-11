@@ -1156,6 +1156,7 @@ Alta de maquinaria
 .ui-menu-item {
   padding: 8px;
   cursor: pointer;
+  background-color: var(--active) !important;
 }
 
 /* Estilos para el elemento que hagas hover */
