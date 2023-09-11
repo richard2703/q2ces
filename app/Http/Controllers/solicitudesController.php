@@ -94,6 +94,8 @@ class solicitudesController extends Controller
         $eventoCalendario->descripcion = $solicitud['descripcion'];
         $eventoCalendario->estatus = $solicitud['tipo'];
         $eventoCalendario->color = $solicitud['color'];
+        $eventoCalendario->prioridad = $solicitud['prioridad'];
+        $eventoCalendario->tipoEvento = 'solicitud';
         $eventoCalendario->save();
         // dd($solicitud, $i, $nuevaSolicitudDetalle);
 
@@ -176,9 +178,34 @@ class solicitudesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        dd('Actualizar');
+        abort_if(Gate::denies('calendarioMtq_edit'), 404);
+        $calendarioPrincipal = calendarioPrincipal::where('id', $request->id)->first();
+        $data = $request->all();
+        // dd($calendarioPrincipal, $data);
+        $data['estadoId'] = 3;
+        // dd($data);
+        if ($data['fecha'] != null && $data['hora'] != null) {
+            $data['start'] = strtoupper($data['fecha'] . ' ' . $data['hora']);
+        }
+        if ($data['fechaSalida'] != null && $data['horaSalida'] != null) {
+            $data['end'] = strtoupper($data['fechaSalida'] . ' ' . $data['horaSalida']);
+        }
+        if ($data['color'] === null) {
+            unset($data['color']);
+        }
+        if ($data['maquinariaId'] === null) {
+            unset($data['maquinariaId']);
+        }
+        if ($data['title'] === null) {
+            unset($data['title']);
+        }
+        $calendarioPrincipal->update($data);
+
+        Session::flash('message', 1);
+
+        return redirect()->route('calendarioPrincipal.index');
     }
 
     /**

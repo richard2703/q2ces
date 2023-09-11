@@ -41,6 +41,7 @@ class actividadesController extends Controller
     {
         $actividad = $request->all();
         // dd($actividad);
+        $actividad['start'] = strtoupper($actividad['fechaTarea'] . ' ' . $actividad['horaTarea']);
         $nuevoactividad = actividades::create($actividad);
         // dd("NO");
         $eventoCalendario = new calendarioPrincipal();
@@ -53,6 +54,8 @@ class actividadesController extends Controller
         $eventoCalendario->descripcion = $actividad['descripcion'];
         $eventoCalendario->estatus = $actividad['tipo'];
         $eventoCalendario->color = $actividad['color'];
+        $eventoCalendario->prioridad = $actividad['prioridad'];
+        $eventoCalendario->tipoEvento = 'actividades';
         // dd($eventoCalendario);
         $eventoCalendario->save();
 
@@ -98,7 +101,29 @@ class actividadesController extends Controller
      */
     public function update(Request $request, actividades $actividades)
     {
-        //
+        abort_if(Gate::denies('calendarioMtq_edit'), 404);
+        $calendarioPrincipal = calendarioPrincipal::where('id', $request->id)->first();
+        $data = $request->all();
+        // dd($calendarioPrincipal, $data);
+        $data['estadoId'] = 3;
+        // dd($data);
+        if ($data['fecha'] != null && $data['hora'] != null) {
+            $data['start'] = strtoupper($data['fecha'] . ' ' . $data['hora']);
+        }
+        if ($data['fechaSalida'] != null && $data['horaSalida'] != null) {
+            $data['end'] = strtoupper($data['fechaSalida'] . ' ' . $data['horaSalida']);
+        }
+        if ($data['color'] === null) {
+            unset($data['color']);
+        }
+        if ($data['prioridad'] === null) {
+            unset($data['prioridad']);
+        }
+        $calendarioPrincipal->update($data);
+
+        Session::flash('message', 1);
+
+        return redirect()->route('calendarioPrincipal.index');
     }
 
     /**
