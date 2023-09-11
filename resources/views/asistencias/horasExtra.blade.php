@@ -17,6 +17,9 @@ $mesSeleccionado = $objCalendar->getNameMonth(date_format($fechaSeleccionada, 'm
 $dtToday = date('Ymd');
 $dtTrabajar = date('Ymd', strtotime("$intAnio-$intMes-$intDia"));
 
+//*** averiguamos si el dia seleccionado es Sabado
+$blnFechaSeleccionadaEsSabado = $fechaSeleccionada->format('N') == 6 ? true : false;
+
 //*** Arreglo para los dias del periodo **/
 $vctDiasSemanaActual = $objCalendar->getSemanaTrabajo(date_create(date('Y-m-d')), 3);
 
@@ -162,9 +165,17 @@ if ($asistencias->isEmpty() == true) {
                                                             {{ $item->getFullLastNameAttribute() }}
                                                         </td>
                                                         <td>
-                                                            {{ $item->horarioSalida ? \Carbon\Carbon::parse($item->horarioSalida)->format('H:i') : '' }}
+                                                            <?php
+                                                            $dtHorario = null;
+                                                            if ($blnFechaSeleccionadaEsSabado == true) {
+                                                                $dtHorario = $item->horarioSalidaSabado ? \Carbon\Carbon::parse($item->horarioSalidaSabado)->format('H:i') : '';
+                                                            } else {
+                                                                $dtHorario = $item->horarioSalida ? \Carbon\Carbon::parse($item->horarioSalida)->format('H:i') : '';
+                                                            }
+                                                            ?>
+                                                            {{ $dtHorario }}
                                                             <input type="hidden" name="horarioSalida[]"
-                                                                value="{{$item->horarioSalida}}">
+                                                                value="{{ $dtHorario }}">
                                                         </td>
                                                         <td>
                                                             <input type="time" class="inputCaja " placeholder="Salida"

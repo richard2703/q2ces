@@ -669,7 +669,7 @@
                                                                 <div class="d-flex">
                                                                     <div class="col-6 pe-1">
                                                                         <label class="labelTitulo">Horario
-                                                                            Entrada:</label></br>
+                                                                            Entrada Semana:</label></br>
 
                                                                         <input type="time" class="inputCaja "
                                                                             placeholder="Entrada" id=""
@@ -678,11 +678,34 @@
                                                                     </div>
                                                                     <div class="col-6  ps-1">
                                                                         <label class="labelTitulo">Horario
-                                                                            Salida:</label></br>
+                                                                            Salida Semana:</label></br>
 
                                                                         <input type="time" class="inputCaja "
                                                                             placeholder="Salida" id=""
                                                                             name="hSalida" value="{{ old('hSalida') }}">
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                                {{--  <label class="labelTitulo">Horario:</label></br>  --}}
+                                                                <div class="d-flex">
+                                                                    <div class="col-6 pe-1">
+                                                                        <label class="labelTitulo">Horario
+                                                                            Entrada Sábado:</label></br>
+
+                                                                        <input type="time" class="inputCaja "
+                                                                            placeholder="Entrada" id=""
+                                                                            name="hEntradaSabado"
+                                                                            value="{{ old('hEntradaSabado') }}">
+                                                                    </div>
+                                                                    <div class="col-6  ps-1">
+                                                                        <label class="labelTitulo">Horario
+                                                                            Salida Sábado:</label></br>
+
+                                                                        <input type="time" class="inputCaja "
+                                                                            placeholder="Salida" id=""
+                                                                            name="hSalidaSabado" value="{{ old('hSalidaSabado') }}">
                                                                     </div>
                                                                 </div>
 
