@@ -363,6 +363,8 @@ class personalController extends Controller
         $newnomina->horario = $request->horario;
         $newnomina->hEntrada = $request->hEntrada;
         $newnomina->hSalida = $request->hSalida;
+        $newnomina->hEntradaSabado = $request->hEntradaSabado;
+        $newnomina->hSalidaSabado = $request->hSalidaSabado;
         $newnomina->jefeId = $request->jefeId;
         $newnomina->neto = $request->neto;
         $newnomina->isr = $request->isr;
@@ -856,6 +858,8 @@ class personalController extends Controller
         $nomina->horario = $request->horario;
         $nomina->hEntrada = $request->hEntrada;
         $nomina->hSalida = $request->hSalida;
+        $nomina->hEntradaSabado = $request->hEntradaSabado;
+        $nomina->hSalidaSabado = $request->hSalidaSabado;
         $nomina->jefeId = $request->jefeId;
         $nomina->neto = $request->neto;
         $nomina->diario = $request->diario;
