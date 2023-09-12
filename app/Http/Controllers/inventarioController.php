@@ -132,9 +132,11 @@ class inventarioController extends Controller
                 ->join('maquinaria as m2', 'm2.id', '=', 'descarga.servicioId')
                 ->join('personal as p2', 'p2.id', '=', 'descarga.receptorId')
                 ->orderBy('descarga.created_at', 'desc')
-                ->paginate(10);
+                ->get();
 
-            // dd($cargas);
+
+
+            // dd($descargas);
 
             return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas', 'gasolinas', 'suma', 'dia', 'despachadores', 'cargas', 'descargas'));
         } else {
@@ -557,7 +559,6 @@ class inventarioController extends Controller
         //     'servicioId',
         // );
         $descarga = $request->all();
-
 
         if ($request->hasFile("imgKm")) {
             $descarga['imgKm'] = time() . '_' . 'imgKm.' . $request->file('imgKm')->getClientOriginalExtension();

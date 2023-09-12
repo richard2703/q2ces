@@ -1051,8 +1051,7 @@
                                                                             onclick='cancelarOmitir("{{ $doc->id }}","{{ $doc->nombre }}")'>
                                                                             <P class="fs-5"> Cancelar</P>
                                                                         </button>
-                                                                        <div class="text-center"
-                                                                            style="margin-top: -10px !important">
+                                                                        <div class="text-center">
                                                                             <div
                                                                                 class="form-check d-flex justify-content-between">
                                                                                 <div class="text-center"></div>
