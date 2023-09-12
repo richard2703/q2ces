@@ -142,6 +142,9 @@ if ($asistencias->isEmpty() == true) {
                                                     <th class="labelTitulo" style="width:150px !important">Vacaciones</th>
                                                     <th class="labelTitulo" style="width:150px !important">Descansos</th>
                                                     <th class="labelTitulo" style="width:140px !important">Entrada
+                                                        Anticipada
+                                                    </th>
+                                                    <th class="labelTitulo" style="width:140px !important">Entrada
                                                     </th>
                                                     <th class="labelTitulo" style="width:140px !important">Salida
                                                     </th>
@@ -190,6 +193,17 @@ if ($asistencias->isEmpty() == true) {
                                                                     {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                     id="Asistencia_{{ $item->id }}" value="5"
                                                                     {{ $item->asistenciaId == 5 ? ' checked' : '' }}>
+                                                            </td>
+                                                            <td>
+                                                                <select class="form-select" id="entradaAnticipada"
+                                                                    name="entradaAnticipada[]">
+                                                                    <option value="0"
+                                                                        {{ $item->entradaAnticipada == 0 ? ' selected' : '' }}>
+                                                                        No</option>
+                                                                    <option value="1"
+                                                                        {{ $item->entradaAnticipada == 1 ? ' selected' : '' }}>
+                                                                        Sí</option>
+                                                                </select>
                                                             </td>
                                                             <td>
                                                                 <input type="time" class="inputCaja "

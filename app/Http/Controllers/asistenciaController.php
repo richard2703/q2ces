@@ -186,6 +186,7 @@ class asistenciaController extends Controller
             DB::raw( 'userEstatus.nombre AS estatus' ),
             DB::raw( 'userEstatus.color AS estatusColor' ),
             DB::raw( 'nomina.nomina AS numNomina' ),
+            DB::raw( 'nomina.hEntrada AS horarioEntrada' ),
             DB::raw( 'nomina.ingreso AS fechaIngreso' ),
         )
         ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
@@ -207,8 +208,10 @@ class asistenciaController extends Controller
             DB::raw( 'userEstatus.nombre AS estatus' ),
             DB::raw( 'userEstatus.color AS estatusColor' ),
             DB::raw( 'nomina.nomina AS numNomina' ),
+            DB::raw( 'nomina.hEntrada AS horarioEntrada' ),
             DB::raw( 'nomina.ingreso AS fechaIngreso' ),
             DB::raw( 'asistencia.id AS recordId' ),
+            DB::raw( 'asistencia.entradaAnticipada' ),
         )
         ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
         ->join( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
@@ -259,7 +262,11 @@ class asistenciaController extends Controller
                     // $objRecord->fecha = $request[ 'fecha' ];
                     // $objRecord->horasExtra = $request[ 'horasExtra' ];
                     // $objRecord->tipoHoraExtraId = 1;
+
+        // dd( $request->$value[ 0 ][0] );
+
                     $objRecord->asistenciaId = $request->$value[ 0 ];
+                    $objRecord->entradaAnticipada =  ( $request->$value[ 0 ] == 1 ?  $request[ 'entradaAnticipada' ][ $i ]:0 );
                     $objRecord->hEntrada = ( $request->$value[ 0 ] == 1 ?  $request[ 'hEntrada' ][ $i ]:null );
                     $objRecord->hSalida = ( $request->$value[ 0 ] == 1 ?   $request[ 'hSalida' ][ $i ]:null );
                     // dd( $objRecord );
@@ -334,6 +341,7 @@ class asistenciaController extends Controller
             DB::raw( 'nomina.ingreso AS fechaIngreso' ),
             DB::raw( 'asistencia.id AS recordId' ),
             DB::raw( 'asistencia.id AS asistenciaId' ),
+            DB::raw( 'asistencia.entradaAnticipada' ),
         )
         ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
         ->join( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
@@ -494,6 +502,7 @@ class asistenciaController extends Controller
             'asistencia.comentario',
             'asistencia.tipoHoraExtraId',
             DB::raw( 'nomina.hSalida AS horarioSalida' ),
+            DB::raw( 'asistencia.entradaAnticipada' ),
             'asistencia.hEntrada',
             'asistencia.hSalida'
         )
@@ -562,6 +571,7 @@ class asistenciaController extends Controller
             DB::raw( 'tipoHoraExtra.nombre AS horaExtraNombre' ),
             DB::raw( 'userEstatus.nombre AS estatus' ),
             DB::raw( 'userEstatus.color AS estatusColor' ),
+            DB::raw( 'asistencia.entradaAnticipada' ),
         )
         ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
         ->join( 'asistencia', 'asistencia.personalId', '=', 'personal.id' )

@@ -11,7 +11,7 @@ $diaSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$int
 $mesSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$intDia"), 'm');
 $anioSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$intDia"), 'Y');
 $fechaSeleccionada = date_create(date('Y-m-d', strtotime("$intAnio-$intMes-$intDia")));
-$diaSeleccionado = $objCalendar->getNameDay(date_format($fechaSeleccionada, 'N'));
+$diaSeleccionado = $objCalendar->getNameDay(date_format($fechaSeleccionada, 'N'),true);
 $mesSeleccionado = $objCalendar->getNameMonth(date_format($fechaSeleccionada, 'm'));
 
 $dtToday = date('Ymd');
@@ -109,7 +109,7 @@ if ($asistencias->isEmpty() == true) {
                                             <div class="col-10 col-md-8 text-center">
                                                 <a href="{{ route('asistencia.HEstore') }}"
                                                     class="combustibleLitros fw-semibold text-end"
-                                                    title="Ir al día de hoy"><b>Horas Extras Del Día
+                                                    title="Ir al día de hoy"><b>Horas Extras del Día
                                                         {{ ucwords(trans($objCalendar->getFechaFormateada($fechaSeleccionada, true))) }}</b>
                                                 </a>
                                             </div>
@@ -124,7 +124,6 @@ if ($asistencias->isEmpty() == true) {
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                                 <form class="row alertaGuardar" action="{{ route('asistencia.HEstore') }}" method="post"
                                     enctype="multipart/form-data">
@@ -222,13 +221,13 @@ if ($asistencias->isEmpty() == true) {
                                                     @empty
                                                         <tr>
                                                             <td colspan="2">Sin registros.<br><br> <b>Es necesario
-                                                                    Registrar Primero La Asistencia Del Personal Antes De
-                                                                    Poder Asignar Las Horas Extras.</b></td>
+                                                                    Registrar Primero la Asistencia del Personal Antes de
+                                                                    Poder Asignar las Horas Extras.</b></td>
                                                         </tr>
                                                     @endforelse
                                                 @endforelse
                                                 <tr>
-                                                    <td colspan="7"><br>Solo Se Muestran Registros De Personal Que
+                                                    <td colspan="7"><br>Solo Se Muestran Registros de Personal Que
                                                         Asistió.<br><br></b></td>
                                                 </tr>
                                             </tbody>
