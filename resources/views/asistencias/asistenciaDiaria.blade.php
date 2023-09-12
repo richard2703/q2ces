@@ -25,7 +25,7 @@ $blnEnSemanaEnCurso = $objCalendar->getEnSemanaDeTrabajo($fechaSeleccionada, 3);
 //*** el dia actual en curso
 $blnEsDiaActual = ($dtTrabajar == $dtToday ? true : false);
 //*** bloqueamos fecha mayor al dia actual
-$blnBloquearRegistro = ( $dtToday > $dtTrabajar  ? false : true);
+$blnBloquearRegistro = ( $dtToday >=     $dtTrabajar  ? false : true);
 
 // dd('Asistencias',$asistencias,
 // 'Dia anterior',$diaAnterior,
