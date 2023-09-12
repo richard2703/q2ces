@@ -135,8 +135,6 @@ if ($asistencias->isEmpty() == true) {
                                             <table class="table">
                                                 <thead class="labelTitulo text-center">
                                                     <th class="labelTitulo">Día</th>
-                                                    <th class="labelTitulo">Horas Extra</th>
-                                                    <th class="labelTitulo" style="width:140px !important">Tipo</th>
                                                     <th class="labelTitulo" style="width:150px !important">Asistencia</th>
                                                     <th class="labelTitulo">Faltas</th>
                                                     <th class="labelTitulo" style="width:170px !important">Incapacidades
@@ -147,8 +145,10 @@ if ($asistencias->isEmpty() == true) {
                                                     </th>
                                                     <th class="labelTitulo" style="width:140px !important">Salida
                                                     </th>
+                                                    <th class="labelTitulo" style="width:140px !important">Tipo</th>
                                                     <th class="labelTitulo" style="width:170px !important">Observaciones
                                                     </th>
+                                                    <th class="labelTitulo">Tiempo Extra</th>
                                                 </thead>
                                                 <tbody class="text-center">
                                                     @forelse ($asistencias as $item)
@@ -158,30 +158,15 @@ if ($asistencias->isEmpty() == true) {
                                                                     value="{{ $item->fecha }}">
                                                                 <input type="hidden" name="recordId[]"
                                                                     value="{{ $item->id }}">
-                                                            </td>
-                                                            <td><input type="number" class="inputCaja text-right" required
-                                                                    name="horasExtra[]"
-                                                                    id="horasExtra"{{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
-                                                                    value="{{ $item->horasExtra }}" maxlength="2"
-                                                                    step="1" min="0" max="16"></td>
-                                                            <td>
-                                                                <select id="tipoHoraExtraId" name="tipoHoraExtraId[]"
-                                                                    {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
-                                                                    class="form-select" aria-label="Default select example">
-
-                                                                    @foreach ($vctTiposHoras as $tipo)
-                                                                        <option value="{{ $tipo->id }}"
-                                                                            {{ $item->tipoHoraExtraId == $tipo->id ? ' selected' : '' }}>
-                                                                            {{ $tipo->nombre }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
+                                                                <input type="hidden" name="horarioSalida[]"
+                                                                    value="{{ $item->horarioSalida }}">
                                                             </td>
                                                             <td>
                                                                 <input type="radio" name="{{ $item->id }}[]"
                                                                     id="Asistencia_{{ $item->id }}" value="1"
                                                                     {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
-                                                                    {{ $item->asistenciaId == 1 ? ' checked' : '' }}></td>
+                                                                    {{ $item->asistenciaId == 1 ? ' checked' : '' }}>
+                                                            </td>
                                                             <td>
                                                                 <input type="radio" name="{{ $item->id }}[]"
                                                                     id="Asistencia_{{ $item->id }}" value="2"
@@ -208,13 +193,28 @@ if ($asistencias->isEmpty() == true) {
                                                             </td>
                                                             <td>
                                                                 <input type="time" class="inputCaja "
-                                                                    placeholder="Entrada" id="hEntrada" name="hEntrada[]"
-                                                                    value="{{ ($item->hEntrada?\Carbon\Carbon::parse($item->hEntrada)->format('H:i'):"") }}">
+                                                                    placeholder="Entrada" id="hEntrada"
+                                                                    name="hEntrada[]"
+                                                                    value="{{ $item->hEntrada ? \Carbon\Carbon::parse($item->hEntrada)->format('H:i') : '' }}">
                                                             </td>
                                                             <td>
                                                                 <input type="time" class="inputCaja "
                                                                     placeholder="Salida" id="hSalida" name="hSalida[]"
-                                                                    value="{{ ($item->hSalida?\Carbon\Carbon::parse($item->hSalida)->format('H:i') : "")}}">
+                                                                    value="{{ $item->hSalida ? \Carbon\Carbon::parse($item->hSalida)->format('H:i') : '' }}">
+                                                            </td>
+                                                            <td>
+                                                                <select id="tipoHoraExtraId" name="tipoHoraExtraId[]"
+                                                                    {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
+                                                                    class="form-select"
+                                                                    aria-label="Default select example">
+
+                                                                    @foreach ($vctTiposHoras as $tipo)
+                                                                        <option value="{{ $tipo->id }}"
+                                                                            {{ $item->tipoHoraExtraId == $tipo->id ? ' selected' : '' }}>
+                                                                            {{ $tipo->nombre }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
                                                             </td>
                                                             <td>
                                                                 <input type="text" class="inputCaja text-left"
@@ -222,6 +222,20 @@ if ($asistencias->isEmpty() == true) {
                                                                     {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                     value="{{ $item->comentario }}" maxlength="500"
                                                                     placeholder="Especifique...">
+                                                            </td>
+                                                            <td>
+                                                                <?php
+                                                                $intHoras = (int) ($item->horasExtra / 60);
+                                                                $intMinutos = $item->horasExtra % 60;
+                                                                ?>
+                                                                <input type="time" class="inputCaja text-right"
+                                                                    readonly="false" name="horasExtra[]" id="horasExtra"
+                                                                    value="{{ str_pad($intHoras, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutos, 2, '0', STR_PAD_LEFT) }}">
+                                                                {{-- <input type="number" class="inputCaja text-right" required
+                                                                    name="horasExtra[]"
+                                                                    id="horasExtra"{{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
+                                                                    value="{{ $item->horasExtra }}" maxlength="2"
+                                                                    step="1" min="0" max="16"> --}}
                                                             </td>
                                                         </tr>
                                                     @empty

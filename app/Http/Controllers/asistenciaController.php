@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Carbon;
 use App\Models\asistencia;
 use App\Models\personal;
 // use App\Helpers\Validaciones;
@@ -328,6 +329,8 @@ class asistenciaController extends Controller
             DB::raw( 'userEstatus.nombre AS estatus' ),
             DB::raw( 'userEstatus.color AS estatusColor' ),
             DB::raw( 'nomina.nomina AS numNomina' ),
+            DB::raw( 'nomina.hSalidaSabado AS horarioSalidaSabado' ),
+            DB::raw( 'nomina.hSalida AS horarioSalida' ),
             DB::raw( 'nomina.ingreso AS fechaIngreso' ),
             DB::raw( 'asistencia.id AS recordId' ),
             DB::raw( 'asistencia.id AS asistenciaId' ),
@@ -339,36 +342,9 @@ class asistenciaController extends Controller
         ->join( 'asistencia', 'asistencia.personalId', '=', 'personal.id' )
         ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
         ->where( 'userEstatus.id', '=', '1' )
-        ->where( 'nomina.ingreso', '<=', $strDate )
+        ->where( 'asistencia.asistenciaId', '=', '1' )
         ->where( 'asistencia.fecha', '=', $strDate )
         ->orderBy( 'personal.apellidoP', 'asc' )->get();
-
-        // $asistencias = personal::select(
-        //     'personal.id',
-        //     'personal.nombres',
-        //     'personal.apellidoP',
-        //     'personal.apellidoM',
-        //     DB::raw( 'nomina.nomina AS numNomina' ),
-        //     DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
-        //     DB::raw( 'puesto.nombre AS puesto' ),
-        //     DB::raw( 'puestoNivel.nombre AS puestoNivel' ),
-        //     DB::raw( 'asistencia.id AS asistenciaId' ),
-        //     'asistencia.horasExtra',
-        //     'asistencia.tipoHoraExtraId',
-        //     DB::raw( 'userEstatus.nombre AS estatus' ),
-        //     DB::raw( 'userEstatus.color AS estatusColor' ),
-        // )
-        // ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
-        // ->join( 'asistencia', 'asistencia.personalId', '=', 'personal.id' )
-        // ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
-        // ->join( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
-        // ->join( 'puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId' )
-
-        // ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
-        // ->where( 'asistencia.asistenciaId', '=', '1' )
-        // ->where( 'userEstatus.id', '=', '1' )
-        // ->where( 'asistencia.fecha', '=', $strDate )
-        // ->orderBy( 'personal.apellidoP', 'asc' )->get();
 
         //*** lista de asistencia */
         $listaAsistencia = personal::select(
@@ -376,27 +352,29 @@ class asistenciaController extends Controller
             'personal.nombres',
             'personal.apellidoP',
             'personal.apellidoM',
-            DB::raw('puestoNivel.nombre AS puesto'),
-            DB::raw("CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal"),
-            DB::raw('puestoNivel.nombre AS puesto'),
-            DB::raw('nomina.nomina AS numNomina'),
-            DB::raw('userEstatus.nombre AS estatus'),
-            DB::raw('userEstatus.color AS estatusColor')
+            DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
+            DB::raw( 'puesto.nombre AS puesto' ),
+            DB::raw( 'puestoNivel.nombre AS puestoNivel' ),
+            DB::raw( 'nomina.nomina AS numNomina' ),
+            DB::raw( 'userEstatus.nombre AS estatus' ),
+            DB::raw( 'userEstatus.color AS estatusColor' )
         )
-            ->join('puestoNivel', 'puestoNivel.id', '=', 'personal.puestoNivelId')
-            ->join('nomina', 'nomina.personalId', '=', 'personal.id')
-            ->join('asistencia', 'asistencia.personalId', '=', 'personal.id')
-            ->join('userEstatus', 'userEstatus.id', '=', 'personal.estatusId')
-            ->where('puestoNivel.requiereAsistencia', '=', '1')
-            ->groupBy('asistencia.personalId')
-            ->orderBy('personal.apellidoP', 'asc')->get();
+        ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
+        ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
+        ->join( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
+        ->join( 'puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId' )
+        ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
+        ->where( 'userEstatus.id', '=', '1' )
+        ->orderBy( 'personal.apellidoP', 'asc' )->get();
 
         $vctTiposHoras = tipoHoraExtra::all();
 
         $dteMesInicio = $intAnio . '-' . $intMes . '-01';
         $dteMesFin = $intAnio . '-' . $intMes . '-' . $objCalendario->getTotalDaysInMonth($intMes, $intAnio);
 
-        return view('asistencias.horasExtra', compact('usuario', 'asistencias', 'listaAsistencia', 'vctTiposHoras', 'intDia', 'intMes', 'intAnio'));
+        // dd( $asistencias, $listaAsistencia );
+
+        return view( 'asistencias.horasExtra', compact( 'usuario', 'asistencias', 'listaAsistencia', 'vctTiposHoras', 'intDia', 'intMes', 'intAnio' ) );
     }
 
     public function reloadHorasExtra($intAnio, $intMes, $intDia)
@@ -409,6 +387,7 @@ class asistenciaController extends Controller
     {
         // dd( $request );
 
+        $vctItems =   array();
         for (
             $i = 0;
             $i < count($request['asistenciaId']);
@@ -418,18 +397,53 @@ class asistenciaController extends Controller
                 //** Actualizacion de registro */
                 $objAsistencia =  asistencia::where('id', '=', $request['asistenciaId'][$i])->first();
 
-                if ($objAsistencia) {
-                    $objAsistencia->horasExtra = $request['horasExtra'][$i];
-                    $objAsistencia->tipoHoraExtraId = $request['tipoHoraExtraId'][$i];
+                if ( $objAsistencia ) {
+
+                    $dteHorario = null;
+                    $dteHoraSalida = null;
+
+                    //*** obtenemos los minutos de diferencia */
+                    if ( is_null( $request[ 'horarioSalida' ][ $i ] ) == false &&  is_null( $request[ 'hSalida' ][ $i ] ) == false ) {
+
+                        $intMinutos = 0;
+                        $dteHorario =   Carbon::parse( $request[ 'horarioSalida' ][ $i ] );
+                        $dteHoraSalida =  Carbon::parse( $request[ 'hSalida' ][ $i ] );
+
+                        //*** preguntamos si la salida es mayor que la hora salida */
+                        if ( $dteHoraSalida > $dteHorario ) {
+                            $intMinutos = $dteHoraSalida->diffInMinutes( $dteHorario ) ;
+                            $objAsistencia->tipoHoraExtraId = $request[ 'tipoHoraExtraId' ][ $i ];
+                            // dd( 'Soy mayor '. $intMinutos . ' minutos' );
+                        } else {
+                            //  dd( 'Soy menor' );
+                            $objAsistencia->tipoHoraExtraId = 1;
+                        }
+
+                        $objAsistencia->horasExtra = $intMinutos;
+
+                    } else {
+                        //*** se marca en 0 y se marca que no aplica */
+                        $objAsistencia->horasExtra = 0;
+                        $objAsistencia->tipoHoraExtraId = 1;
+
+                    }
+
+                    $objAsistencia->hSalida = $request[ 'hSalida' ][ $i ];
+
                     $objAsistencia->save();
-                    // dd( $objAsistencia );
+                    $vctItems [] = $objAsistencia;
+
+                    // dd( $request[ 'horarioSalida' ][ $i ],  $dteHorario, $request[ 'hSalida' ][ $i ], $dteHoraSalida, $objAsistencia );
+
                 }
             } else {
                 // dd( 'No hay id' );
             }
         }
 
-        return redirect()->action([asistenciaController::class, 'index'], ['intAnio' => $request['intAnio'], 'intMes' => $request['intMes']]);
+        // dd( $vctItems );
+
+        return redirect()->action( [ asistenciaController::class, 'index' ], [ 'intAnio' => $request[ 'intAnio' ], 'intMes' => $request[ 'intMes' ] ] );
     }
 
     /**
@@ -479,6 +493,7 @@ class asistenciaController extends Controller
             'asistencia.asistenciaId',
             'asistencia.comentario',
             'asistencia.tipoHoraExtraId',
+            DB::raw( 'nomina.hSalida AS horarioSalida' ),
             'asistencia.hEntrada',
             'asistencia.hSalida'
         )
@@ -537,15 +552,16 @@ class asistenciaController extends Controller
             DB::raw('asistencia.asistenciaId as tipoAsistenciaId'),
             'asistencia.horasExtra',
             'asistencia.fecha',
-            DB::raw('nomina.diario AS sueldo'),
-            DB::raw('nomina.nomina AS numeroNomina'),
-            DB::raw('tipoAsistencia.color AS tipoAsistenciaColor'),
-            DB::raw('tipoAsistencia.nombre AS tipoAsistenciaNombre'),
-            DB::raw('tipoAsistencia.esAsistencia AS esAsistencia'),
-            DB::raw('tipoHoraExtra.color AS horaExtraColor'),
-            DB::raw('tipoHoraExtra.valor AS horaExtraCosto'),
-            DB::raw('userEstatus.nombre AS estatus'),
-            DB::raw('userEstatus.color AS estatusColor'),
+            DB::raw( 'nomina.diario AS sueldo' ),
+            DB::raw( 'nomina.nomina AS numeroNomina' ),
+            DB::raw( 'tipoAsistencia.color AS tipoAsistenciaColor' ),
+            DB::raw( 'tipoAsistencia.nombre AS tipoAsistenciaNombre' ),
+            DB::raw( 'tipoAsistencia.esAsistencia AS esAsistencia' ),
+            DB::raw( 'tipoHoraExtra.color AS horaExtraColor' ),
+            DB::raw( 'tipoHoraExtra.valor AS horaExtraCosto' ),
+            DB::raw( 'tipoHoraExtra.nombre AS horaExtraNombre' ),
+            DB::raw( 'userEstatus.nombre AS estatus' ),
+            DB::raw( 'userEstatus.color AS estatusColor' ),
         )
         ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
         ->join( 'asistencia', 'asistencia.personalId', '=', 'personal.id' )
@@ -617,6 +633,7 @@ class asistenciaController extends Controller
                 $objPagos->horasExtra = $item->horasExtra;
                 $objPagos->horaExtraColor = $item->horaExtraColor;
                 $objPagos->horaExtraCosto = $item->horaExtraCosto;
+                $objPagos->horaExtraNombre = $item->horaExtraNombre;
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
@@ -631,6 +648,7 @@ class asistenciaController extends Controller
                 $objPagos->horasExtra = $item->horasExtra;
                 $objPagos->horaExtraColor = $item->horaExtraColor;
                 $objPagos->horaExtraCosto = $item->horaExtraCosto;
+                $objPagos->horaExtraNombre = $item->horaExtraNombre;
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
@@ -650,6 +668,7 @@ class asistenciaController extends Controller
                 $objPagos->horasExtra = $item->horasExtra;
                 $objPagos->horaExtraColor = $item->horaExtraColor;
                 $objPagos->horaExtraCosto = $item->horaExtraCosto;
+                $objPagos->horaExtraNombre = $item->horaExtraNombre;
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
@@ -679,6 +698,7 @@ class asistenciaController extends Controller
                 $objPagos->horasExtra = $item->horasExtra;
                 $objPagos->horaExtraColor = $item->horaExtraColor;
                 $objPagos->horaExtraCosto = $item->horaExtraCosto;
+                $objPagos->horaExtraNombre = $item->horaExtraNombre;
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
@@ -728,19 +748,53 @@ class asistenciaController extends Controller
 
         // dd( $request );
         $i = 0;
-        foreach ($request['recordId'] as $value) {
-            // dd( $request->$value[ 0 ] );
+        foreach ( $request[ 'recordId' ] as $value ) {
 
             $objAsistencia = asistencia::where('id', '=', $request['recordId'][$i])->first();
 
-            if ($objAsistencia) {
-                // $objAsistencia->personalId = $request[ 'personalId' ][ $i ];
-                $objAsistencia->asistenciaId = $request->$value[0];
-                // $objAsistencia->fecha = $request[ 'fecha' ];
-                $objAsistencia->horasExtra = $request[ 'horasExtra' ][ $i ];
+            if ( $objAsistencia ) {
+
+                $dteHorario = null;
+                $dteHoraSalida = null;
+
+                //*** validamos si asistio a trabajar */
+                if ( $request->$value[ 0 ] == 1 ) {
+                    //*** obtenemos los minutos de diferencia */
+                    if ( is_null( $request[ 'horarioSalida' ][ $i ] ) == false &&  is_null( $request[ 'hSalida' ][ $i ] ) == false ) {
+
+                        $intMinutos = 0;
+                        $dteHorario =   Carbon::parse( $request[ 'horarioSalida' ][ $i ] );
+                        $dteHoraSalida =  Carbon::parse( $request[ 'hSalida' ][ $i ] );
+
+                        //*** preguntamos si la salida es mayor que la hora salida */
+                        if ( $dteHoraSalida > $dteHorario ) {
+                            $intMinutos = $dteHoraSalida->diffInMinutes( $dteHorario ) ;
+                            $objAsistencia->tipoHoraExtraId = $request[ 'tipoHoraExtraId' ][ $i ];
+                            // dd( 'Soy mayor '. $intMinutos . ' minutos' );
+                        } else {
+                            //  dd( 'Soy menor' );
+                            $objAsistencia->tipoHoraExtraId = 1;
+                        }
+
+                        $objAsistencia->horasExtra = $intMinutos;
+
+                    } else {
+                        //*** se marca en 0 y se marca que no aplica */
+                        $objAsistencia->horasExtra = 0;
+                        $objAsistencia->tipoHoraExtraId = 1;
+
+                    }
+                } else {
+                    //*** se marca en 0 y se marca que no aplica */
+                    $objAsistencia->horasExtra = 0;
+                    $objAsistencia->tipoHoraExtraId = 1;
+                    // dd( 'No vine' );
+
+                }
+
+                $objAsistencia->asistenciaId = $request->$value[ 0 ];
                 $objAsistencia->hEntrada = $request[ 'hEntrada' ][ $i ];
                 $objAsistencia->hSalida = $request[ 'hSalida' ][ $i ];
-                $objAsistencia->tipoHoraExtraId = $request[ 'tipoHoraExtraId' ][ $i ];
                 $objAsistencia->comentario = $request[ 'comentario' ][ $i ];
                 $objAsistencia->save();
                 // dd( $objAsistencia );
