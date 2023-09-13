@@ -35,7 +35,7 @@
                 </a>  --}}
             </div>
             <div class="col-6 text-end mb-1" style="margin-left: -25px">
-                @can('calendarioMtq_create')
+                @can('calendarioPrincipal_create')
                     <button data-bs-toggle="modal" data-bs-target="#myModal" type="button" class="btn botonGral">Añadir
                         Al Calendario</button>
                     {{--  <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary py-2 px-4">Click Here !</button>  --}}
@@ -79,7 +79,7 @@
                                                 title="Escriba la(s) palabra(s) a buscar." readonly>
                                         </div>
                                         <div class="col-1 mt-4">
-                                            @can('calendarioMtq_edit')
+                                            @can('calendarioPrincipal_edit')
                                                 <div id="editarCampos">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
                                                         fill="currentColor" class="bi bi-pencil accionesIconos"
@@ -113,8 +113,15 @@
 
                                         <div class="mb-3 col-6">
                                             <label for="title" class="labelTitulo">Marca:</label>
-                                            <input autofocus type="text" class="inputCaja" id="marcaEdit"
-                                                name="marca" placeholder="Marca Equipo..." readonly>
+                                                <select name='marca'
+                                                class="form-select" id="marcaEdit" placeholder="Marca Equipo..." readonly>
+                                                <option value="">Seleccione</option>
+                                                @foreach ($marca as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->nombre }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
 
                                     <div class="mb-3">
@@ -143,7 +150,7 @@
                                         </select>
                                     </div>
                                     <div class="col-12 col-sm-6 mb-3">
-                                        <label for="title" class="labelTitulo">Estado De La Solicitud*:</label>
+                                        <label for="title" class="labelTitulo">Estado de la Solicitud*:</label>
                                         <select readonly name="estadoId" id="estadoSelectMantenimiento" required class="form-select">
                                             <option value="1" selected>En Espera</option>
                                         </select>
@@ -156,25 +163,25 @@
 
                                     
                                         <div class="mb-3 col-6">
-                                            <label for="fecha" class="labelTitulo">Fecha De Llegada:</label>
+                                            <label for="fecha" class="labelTitulo">Fecha de Llegada:</label>
                                             <input type="date" class="inputCaja" name="fecha" id="fechaEdit"
                                                 aria-describedby="helpId" placeholder="Fecha" readonly>
                                         </div>
 
                                         <div class="mb-3 col-6">
-                                            <label for="hora" class="labelTitulo">Hora De Llegada:</label>
+                                            <label for="hora" class="labelTitulo">Hora de Llegada:</label>
                                             <input type="time" class="inputCaja" name="hora" id="horaEdit"
                                                 aria-describedby="helpId" placeholder="Fecha" readonly>
                                         </div>
                                     
                                         <div class="mb-3 col-6">
-                                            <label for="fecha" class="labelTitulo">Fecha De Salida:</label>
+                                            <label for="fecha" class="labelTitulo">Fecha de Salida:</label>
                                             <input type="date" class="inputCaja" name="fechaSalida" id="fechaSalida"
                                                 aria-describedby="helpId" placeholder="Fecha" readonly>
                                         </div>
 
                                         <div class="mb-3 col-6">
-                                            <label for="hora" class="labelTitulo">Hora De Salida:</label>
+                                            <label for="hora" class="labelTitulo">Hora de Salida:</label>
                                             <input type="time" class="inputCaja" name="horaSalida" id="horaSalida"
                                                 aria-describedby="helpId" placeholder="Fecha" readonly>
                                         </div>
@@ -220,6 +227,7 @@
                                         class="form-control" name="id" id="id" aria-describedby="helpId" placeholder="ID">
                                     </div> -->
                                     <input type="hidden" name="id" value="" id="idSolicitud">
+                                    <input type="hidden" name="solicitudIdDetalle" value="" id="solicitudIdDetalle">
                                     <input type="hidden" id="maquinariaIdEditSolicitud" name="maquinariaId">
                                     <input type="hidden" id="colorBoxHiddenSolicitudEdit" name="color" value="">
 
@@ -228,10 +236,10 @@
                                         <div class="col-11 mb-3">
                                             <label for="title" class="labelTitulo">Título:</label>
                                             <input autofocus type="text" class="inputCaja" name="title" id="titleEditSolicitud"
-                                                placeholder="Título De Tarea..." title="Escriba El Título De La Tarea." readonly>
+                                                placeholder="Título de Tarea..." title="Escriba El Título de la Tarea." readonly>
                                         </div>
                                         <div class="col-1 mt-4">
-                                            @can('calendarioMtq_edit')
+                                            @can('calendarioPrincipal_edit')
                                                 <div id="editarCamposSolicitud">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
                                                         fill="currentColor" class="bi bi-pencil accionesIconos"
@@ -272,8 +280,15 @@
 
                                         <div class="mb-3 col-6">
                                             <label for="title" class="labelTitulo">Marca:</label>
-                                            <input autofocus type="text" class="inputCaja" id="marcaEditSolicitud"
-                                                name="marca" placeholder="Marca Equipo..." readonly>
+                                                <select name='marca'
+                                                class="form-select" id="marcaEditSolicitud" placeholder="Marca Equipo..." readonly>
+                                                <option value="">Seleccione</option>
+                                                @foreach ($marca as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->nombre }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
 
                                         <div class="col-12 col-sm-6 mb-3">
@@ -308,13 +323,13 @@
                                         </select>
                                     </div>
                                     <div class="col-12 col-sm-6 mb-3">
-                                        <label for="title" class="labelTitulo">Estado De La Solicitud*:</label>
+                                        <label for="title" class="labelTitulo">Estado de la Solicitud*:</label>
                                         <select readonly name="estadoId" id="estadoSelectMantenimiento" required class="form-select">
                                             <option value="1" selected>En Espera</option>
                                         </select>
                                     </div>
                                     <div class="mb-3 col-12 col-sm-6">
-                                        <label for="title" class="labelTitulo">Funcionalidad Del Equipo*:</label>
+                                        <label for="title" class="labelTitulo">Funcionalidad del Equipo*:</label>
                                         <select readonly name="funcionalidad" id="funcionalidadSolicitud" required class="form-select">
                                             <option value="">Seleccione</option>
                                             <option value="No Funciona" selected>No Funciona</option>
@@ -329,25 +344,25 @@
 
                                     
                                         <div class="mb-3 col-6">
-                                            <label for="fecha" class="labelTitulo">Fecha De Llegada:</label>
+                                            <label for="fecha" class="labelTitulo">Fecha de Inicio del Requerimiento:</label>
                                             <input type="date" class="inputCaja" name="fecha" id="fechaEditSolicitud"
                                                 aria-describedby="helpId" placeholder="Fecha" readonly>
                                         </div>
 
                                         <div class="mb-3 col-6">
-                                            <label for="hora" class="labelTitulo">Hora De Llegada:</label>
+                                            <label for="hora" class="labelTitulo">Hora de Inicio del Requerimiento:</label>
                                             <input type="time" class="inputCaja" name="hora" id="horaEditSolicitud"
                                                 aria-describedby="helpId" placeholder="Fecha" readonly>
                                         </div>
                                     
                                         <div class="mb-3 col-6">
-                                            <label for="fecha" class="labelTitulo">Fecha De Salida:</label>
+                                            <label for="fecha" class="labelTitulo">Fecha de Fin del Requerimiento:</label>
                                             <input type="date" class="inputCaja" name="fechaSalida" id="fechaSalidaSolicitud"
                                                 aria-describedby="helpId" placeholder="Fecha" readonly>
                                         </div>
 
                                         <div class="mb-3 col-6">
-                                            <label for="hora" class="labelTitulo">Hora De Salida:</label>
+                                            <label for="hora" class="labelTitulo">Hora de Fin del Requerimiento:</label>
                                             <input type="time" class="inputCaja" name="horaSalida" id="horaSalidaSolicitud"
                                                 aria-describedby="helpId" placeholder="Fecha" readonly>
                                         </div>
@@ -357,27 +372,24 @@
                                         <textarea class="form-control-textarea border-green" name="descripcion" id="descripcionEditSolicitud" rows="3"
                                             placeholder="Especifique..." readonly></textarea>
                                     </div>
-                                    <div class="mb-3 text-center">
-                                        <h4 style="color:#5c7c26 !important; margin-top: 10px; font-weight: bold;">Añadir Tipos A La Solicitud</h4>
-    
-                                        <div id="labelReparacion" style="display: none">
-                                            
-                                            <h5 class="labelTitulo">Reparaciónes</h5><br>
+                                    <div class="mb-3 text-center" id="solicitudDetalleSeccion">
+                                        <div id="labelReparacion" style="display: none; background:#5c7c26 !important; color:white">
+                                            <h3 style="font-weight: bold !important;">Reparaciónes</h3>
                                         </div>
     
-                                        <div id="labelReparacionCombustible" style="display: none">
-                                            
-                                            <h5 class="labelTitulo">Combustibles</h5><br>
+                                        <div id="labelReparacionCombustible" style="display: none; background:#5c7c26 !important; color:white">
+                                            <h3 style="font-weight: bold !important;">Combustibles</h3>
                                         </div>
     
-                                        <div id="labelReparacionHerramienta" style="display: none">
-                                            
-                                            <h5 class="labelTitulo">Herramientas</h5><br>
+                                        <div id="labelReparacionHerramienta" style="display: none; background:#5c7c26 !important; color:white">
+                                            <h3 style="font-weight: bold !important;">Herramientas</h3>
                                         </div>
 
-                                        <div id="labelReparacionRefaccion" style="display: none">
-                                            <h5 class="labelTitulo">Refacciónes</h5><br>
+                                        <div id="labelReparacionRefaccion" style="display: none; background:#5c7c26 !important; color:white">
+                                            <h3 style="font-weight: bold !important;">Refacciónes</h3>
                                         </div>
+                                        <div class="line"></div>
+                                        <div id="detalleSolicitud"></div>
                                     </div>
                                 </div>
                             </div>
@@ -421,7 +433,7 @@
                                         <div class="col-12 col-sm-6 mb-3">
                                             <label for="title" class="labelTitulo">Título:</label>
                                             <input autofocus type="text" class="inputCaja" name="title" id="titleEditTarea"
-                                                placeholder="Título De Tarea..." title="Escriba El Título De La Tarea." readonly>
+                                                placeholder="Título de Tarea..." title="Escriba El Título de la Tarea." readonly>
                                         </div>
 
                                         <div class="col-11 col-sm-5 mb-3">
@@ -444,7 +456,7 @@
                                         </div>
                                         
                                         <div class="col-1 mt-4">
-                                            @can('calendarioMtq_edit')
+                                            @can('calendarioPrincipal_edit')
                                                 <div id="editarCamposTarea">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
                                                         fill="currentColor" class="bi bi-pencil accionesIconos"
@@ -472,7 +484,7 @@
                                         </select>
                                     </div>
                                     <div class="col-12 col-sm-6 mb-3">
-                                        <label for="title" class="labelTitulo">Estado De La Solicitud*:</label>
+                                        <label for="title" class="labelTitulo">Estado de la Solicitud*:</label>
                                         <select readonly name="estadoId" id="estadoIdTarea" required class="form-select">
                                             <option value="1" selected>En Espera</option>
                                         </select>
@@ -485,25 +497,25 @@
 
                                     
                                         <div class="mb-3 col-6">
-                                            <label for="fecha" class="labelTitulo">Fecha De Llegada:</label>
+                                            <label for="fecha" class="labelTitulo">Fecha de Inicio para la tarea:</label>
                                             <input type="date" class="inputCaja" name="fecha" id="fechaEditTarea"
                                                 aria-describedby="helpId" placeholder="Fecha" readonly>
                                         </div>
 
                                         <div class="mb-3 col-6">
-                                            <label for="hora" class="labelTitulo">Hora De Llegada:</label>
+                                            <label for="hora" class="labelTitulo">Hora de Inicio para la tarea:</label>
                                             <input type="time" class="inputCaja" name="hora" id="horaEditTarea"
                                                 aria-describedby="helpId" placeholder="Fecha" readonly>
                                         </div>
                                     
                                         <div class="mb-3 col-6">
-                                            <label for="fecha" class="labelTitulo">Fecha De Salida:</label>
+                                            <label for="fecha" class="labelTitulo">Fecha de Termino para la tarea:</label>
                                             <input type="date" class="inputCaja" name="fechaSalida" id="fechaSalidaTarea"
                                                 aria-describedby="helpId" placeholder="Fecha" readonly>
                                         </div>
 
                                         <div class="mb-3 col-6">
-                                            <label for="hora" class="labelTitulo">Hora De Salida:</label>
+                                            <label for="hora" class="labelTitulo">Hora de Termino para la tarea:</label>
                                             <input type="time" class="inputCaja" name="horaSalida" id="horaSalidaTarea"
                                                 aria-describedby="helpId" placeholder="Fecha" readonly>
                                         </div>
@@ -591,8 +603,16 @@
 
                                         <div class="mb-3 col-6">
                                             <label for="title" class="labelTitulo">Marca:</label>
-                                            <input autofocus type="text" class="inputCaja" id="marca"
-                                                name="marca" placeholder="Marca Equipo..." readonly>
+                                                <select id="marca"
+                                                name="marca"
+                                                class="form-select" id="marcaSolicitud" placeholder="Marca Equipo..." readonly>
+                                                <option value="">Seleccione</option>
+                                                @foreach ($marca as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->nombre }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     
 
@@ -620,7 +640,7 @@
                                         </select>
                                     </div>
                                     <div class="mb-3 col-6">
-                                        <label for="title" class="labelTitulo">Estado De La Solicitud*:</label>
+                                        <label for="title" class="labelTitulo">Estado de la Solicitud*:</label>
                                         <select name="estadoId" id="estadoSelectMantenimiento" required class="form-select">
                                             <option value="1" selected>En Espera</option>
                                         </select>
@@ -633,13 +653,13 @@
 
                                     <div class="row">
                                         <div class="mb-3 col-6">
-                                            <label for="fecha" class="labelTitulo">Fecha De Llegada:</label>
+                                            <label for="fecha" class="labelTitulo">Fecha de Llegada:</label>
                                             <input type="date" class="inputCaja" name="fecha" id="fecha"
                                                 aria-describedby="helpId" placeholder="Fecha">
                                         </div>
 
                                         <div class="mb-3 col-6">
-                                            <label for="hora" class="labelTitulo">Hora De Llegada:</label>
+                                            <label for="hora" class="labelTitulo">Hora de Llegada:</label>
                                             <input type="time" class="inputCaja" name="hora" id="hora"
                                                 aria-describedby="helpId" placeholder="Fecha">
                                         </div>
@@ -676,7 +696,7 @@
                                     <div class="col-12 col-sm-6 mb-3">
                                         <label for="title" class="labelTitulo">Título:</label>
                                         <input autofocus type="text" class="inputCaja" name="title"
-                                            placeholder="Título De Tarea..." title="Escriba El Título De La Tarea.">
+                                            placeholder="Título de Tarea..." title="Escriba El Título de la Tarea.">
                                     </div>
                                     <div class="col-12 col-sm-6 mb-3 ">
                                         <label class="labelTitulo">Responsable:</label></br>
@@ -710,7 +730,7 @@
                                     </div>
 
                                     <div class="mb-3 col-6">
-                                        <label for="title" class="labelTitulo">Estado De La Solicitud*:</label>
+                                        <label for="title" class="labelTitulo">Estado de la Solicitud*:</label>
                                         <select name="estadoId" id="estadoSelectTarea" required class="form-select">
                                             <option value="1" selected>En Espera</option>
                                         </select>
@@ -721,13 +741,13 @@
                                         <div id="colorBoxTarea" class="color-box w-100" style="margin-left:-0.5px"></div>
                                     </div>
                                     <div class="mb-3 col-6">
-                                        <label for="fecha" class="labelTitulo">Fecha De Llegada:</label>
+                                        <label for="fecha" class="labelTitulo">Fecha de Inicio Para la Tarea:</label>
                                         <input type="date" class="inputCaja" name="fechaTarea" id="fechaTarea"
                                             aria-describedby="helpId" placeholder="Fecha">
                                     </div>
     
                                     <div class="mb-3 col-6">
-                                        <label for="hora" class="labelTitulo">Hora De Llegada:</label>
+                                        <label for="hora" class="labelTitulo">Hora de Inicio Para la Tarea:</label>
                                         <input type="time" class="inputCaja" name="horaTarea" id="horaTarea"
                                             aria-describedby="helpId" placeholder="Fecha">
                                     </div>
@@ -769,7 +789,7 @@
                                     <div class="col-12 mb-3">
                                         <label for="title" class="labelTitulo">Título:</label>
                                         <input autofocus type="text" class="inputCaja" name="title"
-                                            placeholder="Título De Solicitud..." title="Escriba El Título De La Solicitud.">
+                                            placeholder="Título de Solicitud..." title="Escriba El Título de la Solicitud.">
                                     </div>
                                     
                                     <div class="mb-3" role="search">
@@ -798,8 +818,15 @@
 
                                         <div class="mb-3 col-6">
                                             <label for="title" class="labelTitulo">Marca:</label>
-                                            <input autofocus type="text" class="inputCaja" id="marcaSolicitud"
-                                                name="marca" placeholder="Marca Equipo..." readonly>
+                                            <select name='marca'
+                                                class="form-select" id="marcaSolicitud" placeholder="Marca Equipo..." readonly>
+                                                <option value="">Seleccione</option>
+                                                @foreach ($marca as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->nombre }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     <div class="mb-3 col-6">
                                         <label for="prioridad" class="labelTitulo">Prioridad*:</label>
@@ -834,14 +861,14 @@
                                     </div>
 
                                     <div class="mb-3 col-6">
-                                        <label for="title" class="labelTitulo">Estado De La Solicitud*:</label>
+                                        <label for="title" class="labelTitulo">Estado de la Solicitud*:</label>
                                         <select name="estadoId" id="estadoSelectSolicitud" required class="form-select">
                                             <option value="1" selected>En Espera</option>
                                         </select>
                                     </div>
 
                                     <div class="mb-3 col-6">
-                                        <label for="title" class="labelTitulo">Funcionalidad Del Equipo*:</label>
+                                        <label for="title" class="labelTitulo">Funcionalidad del Equipo*:</label>
                                         <select name="funcionalidad" id="estadoSelectSolicitud" required class="form-select">
                                             <option value="">Seleccione</option>
                                             <option value="No Funciona" selected>No Funciona</option>
@@ -857,13 +884,13 @@
                                         <div id="colorBoxSolicitud" class="color-box w-100" style="margin-left:-0.5px"></div>
                                     </div>
                                     <div class="mb-3 col-6">
-                                        <label for="fecha" class="labelTitulo">Fecha De Llegada:</label>
+                                        <label for="fecha" class="labelTitulo">Fecha de Inicio del Requerimiento:</label>
                                         <input type="date" class="inputCaja" name="fechaSolicitud" id="fechaSolicitud"
                                             aria-describedby="helpId" placeholder="Fecha">
                                     </div>
     
                                     <div class="mb-3 col-6">
-                                        <label for="hora" class="labelTitulo">Hora De Llegada:</label>
+                                        <label for="hora" class="labelTitulo">Hora de Inicio del Requerimiento:</label>
                                         <input type="time" class="inputCaja" name="horaSolicitud" id="horaSolicitud"
                                             aria-describedby="helpId" placeholder="Fecha">
                                     </div>
@@ -877,10 +904,10 @@
                                 </div>
 
                                 <div class="mb-3 text-center">
-                                    <h4 style="color:#5c7c26 !important; margin-top: 10px; font-weight: bold;">Añadir Tipos A La Solicitud</h4>
+                                    <h4 style="color:#5c7c26 !important; margin-top: 10px; font-weight: bold;">Añadir Tipos A la Solicitud</h4>
 
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" value="reparacion" id="checkbox_reparacion">
+                                        <input type="radio" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" value="reparacion" id="checkbox_reparacion" required>
                                         <label for="checkbox_reparacion">Reparación</label><br>
                                     </div>
 
@@ -910,7 +937,7 @@
                                         </div>
                                         <div class="opcReparacion">
                                             <div class="row">
-                                                <div class="line"></div>
+                                                <div class="line mb-2"></div>
                                                 <div class="mb-3 col-11">
                                                     <label for="reparacion" class="labelTitulo">Reparación:</label>
                                                     <input type="text" class="inputCaja" name="reparacionSolicitud[]" id="reparacionSolicitud"
@@ -940,10 +967,10 @@
                                         </div>
                                         <div class="opcCombustible">
                                             <div class="row">
-                                                <div class="line"></div>
+                                                <div class="line mb-2"></div>
                                                 <div class="mb-3 col-6">
                                                     <label for="litros" class="labelTitulo">Litros:</label>
-                                                    <input type="number" class="inputCaja" name="litrosSolicitud" id="litrosSolicitud"
+                                                    <input type="number" class="inputCaja" name="litros[]" id="litrosSolicitud"
                                                         aria-describedby="helpId" placeholder="Litros">
                                                 </div>
                                                 <div class="mb-3 col-5">
@@ -958,8 +985,8 @@
                                                     </div>
             
                                                 <div class="mb-3">
-                                                    <label for="comentarioTarea" class="labelTitulo">Comentario:</label>
-                                                    <textarea class="form-control-textarea border-green" name="comentarioTarea[]" id="comentarioTarea" rows="3"
+                                                    <label for="comentarioCombustible" class="labelTitulo">Comentario:</label>
+                                                    <textarea class="form-control-textarea border-green" name="comentarioCombustible[]" id="comentarioCombustible" rows="3"
                                                         placeholder="Especifique..."></textarea>
                                                 </div>
                                             </div>
@@ -978,7 +1005,7 @@
                                         </div>
                                         <div class="opcHerramienta">
                                             <div class="row">
-                                                <div class="line"></div>
+                                                <div class="line mb-2"></div>
                                                 <div class="mb-3 col-6">
                                                     <label for="cantidad" class="labelTitulo">Herramienta:</label>
                                                     <select name="herramientaNombre[]" id="herramientaNombre" class="form-select">
@@ -992,7 +1019,7 @@
                                                 </div>
                                                 <div class="mb-3 col-5">
                                                     <label for="cantidad" class="labelTitulo">Cantidad:</label>
-                                                    <input type="number" class="inputCaja" name="cantidadSolicitudHerramienta[]" id="cantidadSolicitudHerramienta"
+                                                    <input type="number" class="inputCaja" name="cantidadHerramienta[]" id="cantidadSolicitudHerramienta"
                                                         aria-describedby="helpId" placeholder="Cantidad">
                                                 </div>
                                                 <div class="col-1 my-3 text-end">
@@ -1020,7 +1047,7 @@
                                         </div>
                                         <div class="opcRefaccion">
                                             <div class="row">
-                                                <div class="line"></div>
+                                                <div class="line mb-2"></div>
                                                 <div class="mb-3 col-6">
                                                     <label for="refaccion" class="labelTitulo">Refacción:</label>
                                                     <select name="refaccionNombre[]" id="refaccionNombre" class="form-select">
@@ -1035,7 +1062,7 @@
                                                 
                                                 <div class="mb-3 col-5">
                                                     <label for="cantidad" class="labelTitulo">Cantidad:</label>
-                                                    <input type="number" class="inputCaja" name="cantidadSolicitudRefaccion[]" id="cantidadSolicitudRefaccion"
+                                                    <input type="number" class="inputCaja" name="cantidadRefaccion[]" id="cantidadSolicitudRefaccion"
                                                         aria-describedby="helpId" placeholder="Cantidad">
                                                 </div>
                                                 <div class="col-1 my-3 text-end">
@@ -1159,7 +1186,7 @@
                                         </select>
                                     </div>
                                     <div class="mb-3 col-6">
-                                        <label for="title" class="labelTitulo">Estado De La Solicitud*:</label>
+                                        <label for="title" class="labelTitulo">Estado de la Solicitud*:</label>
                                         <select name="estadoId" id="estadoSelectMantenimiento" required class="form-select">
                                             <option value="1" selected>En Espera</option>
                                         </select>
@@ -1172,13 +1199,13 @@
 
                                     <div class="row">
                                         <div class="mb-3 col-6">
-                                            <label for="fecha" class="labelTitulo">Fecha De Llegada:</label>
+                                            <label for="fecha" class="labelTitulo">Fecha de Llegada:</label>
                                             <input type="date" class="inputCaja" name="fecha" id="fecha"
                                                 aria-describedby="helpId" placeholder="Fecha">
                                         </div>
 
                                         <div class="mb-3 col-6">
-                                            <label for="hora" class="labelTitulo">Hora De Llegada:</label>
+                                            <label for="hora" class="labelTitulo">Hora de Llegada:</label>
                                             <input type="time" class="inputCaja" name="hora" id="hora"
                                                 aria-describedby="helpId" placeholder="Fecha">
                                         </div>
@@ -1215,7 +1242,7 @@
                                     <div class="col-12 col-sm-6 mb-3">
                                         <label for="title" class="labelTitulo">Título:</label>
                                         <input autofocus type="text" class="inputCaja" name="title"
-                                            placeholder="Título De Tarea..." title="Escriba El Título De La Tarea.">
+                                            placeholder="Título de Tarea..." title="Escriba El Título de la Tarea.">
                                     </div>
                                     <div class="col-12 col-sm-6 mb-3 ">
                                         <label class="labelTitulo">Responsable:</label></br>
@@ -1249,7 +1276,7 @@
                                     </div>
 
                                     <div class="mb-3 col-6">
-                                        <label for="title" class="labelTitulo">Estado De La Solicitud*:</label>
+                                        <label for="title" class="labelTitulo">Estado de la Solicitud*:</label>
                                         <select name="estadoId" id="estadoSelectTarea" required class="form-select">
                                             <option value="1" selected>En Espera</option>
                                         </select>
@@ -1260,13 +1287,13 @@
                                         <div id="colorBoxTarea" class="color-box w-100" style="margin-left:-0.5px"></div>
                                     </div>
                                     <div class="mb-3 col-6">
-                                        <label for="fecha" class="labelTitulo">Fecha De Llegada:</label>
+                                        <label for="fecha" class="labelTitulo">Fecha de Llegada:</label>
                                         <input type="date" class="inputCaja" name="fechaTarea" id="fechaTarea"
                                             aria-describedby="helpId" placeholder="Fecha">
                                     </div>
     
                                     <div class="mb-3 col-6">
-                                        <label for="hora" class="labelTitulo">Hora De Llegada:</label>
+                                        <label for="hora" class="labelTitulo">Hora de Llegada:</label>
                                         <input type="time" class="inputCaja" name="horaTarea" id="horaTarea"
                                             aria-describedby="helpId" placeholder="Fecha">
                                     </div>
@@ -1308,7 +1335,7 @@
                                     <div class="col-12 mb-3">
                                         <label for="title" class="labelTitulo">Título:</label>
                                         <input autofocus type="text" class="inputCaja" name="title"
-                                            placeholder="Título De Solicitud..." title="Escriba El Título De La Solicitud.">
+                                            placeholder="Título de Solicitud..." title="Escriba El Título de la Solicitud.">
                                     </div>
                                     
                                     <div class="mb-3" role="search">
@@ -1360,14 +1387,14 @@
                                     </div>
 
                                     <div class="mb-3 col-6">
-                                        <label for="title" class="labelTitulo">Estado De La Solicitud*:</label>
+                                        <label for="title" class="labelTitulo">Estado de la Solicitud*:</label>
                                         <select name="estadoId" id="estadoSelectSolicitud" required class="form-select">
                                             <option value="1" selected>En Espera</option>
                                         </select>
                                     </div>
 
                                     <div class="mb-3 col-6">
-                                        <label for="title" class="labelTitulo">Funcionalidad Del Equipo*:</label>
+                                        <label for="title" class="labelTitulo">Funcionalidad del Equipo*:</label>
                                         <select name="funcionalidad" id="estadoSelectSolicitud" required class="form-select">
                                             <option value="">Seleccione</option>
                                             <option value="No Funciona" selected>No Funciona</option>
@@ -1394,13 +1421,13 @@
                                         <div id="colorBoxSolicitud" class="color-box w-100" style="margin-left:-0.5px"></div>
                                     </div>
                                     <div class="mb-3 col-6">
-                                        <label for="fecha" class="labelTitulo">Fecha De Llegada:</label>
+                                        <label for="fecha" class="labelTitulo">Fecha de Llegada:</label>
                                         <input type="date" class="inputCaja" name="fechaSolicitud" id="fechaSolicitud"
                                             aria-describedby="helpId" placeholder="Fecha">
                                     </div>
     
                                     <div class="mb-3 col-6">
-                                        <label for="hora" class="labelTitulo">Hora De Llegada:</label>
+                                        <label for="hora" class="labelTitulo">Hora de Llegada:</label>
                                         <input type="time" class="inputCaja" name="horaSolicitud" id="horaSolicitud"
                                             aria-describedby="helpId" placeholder="Fecha">
                                     </div>
@@ -1414,7 +1441,7 @@
                                 </div>
 
                                 <div class="mb-3 text-center">
-                                    <h4 style="color:#5c7c26 !important; margin-top: 10px; font-weight: bold;">Añadir Tipos A La Solicitud</h4>
+                                    <h4 style="color:#5c7c26 !important; margin-top: 10px; font-weight: bold;">Añadir Tipos A la Solicitud</h4>
 
                                     <div class="form-check form-check-inline">
                                         <input type="radio" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" value="reparacion" id="checkbox_reparacion">
@@ -1674,7 +1701,7 @@
                 $('#nombre').val(ui.item.nombre);
                 $('#marca').val(ui.item.marca);
                 // $('#modelo').val(ui.item.modelo);
-                $('#numeconomico').val(ui.item.identificador);
+                $('#numeconomico').val(ui.item.numserie);
                 $('#placas').val(ui.item.placas);
             }
         });
@@ -1707,7 +1734,7 @@
                 $('#nombreMantenimiento').val(ui.item.nombre);
                 $('#marcaMantenimiento').val(ui.item.marca);
                 // $('#modelo').val(ui.item.modelo);
-                $('#numeconomicoMantenimiento').val(ui.item.identificador);
+                $('#numeconomicoMantenimiento').val(ui.item.numserie);
                 $('#placasMantenimiento').val(ui.item.placas);
             }
         });
@@ -1733,14 +1760,14 @@
             autoFill: true,
             minLength: 1,
             select: function(event, ui) {
-
+                console.log('ui',ui.item);
                 // Rellenar los campos con los datos de la persona seleccionada
                 $('#maquinariaIdSolicitud').val(ui.item.id);
                 // $('#descripcion').val(ui.item.value);
                 $('#nombreSolicitud').val(ui.item.nombre);
                 $('#marcaSolicitud').val(ui.item.marca);
                 // $('#modelo').val(ui.item.modelo);
-                $('#numeconomicoSolicitud').val(ui.item.identificador);
+                $('#numeconomicoSolicitud').val(ui.item.numserie);
                 $('#placasSolicitud').val(ui.item.placas);
             }
         });
@@ -1772,7 +1799,7 @@
                 $('#nombreEdit').val(ui.item.nombre);
                 $('#marcaEdit').val(ui.item.marca);
                 // $('#modelo').val(ui.item.modelo);
-                $('#numeconomicoEdit').val(ui.item.identificador);
+                $('#numeconomicoEdit').val(ui.item.numserie);
                 $('#placasEdit').val(ui.item.placas);
             }
         });
@@ -1804,7 +1831,7 @@
                 $('#nombreEditSolicitud').val(ui.item.nombre);
                 $('#marcaEditSolicitud').val(ui.item.marca);
                 // $('#modelo').val(ui.item.modelo);
-                $('#numeconomicoEditSolicitud').val(ui.item.identificador);
+                $('#numeconomicoEditSolicitud').val(ui.item.numserie);
                 $('#placasEditSolicitud').val(ui.item.placas);
             }
         });
@@ -1893,12 +1920,14 @@
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
                 dateClick: function(informacion) {
-                    var permissionName = 'calendarioMtq_create';
+                    let permissionName = 'calendarioPrincipal_create';
                     fetch(`/check-permission/${permissionName}`)
                         .then(response => response.json())
                         .then(data => {
                             if (data.hasPermission) {
                                 document.getElementById('fecha').value = informacion.dateStr;
+                                document.getElementById('fechaTarea').value = informacion.dateStr;
+                                document.getElementById('fechaSolicitud').value = informacion.dateStr;
                                 myModal.show();
                                 
                             } else {
@@ -1911,34 +1940,31 @@
 
                 },
                 eventClick: function(informacion) {
-                    console.log('Vista Manteniemiento', informacion.event._def.extendedProps.tipoEvento);
-                    if(informacion.event._def.extendedProps.tipoEvento == 'mantenimiento'){
-                        myModalEditMantenimiento.show();
-                        recuperarDatosEvento(informacion.event);
-                    }else if(informacion.event._def.extendedProps.tipoEvento == 'actividades'){
-                        myModalEditActividad.show();
-                        recuperarDatosEventoActividad(informacion.event);
-                        //myModalEdit.show();
-                    }else{
-                        myModalEditSolicitud.show();
-                        recuperarDatosEventoSolicitud(informacion.event);
-                    }
-                    /*var permissionName = 'calendarioMtq_show';
+                    let permissionName = 'calendarioPrincipal_show';
                     fetch(`/check-permission/${permissionName}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log('Vista Manteniemiento', data);
-                            if (data.hasPermission) {
-                                
-                                myModalEdit.show();
-                                
-                            } else {
-                                alertaNoPermission();
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Vista Manteniemiento', data);
+                        if (data.hasPermission) {
+                            if(informacion.event._def.extendedProps.tipoEvento == 'mantenimiento'){
+                                myModalEditMantenimiento.show();
+                                recuperarDatosEvento(informacion.event);
+                            }else if(informacion.event._def.extendedProps.tipoEvento == 'actividades'){
+                                myModalEditActividad.show();
+                                recuperarDatosEventoActividad(informacion.event);
+                                //myModalEdit.show();
+                            }else{
+                                recuperarDatosEventoSolicitud(informacion.event);
                             }
-                        })
-                        .catch(error => {
-                            console.error("Error al verificar permisos:", error);
-                        });*/
+                            
+                        } else {
+                            alertaNoPermission();
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error al verificar permisos:", error);
+                    });
+                    
                 },
                 events: eventosJson,
 
@@ -2239,7 +2265,7 @@
             document.getElementById("colorBoxEdit").style.backgroundColor = evento._def.ui.backgroundColor;
             document.getElementById('descripcionEdit').value = evento._def.extendedProps.descripcion;
 
-            let marca = evento._def.extendedProps.marca;
+            let marca = evento._def.extendedProps.marcaId;
             let nombre = evento._def.extendedProps.nombre;
             let numeconomico = evento._def.extendedProps.numeconomico;
             let placas = evento._def.extendedProps.placas;
@@ -2403,7 +2429,7 @@
             document.getElementById("colorBoxEditSolicitud").style.backgroundColor = evento._def.ui.backgroundColor;
             document.getElementById('descripcionEditSolicitud').value = evento._def.extendedProps.descripcion;
 
-            let marca = evento._def.extendedProps.marca;
+            let marca = evento._def.extendedProps.marcaId;
             let nombre = evento._def.extendedProps.nombre;
             let numeconomico = evento._def.extendedProps.numeconomico;
             let placas = evento._def.extendedProps.placas;
@@ -2420,29 +2446,352 @@
             document.getElementById('placasEditSolicitud').value = placas;
             //document.getElementById('searchSEdit').value =  'Equipo ' . nombre . ', Marca ' . marca . ', N. ECO. ' . numeconomico . ', Placas ' .  placas;
             document.getElementById('idSolicitud').value = evento._def.publicId;
+            
             let labelReparacion = document.getElementById('labelReparacion');
             let labelReparacionCombustible = document.getElementById('labelReparacionCombustible');
             let labelReparacionHerramienta = document.getElementById('labelReparacionHerramienta');
             let labelReparacionRefaccion = document.getElementById('labelReparacionRefaccion');
 
-            switch (evento._def.extendedProps.tipo) {
-                case 'reparacion':
-                    labelReparacion.style.display = 'block';
-                    break;
-                case 'combustible':
-                    labelReparacionCombustible.style.display = 'block';
-                    break;
-                case 'herramienta':
-                    labelReparacionHerramienta.style.display = 'block';
-                    break;
-                case 'refaccion':
-                    labelReparacionRefaccion.style.display = 'block';
-                    break;
-                // Agrega más casos si tienes otros tipos de solicitud
-            }
+            let solicitudId = evento._def.extendedProps.solicitudesId;
+            document.getElementById('solicitudIdDetalle').value = solicitudId;
+            console.log('SOLICITUD ID que se envia al fetch',solicitudId);
+            const container = document.getElementById('detalleSolicitud');
+            fetch(`/solicitud-detalle/${solicitudId}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('data',data);
+                if (data && data.length > 0) {
+                    // Supongamos que 'data' contiene los detalles de la solicitud
+                    const modalContenedor = document.getElementById('detalleSolicitud');
             
-            // document.getElementById('editarCampos').id =  "editarCampos" + evento._def.publicId;
+                    // Construye el contenido que deseas agregar al modal
+                    let contenidoModal = `<div class="text-end">
+                        <h5 style="color:#5c7c26 !important; margin-top: 10px; font-weight: bold;" class="text-center">Modificar los Registros en la Solicitud</h5>
+                        <button type="button" class="btnVerde"
+                            onclick="${data[0].tipo == 'refaccion' ? 'crearItemsRefaccion()' : data[0].tipo == 'reparacion' ? 'crearItemsReparacion()' : data[0].tipo == 'herramienta' ? 'crearItemsHerramienta()' : data[0].tipo == 'herramienta' ? 'crearItemsHerramienta()' : 'crearItemsCombustible()'}">
+                        </button>
+                        
+                    </div>`;
+                    switch (data[0].tipo) {
+                        case 'reparacion':
+                            labelReparacion.style.display = 'block';
+                            labelReparacionHerramienta.style.display = 'none';
+                            labelReparacionCombustible.style.display = 'none';
+                            labelReparacionRefaccion.style.display = 'none';
+                            break;
+                        case 'combustible':
+                            labelReparacionCombustible.style.display = 'block';
+                            labelReparacion.style.display = 'none';
+                            labelReparacionHerramienta.style.display = 'none';
+                            labelReparacionRefaccion.style.display = 'none';
+                            break;
+                        case 'herramienta':
+                            labelReparacionHerramienta.style.display = 'block';
+                            labelReparacionCombustible.style.display = 'none';
+                            labelReparacion.style.display = 'none';
+                            labelReparacionRefaccion.style.display = 'none';
+                            break;
+                        case 'refaccion':
+                            labelReparacionRefaccion.style.display = 'block';
+                            labelReparacionHerramienta.style.display = 'none';
+                            labelReparacionCombustible.style.display = 'none';
+                            labelReparacion.style.display = 'none';
+                            break;
+                    }
+                    
+                    // Suponiendo que 'data' es una matriz de detalles
+                    data.forEach(detalle => {
+                        console.log('detalle.tipo',detalle);
+                        if(detalle.tipo == 'refaccion'){
+                            contenidoModal += `<div id="refaccion_campos" class="campos-solicitud">
+                                <div class="row">
+                                    <div class="opcRefaccion text-start">
+                                        <div class="row">
+                                            <div class="line mb-2"></div>
+                                            <input type="hidden" name="detalleTipo[]" value="${detalle.tipo}">
+                                            <input type="hidden" name="idRefaccion[]" value="${detalle.id}">
+                                            <div class="mb-3 col-6">
+                                                <label for="refaccion" class="labelTitulo">Refacción:</label>
+                                                <select name="refaccionNombre[]" id="refaccionNombre${detalle.id}" class="form-select">
+                                                    @foreach ($refacciones as $item)
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->nombre }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="mb-3 col-5">
+                                                <label for="cantidad" class="labelTitulo">Cantidad:</label>
+                                                <input type="number" class="inputCaja detalleSolicitud" name="cantidadRefaccion[]" id="cantidadSolicitudRefaccion"
+                                                    aria-describedby="helpId" placeholder="Cantidad" value="${detalle.cantidad}">
+                                            </div>
+
+                                            <div class="col-1" style="margin-left: -5px;"><button type="button" id="removeRowRefaccion"
+                                                class="btnRojo"></button></div>
+                                               
+                                            <div class="mb-3">
+                                                <label for="comentarioRefaccion" class="labelTitulo">Comentario:</label>
+                                                <textarea class="form-control-textarea border-green" name="comentarioRefaccion[]" id="comentarioRefaccion" rows="3"
+                                                    placeholder="Especifique...">${detalle.comentario}</textarea>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>`;
+
+                            
+                        }
+                        if(detalle.tipo == 'herramienta'){
+                            contenidoModal += `<div id="herramienta_campos" class="campos-solicitud">
+                                <div class="row">
+                                    
+                                    <div class="opcHerramienta text-start">
+                                        <div class="row">
+                                            <div class="line mb-2"></div>
+                                            <input type="hidden" name="detalleTipo[]" value="${detalle.tipo}">
+                                            <input type="hidden" name="idHerramienta[]" value="${detalle.id}">
+                                            <div class="mb-3 col-6">
+                                                <label for="herramienta" class="labelTitulo">Herramienta:</label>
+                                                <select name="herramientaNombre[]" id="herramientaNombre${detalle.id}" class="form-select">
+                                                    @foreach ($herramientas as $item)
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->nombre }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="mb-3 col-5">
+                                                <label for="cantidad" class="labelTitulo">Cantidad:</label>
+                                                <input type="number" class="inputCaja" name="cantidadHerramienta[]" id="cantidadSolicitudHerramienta"
+                                                    aria-describedby="helpId" placeholder="Cantidad" value="${detalle.cantidad}">
+                                            </div>
+
+                                            <div class="col-1" style="margin-left: -5px;"><button type="button" id="removeRowHerramienta"
+                                                class="btnRojo"></button></div>
+                                               
+                                            <div class="mb-3">
+                                                <label for="comentarioHerramienta" class="labelTitulo">Comentario:</label>
+                                                <textarea class="form-control-textarea border-green" name="comentarioHerramienta[]" id="comentarioHerramienta" rows="3"
+                                                    placeholder="Especifique...">${detalle.comentario}</textarea>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                            
+                        }
+                        if(detalle.tipo == 'reparacion'){
+                            contenidoModal += `<div id="reparacion_campos" class="campos-solicitud">
+                                <div class="row">
+                                    
+                                    <div class="opcReparacion text-start">
+                                        <div class="row">
+                                            <div class="line mb-2"></div>
+                                            <input type="hidden" name="detalleTipo[]" value="${detalle.tipo}">
+                                            <input type="hidden" name="idReparacion[]" value="${detalle.id}">
+                                            <div class="mb-3 col-11">
+                                                <label for="reparacion" class="labelTitulo">Reparación:</label>
+                                                <input type="text" class="inputCaja" name="reparacionSolicitud[]" id="reparacionSolicitud"
+                                                    aria-describedby="helpId" placeholder="Reparacion" value="${detalle.reparacion}">
+                                            </div>
+
+                                            <div class="col-1" style="margin-left: -5px;"><button type="button" id="removeRowReparacion"
+                                                class="btnRojo"></button></div>
+                                               
+                                            <div class="mb-3">
+                                                <label for="comentarioReparacion" class="labelTitulo">Comentario:</label>
+                                                <textarea class="form-control-textarea border-green" name="comentarioReparacion[]" id="comentarioReparacion" rows="3"
+                                                    placeholder="Especifique...">${detalle.comentario}</textarea>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                        }
+
+                        if(detalle.tipo == 'combustible'){
+                            contenidoModal += `<div id="combustible_campos" class="campos-solicitud">
+                                <div class="row">
+                                    
+                                    <div class="opcCombustible text-start">
+                                        <div class="row">
+                                            <div class="line mb-2"></div>
+                                            <input type="hidden" name="detalleTipo[]" value="${detalle.tipo}">
+                                            <input type="hidden" name="idCombustible[]" value="${detalle.id}">
+                                            <div class="mb-3 col-6">
+                                                <label for="litros" class="labelTitulo">Litros:</label>
+                                                <input type="number" class="inputCaja" name="litros[]" id="litrosSolicitud"
+                                                    aria-describedby="helpId" placeholder="Litros" value="${detalle.litros}">
+                                            </div>
+                                            <div class="mb-3 col-5">
+                                                <label for="carga" class="labelTitulo">Tipo*:</label>
+                                                <select name="carga[]" id="carga" required class="form-select">
+                                                    <option value="carga" selected>Carga</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-1 my-3 text-end">
+                                                <button type="button" id="removeRowCombustible"
+                                                    class="btnRojo"></button>
+                                                </div>
+                                               
+                                            <div class="mb-3">
+                                                <label for="comentarioCombustible" class="labelTitulo">Comentario:</label>
+                                                <textarea class="form-control-textarea border-green" name="comentarioCombustible[]" id="comentarioCombustible" rows="3"
+                                                    placeholder="Especifique...">${detalle.comentario}</textarea>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                            
+                        }
+                        
+                    });
+                    contenidoModal += '</div>';
+                    modalContenedor.innerHTML = contenidoModal;
+
+                    data.forEach( item => {
+                        if(item.tipo == 'refaccion'){
+                        const selectRefaccion = document.getElementById(`refaccionNombre${item.id}`);
+                        console.log('selectRefaccion',selectRefaccion);
+                        for (let i = 0; i < selectRefaccion.options.length; i++) {
+                            if (selectRefaccion.options[i].value == item.inventarioId) {
+                                // selectRefaccion.options[i].selected = true;
+                                selectRefaccion.selectedIndex = i;
+                            }
+                        }
+
+                        } else if(item.tipo == 'herramienta'){
+                            const selectHerramienta = document.getElementById(`herramientaNombre${item.id}`);
+                            console.log('selectHerramienta',selectHerramienta);
+                            for (let i = 0; i < selectHerramienta.options.length; i++) {
+                                if (selectHerramienta.options[i].value == item.inventarioId) {
+                                    // selectHerramienta.options[i].selected = true;
+                                    selectHerramienta.selectedIndex = i;
+                                }
+                            }
+                        }
+                    });
+                    
+                    
+                } else {
+                    console.log('NO HAY DETALLE para esa solicitud');
+                }
+                
+            });
+            let myModalEditSolicitud = new bootstrap.Modal(document.getElementById('myModalEditSolicitud'), {
+                keyboard: false
+            });
+            myModalEditSolicitud.show();
         }
+        
+        /*<div id="reparacion_campos" class="campos-solicitud" style="display: none;">
+            <div class="row">
+                <div class="col-12 pb-3 text-end">
+                    <button type="button" class="btnVerde"
+                        onclick="crearItemsReparacion()">
+                    </button>
+                </div>
+                <div class="opcReparacion">
+                    <div class="row">
+                        <div class="line"></div>
+                        <div class="mb-3 col-11">
+                            <label for="reparacion" class="labelTitulo">Reparación:</label>
+                            <input type="text" class="inputCaja" name="reparacionSolicitud[]" id="reparacionSolicitud"
+                                aria-describedby="helpId" placeholder="Reparacion">
+                        </div>
+                        <div class="col-1 my-3 text-end">
+                            <button type="button" id="removeRowReparacion"
+                            class="btnRojo"></button>
+                        </div>
+                        
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+
+        <div id="combustible_campos" class="campos-solicitud" style="display: none;">
+            <div class="row">
+                <div class="col-12 pb-3 text-end">
+                    <button type="button" class="btnVerde"
+                        onclick="crearItemsCombustible()">
+                    </button>
+                </div>
+                <div class="opcCombustible">
+                    <div class="row">
+                        <div class="line"></div>
+                        <div class="mb-3 col-6">
+                            <label for="litros" class="labelTitulo">Litros:</label>
+                            <input type="number" class="inputCaja" name="litrosSolicitud" id="litrosSolicitud"
+                                aria-describedby="helpId" placeholder="Litros">
+                        </div>
+                        <div class="mb-3 col-5">
+                            <label for="carga" class="labelTitulo">Tipo*:</label>
+                            <select name="carga[]" id="carga" required class="form-select">
+                                <option value="carga" selected>Carga</option>
+                            </select>
+                        </div>
+                        <div class="col-1 my-3 text-end">
+                            <button type="button" id="removeRowCombustible"
+                                class="btnRojo"></button>
+                            </div>
+
+                        <div class="mb-3">
+                            <label for="comentarioTarea" class="labelTitulo">Comentario:</label>
+                            <textarea class="form-control-textarea border-green" name="comentarioTarea[]" id="comentarioTarea" rows="3"
+                                placeholder="Especifique..."></textarea>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </div>
+
+        <div id="herramienta_campos" class="campos-solicitud" style="display: none;">
+            <div class="row">
+                <div class="col-12 pb-3 text-end">
+                    <button type="button" class="btnVerde"
+                        onclick="crearItemsHerramienta()">
+                    </button>
+                </div>
+                <div class="opcHerramienta">
+                    <div class="row">
+                        <div class="line"></div>
+                        <div class="mb-3 col-6">
+                            <label for="cantidad" class="labelTitulo">Herramienta:</label>
+                            <select name="herramientaNombre[]" id="herramientaNombre" class="form-select">
+                                <option value="" >Seleccione</option>
+                                @foreach ($herramientas as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3 col-5">
+                            <label for="cantidad" class="labelTitulo">Cantidad:</label>
+                            <input type="number" class="inputCaja" name="cantidadSolicitudHerramienta[]" id="cantidadSolicitudHerramienta"
+                                aria-describedby="helpId" placeholder="Cantidad">
+                        </div>
+                        <div class="col-1 my-3 text-end">
+                            <button type="button" id="removeRowHerramienta"
+                                class="btnRojo"></button>
+                            </div>
+                        <div class="mb-3">
+                            <label for="comentarioHerramienta" class="labelTitulo">Comentario:</label>
+                            <textarea class="form-control-textarea border-green" name="comentarioHerramienta[]" id="comentarioHerramienta" rows="3"
+                                placeholder="Especifique..."></textarea>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </div>
+
+        */
+        // document.getElementById('editarCampos').id =  "editarCampos" + evento._def.publicId;
     </script>
 
     <script>
@@ -2629,6 +2978,8 @@
             let idModal = document.getElementById('idSolicitud');
             let editarCamposLink = document.getElementById('editarCamposSolicitud' + idModal.value);
             let campos = document.querySelectorAll('.inputCaja, .form-select, .form-control-textarea');
+            let detalleSolicitud = document.querySelectorAll('.detalleSolicitud');
+
             const tituloModal = document.getElementById('modalTitleIdSolicitud');
             const contenedorBotonGuardar = document.getElementById('contenedorBotonGuardarSolicitud');
             console.log('editarCamposLink', editarCamposLink);
@@ -2646,16 +2997,20 @@
                     contenedorBotonGuardar.style.display = 'block';
                     vistaSolicitud = true;
                     campos.forEach(function(campo) {
-                        if (campo.id !== 'nombreEdit' && campo.id !== 'numeconomicoEdit' && campo
-                            .id !== 'placasEdit' && campo.id !== 'marcaEdit') {
+                        if (campo.id !== 'nombreEditSolicitud' && campo.id !== 'numeconomicoEditSolicitud' && campo
+                            .id !== 'placasEditSolicitud' && campo.id !== 'marcaEditSolicitud') {
                             campo.removeAttribute('readonly');
                         }
-                        if (campo.id !== 'nombreEdit' || campo.id !== 'numeconomicoEdit' || campo
-                            .id !== 'placasEdit' || campo.id !== 'marcaEdit') {
+                        if (campo.id !== 'nombreEditSolicitud' || campo.id !== 'numeconomicoEditSolicitud' || campo
+                            .id !== 'placasEditSolicitud' || campo.id !== 'marcaEditSolicitud') {
                             campo.style.color = 'initial';
                         }
                     });
-
+                    /*camposDetalleSolicitud.forEach(function(campo) {
+                        campo.removeAttribute('readonly');
+                        campo.style.color = 'initial';
+                    });*/
+                    
                 } else {
                     vistaSolicitud = false;
                     editarCamposLink.innerHTML = `

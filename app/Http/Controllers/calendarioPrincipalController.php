@@ -6,12 +6,14 @@ use App\Models\calendarioPrincipal;
 use App\Http\Controllers\Controller;
 use App\Models\inventario;
 use App\Models\mantenimientos;
+use App\Models\marca;
 use App\Models\personal;
 use App\Models\solicitudDetalle;
 use App\Models\tipoMantenimiento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class calendarioPrincipalController extends Controller
 {
@@ -22,8 +24,10 @@ class calendarioPrincipalController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('calendarioPrincipal_index'), 404);
         // dd('HOLA');
         $personal = personal::all();
+        $marca = marca::all();
         $tiposMantenimiento = tipoMantenimiento::all();
         $herramientas = inventario::where('tipo', 'herramientas')->get();
         $refacciones = inventario::where('tipo', 'refacciones')->get();
@@ -31,7 +35,7 @@ class calendarioPrincipalController extends Controller
         $eventos = calendarioPrincipal::leftJoin('solicitudes', 'calendarioPrincipal.solicitudesId', '=', 'solicitudes.id')
             ->leftJoin('actividades', 'calendarioPrincipal.actividadesId', '=', 'actividades.id')
             ->leftJoin('maquinaria', 'calendarioPrincipal.maquinariaId', '=', 'maquinaria.id')
-            ->leftJoin('solicitudDetalle', 'solicitudes.id', '=', 'solicitudDetalle.solicitudId')
+            // ->leftJoin('solicitudDetalle', 'solicitudes.id', '=', 'solicitudDetalle.solicitudId')
             ->select(
                 'calendarioPrincipal.*',
                 'calendarioPrincipal.id',
@@ -50,20 +54,20 @@ class calendarioPrincipalController extends Controller
                 'maquinaria.nombre',
                 'maquinaria.identificador as numeconomico',
                 'maquinaria.placas',
-                'maquinaria.marca',
-                'solicitudDetalle.cantidad',
-                'solicitudDetalle.tipo',
-                'solicitudDetalle.comentario',
-                'solicitudDetalle.litros',
-                'solicitudDetalle.reparacion',
-                'solicitudDetalle.carga'
+                'maquinaria.marcaId',
+                // 'solicitudDetalle.cantidad',
+                // 'solicitudDetalle.tipo',
+                // 'solicitudDetalle.comentario',
+                // 'solicitudDetalle.litros',
+                // 'solicitudDetalle.reparacion',
+                // 'solicitudDetalle.carga'
             )
             ->get();
         $eventosJson = $eventos->toJson();
 
         // $solicitudDetalle = solicitudDetalle::where($maquinaria->id)->get();
         // dd($eventos, $eventosJson);
-        return view('calendarioPrincipal/calendarioPrincipal', compact('eventosJson', 'tiposMantenimiento', 'personal', 'herramientas', 'refacciones'));
+        return view('calendarioPrincipal/calendarioPrincipal', compact('eventosJson', 'tiposMantenimiento', 'marca', 'personal', 'herramientas', 'refacciones'));
     }
 
     /**
@@ -84,6 +88,7 @@ class calendarioPrincipalController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(Gate::denies('calendarioPrincipal_create'), 404);
         $mantenimiento = $request->all();
         $nuevoMantenimiento = mantenimientos::create($mantenimiento);
         // dd("NO");
@@ -138,7 +143,7 @@ class calendarioPrincipalController extends Controller
      */
     public function update(Request $request, calendarioPrincipal $calendarioPrincipal)
     {
-        abort_if(Gate::denies('calendarioMtq_edit'), 404);
+        abort_if(Gate::denies('calendarioPrincipal_edit'), 404);
         $calendarioPrincipal = calendarioPrincipal::where('id', $request->id)->first();
         $data = $request->all();
         // dd($calendarioPrincipal, $data);
@@ -173,5 +178,18 @@ class calendarioPrincipalController extends Controller
     public function destroy(calendarioPrincipal $calendarioPrincipal)
     {
         //
+    }
+
+    public function solicitudDetalle($solicitudId)
+    {
+        $solicitudes = solicitudDetalle::where('solicitudId', $solicitudId)->get();
+        return response()->json($solicitudes);
+    }
+
+    public function checkPermission($permission)
+    {
+        $hasPermission = Auth::user()->hasPermissionTo($permission);
+
+        return response()->json(['hasPermission' => $hasPermission]);
     }
 }

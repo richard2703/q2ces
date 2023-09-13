@@ -543,7 +543,7 @@ class maquinariaController extends Controller
                 $nuevaLista->push($objRefaccion->id);
             }
         }
-        // $test = refacciones::where('maquinariaId', $maquinaria->id)->whereNotIn('id', $nuevaLista)->delete();
+        $test = refacciones::where('maquinariaId', $maquinaria->id)->whereNotIn('id', $nuevaLista)->delete();
 
         Session::flash('message', 1);
 
