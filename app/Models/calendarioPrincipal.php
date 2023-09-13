@@ -28,5 +28,6 @@ class calendarioPrincipal extends Model
         'color',
         'start',
         'end',
+        'prioridad'
     ];
 }

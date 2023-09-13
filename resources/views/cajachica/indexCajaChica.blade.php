@@ -44,20 +44,22 @@
 
                                         <div class="col-3 col-md-2 text-center">
                                             <p class="">Semana Pasada</p>
-                                            <p class="combustibleLitros fw-semibold text-black-50 ">$ {{ $lastweek }}
-                                            </p>
+                                            <p class="combustibleLitros fw-semibold text-black-50 ">$
+                                                {{ number_format($lastweek, 2) }}</p>
                                         </div>
                                         <div class="col-3 col-md-2 text-center">
                                             <p class="">Ingreso</p>
-                                            <p class="combustibleLitros fw-semibold text-success">$ {{ $ingreso }}</p>
+                                            <p class="combustibleLitros fw-semibold text-success">$
+                                                {{ number_format($ingreso, 2) }}</p>
                                         </div>
                                         <div class="col-3 col-md-2  text-center">
                                             <p class="">Egreso</p>
-                                            <p class="combustibleLitros fw-semibold text-danger">$ {{ $egreso }}</p>
+                                            <p class="combustibleLitros fw-semibold text-danger">$
+                                                {{ number_format($egreso, 2) }}</p>
                                         </div>
                                         <div class="col-3 col-md-2 text-center">
                                             <p class="">Saldo</p>
-                                            <p class="combustibleLitros fw-semibold ">$ {{ $lastTotal }}
+                                            <p class="combustibleLitros fw-semibold ">$ {{ number_format($lastTotal, 2) }}
                                             </p>
                                         </div>
                                         <div class="row">
@@ -150,7 +152,7 @@
 
                                                             @default
                                                         @endswitch>
-                                                            {{ $registro->cantidad }}</td>
+                                                            {{ number_format($registro->cantidad, 2) }}</td>
                                                         <td class="td-actions text-right">
                                                             @can('cajachica_show')
                                                                 <a href="{{ route('cajaChica.show', $registro->id) }}"

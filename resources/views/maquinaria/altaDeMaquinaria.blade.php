@@ -395,7 +395,8 @@
                                                         </div>
 
                                                     </div>
-                                                    @php$countador = 0;
+                                                    @php
+                                                        $countador = 0;
                                                     @endphp
                                                     <div class="d-flex p-3">
                                                         <div class="col-12" id="elementos">
@@ -462,9 +463,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    @php
+                                                    {{--  @php
                                                         $countador++;
-                                                    @endphp
+                                                    @endphp  --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -482,7 +483,8 @@
                                             aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
                                                 <div class="row mt-3">
-                                                    @php$count = 0;
+                                                    @php
+                                                        $count = 0;
                                                     @endphp
                                                     @foreach ($doc as $item)
                                                         <div
@@ -592,7 +594,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        @php$count++;
+                                                        @php
+                                                            $count++;
                                                         @endphp
                                                     @endforeach
                                                 </div>
@@ -635,10 +638,10 @@
                         success: function(data) {
                             if (data.relacionEncontrada) {
                                 iconContainer.css("color",
-                                "green"); // Cambiar el color del icono a verde
+                                    "green"); // Cambiar el color del icono a verde
                             } else {
                                 iconContainer.css("color",
-                                "red"); // Cambiar el color del icono a rojo
+                                    "red"); // Cambiar el color del icono a rojo
                             }
                         },
                         error: function(error) {

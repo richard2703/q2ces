@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ReporteCajaChicaExport;
 use App\Models\cajaChica;
 use App\Http\Controllers\Controller;
 use App\Models\conceptos;
@@ -17,6 +18,8 @@ use Illuminate\Support\Facades\DB;
 use App\Helpers\Calculos;
 use App\Models\clientes;
 use App\Models\comprobante;
+use Maatwebsite\Excel\Excel as ExcelExcel;
+use Maatwebsite\Excel\Facades\Excel;
 
 class cajaChicaController extends Controller
 {
@@ -74,7 +77,6 @@ class cajaChicaController extends Controller
         } else {
             $lunes = new Carbon('last monday');
         }
-
         if (Carbon::parse(now())->locale('es')->isoFormat('dddd') == 'domingo') {
             $domingo = now();
             // dd(Carbon::parse($pLunes)->locale('es')->isoFormat('dddd'));
@@ -94,11 +96,11 @@ class cajaChicaController extends Controller
             ->get()
             ->sum('cantidad');
 
-        $domingo = new Carbon('last sunday');
+        $Adomingo = new Carbon('last sunday');
 
-        $lunes->subDay(7);
+        $Alunes = $lunes->clone()->subDay(7);
 
-        $semana = cajaChica::whereBetween('dia', [$lunes, $domingo])
+        $semana = cajaChica::whereBetween('dia', [$Alunes, $Adomingo])
             ->orderby('dia', 'desc')
             ->orderby('id', 'desc')->first();
         if ($semana == null) {
@@ -106,6 +108,8 @@ class cajaChicaController extends Controller
         } else {
             $lastweek = $semana->total;
         }
+        // dd($lunes, $domingo);
+
         return view('cajaChica.indexCajaChica', compact('registros', 'lastTotal', 'ingreso', 'egreso', 'lastweek', 'lunes', 'domingo'));
     }
 
@@ -281,7 +285,74 @@ class cajaChicaController extends Controller
             )->whereBetween('dia', [$request->inicio, $request->fin])
             ->orderby('dia', 'desc')->orderby('id', 'desc')
             ->get();
-        dd($registros);
-        return view('cajaChica.reporteCajaChica', compact('registros', 'lastTotal', 'ingreso', 'egreso', 'lastweek', 'lunes', 'domingo'));
+
+        $ingreso = cajaChica::where('tipo', 1)
+            ->whereBetween('dia', [$request->inicio, $request->fin])
+            ->sum('cantidad');
+        $egreso = cajaChica::where('tipo', 2)
+            ->whereBetween('dia', [$request->inicio, $request->fin])
+            ->sum('cantidad');
+
+        $inicio = $request->inicio;
+        $fin = $request->fin;
+        return view('cajaChica.reporteCajaChica', compact('registros', 'inicio', 'fin', 'ingreso', 'egreso'));
+    }
+
+    public function reporteExcel(Request $request)
+    {
+        // dd('test');
+        $query = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
+            ->leftJoin('obras', 'cajaChica.obra', 'obras.id')
+            ->join('maquinaria', 'cajaChica.equipo', 'maquinaria.id')
+            ->join('conceptos', 'cajaChica.concepto', 'conceptos.id')
+            ->join('comprobante', 'cajaChica.comprobanteId', 'comprobante.id')
+            ->select(
+                'cajaChica.id',
+                'dia',
+                'conceptos.codigo',
+                'conceptos.nombre as cnombre',
+                'ncomprobante',
+                'comprobante.nombre as comprobante',
+                'personal.nombres as pnombre',
+                'personal.apellidoP as papellidoP',
+                'cliente',
+                'obras.nombre as obra',
+                'maquinaria.identificador',
+                'maquinaria.nombre as maquinaria',
+                'cantidad',
+                'cajaChica.tipo',
+            )->whereBetween('dia', [$request->inicio, $request->fin])
+            ->orderby('dia', 'desc')->orderby('id', 'desc')
+            ->get();
+        // dd($query);
+
+        foreach ($query as $q) {
+            switch ($q->tipo) {
+                case  $q->tipo == 1:
+                    $q->tipo = 'Ingreso';
+                    break;
+                case $q->tipo == 2:
+                    $q->tipo = 'Egreso';
+                    break;
+                case $q->tipo == 3:
+                    $q->tipo = 'Ingreso de Servicios';
+                    break;
+                case $q->tipo == 4:
+                    $q->tipo = 'Pendiente de Cobro Y/O Factura';
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+
+
+
+        // dd($request);
+        // return Excel::download(new ReporteCajaChicaExport, 'cajaChica.xlsx');
+        // return (new ReporteCajaChicaExport)->download('invoices.csv', ExcelExcel::CSV, ['Content-Type' => 'text/csv']);
+        return (new ReporteCajaChicaExport($query))->download('invoices.xlsx');
+        // return (new ReporteCajaChicaExport)->forYear(2023)->download('invoices.xlsx');
     }
 }
