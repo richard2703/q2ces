@@ -16,7 +16,11 @@
     </head>
     <div class="content">
         <div class="row">
-            <div class="col-4 text-left mb-1" style="margin-left: 12px">
+            <div class="col-6 text-left mb-1" style="margin-left: 12px">
+                <span>
+                    <div
+                        class="display-8 text-start" title="Ir al periodo en curso" style="color: #5C7C26;"><b>CALENDARIO: Servicios MTQ</b></div>
+                </span>
                 {{--  <a href="{{ url('dashMtq') }}" id="regresarId">
                     <button class="btn regresar"
                         style="background-color: var(--select);
@@ -29,7 +33,7 @@
                     </button>
                 </a>  --}}
             </div>
-            <div class="col-8 text-end mb-1" style="margin-left: -25px">
+            <div class="col-6 text-end mb-1" style="margin-left: -25px">
                 @can('calendarioMtq_create')
                     <button data-bs-toggle="modal" data-bs-target="#modalEvento" type="button" class="btn botonGral">Añadir
                         Mantenimiento</button>

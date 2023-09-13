@@ -38,13 +38,21 @@
                         <div class="text-start">
                             <p class="headerTicket text-center">COMBUSTIBLES Y/O FLUIDOS,<br> CARGA DE COMBUSTIBLE</p>
                             <p class="text-center" id="fecha-hora" style="margin-top: -10px"></p>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">CARGA ID: -- </span> {{ $carga->id }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">Q2S/COMB-: -- </span> {{ $carga->id }}</div>
                             <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">OPERADOR: -- </span> {{ $carga->operador_nombre }}</div>
                             <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">EQUIPO Y/O MAQUINARIA: -- </span> {{ $carga->maquinaria_nombre }}</div>
                             <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">SOLICITO: -- </span> {{ $carga->user_nombre }}</div>
                             <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">LITROS: -- </span>{{ $carga->litros }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">HORA: -- </span>{{ $carga->horas }}</div>
                             <p class="headerTicket text-center mt-2">INFORMACIÓN EQUIPO DESPACHO</p>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">HORA LLEGADA: -- </span>{{ $carga->horas }}</div>
+                            {{--  <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">HORA LLEGADA: -- </span>{{ $carga->horas }}</div>  --}}
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">HORA LLEGADA: -- </span>11:00 pm</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">HORA LLEGADA: -- </span>2:30 pm</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">HORARIO: -- </span>8:00 am - 7:30 pm</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">TOTAL HORAS EXTRA: -- </span>1.30</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">ODOMETRO LLEGADA: -- </span>125345.5</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">ODOMETRO SALIDA: -- </span>125445.5</div>
+                            <p class="text-center"><span style="font-weight: 1000; font-size: 14px important; margin-top: 10px;">OBSERVACIONES: -- </span>EL EQUIPO DE DESPACHO NO FUNCIONO Y SE TUBO QUE UTILIZAR EL PORTATIL</p>
                             <p class="pt-5" style="margin-top: 20px; text-align: center;">
                                 ______________________________________<br>
                                 Nombre Y Firma De Recibido
@@ -53,7 +61,9 @@
                                 </div>
                             </p>
                             <p class="headerTicket text-center">COMBUSTIBLES Y/O FLUIDOS</p>
-                            <div><span style="font-weight: 1000; font-size: 14px important;">PRECIO: -- </span>{{ $carga->precio }}</div>
+                            <div><span style="font-weight: 1000; font-size: 14px important;">COSTO DE COMBUSTIBLE: -- </span>100.00</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">COSTO DE FLUIDOS: -- </span> 25.00</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">TOTAL: -- </span>125.00</div>
                         </div>
                     </div>
                 </div>

@@ -323,6 +323,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Crud calendarioPrincipal
     Route::resource('calendarioPrincipal', App\Http\Controllers\calendarioPrincipalController::class);
+    Route::put('calendarioPrincipal/editar/{evento}', [App\Http\Controllers\calendarioPrincipalController::class, 'update'])->name('calendarioPrincipal.update');
     Route::resource('actividades', App\Http\Controllers\actividadesController::class);
     // Route::get('/calendario', [App\Http\Controllers\calendarioController::class, 'index'])->name('calendarioPrincipal.index');
     // Route::get('/calendario2', [App\Http\Controllers\calendarioController::class, 'index2'])->name('calendarioPrincipal.index2');
@@ -350,7 +351,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //*** operaciones con solicitudes */
     Route::post('/calendario/solicitudes/nuevo', [App\Http\Controllers\solicitudesController::class, 'store'])->name('solicitudes.store');
-    // Route::put('/calendario/solicitudes/editar', [App\Http\Controllers\solicitudesController::class, 'update'])->name('solicitudes.update');
+    Route::put('/calendario/solicitudes/editar', [App\Http\Controllers\solicitudesController::class, 'update'])->name('solicitudes.update');
 
     //Crud personal
     Route::get('/asistencia', [App\Http\Controllers\asistenciaController::class, 'index'])->name('asistencia.index');
@@ -380,6 +381,8 @@ Route::group(['middleware' => 'auth'], function () {
     // Caja Chica
     Route::resource('cajaChica', App\Http\Controllers\cajaChicaController::class);
     Route::post('cajaChica/reporte', [App\Http\Controllers\cajaChicaController::class, 'reporte'])->name('cajaChica.reporte');
+    Route::post('cajaChica/reporte/exportar', [App\Http\Controllers\cajaChicaController::class, 'reporteExcel'])->name('cajaChica.reporteExcel');
+
 
     // Conceptos
     Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
