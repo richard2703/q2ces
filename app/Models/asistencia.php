@@ -21,6 +21,7 @@ class asistencia extends Model {
         'esAsistencia',
         'hEntrada' ,
         'hSalida',
+        'EntradaAnticipada'
     ];
 
 }

@@ -1465,6 +1465,7 @@ create table asistencia(
     comentario text NULL,
     hEntrada time null,
     hSalida time null,
+    EntradaAnticipada int NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     primary key (id),

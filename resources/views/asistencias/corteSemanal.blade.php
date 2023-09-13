@@ -153,8 +153,8 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead class="labelTitulo text-center">
-                                                    <th class="labelTitulo corte">Puesto</th>
                                                     <th class="labelTitulo corte">Código</th>
+                                                    <th class="labelTitulo corte">Puesto</th>
                                                     <th class="labelTitulo corte">Nombre</th>
                                                     <?php
                                                     for ($i=0; $i < 7 ; $i++) {
@@ -189,10 +189,10 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                         $intTotalHorasCompletas = 0;
                                                         ?>
                                                         <tr>
-                                                            <td>{{ ucwords(trans($item->puesto)) }}</td>
                                                             <td style="color: {{ $item->estatusColor }};">
                                                                 <strong>{{ ucwords(trans($item->numEmpleado)) }}</strong>
                                                             </td>
+                                                            <td>{{ ucwords(trans($item->puesto)) }}</td>
                                                             <td class="text-left">{{ ucwords(trans($item->empleado)) }}
                                                             </td>
                                                             <?php
@@ -308,10 +308,10 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
 
                                                         @forelse ($listaAsistencia as $item)
                                                             <tr>
-                                                                <td>{{ ucwords(trans($item->puesto)) }}</td>
                                                                 <td style="color: {{ $item->estatusColor }};">
                                                                     <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                                 </td>
+                                                                <td>{{ ucwords(trans($item->puesto)) }}</td>
                                                                 <td class="text-left">{{ $item->apellidoP }}
                                                                     {{ $item->apellidoM }}, {{ $item->nombres }}</td>
                                                                 <td>---</td>
