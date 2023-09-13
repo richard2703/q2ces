@@ -13,6 +13,7 @@ use App\Models\maqimagen;
 use App\Models\usoMaquinarias;
 use App\Models\marca;
 use App\Models\serviciosMtq;
+use Illuminate\Support\Facades\Storage;
 
 class maquinariaMtqController extends Controller
 {
@@ -28,7 +29,7 @@ class maquinariaMtqController extends Controller
         // Filtrar maquinarias donde el campo 'compania' no sea nulo
         // $maquinaria = maquinaria::whereNotNull('compania')->paginate(15);
 
-        $maquinaria = maquinaria::whereNotNull('compania')
+        $maquinaria = maquinaria::where('compania', 'mtq')
             ->leftJoin('marca', 'marca.id', 'maquinaria.marcaId')
             ->select('maquinaria.*', 'marca.nombre as nombreMarca')
             ->paginate(15);
@@ -61,8 +62,16 @@ class maquinariaMtqController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('maquinaria_mtq_create'), 403);
+        if ($request->hasFile('foto')) {
+            dd('entro');
+        }
+        dd('fallo');
 
-
+        $request->validate([
+            'identificador' => 'required|max:150|unique:maquinaria,identificador',
+        ], [
+            'identificador.unique' => 'El Numero Economico Ya Existe.',
+        ]);
 
         $maquinaria = $request->all();
 
@@ -80,7 +89,7 @@ class maquinariaMtqController extends Controller
         $maquinaria['numserie'] = strtoupper($maquinaria['numserie']);
 
         //*** se guarda la maquinaria */
-        //dd($request);
+
 
         $maquinaria = maquinaria::create($maquinaria);
 
@@ -91,6 +100,34 @@ class maquinariaMtqController extends Controller
             $maquinaria->foto = time() . '_' . $request->file('foto')->getClientOriginalName();
             //$maqimagen = maqimagen::create($imagen); 
             $request->file('foto')->storeAs('/public/maquinaria/' . $pathMaquinaria, $maquinaria->foto);
+            $maquinaria->save();
+        }
+        if ($request->hasFile('frente')) {
+            // dd($request);
+            $maquinaria->frente = time() . '_' . $request->file('frente')->getClientOriginalName();
+            //$maqimagen = maqimagen::create($imagen); 
+            $request->file('frente')->storeAs('/public/maquinaria/' . $pathMaquinaria, $maquinaria->frente);
+            $maquinaria->save();
+        }
+        if ($request->hasFile('derecho')) {
+            // dd($request);
+            $maquinaria->derecho = time() . '_' . $request->file('derecho')->getClientOriginalName();
+            //$maqimagen = maqimagen::create($imagen); 
+            $request->file('derecho')->storeAs('/public/maquinaria/' . $pathMaquinaria, $maquinaria->derecho);
+            $maquinaria->save();
+        }
+        if ($request->hasFile('izquierdo')) {
+            // dd($request);
+            $maquinaria->izquierdo = time() . '_' . $request->file('izquierdo')->getClientOriginalName();
+            //$maqimagen = maqimagen::create($imagen); 
+            $request->file('izquierdo')->storeAs('/public/maquinaria/' . $pathMaquinaria, $maquinaria->izquierdo);
+            $maquinaria->save();
+        }
+        if ($request->hasFile('trasero')) {
+            // dd($request);
+            $maquinaria->trasero = time() . '_' . $request->file('trasero')->getClientOriginalName();
+            //$maqimagen = maqimagen::create($imagen); 
+            $request->file('trasero')->storeAs('/public/maquinaria/' . $pathMaquinaria, $maquinaria->trasero);
             $maquinaria->save();
         }
 
@@ -138,6 +175,10 @@ class maquinariaMtqController extends Controller
     public function update(Request $request, $maquinaria)
     {
         abort_if(Gate::denies('maquinaria_mtq_edit'), 403);
+        // if ($request->hasFile('foto')) {
+        //     dd('entro');
+        // }
+        // dd('fallo');
 
         $maquinariaMtq = maquinaria::where('id', $request->id)->first();
         // dd($request, $maquinaria, $maquinariaMtq);
@@ -152,18 +193,69 @@ class maquinariaMtqController extends Controller
         /*** directorio contenedor de su información */
         $pathMaquinaria = str_pad($data['identificador'], 4, '0', STR_PAD_LEFT);
         $data['compania'] = 'mtq';
-
         $maquinariaMtq->update($data);
 
 
+
         if ($request->hasFile('foto')) {
-            //dd($request);    
+            // dd($request);
             $maquinariaMtq->foto = time() . '_' . $request->file('foto')->getClientOriginalName();
             //$maqimagen = maqimagen::create($imagen); 
             $request->file('foto')->storeAs('/public/maquinaria/' . $pathMaquinaria, $maquinariaMtq->foto);
             $maquinariaMtq->save();
         }
-        //  dd($maquinaria);
+        if ($request->hasFile('frente')) {
+            // dd($request);
+            $maquinariaMtq->frente = time() . '_' . $request->file('frente')->getClientOriginalName();
+            //$maqimagen = maqimagen::create($imagen); 
+            $request->file('frente')->storeAs('/public/maquinaria/' . $pathMaquinaria, $maquinariaMtq->frente);
+            $maquinariaMtq->save();
+        }
+        if ($request->hasFile('derecho')) {
+            // dd($request);
+            $maquinariaMtq->derecho = time() . '_' . $request->file('derecho')->getClientOriginalName();
+            //$maqimagen = maqimagen::create($imagen); 
+            $request->file('derecho')->storeAs('/public/maquinaria/' . $pathMaquinaria, $maquinariaMtq->derecho);
+            $maquinariaMtq->save();
+        }
+        if ($request->hasFile('izquierdo')) {
+            // dd($request);
+            $maquinariaMtq->izquierdo = time() . '_' . $request->file('izquierdo')->getClientOriginalName();
+            //$maqimagen = maqimagen::create($imagen); 
+            $request->file('izquierdo')->storeAs('/public/maquinaria/' . $pathMaquinaria, $maquinariaMtq->izquierdo);
+            $maquinariaMtq->save();
+        }
+        if ($request->hasFile('trasero')) {
+            // dd($request);
+            $maquinariaMtq->trasero = time() . '_' . $request->file('trasero')->getClientOriginalName();
+            //$maqimagen = maqimagen::create($imagen); 
+            $request->file('trasero')->storeAs('/public/maquinaria/' . $pathMaquinaria, $maquinariaMtq->trasero);
+            $maquinariaMtq->save();
+        }
+
+        // if ($request->hasFile('foto')) {
+        //     // // dd($maquinariaMtq->foto);
+        //     // $image_path = storage_path() . '\app\public\maquinaria' . $pathMaquinaria . '/' . $maquinariaMtq->foto;
+        //     // // $image_path = str_replace('storage', 'maquinaria', $pathMaquinaria . '/' . $maquinariaMtq->foto);
+
+        //     // if (Storage::exists($image_path)) {
+        //     //     Storage::delete($image_path);
+        //     //     // return 'Imagen eliminada con éxito.';
+        //     // } else {
+        //     //     // dd($image_path);
+
+        //     //     // dd('no existe');
+        //     //     // return 'La imagen no existe.';
+        //     // }
+
+        //     $maquinariaMtq->foto = time() . '_' . $request->file('foto')->getClientOriginalName();
+        //     $request->file('foto')->storeAs('/public/maquinaria/' . $pathMaquinaria, $maquinariaMtq->foto);
+
+        //     // $maquinariaMtq->save();
+        //     $maquinariaMtq->save();
+        // }
+
+
 
         Session::flash('message', 1);
 

@@ -2,6 +2,17 @@
 @section('content')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/calendarMtq.css') }}">
     <div class="content">
+        @if ($errors->any())
+            <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+            <div class="alert alert-danger">
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -96,7 +107,9 @@
                                             <td class="td-actions text-center">
                                                 @can('maquinaria_mtq_show')
                                                     <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
-                                                        onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marcaId }}','{{ $maquina->modelo }}','{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}','{{ $maquina->foto }}','{{ true }}')">
+                                                        onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marcaId }}','{{ $maquina->modelo }}',
+                                                    '{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}',
+                                                    '{{ $maquina->foto }}','{{ $maquina->frente }}','{{ $maquina->derecho }}','{{ $maquina->izquierdo }}','{{ $maquina->trasero }}','{{ true }}')">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
                                                             fill="currentColor" class="bi bi-card-text accionesIconos"
                                                             viewBox="0 0 16 16">
@@ -109,7 +122,9 @@
                                                 @endcan
                                                 @can('maquinaria_mtq_edit')
                                                     <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
-                                                        onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marcaId }}','{{ $maquina->modelo }}','{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}','{{ $maquina->foto }}','{{ false }}')">
+                                                        onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marcaId }}','{{ $maquina->modelo }}',
+                                                        '{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}',
+                                                        '{{ $maquina->foto }}','{{ $maquina->frente }}','{{ $maquina->derecho }}','{{ $maquina->izquierdo }}','{{ $maquina->trasero }}','{{ false }}')">
                                                         <svg xmlns="http://www.w3.org/2000/svg " width="28" height="28"
                                                             fill="currentColor" class="bi bi-pencil accionesIconos"
                                                             viewBox="0 0 16 16">
@@ -169,15 +184,62 @@
                         {{-- <input type="hidden" name="userId" id="userId" value="{{ $usuario->id }}"> --}}
 
                         <div class="row d-flex justify-content-center">
-                            <div class="col-12 col-sm-6 align-items-center">
+                            <div class="col-12 col-sm-6 col-md-4  align-items-center">
                                 <div class="text-center mx-auto border vistaFoto mb-4">
                                     <i><img class="imgVista img-fluid mb-5"
                                             src="{{ asset('/img/general/default.jpg') }}"></i>
                                     <span class="mi-archivo">
-                                        <input class="mb-4 ver" type="file" name="foto" id="mi-archivo2"
-                                            accept="image/*">
+                                        <input class="mb-4 ver" type="file" name="frente" accept="image/*">
+                                    </span>
+                                    <label for="mi-archivo">
+                                        <span>sube Imagen</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 align-items-center">
+                                <div class="text-center mx-auto border vistaFoto mb-4">
+                                    <i><img class="imgVista img-fluid mb-5"
+                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                    <span class="mi-archivo2">
+                                        <input class="mb-4 ver" type="file" name="derecho" accept="image/*">
                                     </span>
                                     <label for="mi-archivo2">
+                                        <span>sube Imagen</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 align-items-center">
+                                <div class="text-center mx-auto border vistaFoto mb-4">
+                                    <i><img class="imgVista img-fluid mb-5"
+                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                    <span class="mi-archivo3">
+                                        <input class="mb-4 ver" type="file" name="izquierdo" accept="image/*">
+                                    </span>
+                                    <label for="mi-archivo3">
+                                        <span>sube Imagen</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 align-items-center">
+                                <div class="text-center mx-auto border vistaFoto mb-4">
+                                    <i><img class="imgVista img-fluid mb-5"
+                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                    <span class="mi-archivo4">
+                                        <input class="mb-4 ver" type="file" name="trasero" accept="image/*">
+                                    </span>
+                                    <label for="mi-archivo4">
+                                        <span>sube Imagen</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 align-items-center">
+                                <div class="text-center mx-auto border vistaFoto mb-4">
+                                    <i><img class="imgVista img-fluid mb-5"
+                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                    <span class="mi-archivo5">
+                                        <input class="mb-4 ver" type="file" name="foto" accept="image/*">
+                                    </span>
+                                    <label for="mi-archivo5">
                                         <span>sube Imagen</span>
                                     </label>
                                 </div>
@@ -276,22 +338,85 @@
                         @csrf
                         @method('put')
                         <input type="hidden" name="id" value="" id="id">
+
                         <div class="row d-flex justify-content-center">
-                            <div class="col-12 col-sm-6 align-items-center">
+                            <div class="col-12 col-sm-6 col-md-4  align-items-center">
                                 <div class="text-center mx-auto border vistaFoto mb-4">
-                                    <i><img id="fotoImg" class="imgVista img-fluid mb-5"
+                                    <i><img id="fotoImgF" class="imgVista img-fluid "
                                             src="{{ asset('/img/general/default.jpg') }}"></i>
                                     <span class="mi-archivo">
-                                        <input class="mb-4 ver" type="file" name="foto" id="mi-archivo"
+                                        <input class="mb-4 ver" type="file" name="frente" id="mi-archivo"
                                             accept="image/*">
                                     </span>
-                                    <div id="contenedorBotonSubirImagen">
+                                    <div id="contenedorBotonSubirImagenF">
                                         <label for="mi-archivo">
                                             <span>sube Imagen</span>
                                         </label>
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12 col-sm-6 col-md-4 align-items-center">
+                                <div class="text-center mx-auto border vistaFoto mb-4">
+                                    <i><img id="fotoImgD" class="imgVista img-fluid "
+                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                    <span class="mi-archivo2">
+                                        <input class="mb-4 ver" type="file" name="derecho" id="mi-archivo2"
+                                            accept="image/*">
+                                    </span>
+                                    <div id="contenedorBotonSubirImagenD">
+                                        <label for="mi-archivo2">
+                                            <span>sube Imagen</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 align-items-center">
+                                <div class="text-center mx-auto border vistaFoto mb-4">
+                                    <i><img id="fotoImgI" class="imgVista img-fluid "
+                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                    <span class="mi-archivo3">
+                                        <input class="mb-4 ver" type="file" name="izquierdo" id="mi-archivo3"
+                                            accept="image/*">
+                                    </span>
+                                    <div id="contenedorBotonSubirImagenI">
+                                        <label for="mi-archivo3">
+                                            <span>sube Imagen</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 align-items-center">
+                                <div class="text-center mx-auto border vistaFoto mb-4">
+                                    <i><img id="fotoImgT" class="imgVista img-fluid "
+                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                    <span class="mi-archivo4">
+                                        <input class="mb-4 ver" type="file" name="trasero" id="mi-archivo4"
+                                            accept="image/*">
+                                    </span>
+                                    <div id="contenedorBotonSubirImagenT">
+                                        <label for="mi-archivo4">
+                                            <span>sube Imagen</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 align-items-center">
+                                <div class="text-center mx-auto border vistaFoto mb-4">
+                                    <i><img id="fotoImg" class="imgVista img-fluid "
+                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                    <span class="mi-archivo5">
+                                        <input class="mb-4 ver" type="file" name="foto" id="mi-archivo5"
+                                            accept="image/*">
+                                    </span>
+                                    <div id="contenedorBotonSubirImagen">
+                                        <label for="mi-archivo5">
+                                            <span>sube Imagen</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
 
                         <input type="hidden" name="puestoId" id="puestoId" value="">
@@ -629,7 +754,8 @@
     </script>
     <script>
         function cargaItem(id, identificador, nombre, marca, modelo, submarca, ano, color, placas, numserie, nummotor, img,
-            modalTipo) {
+            imgF, imgD, imgI, imgT, modalTipo) {
+            console.log("Foto", img, "FotoF", imgF);
 
             const txtId = document.getElementById('id');
             txtId.value = id;
@@ -641,6 +767,31 @@
             } else {
                 contenedorBotonSubirImagen.style.display = 'block';
             }
+            const contenedorBotonSubirImagenD = document.getElementById('contenedorBotonSubirImagenD');
+            if (modalTipo) {
+                contenedorBotonSubirImagenD.style.display = 'none';
+            } else {
+                contenedorBotonSubirImagenD.style.display = 'block';
+            }
+            const contenedorBotonSubirImagenF = document.getElementById('contenedorBotonSubirImagenF');
+            if (modalTipo) {
+                contenedorBotonSubirImagenF.style.display = 'none';
+            } else {
+                contenedorBotonSubirImagenF.style.display = 'block';
+            }
+            const contenedorBotonSubirImagenI = document.getElementById('contenedorBotonSubirImagenI');
+            if (modalTipo) {
+                contenedorBotonSubirImagenI.style.display = 'none';
+            } else {
+                contenedorBotonSubirImagenI.style.display = 'block';
+            }
+            const contenedorBotonSubirImagenT = document.getElementById('contenedorBotonSubirImagenT');
+            if (modalTipo) {
+                contenedorBotonSubirImagenT.style.display = 'none';
+            } else {
+                contenedorBotonSubirImagenT.style.display = 'block';
+            }
+
 
             if (modalTipo) {
                 contenedorBotonGuardar.style.display = 'none';
@@ -701,13 +852,38 @@
             txtNummotor.value = nummotor;
             txtNummotor.readOnly = modalTipo;
 
+
             const imagenVista = document.getElementById('fotoImg');
-            console.log('imagen 1', img);
             if (img != "" && img != null) {
-                imagenVista.src = "{{ asset('/storage/maquinaria/') }}/" + identificador + "/" + img;
+                imagenVista.src = "{{ asset('/storage/maquinaria/') }}/" + identificador.padStart(4, "0") + "/" + img;
             } else {
                 imagenVista.src = "{{ asset('/img/general/default.jpg') }}"
             }
+            const imagenVistaF = document.getElementById('fotoImgF');
+            if (imgF != "" && imgF != null) {
+                imagenVistaF.src = "{{ asset('/storage/maquinaria/') }}/" + identificador.padStart(4, "0") + "/" + imgF;
+            } else {
+                imagenVistaF.src = "{{ asset('/img/general/default.jpg') }}"
+            }
+            const imagenVistaD = document.getElementById('fotoImgD');
+            if (imgD != "" && imgD != null) {
+                imagenVistaD.src = "{{ asset('/storage/maquinaria/') }}/" + identificador.padStart(4, "0") + "/" + imgD;
+            } else {
+                imagenVistaD.src = "{{ asset('/img/general/default.jpg') }}"
+            }
+            const imagenVistaI = document.getElementById('fotoImgI');
+            if (imgI != "" && imgI != null) {
+                imagenVistaI.src = "{{ asset('/storage/maquinaria/') }}/" + identificador.padStart(4, "0") + "/" + imgI;
+            } else {
+                imagenVistaI.src = "{{ asset('/img/general/default.jpg') }}"
+            }
+            const imagenVistaT = document.getElementById('fotoImgT');
+            if (imgT != "" && imgT != null) {
+                imagenVistaT.src = "{{ asset('/storage/maquinaria/') }}/" + identificador.padStart(4, "0") + "/" + imgT;
+            } else {
+                imagenVistaT.src = "{{ asset('/img/general/default.jpg') }}"
+            }
+
             // Obtener todos los campos del formulario
             const campos = document.querySelectorAll('input[type="text"], textarea');
 
