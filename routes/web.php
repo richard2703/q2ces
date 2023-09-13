@@ -439,6 +439,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Permisos Desde Javascript
     Route::get('/check-permission/{permission}', 'App\Http\Controllers\calendarioMtqController@checkPermission');
+    Route::get('/check-permission-calendarioPrincipal/{permission}', 'App\Http\Controllers\calendarioPrincipalController@checkPermission');
+    Route::get('/solicitud-detalle/{solicitudId}', 'App\Http\Controllers\calendarioPrincipalController@solicitudDetalle');
 
     // Import Excel
     Route::get('/import-excel', 'App\Http\Controllers\ImportExcelController@index')->name('importExcel.get');

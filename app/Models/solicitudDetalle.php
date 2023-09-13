@@ -13,7 +13,6 @@ class solicitudDetalle extends Model
 
     protected $fillable = [
         'inventarioId',
-        'estadoId',
         'solicitudId',
         'tipo',
         'cantidad',
