@@ -187,7 +187,7 @@
                             <div class="col-12 col-sm-6 col-md-4  align-items-center">
                                 <div class="text-center mx-auto border vistaFoto mb-4">
                                     <i><img class="imgVista img-fluid mb-5"
-                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                            src="{{ asset('/img/equipos/frente.png') }}"></i>
                                     <span class="mi-archivo">
                                         <input class="mb-4 ver" type="file" name="frente" accept="image/*">
                                     </span>
@@ -199,7 +199,7 @@
                             <div class="col-12 col-sm-6 col-md-4 align-items-center">
                                 <div class="text-center mx-auto border vistaFoto mb-4">
                                     <i><img class="imgVista img-fluid mb-5"
-                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                            src="{{ asset('/img/equipos/derecho.png') }}"></i>
                                     <span class="mi-archivo2">
                                         <input class="mb-4 ver" type="file" name="derecho" accept="image/*">
                                     </span>
@@ -211,7 +211,7 @@
                             <div class="col-12 col-sm-6 col-md-4 align-items-center">
                                 <div class="text-center mx-auto border vistaFoto mb-4">
                                     <i><img class="imgVista img-fluid mb-5"
-                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                            src="{{ asset('/img/equipos/izquierdo.png') }}"></i>
                                     <span class="mi-archivo3">
                                         <input class="mb-4 ver" type="file" name="izquierdo" accept="image/*">
                                     </span>
@@ -223,7 +223,7 @@
                             <div class="col-12 col-sm-6 col-md-4 align-items-center">
                                 <div class="text-center mx-auto border vistaFoto mb-4">
                                     <i><img class="imgVista img-fluid mb-5"
-                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                            src="{{ asset('/img/equipos/trasero.png') }}"></i>
                                     <span class="mi-archivo4">
                                         <input class="mb-4 ver" type="file" name="trasero" accept="image/*">
                                     </span>
@@ -235,7 +235,7 @@
                             <div class="col-12 col-sm-6 col-md-4 align-items-center">
                                 <div class="text-center mx-auto border vistaFoto mb-4">
                                     <i><img class="imgVista img-fluid mb-5"
-                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                            src="{{ asset('/img/equipos/foto.png') }}"></i>
                                     <span class="mi-archivo5">
                                         <input class="mb-4 ver" type="file" name="foto" accept="image/*">
                                     </span>
@@ -343,7 +343,7 @@
                             <div class="col-12 col-sm-6 col-md-4  align-items-center">
                                 <div class="text-center mx-auto border vistaFoto mb-4">
                                     <i><img id="fotoImgF" class="imgVista img-fluid "
-                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                            src="{{ asset('/img/equipos/frente.png') }}"></i>
                                     <span class="mi-archivo">
                                         <input class="mb-4 ver" type="file" name="frente" id="mi-archivo"
                                             accept="image/*">
@@ -358,7 +358,7 @@
                             <div class="col-12 col-sm-6 col-md-4 align-items-center">
                                 <div class="text-center mx-auto border vistaFoto mb-4">
                                     <i><img id="fotoImgD" class="imgVista img-fluid "
-                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                            src="{{ asset('/img/equipos/derecho.png') }}"></i>
                                     <span class="mi-archivo2">
                                         <input class="mb-4 ver" type="file" name="derecho" id="mi-archivo2"
                                             accept="image/*">
@@ -373,7 +373,7 @@
                             <div class="col-12 col-sm-6 col-md-4 align-items-center">
                                 <div class="text-center mx-auto border vistaFoto mb-4">
                                     <i><img id="fotoImgI" class="imgVista img-fluid "
-                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                            src="{{ asset('/img/equipos/izquierdo.png') }}"></i>
                                     <span class="mi-archivo3">
                                         <input class="mb-4 ver" type="file" name="izquierdo" id="mi-archivo3"
                                             accept="image/*">
@@ -388,7 +388,7 @@
                             <div class="col-12 col-sm-6 col-md-4 align-items-center">
                                 <div class="text-center mx-auto border vistaFoto mb-4">
                                     <i><img id="fotoImgT" class="imgVista img-fluid "
-                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                            src="{{ asset('/img/equipos/derecho.png') }}"></i>
                                     <span class="mi-archivo4">
                                         <input class="mb-4 ver" type="file" name="trasero" id="mi-archivo4"
                                             accept="image/*">
@@ -403,7 +403,7 @@
                             <div class="col-12 col-sm-6 col-md-4 align-items-center">
                                 <div class="text-center mx-auto border vistaFoto mb-4">
                                     <i><img id="fotoImg" class="imgVista img-fluid "
-                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                            src="{{ asset('/img/equipos/foto.png') }}"></i>
                                     <span class="mi-archivo5">
                                         <input class="mb-4 ver" type="file" name="foto" id="mi-archivo5"
                                             accept="image/*">
