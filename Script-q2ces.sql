@@ -1134,6 +1134,10 @@ CREATE TABLE maquinaria(
     cisterna int(1) NULL,
     cisternaNivel float(10, 2) NULL,
     compania varchar(200) NULL,
+    frente varchar(250) null,
+	izquierdo varchar(250) null,
+	derecho varchar(250) null,
+	trasero varchar(250) null
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),

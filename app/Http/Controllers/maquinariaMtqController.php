@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\maqimagen;
 use App\Models\usoMaquinarias;
 use App\Models\marca;
+use App\Models\residente;
 use App\Models\serviciosMtq;
 use Illuminate\Support\Facades\Storage;
 
@@ -31,14 +32,25 @@ class maquinariaMtqController extends Controller
 
         $maquinaria = maquinaria::where('compania', 'mtq')
             ->leftJoin('marca', 'marca.id', 'maquinaria.marcaId')
-            ->select('maquinaria.*', 'marca.nombre as nombreMarca')
+            ->leftJoin('residente', 'residente.autoId', 'maquinaria.id')
+            ->select('maquinaria.*', 'marca.nombre as nombreMarca', 'residente.nombre as residente', 'residente.id as residenteId')
             ->paginate(15);
+
+        $autos = residente::select(
+            'residente.*',
+            'obras.nombre AS obra',
+            'maquinaria.identificador',
+            'maquinaria.nombre AS auto'
+        )
+            ->leftjoin('obras', 'obras.id', '=', 'residente.obraId')
+            ->leftjoin('maquinaria', 'maquinaria.id', '=', 'residente.autoId')
+            ->orderBy('nombre', 'asc')->get();
 
         $marcas = marca::all();
         $servicios = serviciosMtq::all();
 
         // dd( 'test' );
-        return view('MTQ.indexMaquinariaMtq', compact('maquinaria', 'marcas', 'servicios'));
+        return view('MTQ.indexMaquinariaMtq', compact('maquinaria', 'marcas', 'servicios', 'autos'));
     }
 
     /**
@@ -290,5 +302,32 @@ class maquinariaMtqController extends Controller
 
 
         return view('MTQ.indexUsoMaquinariaMtq', compact('maquinaria'));
+    }
+
+    public function asignacion(Request $request)
+    {
+        // dd($request);
+        $data = $request->all();
+        // dd($data);
+
+        if ($data['NresidenteId'] == null || $data['NresidenteId'] == '') {
+            dd('Borrar');
+            $record = residente::where('id', $data['residenteId'])->first();
+            $record->autoId = null;
+            $record->save();
+        } else if ($data['NresidenteId'] != 0) {
+
+            if ($data['residenteId'] != null) {
+                // dd('Residente');
+                $record = residente::where('id', $data['residenteId'])->first();
+                $record->autoId = null;
+                $record->save();
+            }
+
+            $record = residente::where('id', $data['NresidenteId'])->first();
+            $record->autoId = $data['autoId'];
+            $record->save();
+        }
+        return redirect()->route('mtq.index');
     }
 }

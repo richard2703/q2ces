@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\maquinaria;
 use Illuminate\Http\Request;
 use App\Models\residente;
 use App\Models\obras;
-
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
@@ -22,18 +22,29 @@ class residenteController extends Controller
 
     public function index()
     {
-        abort_if(Gate::denies('puesto_index'), 403);
+        // abort_if(Gate::denies('puesto_index'), 403);
 
         $records = residente::select(
             'residente.*',
-            DB::raw('obras.nombre AS obra')
+            'obras.nombre AS obra',
+            'maquinaria.identificador',
+            'maquinaria.nombre AS auto'
         )
-            ->join('obras', 'obras.id', '=', 'residente.obraId')
+            ->leftjoin('obras', 'obras.id', '=', 'residente.obraId')
+            ->leftjoin('maquinaria', 'maquinaria.id', '=', 'residente.autoId')
             ->orderBy('nombre', 'asc')->paginate(10);
 
-        $vctObras = obras::orderBy('nombre', 'asc')->get();
-        // dd( $puestos );
-        return view('MTQ.residentes', compact('records', 'vctObras'));
+        $vctObras = obras::where('clienteId', 1)->where('estatus', 'Activa')
+            ->orderBy('nombre', 'asc')->get();
+
+        $maquinaria = maquinaria::where('compania', 'mtq')
+            ->where('residente.autoId', null)
+            ->orWhere('residente.autoId', '')
+            ->leftJoin('residente', 'residente.autoId', 'maquinaria.id')
+            ->select('maquinaria.*')
+            ->get();
+        // dd($maquinaria);
+        return view('MTQ.residentes', compact('records', 'vctObras', 'maquinaria'));
     }
 
     /**
@@ -56,7 +67,7 @@ class residenteController extends Controller
 
     public function store(Request $request)
     {
-        abort_if(Gate::denies('catalogos_create'), 403);
+        // abort_if(Gate::denies('catalogos_create'), 403);
 
         // dd( $request );
         $request->validate([
@@ -112,19 +123,20 @@ class residenteController extends Controller
 
         abort_if(Gate::denies('catalogos_edit'), 403);
 
-        // dd( $request );
+        // dd($request);
 
         $request->validate([
             'nombre' => 'required|max:250',
-            'comentario' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
-            'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
         ]);
         $data = $request->all();
 
-        $record = residente::where('id', $data['controlId'])->first();
+        $record = residente::where('id', $data['residenteId'])->first();
+        if ($data['autoId'] == 0 && $data['autoId'] != '') {
+            $data['autoId'] = $record->autoId;
+        }
 
         if (is_null($record) == false) {
             // dd( $data );

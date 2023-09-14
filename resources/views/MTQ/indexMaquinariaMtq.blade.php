@@ -123,14 +123,21 @@
                                                 @can('maquinaria_mtq_edit')
                                                     <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
                                                         onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marcaId }}','{{ $maquina->modelo }}',
-                                                        '{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}',
-                                                        '{{ $maquina->foto }}','{{ $maquina->frente }}','{{ $maquina->derecho }}','{{ $maquina->izquierdo }}','{{ $maquina->trasero }}','{{ false }}')">
+                                                    '{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}',
+                                                    '{{ $maquina->foto }}','{{ $maquina->frente }}','{{ $maquina->derecho }}','{{ $maquina->izquierdo }}','{{ $maquina->trasero }}','{{ false }}')">
                                                         <svg xmlns="http://www.w3.org/2000/svg " width="28" height="28"
                                                             fill="currentColor" class="bi bi-pencil accionesIconos"
                                                             viewBox="0 0 16 16">
                                                             <path
                                                                 d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                                         </svg>
+                                                    </a>
+                                                @endcan
+
+                                                @can('maquinaria_mtq_edit')
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#asignar"
+                                                        onclick="asignar('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->residenteId }}','{{ $maquina->residente }}')">
+                                                        <i class="fas fa-user-check iconoTablas"></i>
                                                     </a>
                                                 @endcan
                                                 {{-- @can('maquinaria_mtq_destroy') --}}
@@ -186,8 +193,7 @@
                         <div class="row d-flex justify-content-center">
                             <div class="col-12 col-sm-6 col-md-4  align-items-center">
                                 <div class="text-center mx-auto border vistaFoto mb-4">
-                                    <i><img class="imgVista img-fluid mb-5"
-                                            src="{{ asset('/img/equipos/frente.png') }}"></i>
+                                    <i><img class="imgVista img-fluid " src="{{ asset('/img/equipos/frente.png') }}"></i>
                                     <span class="mi-archivo">
                                         <input class="mb-4 ver" type="file" name="frente" accept="image/*">
                                     </span>
@@ -198,7 +204,7 @@
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 align-items-center">
                                 <div class="text-center mx-auto border vistaFoto mb-4">
-                                    <i><img class="imgVista img-fluid mb-5"
+                                    <i><img class="imgVista img-fluid "
                                             src="{{ asset('/img/equipos/derecho.png') }}"></i>
                                     <span class="mi-archivo2">
                                         <input class="mb-4 ver" type="file" name="derecho" accept="image/*">
@@ -210,7 +216,7 @@
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 align-items-center">
                                 <div class="text-center mx-auto border vistaFoto mb-4">
-                                    <i><img class="imgVista img-fluid mb-5"
+                                    <i><img class="imgVista img-fluid "
                                             src="{{ asset('/img/equipos/izquierdo.png') }}"></i>
                                     <span class="mi-archivo3">
                                         <input class="mb-4 ver" type="file" name="izquierdo" accept="image/*">
@@ -222,7 +228,7 @@
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 align-items-center">
                                 <div class="text-center mx-auto border vistaFoto mb-4">
-                                    <i><img class="imgVista img-fluid mb-5"
+                                    <i><img class="imgVista img-fluid "
                                             src="{{ asset('/img/equipos/trasero.png') }}"></i>
                                     <span class="mi-archivo4">
                                         <input class="mb-4 ver" type="file" name="trasero" accept="image/*">
@@ -234,8 +240,7 @@
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 align-items-center">
                                 <div class="text-center mx-auto border vistaFoto mb-4">
-                                    <i><img class="imgVista img-fluid mb-5"
-                                            src="{{ asset('/img/equipos/foto.png') }}"></i>
+                                    <i><img class="imgVista img-fluid " src="{{ asset('/img/equipos/foto.png') }}"></i>
                                     <span class="mi-archivo5">
                                         <input class="mb-4 ver" type="file" name="foto" accept="image/*">
                                     </span>
@@ -395,7 +400,7 @@
                                     </span>
                                     <div id="contenedorBotonSubirImagenT">
                                         <label for="mi-archivo4">
-                                            <span>sube Imagen</span>
+                                            <span>sube Imsssagen</span>
                                         </label>
                                     </div>
                                 </div>
@@ -415,8 +420,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
 
                         <input type="hidden" name="puestoId" id="puestoId" value="">
@@ -598,36 +601,60 @@
         </div>
     </div>
 
+    <!-- Modal Asignar-->
+    <div class="modal fade" id="asignar" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bacTituloPrincipal">
+                    <h5 class="modal-title fs-5" id="modalTitleId">Asignar Vehiculo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <form action="{{ route('mtq.asignacion') }}" method="post">
+                            @csrf
+                            @method('put')
+
+                            <input type="hidden" name="autoId" id="asignacionMaquinaria">
+
+                            <div class="row">
+                                <div class="mb-3 col-12 text-center">
+                                    <h3 class="labelTitulo fs-3" id="nombreAuto">Asignar Vehiculo</h3>
+                                </div>
+
+                                <div class="mb-3 col-6">
+                                    <label for="title" class="labelTitulo">Asignado a:</label>
+                                    <input type="hidden" name="residenteId" id="residenteId">
+                                    <input autofocus type="text" class="inputCaja" id="asignado"
+                                        placeholder="Nombre Equipo..." readonly>
+                                </div>
+
+                                <div class="mb-3 col-6">
+                                    <label for="title" class="labelTitulo">asignar a:</label>
+                                    <select name="NresidenteId" id="titleSelect" required class="form-select">
+                                        <option value="0">Sin Cambios</option>
+                                        <option value="">Denegar Auto</option>
+                                        @foreach ($autos as $item)
+                                            <option value="{{ $item->id }}">
+                                                {{ $item->nombre }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
 
-    {{--  <style>
-        .align-end {
-            display: flex !important;
-            justify-content: flex-end !important;
-        }
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn botonGral">Guardar</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        @media only screen and (max-width: 500px) {
-            .align-end button {
-                width: 120px !important;
-            }
-
-            #submit-button {
-                margin-right: 0px !important;
-            }
-        }
-
-        select[readonly],
-        input[readonly],
-        textarea[readonly] {
-            color: grey;
-            cursor: no-drop;
-        }
-
-
-        select[readonly] option {
-            display: none;
-        }
-    </style>  --}}
 
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
         crossorigin="anonymous"></script>
@@ -883,6 +910,48 @@
             } else {
                 imagenVistaT.src = "{{ asset('/img/general/default.jpg') }}"
             }
+
+            // Obtener todos los campos del formulario
+            const campos = document.querySelectorAll('input[type="text"], textarea');
+
+            // Aplicar color gris a los campos con readonly
+            campos.forEach((campo) => {
+                if (modalTipo) {
+                    campo.readOnly = true;
+
+                    // campo.style.cursor:no-drop;
+                } else {
+                    campo.readOnly = false;
+                    campo.style.color = 'initial';
+                    // campo.style.cursor:no-drop;
+                }
+                if (campo == txtIdentificador) {
+                    campo.readOnly = true;
+                    campo.style.color = 'grey';
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function asignar(id, identificador, nombre, residenteId, residente) {
+            console.log("Foto", id, "FotoF", identificador);
+
+            const txtId = document.getElementById('asignacionMaquinaria');
+            txtId.value = id;
+
+            const txtResidente = document.getElementById('residenteId');
+            txtResidente.value = residenteId;
+
+            const tituloModal = document.getElementById('nombreAuto');
+            tituloModal.textContent = identificador + ' ' + nombre;
+
+            const txtIdentificador = document.getElementById('asignado');
+            txtIdentificador.value = residente;
+            txtIdentificador.readOnly = true;
+
+            const lstObre = document.getElementById('obraId').value = residenteId;
+
 
             // Obtener todos los campos del formulario
             const campos = document.querySelectorAll('input[type="text"], textarea');
