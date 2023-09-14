@@ -234,7 +234,7 @@ $blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
                                                                         <input type="time" class="inputCaja "
                                                                             placeholder="Entrada" id=""
                                                                             name="hEntrada[]"
-                                                                            value="{{ $item->hEntrada }}">
+                                                                            value="{{ $dtHorario }}">
                                                                     </td>
                                                                     <td>
                                                                         <input type="time" class="inputCaja "

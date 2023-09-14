@@ -179,7 +179,7 @@ if ($asistencias->isEmpty() == true) {
                                                         <td>
                                                             <input type="time" class="inputCaja " placeholder="Salida"
                                                                 id="hSalida" name="hSalida[]"
-                                                                value="{{ $item->hSalida ? \Carbon\Carbon::parse($item->hSalida)->format('H:i') : '' }}">
+                                                                value="{{ $item->hSalida ? \Carbon\Carbon::parse($item->hSalida)->format('H:i') : $dtHorario }}">
                                                         </td>
                                                         {{-- <td>
                                                             <!-- Se van a calcular de forma dinamica -->

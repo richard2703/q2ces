@@ -377,6 +377,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::put('/asistencia/{personal}', [App\Http\Controllers\personalController::class, 'update'])->name('personal.update');
     // Route::get('asistencia/{id}/{doc}', [App\Http\Controllers\personalController::class, 'download'])->name('personal.download');
     // Route::delete('/asistencia/{personal}', [App\Http\Controllers\UserController::class, 'destroy'])->name('personal.delete');
+    Route::post('asistencia/corteSemanal/reporte/exportar', [App\Http\Controllers\asistenciaController::class, 'reporteExcel'])->name('asistencia.reporteExcel');
 
     // Caja Chica
     Route::resource('cajaChica', App\Http\Controllers\cajaChicaController::class);

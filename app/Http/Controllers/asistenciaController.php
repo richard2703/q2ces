@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\CorteSemanalExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
-use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Carbon;
 use App\Models\asistencia;
 use App\Models\personal;
+use App\Exports\CorteSemanalExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Excel as ExcelExcel;
 // use App\Helpers\Validaciones;
 use App\Helpers\Calendario;
 // use App\Helpers\Calculos;
@@ -264,10 +265,11 @@ class asistenciaController extends Controller {
                     //*** calculamos tiempo extra anticipado */
                     $objRecord->horasAnticipada = 0;
 
+                    $dteHorario =   Carbon::parse( $request[ 'horarioEntrada' ][ $i ] );
+                    $dteHoraEntrada =  Carbon::parse( $request[ 'hEntrada' ][ $i ] );
+
                     if ( $request[ 'entradaAnticipada' ][ $i ] == 1 ) {
                         $intMinutos = 0;
-                        $dteHorario =   Carbon::parse( $request[ 'horarioEntrada' ][ $i ] );
-                        $dteHoraEntrada =  Carbon::parse( $request[ 'hEntrada' ][ $i ] );
 
                         //*** preguntamos si la entrada es menor que la hora salida */
                         if ( $dteHoraEntrada < $dteHorario ) {
@@ -279,6 +281,17 @@ class asistenciaController extends Controller {
 
                         $objRecord->horasAnticipada = $intMinutos;
                     }
+
+                    //*** calculamos tiempo de retraso de entrada */
+                    $objRecord->horasRetraso = 0;
+                    //*** preguntamos si la entrada es menor que la hora salida */
+                    if ( $dteHoraEntrada > $dteHorario ) {
+                        $objRecord->horasRetraso = $dteHoraEntrada->diffInMinutes( $dteHorario ) ;
+                        // dd( 'Soy mayor '. $objRecord->horasRetraso . ' minutos' );
+                    } else {
+                        //  dd( 'Soy menor' );
+                    }
+
                     // dd( $objRecord );
                     $objRecord->save();
                     // $vctIds[] = $objRecord;
@@ -582,6 +595,7 @@ class asistenciaController extends Controller {
             DB::raw( 'asistencia.asistenciaId as tipoAsistenciaId' ),
             'asistencia.horasExtra',
             'asistencia.horasAnticipada',
+            'asistencia.horasRetraso',
             'asistencia.fecha',
             DB::raw( 'nomina.diario AS sueldo' ),
             DB::raw( 'nomina.nomina AS numeroNomina' ),
@@ -664,6 +678,7 @@ class asistenciaController extends Controller {
                 $objPagos->fecha = $item->fecha;
                 $objPagos->horasExtra = $item->horasExtra;
                 $objPagos->horasAnticipada = $item->horasAnticipada;
+                $objPagos->horasRetraso = $item->horasRetraso;
                 // $objPagos->horaExtraColor = $item->horaExtraColor;
                 // $objPagos->horaExtraCosto = $item->horaExtraCosto;
                 // $objPagos->horaExtraNombre = $item->horaExtraNombre;
@@ -681,6 +696,7 @@ class asistenciaController extends Controller {
                 $objPagos->fecha = $item->fecha;
                 $objPagos->horasExtra = $item->horasExtra;
                 $objPagos->horasAnticipada = $item->horasAnticipada;
+                $objPagos->horasRetraso = $item->horasRetraso;
                 // $objPagos->horaExtraColor = $item->horaExtraColor;
                 // $objPagos->horaExtraCosto = $item->horaExtraCosto;
                 // $objPagos->horaExtraNombre = $item->horaExtraNombre;
@@ -703,6 +719,7 @@ class asistenciaController extends Controller {
                 $objPagos->fecha = $item->fecha;
                 $objPagos->horasExtra = $item->horasExtra;
                 $objPagos->horasAnticipada = $item->horasAnticipada;
+                $objPagos->horasRetraso = $item->horasRetraso;
                 // $objPagos->horaExtraColor = $item->horaExtraColor;
                 // $objPagos->horaExtraCosto = $item->horaExtraCosto;
                 // $objPagos->horaExtraNombre = $item->horaExtraNombre;
@@ -735,6 +752,7 @@ class asistenciaController extends Controller {
                 $objPagos->fecha = $item->fecha;
                 $objPagos->horasExtra = $item->horasExtra;
                 $objPagos->horasAnticipada = $item->horasAnticipada;
+                $objPagos->horasRetraso = $item->horasRetraso;
                 // $objPagos->horaExtraColor = $item->horaExtraColor;
                 // $objPagos->horaExtraCosto = $item->horaExtraCosto;
                 // $objPagos->horaExtraNombre = $item->horaExtraNombre;
@@ -799,24 +817,36 @@ class asistenciaController extends Controller {
                 if ( $request->$value[ 0 ] == 1 ) {
 
                     //*** obtenemos los minutos de diferencia en la entrada si se registro que es anticipada siempre y cuando se asignara su calculo */
-                    if ( ( is_null( $request[ 'entradaAnticipada' ][ $i ] ) == false && $request[ 'entradaAnticipada' ][ $i ] ) == 1 &&
-                    ( is_null( $request[ 'horarioEntrada' ][ $i ] ) == false &&  is_null( $request[ 'hEntrada' ][ $i ] ) == false ) ) {
+
+                    if ( is_null( $request[ 'horarioEntrada' ][ $i ] ) == false &&  is_null( $request[ 'hEntrada' ][ $i ] ) == false ) {
 
                         $intMinutosEntrada = 0;
                         $dteHorario =   Carbon::parse( $request[ 'horarioEntrada' ][ $i ] );
                         $dteHoraEntrada =  Carbon::parse( $request[ 'hEntrada' ][ $i ] );
+                        if ( is_null( $request[ 'entradaAnticipada' ][ $i ] ) == false && $request[ 'entradaAnticipada' ][ $i ] == 1 ) {
 
-                        //*** preguntamos si la entrada es menor que la horario de entrada */
-                        if ( $dteHoraEntrada < $dteHorario ) {
-                            $intMinutosEntrada = $dteHoraEntrada->diffInMinutes( $dteHorario ) ;
-                            // $objAsistencia->tipoHoraExtraId = $request[ 'tipoHoraExtraId' ][ $i ];
-                            // dd( 'Soy mayor '. $intMinutosEntrada . ' minutos' );
-                        } else {
-                            // dd( 'Soy menor' );
-                            // $objAsistencia->tipoHoraExtraId = 1;
+                            //*** preguntamos si la entrada es menor que la horario de entrada */
+                            if ( $dteHoraEntrada < $dteHorario ) {
+                                $intMinutosEntrada = $dteHoraEntrada->diffInMinutes( $dteHorario ) ;
+                                // $objAsistencia->tipoHoraExtraId = $request[ 'tipoHoraExtraId' ][ $i ];
+                                  //dd( 'Soy mayor '. $intMinutosEntrada . ' minutos' );
+                            } else {
+                                // dd( 'Soy menor' );
+                                // $objAsistencia->tipoHoraExtraId = 1;
+                            }
+
+                            $objAsistencia->horasAnticipada = $intMinutosEntrada;
                         }
 
-                        $objAsistencia->horasAnticipada = $intMinutosEntrada;
+                        //*** calculamos tiempo de retraso de entrada */
+                        $objAsistencia->horasRetraso = 0;
+                        //*** preguntamos si la entrada es menor que la hora salida */
+                        if ( $dteHoraEntrada > $dteHorario ) {
+                            $objAsistencia->horasRetraso = $dteHoraEntrada->diffInMinutes( $dteHorario ) ;
+                            //  dd( 'Soy mayor '. $objAsistencia->horasRetraso . ' minutos' );
+                        } else {
+                            //  dd( 'Soy menor' );
+                        }
 
                     } else {
                         //*** se marca en 0 y se marca que no aplica */
@@ -824,6 +854,7 @@ class asistenciaController extends Controller {
                         // $objAsistencia->tipoHoraExtraId = 1;
 
                     }
+
                     //*** obtenemos los minutos de diferencia en la salida */
                     if ( is_null( $request[ 'horarioSalida' ][ $i ] ) == false &&  is_null( $request[ 'hSalida' ][ $i ] ) == false ) {
 
@@ -889,6 +920,60 @@ class asistenciaController extends Controller {
 
     public function destroy( $id ) {
         //
+    }
+    public function reporteExcel(Request $request)
+    {
+        // dd( $request);
+        // $query = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
+        //     ->leftJoin('obras', 'cajaChica.obra', 'obras.id')
+        //     ->join('maquinaria', 'cajaChica.equipo', 'maquinaria.id')
+        //     ->join('conceptos', 'cajaChica.concepto', 'conceptos.id')
+        //     ->join('comprobante', 'cajaChica.comprobanteId', 'comprobante.id')
+        //     ->select(
+        //         'cajaChica.id',
+        //         'dia',
+        //         'conceptos.codigo',
+        //         'conceptos.nombre as cnombre',
+        //         'ncomprobante',
+        //         'comprobante.nombre as comprobante',
+        //         'personal.nombres as pnombre',
+        //         'personal.apellidoP as papellidoP',
+        //         'cliente',
+        //         'obras.nombre as obra',
+        //         'maquinaria.identificador',
+        //         'maquinaria.nombre as maquinaria',
+        //         'cantidad',
+        //         'cajaChica.tipo',
+        //     )->whereBetween('dia', [$request->inicio, $request->fin])
+        //     ->orderby('dia', 'desc')->orderby('id', 'desc')
+        //     ->get();
+        // // dd($query);
+
+        // foreach ($query as $q) {
+        //     switch ($q->tipo) {
+        //         case  $q->tipo == 1:
+        //             $q->tipo = 'Ingreso';
+        //             break;
+        //         case $q->tipo == 2:
+        //             $q->tipo = 'Egreso';
+        //             break;
+        //         case $q->tipo == 3:
+        //             $q->tipo = 'Ingreso de Servicios';
+        //             break;
+        //         case $q->tipo == 4:
+        //             $q->tipo = 'Pendiente de Cobro Y/O Factura';
+        //             break;
+
+        //         default:
+        //             break;
+        //     }
+        // }
+
+
+
+
+        // dd($request);
+        return (new CorteSemanalExport($request['intAnio'] ))->download('corteSemanal.xlsx');
     }
 
     public function export() {

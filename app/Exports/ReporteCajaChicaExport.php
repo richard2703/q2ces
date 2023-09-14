@@ -5,7 +5,7 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize; //Para que se acomoden las celdas al tamaño del texto
 use Maatwebsite\Excel\Concerns\Exportable;  //Para modificar el formato en el que se exporta
 use Maatwebsite\Excel\Concerns\FromCollection;  //Para poder utilizar una coleccion de datos ya hecha
-use Maatwebsite\Excel\Concerns\WithTitle;   //Para ponerle un titulo a la pagina 
+use Maatwebsite\Excel\Concerns\WithTitle;   //Para ponerle un titulo a la pagina
 use Maatwebsite\Excel\Concerns\WithHeadings;    //para ponerle encabezados a las columnas
 use Illuminate\Support\Collection;  //para usar la collecion de datos
 use Maatwebsite\Excel\Concerns\WithStyles; //Para utilizar estilos
@@ -30,7 +30,7 @@ class ReporteCajaChicaExport implements FromCollection, ShouldAutoSize, WithTitl
         return $this->query;
     }
 
-    //Personalisacion 
+    //Personalizacion
 
     public function title(): string
     {
