@@ -19,7 +19,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Movimientos De Caja Chica</h4>
+                                    <h4 class="card-title">Movimientos de Caja Chica</h4>
                                     {{-- <p class="card-category">Usuarios Registrados</p> --}}
 
                                 </div>
@@ -107,7 +107,7 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Número De Comprobante: <span>*</span></label></br>
+                                                <label class="labelTitulo">Número de Comprobante: <span>*</span></label></br>
                                                     <input type="number" class="inputCaja text-right" id="ncomprobante" required
                                                     name="ncomprobante" maxlength="100000" step="1" min="1"
                                                     pattern="^\d*(\.\d{0,2})?$" max="99999" placeholder="ej. 100"
@@ -173,7 +173,7 @@
                                                         Ingreso Servicios
                                                     </option>
                                                     <option value="4">
-                                                        Pendiente De Cobro Y/O Factura
+                                                        Pendiente de Cobro Y/O Factura
                                                     </option>
 
                                                     {{--  @foreach ($vctTiposHoras as $tipo)

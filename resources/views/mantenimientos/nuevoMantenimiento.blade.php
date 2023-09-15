@@ -17,7 +17,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header bacTituloPrincipal">
-                            <h4 class="card-title">Nuevo Registro De Mantenimiento</h4>
+                            <h4 class="card-title">Nuevo Registro de Mantenimiento</h4>
                         </div>
 
                         <div class="col-12 col-md-2 mt-4" style="margin-left:20px">
@@ -107,13 +107,13 @@
                                                 id="km" name="km">
                                         </div> --}}
                                     <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                        <label class="labelTitulo">Fecha De Inicio: <span>*</span> </label></br>
+                                        <label class="labelTitulo">Fecha de Inicio: <span>*</span> </label></br>
                                         <input type="date" class="inputCaja" placeholder="Especifique..." required
                                             id="fechaInicio" name="fechaInicio">
                                     </div>
 
                                     <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                        <label class="labelTitulo">Tipo De Mantenimiento: <span>*</span></label></br>
+                                        <label class="labelTitulo">Tipo de Mantenimiento: <span>*</span></label></br>
                                         {{-- <select class="form-select form-select-lg mb-3 inputCaja" name="tipo" required
                                             id="tipo" aria-label=".form-select-lg example">
 

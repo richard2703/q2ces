@@ -38,7 +38,7 @@
                                                         <img src="/img/catalogos/nivelPuestos.svg" alt="Nivel de Puestos"
                                                             title="Nivel de Puestos" width="30%"
                                                             class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">Nivel De
+                                                        <p class="mt-4 texticonos">Nivel de
                                                             Puestos</p>
                                                     </a>
                                                 </div>
@@ -48,8 +48,7 @@
                                                         <img src="/img/inventario/TIPOS DE DOCUMENTOS-01.svg"
                                                             alt="Tipos Docs" title="Tipos Docs" width="30%"
                                                             class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">Tipos De
-                                                            Documentos</p>
+                                                        <p class="mt-4 texticonos">Tipos de Documentos</p>
                                                     </a>
                                                 </div>
 
@@ -59,11 +58,11 @@
                                                             alt="Manage Docs" title="Manage Docs" width="30%"
                                                             class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">
-                                                            Administración De Documentos</p>
+                                                            Administración de Documentos</p>
                                                     </a>
                                                 </div>
 
-                                                <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                                {{-- <div class="col-12 col-sm-6 col-md-3 text-center my-4">
                                                     <a href="{{ route('catalogoTipoHorasExtra.index') }}" class="">
                                                         <img src="/img/catalogos/horasextra.svg" alt="Horas Extras"
                                                             title="Horas Extras" width="30%" class="botonIconoPrincipal">
@@ -71,13 +70,13 @@
                                                         </p>
                                                     </a>
                                                 </div>
+                                                 --}}
                                                 <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                                     <a href="{{ route('catalogoTiposEquipo.index') }}" class="">
                                                         <img src="/img/catalogos/tiposDeEquipo.svg" alt="Tipos de Equipo"
                                                             title="Tipos de Refacción" width="30%"
                                                             class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">Tipos De
-                                                            Equipo</p>
+                                                        <p class="mt-4 texticonos">Tipos de Equipo</p>
                                                     </a>
                                                 </div>
 
@@ -104,7 +103,7 @@
                                                         <img src="/img/catalogos/tiposDeUniforme.svg"
                                                             alt="Tipos de Uniforme" title="Tipos de Uniforme"
                                                             width="30%" class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">Tipos De
+                                                        <p class="mt-4 texticonos">Tipos de
                                                             Uniforme</p>
                                                     </a>
                                                 </div>
@@ -135,7 +134,7 @@
                                                             title="Categorías de Proveedores" width="30%"
                                                             class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Categorías
-                                                            De Proveedores</p>
+                                                            de Proveedores</p>
                                                     </a>
                                                 </div>
 
@@ -144,14 +143,14 @@
                                                         <img src="/img/catalogos/tiposDeRefaccion.svg"
                                                             alt="Tipos de Refacción" title="Tipos de Refacción"
                                                             width="30%" class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">Tipos De
+                                                        <p class="mt-4 texticonos">Tipos de
                                                             Refacción</p>
                                                     </a>
                                                 </div>
 
                                                 <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                                     <a href="{{ route('lugares.index') }}" class="">
-                                                        <img src="/img/inventario/LUGARES-01.svg" alt="Lugares"
+                                                        <img src="/img/inventario/UBICACIONES-01.svg" alt="Lugares"
                                                             title="Lugares" width="30%" class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Lugares</p>
                                                     </a>
@@ -159,7 +158,7 @@
 
                                                 <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                                     <a href="{{ route('ubicaciones.index') }}" class="">
-                                                        <img src="/img/inventario/UBICACIONES-01.svg" alt="Ubicaciones"
+                                                        <img src="/img/inventario/LUGARES-01.svg" alt="Ubicaciones"
                                                             title="Ubicaciones" width="30%"
                                                             class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Ubicaciones
@@ -192,7 +191,7 @@
                                                             alt="Categoría de Maquinaría" title="Categorias de Maquinaría"
                                                             width="30%" class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Categorias
-                                                            De Maquinaría</p>
+                                                            de Maquinaría</p>
                                                     </a>
                                                 </div>
 
@@ -203,8 +202,8 @@
                                                             alt="Tipos de Uso de Maquinaría"
                                                             title="Tipos de Uso de tareas" width="30%"
                                                             class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">Tipos De Uso
-                                                            De Maquinaría</p>
+                                                        <p class="mt-4 texticonos">Tipos de Uso
+                                                            de Maquinaría</p>
                                                     </a>
                                                 </div>
 
@@ -214,7 +213,7 @@
                                                             alt="Refacciones" title="Refacciones" width="30%"
                                                             class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Refacciones
-                                                            Por Maquinaría</p>
+                                                            por Maquinaría</p>
                                                     </a>
                                                 </div>
 
@@ -241,7 +240,7 @@
                                                         <img src="/img/catalogos/categoriasDeTareas.svg"
                                                             alt="Categoría de tareas" title="Categoría de tareas"
                                                             width="30%" class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">Categoría De
+                                                        <p class="mt-4 texticonos">Categoría de
                                                             Tareas</p>
                                                     </a>
                                                 </div>
@@ -251,7 +250,7 @@
                                                         <img src="/img/catalogos/tiposDeTarea.svg" alt="Tipos de tareas"
                                                             title="Tipos de tareas" width="30%"
                                                             class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">Tipos De
+                                                        <p class="mt-4 texticonos">Tipos de
                                                             Tareas</p>
                                                     </a>
                                                 </div>
@@ -263,7 +262,7 @@
                                                             alt="Ubicaciones de tareas" title="Ubicaciones de tareas"
                                                             width="30%" class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Ubicaciones
-                                                            De Tareas</p>
+                                                            de Tareas</p>
                                                     </a>
                                                 </div>
 
@@ -272,7 +271,7 @@
                                                         <img src="/img/inventario/TIPOS DE SERVICIOS-01.svg"
                                                             alt="Lugares" title="Lugares" width="30%"
                                                             class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">Tipos De
+                                                        <p class="mt-4 texticonos">Tipos de
                                                             Servicios</p>
                                                     </a>
                                                 </div>

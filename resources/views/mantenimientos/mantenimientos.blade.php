@@ -5,7 +5,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header bacTituloPrincipal">
-                        <h4 class="card-title">Bitácora De Mantenimientos</h4>
+                        <h4 class="card-title">Bitácora de Mantenimientos</h4>
                     </div>
                     <div class="col-12 text-end mt-4" style="margin-left:-20px">
                         @can('mantenimiento_create')

@@ -19,7 +19,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Movimientos De Caja Chica</h4>
+                                    <h4 class="card-title">Movimientos de Caja Chica</h4>
                                     {{-- <p class="card-category">Usuarios Registrados</p> --}}
                                 </div>
                                 <div class="card-body">
@@ -35,9 +35,9 @@
                                     @endif
                                     <div class="row division">
                                         <div class="col-12 col-md-4">
-                                            <p>Semana Del</br> <span
+                                            <p>Semana del</br> <span
                                                     class="combustibleLitros">{{ \Carbon\Carbon::parse($lunes)->locale('es')->isoFormat('dddd D MMMM') }}
-                                                    Al
+                                                    al
                                                     {{ \Carbon\Carbon::parse($domingo)->locale('es')->isoFormat('dddd D MMMM') }}</span>
                                             </p>
                                         </div>

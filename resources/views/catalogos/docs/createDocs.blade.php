@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista De Documentos')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Documentos')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -40,14 +40,14 @@
                             <div class="row mt-3 ">
                                 <div class="col-12  ">
                                     <div class="row">
-                                    
+
 
                                         <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                             <label class="labelTitulo">Nombre: <span>*</span></label>
                                             <input type="text" class="inputCaja" id="nombre" name="nombre" required
                                                 placeholder="Especifique..." value="{{ old('nombre') }}">
                                         </div>
-                                        
+
                                         <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                             <label class="labelTitulo">Tipo:</label></br>
                                                 <select id="tipoId" name="tipoId" class="form-select"
@@ -66,7 +66,7 @@
                                             <textarea class="form-select" id="exampleFormControlTextarea1" rows="3" maxlength="1000" required id="comentario"
                                                 name="comentario" placeholder="Escribe aquí tus comentarios."></textarea>
                                         </div>
-                                        
+
                                 </div>
 
                                 <div class="col-12 text-end mb-3 ">

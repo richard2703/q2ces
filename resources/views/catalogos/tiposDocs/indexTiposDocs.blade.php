@@ -1,18 +1,18 @@
-@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista De Los Tipos De Documentos')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de los Tipos de Documentos')])
 @section('content')
     <div class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        
+
                         <div class="card-header bacTituloPrincipal">
                             <h4 class="card-title">Tipos de Documentos</h4>
                             {{-- <p class="card-category">Usuarios registrados</p> --}}
                         </div>
 
                         <div class="card-body">
-                        
+
                             @if (session('success'))
                                 <div class="alert alert-success" role="success">
                                     {{ session('success') }}
@@ -23,7 +23,7 @@
                                     {{ session('faild') }}
                                 </div>
                             @endif
-                            <div class="row divBorder">
+                            <div class="row">
                                     <div class="col-12 col-lg-6 text-start mb-3">
                                     <a href="{{ route('catalogos.index') }}">
                                         <button class="btn regresar">
@@ -35,12 +35,15 @@
                                     </a>
                                 </div>
                                 <div class="col-12 col-lg-6 pb-3 divAñadir">
-                              
+
                                     @can('tiposDocs_create')
                                         <a href="{{ route('tiposDocs.create') }}">
                                             <button type="button" class="btn botonGral align-it">Añadir Tipo</button>
                                         </a>
                                     @endcan
+                                </div>
+                                <div class="row divBorder">
+                                    <p>Catálogo General de Tipos de Documentos, Es Utilizado para Asignar y Agrupar Todos los Documentos de Personal y Equipo en un Grupo de Datos.</p>
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -93,7 +96,7 @@
 
     <script src="{{ asset('js/alertas.js') }}"></script>
 
-    <script>   
+    <script>
         var slug = '{{ Session::get('message') }}';
         if (slug == 1) {
             Guardado();

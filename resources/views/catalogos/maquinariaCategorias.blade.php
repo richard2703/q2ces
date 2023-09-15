@@ -34,28 +34,31 @@
                                         </div>
                                     @endif
                                     <div class="row">
-                                    <div class="d-flex p-3 divBorder">
-                                        <div class="col-12 text-right">
+                                        <div class="d-flex p-3 ">
+                                            <div class="col-12 text-right">
 
-                                            <a href="{{ route('catalogos.index') }}">
-                                                <button class="btn regresar">
-                                                    <span class="material-icons">
-                                                        reply
-                                                    </span>
-                                                    Regresar
-                                                </button>
-                                            </a>
+                                                <a href="{{ route('catalogos.index') }}">
+                                                    <button class="btn regresar">
+                                                        <span class="material-icons">
+                                                            reply
+                                                        </span>
+                                                        Regresar
+                                                    </button>
+                                                </a>
 
-                                            @can('catalogos_create')
-                                                <button class="btn botonGral float-end" data-bs-toggle="modal"
-                                                    data-bs-target="#nuevoItem">
-                                                    Añadir Categoría de Maquinaría
-                                                </button>
-                                            @endcan
+                                                @can('catalogos_create')
+                                                    <button class="btn botonGral float-end" data-bs-toggle="modal"
+                                                        data-bs-target="#nuevoItem">
+                                                        Añadir Categoría de Maquinaría
+                                                    </button>
+                                                @endcan
+                                            </div>
+                                        </div>
+                                        <div class="row divBorder">
+                                            <p>Catálogo General de Categorías de Maquinaría, Es Utilizado para Asignar y Agrupar
+                                                la Maquinario y/o Equipos en Bloque de Datos.</p>
                                         </div>
                                     </div>
-                                    </div>
-
 
                                     <table class="table table-responsive">
                                         <thead class="labelTitulo">
@@ -243,7 +246,7 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre,  comentarios) {
+        function cargaItem(id, nombre, comentarios) {
 
             const txtId = document.getElementById('controlId');
             txtId.value = id;
