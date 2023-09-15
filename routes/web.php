@@ -377,10 +377,13 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::put('/asistencia/{personal}', [App\Http\Controllers\personalController::class, 'update'])->name('personal.update');
     // Route::get('asistencia/{id}/{doc}', [App\Http\Controllers\personalController::class, 'download'])->name('personal.download');
     // Route::delete('/asistencia/{personal}', [App\Http\Controllers\UserController::class, 'destroy'])->name('personal.delete');
+    Route::post('asistencia/corteSemanal/reporte/exportar', [App\Http\Controllers\asistenciaController::class, 'reporteExcel'])->name('asistencia.reporteExcel');
 
     // Caja Chica
     Route::resource('cajaChica', App\Http\Controllers\cajaChicaController::class);
     Route::post('cajaChica/reporte', [App\Http\Controllers\cajaChicaController::class, 'reporte'])->name('cajaChica.reporte');
+    Route::post('cajaChica/reporte/exportar', [App\Http\Controllers\cajaChicaController::class, 'reporteExcel'])->name('cajaChica.reporteExcel');
+
 
     // Conceptos
     Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
@@ -398,6 +401,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('mtq', App\Http\Controllers\maquinariaMtqController::class);
     // Route::get('mtq/uso', [App\Http\Controllers\maquinariaMtqController::class, 'uso'])->name('mtq.uso');
+    Route::put('asignacion', [App\Http\Controllers\maquinariaMtqController::class, 'asignacion'])->name('mtq.asignacion');
+
 
     Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');
     Route::get('search/equiposMTQ', [App\Http\Controllers\searchController::class, 'equiposMTQ'])->name('search.equiposMTQ');

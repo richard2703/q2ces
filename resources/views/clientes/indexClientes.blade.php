@@ -51,7 +51,7 @@
                                                         <td class="text-center">{{ $cliente->nombre }}</td>
                                                         <td class="text-center">{{ $cliente->razonSocial }}</td>
                                                         <td class="text-center">{{ $cliente->colonia }}</td>
-                                                        <td class="text-center">{{ $cliente->estado }}</td>
+                                                        <td class="text-center">{{ $cliente->ciudad }}</td>
                                                         <td class="text-center">{{ $cliente->estado }}</td>
                                                         <td class="text-center">{{ $cliente->estatus }}</td>
 

@@ -13,17 +13,27 @@ $anioSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$in
 
 $fechaSeleccionada = date_create(date('Y-m-d', strtotime("$intAnio-$intMes-$intDia")));
 $intDiaSeleccionado = date_format($fechaSeleccionada, 'N');
-$diaSeleccionado = $objCalendar->getNameDay(date_format($fechaSeleccionada, 'N'));
+$diaSeleccionado = $objCalendar->getNameDay(date_format($fechaSeleccionada, 'N'), true);
 $mesSeleccionado = $objCalendar->getNameMonth(date_format($fechaSeleccionada, 'm'));
 
 $dtToday = date('Ymd');
 $dtTrabajar = date('Ymd', strtotime("$intAnio-$intMes-$intDia"));
 
+//*** estoy dentro del periodo de la semana de trabajo en curso
+$blnEnSemanaEnCurso = $objCalendar->getEnSemanaDeTrabajo($fechaSeleccionada, 3);
+//*** el dia actual en curso
 $blnEsDiaActual = $dtTrabajar == $dtToday ? true : false;
 //*** bloqueamos fecha mayor al dia actual
-$blnBloquearRegistro = ( $blnEsDiaActual == true  ? false : true );
+$blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
 
-// dd($asistencias, $diaAnterior, $diaSiguiente, $fechaSeleccionada, $diaSeleccionado, $dtToday, $dtTrabajar);
+// dd('Asistencias',$asistencias,
+// 'Dia anterior',$diaAnterior,
+// 'Dia sisguiente', $diaSiguiente,
+// 'Fecha seleccionada', $fechaSeleccionada,
+// 'Dia seleccionado',$diaSeleccionado,
+// 'Hoy:', $dtToday,
+// 'Fecha trabajar:',$dtTrabajar,
+// 'Bloquear',$blnBloquearRegistro);
 
 ?>
 @section('content')
@@ -31,7 +41,7 @@ $blnBloquearRegistro = ( $blnEsDiaActual == true  ? false : true );
         @if ($errors->any())
             <div class="alert alert-danger">
                 <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
-                <p>Listado De Errores A Corregir</p>
+                <p>Listado de Errores a Corregir</p>
                 <ul>
                     @foreach ($errors->all() as $item)
                         <li>{{ $item }}</li>
@@ -104,8 +114,8 @@ $blnBloquearRegistro = ( $blnEsDiaActual == true  ? false : true );
                                             <div class="col-10 col-md-8 text-center">
                                                 <a href="{{ route('asistencia.create') }}"
                                                     class="combustibleLitros fw-semibold text-end"
-                                                    title="Ir al dia en curso"><b>Asistencia Del Día
-                                                        {{ ucwords(trans($objCalendar->getFechaFormateada($fechaSeleccionada, true))) }}
+                                                    title="Ir al dia en curso"><b>Asistencia del Día
+                                                        {{ /*ucwords*/(trans($objCalendar->getFechaFormateada($fechaSeleccionada, true))) }}
                                                     </b>
                                                 </a>
                                             </div>
@@ -148,6 +158,10 @@ $blnBloquearRegistro = ( $blnEsDiaActual == true  ? false : true );
                                                         </th>
                                                         <th class="labelTitulo" style="width:140px !important">Descansos
                                                         </th>
+                                                        <th class="labelTitulo">Horario Entrada</th>
+                                                        <th class="labelTitulo" style="width:140px !important">Entrada
+                                                            Anticipada
+                                                        </th>
                                                         <th class="labelTitulo" style="width:140px !important">Entrada
                                                         </th>
                                                         <th class="labelTitulo" style="width:140px !important">Salida
@@ -155,17 +169,18 @@ $blnBloquearRegistro = ( $blnEsDiaActual == true  ? false : true );
                                                     </thead>
                                                     <tbody class="text-center">
 
-
                                                         @if ($blnAsistenciaRegistrada == false)
                                                             @forelse ($personal as $item)
                                                                 <tr>
                                                                     <td class=""
                                                                         style="color: {{ $item->estatusColor }};">
-                                                                        <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>???
+                                                                        <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                                         <input type="hidden" name="asistenciaId[]"
                                                                             value="{{ $item->asistenciaId }}">
                                                                         <input type="hidden" name="personalId[]"
                                                                             value="{{ $item->id }}">
+                                                                        <input type="hidden" name="horarioSalida[]"
+                                                                            value="{{ $item->horarioSalida }}">
                                                                     </td>
                                                                     <td>{{ $item->puesto }}</td>
                                                                     <td class="text-left">
@@ -173,7 +188,8 @@ $blnBloquearRegistro = ( $blnEsDiaActual == true  ? false : true );
                                                                             title="Fecha de Ingreso {{ \Carbon\Carbon::parse($item->fechaIngreso)->format('d/m/Y') }}">
                                                                             {{ $item->getFullLastNameAttribute() }}</a>
                                                                     </td>
-                                                                    <td><input type="radio" name="{{ $item->id }}[]"
+                                                                    <td><input type="radio"
+                                                                            name="{{ $item->id }}[]"
                                                                             id="Asistencia_{{ $item->id }}"
                                                                             value="1"
                                                                             {{ $intDiaSeleccionado != 7 ? 'checked' : '' }}>
@@ -200,10 +216,25 @@ $blnBloquearRegistro = ( $blnEsDiaActual == true  ? false : true );
                                                                             {{ $intDiaSeleccionado == 7 ? 'checked' : '' }}>
                                                                     </td>
                                                                     <td>
+                                                                        <?php
+                                                                        $dtHorario = $item->horarioEntrada ? \Carbon\Carbon::parse($item->horarioEntrada)->format('H:i') : '';
+                                                                        ?>
+                                                                        {{ $dtHorario }}
+                                                                        <input type="hidden" name="horarioEntrada[]"
+                                                                            value="{{ $dtHorario }}">
+                                                                    </td>
+                                                                    <td>
+                                                                        <select class="form-select"  id="entradaAnticipada"
+                                                                        name="entradaAnticipada[]">
+                                                                        <option value="0" {{ $item->entradaAnticipada == 0 ? ' selected' : '' }}>No</option>
+                                                                        <option value="1" {{ $item->entradaAnticipada == 1 ? ' selected' : '' }}>Sí</option>
+                                                                    </select>
+                                                                    </td>
+                                                                    <td>
                                                                         <input type="time" class="inputCaja "
                                                                             placeholder="Entrada" id=""
                                                                             name="hEntrada[]"
-                                                                            value="{{ $item->hEntrada }}">
+                                                                            value="{{ $dtHorario }}">
                                                                     </td>
                                                                     <td>
                                                                         <input type="time" class="inputCaja "
@@ -229,6 +260,10 @@ $blnBloquearRegistro = ( $blnEsDiaActual == true  ? false : true );
                                                                             value="{{ $item->id }}">
                                                                         <input type="hidden" name="recordId[]"
                                                                             value="{{ $item->recordId }}">
+                                                                        <input type="hidden" name="horarioSalida[]"
+                                                                            value="{{ $item->horarioSalida }}">
+                                                                        <input type="hidden" name="horarioEntrada[]"
+                                                                            value="{{ $item->horarioEntrada }}">
                                                                     </td>
                                                                     <td>{{ $item->puesto }}</td>
                                                                     <td class="text-left">
@@ -272,16 +307,33 @@ $blnBloquearRegistro = ( $blnEsDiaActual == true  ? false : true );
                                                                             {{ $item->asistenciaId == 5 ? ' checked' : '' }}>
                                                                     </td>
                                                                     <td>
+                                                                        <?php
+                                                                        $dtHorario = $item->horarioEntrada ? \Carbon\Carbon::parse($item->horarioEntrada)->format('H:i') : '';
+                                                                        ?>
+                                                                        {{ $dtHorario }}
+                                                                    </td>
+                                                                    <td>
+                                                                        <select class="form-select" id="entradaAnticipada"
+                                                                            name="entradaAnticipada[]">
+                                                                            <option value="0"
+                                                                                {{ $item->entradaAnticipada == 0 ? ' selected' : '' }}>
+                                                                                No</option>
+                                                                            <option value="1"
+                                                                                {{ $item->entradaAnticipada == 1 ? ' selected' : '' }}>
+                                                                                Sí</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
                                                                         <input type="time" class="inputCaja "
                                                                             placeholder="Entrada" id=""
                                                                             name="hEntrada[]"
-                                                                            value="{{ $item->hEntrada }}">
+                                                                            value="{{ $item->hEntrada ? \Carbon\Carbon::parse($item->hEntrada)->format('H:i') : '' }}">
                                                                     </td>
                                                                     <td>
                                                                         <input type="time" class="inputCaja "
                                                                             placeholder="Salida" id=""
                                                                             name="hSalida[]"
-                                                                            value="{{ $item->hSalida }}">
+                                                                            value="{{ $item->hSalida ? \Carbon\Carbon::parse($item->hSalida)->format('H:i') : '' }}">
                                                                     </td>
                                                                 </tr>
                                                             @empty
@@ -297,7 +349,7 @@ $blnBloquearRegistro = ( $blnEsDiaActual == true  ? false : true );
                                             </div>
 
                                             <div class="card-footer mr-auto">
-                                                <?php if( $blnBloquearRegistro == false && $blnEsDiaActual == true){  ?>
+                                                <?php if($blnEnSemanaEnCurso == true && $blnBloquearRegistro == false ){  ?>
                                                 <a href="{{ route('asistencia.index') }}">
                                                     <button type="button" class="btn btn-danger">Cancelar</button>
                                                 </a>

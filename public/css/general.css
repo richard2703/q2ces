@@ -445,7 +445,9 @@ input[type="file"] {
 label[for="mi-archivo"],
 label[for="mi-archivo2"],
 label[for="mi-archivo3"],
-label[for="mi-archivo4"] {
+label[for="mi-archivo4"],
+label[for="mi-archivo5"],
+label[for="mi-archivo6"] {
   font-size: 14px;
   font-weight: 600;
   color: #fff;
@@ -954,3 +956,7 @@ input.search-text::-webkit-search-cancel-button {
   color: #5C7C26;
 
 }
+
+/* .ui-menu .ui-widget .ui-widget-content .ui-autocomplete .ui-front{
+  background-color: red !important;
+} */

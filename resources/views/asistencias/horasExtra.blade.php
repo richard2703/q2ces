@@ -11,11 +11,14 @@ $diaSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$int
 $mesSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$intDia"), 'm');
 $anioSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$intDia"), 'Y');
 $fechaSeleccionada = date_create(date('Y-m-d', strtotime("$intAnio-$intMes-$intDia")));
-$diaSeleccionado = $objCalendar->getNameDay(date_format($fechaSeleccionada, 'N'));
+$diaSeleccionado = $objCalendar->getNameDay(date_format($fechaSeleccionada, 'N'),true);
 $mesSeleccionado = $objCalendar->getNameMonth(date_format($fechaSeleccionada, 'm'));
 
 $dtToday = date('Ymd');
 $dtTrabajar = date('Ymd', strtotime("$intAnio-$intMes-$intDia"));
+
+//*** averiguamos si el dia seleccionado es Sabado
+$blnFechaSeleccionadaEsSabado = $fechaSeleccionada->format('N') == 6 ? true : false;
 
 //*** Arreglo para los dias del periodo **/
 $vctDiasSemanaActual = $objCalendar->getSemanaTrabajo(date_create(date('Y-m-d')), 3);
@@ -106,8 +109,8 @@ if ($asistencias->isEmpty() == true) {
                                             <div class="col-10 col-md-8 text-center">
                                                 <a href="{{ route('asistencia.HEstore') }}"
                                                     class="combustibleLitros fw-semibold text-end"
-                                                    title="Ir al día de hoy"><b>Horas Extras Del Día
-                                                        {{ ucwords(trans($objCalendar->getFechaFormateada($fechaSeleccionada, true))) }}</b>
+                                                    title="Ir al día de hoy"><b>Horas Extras del Día
+                                                        {{ /*ucwords*/(trans($objCalendar->getFechaFormateada($fechaSeleccionada, true))) }}</b>
                                                 </a>
                                             </div>
 
@@ -121,7 +124,6 @@ if ($asistencias->isEmpty() == true) {
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                                 <form class="row alertaGuardar" action="{{ route('asistencia.HEstore') }}" method="post"
                                     enctype="multipart/form-data">
@@ -140,33 +142,47 @@ if ($asistencias->isEmpty() == true) {
                                                 <th class="labelTitulo">Código</th>
                                                 <th class="labelTitulo">Puesto</th>
                                                 <th class="labelTitulo">Nombre</th>
-                                                <th class="labelTitulo">Horas Extra</th>
-                                                <th class="labelTitulo">Tipo</th>
-                                                {{--  <th class="labelTitulo">Faltas</th>
-                                                <th class="labelTitulo">Incapacidadades</th>
-                                                <th class="labelTitulo">Vacaciones</th>
-                                                <th class="labelTitulo">Descansos</th>  --}}
+                                                <th class="labelTitulo">Horario Salida</th>
+                                                <th class="labelTitulo">Salida</th>
+                                                {{-- <th class="labelTitulo">Tipo</th> <!-- Se calculan de forma dinamica --> --}}
+                                                <th class="labelTitulo">Tiempo Extra</th>
                                             </thead>
                                             <tbody class="text-center">
                                                 @forelse ($asistencias as $item)
                                                     <tr>
-                                                        <td>
-                                                            {{ $item->id }}
+                                                        <td style="color: {{ $item->estatusColor }};">
+                                                            <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                             <input type="hidden" name="asistenciaId[]"
                                                                 value="{{ $item->asistenciaId }}">
                                                             <input type="hidden" name="personalId[]"
                                                                 value="{{ $item->id }}">
                                                         </td>
-                                                        <td>{{ $item->puesto }}</td>
+                                                        <td>
+                                                            {{ $item->puesto }}
+                                                        </td>
                                                         <td class="text-left">
                                                             {{ $item->getFullLastNameAttribute() }}
                                                         </td>
-                                                        <td><input type="time" class="inputCaja text-right" required
-                                                                name="horasExtra[]" id="horasExtra"
-                                                                value="{{ ($item->horasExtra?\Carbon\Carbon::parse($item->horasExtra)->format('H:i') : "") }}"
-                                                                {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
-                                                                 ></td>
                                                         <td>
+                                                            <?php
+                                                            $dtHorario = null;
+                                                            if ($blnFechaSeleccionadaEsSabado == true) {
+                                                                $dtHorario = $item->horarioSalidaSabado ? \Carbon\Carbon::parse($item->horarioSalidaSabado)->format('H:i') : '';
+                                                            } else {
+                                                                $dtHorario = $item->horarioSalida ? \Carbon\Carbon::parse($item->horarioSalida)->format('H:i') : '';
+                                                            }
+                                                            ?>
+                                                            {{ $dtHorario }}
+                                                            <input type="hidden" name="horarioSalida[]"
+                                                                value="{{ $dtHorario }}">
+                                                        </td>
+                                                        <td>
+                                                            <input type="time" class="inputCaja " placeholder="Salida"
+                                                                id="hSalida" name="hSalida[]"
+                                                                value="{{ $item->hSalida ? \Carbon\Carbon::parse($item->hSalida)->format('H:i') : $dtHorario }}">
+                                                        </td>
+                                                        {{-- <td>
+                                                            <!-- Se van a calcular de forma dinamica -->
                                                             <select id="tipoHoraExtraId" name="tipoHoraExtraId[]"
                                                                 {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                 class="form-select" aria-label="Default select example">
@@ -178,11 +194,16 @@ if ($asistencias->isEmpty() == true) {
                                                                     </option>
                                                                 @endforeach
                                                             </select>
+                                                        </td> --}}
+                                                        <td>
+                                                            <?php
+                                                            $intHoras = (int) ($item->horasExtra / 60);
+                                                            $intMinutos = $item->horasExtra % 60;
+                                                            ?>
+                                                            <input type="time" class="inputCaja text-right"
+                                                                readonly="false" name="horasExtra[]" id="horasExtra"
+                                                                value="{{ str_pad($intHoras, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutos, 2, '0', STR_PAD_LEFT) }}">
                                                         </td>
-                                                        {{--  <td><input type="radio" name="Asistensia1542" value="2"></td>
-                                                    <td><input type="radio" name="Asistensia1542" value="3"></td>
-                                                    <td><input type="radio" name="Asistensia1542" value="4"></td>
-                                                    <td><input type="radio" name="Asistensia1542" value="5"></td>  --}}
                                                     </tr>
                                                 @empty
                                                     @forelse ($listaAsistencia as $item)
@@ -190,20 +211,26 @@ if ($asistencias->isEmpty() == true) {
                                                             <td style="color: {{ $item->estatusColor }};">
                                                                 <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                             </td>
-                                                            <td class="text-left">{{ $item->apellidoP }}
-                                                                {{ $item->apellidoM }}, {{ $item->nombres }}</td>
+                                                            <td>{{ $item->puesto }}</td>
+                                                            <td class="text-left">
+                                                                {{ $item->getFullLastNameAttribute() }}</td>
                                                             <td>---</td>
+                                                            <td>---</td>
+                                                            {{-- <td>---</td> --}}
                                                             <td class="td-actions">---</td>
                                                         </tr>
                                                     @empty
                                                         <tr>
                                                             <td colspan="2">Sin registros.<br><br> <b>Es necesario
-                                                                    Registrar Primero La Asistencia Del Personal Antes De
-                                                                    Poder Asignar Las Horas Extras.</b></td>
+                                                                    Registrar Primero la Asistencia del Personal Antes de
+                                                                    Poder Asignar las Horas Extras.</b></td>
                                                         </tr>
                                                     @endforelse
                                                 @endforelse
-
+                                                <tr>
+                                                    <td colspan="6"><br>Solo se Muestran Registros de Personal que
+                                                        Asistió.<br><br></b></td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
