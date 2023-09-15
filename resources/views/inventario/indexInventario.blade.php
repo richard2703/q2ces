@@ -8,7 +8,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title text-capitalize">Inventario De {{$tipo}}</h4>
+                                    <h4 class="card-title text-capitalize">Inventario de {{ $tipo }}</h4>
                                     {{-- <p class="card-category">Usuarios registrados</p> --}}
                                 </div>
 
@@ -24,9 +24,7 @@
                                         </div>
                                     @endif
                                     <div class="row divBorder">
-
                                         <div class="col-6 text-right">
-
                                             <a href="{{ route('inventario.dash') }}">
                                                 <button class="btn regresar">
                                                     <span class="material-icons">
@@ -40,7 +38,8 @@
                                         <div class="col-6 pb-3 text-end">
                                             @can('inventario_create')
                                                 <a href="{{ route('inventario.create', $tipo) }}">
-                                                    <button type="button" class="btn botonGral text-capitalize">Añadir al Inventario</button>
+                                                    <button type="button" class="btn botonGral text-capitalize">Añadir al
+                                                        Inventario</button>
                                                 </a>
                                             @endcan
                                         </div>
@@ -82,7 +81,8 @@
                                                                     data-bs-toggle="modal" data-bs-target="#modal-cliente"
                                                                     onclick="cargar('{{ $inventario->nombre }}','{{ $inventario->imagen }}','{{ $inventario->tipo }}','{{ $inventario->id }}')">
                                                                     <img
-                                                                        style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}"></button>
+                                                                        style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}">
+                                                                </button>
                                                                 {{--  <p class="botonTitulos mt-2">Resurtir</p>  --}}
                                                             @endcan
                                                             @can('inventario_edit')

@@ -1,41 +1,40 @@
-@extends('layouts.main', ['activePage' => 'personal', 'titlePage' => __('Inventario Nuevo')])
+@extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Inventario Nuevo')])
 @section('content')
-    <div class="content">
-        @if ($errors->any())
-            <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
-            <div class="alert alert-danger">
-                <p>Listado de errores a corregir</p>
-                <ul>
-                    @foreach ($errors->all() as $item)
-                        <li>{{ $item }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col-11 align-self-center">
-                    <div class="card">
-                        <div class="card-body contCart">
-                            <div class="p-1 align-self-start bacTituloPrincipal">
-                                <h2 class="my-3 ms-3 texticonos ">Inventario Nuevo {{ ucfirst($tipo) }}</h2>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-12 text-right">
-                                    <a href="{{ route('inventario.dash') }}"
-                                        title="Regresa a la vista de consulta de inventario.">
-                                        <button class="btn regresar">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header bacTituloPrincipal">
+                            <h4 class="card-title text-capitalize">Inventario de {{ $tipo }}</h4>
+                            {{-- <p class="card-category">Usuarios registrados</p> --}}
+                        </div>
+
+                        <div class="card-body">
+                            @if (session('success'))
+                                <div class="alert alert-success" role="success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+                            @if (session('faild'))
+                                <div class="alert alert-danger" role="faild">
+                                    {{ session('faild') }}
+                                </div>
+                            @endif
+                            <div class="row divBorder ">
+                                <div class="col-6 pb-3 text-right">
+                                    <a href="{{ route('inventario.index', $tipo) }}">
+                                        <button class="btn regresar ">
                                             <span class="material-icons">
                                                 reply
                                             </span>
                                             Regresar
                                         </button>
                                     </a>
-
                                 </div>
-                            </div>
 
+                            </div>
                             <form class="row alertaGuardar" action="{{ route('inventario.store') }}"
                                 method="post"class="row" enctype="multipart/form-data">
                                 @csrf
@@ -59,7 +58,8 @@
 
                                 <div class="col-12 col-md-8 my-3 ">
                                     <div class="row alin">
-                                        <input type="hidden" name="usuarioId" id="usuarioId" value="{{  auth()->user()->id }}">
+                                        <input type="hidden" name="usuarioId" id="usuarioId"
+                                            value="{{ auth()->user()->id }}">
 
                                         <div class=" col-12 col-sm-6 col-lg-8 mb-3 ">
                                             <label class="labelTitulo">Tipo:</label></br>
@@ -236,11 +236,16 @@
                                 </div>  --}}
                             </form>
                         </div>
+                        {{--  <div class="card-footer mr-auto">
+                            {{ $inventarios->links() }}
+                        </div>  --}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
 
     <script type="application/javascript">
         jQuery('input[type=file]').change(function(){

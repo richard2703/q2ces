@@ -245,6 +245,8 @@ class inventarioController extends Controller
         $vctMaquinaria = maquinaria::all();
         // dd($vctDesde);
         $inventario = inventario::where("id", $inventario->id)->first();
+        // dd($inventario);
+
         return view('inventario.detalleInventario', compact('inventario', 'vctDesde', 'vctHasta', 'vctTipos', 'vctMarcas', 'vctProveedores', 'vctMaquinaria'));
     }
 
