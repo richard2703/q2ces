@@ -115,7 +115,7 @@ $blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
                                                 <a href="{{ route('asistencia.create') }}"
                                                     class="combustibleLitros fw-semibold text-end"
                                                     title="Ir al dia en curso"><b>Asistencia del Día
-                                                        {{ ucwords(trans($objCalendar->getFechaFormateada($fechaSeleccionada, true))) }}
+                                                        {{ /*ucwords*/(trans($objCalendar->getFechaFormateada($fechaSeleccionada, true))) }}
                                                     </b>
                                                 </a>
                                             </div>
@@ -168,7 +168,6 @@ $blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
                                                         </th>
                                                     </thead>
                                                     <tbody class="text-center">
-
 
                                                         @if ($blnAsistenciaRegistrada == false)
                                                             @forelse ($personal as $item)
@@ -235,7 +234,7 @@ $blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
                                                                         <input type="time" class="inputCaja "
                                                                             placeholder="Entrada" id=""
                                                                             name="hEntrada[]"
-                                                                            value="{{ $item->hEntrada }}">
+                                                                            value="{{ $dtHorario }}">
                                                                     </td>
                                                                     <td>
                                                                         <input type="time" class="inputCaja "

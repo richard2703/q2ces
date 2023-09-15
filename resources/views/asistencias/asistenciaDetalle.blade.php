@@ -36,14 +36,16 @@ if ($asistencias->isEmpty() == true) {
         $blnBloquearRegistro = true;
     }
 }
+
 // dd($asistencias, $diaAnterior, $diaSiguiente, $fechaSeleccionada, $diaSeleccionado, $dtToday, $dtTrabajar);
+
 ?>
 @section('content')
     <div class="content">
         @if ($errors->any())
             <div class="alert alert-danger">
                 <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
-                <p>Listado De Errores A Corregir</p>
+                <p>Listado de Errores a Corregir</p>
                 <ul>
                     @foreach ($errors->all() as $item)
                         <li>{{ $item }}</li>
@@ -67,8 +69,8 @@ if ($asistencias->isEmpty() == true) {
                                             </a>
                                             <!-- Para el mes en curso -->
                                         </span>
-                                        &nbsp;&nbsp;&nbsp; Semana {{ $semanaSeleccionada }} Del
-                                        {{ $strFechaInicioPeriodo }} Al {{ $strFechaFinPeriodo }}
+                                        &nbsp;&nbsp;&nbsp; Semana {{ $semanaSeleccionada }} del
+                                        {{ $strFechaInicioPeriodo }} al {{ $strFechaFinPeriodo }}
                                         &nbsp;&nbsp;&nbsp;
                                         <!-- Un dia adelante del cargado -->
                                         <span>
@@ -97,13 +99,20 @@ if ($asistencias->isEmpty() == true) {
 
                                         <span>
                                             <a href="{{ route('asistencia.show', $personal->id) }}"
-                                                class="display-8 mb-8 text-center" title="Ir al periodo en curso"><b>Hoy
-                                                    Es
-                                                    {{ ucwords(trans($objCalendar->getFechaFormateada(date_create(date('Y-m-d')), true))) }}</b></a>
+                                                class="display-8 mb-8 text-center" title="Ir al periodo en curso"><b>Hoy es
+                                                    {{ /*ucwords*/ trans($objCalendar->getFechaFormateada(date_create(date('Y-m-d')), true)) }}</b></a>
                                         </span>
                                         <h4 class="card-title">
-                                            {{ $personal->nombres }} {{ $personal->apellidoP }}
-                                            {{ $personal->apellidoM }}</h4>
+                                            <strong>{{ str_pad($personal->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
+                                            {{ $personal->personal }} [ {{ $personal->puesto }} ]
+                                        </h4>
+                                        <p>Horario Semana: Entra
+                                            {{ \Carbon\Carbon::parse($personal->horarioEntrada)->format('H:i') }} y Sale
+                                            {{ \Carbon\Carbon::parse($personal->horarioSalida)->format('H:i') }}</p>
+                                        <p>Horario Sábado: Entra
+                                            {{ \Carbon\Carbon::parse($personal->horarioEntradaSabado)->format('H:i') }} y
+                                            Sale {{ \Carbon\Carbon::parse($personal->horarioSalidaSabado)->format('H:i') }}
+                                        </p>
                                     </div>
                                     <div class="row">
                                         <div class="col-12 my-4 pb-4 d-md-flex align-items-center divBorder">
@@ -148,7 +157,7 @@ if ($asistencias->isEmpty() == true) {
                                                     </th>
                                                     <th class="labelTitulo" style="width:140px !important">Salida
                                                     </th>
-                                                    <th class="labelTitulo" style="width:140px !important">Tipo</th>
+                                                    {{-- <th class="labelTitulo" style="width:140px !important">Tipo</th> --}} <!-- Calculo dinamico -->
                                                     <th class="labelTitulo" style="width:170px !important">Observaciones
                                                     </th>
                                                     <th class="labelTitulo">Tiempo Extra</th>
@@ -163,6 +172,12 @@ if ($asistencias->isEmpty() == true) {
                                                                     value="{{ $item->id }}">
                                                                 <input type="hidden" name="horarioSalida[]"
                                                                     value="{{ $item->horarioSalida }}">
+                                                                <input type="hidden" name="horarioEntrada[]"
+                                                                    value="{{ $item->horarioEntrada }}">
+                                                                <input type="hidden" name="horarioSalidaSabado[]"
+                                                                    value="{{ $item->horarioSalidaSabado }}">
+                                                                <input type="hidden" name="horarioEntradaSabado[]"
+                                                                    value="{{ $item->horarioEntradaSabado }}">
                                                             </td>
                                                             <td>
                                                                 <input type="radio" name="{{ $item->id }}[]"
@@ -216,7 +231,8 @@ if ($asistencias->isEmpty() == true) {
                                                                     placeholder="Salida" id="hSalida" name="hSalida[]"
                                                                     value="{{ $item->hSalida ? \Carbon\Carbon::parse($item->hSalida)->format('H:i') : '' }}">
                                                             </td>
-                                                            <td>
+                                                            {{-- <td>
+                                                                <!-- Calculo dinamico -->
                                                                 <select id="tipoHoraExtraId" name="tipoHoraExtraId[]"
                                                                     {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                     class="form-select"
@@ -229,7 +245,7 @@ if ($asistencias->isEmpty() == true) {
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
-                                                            </td>
+                                                            </td> --}}
                                                             <td>
                                                                 <input type="text" class="inputCaja text-left"
                                                                     name="comentario[]" id="comentario"
@@ -245,11 +261,9 @@ if ($asistencias->isEmpty() == true) {
                                                                 <input type="time" class="inputCaja text-right"
                                                                     readonly="false" name="horasExtra[]" id="horasExtra"
                                                                     value="{{ str_pad($intHoras, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutos, 2, '0', STR_PAD_LEFT) }}">
-                                                                {{-- <input type="number" class="inputCaja text-right" required
-                                                                    name="horasExtra[]"
-                                                                    id="horasExtra"{{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
-                                                                    value="{{ $item->horasExtra }}" maxlength="2"
-                                                                    step="1" min="0" max="16"> --}}
+
+                                                                <input type="hidden" name="horasAnticipada[]"
+                                                                    value="{{ $item->horasAnticipada }}">
                                                             </td>
                                                         </tr>
                                                     @empty

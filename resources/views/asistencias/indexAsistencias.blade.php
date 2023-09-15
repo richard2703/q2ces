@@ -68,8 +68,8 @@ $anioSeleccionado = $intAnio;
                                             <div class="col-8">
                                                 <a href="{{ route('asistencia.index') }}"
                                                     class="combustibleLitros fw-semibold text-end"
-                                                    title="Ir al mes en curso"><b>Asistencia Mensual De
-                                                        {{ $objCalendar->getNameMonth($intMes) }} Del
+                                                    title="Ir al mes en curso"><b>Asistencia Mensual de
+                                                        {{ $objCalendar->getNameMonth($intMes) }} del
                                                         {{ $intAnio }}</br>
                                                 </a>
                                             </div>

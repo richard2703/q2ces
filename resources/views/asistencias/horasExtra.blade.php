@@ -110,7 +110,7 @@ if ($asistencias->isEmpty() == true) {
                                                 <a href="{{ route('asistencia.HEstore') }}"
                                                     class="combustibleLitros fw-semibold text-end"
                                                     title="Ir al día de hoy"><b>Horas Extras del Día
-                                                        {{ ucwords(trans($objCalendar->getFechaFormateada($fechaSeleccionada, true))) }}</b>
+                                                        {{ /*ucwords*/(trans($objCalendar->getFechaFormateada($fechaSeleccionada, true))) }}</b>
                                                 </a>
                                             </div>
 
@@ -144,7 +144,7 @@ if ($asistencias->isEmpty() == true) {
                                                 <th class="labelTitulo">Nombre</th>
                                                 <th class="labelTitulo">Horario Salida</th>
                                                 <th class="labelTitulo">Salida</th>
-                                                <th class="labelTitulo">Tipo</th>
+                                                {{-- <th class="labelTitulo">Tipo</th> <!-- Se calculan de forma dinamica --> --}}
                                                 <th class="labelTitulo">Tiempo Extra</th>
                                             </thead>
                                             <tbody class="text-center">
@@ -179,9 +179,10 @@ if ($asistencias->isEmpty() == true) {
                                                         <td>
                                                             <input type="time" class="inputCaja " placeholder="Salida"
                                                                 id="hSalida" name="hSalida[]"
-                                                                value="{{ $item->hSalida ? \Carbon\Carbon::parse($item->hSalida)->format('H:i') : '' }}">
+                                                                value="{{ $item->hSalida ? \Carbon\Carbon::parse($item->hSalida)->format('H:i') : $dtHorario }}">
                                                         </td>
-                                                        <td>
+                                                        {{-- <td>
+                                                            <!-- Se van a calcular de forma dinamica -->
                                                             <select id="tipoHoraExtraId" name="tipoHoraExtraId[]"
                                                                 {{ $blnBloquearRegistro == true ? 'disabled="false"' : '' }}
                                                                 class="form-select" aria-label="Default select example">
@@ -193,7 +194,7 @@ if ($asistencias->isEmpty() == true) {
                                                                     </option>
                                                                 @endforeach
                                                             </select>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
                                                             <?php
                                                             $intHoras = (int) ($item->horasExtra / 60);
@@ -215,7 +216,7 @@ if ($asistencias->isEmpty() == true) {
                                                                 {{ $item->getFullLastNameAttribute() }}</td>
                                                             <td>---</td>
                                                             <td>---</td>
-                                                            <td>---</td>
+                                                            {{-- <td>---</td> --}}
                                                             <td class="td-actions">---</td>
                                                         </tr>
                                                     @empty
@@ -227,7 +228,7 @@ if ($asistencias->isEmpty() == true) {
                                                     @endforelse
                                                 @endforelse
                                                 <tr>
-                                                    <td colspan="7"><br>Solo Se Muestran Registros de Personal Que
+                                                    <td colspan="6"><br>Solo se Muestran Registros de Personal que
                                                         Asistió.<br><br></b></td>
                                                 </tr>
                                             </tbody>

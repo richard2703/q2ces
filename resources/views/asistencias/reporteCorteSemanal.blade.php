@@ -135,13 +135,12 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             </div>
                                             <div class="">
                                                 @can('asistencia_create')
-                                                    {{-- <form action="{{ route('asistencia.reporteExcel' ) }}" method="post">
+                                                    <form action="{{ route('asistencia.reporteExcel') }}" method="post">
                                                         @csrf
-                                                        <input type="hidden" name="intAnio" value="{{ $intAnio }}">
-                                                        <input type="hidden" name="intMes" value="{{ $intMes }}">
-                                                        <input type="hidden" name="intDia" value="{{ $intDia }}">
+                                                        <input type="hidden" name="inicio" value="{{ $vctDiasSemana[0]->format('Y-m-d') }}">
+                                                        <input type="hidden" name="fin" value="{{ $vctDiasSemana[6]->format('Y-m-d') }}">
                                                         <button type="submit" class="btn botonGral">Descargar Excel</button>
-                                                    </form> --}}
+                                                    </form>
                                                 @endcan
                                             </div>
                                         </div>
