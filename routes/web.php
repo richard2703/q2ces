@@ -371,14 +371,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/asistencia/horasExtra/{anio}/{mes}/{dia}', [App\Http\Controllers\asistenciaController::class, 'reloadHorasExtra'])->name('asistencia.reloadHorasExtra');
     Route::get('/asistencia/personal/{personalId}/{anio}/{mes}/{dia}', [App\Http\Controllers\asistenciaController::class, 'reloadDetalle'])->name('asistencia.reloadDetalle');
     Route::get('/asistencia/corteSemanal/{anio}/{mes}/{dia}', [App\Http\Controllers\asistenciaController::class, 'reloadcorteSemanal'])->name('asistencia.reloadcorteSemanal');
+    Route::post('asistencia/corteSemanal/reporte/exportar/{intAnio}/{intMes}/{intDia}', [App\Http\Controllers\asistenciaController::class, 'reporteExcel'])->name('asistencia.reporteExcel');
+
     // Route::post('/asistencia', [App\Http\Controllers\personalController::class, 'store'])->name('personal.store');
     // Route::get('/asistencia', [App\Http\Controllers\personalController::class, 'index'])->name('personal.indexPersonal');
     // Route::get('/asistencia/{personal}', [App\Http\Controllers\personalController::class, 'show'])->name('personal.show');
     // Route::put('/asistencia/{personal}', [App\Http\Controllers\personalController::class, 'update'])->name('personal.update');
     // Route::get('asistencia/{id}/{doc}', [App\Http\Controllers\personalController::class, 'download'])->name('personal.download');
     // Route::delete('/asistencia/{personal}', [App\Http\Controllers\UserController::class, 'destroy'])->name('personal.delete');
-    Route::post('asistencia/corteSemanal/reporte/exportar', [App\Http\Controllers\asistenciaController::class, 'reporteExcel'])->name('asistencia.reporteExcel');
-
     // Caja Chica
     Route::resource('cajaChica', App\Http\Controllers\cajaChicaController::class);
     Route::post('cajaChica/reporte', [App\Http\Controllers\cajaChicaController::class, 'reporte'])->name('cajaChica.reporte');

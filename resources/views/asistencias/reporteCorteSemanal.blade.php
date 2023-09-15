@@ -1,36 +1,38 @@
 @extends('layouts.main', ['activePage' => 'asistencias', 'titlePage' => __('Corte Semanal de Nómina')])
 <?php
+
+// // dd($intAnio,$intMes,$intDia);
 $objCalendar = new Calendario();
 
-$dtToday = date('Ymd');
-$fechaSeleccionada = date_create(date('Y-m-d', strtotime("$intAnio-$intMes-$intDia")));
-$diaSeleccionado = $objCalendar->getNameDay(date_format($fechaSeleccionada, 'N'));
-$mesSeleccionado = $objCalendar->getNameMonth(date_format($fechaSeleccionada, 'm'));
-$semanaSeleccionada = date_format($fechaSeleccionada, 'W');
+// $dtToday = date('Ymd');
+// $fechaSeleccionada = date_create(date('Y-m-d', strtotime("$intAnio-$intMes-$intDia")));
+// $diaSeleccionado = $objCalendar->getNameDay(date_format($fechaSeleccionada, 'N'));
+// $mesSeleccionado = $objCalendar->getNameMonth(date_format($fechaSeleccionada, 'm'));
+// $semanaSeleccionada = date_format($fechaSeleccionada, 'W');
 
-$semanaAnterior = date('Y-m-d', strtotime($strFechaInicioPeriodo . '- 6 days'));
+// $semanaAnterior = date('Y-m-d', strtotime($strFechaInicioPeriodo . '- 6 days'));
 
-// dd( $intAnio, $intMes, $intDia );
-$diaAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'd');
-$mesAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'm');
-$anioAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'Y');
+// // dd( $intAnio, $intMes, $intDia );
+// $diaAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'd');
+// $mesAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'm');
+// $anioAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'Y');
 
-$diaSiguiente = date_format($objCalendar->getDiaSiguiente($strFechaFinPeriodo), 'd');
-$mesSiguiente = date_format($objCalendar->getDiaSiguiente($strFechaFinPeriodo), 'm');
-$anioSiguiente = date_format($objCalendar->getDiaSiguiente($strFechaFinPeriodo), 'Y');
+// $diaSiguiente = date_format($objCalendar->getDiaSiguiente($strFechaFinPeriodo), 'd');
+// $mesSiguiente = date_format($objCalendar->getDiaSiguiente($strFechaFinPeriodo), 'm');
+// $anioSiguiente = date_format($objCalendar->getDiaSiguiente($strFechaFinPeriodo), 'Y');
 
-$dtTrabajar = date('Ymd', strtotime("$intAnio-$intMes-$intDia"));
+// $dtTrabajar = date('Ymd', strtotime("$intAnio-$intMes-$intDia"));
 
-//*** Arreglo para los dias del periodo **/
-$vctDiasSemana = [];
-for ($i = 0; $i < 7; $i++) {
-    $vctDiasSemana[] = date_create(date('Y-m-d', strtotime($strFechaInicioPeriodo . '+' . $i . ' days')));
-}
+// //*** Arreglo para los dias del periodo **/
+// $vctDiasSemana = [];
+// for ($i = 0; $i < 7; $i++) {
+//     $vctDiasSemana[] = date_create(date('Y-m-d', strtotime($strFechaInicioPeriodo . '+' . $i . ' days')));
+// }
 
-// dd($vctDiasSemana);
+// // dd($vctDiasSemana);
 
-//*** bloqueamos fecha mayor al dia actual
-$blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? false : true;
+// //*** bloqueamos fecha mayor al dia actual
+// $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? false : true;
 
 // dd($asistencias, $diaAnterior, $diaSiguiente, $fechaSeleccionada, $diaSeleccionado, $dtToday, $dtTrabajar);
 
@@ -80,23 +82,23 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                 <div class="card-header bacTituloPrincipal">
                                     <h4 class="card-title">
                                         <!-- Un dia atras del cargado -->
-                                        <span>
+                                        {{-- <span>
                                             <a href="{{ url('asistencia/corteSemanal/' . $anioAnterior . '/' . $mesAnterior . '/' . $diaAnterior) }}"
                                                 class="" title="Ir al día periodo anterior">
                                                 <i class="bi bi-arrow-left-square"></i>
                                             </a>
                                             <!-- Para el mes en curso -->
-                                        </span>
-                                        &nbsp;&nbsp;&nbsp; Semana {{ $semanaSeleccionada }} del
+                                        </span> --}}
+                                        {{-- &nbsp;&nbsp;&nbsp; Semana {{ $semanaSeleccionada }} del
                                         {{ $strFechaInicioPeriodo }} al {{ $strFechaFinPeriodo }}
-                                        &nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp; --}}
                                         <!-- Un dia adelante del cargado -->
-                                        <span>
+                                        {{-- <span>
                                             <a href="{{ url('asistencia/corteSemanal/' . $anioSiguiente . '/' . $mesSiguiente . '/' . $diaSiguiente) }}"
                                                 class="" title="Ir al día periodo siguiente">
                                                 <i class="bi bi-arrow-right-square"></i>
                                             </a>
-                                        </span>
+                                        </span> --}}
                                     </h4>
                                     {{-- <p class="card-category">Usuarios registrados</p> --}}
                                 </div>
@@ -130,19 +132,10 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                 <a href="{{ route('asistencia.corteSemanal') }}"
                                                     class="combustibleLitros fw-semibold text-end"
                                                     title="Ir al mes en curso"><b>Hoy es
-                                                        {{ /*ucwords*/ trans($objCalendar->getFechaFormateada(date_create(date('Y-m-d')), true)) }}</b>
+                                                        {{-- {{ /*ucwords*/ trans($objCalendar->getFechaFormateada(date_create(date('Y-m-d')), true)) }}</b> --}}
                                                 </a>
                                             </div>
-                                            <div class="">
-                                                @can('asistencia_create')
-                                                    <form action="{{ route('asistencia.reporteExcel') }}" method="post">
-                                                        @csrf
-                                                        <input type="hidden" name="inicio" value="{{ $vctDiasSemana[0]->format('Y-m-d') }}">
-                                                        <input type="hidden" name="fin" value="{{ $vctDiasSemana[6]->format('Y-m-d') }}">
-                                                        <button type="submit" class="btn botonGral">Descargar Excel</button>
-                                                    </form>
-                                                @endcan
-                                            </div>
+
                                         </div>
 
                                     </div>
@@ -157,7 +150,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                         {{-- <input type="hidden" name="personalId" value="{{ $personal->id }}"> --}}
 
 
-                                        <div class="table-responsive">
+                                        {{-- <div class="table-responsive">
                                             <table class="table">
                                                 <thead class="labelTitulo text-center">
                                                     <th class="labelTitulo corte">Código</th>
@@ -406,7 +399,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="card-footer mr-auto">
 

@@ -19,7 +19,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Tipos De Mantenimiento</h4>
+                                    <h4 class="card-title">Tipos de Mantenimiento</h4>
 
                                 </div>
                                 <div class="card-body">
@@ -37,21 +37,27 @@
                                         <div class="d-flex p-3 divBorder">
                                         <div class="col-12 text-right">
 
-                                            <a href="{{ route('catalogos.index') }}">
-                                                <button class="btn regresar">
-                                                    <span class="material-icons">
-                                                        reply
-                                                    </span>
-                                                    Regresar
-                                                </button>
-                                            </a>
+                                                <a href="{{ route('catalogos.index') }}">
+                                                    <button class="btn regresar">
+                                                        <span class="material-icons">
+                                                            reply
+                                                        </span>
+                                                        Regresar
+                                                    </button>
+                                                </a>
 
-                                            @can('catalogos_create')
-                                                <button class="btn botonGral float-end" data-bs-toggle="modal"
-                                                    data-bs-target="#nuevoItem">
-                                                    Añadir Tipo De Mantenimiento
-                                                </button>
-                                            @endcan
+                                                @can('catalogos_create')
+                                                    <button class="btn botonGral float-end" data-bs-toggle="modal"
+                                                        data-bs-target="#nuevoItem">
+                                                        Añadir Tipo de Mantenimiento
+                                                    </button>
+                                                @endcan
+                                            </div>
+                                        </div>
+                                        <div class="row divBorder">
+                                            <p>Catálogo General de Tipo de Mantenimento, Es Utilizado para Especificar
+                                                el tipo de Mantenimiento que se Aplicará a un Equipo en una Solicitud.
+                                            </p>
                                         </div>
                                     </div>
                                     </div>
@@ -146,7 +152,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nuevo Tipo De Mantenimiento</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nuevo Tipo de Mantenimiento</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -186,7 +192,7 @@
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
 
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Tipo De Mantenimiento</label>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Tipo de Mantenimiento</label>
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>

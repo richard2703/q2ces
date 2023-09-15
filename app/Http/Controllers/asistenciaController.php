@@ -923,57 +923,213 @@ class asistenciaController extends Controller {
     }
     public function reporteExcel(Request $request)
     {
-        // dd( $request);
-        // $query = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
-        //     ->leftJoin('obras', 'cajaChica.obra', 'obras.id')
-        //     ->join('maquinaria', 'cajaChica.equipo', 'maquinaria.id')
-        //     ->join('conceptos', 'cajaChica.concepto', 'conceptos.id')
-        //     ->join('comprobante', 'cajaChica.comprobanteId', 'comprobante.id')
-        //     ->select(
-        //         'cajaChica.id',
-        //         'dia',
-        //         'conceptos.codigo',
-        //         'conceptos.nombre as cnombre',
-        //         'ncomprobante',
-        //         'comprobante.nombre as comprobante',
-        //         'personal.nombres as pnombre',
-        //         'personal.apellidoP as papellidoP',
-        //         'cliente',
-        //         'obras.nombre as obra',
-        //         'maquinaria.identificador',
-        //         'maquinaria.nombre as maquinaria',
-        //         'cantidad',
-        //         'cajaChica.tipo',
-        //     )->whereBetween('dia', [$request->inicio, $request->fin])
-        //     ->orderby('dia', 'desc')->orderby('id', 'desc')
-        //     ->get();
-        // // dd($query);
+        $objCalendario = new Calendario();
 
-        // foreach ($query as $q) {
-        //     switch ($q->tipo) {
-        //         case  $q->tipo == 1:
-        //             $q->tipo = 'Ingreso';
-        //             break;
-        //         case $q->tipo == 2:
-        //             $q->tipo = 'Egreso';
-        //             break;
-        //         case $q->tipo == 3:
-        //             $q->tipo = 'Ingreso de Servicios';
-        //             break;
-        //         case $q->tipo == 4:
-        //             $q->tipo = 'Pendiente de Cobro Y/O Factura';
-        //             break;
+        $data = request()->all();
+        if ( is_array( $data ) == true && count( $data ) > 0 ) {
+            $intMes = $data[ 'intMes' ];
+            $intAnio = $data[ 'intAnio' ];
+            $intDia = $data[ 'intDia' ];
+        } else {
+            $intMes = date( 'm' );
+            $intAnio = date( 'Y' );
+            $intDia = date( 'd' );
+        }
 
-        //         default:
-        //             break;
-        //     }
-        // }
+        $strDate = $intAnio . '-' . $intMes . '-' . $intDia;
+        $vctFechas =  $objCalendario->getSemanaTrabajo( date_create( $strDate ), 3 );
+        $strFechaInicioPeriodo = $vctFechas[ 0 ]->format( 'Y-m-d' );
+        $strFechaFinPeriodo = $vctFechas[ 1 ]->format( 'Y-m-d' );
 
+        $usuario = personal::where( 'userId', auth()->user()->id )->first();
+        // $personal = personal::where( 'id', $personalId )->first();
 
+        $asistencias = personal::select(
+            DB::raw( 'personal.id AS personalId' ),
+            DB::raw( "CONCAT( personal.apellidoP,' ', personal.apellidoM,', ',personal.nombres)as personal" ),
+            DB::raw( 'puestoNivel.nombre AS puesto' ),
+            DB::raw( 'asistencia.id AS id' ),
+            DB::raw( 'asistencia.asistenciaId as tipoAsistenciaId' ),
+            'asistencia.horasExtra',
+            'asistencia.horasAnticipada',
+            'asistencia.horasRetraso',
+            'asistencia.fecha',
+            DB::raw( 'nomina.diario AS sueldo' ),
+            DB::raw( 'nomina.nomina AS numeroNomina' ),
+            DB::raw( 'tipoAsistencia.color AS tipoAsistenciaColor' ),
+            DB::raw( 'tipoAsistencia.nombre AS tipoAsistenciaNombre' ),
+            DB::raw( 'tipoAsistencia.esAsistencia AS esAsistencia' ),
+            DB::raw( 'tipoHoraExtra.color AS horaExtraColor' ),
+            DB::raw( 'tipoHoraExtra.valor AS horaExtraCosto' ),
+            DB::raw( 'tipoHoraExtra.nombre AS horaExtraNombre' ),
+            DB::raw( 'userEstatus.nombre AS estatus' ),
+            DB::raw( 'userEstatus.color AS estatusColor' ),
+            DB::raw( 'asistencia.entradaAnticipada' ),
+        )
+        ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
+        ->join( 'asistencia', 'asistencia.personalId', '=', 'personal.id' )
+        ->join( 'tipoAsistencia', 'tipoAsistencia.id', '=', 'asistencia.asistenciaId' )
+        ->join( 'tipoHoraExtra', 'tipoHoraExtra.id', '=', 'asistencia.tipoHoraExtraId' )
+        ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
+        ->join( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
+        ->join( 'puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId' )
+        ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
+        // ->where( 'asistencia.personalId', '=', 23 )
+        ->whereBetween( 'asistencia.fecha',   [ $strFechaInicioPeriodo, $strFechaFinPeriodo ] )
+        ->orderBy( 'personal.apellidoP', 'asc' )
+        ->orderBy( 'asistencia.personalId', 'asc' )
+        ->orderBy( 'asistencia.fecha', 'asc' )->get();
+
+        //*** lista de asistencia */
+        $listaAsistencia = personal::select(
+            'personal.id',
+            'personal.nombres',
+            'personal.apellidoP',
+            'personal.apellidoM',
+            DB::raw( 'puestoNivel.nombre AS puesto' ),
+            DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
+            DB::raw( 'puestoNivel.nombre AS puesto' ),
+            DB::raw( 'nomina.nomina AS numNomina' ),
+            DB::raw( 'userEstatus.nombre AS estatus' ),
+            DB::raw( 'userEstatus.color AS estatusColor' )
+        )
+        ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
+        ->join( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
+        ->join( 'puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId' )
+        ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
+        ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
+        ->orderBy( 'personal.apellidoP', 'asc' )->get();
+
+        $dteMesInicio = $intAnio . '-' . $intMes . '-01';
+        $dteMesFin = $intAnio . '-' . $intMes . '-' . $objCalendario->getTotalDaysInMonth( $intMes, $intAnio );
+
+        $vctAsistencias = array();
+        $vctEmpleado = array();
+        $vctPagos = array();
+        $intDia = 0;
+        $strEmpleado = null;
+        $intEmpleado = null;
+
+        foreach ( $asistencias as $key => $item ) {
+
+            if ( $intDia == 0 && $strEmpleado == null ) {
+                //*** creamos el objeto */
+                $objDia = new stdClass;
+            } else {
+                //*** el objeto sigue vivo */
+                // dd( 'Seguimos con el objeto ' .  $intDia );
+            }
+
+            if ( $intDia == 0 && $strEmpleado == null ) {
+                //** primer registro del empleado */
+                unset( $vctPagos );
+                $strEmpleado = $item->personal;
+                $objDia->numEmpleado = str_pad( $item->numeroNomina, 4, '0', STR_PAD_LEFT );
+                $objDia->empleado = $item->personal;
+                $objDia->puesto = $item->puesto;
+                $objDia->sueldo = $item->sueldo;
+                $objDia->estatus = $item->estatus;
+                $objDia->estatusColor = $item->estatusColor;
+
+                $objPagos = new stdClass;
+                $objPagos->fecha = $item->fecha;
+                $objPagos->horasExtra = $item->horasExtra;
+                $objPagos->horasAnticipada = $item->horasAnticipada;
+                $objPagos->horasRetraso = $item->horasRetraso;
+                // $objPagos->horaExtraColor = $item->horaExtraColor;
+                // $objPagos->horaExtraCosto = $item->horaExtraCosto;
+                // $objPagos->horaExtraNombre = $item->horaExtraNombre;
+                $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
+                $objPagos->esAsistencia = $item->esAsistencia;
+                $objPagos->entradaAnticipada = $item->entradaAnticipada;
+                $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
+                $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
+                $vctPagos[] = $objPagos;
+
+                $intDia += 1;
+            } else  if ( ( $intDia == 6 ) &&  ( $strEmpleado ==  $item->personal ) ) {
+                //** ultimo registro del empleado del periodo en los casos */
+                $objPagos = new stdClass;
+                $objPagos->fecha = $item->fecha;
+                $objPagos->horasExtra = $item->horasExtra;
+                $objPagos->horasAnticipada = $item->horasAnticipada;
+                $objPagos->horasRetraso = $item->horasRetraso;
+                // $objPagos->horaExtraColor = $item->horaExtraColor;
+                // $objPagos->horaExtraCosto = $item->horaExtraCosto;
+                // $objPagos->horaExtraNombre = $item->horaExtraNombre;
+                $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
+                $objPagos->esAsistencia = $item->esAsistencia;
+                $objPagos->entradaAnticipada = $item->entradaAnticipada;
+                $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
+                $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
+                $vctPagos[] = $objPagos;
+
+                $objDia->pagos  = $vctPagos;
+                $vctAsistencias[] =  $objDia;
+
+                $intDia = 0;
+                $strEmpleado = null;
+                unset( $vctPagos );
+            } else  if ( ( $intDia > 0 &&  $intDia < 6 ) &&  ( $strEmpleado ==  $item->personal ) ) {
+                //*** seguimos con el siguiente dia y verificamos que se trate de la misma persona */
+                $objPagos = new stdClass;
+                $objPagos->fecha = $item->fecha;
+                $objPagos->horasExtra = $item->horasExtra;
+                $objPagos->horasAnticipada = $item->horasAnticipada;
+                $objPagos->horasRetraso = $item->horasRetraso;
+                // $objPagos->horaExtraColor = $item->horaExtraColor;
+                // $objPagos->horaExtraCosto = $item->horaExtraCosto;
+                // $objPagos->horaExtraNombre = $item->horaExtraNombre;
+                $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
+                $objPagos->esAsistencia = $item->esAsistencia;
+                $objPagos->entradaAnticipada = $item->entradaAnticipada;
+                $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
+                $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
+                $vctPagos[] = $objPagos;
+                $intDia += 1;
+            } else {
+                //*** el empleado ya no tiene registros y hay que cerrar y crear el nuevo */
+                $objDia->pagos  = $vctPagos;
+                $vctAsistencias[] =  $objDia;
+                // dd( 'Entre al cierre forzoso ',  $intDia, $objDia );
+                $intDia = 0;
+                $strEmpleado = null;
+                unset( $vctPagos );
+                $objDia = new stdClass;
+
+                $strEmpleado = $item->personal;
+                $objDia->numEmpleado = str_pad( $item->numeroNomina, 4, '0', STR_PAD_LEFT );
+                $objDia->empleado = $item->personal;
+                $objDia->puesto = $item->puesto;
+                $objDia->sueldo = $item->sueldo;
+                $objDia->estatus = $item->estatus;
+                $objDia->estatusColor = $item->estatusColor;
+
+                $objPagos = new stdClass;
+                $objPagos->fecha = $item->fecha;
+                $objPagos->horasExtra = $item->horasExtra;
+                $objPagos->horasAnticipada = $item->horasAnticipada;
+                $objPagos->horasRetraso = $item->horasRetraso;
+                // $objPagos->horaExtraColor = $item->horaExtraColor;
+                // $objPagos->horaExtraCosto = $item->horaExtraCosto;
+                // $objPagos->horaExtraNombre = $item->horaExtraNombre;
+                $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
+                $objPagos->esAsistencia = $item->esAsistencia;
+                $objPagos->entradaAnticipada = $item->entradaAnticipada;
+                $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
+                $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
+                $vctPagos[] = $objPagos;
+
+                $intDia += 1;
+                // dd( 'Entre al cierre forzoso ',  $intDia, $objDia );
+
+            }
+        }
 
 
         // dd($request);
-        return (new CorteSemanalExport($request['intAnio'] ))->download('corteSemanal.xlsx');
+
+        return (new CorteSemanalExport( compact( 'usuario', 'vctAsistencias',   'asistencias', 'listaAsistencia', 'intDia', 'intMes', 'intAnio', 'strFechaInicioPeriodo', 'strFechaFinPeriodo' ) ))->download('corteSemanal.xlsx');
     }
 
     public function export() {

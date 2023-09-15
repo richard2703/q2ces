@@ -34,26 +34,29 @@
                                         </div>
                                     @endif
                                     <div class="row">
-                                    <div class="d-flex p-3 divBorder">
-                                        <div class="col-12 text-right">
+                                        <div class="d-flex p-3">
+                                            <div class="col-12 text-right">
 
-                                            <a href="{{ route('catalogos.index') }}">
-                                                <button class="btn regresar">
-                                                    <span class="material-icons">
-                                                        reply
-                                                    </span>
-                                                    Regresar
-                                                </button>
-                                            </a>
+                                                <a href="{{ route('catalogos.index') }}">
+                                                    <button class="btn regresar">
+                                                        <span class="material-icons">
+                                                            reply
+                                                        </span>
+                                                        Regresar
+                                                    </button>
+                                                </a>
 
-                                            @can('catalogos_create')
-                                                <button class="btn botonGral float-end" data-bs-toggle="modal"
-                                                    data-bs-target="#nuevoItem">
-                                                    Añadir Tipo de Uniforme
-                                                </button>
-                                            @endcan
+                                                @can('catalogos_create')
+                                                    <button class="btn botonGral float-end" data-bs-toggle="modal"
+                                                        data-bs-target="#nuevoItem">
+                                                        Añadir Tipo de Uniforme
+                                                    </button>
+                                                @endcan
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div class="row divBorder">
+                                            <p>Catálogo General de Tipos de Uniforme, Es Utilizado para Agrupar y/o Especificar en un Grupo a los Diferentes Tipos de Uniforme.</p>
+                                        </div>
                                     </div>
 
 

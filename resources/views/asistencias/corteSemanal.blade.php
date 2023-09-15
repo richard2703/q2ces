@@ -135,7 +135,9 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             </div>
                                             <div class="">
                                                 @can('asistencia_create')
-                                                    {{-- <form action="{{ route('asistencia.reporteExcel' ) }}" method="post">
+                                                    {{-- <form
+                                                        action="{{ route('asistencia.reporteExcel', [$intAnio, $intMes, $intDia]) }}"
+                                                        method="post">
                                                         @csrf
                                                         <input type="hidden" name="intAnio" value="{{ $intAnio }}">
                                                         <input type="hidden" name="intMes" value="{{ $intMes }}">

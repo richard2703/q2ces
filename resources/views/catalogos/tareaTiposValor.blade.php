@@ -34,26 +34,30 @@
                                         </div>
                                     @endif
                                     <div class="row">
-                                    <div class="d-flex p-3 divBorder">
-                                        <div class="col-12 text-right">
+                                        <div class="d-flex p-3">
+                                            <div class="col-12 text-right">
 
-                                            <a href="{{ route('catalogos.index') }}">
-                                                <button class="btn regresar">
-                                                    <span class="material-icons">
-                                                        reply
-                                                    </span>
-                                                    Regresar
-                                                </button>
-                                            </a>
+                                                <a href="{{ route('catalogos.index') }}">
+                                                    <button class="btn regresar">
+                                                        <span class="material-icons">
+                                                            reply
+                                                        </span>
+                                                        Regresar
+                                                    </button>
+                                                </a>
 
-                                            @can('catalogos_create')
-                                                <button class="btn botonGral float-end" data-bs-toggle="modal"
-                                                    data-bs-target="#nuevoItem">
-                                                    Añadir Tipo de Tareas
-                                                </button>
-                                            @endcan
+                                                @can('catalogos_create')
+                                                    <button class="btn botonGral float-end" data-bs-toggle="modal"
+                                                        data-bs-target="#nuevoItem">
+                                                        Añadir Tipo de Tareas
+                                                    </button>
+                                                @endcan
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div class="row divBorder">
+                                            <p>Catálogo General de Tipo de Valor de Tarea, Es Utilizado para Especificar el Tipo
+                                                de Valor y la Forma en que una Tarea se Guardará dentro de un CheckList.</p>
+                                        </div>
                                     </div>
 
 

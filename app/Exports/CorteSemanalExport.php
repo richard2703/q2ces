@@ -37,13 +37,15 @@ class CorteSemanalExport implements   ShouldAutoSize, WithTitle, WithHeadings, W
     use Exportable;
     protected $query;
 
-    public function view( ): View
+    public function view(): View
     {
-        dd($post);
+        // dd($_POST);
+        //return view( 'asistencias.corteSemanal',  compact( 'usuario', 'vctAsistencias',   'asistencias', 'listaAsistencia', 'intDia', 'intMes', 'intAnio', 'strFechaInicioPeriodo', 'strFechaFinPeriodo' ) );
 
-        return view('asistencias.reporteCorteSemanal', [
-            [ 'intAnio' => $intAnio, 'intMes' => $intMes, 'intDia' => $intDia ]
-        ]);
+        return view('asistencias.reporteCorteSemanal')
+        ->with('intAnio',$_POST['intAnio'])
+        ->with('intMes',$_POST['intMes'])
+        ->with('intDia',$_POST['intDia']);
     }
 
     // public function __construct( Collection $query ) {

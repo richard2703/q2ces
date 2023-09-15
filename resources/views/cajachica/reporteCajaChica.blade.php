@@ -36,7 +36,7 @@
                                     <div class="row division">
 
                                         <div class="col-12 col-md-4">
-                                            <p>Reporte Del</br> <span
+                                            <p>Reporte del</br> <span
                                                     class="combustibleLitros">{{ ucfirst(\Carbon\Carbon::parse($inicio)->locale('es')->isoFormat('D ')) }}
                                                     {{ ucfirst(\Carbon\Carbon::parse($inicio)->locale('es')->isoFormat('MMMM YY')) }}
                                                     al
