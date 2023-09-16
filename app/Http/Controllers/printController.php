@@ -35,6 +35,8 @@ class printController extends Controller
 
     public function printCarga(Request $request)
     {
+        // dd($request);
+        $solicitante = $request->all();
         $carga = carga::join('maquinaria', 'carga.maquinariaId', '=', 'maquinaria.id')
             ->join('users', 'carga.userId', '=', 'users.id')
             ->join('personal as operador', 'carga.operadorId', '=', 'operador.id')
@@ -46,6 +48,6 @@ class printController extends Controller
         // dd($descarga);
 
         // return redirect()->route('inventario.dashCombustible');
-        return view('inventario.vistaPreviaImpresionCarga', compact('carga'));
+        return view('inventario.vistaPreviaImpresionCarga', compact('carga', 'solicitante'));
     }
 }
