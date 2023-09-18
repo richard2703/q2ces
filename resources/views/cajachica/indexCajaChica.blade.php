@@ -152,7 +152,7 @@
 
                                                             @default
                                                         @endswitch>
-                                                            {{ number_format($registro->cantidad, 2) }}</td>
+                                                            $ {{ number_format($registro->cantidad, 2) }}</td>
                                                         <td class="td-actions text-right">
                                                             @can('cajachica_show')
                                                                 <a href="{{ route('cajaChica.show', $registro->id) }}"
