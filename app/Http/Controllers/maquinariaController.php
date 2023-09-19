@@ -427,7 +427,7 @@ class maquinariaController extends Controller
         ]);
 
         $data = $request->all();
-        dd($data);
+        // dd($data);
 
         $data['identificador'] = strtoupper($data['identificador']);
         $data['placas'] = strtoupper($data['placas']);
@@ -543,7 +543,7 @@ class maquinariaController extends Controller
                 $nuevaLista->push($objRefaccion->id);
             }
         }
-        // $test = refacciones::where('maquinariaId', $maquinaria->id)->whereNotIn('id', $nuevaLista)->delete();
+        $test = refacciones::where('maquinariaId', $maquinaria->id)->whereNotIn('id', $nuevaLista)->delete();
 
         Session::flash('message', 1);
 

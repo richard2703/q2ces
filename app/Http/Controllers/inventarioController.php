@@ -44,7 +44,7 @@ class inventarioController extends Controller
     {
         abort_if(Gate::denies('inventario_index'), 403);
         if ($tipo == 'combustible') {
-
+            $usuarios = personal::all();
             $despachador = personal::join('puesto', 'personal.puestoId', 'puesto.id')
                 ->join('puestoNivel', 'puesto.puestoNivelId', 'puestoNivel.id')
                 ->select('personal.id', 'personal.nombres', 'personal.apellidoP')
@@ -138,7 +138,7 @@ class inventarioController extends Controller
 
             // dd($descargas);
 
-            return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas', 'gasolinas', 'suma', 'dia', 'despachadores', 'cargas', 'descargas'));
+            return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas', 'gasolinas', 'suma', 'dia', 'despachadores', 'cargas', 'descargas', 'usuarios'));
         } else {
             $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(15);
 
@@ -147,7 +147,7 @@ class inventarioController extends Controller
             }
 
 
-            return view('inventario.indexInventario', compact('inventarios', 'tipo'));
+            return view('inventario.indexInventario', compact('inventarios', 'tipo', 'usuarios'));
         }
     }
 
@@ -245,6 +245,8 @@ class inventarioController extends Controller
         $vctMaquinaria = maquinaria::all();
         // dd($vctDesde);
         $inventario = inventario::where("id", $inventario->id)->first();
+        // dd($inventario);
+
         return view('inventario.detalleInventario', compact('inventario', 'vctDesde', 'vctHasta', 'vctTipos', 'vctMarcas', 'vctProveedores', 'vctMaquinaria'));
     }
 

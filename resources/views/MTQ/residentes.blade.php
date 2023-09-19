@@ -50,7 +50,9 @@
                                             <tr>
                                                 <th class="labelTitulo">Id</th>
                                                 <th class="labelTitulo">Nombre</th>
-                                                <th class="labelTitulo">Comentario</th>
+                                                <th class="labelTitulo">Telefono</th>
+                                                <th class="labelTitulo">Obra</th>
+                                                <th class="labelTitulo">Auto</th>
                                                 <th class="labelTitulo text-right">Acciones</th>
                                             </tr>
                                         </thead>
@@ -59,7 +61,10 @@
                                                 <tr>
                                                     <td>{{ $item->id }}</td>
                                                     <td class="text-left">{{ $item->nombre }}</td>
-                                                    <td class="text-left">{{ $item->comentario }}</td>
+                                                    <td class="text-left">{{ $item->telefono }}</td>
+                                                    <td class="text-left">{{ $item->obra }}</td>
+                                                    <td class="text-left">{{ $item->identificador }} {{ $item->auto }}
+                                                    </td>
 
                                                     <td class="td-actions text-right">
                                                         {{-- @can('user_show') --}}
@@ -73,7 +78,7 @@
                                                         {{-- @can('user_edit') --}}
                                                         <a href="#" class="" data-bs-toggle="modal"
                                                             data-bs-target="#editarItem"
-                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->empresa }}','{{ $item->email }}','{{ $item->telefono }}','{{ $item->puesto }}','{{ $item->obraId }}','{{ $item->comentario }}')">
+                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->email }}','{{ $item->telefono }}','{{ $item->identificador }}','{{ $item->auto }}','{{ $item->obraId }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                 height="28" fill="currentColor"
                                                                 class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -136,38 +141,36 @@
                         <input type="hidden" name="userId" id="userId" value="{{ auth()->user()->id }}">
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Nombre:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="nombre" name="nombre" required
-                                value="{{ old('nombre') }}" required placeholder="Especifique...">
+                            <input type="text" class="inputCaja" name="nombre" required value="{{ old('nombre') }}"
+                                required placeholder="Especifique...">
                         </div>
-                        <div class=" col-12 col-sm-6 mb-3 ">
+                        {{--  <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Empresa:<span>*</span></label></br>
                             <input type="text" class="inputCaja" id="empresa" name="empresa" required
                                 value="{{ old('empresa') }}" required placeholder="Especifique...">
-                        </div>
+                        </div>  --}}
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">E-mail</label></br>
-                            <input type="email" class="inputCaja" id="remail" required
-                                placeholder="ej. elcorreo@delresponsable.com" min="6" name="email"
-                                value="{{ old('email') }}">
+                            <input type="email" class="inputCaja" required placeholder="ej. elcorreo@delresponsable.com"
+                                min="6" name="email" value="{{ old('email') }}">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Teléfono:</label></br>
-                            <input type="tel" pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}" placeholder="ej. 00-0000-0000"
-                                class="inputCaja" id="telefono" name="telefono"value="{{ old('telefono') }}">
+                            <input type="tel" placeholder="ej. 00-0000-0000" class="inputCaja"
+                                name="telefono"value="{{ old('telefono') }}">
                         </div>
 
-                        <div class=" col-12 col-sm-6 mb-3 ">
+                        {{--  <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Puesto:<span>*</span></label></br>
                             <input type="text" class="inputCaja" id="puesto" name="puesto" required
                                 value="{{ old('puesto') }}" required placeholder="Especifique...">
-                        </div>
+                        </div>  --}}
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Obra: <span>*</span></label></br>
-                            <select id="obraId" name="obraId" class="form-select" required
-                                aria-label="Default select example">
+                            <select name="obraId" class="form-select" aria-label="Default select example">
                                 <option value="">Seleccione</option>
                                 @foreach ($vctObras as $item)
                                     <option value="{{ $item->id }}">
@@ -177,11 +180,23 @@
                             </select>
                         </div>
 
-                        <div class=" col-12  mb-3 ">
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Auto: <span></span></label></br>
+                            <select name="autoId" class="form-select" aria-label="Default select example">
+                                <option value="">Seleccione</option>
+                                @foreach ($maquinaria as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->identificador }} {{ $item->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        {{--  <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
                             <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario"
                                 spellcheck="true">{{ old('comentario') }}</textarea>
-                        </div>
+                        </div>  --}}
 
 
 
@@ -209,40 +224,29 @@
                     <form class="row d-flex" action="{{ route('residentes.update', 0) }}" method="post">
                         @csrf
                         @method('put')
-                        <input type="hidden" name="controlId" id="controlId" value="">
+                        <input type="hidden" name="residenteId" id="residenteId" value="">
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Nombre:</label></br>
-                            <input type="text" class="inputCaja" id="controlNombre" name="nombre" value="">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Empresa:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="controlEmpresa" name="empresa" required
-                                value=" " required placeholder="Especifique...">
+                            <label class="labelTitulo">Nombre:<span>*</span></label></br>
+                            <input type="text" class="inputCaja" id="nombre" name="nombre" required
+                                value="{{ old('nombre') }}" required placeholder="Especifique...">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">E-mail</label></br>
-                            <input type="email" class="inputCaja" id="controlEmail" required
+                            <input type="email" class="inputCaja" id="email" required
                                 placeholder="ej. elcorreo@delresponsable.com" min="6" name="email"
-                                value="">
+                                value="{{ old('email') }}">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Teléfono:</label></br>
-                            <input type="tel" pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}" placeholder="ej. 00-0000-0000"
-                                required class="inputCaja" id="controlTelefono" name="telefono"value="">
+                            <input type="tel" placeholder="ej. 00-0000-0000" class="inputCaja" id="telefono"
+                                name="telefono"value="{{ old('telefono') }}">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Puesto:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="controlPuesto" name="puesto" value=""
-                                required placeholder="Especifique...">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Obra: <span>*</span></label></br>
-                            <select id="controlObraId" name="obraId" class="form-select" required
+                            <label class="labelTitulo">Obra: </label></br>
+                            <select id="obraId" name="obraId" class="form-select"
                                 aria-label="Default select example">
                                 <option value="">Seleccione</option>
                                 @foreach ($vctObras as $item)
@@ -253,10 +257,25 @@
                             </select>
                         </div>
 
-                        <div class=" col-12  mb-3 ">
-                            <label class="labelTitulo">Comentarios:</label></br>
-                            <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="controlComentarios" name="comentario"></textarea>
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Auto Asignado: </label></br>
+                            <input type="text" class="inputCaja" id="asignado" value="" readonly>
                         </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Cambio de Auto: </label></br>
+                            <select id="autoId" name="autoId" class="form-select"
+                                aria-label="Default select example">
+                                <option value="0">Sin Cambios</option>
+                                <option value="">Denegar Auto</option>
+                                @foreach ($maquinaria as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->identificador }} {{ $item->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <button type="submit" class="btn botonGral" id="btnTareaGuardar">Guardar cambios</button>
@@ -308,30 +327,27 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, empresa, email, telefono, puesto, obraId, comentarios) {
-
-            const txtId = document.getElementById('controlId');
+        function cargaItem(id, nombre, email, telefono, identificador, auto, obraId) {
+            console.log('id= ', id)
+            const txtId = document.getElementById('residenteId');
             txtId.value = id;
 
-            const txtNombre = document.getElementById('controlNombre');
+            const txtNombre = document.getElementById('nombre');
             txtNombre.value = nombre;
 
-            const txtEmpresa = document.getElementById('controlEmpresa');
-            txtEmpresa.value = empresa;
 
-            const txtEmail = document.getElementById('controlEmail');
+            const txtEmail = document.getElementById('email');
             txtEmail.value = email;
 
-            const txtTelefono = document.getElementById('controlTelefono');
+            const txtTelefono = document.getElementById('telefono');
             txtTelefono.value = telefono;
 
-            const txtPuesto = document.getElementById('controlPuesto');
-            txtPuesto.value = puesto;
+            const txtAsignado = document.getElementById('asignado');
+            txtAsignado.value = identificador + ' ' + auto;
 
-            const lstObre = document.getElementById('controlObraId').value = obraId;
 
-            const txtComentarios = document.getElementById('controlComentarios');
-            txtComentarios.value = comentarios;
+            const lstObre = document.getElementById('obraId').value = obraId;
+
 
         }
     </script>

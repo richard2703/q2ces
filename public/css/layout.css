@@ -30,6 +30,7 @@
 --amarillo:#F7C90D;
 --texto: #3C4858;
 --select: #727176;
+--iconos: #8caf48;
   }
   
   body {
@@ -1250,4 +1251,9 @@ table{
   border-radius: 4px;
   padding: 5px;
   font-size: 15px;
+}
+
+.iconoTablas{
+  color: var(--iconos);
+  font-size: x-large;
 }

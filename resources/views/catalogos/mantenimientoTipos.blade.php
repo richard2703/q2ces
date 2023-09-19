@@ -34,8 +34,8 @@
                                         </div>
                                     @endif
                                     <div class="row">
-                                        <div class="d-flex p-3">
-                                            <div class="col-12 text-right">
+                                        <div class="d-flex p-3 divBorder">
+                                        <div class="col-12 text-right">
 
                                                 <a href="{{ route('catalogos.index') }}">
                                                     <button class="btn regresar">
@@ -60,15 +60,17 @@
                                             </p>
                                         </div>
                                     </div>
+                                    </div>
 
 
                                     <table class="table table-responsive">
                                         <thead class="labelTitulo">
-                                            <tr>
+                                            <tr> 
                                                 <th class="labelTitulo">Id</th>
                                                 <th class="labelTitulo">Nombre</th>
-                                                <th class="labelTitulo">Comentario</th>
-                                                <th class="labelTitulo text-right">Acciones</th>
+                                                <th class="labelTitulo">Color</th>
+                                                <th class="labelTitulo" style="width:150px">Comentario</th>
+                                                <th class="labelTitulo text-right" style="width:140px">Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -76,6 +78,12 @@
                                                 <tr>
                                                     <td>{{ $item->id }}</td>
                                                     <td class="text-left">{{ $item->nombre }}</td>
+                                                    <td class="text-center"
+                                                    style="
+                                                font-weight: bold;
+                                                background: {{ $item->color }};
+                                            ">
+                                                    {{ $item->color }}</td>
                                                     <td class="text-left">{{ $item->comentario }}</td>
 
                                                     <td class="td-actions text-right">
@@ -90,7 +98,7 @@
                                                         {{-- @can('user_edit') --}}
                                                         <a href="#" class="" data-bs-toggle="modal"
                                                             data-bs-target="#editarItem"
-                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->comentario }}')">
+                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}', '{{ $item->color }}','{{ $item->comentario }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                 height="28" fill="currentColor"
                                                                 class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -157,6 +165,11 @@
                                 value="{{ old('nombre') }}" required placeholder="Especifique...">
                         </div>
 
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Color:<span>*</span></label></br>
+                            <input type="color" class="inputCaja" name="color" value="{{ old('color') }}">
+                        </div>
+
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
                             <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario"
@@ -191,6 +204,11 @@
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Nombre:</label></br>
                             <input type="text" class="inputCaja" id="controlNombre" name="nombre" value="">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Color:<span>*</span></label></br>
+                            <input type="color" class="inputCaja" name="color" value="{{ old('color') }}" id="color">
                         </div>
 
                         <div class=" col-12  mb-3 ">
@@ -248,7 +266,7 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, comentarios) {
+        function cargaItem(id, nombre, color,comentarios) {
 
             const txtId = document.getElementById('controlId');
             txtId.value = id;
@@ -258,6 +276,9 @@
 
             const txtComentarios = document.getElementById('controlComentarios');
             txtComentarios.value = comentarios;
+
+            const txtColor = document.getElementById('color');
+            txtColor.value = color;
 
         }
     </script>
