@@ -584,8 +584,229 @@ class asistenciaController extends Controller {
         $strFechaInicioPeriodo = $vctFechas[ 0 ]->format( 'Y-m-d' );
         $strFechaFinPeriodo = $vctFechas[ 1 ]->format( 'Y-m-d' );
 
+        // dd( $strDate, $vctFechas, $strFechaInicioPeriodo, $strFechaFinPeriodo );
+
         $usuario = personal::where( 'userId', auth()->user()->id )->first();
         // $personal = personal::where( 'id', $personalId )->first();
+
+        $asistencias = personal::select(
+            DB::raw( 'personal.id AS personalId' ),
+            DB::raw( "CONCAT( personal.apellidoP,' ', personal.apellidoM,', ',personal.nombres)as personal" ),
+            DB::raw( 'puestoNivel.nombre AS puesto' ),
+            DB::raw( 'asistencia.id AS id' ),
+            DB::raw( 'asistencia.asistenciaId as tipoAsistenciaId' ),
+            'asistencia.horasExtra',
+            'asistencia.horasAnticipada',
+            'asistencia.horasRetraso',
+            'asistencia.fecha',
+            DB::raw( 'nomina.diario AS sueldo' ),
+            DB::raw( 'nomina.nomina AS numeroNomina' ),
+            DB::raw( 'tipoAsistencia.color AS tipoAsistenciaColor' ),
+            DB::raw( 'tipoAsistencia.nombre AS tipoAsistenciaNombre' ),
+            DB::raw( 'tipoAsistencia.esAsistencia AS esAsistencia' ),
+            DB::raw( 'tipoHoraExtra.color AS horaExtraColor' ),
+            DB::raw( 'tipoHoraExtra.valor AS horaExtraCosto' ),
+            DB::raw( 'tipoHoraExtra.nombre AS horaExtraNombre' ),
+            DB::raw( 'userEstatus.nombre AS estatus' ),
+            DB::raw( 'userEstatus.color AS estatusColor' ),
+            DB::raw( 'asistencia.entradaAnticipada' ),
+        )
+        ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
+        ->join( 'asistencia', 'asistencia.personalId', '=', 'personal.id' )
+        ->join( 'tipoAsistencia', 'tipoAsistencia.id', '=', 'asistencia.asistenciaId' )
+        ->join( 'tipoHoraExtra', 'tipoHoraExtra.id', '=', 'asistencia.tipoHoraExtraId' )
+        ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
+        ->join( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
+        ->join( 'puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId' )
+        ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
+        // ->where( 'asistencia.personalId', '=', 23 )
+        ->whereBetween( 'asistencia.fecha',   [ $strFechaInicioPeriodo, $strFechaFinPeriodo ] )
+        ->orderBy( 'personal.apellidoP', 'asc' )
+        ->orderBy( 'asistencia.personalId', 'asc' )
+        ->orderBy( 'asistencia.fecha', 'asc' )->get();
+
+        //*** lista de asistencia */
+        $listaAsistencia = personal::select(
+            'personal.id',
+            'personal.nombres',
+            'personal.apellidoP',
+            'personal.apellidoM',
+            DB::raw( 'puestoNivel.nombre AS puesto' ),
+            DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
+            DB::raw( 'puestoNivel.nombre AS puesto' ),
+            DB::raw( 'nomina.nomina AS numNomina' ),
+            DB::raw( 'userEstatus.nombre AS estatus' ),
+            DB::raw( 'userEstatus.color AS estatusColor' )
+        )
+        ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
+        ->join( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
+        ->join( 'puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId' )
+        ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
+        ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
+        ->orderBy( 'personal.apellidoP', 'asc' )->get();
+
+        $dteMesInicio = $intAnio . '-' . $intMes . '-01';
+        $dteMesFin = $intAnio . '-' . $intMes . '-' . $objCalendario->getTotalDaysInMonth( $intMes, $intAnio );
+
+        $vctAsistencias = array();
+        $vctEmpleado = array();
+        $vctPagos = array();
+        $intDiaTrabajado = 0;
+        $strEmpleado = null;
+        $intEmpleado = null;
+
+        foreach ( $asistencias as $key => $item ) {
+
+            if ( $intDiaTrabajado == 0 && $strEmpleado == null ) {
+                //*** creamos el objeto */
+                $objDia = new stdClass;
+            } else {
+                //*** el objeto sigue vivo */
+                // dd( 'Seguimos con el objeto ' .  $intDiaTrabajado );
+            }
+
+            if ( $intDiaTrabajado == 0 && $strEmpleado == null ) {
+                //** primer registro del empleado */
+                unset( $vctPagos );
+                $strEmpleado = $item->personal;
+                $objDia->numEmpleado = str_pad( $item->numeroNomina, 4, '0', STR_PAD_LEFT );
+                $objDia->empleado = $item->personal;
+                $objDia->puesto = $item->puesto;
+                $objDia->sueldo = $item->sueldo;
+                $objDia->estatus = $item->estatus;
+                $objDia->estatusColor = $item->estatusColor;
+
+                $objPagos = new stdClass;
+                $objPagos->fecha = $item->fecha;
+                $objPagos->horasExtra = $item->horasExtra;
+                $objPagos->horasAnticipada = $item->horasAnticipada;
+                $objPagos->horasRetraso = $item->horasRetraso;
+                // $objPagos->horaExtraColor = $item->horaExtraColor;
+                // $objPagos->horaExtraCosto = $item->horaExtraCosto;
+                // $objPagos->horaExtraNombre = $item->horaExtraNombre;
+                $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
+                $objPagos->esAsistencia = $item->esAsistencia;
+                $objPagos->entradaAnticipada = $item->entradaAnticipada;
+                $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
+                $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
+                $vctPagos[] = $objPagos;
+
+                $intDiaTrabajado += 1;
+            } else  if ( ( $intDiaTrabajado == 6 ) &&  ( $strEmpleado ==  $item->personal ) ) {
+                //** ultimo registro del empleado del periodo en los casos */
+                $objPagos = new stdClass;
+                $objPagos->fecha = $item->fecha;
+                $objPagos->horasExtra = $item->horasExtra;
+                $objPagos->horasAnticipada = $item->horasAnticipada;
+                $objPagos->horasRetraso = $item->horasRetraso;
+                // $objPagos->horaExtraColor = $item->horaExtraColor;
+                // $objPagos->horaExtraCosto = $item->horaExtraCosto;
+                // $objPagos->horaExtraNombre = $item->horaExtraNombre;
+                $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
+                $objPagos->esAsistencia = $item->esAsistencia;
+                $objPagos->entradaAnticipada = $item->entradaAnticipada;
+                $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
+                $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
+                $vctPagos[] = $objPagos;
+
+                $objDia->pagos  = $vctPagos;
+                $vctAsistencias[] =  $objDia;
+
+                $intDiaTrabajado = 0;
+                $strEmpleado = null;
+                unset( $vctPagos );
+            } else  if ( ( $intDiaTrabajado > 0 &&  $intDiaTrabajado < 6 ) &&  ( $strEmpleado ==  $item->personal ) ) {
+                //*** seguimos con el siguiente dia y verificamos que se trate de la misma persona */
+                $objPagos = new stdClass;
+                $objPagos->fecha = $item->fecha;
+                $objPagos->horasExtra = $item->horasExtra;
+                $objPagos->horasAnticipada = $item->horasAnticipada;
+                $objPagos->horasRetraso = $item->horasRetraso;
+                // $objPagos->horaExtraColor = $item->horaExtraColor;
+                // $objPagos->horaExtraCosto = $item->horaExtraCosto;
+                // $objPagos->horaExtraNombre = $item->horaExtraNombre;
+                $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
+                $objPagos->esAsistencia = $item->esAsistencia;
+                $objPagos->entradaAnticipada = $item->entradaAnticipada;
+                $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
+                $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
+                $vctPagos[] = $objPagos;
+                $intDiaTrabajado += 1;
+            } else {
+                //*** el empleado ya no tiene registros y hay que cerrar y crear el nuevo */
+                $objDia->pagos  = $vctPagos;
+                $vctAsistencias[] =  $objDia;
+                // dd( 'Entre al cierre forzoso ',  $intDiaTrabajado, $objDia );
+                $intDiaTrabajado = 0;
+                $strEmpleado = null;
+                unset( $vctPagos );
+                $objDia = new stdClass;
+
+                $strEmpleado = $item->personal;
+                $objDia->numEmpleado = str_pad( $item->numeroNomina, 4, '0', STR_PAD_LEFT );
+                $objDia->empleado = $item->personal;
+                $objDia->puesto = $item->puesto;
+                $objDia->sueldo = $item->sueldo;
+                $objDia->estatus = $item->estatus;
+                $objDia->estatusColor = $item->estatusColor;
+
+                $objPagos = new stdClass;
+                $objPagos->fecha = $item->fecha;
+                $objPagos->horasExtra = $item->horasExtra;
+                $objPagos->horasAnticipada = $item->horasAnticipada;
+                $objPagos->horasRetraso = $item->horasRetraso;
+                // $objPagos->horaExtraColor = $item->horaExtraColor;
+                // $objPagos->horaExtraCosto = $item->horaExtraCosto;
+                // $objPagos->horaExtraNombre = $item->horaExtraNombre;
+                $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
+                $objPagos->esAsistencia = $item->esAsistencia;
+                $objPagos->entradaAnticipada = $item->entradaAnticipada;
+                $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
+                $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
+                $vctPagos[] = $objPagos;
+
+                $intDiaTrabajado += 1;
+                // dd( 'Entre al cierre forzoso ',  $intDiaTrabajado, $objDia );
+
+            }
+        }
+
+        // dd( $vctAsistencias, $asistencias, $intAnio, $intMes, $intDia, $strDate, $vctFechas[ 0 ], $vctFechas[ 1 ] );
+
+        return view( 'asistencias.corteSemanal',  compact( 'usuario', 'vctAsistencias',   'asistencias', 'listaAsistencia', 'intDia', 'intMes', 'intAnio', 'strFechaInicioPeriodo', 'strFechaFinPeriodo' ) );
+    }
+
+    /**
+    * Realiza el calculo del corte semanal a partir de los parametros de la fecha entregada
+    *
+    * @param [ type ] $intAnio
+    * @param [ type ] $intMes
+    * @param [ type ] $intDia
+    * @return void vctAsistencias
+    */
+    public static function getCalculoCorteSemanal( $intAnio, $intMes, $intDia ) {
+        $vctResultado = array();
+
+        $vctResultado = asistencia::all();
+        $objCalendario = new Calendario();
+
+        $data = request()->all();
+        if ( is_array( $data ) == true && count( $data ) > 0 ) {
+            $intMes = $data[ 'intMes' ];
+            $intAnio = $data[ 'intAnio' ];
+            $intDia = $data[ 'intDia' ];
+        } else {
+            $intMes = date( 'm' );
+            $intAnio = date( 'Y' );
+            $intDia = date( 'd' );
+        }
+
+        $strDate = $intAnio . '-' . $intMes . '-' . $intDia;
+        $vctFechas =  $objCalendario->getSemanaTrabajo( date_create( $strDate ), 3 );
+        $strFechaInicioPeriodo = $vctFechas[ 0 ]->format( 'Y-m-d' );
+        $strFechaFinPeriodo = $vctFechas[ 1 ]->format( 'Y-m-d' );
+
+        // dd( $strDate, $vctFechas, $strFechaInicioPeriodo, $strFechaFinPeriodo );
 
         $asistencias = personal::select(
             DB::raw( 'personal.id AS personalId' ),
@@ -671,22 +892,63 @@ class asistenciaController extends Controller {
                 $objDia->empleado = $item->personal;
                 $objDia->puesto = $item->puesto;
                 $objDia->sueldo = $item->sueldo;
+                $objDia->costoHoraExtra = number_format( ( $item->sueldo / 8 ), 2 );
                 $objDia->estatus = $item->estatus;
                 $objDia->estatusColor = $item->estatusColor;
 
                 $objPagos = new stdClass;
                 $objPagos->fecha = $item->fecha;
-                $objPagos->horasExtra = $item->horasExtra;
-                $objPagos->horasAnticipada = $item->horasAnticipada;
-                $objPagos->horasRetraso = $item->horasRetraso;
-                // $objPagos->horaExtraColor = $item->horaExtraColor;
-                // $objPagos->horaExtraCosto = $item->horaExtraCosto;
-                // $objPagos->horaExtraNombre = $item->horaExtraNombre;
+                $objPagos->tiempoExtra = $item->horasExtra;
+                $objPagos->tiempoAnticipado = $item->horasAnticipada;
+                $objPagos->tiempoRetraso = $item->horasRetraso;
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->entradaAnticipada = $item->entradaAnticipada;
                 $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
                 $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
+
+                //*** Todo el tiempo extra ( anticipado y excedente )
+                $intMinutosTotalesDia = ( int ) $item->horasExtra ;
+                if ( $item->entradaAnticipada == 1 && $item->horasAnticipada > 0 ) {
+                    $intMinutosTotalesDia += $item->horasAnticipada ;
+                }
+
+                $objPagos->horas =  ( int )( $intMinutosTotalesDia / 60 );
+                $objPagos->minutos =  ( int )( $intMinutosTotalesDia % 60 );
+                $objPagos->tiempo =  str_pad( $objPagos->horas, 2, '0', STR_PAD_LEFT ) . ':' . str_pad( $objPagos->minutos, 2, '0', STR_PAD_LEFT ) ;
+
+                //*** obtención del tiempo de retraso de ingreso
+                $objPagos->horasRetraso =  0;
+                $objPagos->minutosRetraso = 0;
+                $intMinutosRetrasoDia = 0;
+                if ( $item->horasRetraso > 0 ) {
+                    $objPagos->horasRetraso = ( int ) ( $item->horasRetraso / 60 );
+                    $objPagos->minutosRetraso = ( $item->horasRetraso % 60 );
+                }
+                $objPagos->retraso =  str_pad( $objPagos->horasRetraso, 2, '0', STR_PAD_LEFT ) . ':' . str_pad( $objPagos->minutosRetraso, 2, '0', STR_PAD_LEFT ) ;
+
+                //*** completar una hora fraccionaria, deberá de ser mayor o igual a 35 minutos
+                $objPagos->horasExtras =  ( $objPagos->horas + ( $objPagos->minutos >= 35 ? 1 : 0 ) ) ;
+
+                //*** Para el calculo de horas extras con descuento realizamos el descuento del tiempo extra menos el tiempo de retraso
+                $intTiempoDescuento = 0;
+                $objPagos->horasDescuento = 0;
+                $objPagos->minutosDescuento = 0;
+                $objPagos->horasExtrasDescuento = $objPagos->horasExtras;
+                //*** inicialmente es el pago normal */
+
+                if ( $item->horasRetraso > 0 ) {
+                    $intTiempoDescuento = ( $intMinutosTotalesDia -  $item->horasRetraso );
+                    $objPagos->horasDescuento =  ( int ) ( $intTiempoDescuento / 60 );
+                    $objPagos->minutosDescuento = ( $intTiempoDescuento % 60 );
+                    $objPagos->horasExtrasDescuento =  ( $objPagos->horasDescuento + ( $objPagos->minutosDescuento >= 35 ? 1 : 0 ) ) ;
+                }
+                $objPagos->descuento =  str_pad( $objPagos->horasDescuento, 2, '0', STR_PAD_LEFT ) . ':' . str_pad( $objPagos->minutosDescuento, 2, '0', STR_PAD_LEFT ) ;
+
+                //*** calculo del pago */
+                $objPagos->horasExtrasPagar = number_format( $objPagos->horasExtras *  $objDia->costoHoraExtra, 2 );
+                $objPagos->horasExtrasDescuentoPagar = number_format( $objPagos->horasExtrasDescuento *  $objDia->costoHoraExtra, 2 );
+
                 $vctPagos[] = $objPagos;
 
                 $intDia += 1;
@@ -694,17 +956,56 @@ class asistenciaController extends Controller {
                 //** ultimo registro del empleado del periodo en los casos */
                 $objPagos = new stdClass;
                 $objPagos->fecha = $item->fecha;
-                $objPagos->horasExtra = $item->horasExtra;
-                $objPagos->horasAnticipada = $item->horasAnticipada;
-                $objPagos->horasRetraso = $item->horasRetraso;
-                // $objPagos->horaExtraColor = $item->horaExtraColor;
-                // $objPagos->horaExtraCosto = $item->horaExtraCosto;
-                // $objPagos->horaExtraNombre = $item->horaExtraNombre;
+                $objPagos->tiempoExtra = $item->horasExtra;
+                $objPagos->tiempoAnticipado = $item->horasAnticipada;
+                $objPagos->tiempoRetraso = $item->horasRetraso;
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->entradaAnticipada = $item->entradaAnticipada;
                 $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
                 $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
+                //*** Todo el tiempo extra ( anticipado y excedente )
+                $intMinutosTotalesDia = ( int ) $item->horasExtra ;
+                if ( $item->entradaAnticipada == 1 && $item->horasAnticipada > 0 ) {
+                    $intMinutosTotalesDia += $item->horasAnticipada ;
+                }
+
+                $objPagos->horas =  ( int )( $intMinutosTotalesDia / 60 );
+                $objPagos->minutos =  ( int )( $intMinutosTotalesDia % 60 );
+                $objPagos->tiempo =  str_pad( $objPagos->horas, 2, '0', STR_PAD_LEFT ) . ':' . str_pad( $objPagos->minutos, 2, '0', STR_PAD_LEFT ) ;
+
+                //*** obtención del tiempo de retraso de ingreso
+                $objPagos->horasRetraso =  0;
+                $objPagos->minutosRetraso = 0;
+                $intMinutosRetrasoDia = 0;
+                if ( $item->horasRetraso > 0 ) {
+                    $objPagos->horasRetraso = ( int ) ( $item->horasRetraso / 60 );
+                    $objPagos->minutosRetraso = ( $item->horasRetraso % 60 );
+                }
+                $objPagos->retraso =  str_pad( $objPagos->horasRetraso, 2, '0', STR_PAD_LEFT ) . ':' . str_pad( $objPagos->minutosRetraso, 2, '0', STR_PAD_LEFT ) ;
+
+                //*** completar una hora fraccionaria, deberá de ser mayor o igual a 35 minutos
+                $objPagos->horasExtras =  ( $objPagos->horas + ( $objPagos->minutos >= 35 ? 1 : 0 ) ) ;
+
+                //*** Para el calculo de horas extras con descuento realizamos el descuento del tiempo extra menos el tiempo de retraso
+                $intTiempoDescuento = 0;
+                $objPagos->horasDescuento = 0;
+                $objPagos->minutosDescuento = 0;
+                $objPagos->horasExtrasDescuento = $objPagos->horasExtras;
+                //*** inicialmente es el pago normal */
+
+                if ( $item->horasRetraso > 0 ) {
+                    $intTiempoDescuento = ( $intMinutosTotalesDia -  $item->horasRetraso );
+                    $objPagos->horasDescuento =  ( int ) ( $intTiempoDescuento / 60 );
+                    $objPagos->minutosDescuento = ( $intTiempoDescuento % 60 );
+                    $objPagos->horasExtrasDescuento =  ( $objPagos->horasDescuento + ( $objPagos->minutosDescuento >= 35 ? 1 : 0 ) ) ;
+                }
+                $objPagos->descuento =  str_pad( $objPagos->horasDescuento, 2, '0', STR_PAD_LEFT ) . ':' . str_pad( $objPagos->minutosDescuento, 2, '0', STR_PAD_LEFT ) ;
+
+                //*** calculo del pago */
+                $objPagos->horasExtrasPagar = number_format( $objPagos->horasExtras *  $objDia->costoHoraExtra, 2 );
+                $objPagos->horasExtrasDescuentoPagar = number_format( $objPagos->horasExtrasDescuento *  $objDia->costoHoraExtra, 2 );
+
                 $vctPagos[] = $objPagos;
 
                 $objDia->pagos  = $vctPagos;
@@ -717,17 +1018,56 @@ class asistenciaController extends Controller {
                 //*** seguimos con el siguiente dia y verificamos que se trate de la misma persona */
                 $objPagos = new stdClass;
                 $objPagos->fecha = $item->fecha;
-                $objPagos->horasExtra = $item->horasExtra;
-                $objPagos->horasAnticipada = $item->horasAnticipada;
-                $objPagos->horasRetraso = $item->horasRetraso;
-                // $objPagos->horaExtraColor = $item->horaExtraColor;
-                // $objPagos->horaExtraCosto = $item->horaExtraCosto;
-                // $objPagos->horaExtraNombre = $item->horaExtraNombre;
+                $objPagos->tiempoExtra = $item->horasExtra;
+                $objPagos->tiempoAnticipado = $item->horasAnticipada;
+                $objPagos->tiempoRetraso = $item->horasRetraso;
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->entradaAnticipada = $item->entradaAnticipada;
                 $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
                 $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
+                //*** Todo el tiempo extra ( anticipado y excedente )
+                $intMinutosTotalesDia = ( int ) $item->horasExtra ;
+                if ( $item->entradaAnticipada == 1 && $item->horasAnticipada > 0 ) {
+                    $intMinutosTotalesDia += $item->horasAnticipada ;
+                }
+
+                $objPagos->horas =  ( int )( $intMinutosTotalesDia / 60 );
+                $objPagos->minutos =  ( int )( $intMinutosTotalesDia % 60 );
+                $objPagos->tiempo =  str_pad( $objPagos->horas, 2, '0', STR_PAD_LEFT ) . ':' . str_pad( $objPagos->minutos, 2, '0', STR_PAD_LEFT ) ;
+
+                //*** obtención del tiempo de retraso de ingreso
+                $objPagos->horasRetraso =  0;
+                $objPagos->minutosRetraso = 0;
+                $intMinutosRetrasoDia = 0;
+                if ( $item->horasRetraso > 0 ) {
+                    $objPagos->horasRetraso = ( int ) ( $item->horasRetraso / 60 );
+                    $objPagos->minutosRetraso = ( $item->horasRetraso % 60 );
+                }
+                $objPagos->retraso =  str_pad( $objPagos->horasRetraso, 2, '0', STR_PAD_LEFT ) . ':' . str_pad( $objPagos->minutosRetraso, 2, '0', STR_PAD_LEFT ) ;
+
+                //*** completar una hora fraccionaria, deberá de ser mayor o igual a 35 minutos
+                $objPagos->horasExtras =  ( $objPagos->horas + ( $objPagos->minutos >= 35 ? 1 : 0 ) ) ;
+
+                //*** Para el calculo de horas extras con descuento realizamos el descuento del tiempo extra menos el tiempo de retraso
+                $intTiempoDescuento = 0;
+                $objPagos->horasDescuento = 0;
+                $objPagos->minutosDescuento = 0;
+                $objPagos->horasExtrasDescuento = $objPagos->horasExtras;
+                //*** inicialmente es el pago normal */
+
+                if ( $item->horasRetraso > 0 ) {
+                    $intTiempoDescuento = ( $intMinutosTotalesDia -  $item->horasRetraso );
+                    $objPagos->horasDescuento =  ( int ) ( $intTiempoDescuento / 60 );
+                    $objPagos->minutosDescuento = ( $intTiempoDescuento % 60 );
+                    $objPagos->horasExtrasDescuento =  ( $objPagos->horasDescuento + ( $objPagos->minutosDescuento >= 35 ? 1 : 0 ) ) ;
+                }
+                $objPagos->descuento =  str_pad( $objPagos->horasDescuento, 2, '0', STR_PAD_LEFT ) . ':' . str_pad( $objPagos->minutosDescuento, 2, '0', STR_PAD_LEFT ) ;
+
+                //*** calculo del pago */
+                $objPagos->horasExtrasPagar = number_format( $objPagos->horasExtras *  $objDia->costoHoraExtra, 2 );
+                $objPagos->horasExtrasDescuentoPagar = number_format( $objPagos->horasExtrasDescuento *  $objDia->costoHoraExtra, 2 );
+
                 $vctPagos[] = $objPagos;
                 $intDia += 1;
             } else {
@@ -745,33 +1085,102 @@ class asistenciaController extends Controller {
                 $objDia->empleado = $item->personal;
                 $objDia->puesto = $item->puesto;
                 $objDia->sueldo = $item->sueldo;
+                $objDia->costoHoraExtra = number_format( ( $item->sueldo / 8 ), 2 );
                 $objDia->estatus = $item->estatus;
                 $objDia->estatusColor = $item->estatusColor;
 
                 $objPagos = new stdClass;
                 $objPagos->fecha = $item->fecha;
-                $objPagos->horasExtra = $item->horasExtra;
-                $objPagos->horasAnticipada = $item->horasAnticipada;
-                $objPagos->horasRetraso = $item->horasRetraso;
-                // $objPagos->horaExtraColor = $item->horaExtraColor;
-                // $objPagos->horaExtraCosto = $item->horaExtraCosto;
-                // $objPagos->horaExtraNombre = $item->horaExtraNombre;
+                $objPagos->tiempoExtra = $item->horasExtra;
+                $objPagos->tiempoAnticipado = $item->horasAnticipada;
+                $objPagos->tiempoRetraso = $item->horasRetraso;
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->entradaAnticipada = $item->entradaAnticipada;
                 $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
                 $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
+                //*** Todo el tiempo extra ( anticipado y excedente )
+                $intMinutosTotalesDia = ( int ) $item->horasExtra ;
+                if ( $item->entradaAnticipada == 1 && $item->horasAnticipada > 0 ) {
+                    $intMinutosTotalesDia += $item->horasAnticipada ;
+                }
+
+                $objPagos->horas =  ( int )( $intMinutosTotalesDia / 60 );
+                $objPagos->minutos =  ( int )( $intMinutosTotalesDia % 60 );
+                $objPagos->tiempo =  str_pad( $objPagos->horas, 2, '0', STR_PAD_LEFT ) . ':' . str_pad( $objPagos->minutos, 2, '0', STR_PAD_LEFT ) ;
+
+                //*** obtención del tiempo de retraso de ingreso
+                $objPagos->horasRetraso =  0;
+                $objPagos->minutosRetraso = 0;
+                $intMinutosRetrasoDia = 0;
+                if ( $item->horasRetraso > 0 ) {
+                    $objPagos->horasRetraso = ( int ) ( $item->horasRetraso / 60 );
+                    $objPagos->minutosRetraso = ( $item->horasRetraso % 60 );
+                }
+                $objPagos->retraso =  str_pad( $objPagos->horasRetraso, 2, '0', STR_PAD_LEFT ) . ':' . str_pad( $objPagos->minutosRetraso, 2, '0', STR_PAD_LEFT ) ;
+
+                //*** completar una hora fraccionaria, deberá de ser mayor o igual a 35 minutos
+                $objPagos->horasExtras =  ( $objPagos->horas + ( $objPagos->minutos >= 35 ? 1 : 0 ) ) ;
+
+                //*** Para el calculo de horas extras con descuento realizamos el descuento del tiempo extra menos el tiempo de retraso
+                $intTiempoDescuento = 0;
+                $objPagos->horasDescuento = 0;
+                $objPagos->minutosDescuento = 0;
+                $objPagos->horasExtrasDescuento = $objPagos->horasExtras;
+                //*** inicialmente es el pago normal */
+
+                if ( $item->horasRetraso > 0 ) {
+                    $intTiempoDescuento = ( $intMinutosTotalesDia -  $item->horasRetraso );
+                    $objPagos->horasDescuento =  ( int ) ( $intTiempoDescuento / 60 );
+                    $objPagos->minutosDescuento = ( $intTiempoDescuento % 60 );
+                    $objPagos->horasExtrasDescuento =  ( $objPagos->horasDescuento + ( $objPagos->minutosDescuento >= 35 ? 1 : 0 ) ) ;
+                }
+                $objPagos->descuento =  str_pad( $objPagos->horasDescuento, 2, '0', STR_PAD_LEFT ) . ':' . str_pad( $objPagos->minutosDescuento, 2, '0', STR_PAD_LEFT ) ;
+
+                //*** calculo del pago */
+                $objPagos->horasExtrasPagar = number_format( $objPagos->horasExtras *  $objDia->costoHoraExtra, 2 );
+                $objPagos->horasExtrasDescuentoPagar = number_format( $objPagos->horasExtrasDescuento *  $objDia->costoHoraExtra, 2 );
                 $vctPagos[] = $objPagos;
 
                 $intDia += 1;
-                // dd( 'Entre al cierre forzoso ',  $intDia, $objDia );
+                // dd( 'Entre al cierre forzoso ',  $intDia, $objDia, $objPagos );
 
             }
         }
 
-        // dd( $vctAsistencias, $asistencias, $intAnio, $intMes, $intDia, $strDate, $vctFechas[ 0 ], $vctFechas[ 1 ] );
+        //*** Procesamos para los totales */
+        foreach ( $vctAsistencias as $objItem ) {
 
-        return view( 'asistencias.corteSemanal',  compact( 'usuario', 'vctAsistencias',   'asistencias', 'listaAsistencia', 'intDia', 'intMes', 'intAnio', 'strFechaInicioPeriodo', 'strFechaFinPeriodo' ) );
+            $intAsistencias = 0;
+            $intHorasExtras = 0;
+            $decCostoHorasExtras = 0;
+            $decCostoHorasExtrasDescuento = 0;
+            $intHorasExtrasDescuento = 0;
+            $intMinutosExtra = 0;
+            $intTiempoExtra = 0;
+            foreach ( $objItem->pagos as  $value ) {
+                $intAsistencias += ( $value->esAsistencia == 1?1:0 );
+                $decCostoHorasExtras +=   $value->horasExtrasPagar ;
+                $decCostoHorasExtrasDescuento +=   $value->horasExtrasDescuentoPagar ;
+                $intHorasExtras += $value->horasExtras ;
+                $intHorasExtrasDescuento += $value->horasExtrasDescuento ;
+                $intTiempoExtra += ($value->tiempoExtra + $value->tiempoAnticipado);
+
+            }
+
+            $objItem->nominaDias = $intAsistencias;
+            $objItem->nominaImporte = ( $intAsistencias *$objItem->sueldo );
+            $objItem->nominaHorasExtras =  $intHorasExtras ;
+            $objItem->nominaImporteHorasExtras =  $decCostoHorasExtras ;
+            $objItem->nominaPagoSemanal =  $objItem->nominaImporte + $decCostoHorasExtras ;
+            $objItem->nominaHorasExtrasDescuento =  $intHorasExtrasDescuento ;
+            $objItem->nominaImporteHorasExtrasDescuento =  $decCostoHorasExtrasDescuento ;
+            $objItem->nominaPagoSemanalDescuento =  $objItem->nominaImporte + $decCostoHorasExtrasDescuento ;
+            $objItem->nominaTiempoExtra =  str_pad((int) ($intTiempoExtra/60), 2, '0', STR_PAD_LEFT ) . ':' . str_pad( ($intTiempoExtra % 60), 2, '0', STR_PAD_LEFT ) ;
+
+        }
+        // dd( $vctAsistencias );
+        return $vctAsistencias ;
     }
 
     public function reloadCorteSemanal( $intAnio, $intMes, $intDia ) {
@@ -829,7 +1238,7 @@ class asistenciaController extends Controller {
                             if ( $dteHoraEntrada < $dteHorario ) {
                                 $intMinutosEntrada = $dteHoraEntrada->diffInMinutes( $dteHorario ) ;
                                 // $objAsistencia->tipoHoraExtraId = $request[ 'tipoHoraExtraId' ][ $i ];
-                                  //dd( 'Soy mayor '. $intMinutosEntrada . ' minutos' );
+                                //dd( 'Soy mayor '. $intMinutosEntrada . ' minutos' );
                             } else {
                                 // dd( 'Soy menor' );
                                 // $objAsistencia->tipoHoraExtraId = 1;
@@ -921,8 +1330,8 @@ class asistenciaController extends Controller {
     public function destroy( $id ) {
         //
     }
-    public function reporteExcel(Request $request)
-    {
+
+    public function reporteExcel( Request $request ) {
         $objCalendario = new Calendario();
 
         $data = request()->all();
@@ -1126,10 +1535,9 @@ class asistenciaController extends Controller {
             }
         }
 
+        // dd( $request );
 
-        // dd($request);
-
-        return (new CorteSemanalExport( compact( 'usuario', 'vctAsistencias',   'asistencias', 'listaAsistencia', 'intDia', 'intMes', 'intAnio', 'strFechaInicioPeriodo', 'strFechaFinPeriodo' ) ))->download('corteSemanal.xlsx');
+        return ( new CorteSemanalExport( compact( 'usuario', 'vctAsistencias',   'asistencias', 'listaAsistencia', 'intDia', 'intMes', 'intAnio', 'strFechaInicioPeriodo', 'strFechaFinPeriodo' ) ) )->download( 'corteSemanal.xlsx' );
     }
 
     public function export() {

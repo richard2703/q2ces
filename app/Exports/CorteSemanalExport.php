@@ -29,6 +29,11 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 //Dar formatos especificos a columnas ( numeros, fechas, etc... )
 
+use App\Models\asistencia;
+use App\Models\personal;
+use App\Helpers\Calendario;
+use App\Http\Controllers\asistenciaController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
@@ -37,15 +42,39 @@ class CorteSemanalExport implements   ShouldAutoSize, WithTitle, WithHeadings, W
     use Exportable;
     protected $query;
 
-    public function view(): View
-    {
-        // dd($_POST);
+    public function view(): View {
+        $objCalendario = new Calendario();
+
+        $data = request()->all();
+        if ( is_array( $data ) == true && count( $data ) > 0 ) {
+            $intMes = $data[ 'intMes' ];
+            $intAnio = $data[ 'intAnio' ];
+            $intDia = date( 'd' );
+            //$data[ 'intDia' ];
+        } else {
+            $intMes = date( 'm' );
+            $intAnio = date( 'Y' );
+            $intDia = date( 'd' );
+        }
+        //  dd( $data );
         //return view( 'asistencias.corteSemanal',  compact( 'usuario', 'vctAsistencias',   'asistencias', 'listaAsistencia', 'intDia', 'intMes', 'intAnio', 'strFechaInicioPeriodo', 'strFechaFinPeriodo' ) );
 
-        return view('asistencias.reporteCorteSemanal')
-        ->with('intAnio',$_POST['intAnio'])
-        ->with('intMes',$_POST['intMes'])
-        ->with('intDia',$_POST['intDia']);
+        $strDate = $intAnio . '-' . $intMes . '-' . $intDia;
+        $vctFechas =  $objCalendario->getSemanaTrabajo( date_create( $strDate ), 3 );
+        $strFechaInicioPeriodo = $vctFechas[ 0 ]->format( 'Y-m-d' );
+        $strFechaFinPeriodo = $vctFechas[ 1 ]->format( 'Y-m-d' );
+        $strPeriodoCorte = 'PERIODO: ' . $vctFechas[ 0 ]->format( 'W' )  ;
+        $strSemanaCorte = $objCalendario->getPeriodoFormateado ($vctFechas[ 0 ] ,$vctFechas[ 1 ],true);
+
+        $usuario = personal::where( 'userId', auth()->user()->id )->first();
+        // $personal = personal::where( 'id', $personalId )->first();
+
+        $vctAsistencias =  asistenciaController::getCalculoCorteSemanal( $intAnio, $intMes, $intDia );
+
+        // dd( $strPeriodoCorte, $strSemanaCorte,  $vctAsistencias );
+
+        return view( 'asistencias.reporteCorteSemanal', compact( 'vctAsistencias', 'strPeriodoCorte', 'strSemanaCorte' ) );
+
     }
 
     // public function __construct( Collection $query ) {
