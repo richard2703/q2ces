@@ -54,7 +54,7 @@
                                                 @endcan
                                             </div>
                                         </div>
-                                        <div class="row divBorder">
+                                        <div class="divBorder">
                                             <p>Catálogo General de Puestos, Es Utilizado para Gestionar los Puestos
                                                 Laborares del Personal en el
                                                 Sistema.</p>
