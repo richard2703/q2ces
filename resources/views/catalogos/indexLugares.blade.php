@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista De Lugares')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Lugares')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -31,7 +31,7 @@
                                 </div>
                             @endif
                             <div class="row">
-                                <div class="d-flex p-3 divBorder">
+                                <div class="d-flex p-3">
                                     <div class="col-12 text-right">
 
                                         <a href="{{ route('catalogos.index') }}">
@@ -46,10 +46,13 @@
                                         @can('lugares_create')
                                             <button class="btn botonGral float-end" data-bs-toggle="modal"
                                                 data-bs-target="#nuevoItem" onclick="cargaItem('','','','','','')">
-                                                Añadir Un Lugar
+                                                Añadir un Lugar
                                             </button>
                                         @endcan
                                     </div>
+                                </div>
+                                <div class="row divBorder">
+                                    <p>Catálogo General de Lugares, Es Utilizado para Asignar un Lugar (Ej. Taller) y en Donde se Podrán Asignar las Ubicaciones (Ej. Oficinas) de los Extintores.</p>
                                 </div>
                             </div>
                             <div class="table-responsive">

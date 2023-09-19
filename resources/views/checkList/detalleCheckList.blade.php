@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'checklist', 'titlePage' => __('NuevaTarea Check List')])
+@extends('layouts.main', ['activePage' => 'checklist', 'titlePage' => __('Nueva Tarea Check List')])
 @section('content')
     <div class="content">
         <div class="container-fluid">

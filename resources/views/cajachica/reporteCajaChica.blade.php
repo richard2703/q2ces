@@ -34,49 +34,58 @@
                                         </div>
                                     @endif
                                     <div class="row division">
+
                                         <div class="col-12 col-md-4">
-                                            <p>Semana Del</br> <span
-                                                    class="combustibleLitros">{{ \Carbon\Carbon::parse($lunes)->locale('es')->isoFormat('dddd D MMMM') }}
-                                                    Al
-                                                    {{ \Carbon\Carbon::parse($domingo)->locale('es')->isoFormat('dddd D MMMM') }}</span>
+                                            <p>Reporte del</br> <span
+                                                    class="combustibleLitros">{{ ucfirst(\Carbon\Carbon::parse($inicio)->locale('es')->isoFormat('D ')) }}
+                                                    {{ ucfirst(\Carbon\Carbon::parse($inicio)->locale('es')->isoFormat('MMMM YY')) }}
+                                                    al
+                                                    {{ ucfirst(\Carbon\Carbon::parse($fin)->locale('es')->isoFormat('D')) }}
+                                                    {{ ucfirst(\Carbon\Carbon::parse($fin)->locale('es')->isoFormat('MMMM YY')) }}
+                                                </span>
                                             </p>
                                         </div>
 
-                                        <div class="col-3 col-md-2 text-center">
-                                            <p class="">Semana Pasada</p>
-                                            <p class="combustibleLitros fw-semibold text-black-50 ">$ {{ $lastweek }}
+                                        {{--  <div class="col-3 col-md-2 text-center">
+                                            <p class="">Pendientes de cobro</p>
+                                            <p class="combustibleLitros fw-semibold text-black-50 ">$
                                             </p>
-                                        </div>
-                                        <div class="col-3 col-md-2 text-center">
+                                        </div>  --}}
+                                        <div class="col-6 col-md-4 text-center">
                                             <p class="">Ingreso</p>
-                                            <p class="combustibleLitros fw-semibold text-success">$ {{ $ingreso }}</p>
+                                            <p class="combustibleLitros fw-semibold text-success">$
+                                                {{ number_format($ingreso, 2) }}</p>
                                         </div>
-                                        <div class="col-3 col-md-2  text-center">
+                                        <div class="col-6 col-md-4  text-center">
                                             <p class="">Egreso</p>
-                                            <p class="combustibleLitros fw-semibold text-danger">$ {{ $egreso }}</p>
+                                            <p class="combustibleLitros fw-semibold text-danger">$
+                                                {{ number_format($egreso, 2) }}</p>
                                         </div>
-                                        <div class="col-3 col-md-2 text-center">
-                                            <p class="">Saldo</p>
-                                            <p class="combustibleLitros fw-semibold ">$ {{ $lastTotal }}
+                                        {{--  <div class="col-3 col-md-2 text-center">
+                                            <p class="">Ingresos Servicios</p>
+                                            <p class="combustibleLitros fw-semibold ">$
                                             </p>
+                                        </div>  --}}
+                                        <div class="col-12 col-md-6">
+                                            <a href="{{ route('cajaChica.index') }}">
+                                                <button class="btn regresar">
+                                                    <span class="material-icons">
+                                                        reply
+                                                    </span>
+                                                    Regresar
+                                                </button>
+                                            </a>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-6 text-left">
-                                                @can('cajachica_create')
-                                                    <button type="button" class="btn botonGral" data-bs-toggle="modal"
-                                                        data-bs-target="#modal-reporte">
-                                                        Reporte de Movimientos
-                                                    </button>
-                                                @endcan
-                                            </div>
 
-                                            <div class="col-6 text-end">
-                                                @can('cajachica_create')
-                                                    <a href="{{ route('cajaChica.create') }}">
-                                                        <button type="button" class="btn botonGral">Nuevo Movimiento</button>
-                                                    </a>
-                                                @endcan
-                                            </div>
+                                        <div class="col-12 col-md-6 text-end">
+                                            @can('cajachica_create')
+                                                <form action="{{ route('cajaChica.reporteExcel') }}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="inicio" value="{{ $inicio }}">
+                                                    <input type="hidden" name="fin" value="{{ $fin }}">
+                                                    <button type="submit" class="btn botonGral">Descargar Excel</button>
+                                                </form>
+                                            @endcan
                                         </div>
 
                                     </div>
@@ -88,12 +97,10 @@
                                                     <th class="labelTitulo" style="width: 120px !important;">Concepto</th>
                                                     <th class="labelTitulo" style="width: 160px !important;">Comprobante
                                                     </th>
-                                                    {{--  <th class="labelTitulo">N. Comprobante</th>  --}}
                                                     <th class="labelTitulo">Cliente</th>
                                                     <th class="labelTitulo">Obra</th>
                                                     <th class="labelTitulo">Equipo</th>
                                                     <th class="labelTitulo" style="width: 130px !important;">Personal</th>
-                                                    {{--  <th class="labelTitulo">Tipo</th>  --}}
                                                     <th class="labelTitulo" style="width: 130px !important;">Cantidad</th>
                                                     <th class="labelTitulo text-right" style="width: 130px !important;">
                                                         Acciones</th>
@@ -150,7 +157,7 @@
 
                                                             @default
                                                         @endswitch>
-                                                            {{ $registro->cantidad }}</td>
+                                                            $ {{ number_format($registro->cantidad, 2) }}</td>
                                                         <td class="td-actions text-right">
                                                             @can('cajachica_show')
                                                                 <a href="{{ route('cajaChica.show', $registro->id) }}"
@@ -203,9 +210,9 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="card-footer mr-auto">
+                                {{--  <div class="card-footer mr-auto">
                                     {{ $registros->links() }}
-                                </div>
+                                </div>  --}}
                             </div>
                         </div>
                     </div>

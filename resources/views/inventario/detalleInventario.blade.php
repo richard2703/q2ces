@@ -1,29 +1,32 @@
-@extends('layouts.main', ['activePage' => 'personal', 'titlePage' => __('Detalle {{ ucfirst($inventario->tipo) }}')])
+@extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Detalle {{ ucfirst($inventario->tipo) }}')])
 @section('content')
+
     <div class="content">
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
-                <p>Listado de errores a corregir</p>
-                <ul>
-                    @foreach ($errors->all() as $item)
-                        <li>{{ $item }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
         <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col-11 align-self-center">
-                    <div class="card-body contCart justify-content-center">
-                        <div class="card ">
-                            <div class="card-header bacTituloPrincipal mb-5">
-                                <h2 class="my-3 ms-3 texticonos ">Detalle {{ ucfirst($inventario->tipo) }}</h2>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 text-right">
-                                    <a href="{{ route('inventario.dash') }}"
-                                        title="Regresa a la vista de consulta de inventario.">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header bacTituloPrincipal">
+                            <h4 class="card-title text-capitalize">Inventario de {{ $inventario->tipo }} </h4>
+                            {{-- <p class="card-category">Usuarios registrados</p> --}}
+                        </div>
+
+                        <div class="card-body">
+                            @if (session('success'))
+                                <div class="alert alert-success" role="success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+                            @if (session('faild'))
+                                <div class="alert alert-danger" role="faild">
+                                    {{ session('faild') }}
+                                </div>
+                            @endif
+                            <div class="row divBorder">
+
+                                <div class="col-6 pb-3 text-right">
+
+                                    <a href="{{ route('inventario.index', $inventario->tipo) }}">
                                         <button class="btn regresar">
                                             <span class="material-icons">
                                                 reply
@@ -32,8 +35,8 @@
                                         </button>
                                     </a>
                                 </div>
-                            </div>
 
+                            </div>
                             <form action="{{ route('inventario.update', $inventario->id) }}"
                                 method="post"class="row alertaGuardar" enctype="multipart/form-data">
                                 @csrf
@@ -143,19 +146,24 @@
                                                     {{ $inventario->tipo == 'herramientas' ? ' selected' : '' }}>
                                                     Herramientas</option>
                                                 <option value="refacciones"
-                                                    {{ $inventario->tipo == 'refacciones' ? ' selected' : '' }}>Refacciones
+                                                    {{ $inventario->tipo == 'refacciones' ? ' selected' : '' }}>
+                                                    Refacciones
                                                 </option>
                                                 <option value="consumibles"
-                                                    {{ $inventario->tipo == 'consumibles' ? ' selected' : '' }}>Consumibles
+                                                    {{ $inventario->tipo == 'consumibles' ? ' selected' : '' }}>
+                                                    Consumibles
                                                 </option>
                                                 <option value="uniformes"
-                                                    {{ $inventario->tipo == 'uniformes' ? ' selected' : '' }}>Uniformes
+                                                    {{ $inventario->tipo == 'uniformes' ? ' selected' : '' }}>
+                                                    Uniformes
                                                 </option>
                                                 <option value="extintores"
-                                                    {{ $inventario->tipo == 'extintores' ? ' selected' : '' }}>Extintores
+                                                    {{ $inventario->tipo == 'extintores' ? ' selected' : '' }}>
+                                                    Extintores
                                                 </option>
                                                 <option value="servicios"
-                                                    {{ $inventario->tipo == 'servicios' ? ' selected' : '' }}>Servicios
+                                                    {{ $inventario->tipo == 'servicios' ? ' selected' : '' }}>
+                                                    Servicios
                                                 </option>
                                             </select>
                                         </div>
@@ -186,10 +194,12 @@
                                                 <select class="form-select" aria-label="Default select example"
                                                     id="uniformeRetornable" name="uniformeRetornable">
                                                     <option value="0"
-                                                        {{ $inventario->uniformeRetornable <= 0 ? ' selected' : '' }}>No
+                                                        {{ $inventario->uniformeRetornable <= 0 ? ' selected' : '' }}>
+                                                        No
                                                     </option>
                                                     <option value="1"
-                                                        {{ $inventario->uniformeRetornable == 1 ? ' selected' : '' }}>Sí
+                                                        {{ $inventario->uniformeRetornable == 1 ? ' selected' : '' }}>
+                                                        Sí
                                                     </option>
                                                 </select>
                                             </div>
@@ -272,10 +282,9 @@
                                 </div>
 
                                 {{--  <div class="col-12 text-end mb-3 ">
-                                    <button type="submit" class="btn botonGral">Guardar</button>
-                                </div>  --}}
+                                <button type="submit" class="btn botonGral">Guardar</button>
+                            </div>  --}}
                             </form>
-
                             <div class="col-11 align-self-center my-5">
                                 <div class="row my-5 pt-5 border-top">
                                     <div class="col-6 col-lg-4 my-5">
@@ -286,7 +295,8 @@
                                                             style="width: 60px;"src="{{ '/img/equipos/obras.svg' }}"></i>
                                                 </div>
                                                 <h4 class="textTitulo">Obra Asignada</h4>
-                                                <p class="description">This is content and this is actually something.</p>
+                                                <p class="description">This is content and this is actually
+                                                    something.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -300,7 +310,8 @@
                                                             style="width: 60px;"src="{{ '/img/equipos/equipo.svg' }}"></i>
                                                 </div>
                                                 <h4 class="textTitulo">Equipo Asignado</h4>
-                                                <p class="description">This is content and this is actually something.</p>
+                                                <p class="description">This is content and this is actually
+                                                    something.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -323,12 +334,13 @@
 
                             </div>
                         </div>
+
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
+
 
     <script type="application/javascript">
         jQuery('input[type=file]').change(function(){
@@ -343,58 +355,58 @@
 
     <!-- Modal -->
     <!--
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bacTituloPrincipal mb-3">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Mover</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form class="col-11" action="{{ route('inventario.mover', $inventario->id) }}" method="post">
-                    @csrf
-                    @method('put')
-                    <input type="hidden" name="productoId" id="productoId" value="{{ $inventario->id }}">
-                    <input type="hidden" name="productoTipo" id="productoTipo" value="{{ $inventario->tipo }}">
-                    <label class="labelTitulo">Tipo de Movimiento:</label></br>
-                    <select class="form-select" aria-label="Default select example" id="tipo" name="tipo">
-                        <option value="asignar">Asignar</option>
-                        <option value="desechar">Desechar</option>
-                    </select>
+                                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header bacTituloPrincipal mb-3">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Mover</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <form class="col-11" action="{{ route('inventario.mover', $inventario->id) }}" method="post">
+                                                            @csrf
+                                                            @method('put')
+                                                            <input type="hidden" name="productoId" id="productoId" value="{{ $inventario->id }}">
+                                                            <input type="hidden" name="productoTipo" id="productoTipo" value="{{ $inventario->tipo }}">
+                                                            <label class="labelTitulo">Tipo de Movimiento:</label></br>
+                                                            <select class="form-select" aria-label="Default select example" id="tipo" name="tipo">
+                                                                <option value="asignar">Asignar</option>
+                                                                <option value="desechar">Desechar</option>
+                                                            </select>
 
-                    <label class="labelTitulo mt-3">Cantidad:</label></br>
-                    <input type="number"  class="inputCaja" id="cantidad"
-                        name="cantidad" value="">
+                                                            <label class="labelTitulo mt-3">Cantidad:</label></br>
+                                                            <input type="number"  class="inputCaja" id="cantidad"
+                                                                name="cantidad" value="">
 
-                    <label class="labelTitulo mt-3">Origen:</label></br>
-                    {{-- <input type="text" class="inputCaja" id="desde" name="desde" value=""> --}}
-                    <select id="desde" name="desde" class="form-select" aria-label="Default select example">
-                        @foreach ($vctDesde as $maquina)
-                            <option value="{{ $maquina->id }}" {{ $maquina->id == $inventario->id ? ' selected' : '' }}>
-                                {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
-                            </option>
-                        @endforeach
-                    </select>
+                                                            <label class="labelTitulo mt-3">Origen:</label></br>
+                                                            {{-- <input type="text" class="inputCaja" id="desde" name="desde" value=""> --}}
+                                                            <select id="desde" name="desde" class="form-select" aria-label="Default select example">
+                                                                @foreach ($vctDesde as $maquina)
+    <option value="{{ $maquina->id }}" {{ $maquina->id == $inventario->id ? ' selected' : '' }}>
+                                                                        {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                                                                    </option>
+    @endforeach
+                                                            </select>
 
-                    <label class="labelTitulo mt-3">Destino:</label></br>
-                    {{-- <input type="text" class="inputCaja" id="hasta" name="hasta" value=""> --}}
-                    <select id="hasta" name="hasta" class="form-select" aria-label="Default select example">
-                        @foreach ($vctHasta as $maquina)
-                            <option value="{{ $maquina->id }}" {{ $maquina->id == $inventario->id ? ' selected' : '' }}>
-                                {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
-                            </option>
-                        @endforeach
-                    </select>
+                                                            <label class="labelTitulo mt-3">Destino:</label></br>
+                                                            {{-- <input type="text" class="inputCaja" id="hasta" name="hasta" value=""> --}}
+                                                            <select id="hasta" name="hasta" class="form-select" aria-label="Default select example">
+                                                                @foreach ($vctHasta as $maquina)
+    <option value="{{ $maquina->id }}" {{ $maquina->id == $inventario->id ? ' selected' : '' }}>
+                                                                        {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                                                                    </option>
+    @endforeach
+                                                            </select>
 
-                    <label class="labelTitulo mt-3">Comentario:</label></br>
-                    <textarea class="col-12 inputCaja mb-3" id="comentarios" name="comentarios"></textarea>
+                                                            <label class="labelTitulo mt-3">Comentario:</label></br>
+                                                            <textarea class="col-12 inputCaja mb-3" id="comentarios" name="comentarios"></textarea>
 
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary botonGral mx-auto">Mover</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
--->
+                                                            <div class="modal-footer">
+                                                                <button type="submit" class="btn btn-primary botonGral mx-auto">Mover</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        -->
 @endsection

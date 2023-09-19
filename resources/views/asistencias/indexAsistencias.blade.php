@@ -5,7 +5,7 @@ $mesAnterior = $objCalendar->getMesAnterior($intMes, $intAnio);
 $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
 
 //*** el mes seleccionado
-$mesSeleccionado =  $intMes;
+$mesSeleccionado = $intMes;
 $anioSeleccionado = $intAnio;
 ?>
 @section('content')
@@ -68,8 +68,9 @@ $anioSeleccionado = $intAnio;
                                             <div class="col-8">
                                                 <a href="{{ route('asistencia.index') }}"
                                                     class="combustibleLitros fw-semibold text-end"
-                                                    title="Ir al mes en curso"><b>Asistencia Mensual De
-                                                        {{ $objCalendar->getNameMonth($intMes) }} Del {{ $intAnio}}</br>
+                                                    title="Ir al mes en curso"><b>Asistencia Mensual de
+                                                        {{ $objCalendar->getNameMonth($intMes) }} del
+                                                        {{ $intAnio }}</br>
                                                 </a>
                                             </div>
                                             <div class="col-4 text-end">
@@ -94,7 +95,7 @@ $anioSeleccionado = $intAnio;
                                             <div class="col-8 text-end">
                                                 @can('asistencia_horasextra')
                                                     <a href="{{ route('asistencia.horasExtra') }}">
-                                                        <button type="button" class="btn botonGral">Horas Extra</button>
+                                                        <button type="button" class="btn botonGral">Tiempo Extra</button>
                                                     </a>
                                                 @endcan
                                                 @can('asistencia_create')
@@ -116,7 +117,7 @@ $anioSeleccionado = $intAnio;
                                                 <th class="labelTitulo" style="width:140px !important">Asistencia</th>
                                                 <th class="labelTitulo">Faltas</th>
                                                 <th class="labelTitulo">Otros Días</th>
-                                                <th class="labelTitulo">Horas Extra</th>
+                                                <th class="labelTitulo">Tiempo Extra</th>
                                                 <th class="labelTitulo " style="width:140px !important">Acciones</th>
                                             </thead>
                                             <tbody class="text-center">
@@ -133,7 +134,15 @@ $anioSeleccionado = $intAnio;
                                                         <td>{{ $item->faltas }}</td>
                                                         <td>{{ $item->incapacidades + $item->vacaciones + $item->descansos }}
                                                         </td>
-                                                        <td>{{ $item->extras }}</td>
+                                                        <td>
+                                                            <?php
+
+                                                            $intHoras = (int) ($item->extras / 60);
+                                                            $intMinutos = $item->extras % 60;
+                                                            ?>
+                                                            {{ str_pad($intHoras, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutos, 2, '0', STR_PAD_LEFT) }}
+                                                            {{-- {{ $item->extras }} --}}
+                                                        </td>
                                                         <td class="td-actions">
                                                             @can('asistencia_show')
                                                                 <a href="{{ route('asistencia.show', $item->id) }}"
@@ -213,7 +222,7 @@ $anioSeleccionado = $intAnio;
 
                                     <div class="col-12 col-lg-6">
                                         <input type="month" class="inputCaja" id="fechaAsistencia"
-                                            placeholder="Ej.: 2023-01" name="fechaAsistencia"  pattern="[0-9]{4}-[0-9]{2}"
+                                            placeholder="Ej.: 2023-01" name="fechaAsistencia" pattern="[0-9]{4}-[0-9]{2}"
                                             value="{{ $anioSeleccionado . '-' . $mesSeleccionado }}"></br>
                                     </div>
                                 </div>

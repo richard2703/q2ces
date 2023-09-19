@@ -34,7 +34,7 @@
                                         </div>
                                     @endif
                                     <div class="row">
-                                        <div class="d-flex p-3 divBorder">
+                                        <div class="d-flex p-3 ">
                                             <div class="col-12 text-right">
 
                                                 <a href="{{ route('catalogos.index') }}">
@@ -53,6 +53,10 @@
                                                     </button>
                                                 @endcan
                                             </div>
+                                        </div>
+                                        <div class="row divBorder">
+                                            <p>Catálogo General de Refacciones, Es Utilizado para Asignar o Especificar un
+                                                tipo de Refacción particular para una Maquinaría y/o Equipo.</p>
                                         </div>
                                     </div>
 

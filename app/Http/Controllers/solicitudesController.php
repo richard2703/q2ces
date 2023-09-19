@@ -52,7 +52,6 @@ class solicitudesController extends Controller
             'personalId' => 'required',
             'maquinariaId' => 'required',
             'prioridad' => 'required',
-            'estadoId' => 'required',
             'funcionalidad' => 'required',
             'fechaSolicitud' => 'required|date|date_format:Y-m-d',
             'descripcion' => 'nullable|max:500',
@@ -62,7 +61,6 @@ class solicitudesController extends Controller
             'fechaSolicitud' => 'El campo fecha del requerimiento es obligatoria.',
             'personalId.required' => 'El campo responsable es obligatorio.',
             'maquinariaId.required' => 'El campo maquinaria es obligatorio.',
-            'estadoId.required' => 'El campo estado es obligatorio.',
             'funcionalidad.required' => 'El campo funcionalidad es obligatorio.',
             'descripcion.max' => 'El campo descripción excede el límite de caracteres permitidos.',
         ]);
@@ -70,19 +68,56 @@ class solicitudesController extends Controller
         $solicitud['start'] = strtoupper($solicitud['fechaSolicitud'] . ' ' . $solicitud['horaSolicitud']);
         $nuevaSolicitud = solicitudes::create($solicitud);
 
-        for ($i = 0; $i < count($solicitud['refaccionNombre']); $i++) {
+        $tipoCount = ($solicitud['tipo_solicitud'] == 'refaccion'
+            ? $solicitud['refaccionNombre']
+            : ($solicitud['tipo_solicitud'] == 'herramienta'
+                ? $solicitud['herramientaNombre']
+                : ($solicitud['tipo_solicitud'] == 'reparacion'
+                    ? $solicitud['reparacionSolicitud']
+                    : ($solicitud['tipo_solicitud'] == 'combustible'
+                        ? $solicitud['carga']
+                        : null
+                    )
+                )
+            )
+        );
+        $tipoComentario = ($solicitud['tipo_solicitud'] == 'refaccion'
+            ? $solicitud['comentarioRefaccion']
+            : ($solicitud['tipo_solicitud'] == 'herramienta'
+                ? $solicitud['comentarioHerramienta']
+                : ($solicitud['tipo_solicitud'] == 'reparacion'
+                    ? $solicitud['comentarioReparacion']
+                    : ($solicitud['tipo_solicitud'] == 'combustible'
+                        ? $solicitud['comentarioCombustible']
+                        : null
+                    )
+                )
+            )
+        );
+        $tipoCantidad = ($solicitud['tipo_solicitud'] == 'refaccion'
+            ? $solicitud['cantidadRefaccion']
+            : ($solicitud['tipo_solicitud'] == 'herramienta'
+                ? $solicitud['cantidadHerramienta']
+                : null
+            )
+        );
+
+
+
+        for ($i = 0; $i < count($tipoCount); $i++) {
             $nuevaSolicitudDetalle = new solicitudDetalle();
             $nuevaSolicitudDetalle->solicitudId = $nuevaSolicitud->id;
-            $nuevaSolicitudDetalle->estadoId = $nuevaSolicitud->estadoId;
+            // $nuevaSolicitudDetalle->estadoId = $nuevaSolicitud->estadoId;
             $nuevaSolicitudDetalle->tipo = $solicitud['tipo_solicitud'];
-            $nuevaSolicitudDetalle->cantidad = $solicitud['cantidadSolicitudRefaccion'][$i] ?? '';
-            $nuevaSolicitudDetalle->inventarioId = $solicitud['tipo_solicitud'] == 'herramienta' ? $solicitud['herramientaNombre'][$i] : ($solicitud['tipo_solicitud'] == 'refaccion' ? $solicitud['refaccionNombre'][$i] : '');
-            $nuevaSolicitudDetalle->comentario = $solicitud['comentarioRefaccion'][$i] ?? '';
+            $nuevaSolicitudDetalle->cantidad = $tipoCantidad[$i] ?? '';
+            $nuevaSolicitudDetalle->inventarioId = $solicitud['tipo_solicitud'] == 'herramienta' ? $solicitud['herramientaNombre'][$i] : ($solicitud['tipo_solicitud'] == 'refaccion' ? $solicitud['refaccionNombre'][$i] : null);
+            $nuevaSolicitudDetalle->comentario = $tipoComentario[$i];
             $nuevaSolicitudDetalle->carga = $solicitud['carga'][$i] ?? '';
-            $nuevaSolicitudDetalle->litros = $solicitud['litrosSolicitud'][$i] ?? '';
+            $nuevaSolicitudDetalle->litros = $solicitud['litros'][$i] ?? '';
             $nuevaSolicitudDetalle->reparacion = $solicitud['reparacionSolicitud'][$i] ?? '';
             $nuevaSolicitudDetalle->save();
         }
+        // dd($solicitud, $tipoComentario, $nuevaSolicitudDetalle);
         $eventoCalendario = new calendarioPrincipal();
         $eventoCalendario->solicitudesId = $nuevaSolicitud->id;
         $eventoCalendario->title = $solicitud['title'];
@@ -94,6 +129,8 @@ class solicitudesController extends Controller
         $eventoCalendario->descripcion = $solicitud['descripcion'];
         $eventoCalendario->estatus = $solicitud['tipo'];
         $eventoCalendario->color = $solicitud['color'];
+        $eventoCalendario->prioridad = $solicitud['prioridad'];
+        $eventoCalendario->tipoEvento = 'solicitud';
         $eventoCalendario->save();
         // dd($solicitud, $i, $nuevaSolicitudDetalle);
 
@@ -176,9 +213,105 @@ class solicitudesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        dd('Actualizar');
+        abort_if(Gate::denies('calendarioMtq_edit'), 404);
+        $calendarioPrincipal = calendarioPrincipal::where('id', $request->id)->first();
+        $data = $request->all();
+        // dd($calendarioPrincipal, $data);
+        $data['estadoId'] = 3;
+        // dd($data);
+        if ($data['fecha'] != null && $data['hora'] != null) {
+            $data['start'] = strtoupper($data['fecha'] . ' ' . $data['hora']);
+        }
+        if ($data['fechaSalida'] != null && $data['horaSalida'] != null) {
+            $data['end'] = strtoupper($data['fechaSalida'] . ' ' . $data['horaSalida']);
+        }
+        if ($data['color'] === null) {
+            unset($data['color']);
+        }
+        if ($data['maquinariaId'] === null) {
+            unset($data['maquinariaId']);
+        }
+        if ($data['title'] === null) {
+            unset($data['title']);
+        }
+        $calendarioPrincipal->update($data);
+        // dd($data);
+        $nuevaLista = collect();
+        $tipoSolicitud = ($data['detalleTipo'][0] == 'refaccion'
+            ? 'refaccion'
+            : ($data['detalleTipo'][0] == 'herramienta'
+                ? 'herramienta'
+                : ($data['detalleTipo'][0] == 'reparacion'
+                    ? 'reparacion'
+                    : ($data['detalleTipo'][0] == 'combustible'
+                        ? 'combustible'
+                        : null
+                    )
+                )
+            )
+        );
+        if ($tipoSolicitud == 'refaccion') {
+            for ($i = 0; $i < count($data['idRefaccion']); $i++) {
+                $array = [
+                    'id' => $data['idRefaccion'][$i],
+                    'inventarioId' => $data['refaccionNombre'][$i],
+                    'cantidad' => $data['cantidadRefaccion'][$i],
+                    'comentario' => $data['comentarioRefaccion'][$i],
+                    'tipo' => $data['detalleTipo'][$i] != null ? $data['detalleTipo'][$i] : 'refaccion',
+                    'solicitudId' => $data['solicitudIdDetalle'],
+                ];
+                $objRefaccion = solicitudDetalle::updateOrCreate(['id' => $array['id']], $array);
+                $nuevaLista->push($objRefaccion->id);
+            }
+            $test = solicitudDetalle::where('solicitudId', $data['solicitudIdDetalle'])->whereNotIn('id', $nuevaLista)->delete();
+        } else if ($tipoSolicitud == 'herramienta') {
+            for ($i = 0; $i < count($data['idHerramienta']); $i++) {
+                $array = [
+                    'id' => $data['idHerramienta'][$i],
+                    'inventarioId' => $data['herramientaNombre'][$i],
+                    'cantidad' => $data['cantidadHerramienta'][$i],
+                    'comentario' => $data['comentarioHerramienta'][$i],
+                    'tipo' => $data['detalleTipo'][$i] != null ? $data['detalleTipo'][$i] : 'herramienta',
+                    'solicitudId' => $data['solicitudIdDetalle'],
+                ];
+                $objHerramienta = solicitudDetalle::updateOrCreate(['id' => $array['id']], $array);
+                $nuevaLista->push($objHerramienta->id);
+            }
+            $test = solicitudDetalle::where('solicitudId', $data['solicitudIdDetalle'])->whereNotIn('id', $nuevaLista)->delete();
+        } else if ($tipoSolicitud == 'reparacion') {
+            for ($i = 0; $i < count($data['idReparacion']); $i++) {
+                $array = [
+                    'id' => $data['idReparacion'][$i],
+                    'reparacion' => $data['reparacionSolicitud'][$i],
+                    'comentario' => $data['comentarioReparacion'][$i],
+                    'tipo' => $data['detalleTipo'][$i] != null ? $data['detalleTipo'][$i] : 'reparacion',
+                    'solicitudId' => $data['solicitudIdDetalle'],
+                ];
+                $objHerramienta = solicitudDetalle::updateOrCreate(['id' => $array['id']], $array);
+                $nuevaLista->push($objHerramienta->id);
+            }
+            $test = solicitudDetalle::where('solicitudId', $data['solicitudIdDetalle'])->whereNotIn('id', $nuevaLista)->delete();
+        } else {
+            for ($i = 0; $i < count($data['idCombustible']); $i++) {
+                $array = [
+                    'id' => $data['idCombustible'][$i],
+                    'litros' => $data['litros'][$i],
+                    'carga' => $data['carga'][$i],
+                    'comentario' => $data['comentarioCombustible'][$i],
+                    'tipo' => $data['detalleTipo'][$i] != null ? $data['detalleTipo'][$i] : 'combustible',
+                    'solicitudId' => $data['solicitudIdDetalle'],
+                ];
+                $objHerramienta = solicitudDetalle::updateOrCreate(['id' => $array['id']], $array);
+                $nuevaLista->push($objHerramienta->id);
+            }
+            $test = solicitudDetalle::where('solicitudId', $data['solicitudIdDetalle'])->whereNotIn('id', $nuevaLista)->delete();
+        }
+
+        Session::flash('message', 1);
+
+        return redirect()->route('calendarioPrincipal.index');
     }
 
     /**

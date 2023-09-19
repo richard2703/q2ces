@@ -34,23 +34,28 @@
                                         </div>
                                     @endif
                                     <div class="row">
-                                        <div class="col-12 text-right">
+                                        <div class="d-flex p-3">
+                                            <div class="col-12 text-right">
 
-                                            <a href="{{ route('catalogos.index') }}">
-                                                <button class="btn regresar">
-                                                    <span class="material-icons">
-                                                        reply
-                                                    </span>
-                                                    Regresar
-                                                </button>
-                                            </a>
+                                                <a href="{{ route('catalogos.index') }}">
+                                                    <button class="btn regresar">
+                                                        <span class="material-icons">
+                                                            reply
+                                                        </span>
+                                                        Regresar
+                                                    </button>
+                                                </a>
 
-                                            @can('catalogos_create')
-                                                <button class="btn botonGral float-end" data-bs-toggle="modal"
-                                                    data-bs-target="#nuevoItem">
-                                                    Añadir Proveedor
-                                                </button>
-                                            @endcan
+                                                @can('catalogos_create')
+                                                    <button class="btn botonGral float-end" data-bs-toggle="modal"
+                                                        data-bs-target="#nuevoItem">
+                                                        Añadir Proveedor
+                                                    </button>
+                                                @endcan
+                                            </div>
+                                        </div>
+                                        <div class="row divBorder">
+                                            <p>Catálogo General de Proveedores, Es Utilizado para Gestionar los Proveedores en el Sistema.</p>
                                         </div>
                                     </div>
 

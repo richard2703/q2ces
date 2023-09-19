@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card" style="margin-top: 100px;">
                     <div class="card-header bacTituloPrincipal">
                         {{-- <p class="card-category">Usuarios registrados</p> --}}
                         Detalles De La Carga
@@ -33,27 +33,43 @@
                         </div>
                     </div>
                     <div id="print-content" class="content-print">
-                        <img src="{{ asset('/img/login/002-sin-slogan.png') }}" alt="" width="100px;" class="mb-2" style="margin-left: -15px;">
+                        <img src="{{ asset('/img/login/002-sin-slogan.png') }}" alt="" width="160px;" class="mb-2" style="margin-left: -15px;">
                         
                         <div class="text-start">
-                            <p class="headerTicket text-center">COMBUSTIBLES Y/O FLUIDOS,<br> CARGA DE COMBUSTIBLE</p>
-                            <p class="text-center" id="fecha-hora" style="margin-top: -10px"></p>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">CARGA ID: -- </span> {{ $carga->id }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">OPERADOR: -- </span> {{ $carga->operador_nombre }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">EQUIPO Y/O MAQUINARIA: -- </span> {{ $carga->maquinaria_nombre }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">SOLICITO: -- </span> {{ $carga->user_nombre }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">LITROS: -- </span>{{ $carga->litros }}</div>
-                            <p class="headerTicket text-center mt-2">INFORMACIÓN EQUIPO DESPACHO</p>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 14px important;">HORA LLEGADA: -- </span>{{ $carga->horas }}</div>
+                            <img src="{{ asset('/img/login/Header1CargaGrande.svg') }}" alt="" class="mb-2">
+                            <br>
+                            <div class="text-center" id="fecha-hora"></div>
+                            <p class="text-center" id="hora"></p>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">Q2S/COMB-: -- </span> 00{{ $carga->id }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">OPERADOR: -- </span> {{ $carga->operador_nombre }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">EQUIPO Y/O MAQUINARIA: -- </span> {{ $carga->maquinaria_nombre }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">SOLICITO: -- </span> {{$solicitante['nombreSolicitante']}}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">LITROS: -- </span>{{ $carga->litros }}</div>
+                            <!--<div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">HORA: -- </span>{{ $carga->horas }}</div>-->
+
+                            <br>
+                            <img src="{{ asset('/img/login/Header2GenericoGrande.svg') }}" alt="" class="mb-2">
+                            {{--  <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">HORA LLEGADA: -- </span>{{ $carga->horas }}</div>  --}}
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">HORA SALIDA: -- </span>11:00 pm</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">HORA LLEGADA: -- </span>2:30 pm</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">HORARIO: -- </span>8:00 am - 7:30 pm</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">TOTAL HORAS EXTRAS: -- </span>1.30 hrs</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">ODOMETRO SALIDA: -- </span>125445.5</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">ODOMETRO LLEGADA: -- </span>125345.5</div>
+                            <p class="text-center"><span style="font-weight: 1000; font-size: 16px important; margin-top: 10px;">OBSERVACIONES: -- </span>{{$solicitante['observaciones']}}</p>
                             <p class="pt-5" style="margin-top: 20px; text-align: center;">
                                 ______________________________________<br>
-                                Nombre Y Firma De Recibido
-                                <div class="copyright text-center" style="font-size: 10px;">
-                                    &copy; Copyright <strong><span>Q2Ces</span></strong>. All Rights Reserved
-                                </div>
+                                Nombre y Firma de Recibido<br>
+                                <p class="text-center">de:{{$solicitante['nombreSolicitante']}}</p>
                             </p>
-                            <p class="headerTicket text-center">COMBUSTIBLES Y/O FLUIDOS</p>
-                            <div><span style="font-weight: 1000; font-size: 14px important;">PRECIO: -- </span>{{ $carga->precio }}</div>
+                            <br>
+                            <img src="{{ asset('/img/login/Header3DescargaGrande.svg') }}" alt="" class="mb-2">
+                            <div><span style="font-weight: 1000; font-size: 16px important;">COSTO DE COMBUSTIBLE: -- </span>100.00</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">COSTO DE TRABAJO: -- </span>{{$solicitante['costoTrabajo']}}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">TOTAL: -- </span>125.00</div>
+                            <div class="copyright text-center" style="font-size: 10px;">
+                                &copy; Copyright <strong><span>Q2Ces</span></strong>. All Rights Reserved
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -68,8 +84,10 @@
         let now = new Date();
         let monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
         let dayNames = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-        let formattedDateTime = now.getDate() + " De " + monthNames[now.getMonth()] + " De " + now.getFullYear() + " A Las " + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
+        let formattedDateTime = now.getDate() + " de " + monthNames[now.getMonth()] + " de " + now.getFullYear();
+        let formattedHora = "a la Hora:" + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
         document.getElementById("fecha-hora").textContent = formattedDateTime;
+        document.getElementById("hora").textContent = formattedHora;
         window.print();
     };
 </script>
@@ -99,7 +117,7 @@
         .content-print {
             position: absolute;
             bottom: 0mm; /* Ajusta la posición superior según sea necesario */
-            top: -8mm;
+            top: -35mm;
 
             /* Otros estilos necesarios */
         }
@@ -119,12 +137,11 @@
     #main {
     margin-top: 0px !important; */
     }
-    #header {
-        display: none !important;
+    .headerTicket {
+        background-color: black !important;
+        color: white !important;
+        align-items: center !important;
     }
-    .headerTicket{
-        border: 2px solid black;
-        align-items: center;
-    }
+
 </style>
 @endsection

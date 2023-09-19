@@ -323,6 +323,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Crud calendarioPrincipal
     Route::resource('calendarioPrincipal', App\Http\Controllers\calendarioPrincipalController::class);
+    Route::put('calendarioPrincipal/editar/{evento}', [App\Http\Controllers\calendarioPrincipalController::class, 'update'])->name('calendarioPrincipal.update');
     Route::resource('actividades', App\Http\Controllers\actividadesController::class);
     // Route::get('/calendario', [App\Http\Controllers\calendarioController::class, 'index'])->name('calendarioPrincipal.index');
     // Route::get('/calendario2', [App\Http\Controllers\calendarioController::class, 'index2'])->name('calendarioPrincipal.index2');
@@ -350,7 +351,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //*** operaciones con solicitudes */
     Route::post('/calendario/solicitudes/nuevo', [App\Http\Controllers\solicitudesController::class, 'store'])->name('solicitudes.store');
-    // Route::put('/calendario/solicitudes/editar', [App\Http\Controllers\solicitudesController::class, 'update'])->name('solicitudes.update');
+    Route::put('/calendario/solicitudes/editar', [App\Http\Controllers\solicitudesController::class, 'update'])->name('solicitudes.update');
 
     //Crud personal
     Route::get('/asistencia', [App\Http\Controllers\asistenciaController::class, 'index'])->name('asistencia.index');
@@ -370,16 +371,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/asistencia/horasExtra/{anio}/{mes}/{dia}', [App\Http\Controllers\asistenciaController::class, 'reloadHorasExtra'])->name('asistencia.reloadHorasExtra');
     Route::get('/asistencia/personal/{personalId}/{anio}/{mes}/{dia}', [App\Http\Controllers\asistenciaController::class, 'reloadDetalle'])->name('asistencia.reloadDetalle');
     Route::get('/asistencia/corteSemanal/{anio}/{mes}/{dia}', [App\Http\Controllers\asistenciaController::class, 'reloadcorteSemanal'])->name('asistencia.reloadcorteSemanal');
+    Route::post('asistencia/corteSemanal/reporte/exportar/{intAnio}/{intMes}/{intDia}', [App\Http\Controllers\asistenciaController::class, 'reporteExcel'])->name('asistencia.reporteExcel');
+
     // Route::post('/asistencia', [App\Http\Controllers\personalController::class, 'store'])->name('personal.store');
     // Route::get('/asistencia', [App\Http\Controllers\personalController::class, 'index'])->name('personal.indexPersonal');
     // Route::get('/asistencia/{personal}', [App\Http\Controllers\personalController::class, 'show'])->name('personal.show');
     // Route::put('/asistencia/{personal}', [App\Http\Controllers\personalController::class, 'update'])->name('personal.update');
     // Route::get('asistencia/{id}/{doc}', [App\Http\Controllers\personalController::class, 'download'])->name('personal.download');
     // Route::delete('/asistencia/{personal}', [App\Http\Controllers\UserController::class, 'destroy'])->name('personal.delete');
-
     // Caja Chica
     Route::resource('cajaChica', App\Http\Controllers\cajaChicaController::class);
     Route::post('cajaChica/reporte', [App\Http\Controllers\cajaChicaController::class, 'reporte'])->name('cajaChica.reporte');
+    Route::post('cajaChica/reporte/exportar', [App\Http\Controllers\cajaChicaController::class, 'reporteExcel'])->name('cajaChica.reporteExcel');
+
 
     // Conceptos
     Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
@@ -397,6 +401,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('mtq', App\Http\Controllers\maquinariaMtqController::class);
     // Route::get('mtq/uso', [App\Http\Controllers\maquinariaMtqController::class, 'uso'])->name('mtq.uso');
+    Route::put('asignacion', [App\Http\Controllers\maquinariaMtqController::class, 'asignacion'])->name('mtq.asignacion');
+
 
     Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');
     Route::get('search/equiposMTQ', [App\Http\Controllers\searchController::class, 'equiposMTQ'])->name('search.equiposMTQ');
@@ -438,6 +444,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Permisos Desde Javascript
     Route::get('/check-permission/{permission}', 'App\Http\Controllers\calendarioMtqController@checkPermission');
+    Route::get('/check-permission-calendarioPrincipal/{permission}', 'App\Http\Controllers\calendarioPrincipalController@checkPermission');
+    Route::get('/solicitud-detalle/{solicitudId}', 'App\Http\Controllers\calendarioPrincipalController@solicitudDetalle');
 
     // Import Excel
     Route::get('/import-excel', 'App\Http\Controllers\ImportExcelController@index')->name('importExcel.get');

@@ -131,16 +131,18 @@ class clientesController extends Controller
 
         $nuevaLista = collect();
 
-        for ($i = 0; $i < count($request['idResidente']); $i++) {
-            $array = [
-                'id' => $request['idResidente'][$i],
-                'nombre' => $request['rNombre'][$i],
-                'telefono' => $request['rTelefono'][$i],
-                'email' => $request['rEmail'][$i],
-                'clienteId' => $cliente->id,
-            ];
-            $objResidente = residente::updateOrCreate(['id' => $array['id']], $array);
-            $nuevaLista->push($objResidente->id);
+        for ($i = 0; $i < count($request['rNombre']); $i++) {
+            if ($request['rNombre'][$i] != '' || $request['rNombre'][$i] != null) {
+                $array = [
+                    'id' => $request['idResidente'][$i],
+                    'nombre' => $request['rNombre'][$i],
+                    'telefono' => $request['rTelefono'][$i],
+                    'email' => $request['rEmail'][$i],
+                    'clienteId' => $cliente->id,
+                ];
+                $objResidente = residente::updateOrCreate(['id' => $array['id']], $array);
+                $nuevaLista->push($objResidente->id);
+            }
         }
         residente::where('clienteId', $cliente->id)->whereNotIn('id', $nuevaLista)->delete();
 

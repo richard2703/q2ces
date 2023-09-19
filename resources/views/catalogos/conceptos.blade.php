@@ -52,7 +52,9 @@
                                     @endcan
                                 </div>
 
-                                <div class="d-flex p-3 divBorder"></div>
+                                <div class="d-flex p-3 divBorder">
+                                    <p>Catálogo General de Conceptos Aplicables para los Movimientos de la Caja Chica.</p>
+                                </div>
                             </div>
 
 

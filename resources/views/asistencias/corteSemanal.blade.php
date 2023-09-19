@@ -9,6 +9,7 @@ $mesSeleccionado = $objCalendar->getNameMonth(date_format($fechaSeleccionada, 'm
 $semanaSeleccionada = date_format($fechaSeleccionada, 'W');
 
 $semanaAnterior = date('Y-m-d', strtotime($strFechaInicioPeriodo . '- 6 days'));
+
 // dd( $intAnio, $intMes, $intDia );
 $diaAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'd');
 $mesAnterior = date_format($objCalendar->getDiaAnterior($semanaAnterior), 'm');
@@ -86,8 +87,8 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             </a>
                                             <!-- Para el mes en curso -->
                                         </span>
-                                        &nbsp;&nbsp;&nbsp; Semana {{ $semanaSeleccionada }} Del
-                                        {{ $strFechaInicioPeriodo }} Al {{ $strFechaFinPeriodo }}
+                                        &nbsp;&nbsp;&nbsp; Semana {{ $semanaSeleccionada }} del
+                                        {{ $strFechaInicioPeriodo }} al {{ $strFechaFinPeriodo }}
                                         &nbsp;&nbsp;&nbsp;
                                         <!-- Un dia adelante del cargado -->
                                         <span>
@@ -128,29 +129,24 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             <div class="">
                                                 <a href="{{ route('asistencia.corteSemanal') }}"
                                                     class="combustibleLitros fw-semibold text-end"
-                                                    title="Ir al mes en curso"><b>Hoy Es
-                                                        {{ ucwords(trans($objCalendar->getFechaFormateada(date_create(date('Y-m-d'))))) }}</b>
+                                                    title="Ir al mes en curso"><b>Hoy es
+                                                        {{ /*ucwords*/ trans($objCalendar->getFechaFormateada(date_create(date('Y-m-d')), true)) }}</b>
                                                 </a>
                                             </div>
                                             <div class="">
-                                                <button type="submit" class="btn botonGral ">Descargar A Excel</button>
+                                                @can('asistencia_create')
+                                                    {{-- <form
+                                                        action="{{ route('asistencia.reporteExcel', [$intAnio, $intMes, $intDia]) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="intAnio" value="{{ $intAnio }}">
+                                                        <input type="hidden" name="intMes" value="{{ $intMes }}">
+                                                        <input type="hidden" name="intDia" value="{{ $intDia }}">
+                                                        <button type="submit" class="btn botonGral">Descargar Excel</button>
+                                                    </form> --}}
+                                                @endcan
                                             </div>
                                         </div>
-
-
-
-                                        <!--<span>
-                                                                                                                                                                                                                                                            <a href="{{ route('asistencia.corteSemanal') }}"
-                                                                                                                                                                                                                                                                class="display-8 mb-8 text-center" title="Ir al periodo en curso"><b>Hoy es
-                                                                                                                                                                                                                                                                    {{ $objCalendar->getFechaFormateada(date_create(date('Y-m-d'))) }}</b></a>
-                                                                                                                                                                                                                                                        </span>-->
-                                        {{-- <h4 class="card-title">
-                                            {{ ucwords(trans($personal->nombres)) }} {{ ucwords(trans($personal->apellidoP)) }}
-                                            {{ ucwords(trans($personal->apellidoM)) }}</h4> --}}
-
-
-
-
 
                                     </div>
 
@@ -167,8 +163,8 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead class="labelTitulo text-center">
-                                                    <th class="labelTitulo corte">Puesto</th>
                                                     <th class="labelTitulo corte">Código</th>
+                                                    <th class="labelTitulo corte">Puesto</th>
                                                     <th class="labelTitulo corte">Nombre</th>
                                                     <?php
                                                     for ($i=0; $i < 7 ; $i++) {
@@ -183,7 +179,8 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                     <th class="labelTitulo corte ">Días</th>
                                                     <th class="labelTitulo corte ">Salario Por Día</th>
                                                     <th class="labelTitulo corte  no-wrap">Importe Semanal</th>
-                                                    <th class="labelTitulo corte  ">Horas Extra</th>
+                                                    <th class="labelTitulo corte  ">Tiempo Extra Total</th>
+                                                    <th class="labelTitulo corte  ">Horas Extra Total</th>
                                                     <th class="labelTitulo corte ">Total Horas Extra</th>
                                                     <th class="labelTitulo corte no-wrap">Pago Semanal</th>
                                                 </thead>
@@ -193,26 +190,33 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                 <tbody class="text-center">
                                                     @forelse ($vctAsistencias as $item)
                                                         <?php
+                                                        // dd($item);
                                                         $intTotalHorasExtras = 0;
                                                         $intTotalCostoHorasExtras = 0;
+                                                        $intTotalMinutosRetrasoExtras = 0;
                                                         $intDiasAsistidos = 0;
+                                                        $intTotalMinutosExtras = 0;
                                                         $intDiasPagados = count($item->pagos);
+                                                        $intTotalHorasCompletas = 0;
                                                         ?>
                                                         <tr>
-                                                            <td>{{ ucwords(trans($item->puesto)) }}</td>
                                                             <td style="color: {{ $item->estatusColor }};">
                                                                 <strong>{{ ucwords(trans($item->numEmpleado)) }}</strong>
                                                             </td>
+                                                            <td>{{ ucwords(trans($item->puesto)) }}</td>
                                                             <td class="text-left">{{ ucwords(trans($item->empleado)) }}
                                                             </td>
                                                             <?php
                                                                 //*** recorremos el arreglo de los dias de la semana de trabajo ***************//
+                                                                $intHorasSemanales = 0;
                                                                 for ($i = 0; $i < 7; $i++) {
                                                                     //*** creamos el pivote de la fecha a buscar ***//
                                                                     $intDiaSemana = $vctDiasSemana[$i]->format('Ymd');
 
                                                                     //*** recorremos el arreglo de los dias de la semana de trabajo registrados
                                                                     $blnExiste=false;
+                                                                    $decSueldoDiario = $item->sueldo;
+                                                                    $decValorHoraExtra = number_format(($decSueldoDiario / 8),2);
 
                                                                     for ($iDay = 0; $iDay < $intDiasPagados; $iDay++) {
                                                                          //*** convertimos las fechas a numero para comparar  **/
@@ -220,32 +224,103 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
 
                                                                         if($intDiaSemana == $intDiaPago){
                                                                             $blnExiste = true;
-                                                                            $intTotalHorasExtras += $item->pagos[$iDay]->horasExtra;
-                                                                            $intTotalCostoHorasExtras += ( $item->pagos[$iDay]->horasExtra * $item->pagos[$iDay]->horaExtraCosto);
+                                                                            $decCostoHoraExtraDia=0;
+
                                                                             $intDiasAsistidos += $item->pagos[$iDay]->esAsistencia;
+
+                                                                          //*** Todo el tiempo extra (anticipado y excedente)
+                                                                            $intMinutosTotalesDia = (int) $item->pagos[$iDay]->horasExtra ;
+                                                                            if ($item->pagos[$iDay]->entradaAnticipada == 1 && $item->pagos[$iDay]->horasAnticipada > 0){
+                                                                                $intMinutosTotalesDia  += $item->pagos[$iDay]->horasAnticipada ;
+                                                                            }
+
+                                                                            $intHorasDia = (int) ($intMinutosTotalesDia / 60);
+                                                                            $intMinutosDia =$intMinutosTotalesDia % 60;
+
+                                                                            //*** completar una hora fraccionaria, debera de ser mayor o igual a 35 minutos
+                                                                            $intHorasCompletasDia =  ( $intHorasDia + ($intMinutosDia >= 35 ? 1 : 0)) ;
+
+                                                                            //*** obtencion del tiempo de retraso de ingreso
+                                                                            $intMinutosRetrasoDia=0;
+
+                                                                            $intHorasRetrasoDia = 0;
+                                                                            $intMinutosRetrasoDia = 0;
+                                                                            if ( $item->pagos[$iDay]->horasRetraso > 0){
+                                                                                $intMinutosRetrasoDia  += $item->pagos[$iDay]->horasRetraso ;
+                                                                                $intHorasRetrasoDia = (int) ($intMinutosRetrasoDia / 60);
+                                                                                $intMinutosRetrasoDia = $intMinutosRetrasoDia % 60;
+                                                                            }
+
+                                                                            //*** minutos posteriores a la entrada
+                                                                            // $intMinutosDescontarDia = 0;
+                                                                            // if ( $dteHoraEntrada < $dteHorario ) {
+                                                                            //     $intMinutosDescontarDia = $dteHoraEntrada->diffInMinutes( $dteHorario ) ;
+                                                                            //     // $objAsistencia->tipoHoraExtraId = $request[ 'tipoHoraExtraId' ][ $i ];
+                                                                            //     // dd( 'Soy mayor '. $intMinutosEntrada . ' minutos' );
+                                                                            // } else {
+                                                                            //     // dd( 'Soy menor' );
+                                                                            //     // $objAsistencia->tipoHoraExtraId = 1;
+                                                                            // }
+
+                                                                            //*** Hay tiempo extra por pagar
+                                                                            if($intHorasCompletasDia > 0){
+                                                                                //*** obtenemos el calculo proporcional del dia
+                                                                                $decCostoHoraExtraDia = number_format( $decValorHoraExtra * $intHorasCompletasDia,2) ;
+
+                                                                                $intHorasCompletasPagarDia = $intHorasCompletasDia;
+
+                                                                                $intHorasSemanales += $intHorasCompletasPagarDia;
+                                                                                $intTotalCostoHorasExtras += $decCostoHoraExtraDia ;
+                                                                                }
+                                                                            else
+                                                                                {
+                                                                                $intHorasCompletasPagarDia = 0;
+                                                                            }
+
+                                                                            //*** Todo el tiempo extra (anticipado y excedente)
+                                                                            $intTotalMinutosExtras += $intMinutosTotalesDia ;    //*** el total de minutos extras de hora
+                                                                            $intTotalHorasExtras +=  $intHorasCompletasDia; //*** obtenemos el numero cerrado de horas del tiempo extra
+                                                                            $intTotalMinutosRetrasoExtras += $intMinutosRetrasoDia ;    //*** el total de minutos extras de hora
+
+
+                                                                            // dd(  $intMinutosTotalesDia,
+                                                                            //  $intHorasDia,
+                                                                            //  $intMinutosDia,
+                                                                            //  $intHorasCompletasDia,
+                                                                            //  $decSueldoDiario,
+                                                                            //  $decCostoHoraExtraDia ,
+                                                                            //  $intTotalMinutosRetrasoExtras );
+
                                                                             break;
                                                                         }
 
                                                                     }
 
                                                                     if($blnExiste == true){
+                                                                        //*** Hay registro del día de la semana ***//
                                                                         ?>
                                                             <td title="{{ $item->pagos[$iDay]->tipoAsistenciaNombre }}"
                                                                 style="color: {{ $item->pagos[$iDay]->tipoAsistenciaColor }};">
+                                                                <!-- Estatus de asistencia-->
                                                                 <strong> {{ $item->pagos[$iDay]->esAsistencia }}</strong>
                                                             </td>
-                                                            <td title="Horas Extra"
-                                                                style="color: {{ $item->pagos[$iDay]->horaExtraColor }}; background: whitesmoke;">
-                                                                <strong> {{ $item->pagos[$iDay]->horasExtra }}</strong>
+                                                            <td
+                                                                title="Tiempo Extra: {{ str_pad($intHorasDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosDia, 2, '0', STR_PAD_LEFT) }}, Tiempo Retraso: {{ str_pad($intHorasRetrasoDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosRetrasoDia, 2, '0', STR_PAD_LEFT) }}, Se Paga: $ {{ $decValorHoraExtra }}">
+                                                                <!-- Tiempo extra -->
+                                                                <strong>
+                                                                    {{ $intHorasCompletasDia }} Hrs<br>
+                                                                    {{ str_pad($intHorasDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosDia, 2, '0', STR_PAD_LEFT) }}
+                                                                </strong>
                                                             </td>
                                                             <?php
                                                                     }else{
+                                                                        //*** no hay registro del día de la semana ***//
                                                                        ?>
                                                             <td> --- </td>
                                                             <td style="background: whitesmoke;"> --- </td>
                                                             <?php
                                                                     }
-                                                                }
+                                                                } // Fin del bloque de los dias de la semana
                                                             ?>
                                                             <td>{{ $intDiasAsistidos }}</td>
                                                             <td class="text-right">$ {{ number_format($item->sueldo, 2) }}
@@ -253,15 +328,29 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                             <td class="text-right">$
                                                                 {{ number_format($item->sueldo * $intDiasAsistidos, 2) }}
                                                             </td>
-                                                            <td class="text-right">{{ $intTotalHorasExtras }}</td>
                                                             <td class="text-right">
-                                                                $ {{ number_format($intTotalCostoHorasExtras, 2) }}
+                                                                <!-- Total semanal de tiempo extra -->
+                                                                <?php
+                                                                $intHorasSemanal = (int) ($intTotalMinutosExtras / 60);
+                                                                $intMinutosSemanal = $intTotalMinutosExtras % 60;
+                                                                ?>
+                                                                {{ str_pad($intHorasSemanal, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosSemanal, 2, '0', STR_PAD_LEFT) }}
+                                                            </td>
+                                                            <td class="text-right">
+                                                                <!-- Calculo de horas extra con los minutos sobrantes -->
+                                                                <?php
+                                                                // $intHorasExtrasPagar = $intHorasSemanal + ($intMinutosSemanal >= 31 ? 1 : 0);
+                                                                ?> {{ $intHorasSemanales }}
+                                                            </td>
+                                                            <td class="text-right">
                                                                 <?php
                                                                 //*** sumamos al total general las horas extras del personal
                                                                 $intTotalGeneralHorasExtras += $intTotalCostoHorasExtras;
                                                                 ?>
+                                                                $ {{ number_format($intTotalCostoHorasExtras, 2) }}
                                                             </td>
                                                             <td class="text-right">
+                                                                <!-- Calculo de costo de tiempo extra -->
                                                                 $
                                                                 {{ number_format($intTotalCostoHorasExtras + $item->sueldo * $intDiasAsistidos, 2) }}
                                                                 <?php
@@ -274,10 +363,10 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
 
                                                         @forelse ($listaAsistencia as $item)
                                                             <tr>
-                                                                <td>{{ ucwords(trans($item->puesto)) }}</td>
                                                                 <td style="color: {{ $item->estatusColor }};">
-                                                                    <strong>{{ str_pad( $item->numNomina, 4, '0', STR_PAD_LEFT ) }}</strong>
+                                                                    <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                                 </td>
+                                                                <td>{{ ucwords(trans($item->puesto)) }}</td>
                                                                 <td class="text-left">{{ $item->apellidoP }}
                                                                     {{ $item->apellidoM }}, {{ $item->nombres }}</td>
                                                                 <td>---</td>
@@ -312,7 +401,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                     @endforelse
 
                                                     <tr>
-                                                        <td colspan="21"></td>
+                                                        <td colspan="22"></td>
                                                         <td class="text-right">$
                                                             {{ number_format($intTotalGeneralHorasExtras, 2) }} </td>
                                                         <td class="text-right">$
@@ -348,7 +437,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
 
         th,
         td {
-            width: 100px;
+            width: 150px;
             word-wrap: break-word;
         }
     </style>

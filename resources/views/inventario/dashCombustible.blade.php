@@ -546,24 +546,21 @@
 
                                                                                     <td
                                                                                     class="td-actions justify-content-end">
-                                                                                    <form
-                                                                                    action="{{ route('printCarga.post',  $carga->id )}}"
-                                                                                    method="POST"
-                                                                                    style="display: inline-block;">
-                                                                                    @csrf
-                                                                                    @method('POST')
-                                                                                    <input type="hidden" name="id" value="{{$carga->id}}" id="id">
-                                                                                    @can('combustible_destroy')
-                                                                                        <button class=" btnSinFondo"
-                                                                                            type="submit"
-                                                                                            rel="tooltip">
-                                                                                            <span class="material-icons mt-3" style="font-size:35px; color: #727176;">
-                                                                                                print
-                                                                                            </span>
-                                                                                        </button>
-                                                                                    @endcan
+                                                                                    <form id="printForm" action="{{ route('printCarga.post', $carga->id) }}" method="POST" style="display: inline-block;">
+                                                                                        @csrf
+                                                                                        @method('POST')
+                                                                                        <input type="hidden" name="id" value="{{$carga->id}}" id="id">
+                                                                                        <input type="hidden" name="nombreSolicitante" value="" id="nombreSolicitante">
+                                                                                        <input type="hidden" name="costoTrabajo" value="" id="costoTrabajo">
+                                                                                        <input type="hidden" name="observaciones" value="" id="observaciones">
 
-                                                                                </form>
+                                                                                        <!-- Agrega un botón que mostrará el diálogo SweetAlert -->
+                                                                                        <button class="btnSinFondo" type="button" id="imprimirButton" rel="tooltip">
+                                                                                            <span class="material-icons mt-3" style="font-size:35px; color: #727176;">print</span>
+                                                                                        </button>
+                                                                                    </form>
+                                                                                    
+                                                                                    
                                                                                 </td>
                                                                                 
                                                                                     <td style="width: 400px"
@@ -1273,5 +1270,70 @@
      jQuery('span.'+idname).next().find('span').html(filename);
     });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('imprimirButton').addEventListener('click', function () {
+                Swal.fire({
+                    title: 'Solicitud de Impresión',
+                    html:
+                        '<label class="labelTitulo">Solicito:</label></br>'+
+                        '<select readonly class="form-select inputCaja" name="nombreSolicitante" id="nombreSolicitante"> <option value="">Seleccione</option> @foreach ($usuarios as $item) <option value="{{ $item->nombres . ' ' . $item->apellidoP }}"> {{ $item->nombres . ' ' . $item->apellidoP }} </option> @endforeach </select>'+
+                        '<label for="hora" class="labelTitulo mt-3">Costo de Trabajo:</label>' +
+                        '<input type="number" id="costoTrabajo" class="inputCaja" placeholder="Costo de Trabajo">' +
+                        '<label for="descripcion" class="labelTitulo mt-3">Descripción:</label>'+
+                        //'<div class="mb-3 col-6"><label for="hora" class="labelTitulo">Hora de Llegada:</label><input type="time" class="inputCaja" name="hora" id="horaEdit"aria-describedby="helpId" placeholder="Fecha" readonly></div>'+
+                        '<textarea class="form-control-textarea border-green" name="observaciones" id="observaciones" rows="3" placeholder="Agregar Observaciones..."></textarea>',
+                    showCancelButton: true,
+                    confirmButtonText: 'Imprimir',
+                    cancelButtonText: 'Cancelar',
+                    customClass: {
+                        confirmButton: 'botonGral' // Clase personalizada para el botón
+                    },
+                    preConfirm: () => {
+                        const nombreSolicitante = Swal.getPopup().querySelector('#nombreSolicitante').value;
+                        const costoTrabajo = Swal.getPopup().querySelector('#costoTrabajo').value;
+                        const observaciones = Swal.getPopup().querySelector('#observaciones').value;
+    
+                        if (!nombreSolicitante || !costoTrabajo || !observaciones) {
+                            Swal.showValidationMessage('Complete los Campos, Solicitante y Costo');
+                        }
+    
+                        return {
+                            nombreSolicitante: nombreSolicitante,
+                            costoTrabajo: costoTrabajo,
+                            observaciones: observaciones
+                        };
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // El usuario confirmó la solicitud, aquí puedes enviar los datos al servidor
+                        const data = result.value;
+    
+                        // Establece los valores en los campos ocultos del formulario
+                        document.getElementById('nombreSolicitante').value = data.nombreSolicitante;
+                        document.getElementById('costoTrabajo').value = data.costoTrabajo;
+                        document.getElementById('observaciones').value = data.observaciones;
+                        // Crear una nueva instancia de Date
+                        /*let fecha = new Date();
+
+                        // Obtener la hora actual
+                        let horas = fecha.getHours();
+                        let minutos = fecha.getMinutes();
+                        let segundos = fecha.getSeconds();
+
+                        // Formatear la hora actual en HH:MM:SS
+                        let horaActual = (horas < 10 ? "0" : "") + horas + ":" +
+                            (minutos < 10 ? "0" : "") + minutos + ":" +
+                            (segundos < 10 ? "0" : "") + segundos;
+                            document.getElementById('horaEdit').value = horaActual;*/
+    
+                        // Envía el formulario de manera programática
+                        document.getElementById('printForm').submit();
+                    }
+                });
+            });
+        });
+    </script>
+
 
 @endsection

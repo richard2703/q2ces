@@ -255,6 +255,13 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('cliente_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('cliente_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('calendarioPrincipal_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('calendarioPrincipal_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('calendarioPrincipal_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('calendarioPrincipal_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('calendarioPrincipal_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+
 INSERT INTO
     `model_has_roles`
 VALUES
@@ -1059,6 +1066,8 @@ CREATE TABLE nomina(
     horario varchar(255) NULL,
     hEntrada time null,
     hSalida time null,
+    hEntradaSabado time null,
+    hSalidaSabado time null,
     jefeId bigint(20) unsigned NULL,
     neto float(10, 2) NULL,
     bruto float(10, 2) NULL,
@@ -1125,6 +1134,10 @@ CREATE TABLE maquinaria(
     cisterna int(1) NULL,
     cisternaNivel float(10, 2) NULL,
     compania varchar(200) NULL,
+    frente varchar(250) null,
+	izquierdo varchar(250) null,
+	derecho varchar(250) null,
+	trasero varchar(250) null
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
@@ -1459,10 +1472,13 @@ create table asistencia(
     asistenciaId bigint(20) unsigned NOT NULL,
     fecha date not NULL,
     horasExtra int NULL,
+    horasAnticipada int NULL,
+    horasRetraso int NULL,
     tipoHoraExtraId bigint(20) unsigned null,
     comentario text NULL,
     hEntrada time null,
     hSalida time null,
+    entradaAnticipada int NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     primary key (id),

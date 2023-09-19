@@ -37,7 +37,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/reset.css') }}"> 
+    <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
     <link rel="stylesheet" href="{{ asset('css/generalFront.css') }}">
     <link rel="stylesheet" href="{{ asset('css/general.css') }}">
     <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
@@ -81,9 +81,10 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top py-0 pe-5 navA">
-        <a href="#" class="navbar-brand ps-0 me-0">
-           
-            <img class="logoQ2Bco" src="{{ asset('/img/front/logo1.png') }}" alt="Image" style=" height: -webkit-fill-available;">
+        <a href="{{ url('home', session('id')) }}" class="navbar-brand ps-0 me-0">
+
+            <img class="logoQ2Bco" src="{{ asset('/img/front/logo1.png') }}" alt="Image"
+                style=" height: -webkit-fill-available;">
             <p class="textUno fs-6">Construction Equipment Services</p>
 
         </a>
@@ -108,6 +109,7 @@
                 {{--  <a href="contact.html" class="nav-item nav-link">Contact</a>  --}}
             </div>
             {{--  <a href="" class="btn btn-primary px-3 d-none d-lg-block btnF">Get A Quote</a>  --}}
+
         </div>
     </nav>
     <!-- Navbar End -->
@@ -633,9 +635,10 @@
                     <h5 class="text-white mb-4">Dirección</h5>
                     <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>José María Heredia 2387 Guadalajara,
                         Jal., Méx.</p>
-                        <div class="d-flex">
-                        <i class="fa fa-phone-alt me-3"></i><p class="mb-2 textTels">+52 33 21 83 64 72</br>
-                        +52 33 36 40 22 90</p>
+                    <div class="d-flex">
+                        <i class="fa fa-phone-alt me-3"></i>
+                        <p class="mb-2 textTels">+52 33 21 83 64 72</br>
+                            +52 33 36 40 22 90</p>
                     </div>
 
                     <p class="mb-2"><i class="fa fa-envelope me-3"></i>contacto@q2ces.com</p>
@@ -665,7 +668,7 @@
                     <p class="mb-1">Sábado</p>
                     <h6 class="text-light">08:00 am - 13:00 pm</h6>
                     <!--<p class="mb-1">Domingo</p>-->
-                    
+
                 </div>
                 {{--  <div class="col-lg-3 col-md-6">
                     <h5 class="text-white mb-4">Newsletter</h5>

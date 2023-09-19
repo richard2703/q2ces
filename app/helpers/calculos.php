@@ -208,7 +208,7 @@ class Calculos
      * @param boolean $blnQ2ces True si es para Q2Ces
      * @return void
      */
-    public function updateKilometrajeMaquinaria($intMaquinaria, $intKilometraje, $proviene = 'indefinido', $blnQ2ces = true,)
+    public function updateKilometrajeMaquinaria($intMaquinaria, $intKilometraje, $proviene = 'indefinido', $blnQ2ces = true)
     {
 
         $blnExito = false;
@@ -230,7 +230,7 @@ class Calculos
             if ($proviene == 'Mantenimiento') {
                 if ($maquina->kom == 'Km') {   //Si es por KM
                     $maquina->mantenimiento = $intKilometraje + 10000;
-                } else if ($maquina->kom == 'MI') {      //Si es por Mi  
+                } else if ($maquina->kom == 'MI') {      //Si es por Mi
                     $maquina->mantenimiento = $intKilometraje + 6000;
                 } else {           //Si es por Hr
                     $maquina->mantenimiento = $intKilometraje + 250;
