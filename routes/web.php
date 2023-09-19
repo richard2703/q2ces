@@ -132,9 +132,6 @@ Route::group(['middleware' => 'auth'], function () {
     // Crud TiposServicios
     Route::resource('tiposServicios', App\Http\Controllers\tiposServiciosController::class);
 
-    // Crud ServiciosMtq
-    Route::resource('serviciosMtq', App\Http\Controllers\serviciosMtqController::class);
-
     // Crud Lugares
     Route::resource('lugares', App\Http\Controllers\lugaresController::class);
     // Crud Ubicaciones
@@ -299,6 +296,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/accesorios/{accesorios}/edit', [App\Http\Controllers\accesoriosController::class, 'edit'])->name('accesorios.edit');
     Route::delete('/accesorios/{accesorios}', [App\Http\Controllers\accesoriosController::class, 'destroy'])->name('accesorios.delete');
 
+
+    Route::get('mtq/inventario/dash', [App\Http\Controllers\inventarioMtqController::class, 'dash'])->name('inventarioMtq.dash');
+
+    Route::resource('mtq/inventario', App\Http\Controllers\inventarioMtqController::class, ['except' => 'index', 'create'])->names([
+        // 'index' => 'inventarioMtq.index',
+        // 'create' => 'inventarioMtq.create',
+        'store' => 'inventarioMtq.store',
+        'show' => 'inventarioMtq.show',
+        'edit' => 'inventarioMtq.edit',
+        'update' => 'inventarioMtq.update',
+        'destroy' => 'inventarioMtq.destroy',
+    ]);
+    Route::get('/mtq/inventario/index/{tipo}', [App\Http\Controllers\inventarioMtqController::class, 'index'])->name('inventarioMtq.index');
+    Route::get('/mtq/inventario/create/{tipo}', [App\Http\Controllers\inventarioMtqController::class, 'create'])->name('inventarioMtq.create');
+
     //Crud Inventario
     Route::get('/inventarios', [App\Http\Controllers\inventarioController::class, 'dash'])->name('inventario.dash');
     Route::get('/inventario/{tipo}', [App\Http\Controllers\inventarioController::class, 'index'])->name('inventario.index');
@@ -353,6 +365,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/calendario/solicitudes/nuevo', [App\Http\Controllers\solicitudesController::class, 'store'])->name('solicitudes.store');
     Route::put('/calendario/solicitudes/editar', [App\Http\Controllers\solicitudesController::class, 'update'])->name('solicitudes.update');
 
+
     //Crud personal
     Route::get('/asistencia', [App\Http\Controllers\asistenciaController::class, 'index'])->name('asistencia.index');
     Route::get('/asistencia/diaria', [App\Http\Controllers\asistenciaController::class, 'create'])->name('asistencia.create');
@@ -397,11 +410,26 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/checkList/registros/editar/{id}', [App\Http\Controllers\checkListRegistrosController::class, 'show'])->name('checkListRegistros.show');
     Route::put('/checkList/registros/editar/', [App\Http\Controllers\checkListRegistrosController::class, 'update'])->name('checkListRegistros.update');
 
-    // Equipos MTQ
+    // Equipos MTQ    
+    // Route::get('mtq/inventario/dash', [App\Http\Controllers\inventarioMtqController::class, 'dash'])->name('inventarioMtq.dash');
+    // Route::resource('mtq/inventario', App\Http\Controllers\inventarioMtqController::class, ['except' => 'index', 'create'])->names([
+    //     // 'index' => 'inventarioMtq.index',
+    //     // 'create' => 'inventarioMtq.create',
+    //     'store' => 'inventarioMtq.store',
+    //     'show' => 'inventarioMtq.show',
+    //     'edit' => 'inventarioMtq.edit',
+    //     'update' => 'inventarioMtq.update',
+    //     'destroy' => 'inventarioMtq.destroy',
+    // ]);
+    // Route::get('/mtq/inventario/index/{tipo}', [App\Http\Controllers\inventarioMtqController::class, 'index'])->name('inventarioMtq.index');
+    // Route::get('/mtq/inventario/create/{tipo}', [App\Http\Controllers\inventarioMtqController::class, 'create'])->name('inventarioMtq.create');
+
 
     Route::resource('mtq', App\Http\Controllers\maquinariaMtqController::class);
-    // Route::get('mtq/uso', [App\Http\Controllers\maquinariaMtqController::class, 'uso'])->name('mtq.uso');
     Route::put('asignacion', [App\Http\Controllers\maquinariaMtqController::class, 'asignacion'])->name('mtq.asignacion');
+
+    // Crud ServiciosMtq
+    Route::resource('serviciosMtq', App\Http\Controllers\serviciosMtqController::class);
 
 
     Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');
@@ -412,7 +440,6 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     // Tareas de bitacoras
-
     Route::get('/bitacoras/', [App\Http\Controllers\bitacorasController::class, 'index'])->name('bitacoras.index');
     Route::get('/bitacoras/maquinaria/{bitacora}', [App\Http\Controllers\bitacorasController::class, 'indexMaquinaria'])->name('bitacoras.maquinaria');
     Route::get('/bitacoras/bitacora/nuevo/', [App\Http\Controllers\bitacorasController::class, 'create'])->name('bitacoras.create');

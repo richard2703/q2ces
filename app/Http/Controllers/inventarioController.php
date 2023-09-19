@@ -146,8 +146,10 @@ class inventarioController extends Controller
                 $inventarios = null;
             }
 
+            // dd($usuarios);
 
-            return view('inventario.indexInventario', compact('inventarios', 'tipo', 'usuarios'));
+
+            return view('inventario.indexInventario', compact('inventarios', 'tipo'));
         }
     }
 
