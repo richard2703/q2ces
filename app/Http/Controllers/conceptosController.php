@@ -10,36 +10,40 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use App\Models\conceptos;
 
-class conceptosController extends Controller {
+class conceptosController extends Controller
+{
     /**
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
-    public function index() {
+    public function index()
+    {
 
         //
     }
 
     /**
-    * Show the form for creating a new resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
-    public function create() {
+    public function create()
+    {
         //
     }
 
     /**
-    * Store a newly created resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
-    */
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
 
-    public function store( Request $request ) {
+    public function store(Request $request)
+    {
         // abort_if ( Gate::denies( 'cajachica_create' ), 403 );
 
         // conceptos::create( $request->only( 'codigo', 'nombre', 'comentario' ) );
@@ -50,7 +54,7 @@ class conceptosController extends Controller {
         abort_if(Gate::denies('catalogos_create'), 403);
 
         // dd( $request );
-        $request->validate( [
+        $request->validate([
             'nombre' => 'required|max:250|unique:conceptos,nombre,' . $request['nombre'],
             'codigo' => 'required|max:8|unique:conceptos,nombre,' . $request['nombre'],
             'comentarios' => 'nullable|max:500',
@@ -72,44 +76,47 @@ class conceptosController extends Controller {
     }
 
     /**
-    * Display the specified resource.
-    *
-    * @param  \App\Models\conceptos  $conceptos
-    * @return \Illuminate\Http\Response
-    */
+     * Display the specified resource.
+     *
+     * @param  \App\Models\conceptos  $conceptos
+     * @return \Illuminate\Http\Response
+     */
 
-    public function show( conceptos $conceptos ) {
+    public function show(conceptos $conceptos)
+    {
         //
     }
 
     /**
-    * Show the form for editing the specified resource.
-    *
-    * @param  \App\Models\conceptos  $conceptos
-    * @return \Illuminate\Http\Response
-    */
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\conceptos  $conceptos
+     * @return \Illuminate\Http\Response
+     */
 
-    public function edit( conceptos $conceptos ) {
+    public function edit(conceptos $conceptos)
+    {
         //
     }
 
     /**
-    * Update the specified resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\conceptos  $conceptos
-    * @return \Illuminate\Http\Response
-    */
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\conceptos  $conceptos
+     * @return \Illuminate\Http\Response
+     */
 
-    public function update( Request $request, conceptos $conceptos ) {
+    public function update(Request $request, conceptos $conceptos)
+    {
 
-        abort_if ( Gate::denies( 'catalogos_edit' ), 403 );
+        abort_if(Gate::denies('catalogos_edit'), 403);
 
         // dd( $request );
 
-        $request->validate( [
-            'nombre' => 'required|max:250|unique:conceptos,nombre,' . $request[ 'controlId' ],
-            'codigo' => 'required|max:8|unique:conceptos,codigo,' . $request[ 'controlId' ],
+        $request->validate([
+            'nombre' => 'required|max:250|unique:conceptos,nombre,' . $request['controlId'],
+            'codigo' => 'required|max:8|unique:conceptos,codigo,' . $request['controlId'],
             'comentario' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
@@ -119,28 +126,42 @@ class conceptosController extends Controller {
             'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
             'codigo.max' => 'El campo código excede el límite de caracteres permitidos.',
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
-        ] );
+        ]);
         $data = $request->all();
 
-        $record = conceptos::where( 'id', $data[ 'controlId' ] )->first();
+        $record = conceptos::where('id', $data['controlId'])->first();
 
-        if ( is_null( $record ) == false ) {
+        if (is_null($record) == false) {
             // dd( $data );
-            $record->update( $data );
-            Session::flash( 'message', 1 );
+            $record->update($data);
+            Session::flash('message', 1);
         }
 
-        return redirect()->route( 'catalogoConceptos.index' );
+        return redirect()->route('catalogoConceptos.index');
     }
 
     /**
-    * Remove the specified resource from storage.
-    *
-    * @param  \App\Models\conceptos  $conceptos
-    * @return \Illuminate\Http\Response
-    */
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\conceptos  $conceptos
+     * @return \Illuminate\Http\Response
+     */
 
-    public function destroy( conceptos $conceptos ) {
-        //
+    public function destroy(conceptos $concepto)
+    {
+        try {
+            $concepto->delete(); // Intenta eliminar 
+        } catch (conceptos $e) {
+            if ($e->getCode() === 23000) {
+                return redirect()->back()->with('faild', 'No Puedes Eliminar ');
+                // Esto es un error de restricción de clave externa (FOREIGN KEY constraint)
+                // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
+            } else {
+                return redirect()->back()->with('faild', 'No Puedes Eliminar si esta en uso');
+                // Otro tipo de error de base de datos
+                // Maneja según sea necesario
+            }
+        }
+        return redirect()->back()->with('success', 'Eliminado correctamente');
     }
 }

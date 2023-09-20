@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\tipoValorTarea;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
@@ -43,7 +44,7 @@ class tipoValorTareaController extends Controller
 
         abort_if(Gate::denies('catalogos_create'), 403);
 
-        $request->validate( [
+        $request->validate([
             'nombre' => 'required|max:250|unique:tipoValorTarea,nombre,' . $request['nombre'],
             'comentario' => 'nullable|max:500',
         ], [
@@ -92,11 +93,11 @@ class tipoValorTareaController extends Controller
     public function update(Request $request, $id)
     {
 
-        abort_if ( Gate::denies( 'catalogos_edit' ), 403 );
+        abort_if(Gate::denies('catalogos_edit'), 403);
 
         // dd( $request );
 
-        $request->validate( [
+        $request->validate([
             'nombre' => 'required|max:250|unique:tipoValorTarea,nombre,' . $request['controlId'],
             'comentario' => 'nullable|max:500',
         ], [
@@ -104,18 +105,18 @@ class tipoValorTareaController extends Controller
             'nombre.unique' => 'El valor del campo nombre ya esta en uso.',
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
-        ] );
+        ]);
         $data = $request->all();
 
-        $record = tipoValorTarea::where( 'id', $data[ 'controlId' ] )->first();
+        $record = tipoValorTarea::where('id', $data['controlId'])->first();
 
-        if ( is_null( $record ) == false ) {
+        if (is_null($record) == false) {
             // dd( $data );
-            $record->update( $data );
-            Session::flash( 'message', 1 );
+            $record->update($data);
+            Session::flash('message', 1);
         }
 
-        return redirect()->route( 'catalogoTiposValorTarea.index' );
+        return redirect()->route('catalogoTiposValorTarea.index');
     }
 
     /**
@@ -124,8 +125,21 @@ class tipoValorTareaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(tipoValorTarea $tipoValorTarea)
     {
-        //
+        try {
+            $tipoValorTarea->delete(); // Intenta eliminar 
+        } catch (QueryException $e) {
+            if ($e->getCode() === 23000) {
+                return redirect()->back()->with('faild', 'No Puedes Eliminar ');
+                // Esto es un error de restricción de clave externa (FOREIGN KEY constraint)
+                // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
+            } else {
+                return redirect()->back()->with('faild', 'No Puedes Eliminar si esta en uso');
+                // Otro tipo de error de base de datos
+                // Maneja según sea necesario
+            }
+        }
+        return redirect()->back()->with('success', 'Eliminado correctamente');
     }
 }

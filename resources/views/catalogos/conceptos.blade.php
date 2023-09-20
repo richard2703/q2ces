@@ -52,7 +52,7 @@
                                     @endcan
                                 </div>
 
-                                <div class="d-flex p-3 divBorder">
+                                <div class="divBorder">
                                     <p>Catálogo General de Conceptos Aplicables para los Movimientos de la Caja Chica.</p>
                                 </div>
                             </div>
@@ -87,35 +87,34 @@
                                                     </a>
                                                 @endcan --}}
                                                 @can('catalogos_edit')
-                                                <a href="#" class="" data-bs-toggle="modal"
-                                                    data-bs-target="#editarItem"
-                                                    onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->codigo }}','{{ $item->comentario }}')">
-                                                    <svg xmlns="http://www.w3.org/2000/svg " width="28"
-                                                        height="28" fill="currentColor"
-                                                        class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                                    </svg>
-                                                </a>
-                                                @endcan
-                                                {{-- @can('user_destroy') --}}
-                                                {{-- <form action="{{ route('puestos.delete', $item->id) }}"
-                                                    method="POST" style="display: inline-block;"
-                                                    onsubmit="return confirm('Seguro?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btnSinFondo" type="submit" rel="tooltip">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="28"
-                                                            height="28" fill="currentColor"
-                                                            class="bi bi-x-circle" viewBox="0 0 16 16">
+                                                    <a href="#" class="" data-bs-toggle="modal"
+                                                        data-bs-target="#editarItem"
+                                                        onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->codigo }}','{{ $item->comentario }}')">
+                                                        <svg xmlns="http://www.w3.org/2000/svg " width="28" height="28"
+                                                            fill="currentColor" class="bi bi-pencil accionesIconos"
+                                                            viewBox="0 0 16 16">
                                                             <path
-                                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                            <path
-                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                                         </svg>
-                                                    </button>
-                                                </form> --}}
-                                                {{-- @endcan --}}
+                                                    </a>
+                                                @endcan
+                                                @can('user_destroy')
+                                                    <form action="{{ route('conceptos.destroy', $item->id) }}" method="POST"
+                                                        style="display: inline-block;" onsubmit="return confirm('Seguro?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btnSinFondo" type="submit" rel="tooltip">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="28"
+                                                                height="28" fill="currentColor" class="bi bi-x-circle"
+                                                                viewBox="0 0 16 16">
+                                                                <path
+                                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                <path
+                                                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                            </svg>
+                                                        </button>
+                                                    </form>
+                                                @endcan
                                             </td>
                                         </tr>
                                     @empty
@@ -151,8 +150,8 @@
 
                         <div class=" col-12 col-sm-4 mb-4 ">
                             <label class="labelTitulo">Código: <span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="codigo" name="codigo" maxlength="8" required  placeholder="Ej: COD-001"
-                                value="{{ old('codigo') }}">
+                            <input type="text" class="inputCaja" id="codigo" name="codigo" maxlength="8" required
+                                placeholder="Ej: COD-001" value="{{ old('codigo') }}">
                         </div>
 
                         <div class=" col-12 col-sm-8 mb-4 ">
@@ -163,8 +162,8 @@
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
-                            <textarea class="form-control-textarea border-green" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario"
-                                spellcheck="true"></textarea>
+                            <textarea class="form-control-textarea border-green" placeholder="Escribe tu comentario aquí" id="floatingTextarea"
+                                name="comentario" spellcheck="true"></textarea>
                         </div>
 
                         <div class="modal-footer">
@@ -183,7 +182,8 @@
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
 
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp <span id="tituloModal">Editar Concepto</label>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp <span id="tituloModal">Editar
+                            Concepto</label>
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -195,8 +195,8 @@
 
                         <div class=" col-12 col-sm-4 mb-4 ">
                             <label class="labelTitulo">Código: <span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="controlCodigo" name="codigo" maxlength="8" required  placeholder="Ej: COD-001"
-                                value="">
+                            <input type="text" class="inputCaja" id="controlCodigo" name="codigo" maxlength="8"
+                                required placeholder="Ej: COD-001" value="">
                         </div>
 
                         <div class=" col-12 col-sm-8 mb-4 ">
@@ -206,12 +206,14 @@
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
-                            <textarea class="form-control-textarea border-green" placeholder="Escribe tu comentario aquí" id="controlComentarios" name="comentario"></textarea>
+                            <textarea class="form-control-textarea border-green" placeholder="Escribe tu comentario aquí" id="controlComentarios"
+                                name="comentario"></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <div id="contenedorBotonGuardar">
-                            <button type="submit" class="btn botonGral" id="btnTareaGuardar">Guardar Cambios</button>
+                                <button type="submit" class="btn botonGral" id="btnTareaGuardar">Guardar
+                                    Cambios</button>
                             </div>
                         </div>
 

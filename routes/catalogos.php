@@ -15,17 +15,65 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('catalogos')->middleware('auth')->group(function () {
 
-	Route::get('/catalogos/puestos', [App\Http\Controllers\catalogosController::class, 'indexPuestos'])->name('catalogoPuestos.index');
-	// Route::get('/catalogos/puestos/nuevo', [App\Http\Controllers\puestoController::class, 'create'])->name('puesto.create');
-	// Route::post('/catalogos/puestos', [App\Http\Controllers\puestoController::class, 'store'])->name('puesto.store');
-	// Route::put('/catalogos/puestos/{puesto}', [App\Http\Controllers\puestoController::class, 'update'])->name('puesto.update');
-	// Route::delete('/catalogos/puestos/{puesto}', [App\Http\Controllers\puestoController::class, 'destroy'])->name('puesto.delete');
+	//Recursos Humanos
+	Route::get('/puestos', [App\Http\Controllers\catalogosController::class, 'indexPuestos'])->name('catalogoPuestos.index');
 	Route::resource('puesto', App\Http\Controllers\puestoController::class);
 
-	Route::get('/catalogos/puestosNivel', [App\Http\Controllers\catalogosController::class, 'indexPuestosNivel'])->name('catalogoPuestosNivel.index');
-	// Route::get('/catalogos/puestosNivel/nuevo', [App\Http\Controllers\puestoNivelController::class, 'create'])->name('puestoNivel.create');
-	// Route::post('/catalogos/puestosNivel', [App\Http\Controllers\puestoNivelController::class, 'store'])->name('puestoNivel.store');
-	// Route::put('/catalogos/puestosNivel/{puesto}', [App\Http\Controllers\puestoNivelController::class, 'update'])->name('puestoNivel.update');
-	// Route::delete('/catalogos/puestosNivel/{puesto}', [App\Http\Controllers\puestoNivelController::class, 'destroy'])->name('puestoNivel.delete');
+	Route::get('/puestosNivel', [App\Http\Controllers\catalogosController::class, 'indexPuestosNivel'])->name('catalogoPuestosNivel.index');
 	Route::resource('puestoNivel', App\Http\Controllers\puestoNivelController::class);
+
+	Route::get('/catalogos/tiposEquipo', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposEquipo'])->name('catalogoTiposEquipo.index');
+	Route::resource('tipoEquipo', App\Http\Controllers\tipoEquipoController::class);
+
+	//Inventario
+	Route::get('/catalogos/tiposUniforme', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTipoUniforme'])->name('catalogoTipoUniforme.index');
+	Route::resource('tipoUniforme', App\Http\Controllers\tipoUniformeController::class);
+
+	Route::get('/marcas', [App\Http\Controllers\catalogosController::class, 'indexCatalogoMarca'])->name('catalogoMarca.index');
+	Route::resource('marca', App\Http\Controllers\marcaController::class);
+
+	Route::get('/proveedores', [App\Http\Controllers\catalogosController::class, 'indexCatalogoProveedor'])->name('catalogoProveedor.index');
+	Route::resource('proveedor', App\Http\Controllers\proveedorController::class);
+
+	Route::get('/catalogos/proveedores/categorias', [App\Http\Controllers\catalogosController::class, 'indexCatalogoProveedorCategoria'])->name('catalogoProveedorCategoria.index');
+	Route::get('/proveedores/categorias/nuevo', [App\Http\Controllers\proveedorCategoriaController::class, 'create'])->name('proveedorCategoria.create');
+	Route::post('/proveedores/categorias', [App\Http\Controllers\proveedorCategoriaController::class, 'store'])->name('proveedorCategoria.store');
+	Route::put('/proveedores/categorias/{proveedorCategoria}', [App\Http\Controllers\proveedorCategoriaController::class, 'update'])->name('proveedorCategoria.update');
+	Route::delete('/proveedores/categorias/{proveedorCategoria}', [App\Http\Controllers\proveedorCategoriaController::class, 'destroy'])->name('proveedorCategoria.destroy');
+
+	Route::get('/catalogos/tiposRefaccion', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTipoRefaccion'])->name('catalogoTipoRefaccion.index');
+	Route::resource('refaccionTipo', App\Http\Controllers\refaccionTipoController::class);
+
+	//Maquinaria
+	Route::get('/catalogos/categoriasMaquinaria', [App\Http\Controllers\catalogosController::class, 'indexCatalogoCategoriasMaquinaria'])->name('catalogoCategoriasMaquinaria.index');
+	Route::resource('maquinariaCategoria', App\Http\Controllers\maquinariaCategoriaController::class);
+
+	Route::get('/catalogos/tiposMaquinaria', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposMaquinaria'])->name('catalogoTiposMaquinaria.index');
+	Route::resource('maquinariaTipo', App\Http\Controllers\maquinariaTipoController::class);
+
+	Route::get('/catalogos/refacciones', [App\Http\Controllers\catalogosController::class, 'indexCatalogoRefacciones'])->name('catalogoRefacciones.index');
+	Route::resource('refacciones', App\Http\Controllers\RefaccionesController::class);
+
+	//Mantenimientos y Servicios
+	Route::get('catalogos/categoriasTareas', [App\Http\Controllers\catalogosController::class, 'indexCatalogoCategoriasTareas'])->name('catalogoCategoriasTareas.index');
+	Route::resource('tareaCategoria', App\Http\Controllers\tareaCategoriaController::class);
+
+	Route::get('/tiposTareas', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposTareas'])->name('catalogoTiposTareas.index');
+	Route::resource('tareaTipo', App\Http\Controllers\tareaTipoController::class);
+
+	Route::get('/catalogos/ubicacionesTareas', [App\Http\Controllers\catalogosController::class, 'indexCatalogoUbicacionesTareas'])->name('catalogoUbicacionesTareas.index');
+	Route::resource('tareaUbicacion', App\Http\Controllers\tareaUbicacionController::class);
+
+	Route::get('/tiposValorTarea', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposValorTarea'])->name('catalogoTiposValorTarea.index');
+	Route::resource('tipoValorTarea', App\Http\Controllers\tipoValorTareaController::class);
+
+	Route::get('/catalogos/tiposMantenimiento', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposMantenimiento'])->name('catalogoTiposMantenimiento.index');
+	Route::resource('tipoMantenimiento', App\Http\Controllers\tipoMantenimientoController::class);
+
+	//Caja Chica
+	Route::get('/catalogos/conceptos', [App\Http\Controllers\catalogosController::class, 'indexCatalogoConceptos'])->name('catalogoConceptos.index');
+	Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
+
+	Route::get('/catalogos/comprobantes', [App\Http\Controllers\catalogosController::class, 'indexCatalogoComprobantes'])->name('catalogoComprobantes.index');
+	Route::resource('comprobante', App\Http\Controllers\comprobanteController::class);
 });
