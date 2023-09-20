@@ -262,6 +262,13 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('calendarioPrincipal_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('calendarioPrincipal_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('ticketDescarga_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ticketDescarga_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ticketDescarga_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ticketDescarga_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ticketDescarga_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+
 INSERT INTO
     `model_has_roles`
 VALUES
