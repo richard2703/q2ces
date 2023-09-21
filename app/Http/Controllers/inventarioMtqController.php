@@ -20,14 +20,14 @@ class inventarioMtqController extends Controller
     {
         // abort_if(Gate::denies('inventario_index'), 403);
 
-        return view('mtq.inventarioDashMtq');
+        return view('MTQ.inventarioDashMtq');
     }
 
     public function index($tipo)
     {
         $inventarios = inventarioMtq::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(15);
         // dd($inventarios);
-        return view('mtq.indexInventarioMtq', compact('inventarios', 'tipo'));
+        return view('MTQ.indexInventarioMtq', compact('inventarios', 'tipo'));
 
         dd('index inventarioMtq.index');
     }
@@ -40,7 +40,7 @@ class inventarioMtqController extends Controller
         $vctMarcas = marca::all();
         $vctProveedores = proveedor::all();
 
-        return view('mtq.inventarioNuevoMtq', compact('tipo', 'vctMarcas', 'vctProveedores'));
+        return view('MTQ.inventarioNuevoMtq', compact('tipo', 'vctMarcas', 'vctProveedores'));
     }
 
     /**
