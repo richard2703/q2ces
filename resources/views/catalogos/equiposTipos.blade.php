@@ -19,7 +19,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Tipos De Equipo</h4>
+                                    <h4 class="card-title">Tipos de Equipo</h4>
 
                                 </div>
                                 <div class="card-body">
@@ -34,23 +34,28 @@
                                         </div>
                                     @endif
                                     <div class="row">
-                                        <div class="col-12 text-right">
+                                        <div class="d-flex p-3">
+                                            <div class="col-12 text-right">
+                                                <a href="{{ route('catalogos.index') }}">
+                                                    <button class="btn regresar">
+                                                        <span class="material-icons">
+                                                            reply
+                                                        </span>
+                                                        Regresar
+                                                    </button>
+                                                </a>
 
-                                            <a href="{{ route('catalogos.index') }}">
-                                                <button class="btn regresar">
-                                                    <span class="material-icons">
-                                                        reply
-                                                    </span>
-                                                    Regresar
-                                                </button>
-                                            </a>
-
-                                            @can('catalogos_create')
-                                                <button class="btn botonGral float-end" data-bs-toggle="modal"
-                                                    data-bs-target="#nuevoItem">
-                                                    Añadir Tipo De Equipo
-                                                </button>
-                                            @endcan
+                                                @can('catalogos_create')
+                                                    <button class="btn botonGral float-end" data-bs-toggle="modal"
+                                                        data-bs-target="#nuevoItem">
+                                                        Añadir Tipo de Equipo
+                                                    </button>
+                                                @endcan
+                                            </div>
+                                        </div>
+                                        <div class="divBorder">
+                                            <p>Catálogo General de Tipos de Equipos,Es Utilizado para Agrupar y/o
+                                                Especificar en un Grupo a las Equipos.</p>
                                         </div>
                                     </div>
 
@@ -92,24 +97,24 @@
                                                             </svg>
                                                         </a>
                                                         {{-- @endcan --}}
-                                                        {{-- @can('user_destroy') --}}
-                                                        {{-- <form action="{{ route('puestos.delete', $item->id) }}"
-                                                            method="POST" style="display: inline-block;"
-                                                            onsubmit="return confirm('Seguro?')">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="btnSinFondo" type="submit" rel="tooltip">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="28"
-                                                                    height="28" fill="currentColor"
-                                                                    class="bi bi-x-circle" viewBox="0 0 16 16">
-                                                                    <path
-                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                    <path
-                                                                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                                </svg>
-                                                            </button>
-                                                        </form> --}}
-                                                        {{-- @endcan --}}
+                                                        @can('user_destroy')
+                                                            <form action="{{ route('tipoEquipo.destroy', $item->id) }}"
+                                                                method="POST" style="display: inline-block;"
+                                                                onsubmit="return confirm('Seguro?')">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="btnSinFondo" type="submit" rel="tooltip">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28"
+                                                                        height="28" fill="currentColor"
+                                                                        class="bi bi-x-circle" viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                        <path
+                                                                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                    </svg>
+                                                                </button>
+                                                            </form>
+                                                        @endcan
                                                     </td>
                                                 </tr>
                                             @empty
@@ -137,7 +142,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nuevo Tipo De Equipo</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nuevo Tipo de Equipo</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -172,7 +177,7 @@
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
 
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Tipo De Equipo</label>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Tipo de Equipo</label>
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Database\QueryException;
 
 class puestoNivelController extends Controller
 {
@@ -129,8 +130,23 @@ class puestoNivelController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy($id)
+    public function destroy(puestoNivel $puestoNivel)
     {
-        //
+
+        try {
+            $puestoNivel->delete(); // Intenta eliminar 
+        } catch (QueryException $e) {
+            if ($e->getCode() === 23000) {
+                return redirect()->back()->with('faild', 'No Puedes Eliminar ');
+                // Esto es un error de restricción de clave externa (FOREIGN KEY constraint)
+                // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
+            } else {
+                return redirect()->back()->with('faild', 'No Puedes Eliminar un puesto en uso');
+                // Otro tipo de error de base de datos
+                // Maneja según sea necesario
+            }
+        }
+
+        return redirect()->back()->with('success', 'Puesto Eliminado correctamente');
     }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Inventario')])
+@extends('layouts.main', ['activePage' => 'mtq', 'titlePage' => __('Inventario')])
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -37,7 +37,7 @@
 
                                         <div class="col-6 pb-3 text-end">
                                             @can('inventario_create')
-                                                <a href="{{ route('inventario.create', $tipo) }}">
+                                                <a href="{{ route('inventarioMtq.create', $tipo) }}">
                                                     <button type="button" class="btn botonGral text-capitalize">Añadir al
                                                         Inventario</button>
                                                 </a>
@@ -69,13 +69,13 @@
                                                         <td class="text-center align-middle">{{ $inventario->reorden }}</td>
                                                         <td class="text-center align-middle">{{ $inventario->maximo }}</td>
                                                         <td class="td-actions text-center align-middle">
-                                                            @can('inventario_restock')
-                                                                {{--  <a href="{{ route('maquinaria.vista', $maquina->id) }}"  class="">
+                                                            {{--  @can('inventario_restock')
+                                                                <a href="{{ route('maquinaria.vista', $maquina->id) }}"  class="">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
                                                                     <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
                                                                     <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
                                                                 </svg>
-                                                            </a>  --}}
+                                                            </a>
                                                                 <button type="button"
                                                                     class="botonSinFondo mx-2"title="Resurtir"
                                                                     data-bs-toggle="modal" data-bs-target="#modal-cliente"
@@ -83,8 +83,8 @@
                                                                     <img
                                                                         style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}">
                                                                 </button>
-                                                                {{--  <p class="botonTitulos mt-2">Resurtir</p>  --}}
-                                                            @endcan
+                                                                <p class="botonTitulos mt-2">Resurtir</p>
+                                                            @endcan  --}}
                                                             @can('inventario_edit')
                                                                 {{--  <a href="{{ route('maquinaria.show', $maquina->id) }}"
                                                                     class="">
@@ -96,7 +96,7 @@
                                                                             d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                                                     </svg>
                                                                 </a>  --}}
-                                                                <a href="{{ route('inventario.show', $inventario->id) }}"
+                                                                <a href="{{ route('inventarioMtq.show', $inventario->id) }}"
                                                                     <button type="button"
                                                                     class="botonSinFondo mx-2"title="Detalle"><img
                                                                         style="width: 30px;"src="{{ '/img/inventario/detalle.svg' }}">
@@ -158,8 +158,8 @@
                                     </div>
                                     <div class="col-12 col-lg-6">
                                         <label class="labelTitulo" for="">Cantidad:</label></br>
-                                        <input class="inputCaja" type="number" step="0.01" min="0.01"
-                                            id="cantidad" name="cantidad" value="" required></br>
+                                        <input class="inputCaja" type="number" step="0.01" min="0.01" id="cantidad"
+                                            name="cantidad" value="" required></br>
                                     </div>
                                     <div class="col-12 col-lg-6">
                                         <label class="labelTitulo" for="">Costo unitario:</label></br>

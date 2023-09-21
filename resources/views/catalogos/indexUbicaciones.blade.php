@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista De Ubicaciones')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Ubicaciones')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -31,7 +31,7 @@
                                 </div>
                             @endif
                             <div class="row">
-                                <div class="d-flex p-3 divBorder">
+                                <div class="d-flex p-3 ">
                                     <div class="col-12 text-right">
 
                                         <a href="{{ route('catalogos.index') }}">
@@ -46,10 +46,13 @@
                                         @can('ubicaciones_create')
                                             <button class="btn botonGral float-end" data-bs-toggle="modal"
                                                 data-bs-target="#nuevoItem" onclick="cargaItem(' ',' ',' ',' ',' ','')">
-                                                Añadir Un Ubicación
+                                                Añadir una Ubicación
                                             </button>
                                         @endcan
                                     </div>
+                                </div>
+                                <div class="row divBorder">
+                                    <p>Catálogo General de Ubicaciones, Es Utilizado para Asignar la Ubicación (Ej. Oficina) en Donde se Tiene Asignado o Colocado un Extintor Dentro de un Lugar (Ej. Taller).</p>
                                 </div>
                             </div>
                             <div class="table-responsive">

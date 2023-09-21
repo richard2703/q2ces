@@ -418,6 +418,14 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('maquinaria_mtq_index')
+                            <li>
+                                {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
+                                <a href="{{ route('inventarioMtq.dash') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Inventario</span>
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
             @endcan

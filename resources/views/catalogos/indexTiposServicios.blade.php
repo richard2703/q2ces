@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista De Tipos Servicios')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Tipos Servicios')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -17,7 +17,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header bacTituloPrincipal">
-                            <h4 class="card-title">Tipos De Servicios</h4>
+                            <h4 class="card-title">Tipos de Servicios</h4>
                         </div>
                         <div class="card-body">
                             @if (session('success'))
@@ -31,7 +31,7 @@
                                 </div>
                             @endif
                             <div class="row">
-                                <div class="d-flex p-3 divBorder">
+                                <div class="d-flex p-3">
                                     <div class="col-12 text-right">
 
                                         <a href="{{ route('catalogos.index') }}">
@@ -46,10 +46,13 @@
                                         @can('tipoServicios_create')
                                             <button class="btn botonGral float-end" data-bs-toggle="modal"
                                                 data-bs-target="#nuevoItem" onclick="cargaItem(' ',' ',' ',' ',' ',' ','')">
-                                                Añadir Un Tipo De Servicio
+                                                Añadir un Tipo de Servicio
                                             </button>
                                         @endcan
                                     </div>
+                                </div>
+                                <div class="row divBorder">
+                                    <p>Catálogo General de Tipos de Servicio, Es Utilizado para Agrupar los Servicios en un Bloque Especifico de Información de los Mantenimientos.</p>
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -138,7 +141,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Añadir Tipo De Servicio</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Añadir Tipo de Servicio</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -190,7 +193,7 @@
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
 
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp <span id="tituloModal">Editar</span> Tipo De Servicio</label>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp <span id="tituloModal">Editar</span> Tipo de Servicio</label>
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>

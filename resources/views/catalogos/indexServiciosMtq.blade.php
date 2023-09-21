@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista De Servicios')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Servicios')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -31,7 +31,7 @@
                                 </div>
                             @endif
                             <div class="row">
-                                <div class="d-flex p-3 divBorder">
+                                <div class="d-flex p-3 ">
                                     <div class="col-12 text-right">
 
                                         <a href="{{ route('catalogos.index') }}">
@@ -50,6 +50,9 @@
                                             </button>
                                         @endcan
                                     </div>
+                                </div>
+                                <div class="row divBorder">
+                                    <p>Catálogo General de Servicios de MTQ, Es Utilizado para Especificar el Tipo de Mantenimiento que se Aplicará a una Solicitud de Servicio de MTQ.</p>
                                 </div>
                             </div>
                             <div class="table-responsive">

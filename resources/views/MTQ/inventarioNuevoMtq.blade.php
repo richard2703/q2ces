@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Inventario Nuevo')])
+@extends('layouts.main', ['activePage' => 'mtq', 'titlePage' => __('Inventario Nuevo')])
 @section('content')
 
     <div class="content">
@@ -35,7 +35,7 @@
                                 </div>
 
                             </div>
-                            <form class="row alertaGuardar" action="{{ route('inventario.store') }}"
+                            <form class="row alertaGuardar" action="{{ route('inventarioMtq.store') }}"
                                 method="post"class="row" enctype="multipart/form-data">
                                 @csrf
                                 <div class="col-12 col-md-4  my-3">
@@ -168,62 +168,6 @@
                                                     id="uniformeRetornable" name="uniformeRetornable">
                                                     <option value="0">No</option>
                                                     <option value="1">Sí</option>
-                                                </select>
-                                            </div>
-                                        @endif
-
-                                        <!-- PARA USO EXCLUSIVO DE EXTINTORES -->
-                                        @if ($tipo == 'extintores')
-                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                <label class="labelTitulo">Capacidad:</label></br>
-                                                <input type="text" class="inputCaja" id="extintorCapacidad"
-                                                    name="extintorCapacidad" value="{{ old('extintorCapacidad') }}">
-                                            </div>
-
-                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                <label class="labelTitulo">Identificador:</label></br>
-                                                <input type="text" class="inputCaja" id="extintorCodigo"
-                                                    name="extintorCodigo" value="{{ old('extintorCodigo') }}">
-                                            </div>
-                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                <label class="labelTitulo">Fecha de Vencimiento:</label></br>
-                                                <input type="date" class="inputCaja" id="extintorFechaVencimiento"
-                                                    name="extintorFechaVencimiento"
-                                                    value="{{ old('extintorFechaVencimiento') }}">
-                                            </div>
-
-                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                <label class="labelTitulo">Tipo de Extintor:</label></br>
-                                                <select class="form-select" aria-label="Default select example"
-                                                    id="extintorTipo" name="extintorTipo">
-                                                    <option value="A">A
-                                                    </option>
-                                                    <option value="B">B
-                                                    </option>
-                                                    <option value="C">C
-                                                    </option>
-                                                    <option value="D">D
-                                                    </option>
-                                                </select>
-                                            </div>
-
-                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                <label class="labelTitulo">Ubicación:</label></br>
-                                                <input type="text" class="inputCaja" id="extintorUbicacion"
-                                                    name="extintorUbicacion" value="{{ old('extintorUbicacion') }}">
-                                            </div>
-
-                                            <div class=" col-12 col-sm-6 col-lg-4 mb-5 ">
-                                                <label class="labelTitulo">Asignado :</label></br>
-                                                <select id="extintorAsignadoMaquinariaId"
-                                                    name="extintorAsignadoMaquinariaId" class="form-select"
-                                                    aria-label="Default select example">
-                                                    <option value="">Seleccione</option>
-                                                    @foreach ($vctMaquinaria as $item)
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->nombre }}
-                                                        </option>
-                                                    @endforeach
                                                 </select>
                                             </div>
                                         @endif

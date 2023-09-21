@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Modificación De Documentos')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Modificación de Documentos')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -16,7 +16,7 @@
             <div class="justify-content-center">
                 <div class="card">
                     <div class="card-header bacTituloPrincipal">
-                        <h4 class="card-title">Modificacion En La Administración De Documentos</h4>
+                        <h4 class="card-title">Modificacion en la Administración de Documentos</h4>
                         {{-- <p class="card-category">Usuarios registrados</p> --}}
                     </div>
                     <div class="card-body">

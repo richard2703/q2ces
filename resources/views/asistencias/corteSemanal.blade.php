@@ -135,13 +135,15 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             </div>
                                             <div class="">
                                                 @can('asistencia_create')
-                                                    {{-- <form action="{{ route('asistencia.reporteExcel' ) }}" method="post">
+                                                    <form
+                                                        action="{{ route('asistencia.reporteExcel', [$intAnio, $intMes, $intDia]) }}"
+                                                        method="post">
                                                         @csrf
                                                         <input type="hidden" name="intAnio" value="{{ $intAnio }}">
                                                         <input type="hidden" name="intMes" value="{{ $intMes }}">
                                                         <input type="hidden" name="intDia" value="{{ $intDia }}">
                                                         <button type="submit" class="btn botonGral">Descargar Excel</button>
-                                                    </form> --}}
+                                                    </form>
                                                 @endcan
                                             </div>
                                         </div>
@@ -233,7 +235,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                                             }
 
                                                                             $intHorasDia = (int) ($intMinutosTotalesDia / 60);
-                                                                            $intMinutosDia =$intMinutosTotalesDia % 60;
+                                                                            $intMinutosDia = $intMinutosTotalesDia % 60;
 
                                                                             //*** completar una hora fraccionaria, debera de ser mayor o igual a 35 minutos
                                                                             $intHorasCompletasDia =  ( $intHorasDia + ($intMinutosDia >= 35 ? 1 : 0)) ;
@@ -302,8 +304,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                                 <!-- Estatus de asistencia-->
                                                                 <strong> {{ $item->pagos[$iDay]->esAsistencia }}</strong>
                                                             </td>
-                                                            <td
-                                                                title="Tiempo Extra: {{ str_pad($intHorasDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosDia, 2, '0', STR_PAD_LEFT) }}, Tiempo Retraso: {{ str_pad($intHorasRetrasoDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosRetrasoDia, 2, '0', STR_PAD_LEFT) }}, Se Paga: $ {{ $decValorHoraExtra }}">
+                                                            <td title="Tiempo Extra: {{ str_pad($intHorasDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosDia, 2, '0', STR_PAD_LEFT) }}, Tiempo Retraso: {{ str_pad($intHorasRetrasoDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosRetrasoDia, 2, '0', STR_PAD_LEFT) }}, Se Paga: $ {{ $decValorHoraExtra }}">
                                                                 <!-- Tiempo extra -->
                                                                 <strong>
                                                                     {{ $intHorasCompletasDia }} Hrs<br>

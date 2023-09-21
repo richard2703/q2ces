@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Modificación De Los Tipos De Documentos')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Modificación de Los Tipos de Documentos')])
 @section('content')
     <div class="content">
         @if ($errors->any())

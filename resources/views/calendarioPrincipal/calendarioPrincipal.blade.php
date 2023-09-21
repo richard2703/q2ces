@@ -37,7 +37,7 @@
             <div class="col-6 text-end mb-1" style="margin-left: -25px">
                 @can('calendarioPrincipal_create')
                     <button data-bs-toggle="modal" data-bs-target="#myModal" type="button" class="btn botonGral">Añadir
-                        Al Calendario</button>
+                        al Calendario</button>
                     {{--  <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary py-2 px-4">Click Here !</button>  --}}
                 @endcan
             </div>
@@ -56,7 +56,7 @@
                             </h5>
                             <button type="button" class="btn-close align-self-end" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        
+
                         <div class="modal-body">
                             <div class="container-fluid">
                                 <form action="{{ route('calendarioPrincipal.update', 0) }}" method="post">
@@ -100,7 +100,7 @@
                                         </div>
 
                                         <div class="mb-3 col-6">
-                                            <label for="title" class="labelTitulo">Número Economico:</label>
+                                            <label for="title" class="labelTitulo">Número Económico:</label>
                                             <input autofocus type="text" class="inputCaja" id="numeconomicoEdit"
                                                 name="numeconomico" placeholder="Del Equipo..." readonly>
                                         </div>
@@ -161,7 +161,7 @@
                                         <div id="colorBoxEdit" class="color-box w-100" style="margin-left:-0.5px"></div>
                                     </div>
 
-                                    
+
                                         <div class="mb-3 col-6">
                                             <label for="fecha" class="labelTitulo">Fecha de Llegada:</label>
                                             <input type="date" class="inputCaja" name="fecha" id="fechaEdit"
@@ -173,7 +173,7 @@
                                             <input type="time" class="inputCaja" name="hora" id="horaEdit"
                                                 aria-describedby="helpId" placeholder="Fecha" readonly>
                                         </div>
-                                    
+
                                         <div class="mb-3 col-6">
                                             <label for="fecha" class="labelTitulo">Fecha de Salida:</label>
                                             <input type="date" class="inputCaja" name="fechaSalida" id="fechaSalida"
@@ -215,7 +215,7 @@
                             </h5>
                             <button type="button" class="btn-close align-self-end" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        
+
                         <div class="modal-body">
                             <div class="container-fluid">
                                 <form action="{{ route('solicitudes.update', 0) }}" method="post">
@@ -232,7 +232,7 @@
                                     <input type="hidden" id="colorBoxHiddenSolicitudEdit" name="color" value="">
 
                                     <div class="row">
-                                        
+
                                         <div class="col-11 mb-3">
                                             <label for="title" class="labelTitulo">Título:</label>
                                             <input autofocus type="text" class="inputCaja" name="title" id="titleEditSolicitud"
@@ -256,7 +256,7 @@
                                                 name="search" placeholder="Buscar Equipo..."
                                                 title="Escriba la(s) palabra(s) a buscar." readonly>
                                         </div>
-                                        
+
                                     </div>
 
                                     <div class="row">
@@ -267,7 +267,7 @@
                                         </div>
 
                                         <div class="mb-3 col-6">
-                                            <label for="title" class="labelTitulo">Número Economico:</label>
+                                            <label for="title" class="labelTitulo">Número Económico:</label>
                                             <input autofocus type="text" class="inputCaja" id="numeconomicoEditSolicitud"
                                                 name="numeconomico" placeholder="Del Equipo..." readonly>
                                         </div>
@@ -292,7 +292,7 @@
                                         </div>
 
                                         <div class="col-12 col-sm-6 mb-3">
-                                            <label for="prioridad" class="labelTitulo">Prioridad*:</label>
+                                            <label for="prioridad" class="labelTitulo">Prioridad: * </label>
                                         <select name="prioridad" readonly id="prioridadEditSolicitud" required class="form-select">
                                             <option value="">Seleccione</option>
                                                 <option value="Urgente" data-color="#ff0000">
@@ -342,7 +342,7 @@
                                         <div id="colorBoxEditSolicitud" class="color-box w-100" style="margin-left:-0.5px"></div>
                                     </div>
 
-                                    
+
                                         <div class="mb-3 col-6">
                                             <label for="fecha" class="labelTitulo">Fecha de Inicio del Requerimiento:</label>
                                             <input type="date" class="inputCaja" name="fecha" id="fechaEditSolicitud"
@@ -354,7 +354,7 @@
                                             <input type="time" class="inputCaja" name="hora" id="horaEditSolicitud"
                                                 aria-describedby="helpId" placeholder="Fecha" readonly>
                                         </div>
-                                    
+
                                         <div class="mb-3 col-6">
                                             <label for="fecha" class="labelTitulo">Fecha de Fin del Requerimiento:</label>
                                             <input type="date" class="inputCaja" name="fechaSalida" id="fechaSalidaSolicitud"
@@ -414,7 +414,7 @@
                             </h5>
                             <button type="button" class="btn-close align-self-end" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        
+
                         <div class="modal-body">
                             <div class="container-fluid">
                                 <form action="{{ route('actividades.update', 0) }}" method="post">
@@ -437,7 +437,7 @@
                                         </div>
 
                                         <div class="col-11 col-sm-5 mb-3">
-                                            <label for="prioridad" class="labelTitulo">Prioridad*:</label>
+                                            <label for="prioridad" class="labelTitulo">Prioridad: * </label>
                                         <select name="prioridad" readonly id="prioridadEditTarea" required class="form-select">
                                             <option value="">Seleccione</option>
                                                 <option value="Urgente" data-color="#ff0000">
@@ -454,7 +454,7 @@
                                                 </option>
                                         </select>
                                         </div>
-                                        
+
                                         <div class="col-1 mt-4">
                                             @can('calendarioPrincipal_edit')
                                                 <div id="editarCamposTarea">
@@ -495,7 +495,7 @@
                                         <div id="colorBoxEditTarea" class="color-box w-100" style="margin-left:-0.5px"></div>
                                     </div>
 
-                                    
+
                                         <div class="mb-3 col-6">
                                             <label for="fecha" class="labelTitulo">Fecha de Inicio para la tarea:</label>
                                             <input type="date" class="inputCaja" name="fecha" id="fechaEditTarea"
@@ -507,7 +507,7 @@
                                             <input type="time" class="inputCaja" name="hora" id="horaEditTarea"
                                                 aria-describedby="helpId" placeholder="Fecha" readonly>
                                         </div>
-                                    
+
                                         <div class="mb-3 col-6">
                                             <label for="fecha" class="labelTitulo">Fecha de Termino para la tarea:</label>
                                             <input type="date" class="inputCaja" name="fechaSalida" id="fechaSalidaTarea"
@@ -538,7 +538,7 @@
                     </div>
                 </div>
             </div>
-            
+
         <!-- Modal-->
         <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true" class="modal fade text-left">
             <div role="document" class="modal-dialog modal-lg">
@@ -590,7 +590,7 @@
                                         </div>
 
                                         <div class="mb-3 col-6">
-                                            <label for="title" class="labelTitulo">Número Economico:</label>
+                                            <label for="title" class="labelTitulo">Número Económico:</label>
                                             <input autofocus type="text" class="inputCaja" id="numeconomico"
                                                 name="numeconomico" placeholder="Del Equipo..." readonly>
                                         </div>
@@ -614,10 +614,10 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    
+
 
                                     <div class="mb-3 col-6">
-                                        <label for="title" class="labelTitulo">Mantenimiento*:</label>
+                                        <label for="title" class="labelTitulo">Mantenimiento: * </label>
                                         <select name="tipoMantenimientoId" id="titleSelect" required class="form-select">
                                             <option value="">Seleccione</option>
                                             @foreach ($tiposMantenimiento as $item)
@@ -683,7 +683,7 @@
                             <div class="text-center" style="color:#5C7C26; margin-top: 10px; font-weight: bold;">
                                 <h4 class="" style="color:#5C7C26; margin-top: 10px; font-weight: bold;">Añadir Tarea</h4>
                             </div>
-                            
+
                             <div class="line"></div>
                             <form action="{{ route('actividades.store') }}" method="post">
                             <div class="container-fluid mt-1">
@@ -711,7 +711,7 @@
                                         </select>
                                     </div>
                                     <div class="mb-3 col-6">
-                                        <label for="prioridad" class="labelTitulo">Prioridad*:</label>
+                                        <label for="prioridad" class="labelTitulo">Prioridad: *</label>
                                         <select name="prioridad" id="prioridadSelect" required class="form-select">
                                             <option value="">Seleccione</option>
                                                 <option value="Urgente" data-color="#ff0000">
@@ -735,7 +735,7 @@
                                             <option value="1" selected>En Espera</option>
                                         </select>
                                     </div>
-                                
+
                                     <div class="mb-3">
                                         <label for="color" class="labelTitulo">Color:</label>
                                         <div id="colorBoxTarea" class="color-box w-100" style="margin-left:-0.5px"></div>
@@ -745,14 +745,14 @@
                                         <input type="date" class="inputCaja" name="fechaTarea" id="fechaTarea"
                                             aria-describedby="helpId" placeholder="Fecha">
                                     </div>
-    
+
                                     <div class="mb-3 col-6">
                                         <label for="hora" class="labelTitulo">Hora de Inicio Para la Tarea:</label>
                                         <input type="time" class="inputCaja" name="horaTarea" id="horaTarea"
                                             aria-describedby="helpId" placeholder="Fecha">
                                     </div>
-                                    
-    
+
+
                                     <div class="mb-3">
                                         <label for="descripcion" class="labelTitulo">Descripción:</label>
                                         <textarea class="form-control-textarea border-green" name="descripcion" id="descripcionTarea" rows="3"
@@ -772,7 +772,7 @@
                             <div class="text-center" style="color:#5C7C26; margin-top: 10px; font-weight: bold;">
                                 <h4 class="" style="color:#5C7C26; margin-top: 10px; font-weight: bold;">Añadir Solicitud</h4>
                             </div>
-                            
+
                             <div class="line"></div>
                             <form action="{{ route('solicitudes.store') }}" method="post">
                             <input type="hidden" name="tipo" value="En Espera">
@@ -791,7 +791,7 @@
                                         <input autofocus type="text" class="inputCaja" name="title"
                                             placeholder="Título de Solicitud..." title="Escriba El Título de la Solicitud.">
                                     </div>
-                                    
+
                                     <div class="mb-3" role="search">
                                         <label for="title" class="labelTitulo">Buscador Equipo:</label>
                                         <input autofocus type="text" class="inputCaja" id="searchSolicitudes" name="search"
@@ -805,7 +805,7 @@
                                         </div>
 
                                         <div class="mb-3 col-6">
-                                            <label for="title" class="labelTitulo">Número Economico:</label>
+                                            <label for="title" class="labelTitulo">Número Económico:</label>
                                             <input autofocus type="text" class="inputCaja" id="numeconomicoSolicitud"
                                                 name="numeconomico" placeholder="Del Equipo..." readonly>
                                         </div>
@@ -829,7 +829,7 @@
                                             </select>
                                         </div>
                                     <div class="mb-3 col-6">
-                                        <label for="prioridad" class="labelTitulo">Prioridad*:</label>
+                                        <label for="prioridad" class="labelTitulo">Prioridad: *</label>
                                         <select name="prioridad" id="prioridadSelectSolicitud" required class="form-select">
                                             <option value="">Seleccione</option>
                                                 <option value="Urgente" data-color="#ff0000">
@@ -877,8 +877,8 @@
                                         </select>
                                     </div>
 
-                                    
-                                
+
+
                                     <div class="mb-3">
                                         <label for="color" class="labelTitulo">Color:</label>
                                         <div id="colorBoxSolicitud" class="color-box w-100" style="margin-left:-0.5px"></div>
@@ -888,14 +888,14 @@
                                         <input type="date" class="inputCaja" name="fechaSolicitud" id="fechaSolicitud"
                                             aria-describedby="helpId" placeholder="Fecha">
                                     </div>
-    
+
                                     <div class="mb-3 col-6">
                                         <label for="hora" class="labelTitulo">Hora de Inicio del Requerimiento:</label>
                                         <input type="time" class="inputCaja" name="horaSolicitud" id="horaSolicitud"
                                             aria-describedby="helpId" placeholder="Fecha">
                                     </div>
-                                    
-    
+
+
                                     <div class="mb-3">
                                         <label for="descripcion" class="labelTitulo">Descripción:</label>
                                         <textarea class="form-control-textarea border-green" name="descripcion" id="descripcionSolicitud" rows="3"
@@ -920,7 +920,7 @@
                                         <input type="radio" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" value="herramienta" id="checkbox_herramienta">
                                         <label for="checkbox_herramienta">Herramienta</label><br>
                                     </div>
-                                
+
                                     <div class="form-check form-check-inline">
                                         <input type="radio" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" value="refaccion" id="checkbox_refaccion">
                                         <label for="checkbox_refaccion">Refacción</label><br>
@@ -954,7 +954,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    
+
                                     </div>
                                 </div>
 
@@ -974,7 +974,7 @@
                                                         aria-describedby="helpId" placeholder="Litros">
                                                 </div>
                                                 <div class="mb-3 col-5">
-                                                    <label for="carga" class="labelTitulo">Tipo*:</label>
+                                                    <label for="carga" class="labelTitulo">Tipo: *</label>
                                                     <select name="carga[]" id="carga" required class="form-select">
                                                         <option value="carga" selected>Carga</option>
                                                     </select>
@@ -983,16 +983,16 @@
                                                     <button type="button" id="removeRowCombustible"
                                                         class="btnRojo"></button>
                                                     </div>
-            
+
                                                 <div class="mb-3">
                                                     <label for="comentarioCombustible" class="labelTitulo">Comentario:</label>
                                                     <textarea class="form-control-textarea border-green" name="comentarioCombustible[]" id="comentarioCombustible" rows="3"
                                                         placeholder="Especifique..."></textarea>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
-                                        
+
                                     </div>
                                 </div>
 
@@ -1032,9 +1032,9 @@
                                                         placeholder="Especifique..."></textarea>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
-                                        
+
                                     </div>
                                 </div>
 
@@ -1059,7 +1059,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                
+
                                                 <div class="mb-3 col-5">
                                                     <label for="cantidad" class="labelTitulo">Cantidad:</label>
                                                     <input type="number" class="inputCaja" name="cantidadRefaccion[]" id="cantidadSolicitudRefaccion"
@@ -1075,7 +1075,7 @@
                                                         placeholder="Especifique..."></textarea>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -1088,7 +1088,7 @@
                         </form>
                         </fieldset>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -1144,7 +1144,7 @@
                                         </div>
 
                                         <div class="mb-3 col-6">
-                                            <label for="title" class="labelTitulo">Número Economico:</label>
+                                            <label for="title" class="labelTitulo">Número Económico:</label>
                                             <input autofocus type="text" class="inputCaja" id="numeconomico"
                                                 name="numeconomico" placeholder="Del Equipo..." readonly>
                                         </div>
@@ -1160,10 +1160,10 @@
                                             <input autofocus type="text" class="inputCaja" id="marca"
                                                 name="marca" placeholder="Marca Equipo..." readonly>
                                         </div>
-                                    
+
 
                                     <div class="mb-3 col-6">
-                                        <label for="title" class="labelTitulo">Mantenimiento*:</label>
+                                        <label for="title" class="labelTitulo">Mantenimiento: *</label>
                                         <select name="tipoMantenimientoId" id="titleSelect" required class="form-select">
                                             <option value="">Seleccione</option>
                                             @foreach ($tiposMantenimiento as $item)
@@ -1229,7 +1229,7 @@
                             <div class="text-center" style="color:#5C7C26; margin-top: 10px; font-weight: bold;">
                                 <h4 class="" style="color:#5C7C26; margin-top: 10px; font-weight: bold;">Añadir Tarea</h4>
                             </div>
-                            
+
                             <div class="line"></div>
                             <form action="{{ route('actividades.store') }}" method="post">
                             <div class="container-fluid mt-1">
@@ -1257,7 +1257,7 @@
                                         </select>
                                     </div>
                                     <div class="mb-3 col-6">
-                                        <label for="prioridad" class="labelTitulo">Prioridad*:</label>
+                                        <label for="prioridad" class="labelTitulo">Prioridad: *</label>
                                         <select name="prioridad" id="prioridadSelect" required class="form-select">
                                             <option value="">Seleccione</option>
                                                 <option value="Urgente" data-color="#ff0000">
@@ -1281,7 +1281,7 @@
                                             <option value="1" selected>En Espera</option>
                                         </select>
                                     </div>
-                                
+
                                     <div class="mb-3">
                                         <label for="color" class="labelTitulo">Color:</label>
                                         <div id="colorBoxTarea" class="color-box w-100" style="margin-left:-0.5px"></div>
@@ -1291,14 +1291,14 @@
                                         <input type="date" class="inputCaja" name="fechaTarea" id="fechaTarea"
                                             aria-describedby="helpId" placeholder="Fecha">
                                     </div>
-    
+
                                     <div class="mb-3 col-6">
                                         <label for="hora" class="labelTitulo">Hora de Llegada:</label>
                                         <input type="time" class="inputCaja" name="horaTarea" id="horaTarea"
                                             aria-describedby="helpId" placeholder="Fecha">
                                     </div>
-                                    
-    
+
+
                                     <div class="mb-3">
                                         <label for="descripcion" class="labelTitulo">Descripción:</label>
                                         <textarea class="form-control-textarea border-green" name="descripcion" id="descripcionTarea" rows="3"
@@ -1318,7 +1318,7 @@
                             <div class="text-center" style="color:#5C7C26; margin-top: 10px; font-weight: bold;">
                                 <h4 class="" style="color:#5C7C26; margin-top: 10px; font-weight: bold;">Añadir Solicitud</h4>
                             </div>
-                            
+
                             <div class="line"></div>
                             <form action="{{ route('solicitudes.store') }}" method="post">
                             <input type="hidden" name="tipo" value="En Espera">
@@ -1337,7 +1337,7 @@
                                         <input autofocus type="text" class="inputCaja" name="title"
                                             placeholder="Título de Solicitud..." title="Escriba El Título de la Solicitud.">
                                     </div>
-                                    
+
                                     <div class="mb-3" role="search">
                                         <label for="title" class="labelTitulo">Buscador Equipo:</label>
                                         <input autofocus type="text" class="inputCaja" id="searchSolicitudes" name="search"
@@ -1351,7 +1351,7 @@
                                         </div>
 
                                         <div class="mb-3 col-6">
-                                            <label for="title" class="labelTitulo">Número Economico:</label>
+                                            <label for="title" class="labelTitulo">Número Económico:</label>
                                             <input autofocus type="text" class="inputCaja" id="numeconomicoSolicitud"
                                                 name="numeconomico" placeholder="Del Equipo..." readonly>
                                         </div>
@@ -1368,7 +1368,7 @@
                                                 name="marca" placeholder="Marca Equipo..." readonly>
                                         </div>
                                     <div class="mb-3 col-6">
-                                        <label for="prioridad" class="labelTitulo">Prioridad*:</label>
+                                        <label for="prioridad" class="labelTitulo">Prioridad: *</label>
                                         <select name="prioridad" id="prioridadSelectSolicitud" required class="form-select">
                                             <option value="">Seleccione</option>
                                                 <option value="Urgente" data-color="#ff0000">
@@ -1415,7 +1415,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                
+
                                     <div class="mb-3">
                                         <label for="color" class="labelTitulo">Color:</label>
                                         <div id="colorBoxSolicitud" class="color-box w-100" style="margin-left:-0.5px"></div>
@@ -1425,14 +1425,14 @@
                                         <input type="date" class="inputCaja" name="fechaSolicitud" id="fechaSolicitud"
                                             aria-describedby="helpId" placeholder="Fecha">
                                     </div>
-    
+
                                     <div class="mb-3 col-6">
                                         <label for="hora" class="labelTitulo">Hora de Llegada:</label>
                                         <input type="time" class="inputCaja" name="horaSolicitud" id="horaSolicitud"
                                             aria-describedby="helpId" placeholder="Fecha">
                                     </div>
-                                    
-    
+
+
                                     <div class="mb-3">
                                         <label for="descripcion" class="labelTitulo">Descripción:</label>
                                         <textarea class="form-control-textarea border-green" name="descripcion" id="descripcionSolicitud" rows="3"
@@ -1457,7 +1457,7 @@
                                         <input type="radio" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" value="herramienta" id="checkbox_herramienta">
                                         <label for="checkbox_herramienta">Herramienta</label><br>
                                     </div>
-                                
+
                                     <div class="form-check form-check-inline">
                                         <input type="radio" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" value="refaccion" id="checkbox_refaccion">
                                         <label for="checkbox_refaccion">Refacción</label><br>
@@ -1491,7 +1491,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    
+
                                     </div>
                                 </div>
 
@@ -1511,7 +1511,7 @@
                                                         aria-describedby="helpId" placeholder="Litros">
                                                 </div>
                                                 <div class="mb-3 col-5">
-                                                    <label for="carga" class="labelTitulo">Tipo*:</label>
+                                                    <label for="carga" class="labelTitulo">Tipo: *</label>
                                                     <select name="carga[]" id="carga" required class="form-select">
                                                         <option value="carga" selected>Carga</option>
                                                     </select>
@@ -1520,16 +1520,16 @@
                                                     <button type="button" id="removeRowCombustible"
                                                         class="btnRojo"></button>
                                                     </div>
-            
+
                                                 <div class="mb-3">
                                                     <label for="comentarioTarea" class="labelTitulo">Comentario:</label>
                                                     <textarea class="form-control-textarea border-green" name="comentarioTarea[]" id="comentarioTarea" rows="3"
                                                         placeholder="Especifique..."></textarea>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
-                                        
+
                                     </div>
                                 </div>
 
@@ -1569,9 +1569,9 @@
                                                         placeholder="Especifique..."></textarea>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
-                                        
+
                                     </div>
                                 </div>
 
@@ -1596,7 +1596,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                
+
                                                 <div class="mb-3 col-5">
                                                     <label for="cantidad" class="labelTitulo">Cantidad:</label>
                                                     <input type="number" class="inputCaja" name="cantidadSolicitudRefaccion[]" id="cantidadSolicitudRefaccion"
@@ -1612,7 +1612,7 @@
                                                         placeholder="Especifique..."></textarea>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -1625,7 +1625,7 @@
                         </form>
                         </fieldset>
                     </div>
-                    
+
                 </div>
             </div>
         </div>  --}}
@@ -1929,7 +1929,7 @@
                                 document.getElementById('fechaTarea').value = informacion.dateStr;
                                 document.getElementById('fechaSolicitud').value = informacion.dateStr;
                                 myModal.show();
-                                
+
                             } else {
                                 alertaNoPermission();
                             }
@@ -2021,7 +2021,7 @@
                 $(this).closest('.opcReparacion').remove();
             }
         });
-       
+
     </script>
     <script>
         function crearItemsCombustible() {
@@ -2035,7 +2035,7 @@
             }
         });
 
-        
+
     </script>
     <script>
         function crearItemsHerramienta() {
@@ -2048,7 +2048,7 @@
                 $(this).closest('.opcHerramienta').remove();
             }
         });
-        
+
     </script>
     <script>
         function crearItemsRefaccion() {
@@ -2067,22 +2067,22 @@
             color: #000;
             overflow-x: hidden;
             height: 100%;
-            
+
             background-repeat: no-repeat;
         }
-        
+
         .container {
             margin: 200px auto;
         }
-        
+
         fieldset {
             display: none;
         }
-        
+
         fieldset.show {
             display: block;
         }
-        
+
         select:focus, input:focus {
             -moz-box-shadow: none !important;
             -webkit-box-shadow: none !important;
@@ -2091,53 +2091,53 @@
             outline-width: 0 !important;
             font-weight: 400;
         }
-        
+
         button:focus {
             -moz-box-shadow: none !important;
             -webkit-box-shadow: none !important;
             box-shadow: none !important;
             outline-width: 0;
         }
-        
+
         .tabs {
             margin: 2px 5px 0px 5px;
             padding-bottom: 10px;
             cursor: pointer;
         }
-        
+
         .tabs:hover, .tabs.active {
             border-bottom: 5px solid #a6ce34;
         }
-        
+
         a:hover {
             text-decoration: none;
             color: #5c7c26;
         }
-        
+
         .box {
             margin-bottom: 10px;
             border-radius: 5px;
             padding: 10px;
         }
-        
+
           .modal-header-multiple {
             display: flex;
             justify-content: space-between;
           }
-          
+
           .modal-header-multiple .tabs {
             flex: 1;
             text-align: center; /* Opcional: centrar contenido horizontalmente */
 
           }
-          
+
           .modal-header-multiple {
             display: grid;
             grid-template-columns: repeat(3, 1fr); /* 4 columnas con el mismo ancho */
             gap: 1px; /* Espacio entre columnas */
             align-items: center; /* Alinea verticalmente en el centro */
           }
-          
+
           /* Opcional: Estilos adicionales para las columnas activas */
           .modal-header-multiple .tabs.active {
             color: #5c7c26;
@@ -2149,7 +2149,7 @@
             height: 2px;
             width: 100%;
         }
-        
+
         @media screen and (max-width: 768px) {
             .tabs h6 {
                 font-size: 12px;
@@ -2164,22 +2164,22 @@
         $(document).ready(function(){
 
             $(".tabs").click(function(){
-                
+
                 $(".tabs").removeClass("active");
-                $(".tabs h6").removeClass("font-weight-bold");    
-                $(".tabs h6").addClass("text-muted");    
+                $(".tabs h6").removeClass("font-weight-bold");
+                $(".tabs h6").addClass("text-muted");
                 $(this).children("h6").removeClass("text-muted");
                 $(this).children("h6").addClass("font-weight-bold");
                 $(this).addClass("active");
-            
+
                 current_fs = $(".active");
-            
+
                 next_fs = $(this).attr('id');
                 next_fs = "#" + next_fs + "1";
-            
+
                 $("fieldset").removeClass("show");
                 $(next_fs).addClass("show");
-            
+
                 current_fs.animate({}, {
                     step: function() {
                         current_fs.css({
@@ -2192,7 +2192,7 @@
                     }
                 });
             });
-            
+
             });
     </script>
 
@@ -2243,9 +2243,9 @@
             var formattedTimeEdit = startLocalEdit.toFormat("HH:mm:ss");
             console.log('fechaSalida', evento);
 
-            
+
             document.getElementById('fechaEdit').value = fechaFormateada;
-            
+
             document.getElementById('horaEdit').value = formattedTime;
             // if(fechaSalida)
             if(evento._def.hasEnd){
@@ -2257,7 +2257,7 @@
             }else{
                 console.log('FEHCASSSSSS NO EDITADA');
             }
-            
+
             //fechaEdit = evento._def.extendedProps.fecha;
 
             document.getElementById('titleSelectEdit').value = evento._def.extendedProps.tipoMantenimientoId;
@@ -2331,9 +2331,9 @@
             var formattedTimeEdit = startLocalEdit.toFormat("HH:mm:ss");
             console.log('fechaSalida', evento);
 
-            
+
             document.getElementById('fechaEditTarea').value = fechaFormateada;
-            
+
             document.getElementById('horaEditTarea').value = formattedTime;
             // if(fechaSalida)
             if(evento._def.hasEnd){
@@ -2345,7 +2345,7 @@
             }else{
                 console.log('FEHCASSSSSS NO EDITADA');
             }
-            
+
             //fechaEdit = evento._def.extendedProps.fecha;
             console.log('evento._def.extendedProps.title', evento._def.title);
             document.getElementById('titleEditTarea').value = evento._def.title;
@@ -2406,9 +2406,9 @@
             var formattedTimeEdit = startLocalEdit.toFormat("HH:mm:ss");
             console.log('fechaSalida', evento);
 
-            
+
             document.getElementById('fechaEditSolicitud').value = fechaFormateada;
-            
+
             document.getElementById('horaEditSolicitud').value = formattedTime;
             // if(fechaSalida)
             if(evento._def.hasEnd){
@@ -2420,7 +2420,7 @@
             }else{
                 console.log('FEHCASSSSSS NO EDITADA');
             }
-            
+
             //fechaEdit = evento._def.extendedProps.fecha;
             document.getElementById('titleEditSolicitud').value = evento._def.title;
             document.getElementById('prioridadEditSolicitud').value = evento._def.extendedProps.solicitud_prioridad;
@@ -2807,7 +2807,7 @@
             let prioridadSelectSolicitud = document.getElementById("prioridadSelectSolicitud");
             let colorBoxSolicitud = document.getElementById("colorBoxSolicitud");
             let colorSolicitud = document.getElementById("colorBoxHiddenSolicitud");
-            
+
 
             titleSelect.addEventListener("change", function() {
                 let selectedColor = this.options[this.selectedIndex].getAttribute("data-color");
@@ -2862,7 +2862,7 @@
                 colorBoxEditSolicitud.style.backgroundColor = selectedColor;
                 colorBoxHiddenSolicitudEdit.value = selectedColor;
             });
-            
+
         });
     </script>
 
@@ -2882,7 +2882,7 @@
                     editarCamposLink.innerHTML = `
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
                     <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
-                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>  
+                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
                 </svg>
             `;
                     tituloModal.textContent = 'Editar Mantenimiento';
@@ -2924,7 +2924,7 @@
 
         });
     </script>
-    
+
     <script>
         let vistaTarea = false;
         document.addEventListener('DOMContentLoaded', function() {
@@ -2941,7 +2941,7 @@
                     editarCamposLink.innerHTML = `
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
                     <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
-                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>  
+                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
                 </svg>
             `;
                     tituloModal.textContent = 'Editar Actividad';
@@ -2971,7 +2971,7 @@
 
         });
     </script>
-    
+
     <script>
         let vistaSolicitud = false;
         document.addEventListener('DOMContentLoaded', function() {
@@ -2990,7 +2990,7 @@
                     editarCamposLink.innerHTML = `
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
                     <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
-                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>  
+                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
                 </svg>
             `;
                     tituloModal.textContent = 'Editar Solicitud';
@@ -3043,7 +3043,7 @@
         const combustibleCampos = document.getElementById('combustible_campos');
         const herramientaCampos = document.getElementById('herramienta_campos');
         const refaccionCampos = document.getElementById('refaccion_campos');
-    
+
         // Escucha el evento de cambio en los checkboxes
         checkboxes.forEach(checkbox => {
             checkbox.addEventListener('change', function() {
@@ -3052,7 +3052,7 @@
                 combustibleCampos.style.display = 'none';
                 herramientaCampos.style.display = 'none';
                 refaccionCampos.style.display = 'none';
-    
+
                 // Muestra solo los campos correspondientes al checkbox seleccionado
                 if (checkbox.checked) {
                     console.log('hola', checkbox.value);

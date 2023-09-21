@@ -149,8 +149,10 @@ class inventarioController extends Controller
                 $inventarios = null;
             }
 
+            // dd($usuarios);
 
-            return view('inventario.indexInventario', compact('inventarios', 'tipo', 'usuarios'));
+
+            return view('inventario.indexInventario', compact('inventarios', 'tipo'));
         }
     }
 
@@ -248,6 +250,8 @@ class inventarioController extends Controller
         $vctMaquinaria = maquinaria::all();
         // dd($vctDesde);
         $inventario = inventario::where("id", $inventario->id)->first();
+        // dd($inventario);
+
         return view('inventario.detalleInventario', compact('inventario', 'vctDesde', 'vctHasta', 'vctTipos', 'vctMarcas', 'vctProveedores', 'vctMaquinaria'));
     }
 

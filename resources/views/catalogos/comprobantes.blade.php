@@ -20,7 +20,6 @@
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
                                     <h4 class="card-title">Comprobantes</h4>
-
                                 </div>
                                 <div class="card-body">
                                     @if (session('success'))
@@ -34,26 +33,31 @@
                                         </div>
                                     @endif
                                     <div class="row">
-                                    <div class="d-flex p-3 divBorder">
-                                        <div class="col-12 text-right">
+                                        <div class="d-flex p-3">
+                                            <div class="col-12 text-right">
 
-                                            <a href="{{ route('catalogos.index') }}">
-                                                <button class="btn regresar">
-                                                    <span class="material-icons">
-                                                        reply
-                                                    </span>
-                                                    Regresar
-                                                </button>
-                                            </a>
+                                                <a href="{{ route('catalogos.index') }}">
+                                                    <button class="btn regresar">
+                                                        <span class="material-icons">
+                                                            reply
+                                                        </span>
+                                                        Regresar
+                                                    </button>
+                                                </a>
 
-                                            @can('catalogos_create')
-                                                <button class="btn botonGral float-end" data-bs-toggle="modal"
-                                                    data-bs-target="#nuevoItem">
-                                                    Añadir Comprobante
-                                                </button>
-                                            @endcan
+                                                @can('catalogos_create')
+                                                    <button class="btn botonGral float-end" data-bs-toggle="modal"
+                                                        data-bs-target="#nuevoItem">
+                                                        Añadir Comprobante
+                                                    </button>
+                                                @endcan
+                                            </div>
                                         </div>
                                     </div>
+
+                                    <div class="divBorder">
+                                        <p>Catálogo General de Comprobantes Aplicables para los Movimientos de la Caja
+                                            Chica.</p>
                                     </div>
 
 
@@ -94,24 +98,24 @@
                                                             </svg>
                                                         </a>
                                                         {{-- @endcan --}}
-                                                        {{-- @can('user_destroy') --}}
-                                                        {{-- <form action="{{ route('puestos.delete', $item->id) }}"
-                                                            method="POST" style="display: inline-block;"
-                                                            onsubmit="return confirm('Seguro?')">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="btnSinFondo" type="submit" rel="tooltip">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="28"
-                                                                    height="28" fill="currentColor"
-                                                                    class="bi bi-x-circle" viewBox="0 0 16 16">
-                                                                    <path
-                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                    <path
-                                                                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                                </svg>
-                                                            </button>
-                                                        </form> --}}
-                                                        {{-- @endcan --}}
+                                                        @can('user_destroy')
+                                                            <form action="{{ route('comprobante.destroy', $item->id) }}"
+                                                                method="POST" style="display: inline-block;"
+                                                                onsubmit="return confirm('Seguro?')">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="btnSinFondo" type="submit" rel="tooltip">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28"
+                                                                        height="28" fill="currentColor"
+                                                                        class="bi bi-x-circle" viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                        <path
+                                                                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                    </svg>
+                                                                </button>
+                                                            </form>
+                                                        @endcan
                                                     </td>
                                                 </tr>
                                             @empty
@@ -243,7 +247,7 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre,  comentarios) {
+        function cargaItem(id, nombre, comentarios) {
 
             const txtId = document.getElementById('controlId');
             txtId.value = id;
