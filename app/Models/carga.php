@@ -13,6 +13,6 @@ class carga extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'litros', 'maquinariaId', 'operadorId', 'precio', 'userId'
+        'litros', 'maquinariaId', 'operadorId', 'precio', 'userId', 'horaLlegadaCarga', 'comentario'
     ];
 }

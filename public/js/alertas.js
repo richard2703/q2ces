@@ -111,6 +111,24 @@ function mostrarSpinner(estado) {
 	  jQuery('span.'+idname).next().find('span').html(filename);
   }
   });
+    // Alertas de Carga Combustible
+    function mostrarAlertaExito() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Carga guardada exitosamente',
+            showConfirmButton: false,
+            timer: 1500 // La alerta se cierra automáticamente después de 1.5 segundos
+        });
+    }
+
+    // Alerta de error
+    function mostrarAlertaError() {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'El kilometraje no puede ser inferior al registrado'
+        });
+    }
   
   
   

@@ -482,5 +482,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/print-vista-previa', 'App\Http\Controllers\printController@print')->name('print.get');
     Route::post('/print-combustible', 'App\Http\Controllers\printController@print')->name('print.post');
     Route::post('/print-carga-combustible', 'App\Http\Controllers\printController@printCarga')->name('printCarga.post');
+    Route::post('/printOnlyTicket-combustible', 'App\Http\Controllers\printController@printOnlyTicket')->name('printOnlyTicket.post');
+    Route::post('/printOnlyTicketEdit-combustible', 'App\Http\Controllers\printController@printEdit')->name('printEdit.post');
+
+    Route::get('/comprobar-descarga/{id}', 'detalleDescargaController@comprobarDescarga');
     // Route::post('/import-excel', 'App\Http\Controllers\ImportExcelController@import')->name('importExcel.post');
+    //
+
+    Route::resource('combustibleTote', App\Http\Controllers\CombustibleToteController::class);
 });

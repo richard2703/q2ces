@@ -125,16 +125,19 @@ class inventarioController extends Controller
                 'descarga.imgHoras',
                 'descarga.imgKm',
                 'descarga.litros',
-                'descarga.created_at AS fecha'
+                'descarga.created_at AS fecha',
+                'descarga.ticket',
+                'descarga.descargaDetalleId',
+                'descarga.id',
+                'detalles.*',
             )
                 ->join('maquinaria', 'maquinaria.id', '=', 'descarga.maquinariaId')
                 ->join('personal', 'personal.id', '=', 'descarga.operadorId')
                 ->join('maquinaria as m2', 'm2.id', '=', 'descarga.servicioId')
                 ->join('personal as p2', 'p2.id', '=', 'descarga.receptorId')
+                ->leftJoin('descargaDetalle as detalles', 'descarga.descargaDetalleId', '=', 'detalles.id')
                 ->orderBy('descarga.created_at', 'desc')
                 ->get();
-
-
 
             // dd($descargas);
 
@@ -453,7 +456,6 @@ class inventarioController extends Controller
                     between '" . $endDate->toDateString() . "' and '" . Carbon::now()->addDay()->toDateString() . "' and maquinariaId = '" . $request->id . "'
                     group by date(created_at) order by created_at";
         $script = DB::select($sql1);
-
         $suma = [];
         $dia = [];
         foreach ($script as $key) {
@@ -477,31 +479,39 @@ class inventarioController extends Controller
         // dd('carga', $request);
         $request->validate([
             'litros' => 'required|numeric',
-            'precio' => 'required|numeric|max:30|min:10',
+            // 'precio' => 'required|numeric|max:30|min:10',
         ], [
             'litros.required' => 'El campo litros es obligatorio.',
             'precio.required' => 'El campo precio es obligatorio.',
             'litros.numeric' => 'El campo litros debe de ser numérico.',
             'precio.numeric' => 'El campo precio debe de ser numérico.',
-            'precio.minimo' => 'El campo precio debiera de ser mayor a 10 pesos.',
-            'precio.maximo' => 'El campo precio debiera de ser menor a 30 pesos.',
+            // 'precio.minimo' => 'El campo precio debiera de ser mayor a 10 pesos.',
+            // 'precio.maximo' => 'El campo precio debiera de ser menor a 30 pesos.',
         ]);
         $carga = $request->only(
             'litros',
             'maquinariaId',
             'operadorId',
             'precio',
+            'horaLlegadaCarga',
+            'comentario'
         );
         $carga['userId'] = auth()->user()->id;
         //*** guardamos el registro */
-        carga::create($carga);
+        // dd($request);
 
         //buscamos el equipo para actulizar el nivel de la cisterna
         $cisterna =   maquinaria::where("id", $request['maquinariaId'])->first();
         $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $request['litros']);
-        $cisterna->update();
 
-        Session::flash('message', 1);
+        if ($request['kilometraje'] > $cisterna->kilometraje) {
+            $cisterna->kilometraje = $request['kilometraje'];
+            carga::create($carga);
+            $cisterna->update();
+            Session::flash('message', 1);
+        } else {
+            Session::flash('message', 6);
+        }
 
         return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
     }
