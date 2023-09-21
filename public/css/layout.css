@@ -175,6 +175,7 @@
   
   .dropdown-menu .dropdown-item:hover {
 	background-color: var(--select);
+  color: var(--active);
   }
   
   @media (min-width: 768px) {

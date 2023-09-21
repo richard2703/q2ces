@@ -1129,4 +1129,30 @@ class personalController extends Controller
         // dd( $docs );        
         return view('personal.showDePersonal', compact('personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal', 'vctPersonal', 'vctEstatus', 'vctPuestos', 'vctNiveles'));
     }
+
+    public function cuenta()
+    {
+        $user = User::where('id', auth()->user()->id)->first();
+        return view('personal.pass', compact('user'));
+    }
+
+    public function cuentaUpdate(Request $request, User $id)
+    {
+        $Validator = $request->validate([
+            'password' => 'required|min:4',
+            'Rpassword' => 'required|same:password'
+        ], [
+            'password.required' => 'La contraseña es Obligatorio',
+            'Rpassword.required' => 'La confirmacion de contraseña es Obligatorio',
+            'Rpassword.same' => 'Las Contraseñas no coinciden',
+        ]);
+        $password = $request->input('password');
+        if ($password)
+            $id->password = bcrypt($password);
+
+        $id->save();
+        // $id->update($data);
+        $user = User::where('id', auth()->user()->id)->first();
+        return view('personal.pass', compact('user'));
+    }
 }
