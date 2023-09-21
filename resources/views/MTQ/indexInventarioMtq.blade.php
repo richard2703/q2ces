@@ -25,7 +25,7 @@
                                     @endif
                                     <div class="row divBorder">
                                         <div class="col-6 text-right">
-                                            <a href="{{ route('inventario.dash') }}">
+                                            <a href="{{ route('inventarioMtq.dash') }}">
                                                 <button class="btn regresar">
                                                     <span class="material-icons">
                                                         reply

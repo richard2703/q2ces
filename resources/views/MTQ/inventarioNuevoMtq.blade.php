@@ -24,7 +24,7 @@
                             @endif
                             <div class="row divBorder ">
                                 <div class="col-6 pb-3 text-right">
-                                    <a href="{{ route('inventario.index', $tipo) }}">
+                                    <a href="{{ route('inventarioMtq.index', $tipo) }}">
                                         <button class="btn regresar ">
                                             <span class="material-icons">
                                                 reply

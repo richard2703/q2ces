@@ -95,7 +95,7 @@ class inventarioMtqController extends Controller
         $inventario = inventarioMtq::where("id", $inventario->id)->first();
         // dd($inventario);
 
-        return view('inventario.detalleInventario', compact('inventario', 'vctDesde', 'vctHasta', 'vctMarcas', 'vctProveedores', 'vctMaquinaria'));
+        return view('MTQ.detalleInventarioMtq ', compact('inventario', 'vctDesde', 'vctHasta', 'vctMarcas', 'vctProveedores', 'vctMaquinaria'));
     }
 
     /**
