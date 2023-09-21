@@ -383,4 +383,28 @@ class Calendario {
 
         return "$intDiaNombre $intDia de $intMes de $intAnio.";
     }
+
+    /**
+    * Formatea la fecha
+    *
+    * @param [ type ] $dtFecha
+    * @param boolean $blnUsarDiaCompleto
+    * @return void
+    */
+
+    function getPeriodoFormateado( $dtFechaInicio, $dtFechaFin, $blnUsarDiaCompleto = false ) {
+
+        $objCalendar = new Calendario();
+        $intDia =  date_format( $dtFechaInicio, 'd' );
+        $intDiaNombre = $objCalendar->getNameDay( date_format( $dtFechaInicio, 'N' ), $blnUsarDiaCompleto );
+        $intMes = $objCalendar->getNameMonth( date_format( $dtFechaInicio, 'm' ) );
+        $intAnio =  date_format( $dtFechaInicio, 'Y' );
+
+        $intDia2 =  date_format( $dtFechaFin, 'd' );
+        $intDiaNombre2 = $objCalendar->getNameDay( date_format( $dtFechaFin, 'N' ), $blnUsarDiaCompleto );
+        $intMes2 = $objCalendar->getNameMonth( date_format( $dtFechaFin, 'm' ) );
+        $intAnio2 =  date_format( $dtFechaFin, 'Y' );
+
+        return "$intDiaNombre $intDia de $intMes de $intAnio al $intDiaNombre2 $intDia2 de $intMes2 de $intAnio2";
+    }
 }

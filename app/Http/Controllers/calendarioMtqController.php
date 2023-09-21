@@ -87,7 +87,7 @@ class calendarioMtqController extends Controller
     public function show(calendarioMtq $calendarioMtq)
     {
         //
-        dd('show');
+        // dd('show');
     }
 
     /**

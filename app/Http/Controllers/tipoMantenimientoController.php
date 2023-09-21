@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use App\Models\tipoMantenimiento;
+use Illuminate\Database\QueryException;
 
 class tipoMantenimientoController extends Controller
 {
@@ -45,7 +46,7 @@ class tipoMantenimientoController extends Controller
         abort_if(Gate::denies('catalogos_create'), 403);
 
         // dd( $request );
-        $request->validate( [
+        $request->validate([
             'nombre' => 'required|max:250|unique:tipoMantenimiento,nombre,' . $request['nombre'],
             'comentarios' => 'nullable|max:500',
         ], [
@@ -94,30 +95,30 @@ class tipoMantenimientoController extends Controller
     public function update(Request $request, $id)
     {
 
-        abort_if ( Gate::denies( 'catalogos_edit' ), 403 );
+        abort_if(Gate::denies('catalogos_edit'), 403);
 
         // dd( $request );
 
-        $request->validate( [
-            'nombre' => 'required|max:250|unique:tipoMantenimiento,nombre,' . $request[ 'controlId' ],
+        $request->validate([
+            'nombre' => 'required|max:250|unique:tipoMantenimiento,nombre,' . $request['controlId'],
             'comentario' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.unique' => 'El valor del campo nombre ya esta en uso.',
             'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
-        ] );
+        ]);
         $data = $request->all();
 
-        $record = tipoMantenimiento::where( 'id', $data[ 'controlId' ] )->first();
+        $record = tipoMantenimiento::where('id', $data['controlId'])->first();
 
-        if ( is_null( $record ) == false ) {
+        if (is_null($record) == false) {
             // dd( $data );
-            $record->update( $data );
-            Session::flash( 'message', 1 );
+            $record->update($data);
+            Session::flash('message', 1);
         }
 
-        return redirect()->route( 'catalogoTiposMantenimiento.index' );
+        return redirect()->route('catalogoTiposMantenimiento.index');
     }
 
     /**
@@ -126,8 +127,21 @@ class tipoMantenimientoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(tipoMantenimiento $tipoMantenimiento)
     {
-        //
+        try {
+            $tipoMantenimiento->delete(); // Intenta eliminar 
+        } catch (QueryException $e) {
+            if ($e->getCode() === 23000) {
+                return redirect()->back()->with('faild', 'No Puedes Eliminar ');
+                // Esto es un error de restricción de clave externa (FOREIGN KEY constraint)
+                // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
+            } else {
+                return redirect()->back()->with('faild', 'No Puedes Eliminar si esta en uso');
+                // Otro tipo de error de base de datos
+                // Maneja según sea necesario
+            }
+        }
+        return redirect()->back()->with('success', 'Eliminado correctamente');
     }
 }

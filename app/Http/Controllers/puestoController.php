@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\puesto;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
@@ -22,9 +23,9 @@ class puestoController extends Controller
     {
         abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = puesto::select('puestos.*','puestosNivel.nombre as puestoNivel')
-        ->leftJoin('puestoNivel', 'puestoNivel.id', '=', 'puestos.puestoNivelId')
-        ->orderBy('nombre', 'asc')->paginate(15);
+        $records = puesto::select('puestos.*', 'puestosNivel.nombre as puestoNivel')
+            ->leftJoin('puestoNivel', 'puestoNivel.id', '=', 'puestos.puestoNivelId')
+            ->orderBy('nombre', 'asc')->paginate(15);
 
         return view('catalogo.indexPuestos', compact('puestos'));
     }
@@ -136,8 +137,21 @@ class puestoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy($id)
+    public function destroy(puesto $puesto)
     {
-        //
+        try {
+            $puesto->delete(); // Intenta eliminar 
+        } catch (QueryException $e) {
+            if ($e->getCode() === 23000) {
+                return redirect()->back()->with('faild', 'No Puedes Eliminar ');
+                // Esto es un error de restricción de clave externa (FOREIGN KEY constraint)
+                // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
+            } else {
+                return redirect()->back()->with('faild', 'No Puedes Eliminar si esta en uso');
+                // Otro tipo de error de base de datos
+                // Maneja según sea necesario
+            }
+        }
+        return redirect()->back()->with('success', 'Eliminado correctamente');
     }
 }
