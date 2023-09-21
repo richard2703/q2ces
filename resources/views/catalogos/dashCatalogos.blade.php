@@ -101,8 +101,8 @@
                                                 <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                                     <a href="{{ route('catalogoTipoUniforme.index') }}" class="">
                                                         <img src="/img/catalogos/tiposDeUniforme.svg"
-                                                            alt="Tipos de Uniforme" title="Tipos de Uniforme"
-                                                            width="30%" class="botonIconoPrincipal">
+                                                            alt="Tipos de Uniforme" title="Tipos de Uniforme" width="30%"
+                                                            class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Tipos de
                                                             Uniforme</p>
                                                     </a>
@@ -110,8 +110,8 @@
 
                                                 <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                                     <a href="{{ route('catalogoMarca.index') }}" class="">
-                                                        <img src="/img/catalogos/marcas.svg" alt="Marcas"
-                                                            title="Marcas" width="30%" class="botonIconoPrincipal">
+                                                        <img src="/img/catalogos/marcas.svg" alt="Marcas" title="Marcas"
+                                                            width="30%" class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Marcas</p>
                                                     </a>
                                                 </div>

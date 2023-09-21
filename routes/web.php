@@ -132,9 +132,6 @@ Route::group(['middleware' => 'auth'], function () {
     // Crud TiposServicios
     Route::resource('tiposServicios', App\Http\Controllers\tiposServiciosController::class);
 
-    // Crud ServiciosMtq
-    Route::resource('serviciosMtq', App\Http\Controllers\serviciosMtqController::class);
-
     // Crud Lugares
     Route::resource('lugares', App\Http\Controllers\lugaresController::class);
     // Crud Ubicaciones
@@ -159,120 +156,119 @@ Route::group(['middleware' => 'auth'], function () {
     //*** catalogos */
     Route::get('/catalogos/', [App\Http\Controllers\catalogosController::class, 'index'])->name('catalogos.index');
 
-    Route::get('/catalogos/puestos', [App\Http\Controllers\catalogosController::class, 'indexPuestos'])->name('catalogoPuestos.index');
-    Route::get('/catalogos/puestos/nuevo', [App\Http\Controllers\puestoController::class, 'create'])->name('puesto.create');
-    Route::post('/catalogos/puestos', [App\Http\Controllers\puestoController::class, 'store'])->name('puesto.store');
-    Route::put('/catalogos/puestos/{puesto}', [App\Http\Controllers\puestoController::class, 'update'])->name('puesto.update');
-    Route::delete('/catalogos/puestos/{puesto}', [App\Http\Controllers\puestoController::class, 'destroy'])->name('puesto.delete');
+    // Route::get('/catalogos/puestos', [App\Http\Controllers\catalogosController::class, 'indexPuestos'])->name('catalogoPuestos.index');
+    // Route::get('/catalogos/puestos/nuevo', [App\Http\Controllers\puestoController::class, 'create'])->name('puesto.create');
+    // Route::post('/catalogos/puestos', [App\Http\Controllers\puestoController::class, 'store'])->name('puesto.store');
+    // Route::put('/catalogos/puestos/{puesto}', [App\Http\Controllers\puestoController::class, 'update'])->name('puesto.update');
+    // Route::delete('/catalogos/puestos/{puesto}', [App\Http\Controllers\puestoController::class, 'destroy'])->name('puesto.delete');
 
-    Route::get('/catalogos/puestosNivel', [App\Http\Controllers\catalogosController::class, 'indexPuestosNivel'])->name('catalogoPuestosNivel.index');
-    Route::get('/catalogos/puestosNivel/nuevo', [App\Http\Controllers\puestoNivelController::class, 'create'])->name('puestoNivel.create');
-    Route::post('/catalogos/puestosNivel', [App\Http\Controllers\puestoNivelController::class, 'store'])->name('puestoNivel.store');
-    Route::put('/catalogos/puestosNivel/{puesto}', [App\Http\Controllers\puestoNivelController::class, 'update'])->name('puestoNivel.update');
-    Route::delete('/catalogos/puestosNivel/{puesto}', [App\Http\Controllers\puestoNivelController::class, 'destroy'])->name('puestoNivel.delete');
+    // Route::get('/catalogos/puestosNivel', [App\Http\Controllers\catalogosController::class, 'indexPuestosNivel'])->name('catalogoPuestosNivel.index');
+    // Route::get('/catalogos/puestosNivel/nuevo', [App\Http\Controllers\puestoNivelController::class, 'create'])->name('puestoNivel.create');
+    // Route::post('/catalogos/puestosNivel', [App\Http\Controllers\puestoNivelController::class, 'store'])->name('puestoNivel.store');
+    // Route::put('/catalogos/puestosNivel/{puesto}', [App\Http\Controllers\puestoNivelController::class, 'update'])->name('puestoNivel.update');
+    // Route::delete('/catalogos/puestosNivel/{puesto}', [App\Http\Controllers\puestoNivelController::class, 'destroy'])->name('puestoNivel.delete');
 
-    Route::get('/catalogos/categoriasTareas', [App\Http\Controllers\catalogosController::class, 'indexCatalogoCategoriasTareas'])->name('catalogoCategoriasTareas.index');
-    Route::get('/catalogos/categoriasTareas/nuevo', [App\Http\Controllers\tareaCategoriaController::class, 'create'])->name('tareaCategoria.create');
-    Route::post('/catalogos/categoriasTareas', [App\Http\Controllers\tareaCategoriaController::class, 'store'])->name('tareaCategoria.store');
-    Route::put('/catalogos/categoriasTareas/{tarea}', [App\Http\Controllers\tareaCategoriaController::class, 'update'])->name('tareaCategoria.update');
-    Route::delete('/catalogos/categoriasTareas/{tarea}', [App\Http\Controllers\tareaCategoriaController::class, 'destroy'])->name('tareaCategoria.delete');
+    // Route::get('/catalogos/categoriasTareas', [App\Http\Controllers\catalogosController::class, 'indexCatalogoCategoriasTareas'])->name('catalogoCategoriasTareas.index');
+    // Route::get('/catalogos/categoriasTareas/nuevo', [App\Http\Controllers\tareaCategoriaController::class, 'create'])->name('tareaCategoria.create');
+    // Route::post('/catalogos/categoriasTareas', [App\Http\Controllers\tareaCategoriaController::class, 'store'])->name('tareaCategoria.store');
+    // Route::put('/catalogos/categoriasTareas/{tarea}', [App\Http\Controllers\tareaCategoriaController::class, 'update'])->name('tareaCategoria.update');
+    // Route::delete('/catalogos/categoriasTareas/{tarea}', [App\Http\Controllers\tareaCategoriaController::class, 'destroy'])->name('tareaCategoria.delete');
 
-    Route::get('/catalogos/categoriasMaquinaria', [App\Http\Controllers\catalogosController::class, 'indexCatalogoCategoriasMaquinaria'])->name('catalogoCategoriasMaquinaria.index');
-    Route::get('/catalogos/categoriasMaquinaria/nuevo', [App\Http\Controllers\maquinariaCategoriaController::class, 'create'])->name('maquinariaCategoria.create');
-    Route::post('/catalogos/categoriasMaquinaria', [App\Http\Controllers\maquinariaCategoriaController::class, 'store'])->name('maquinariaCategoria.store');
-    Route::put('/catalogos/categoriasMaquinaria/{tarea}', [App\Http\Controllers\maquinariaCategoriaController::class, 'update'])->name('maquinariaCategoria.update');
-    Route::delete('/catalogos/categoriasMaquinaria/{tarea}', [App\Http\Controllers\maquinariaCategoriaController::class, 'destroy'])->name('maquinariaCategoria.delete');
+    // Route::get('/catalogos/categoriasMaquinaria', [App\Http\Controllers\catalogosController::class, 'indexCatalogoCategoriasMaquinaria'])->name('catalogoCategoriasMaquinaria.index');
+    // Route::get('/catalogos/categoriasMaquinaria/nuevo', [App\Http\Controllers\maquinariaCategoriaController::class, 'create'])->name('maquinariaCategoria.create');
+    // Route::post('/catalogos/categoriasMaquinaria', [App\Http\Controllers\maquinariaCategoriaController::class, 'store'])->name('maquinariaCategoria.store');
+    // Route::put('/catalogos/categoriasMaquinaria/{tarea}', [App\Http\Controllers\maquinariaCategoriaController::class, 'update'])->name('maquinariaCategoria.update');
+    // Route::delete('/catalogos/categoriasMaquinaria/{tarea}', [App\Http\Controllers\maquinariaCategoriaController::class, 'destroy'])->name('maquinariaCategoria.delete');
 
-    Route::get('/catalogos/tiposMaquinaria', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposMaquinaria'])->name('catalogoTiposMaquinaria.index');
-    Route::get('/catalogos/tiposMaquinaria/nuevo', [App\Http\Controllers\maquinariaTipoController::class, 'create'])->name('maquinariaTipo.create');
-    Route::post('/catalogos/tiposMaquinaria', [App\Http\Controllers\maquinariaTipoController::class, 'store'])->name('maquinariaTipo.store');
-    Route::put('/catalogos/tiposMaquinaria/{tarea}', [App\Http\Controllers\maquinariaTipoController::class, 'update'])->name('maquinariaTipo.update');
-    Route::delete('/catalogos/tiposMaquinaria/{tarea}', [App\Http\Controllers\maquinariaTipoController::class, 'destroy'])->name('maquinariaTipo.delete');
+    // Route::get('/catalogos/tiposMaquinaria', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposMaquinaria'])->name('catalogoTiposMaquinaria.index');
+    // Route::get('/catalogos/tiposMaquinaria/nuevo', [App\Http\Controllers\maquinariaTipoController::class, 'create'])->name('maquinariaTipo.create');
+    // Route::post('/catalogos/tiposMaquinaria', [App\Http\Controllers\maquinariaTipoController::class, 'store'])->name('maquinariaTipo.store');
+    // Route::put('/catalogos/tiposMaquinaria/{tarea}', [App\Http\Controllers\maquinariaTipoController::class, 'update'])->name('maquinariaTipo.update');
+    // Route::delete('/catalogos/tiposMaquinaria/{tarea}', [App\Http\Controllers\maquinariaTipoController::class, 'destroy'])->name('maquinariaTipo.delete');
 
-    Route::get('/catalogos/tiposValorTarea', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposValorTarea'])->name('catalogoTiposValorTarea.index');
-    Route::get('/catalogos/tiposValorTarea/nuevo', [App\Http\Controllers\tipoValorTareaController::class, 'create'])->name('tipoValorTarea.create');
-    Route::post('/catalogos/tiposValorTarea', [App\Http\Controllers\tipoValorTareaController::class, 'store'])->name('tipoValorTarea.store');
-    Route::put('/catalogos/tiposValorTarea/{tarea}', [App\Http\Controllers\tipoValorTareaController::class, 'update'])->name('tipoValorTarea.update');
-    Route::delete('/catalogos/tiposValorTarea/{tarea}', [App\Http\Controllers\tipoValorTareaController::class, 'destroy'])->name('tipoValorTarea.delete');
+    // Route::get('/catalogos/tiposValorTarea', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposValorTarea'])->name('catalogoTiposValorTarea.index');
+    // Route::get('/catalogos/tiposValorTarea/nuevo', [App\Http\Controllers\tipoValorTareaController::class, 'create'])->name('tipoValorTarea.create');
+    // Route::post('/catalogos/tiposValorTarea', [App\Http\Controllers\tipoValorTareaController::class, 'store'])->name('tipoValorTarea.store');
+    // Route::put('/catalogos/tiposValorTarea/{tarea}', [App\Http\Controllers\tipoValorTareaController::class, 'update'])->name('tipoValorTarea.update');
+    // Route::delete('/catalogos/tiposValorTarea/{tarea}', [App\Http\Controllers\tipoValorTareaController::class, 'destroy'])->name('tipoValorTarea.delete');
 
-    Route::get('/catalogos/tiposTareas', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposTareas'])->name('catalogoTiposTareas.index');
-    Route::get('/catalogos/tiposTareas/nuevo', [App\Http\Controllers\tareaTipoController::class, 'create'])->name('tareaTipo.create');
-    Route::post('/catalogos/tiposTareas', [App\Http\Controllers\tareaTipoController::class, 'store'])->name('tareaTipo.store');
-    Route::put('/catalogos/tiposTareas/{tarea}', [App\Http\Controllers\tareaTipoController::class, 'update'])->name('tareaTipo.update');
-    Route::delete('/catalogos/tiposTareas/{tarea}', [App\Http\Controllers\tareaTipoController::class, 'destroy'])->name('tareaTipo.delete');
+    // Route::get('/catalogos/tiposTareas', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposTareas'])->name('catalogoTiposTareas.index');
+    // Route::get('/catalogos/tiposTareas/nuevo', [App\Http\Controllers\tareaTipoController::class, 'create'])->name('tareaTipo.create');
+    // Route::post('/catalogos/tiposTareas', [App\Http\Controllers\tareaTipoController::class, 'store'])->name('tareaTipo.store');
+    // Route::put('/catalogos/tiposTareas/{tarea}', [App\Http\Controllers\tareaTipoController::class, 'update'])->name('tareaTipo.update');
+    // Route::delete('/catalogos/tiposTareas/{tarea}', [App\Http\Controllers\tareaTipoController::class, 'destroy'])->name('tareaTipo.delete');
 
-    Route::get('/catalogos/ubicacionesTareas', [App\Http\Controllers\catalogosController::class, 'indexCatalogoUbicacionesTareas'])->name('catalogoUbicacionesTareas.index');
-    Route::get('/catalogos/ubicacionesTareas/nuevo', [App\Http\Controllers\tareaUbicacionController::class, 'create'])->name('tareaUbicacion.create');
-    Route::post('/catalogos/ubicacionesTareas', [App\Http\Controllers\tareaUbicacionController::class, 'store'])->name('tareaUbicacion.store');
-    Route::put('/catalogos/ubicacionesTareas/{tarea}', [App\Http\Controllers\tareaUbicacionController::class, 'update'])->name('tareaUbicacion.update');
-    Route::delete('/catalogos/ubicacionesTareas/{tarea}', [App\Http\Controllers\tareaUbicacionController::class, 'destroy'])->name('tareaUbicacion.delete');
+    // Route::get('/catalogos/ubicacionesTareas', [App\Http\Controllers\catalogosController::class, 'indexCatalogoUbicacionesTareas'])->name('catalogoUbicacionesTareas.index');
+    // Route::get('/catalogos/ubicacionesTareas/nuevo', [App\Http\Controllers\tareaUbicacionController::class, 'create'])->name('tareaUbicacion.create');
+    // Route::post('/catalogos/ubicacionesTareas', [App\Http\Controllers\tareaUbicacionController::class, 'store'])->name('tareaUbicacion.store');
+    // Route::put('/catalogos/ubicacionesTareas/{tarea}', [App\Http\Controllers\tareaUbicacionController::class, 'update'])->name('tareaUbicacion.update');
+    // Route::delete('/catalogos/ubicacionesTareas/{tarea}', [App\Http\Controllers\tareaUbicacionController::class, 'destroy'])->name('tareaUbicacion.delete');
 
-    Route::get('/catalogos/tiposUniforme', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTipoUniforme'])->name('catalogoTipoUniforme.index');
-    Route::get('/catalogos/tiposUniforme/nuevo', [App\Http\Controllers\tipoUniformeController::class, 'create'])->name('tipoUniforme.create');
-    Route::post('/catalogos/tiposUniforme', [App\Http\Controllers\tipoUniformeController::class, 'store'])->name('tipoUniforme.store');
-    Route::put('/catalogos/tiposUniforme/{tipoUniforme}', [App\Http\Controllers\tipoUniformeController::class, 'update'])->name('tipoUniforme.update');
-    Route::delete('/catalogos/tiposUniforme/{tipoUniforme}', [App\Http\Controllers\tipoUniformeController::class, 'destroy'])->name('tipoUniforme.delete');
+    // Route::get('/catalogos/tiposUniforme', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTipoUniforme'])->name('catalogoTipoUniforme.index');
+    // Route::get('/catalogos/tiposUniforme/nuevo', [App\Http\Controllers\tipoUniformeController::class, 'create'])->name('tipoUniforme.create');
+    // Route::post('/catalogos/tiposUniforme', [App\Http\Controllers\tipoUniformeController::class, 'store'])->name('tipoUniforme.store');
+    // Route::put('/catalogos/tiposUniforme/{tipoUniforme}', [App\Http\Controllers\tipoUniformeController::class, 'update'])->name('tipoUniforme.update');
+    // Route::delete('/catalogos/tiposUniforme/{tipoUniforme}', [App\Http\Controllers\tipoUniformeController::class, 'destroy'])->name('tipoUniforme.delete');
 
+    // Route::get('/catalogos/tiposHorasExtra', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTipoHorasExtra'])->name('catalogoTipoHorasExtra.index');
+    // Route::get('/catalogos/tiposHorasExtra/nuevo', [App\Http\Controllers\tipoHoraExtraController::class, 'create'])->name('tipoHoraExtra.create');
+    // Route::post('/catalogos/tiposHorasExtra', [App\Http\Controllers\tipoHoraExtraController::class, 'store'])->name('tipoHoraExtra.store');
+    // Route::put('/catalogos/tiposHorasExtra/{tipoHorasExtra}', [App\Http\Controllers\tipoHoraExtraController::class, 'update'])->name('tipoHoraExtra.update');
+    // Route::delete('/catalogos/tiposHorasExtra/{tipoHorasExtra}', [App\Http\Controllers\tipoHoraExtraController::class, 'destroy'])->name('tipoHoraExtra.delete');
 
-    Route::get('/catalogos/tiposHorasExtra', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTipoHorasExtra'])->name('catalogoTipoHorasExtra.index');
-    Route::get('/catalogos/tiposHorasExtra/nuevo', [App\Http\Controllers\tipoHoraExtraController::class, 'create'])->name('tipoHoraExtra.create');
-    Route::post('/catalogos/tiposHorasExtra', [App\Http\Controllers\tipoHoraExtraController::class, 'store'])->name('tipoHoraExtra.store');
-    Route::put('/catalogos/tiposHorasExtra/{tipoHorasExtra}', [App\Http\Controllers\tipoHoraExtraController::class, 'update'])->name('tipoHoraExtra.update');
-    Route::delete('/catalogos/tiposHorasExtra/{tipoHorasExtra}', [App\Http\Controllers\tipoHoraExtraController::class, 'destroy'])->name('tipoHoraExtra.delete');
+    // Route::get('/catalogos/tiposEquipo', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposEquipo'])->name('catalogoTiposEquipo.index');
+    // Route::get('/catalogos/tiposEquipo/nuevo', [App\Http\Controllers\tipoEquipoController::class, 'create'])->name('tipoEquipo.create');
+    // Route::post('/catalogos/tiposEquipo', [App\Http\Controllers\tipoEquipoController::class, 'store'])->name('tipoEquipo.store');
+    // Route::put('/catalogos/tiposEquipo/{tipoEquipo}', [App\Http\Controllers\tipoEquipoController::class, 'update'])->name('tipoEquipo.update');
+    // Route::delete('/catalogos/tiposEquipo/{tipoEquipo}', [App\Http\Controllers\tipoEquipoController::class, 'destroy'])->name('tipoEquipo.delete');
 
-    Route::get('/catalogos/tiposEquipo', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposEquipo'])->name('catalogoTiposEquipo.index');
-    Route::get('/catalogos/tiposEquipo/nuevo', [App\Http\Controllers\tipoEquipoController::class, 'create'])->name('tipoEquipo.create');
-    Route::post('/catalogos/tiposEquipo', [App\Http\Controllers\tipoEquipoController::class, 'store'])->name('tipoEquipo.store');
-    Route::put('/catalogos/tiposEquipo/{tipoEquipo}', [App\Http\Controllers\tipoEquipoController::class, 'update'])->name('tipoEquipo.update');
-    Route::delete('/catalogos/tiposEquipo/{tipoEquipo}', [App\Http\Controllers\tipoEquipoController::class, 'destroy'])->name('tipoEquipo.delete');
+    // Route::get('/catalogos/tiposMantenimiento', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposMantenimiento'])->name('catalogoTiposMantenimiento.index');
+    // Route::get('/catalogos/tiposMantenimiento/nuevo', [App\Http\Controllers\tipoMantenimientoController::class, 'create'])->name('tipoMantenimiento.create');
+    // Route::post('/catalogos/tiposMantenimiento', [App\Http\Controllers\tipoMantenimientoController::class, 'store'])->name('tipoMantenimiento.store');
+    // Route::put('/catalogos/tiposMantenimiento/{tipoMantenimiento}', [App\Http\Controllers\tipoMantenimientoController::class, 'update'])->name('tipoMantenimiento.update');
+    // Route::delete('/catalogos/tiposMantenimiento/{tipoMantenimiento}', [App\Http\Controllers\tipoMantenimientoController::class, 'destroy'])->name('tipoMantenimiento.delete');
 
-    Route::get('/catalogos/tiposMantenimiento', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposMantenimiento'])->name('catalogoTiposMantenimiento.index');
-    Route::get('/catalogos/tiposMantenimiento/nuevo', [App\Http\Controllers\tipoMantenimientoController::class, 'create'])->name('tipoMantenimiento.create');
-    Route::post('/catalogos/tiposMantenimiento', [App\Http\Controllers\tipoMantenimientoController::class, 'store'])->name('tipoMantenimiento.store');
-    Route::put('/catalogos/tiposMantenimiento/{tipoMantenimiento}', [App\Http\Controllers\tipoMantenimientoController::class, 'update'])->name('tipoMantenimiento.update');
-    Route::delete('/catalogos/tiposMantenimiento/{tipoMantenimiento}', [App\Http\Controllers\tipoMantenimientoController::class, 'destroy'])->name('tipoMantenimiento.delete');
+    // Route::get('/catalogos/tiposRefaccion', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTipoRefaccion'])->name('catalogoTipoRefaccion.index');
+    // Route::get('/catalogos/tiposRefaccion/nuevo', [App\Http\Controllers\refaccionTipoController::class, 'create'])->name('refaccionTipo.create');
+    // Route::post('/catalogos/tiposRefaccion', [App\Http\Controllers\refaccionTipoController::class, 'store'])->name('refaccionTipo.store');
+    // Route::put('/catalogos/tiposRefaccion/{tipoRefaccion}', [App\Http\Controllers\refaccionTipoController::class, 'update'])->name('refaccionTipo.update');
+    // Route::delete('/catalogos/tiposRefaccion/{tipoRefaccion}', [App\Http\Controllers\refaccionTipoController::class, 'destroy'])->name('refaccionTipo.delete');
 
-    Route::get('/catalogos/tiposRefaccion', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTipoRefaccion'])->name('catalogoTipoRefaccion.index');
-    Route::get('/catalogos/tiposRefaccion/nuevo', [App\Http\Controllers\refaccionTipoController::class, 'create'])->name('refaccionTipo.create');
-    Route::post('/catalogos/tiposRefaccion', [App\Http\Controllers\refaccionTipoController::class, 'store'])->name('refaccionTipo.store');
-    Route::put('/catalogos/tiposRefaccion/{tipoRefaccion}', [App\Http\Controllers\refaccionTipoController::class, 'update'])->name('refaccionTipo.update');
-    Route::delete('/catalogos/tiposRefaccion/{tipoRefaccion}', [App\Http\Controllers\refaccionTipoController::class, 'destroy'])->name('refaccionTipo.delete');
+    // Route::get('/catalogos/refacciones', [App\Http\Controllers\catalogosController::class, 'indexCatalogoRefacciones'])->name('catalogoRefacciones.index');
+    // Route::get('/catalogos/refacciones/nuevo', [App\Http\Controllers\RefaccionesController::class, 'create'])->name('refacciones.create');
+    // Route::post('/catalogos/refacciones', [App\Http\Controllers\RefaccionesController::class, 'store'])->name('refacciones.store');
+    // Route::put('/catalogos/refacciones/{Refaccion}', [App\Http\Controllers\RefaccionesController::class, 'update'])->name('refacciones.update');
+    // Route::delete('/catalogos/refacciones/{Refaccion}', [App\Http\Controllers\RefaccionesController::class, 'destroy'])->name('refacciones.delete');
 
-    Route::get('/catalogos/refacciones', [App\Http\Controllers\catalogosController::class, 'indexCatalogoRefacciones'])->name('catalogoRefacciones.index');
-    Route::get('/catalogos/refacciones/nuevo', [App\Http\Controllers\RefaccionesController::class, 'create'])->name('refacciones.create');
-    Route::post('/catalogos/refacciones', [App\Http\Controllers\RefaccionesController::class, 'store'])->name('refacciones.store');
-    Route::put('/catalogos/refacciones/{Refaccion}', [App\Http\Controllers\RefaccionesController::class, 'update'])->name('refacciones.update');
-    Route::delete('/catalogos/refacciones/{Refaccion}', [App\Http\Controllers\RefaccionesController::class, 'destroy'])->name('refacciones.delete');
+    // Route::get('/catalogos/marcas', [App\Http\Controllers\catalogosController::class, 'indexCatalogoMarca'])->name('catalogoMarca.index');
+    // Route::get('/catalogos/marca/nueva', [App\Http\Controllers\marcaController::class, 'create'])->name('marca.create');
+    // Route::post('/catalogos/marcas', [App\Http\Controllers\marcaController::class, 'store'])->name('marca.store');
+    // Route::put('/catalogos/marcas/{marca}', [App\Http\Controllers\marcaController::class, 'update'])->name('marca.update');
+    // Route::delete('/catalogos/marcas/{marca}', [App\Http\Controllers\marcaController::class, 'destroy'])->name('marca.delete');
 
-    Route::get('/catalogos/marcas', [App\Http\Controllers\catalogosController::class, 'indexCatalogoMarca'])->name('catalogoMarca.index');
-    Route::get('/catalogos/marca/nueva', [App\Http\Controllers\marcaController::class, 'create'])->name('marca.create');
-    Route::post('/catalogos/marcas', [App\Http\Controllers\marcaController::class, 'store'])->name('marca.store');
-    Route::put('/catalogos/marcas/{marca}', [App\Http\Controllers\marcaController::class, 'update'])->name('marca.update');
-    Route::delete('/catalogos/marcas/{marca}', [App\Http\Controllers\marcaController::class, 'destroy'])->name('marca.delete');
+    // Route::get('/catalogos/conceptos', [App\Http\Controllers\catalogosController::class, 'indexCatalogoConceptos'])->name('catalogoConceptos.index');
+    // Route::get('/catalogos/concepto/nuevo', [App\Http\Controllers\conceptosController::class, 'create'])->name('conceptos.create');
+    // Route::post('/catalogos/conceptos', [App\Http\Controllers\conceptosController::class, 'store'])->name('conceptos.store');
+    // Route::put('/catalogos/conceptos/{concepto}', [App\Http\Controllers\conceptosController::class, 'update'])->name('conceptos.update');
+    // Route::delete('/catalogos/conceptos/{concepto}', [App\Http\Controllers\conceptosController::class, 'destroy'])->name('conceptos.delete');
 
-    Route::get('/catalogos/conceptos', [App\Http\Controllers\catalogosController::class, 'indexCatalogoConceptos'])->name('catalogoConceptos.index');
-    Route::get('/catalogos/concepto/nuevo', [App\Http\Controllers\conceptosController::class, 'create'])->name('conceptos.create');
-    Route::post('/catalogos/conceptos', [App\Http\Controllers\conceptosController::class, 'store'])->name('conceptos.store');
-    Route::put('/catalogos/conceptos/{concepto}', [App\Http\Controllers\conceptosController::class, 'update'])->name('conceptos.update');
-    Route::delete('/catalogos/conceptos/{concepto}', [App\Http\Controllers\conceptosController::class, 'destroy'])->name('conceptos.delete');
+    // Route::get('/catalogos/comprobantes', [App\Http\Controllers\catalogosController::class, 'indexCatalogoComprobantes'])->name('catalogoComprobantes.index');
+    // Route::get('/catalogos/comprobante/nuevo', [App\Http\Controllers\comprobanteController::class, 'create'])->name('comprobante.create');
+    // Route::post('/catalogos/comprobantes', [App\Http\Controllers\comprobanteController::class, 'store'])->name('comprobante.store');
+    // Route::put('/catalogos/comprobantes/{concepto}', [App\Http\Controllers\comprobanteController::class, 'update'])->name('comprobante.update');
+    // Route::delete('/catalogos/comprobantes/{concepto}', [App\Http\Controllers\comprobanteController::class, 'destroy'])->name('comprobante.delete');
 
-    Route::get('/catalogos/comprobantes', [App\Http\Controllers\catalogosController::class, 'indexCatalogoComprobantes'])->name('catalogoComprobantes.index');
-    Route::get('/catalogos/comprobante/nuevo', [App\Http\Controllers\comprobanteController::class, 'create'])->name('comprobante.create');
-    Route::post('/catalogos/comprobantes', [App\Http\Controllers\comprobanteController::class, 'store'])->name('comprobante.store');
-    Route::put('/catalogos/comprobantes/{concepto}', [App\Http\Controllers\comprobanteController::class, 'update'])->name('comprobante.update');
-    Route::delete('/catalogos/comprobantes/{concepto}', [App\Http\Controllers\comprobanteController::class, 'destroy'])->name('comprobante.delete');
+    // Route::get('/catalogos/proveedores', [App\Http\Controllers\catalogosController::class, 'indexCatalogoProveedor'])->name('catalogoProveedor.index');
+    // Route::get('/catalogos/proveedores/nuevo', [App\Http\Controllers\proveedorController::class, 'create'])->name('proveedor.create');
+    // Route::post('/catalogos/proveedores', [App\Http\Controllers\proveedorController::class, 'store'])->name('proveedor.store');
+    // Route::put('/catalogos/proveedores/{marca}', [App\Http\Controllers\proveedorController::class, 'update'])->name('proveedor.update');
+    // Route::delete('/catalogos/proveedores/{marca}', [App\Http\Controllers\proveedorController::class, 'destroy'])->name('proveedor.delete');
 
-    Route::get('/catalogos/proveedores', [App\Http\Controllers\catalogosController::class, 'indexCatalogoProveedor'])->name('catalogoProveedor.index');
-    Route::get('/catalogos/proveedores/nuevo', [App\Http\Controllers\proveedorController::class, 'create'])->name('proveedor.create');
-    Route::post('/catalogos/proveedores', [App\Http\Controllers\proveedorController::class, 'store'])->name('proveedor.store');
-    Route::put('/catalogos/proveedores/{marca}', [App\Http\Controllers\proveedorController::class, 'update'])->name('proveedor.update');
-    Route::delete('/catalogos/proveedores/{marca}', [App\Http\Controllers\proveedorController::class, 'destroy'])->name('proveedor.delete');
-
-    Route::get('/catalogos/proveedores/categorias', [App\Http\Controllers\catalogosController::class, 'indexCatalogoProveedorCategoria'])->name('catalogoProveedorCategoria.index');
-    Route::get('/catalogos/proveedores/categorias/nuevo', [App\Http\Controllers\proveedorCategoriaController::class, 'create'])->name('proveedorCategoria.create');
-    Route::post('/catalogos/proveedores/categorias', [App\Http\Controllers\proveedorCategoriaController::class, 'store'])->name('proveedorCategoria.store');
-    Route::put('/catalogos/proveedores/categorias/{proveedorCategoria}', [App\Http\Controllers\proveedorCategoriaController::class, 'update'])->name('proveedorCategoria.update');
-    Route::delete('/catalogos/proveedores/categorias/{proveedorCategoria}', [App\Http\Controllers\proveedorCategoriaController::class, 'destroy'])->name('proveedorCategoria.delete');
+    // Route::get('/catalogos/proveedores/categorias', [App\Http\Controllers\catalogosController::class, 'indexCatalogoProveedorCategoria'])->name('catalogoProveedorCategoria.index');
+    // Route::get('/catalogos/proveedores/categorias/nuevo', [App\Http\Controllers\proveedorCategoriaController::class, 'create'])->name('proveedorCategoria.create');
+    // Route::post('/catalogos/proveedores/categorias', [App\Http\Controllers\proveedorCategoriaController::class, 'store'])->name('proveedorCategoria.store');
+    // Route::put('/catalogos/proveedores/categorias/{proveedorCategoria}', [App\Http\Controllers\proveedorCategoriaController::class, 'update'])->name('proveedorCategoria.update');
+    // Route::delete('/catalogos/proveedores/categorias/{proveedorCategoria}', [App\Http\Controllers\proveedorCategoriaController::class, 'destroy'])->name('proveedorCategoria.delete');
 
     //Crud maquinaria
     Route::get('/maquinaria/nuevo', [App\Http\Controllers\maquinariaController::class, 'create'])->name('maquinaria.create');
@@ -298,6 +294,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/accesorios/{accesorios}', [App\Http\Controllers\accesoriosController::class, 'update'])->name('accesorios.update');
     Route::get('/accesorios/{accesorios}/edit', [App\Http\Controllers\accesoriosController::class, 'edit'])->name('accesorios.edit');
     Route::delete('/accesorios/{accesorios}', [App\Http\Controllers\accesoriosController::class, 'destroy'])->name('accesorios.delete');
+
+
+    Route::get('mtq/inventario/dash', [App\Http\Controllers\inventarioMtqController::class, 'dash'])->name('inventarioMtq.dash');
+
+    Route::resource('mtq/inventario', App\Http\Controllers\inventarioMtqController::class, ['except' => 'index', 'create'])->names([
+        // 'index' => 'inventarioMtq.index',
+        // 'create' => 'inventarioMtq.create',
+        'store' => 'inventarioMtq.store',
+        'show' => 'inventarioMtq.show',
+        'edit' => 'inventarioMtq.edit',
+        'update' => 'inventarioMtq.update',
+        'destroy' => 'inventarioMtq.destroy',
+    ]);
+    Route::get('/mtq/inventario/index/{tipo}', [App\Http\Controllers\inventarioMtqController::class, 'index'])->name('inventarioMtq.index');
+    Route::get('/mtq/inventario/create/{tipo}', [App\Http\Controllers\inventarioMtqController::class, 'create'])->name('inventarioMtq.create');
 
     //Crud Inventario
     Route::get('/inventarios', [App\Http\Controllers\inventarioController::class, 'dash'])->name('inventario.dash');
@@ -353,6 +364,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/calendario/solicitudes/nuevo', [App\Http\Controllers\solicitudesController::class, 'store'])->name('solicitudes.store');
     Route::put('/calendario/solicitudes/editar', [App\Http\Controllers\solicitudesController::class, 'update'])->name('solicitudes.update');
 
+
     //Crud personal
     Route::get('/asistencia', [App\Http\Controllers\asistenciaController::class, 'index'])->name('asistencia.index');
     Route::get('/asistencia/diaria', [App\Http\Controllers\asistenciaController::class, 'create'])->name('asistencia.create');
@@ -397,11 +409,26 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/checkList/registros/editar/{id}', [App\Http\Controllers\checkListRegistrosController::class, 'show'])->name('checkListRegistros.show');
     Route::put('/checkList/registros/editar/', [App\Http\Controllers\checkListRegistrosController::class, 'update'])->name('checkListRegistros.update');
 
-    // Equipos MTQ
+    // Equipos MTQ    
+    // Route::get('mtq/inventario/dash', [App\Http\Controllers\inventarioMtqController::class, 'dash'])->name('inventarioMtq.dash');
+    // Route::resource('mtq/inventario', App\Http\Controllers\inventarioMtqController::class, ['except' => 'index', 'create'])->names([
+    //     // 'index' => 'inventarioMtq.index',
+    //     // 'create' => 'inventarioMtq.create',
+    //     'store' => 'inventarioMtq.store',
+    //     'show' => 'inventarioMtq.show',
+    //     'edit' => 'inventarioMtq.edit',
+    //     'update' => 'inventarioMtq.update',
+    //     'destroy' => 'inventarioMtq.destroy',
+    // ]);
+    // Route::get('/mtq/inventario/index/{tipo}', [App\Http\Controllers\inventarioMtqController::class, 'index'])->name('inventarioMtq.index');
+    // Route::get('/mtq/inventario/create/{tipo}', [App\Http\Controllers\inventarioMtqController::class, 'create'])->name('inventarioMtq.create');
+
 
     Route::resource('mtq', App\Http\Controllers\maquinariaMtqController::class);
-    // Route::get('mtq/uso', [App\Http\Controllers\maquinariaMtqController::class, 'uso'])->name('mtq.uso');
     Route::put('asignacion', [App\Http\Controllers\maquinariaMtqController::class, 'asignacion'])->name('mtq.asignacion');
+
+    // Crud ServiciosMtq
+    Route::resource('serviciosMtq', App\Http\Controllers\serviciosMtqController::class);
 
 
     Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');
@@ -412,7 +439,6 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     // Tareas de bitacoras
-
     Route::get('/bitacoras/', [App\Http\Controllers\bitacorasController::class, 'index'])->name('bitacoras.index');
     Route::get('/bitacoras/maquinaria/{bitacora}', [App\Http\Controllers\bitacorasController::class, 'indexMaquinaria'])->name('bitacoras.maquinaria');
     Route::get('/bitacoras/bitacora/nuevo/', [App\Http\Controllers\bitacorasController::class, 'create'])->name('bitacoras.create');
@@ -456,5 +482,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/print-vista-previa', 'App\Http\Controllers\printController@print')->name('print.get');
     Route::post('/print-combustible', 'App\Http\Controllers\printController@print')->name('print.post');
     Route::post('/print-carga-combustible', 'App\Http\Controllers\printController@printCarga')->name('printCarga.post');
+    Route::post('/printOnlyTicket-combustible', 'App\Http\Controllers\printController@printOnlyTicket')->name('printOnlyTicket.post');
+    Route::post('/printOnlyTicketEdit-combustible', 'App\Http\Controllers\printController@printEdit')->name('printEdit.post');
+
+    Route::get('/comprobar-descarga/{id}', 'detalleDescargaController@comprobarDescarga');
     // Route::post('/import-excel', 'App\Http\Controllers\ImportExcelController@import')->name('importExcel.post');
+    //
+
+    Route::resource('combustibleTote', App\Http\Controllers\CombustibleToteController::class);
 });

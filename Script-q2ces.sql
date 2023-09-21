@@ -262,6 +262,13 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('calendarioPrincipal_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('calendarioPrincipal_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('ticketDescarga_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ticketDescarga_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ticketDescarga_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ticketDescarga_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ticketDescarga_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+
 INSERT INTO
     `model_has_roles`
 VALUES
@@ -830,6 +837,45 @@ CREATE TABLE inventario(
     CONSTRAINT FK_inventario_tipouniforme foreign key (uniformeTipoId) references tipoUniforme(id),
     CONSTRAINT FK_inventario_marca foreign key (marcaId) references marca(id),
     CONSTRAINT FK_inventario_proveedor foreign key (proveedorId) references proveedor(id)
+);
+
+CREATE TABLE inventarioMtq(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    numparte varchar(255) NOT NULL,
+    nombre varchar(255) NOT NULL,
+    marcaId bigint(20) unsigned NOT NULL,
+    modelo varchar(255) NULL,
+    proveedorId bigint(20) unsigned NOT NULL,
+    cantidad float(10, 2) NULL,
+    reorden float(10, 2) NULL,
+    maximo float(10, 2) NULL,
+    valor float(10, 2) NULL,
+    imagen varchar(255) NULL,
+    tipo varchar(255) NULL,
+    uniformeTipoId bigint(20) unsigned  NULL,
+    uniformeTalla varchar(16) NULL,
+    uniformeRetornable int(1) NULL,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_inventarioMtq_tipouniforme foreign key (uniformeTipoId) references tipoUniforme(id),
+    CONSTRAINT FK_inventarioMtq_marca foreign key (marcaId) references marca(id),
+    CONSTRAINT FK_inventarioMtq_proveedor foreign key (proveedorId) references proveedor(id)
+);
+
+CREATE TABLE inventarioMovimientosMtq(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    inventarioId bigint(20) unsigned NOT NULL,
+    usuarioId bigint(20) unsigned NOT NULL,
+    movimiento int(4) NOT NULL,
+    cantidad float(10, 2) NOT NULL,
+    precioUnitario float(10, 2) NOT NULL,
+    total float(10, 2) NOT NULL,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_inventarioMovimientosMtq_inventario foreign key (inventarioId) references inventarioMtq(id),
+    CONSTRAINT FK_inventarioMovimientosMtq_usuario foreign key (usuarioId) references users(id)
 );
 
 CREATE TABLE restock(

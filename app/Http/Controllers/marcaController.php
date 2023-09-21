@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\marca;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
@@ -52,7 +53,7 @@ class marcaController extends Controller
         abort_if(Gate::denies('catalogos_create'), 403);
 
         // dd( $request );
-        $request->validate( [
+        $request->validate([
             'nombre' => 'required|max:250|unique:marca,nombre,' . $request['nombre'],
             'comentarios' => 'nullable|max:500',
             'tipo' => 'required|max:250',
@@ -111,7 +112,7 @@ class marcaController extends Controller
 
         // dd( $request );
 
-        $request->validate( [
+        $request->validate([
             'nombre' => 'required|max:250|unique:marca,nombre,' . $request['controlId'],
             'comentarios' => 'nullable|max:500',
         ], [
@@ -140,8 +141,21 @@ class marcaController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy($id)
+    public function destroy(marca $marca)
     {
-        //
+        try {
+            $marca->delete(); // Intenta eliminar 
+        } catch (QueryException $e) {
+            if ($e->getCode() === 23000) {
+                return redirect()->back()->with('faild', 'No Puedes Eliminar ');
+                // Esto es un error de restricción de clave externa (FOREIGN KEY constraint)
+                // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
+            } else {
+                return redirect()->back()->with('faild', 'No Puedes Eliminar si esta en uso');
+                // Otro tipo de error de base de datos
+                // Maneja según sea necesario
+            }
+        }
+        return redirect()->back()->with('success', 'Eliminado correctamente');
     }
 }

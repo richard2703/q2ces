@@ -157,16 +157,36 @@
             @endcan
 
             @can('combustible_index')
-                <li class="nav-item collapsed">
+
+                <li class="nav-item ">
                     <a class="nav-link {{ $activePage == 'combustible' ? '' : 'collapsed' }}"
-                        href="{{ route('inventario.index', 'combustible') }}">
-                        {{--  <i class="bi bi-sh<op"></i>  --}}
+                        data-bs-target="#combustible-nav" data-bs-toggle="collapse" href="#">
+                        {{--  <i class="bi bi-receipt"></i>  --}}
                         <span class="material-icons">
                             local_gas_station
                         </span>
-
-                        <span>Combustible</span>
+                        <span>Combustible</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
+                    <ul id="combustible-nav"
+                        class="nav-content collapse {{ $activePage == 'combustible' ? 'show' : '' }}"
+                        data-bs-parent="#sidebar-nav">
+                        @can('combustible_index')
+                            <li>
+                                {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
+                                <a href="{{ route('inventario.index', 'combustible') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Combustible Maquinaria</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('mantenimiento_create')
+                            <li>
+                                {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
+                                <a href="{{ route('combustibleTote.index') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Combustible TOTE</span>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
                 </li>
             @endcan
 
@@ -395,6 +415,14 @@
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('residentes.index') }}" class="">
                                     <i class="bi bi-circle"></i><span>Residentes</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('maquinaria_mtq_index')
+                            <li>
+                                {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
+                                <a href="{{ route('inventarioMtq.dash') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Inventario</span>
                                 </a>
                             </li>
                         @endcan
