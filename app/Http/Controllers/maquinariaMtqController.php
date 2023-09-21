@@ -195,7 +195,7 @@ class maquinariaMtqController extends Controller
         $maquinariaMtq = maquinaria::where('id', $request->id)->first();
         // dd($request, $maquinaria, $maquinariaMtq);
         $data = $request->all();
-
+        // dd($data);
         $data['identificador'] = strtoupper($data['identificador']);
         $data['placas'] = strtoupper($data['placas']);
         $data['nummotor'] = strtoupper($data['nummotor']);
