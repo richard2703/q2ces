@@ -263,7 +263,7 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
-                                                                <label class="labelTitulo">Capacidad en kW:</label></br>
+                                                                <label class="labelTitulo">Capacidad en Kg:</label></br>
                                                                 <input type="number" class="inputCaja" id="capacidad"
                                                                     placeholder="Capacidad" name="capacidad"
                                                                     value="{{ old('capacidad') }}" placeholder="">

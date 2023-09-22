@@ -150,7 +150,7 @@
 
                                                 <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                                     <a href="{{ route('lugares.index') }}" class="">
-                                                        <img src="/img/inventario/UBICACIONES-01.svg" alt="Lugares"
+                                                        <img src="/img/inventario/LUGARES-01.svg" alt="Lugares"
                                                             title="Lugares" width="30%" class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Lugares</p>
                                                     </a>
@@ -158,7 +158,7 @@
 
                                                 <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                                     <a href="{{ route('ubicaciones.index') }}" class="">
-                                                        <img src="/img/inventario/LUGARES-01.svg" alt="Ubicaciones"
+                                                        <img src="/img/inventario/UBICACIONES-01.svg" alt="Ubicaciones"
                                                             title="Ubicaciones" width="30%"
                                                             class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Ubicaciones
