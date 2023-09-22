@@ -39,7 +39,7 @@ class maquinariaController extends Controller
             ->select(
                 'maquinaria.*',
                 'marca.nombre as marca',
-                'maquinariacategoria.nombre as categoria'
+                'maquinariaCategoria.nombre as categoria'
             )
             ->whereNull('compania')->paginate(15);
         // $maquinaria = maquinaria::whereNotIn('compania', ['mtq'])->get();
