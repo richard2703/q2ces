@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class carga extends Model
+class cisternas extends Model
 {
     use HasFactory;
-    protected $table = "carga";
-
+    protected $table = "cisternas";
     public $timestamps = true;
 
     protected $fillable = [
-        'litros', 'maquinariaId', 'operadorId', 'precio', 'userId', 'horaLlegadaCarga', 'comentario', 'tipoCisternaId'
+        'nombre', 'contenido', 'ultimoPrecio', 'ultimaCarga'
     ];
 }

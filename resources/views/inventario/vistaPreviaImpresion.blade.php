@@ -13,6 +13,7 @@
                     <div class="card-body">
                         <div class="row divBorder">
                             <div class="col-6 text-right">
+                                @if ($descarga->tipoCisternaId == null)
                                 <a href="{{ route('inventario.dashCombustible') }}">
                                     <button class="btn regresar">
                                         <span class="material-icons">
@@ -20,7 +21,17 @@
                                         </span>
                                         Regresar
                                     </button>
+                                </a>    
+                                @else
+                                <a href="{{ route('combustibleTote.index') }}">
+                                    <button class="btn regresar">
+                                        <span class="material-icons">
+                                            reply
+                                        </span>
+                                        Regresar
+                                    </button>
                                 </a>
+                                @endif
                             </div>
 
                             <div class="col-6 pb-3 text-end">
@@ -38,7 +49,7 @@
                             <br>
                             <div class="text-center" id="fecha-hora"></div>
                             <p class="text-center" id="hora"></p>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">Q2S/COMB-</span>{{ sprintf("%03d", $descarga->descargaDetalleId) }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">Q2S/COMB-</span>{{ sprintf("%03d", $nuevoSolicitante['id']) }}</div>
                             <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">DESPACHADOR: -- </span> {{ $descarga->receptor_nombre }}</div>
                             <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">EQUIPO DESPACHADO: -- </span> {{ $descarga->despachado_nombre }}</div>
                             <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">OPERADOR: -- </span> {{ $descarga->operador_nombre }}</div>

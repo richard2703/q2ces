@@ -102,11 +102,13 @@ class inventarioController extends Controller
                 'carga.operadorid',
                 'carga.litros',
                 'carga.precio',
-                'carga.created_at AS fecha'
+                'carga.created_at AS fecha',
+                'carga.horaLlegadaCarga'
             )
                 ->join('maquinaria', 'maquinaria.id', '=', 'carga.maquinariaId')
                 ->join('personal', 'personal.id', '=', 'carga.operadorId')
                 ->where('maquinaria.cisterna', '=', 1)
+                ->whereNull('carga.tipoCisternaId')
                 ->orderBy('carga.created_at', 'desc')
                 ->paginate(10);
 
@@ -136,8 +138,9 @@ class inventarioController extends Controller
                 ->join('maquinaria as m2', 'm2.id', '=', 'descarga.servicioId')
                 ->join('personal as p2', 'p2.id', '=', 'descarga.receptorId')
                 ->leftJoin('descargaDetalle as detalles', 'descarga.descargaDetalleId', '=', 'detalles.id')
+                ->whereNull('descarga.tipoCisternaId')
                 ->orderBy('descarga.created_at', 'desc')
-                ->get();
+                ->paginate(10);
 
             // dd($descargas);
 
@@ -494,7 +497,7 @@ class inventarioController extends Controller
             'operadorId',
             'precio',
             'horaLlegadaCarga',
-            'comentario'
+            'comentario',
         );
         $carga['userId'] = auth()->user()->id;
         //*** guardamos el registro */

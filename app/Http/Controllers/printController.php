@@ -18,11 +18,12 @@ class printController extends Controller
     public function print(Request $request)
     {
         $solicitante = $request->all();
+        // dd($request);
         $descarga = descarga::join('maquinaria as equipo', 'descarga.maquinariaId', '=', 'equipo.id')
             ->join('users', 'descarga.userId', '=', 'users.id')
             ->join('personal as operador', 'descarga.operadorId', '=', 'operador.id')
             ->join('personal as receptor', 'descarga.receptorId', '=', 'receptor.id')
-            ->join('maquinaria as despachado', 'descarga.servicioId', '=', 'despachado.id')
+            ->leftJoin('maquinaria as despachado', 'descarga.servicioId', '=', 'despachado.id')
             ->where('descarga.descargaDetalleId', $request['id'])
             ->select('descarga.*', 'equipo.nombre as equipo_nombre', 'users.name as user_nombre', 'operador.nombres as operador_nombre', 'receptor.nombres as receptor_nombre', 'despachado.nombre as despachado_nombre')
             ->first();
@@ -42,7 +43,7 @@ class printController extends Controller
         $ticket->descargaDetalleId = $nuevoSolicitante['id'];
         $ticket->save();
 
-        return view('inventario.vistaPreviaImpresion', compact('descarga', 'solicitante', 'cliente'));
+        return view('inventario.vistaPreviaImpresion', compact('descarga', 'solicitante', 'cliente', 'nuevoSolicitante'));
     }
 
     public function printEdit(Request $request)
@@ -53,7 +54,7 @@ class printController extends Controller
             ->join('users', 'descarga.userId', '=', 'users.id')
             ->join('personal as operador', 'descarga.operadorId', '=', 'operador.id')
             ->join('personal as receptor', 'descarga.receptorId', '=', 'receptor.id')
-            ->join('maquinaria as despachado', 'descarga.servicioId', '=', 'despachado.id')
+            ->leftJoin('maquinaria as despachado', 'descarga.servicioId', '=', 'despachado.id')
             ->where('descarga.descargaDetalleId', $request['id'])
             ->select('descarga.*', 'equipo.nombre as equipo_nombre', 'users.name as user_nombre', 'operador.nombres as operador_nombre', 'receptor.nombres as receptor_nombre', 'despachado.nombre as despachado_nombre')
             ->first();
@@ -66,10 +67,10 @@ class printController extends Controller
         // dd($descarga);
         // $ticket->ticket = 1;
 
-        $calendarioPrincipal = descargaDetalle::where('id', $request['id'])->first();
+        $detalleEnDescarga = descargaDetalle::where('id', $request['id'])->first();
         $data = $request->all();
-        $calendarioPrincipal->update($data);
-
+        $detalleEnDescarga->update($data);
+        // dd($solicitante);
         return view('inventario.vistaPreviaImpresion', compact('descarga', 'solicitante', 'cliente'));
     }
 
@@ -94,7 +95,7 @@ class printController extends Controller
             ->join('users', 'descarga.userId', '=', 'users.id')
             ->join('personal as operador', 'descarga.operadorId', '=', 'operador.id')
             ->join('personal as receptor', 'descarga.receptorId', '=', 'receptor.id')
-            ->join('maquinaria as despachado', 'descarga.servicioId', '=', 'despachado.id')
+            ->leftJoin('maquinaria as despachado', 'descarga.servicioId', '=', 'despachado.id')
             ->join('descargaDetalle as detalles', 'descarga.descargaDetalleId', '=', 'detalles.id')
             ->where('descarga.descargaDetalleId', $request['id'])
             ->select('descarga.*', 'detalles.*', 'equipo.nombre as equipo_nombre', 'users.name as user_nombre', 'operador.nombres as operador_nombre', 'receptor.nombres as receptor_nombre', 'despachado.nombre as despachado_nombre')

@@ -485,9 +485,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/printOnlyTicket-combustible', 'App\Http\Controllers\printController@printOnlyTicket')->name('printOnlyTicket.post');
     Route::post('/printOnlyTicketEdit-combustible', 'App\Http\Controllers\printController@printEdit')->name('printEdit.post');
 
-    Route::get('/comprobar-descarga/{id}', 'detalleDescargaController@comprobarDescarga');
-    // Route::post('/import-excel', 'App\Http\Controllers\ImportExcelController@import')->name('importExcel.post');
-    //
-
     Route::resource('combustibleTote', App\Http\Controllers\CombustibleToteController::class);
+    Route::post('/combustibleToteDescarga/', [App\Http\Controllers\CombustibleToteController::class, 'storeDescarga'])->name('descarga.post');
 });
