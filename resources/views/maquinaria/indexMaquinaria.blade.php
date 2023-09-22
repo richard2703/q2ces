@@ -39,7 +39,7 @@
                                             <th class="labelTitulo text-center" style="width:120px">Categoría</th>
                                             <th class="labelTitulo text-center">Uso</th>
                                             <th class="labelTitulo text-center">Placas</th>
-                                            <th class="labelTitulo text-center">Sub Marca</th>
+                                            {{--  <th class="labelTitulo text-center">Sub Marca</th>  --}}
                                             <th class="labelTitulo text-center">Año</th>
                                             <th class="labelTitulo text-center" style="width:120px">Acciones</th>
                                         </thead>
@@ -54,7 +54,7 @@
                                                     <td class="text-center">{{ $maquina->categoria }}</td>
                                                     <td class="text-center">{{ $maquina->uso }}</td>
                                                     <td class="text-center">{{ $maquina->placas }}</td>
-                                                    <td class="text-center">{{ $maquina->submarca }}</td>
+                                                    {{--  <td class="text-center">{{ $maquina->submarca }}</td>  --}}
                                                     <td class="text-center">{{ $maquina->ano }}</td>
 
                                                     <td class="td-actions text-center">

@@ -33,9 +33,18 @@ class maquinariaController extends Controller
     public function index()
     {
         abort_if(Gate::denies('maquinaria_index'), 403);
+        // $mtq = 'mtq';
+        $maquinaria = maquinaria::join('marca', 'maquinaria.marcaId', 'marca.id')
+            ->join('maquinariacategoria', 'maquinaria.categoriaId', 'maquinariacategoria.id')
+            ->select(
+                'maquinaria.*',
+                'marca.nombre as marca',
+                'maquinariacategoria.nombre as categoria'
+            )
+            ->whereNull('compania')->paginate(15);
+        // $maquinaria = maquinaria::whereNotIn('compania', ['mtq'])->get();
 
-        $maquinaria = maquinaria::whereNull('compania')->paginate(15);
-        // dd( 'test' );
+        // dd($maquinaria);
         return view('maquinaria.indexMaquinaria', compact('maquinaria'));
     }
 
@@ -256,11 +265,29 @@ class maquinariaController extends Controller
         abort_if(Gate::denies('maquinaria_show'), 403);
         // dd($maquinaria);
         $bitacora = bitacoras::all();
-        //$maquinaria = maquinaria::all();
-        // $docs = maqdocs::where('maquinariaId', $maquinaria->id)->get();
-        // $doc = docs::where('tipoId', '2')->orderBy('nombre', 'asc')->get();
+        // $doc = maqdocs::leftJoin('docs', "maqdocs.tipoId", "docs.id")
+        //     ->select(
+        //         'docs.id',
+        //         'docs.nombre',
+        //         'maqdocs.fechaVencimiento',
+        //         'maqdocs.estatus',
+        //         'maqdocs.comentarios',
+        //         'maqdocs.ruta',
+        //         'maqdocs.requerido',
+        //         'maqdocs.id as idDoc'
+        //     )
+        //     // ->where('maquinariaId', $maquinaria->id)
+        //     ->where('docs.tipoId', '2')
+        //     // ->where('maqdocs.maquinariaId', $maquinaria->id)
+        //     ->groupBy('docs.id')
+        //     ->orderBy('nombre', 'asc')
+        //     ->get();
+        // dd($doc);
 
-        $doc = maqdocs::rightJoin('docs', "maqdocs.tipoId", "docs.id")
+        $doc = docs::leftJoin('maqdocs', function ($join) use ($maquinaria) {
+            $join->on('docs.id', '=', 'maqdocs.tipoId')
+                ->where('maqdocs.maquinariaId', '=', $maquinaria->id);
+        })
             ->select(
                 'docs.id',
                 'docs.nombre',
@@ -270,12 +297,10 @@ class maquinariaController extends Controller
                 'maqdocs.ruta',
                 'maqdocs.requerido',
                 'maqdocs.id as idDoc'
-            )
-            // ->where('maquinariaId', $maquinaria->id)
-            ->where('docs.tipoId', '2')
-            ->groupBy('docs.id')
-            ->orderBy('nombre', 'asc')
+            )->where('docs.tipoId', '2')
             ->get();
+
+
         $fotos = maqimagen::where('maquinariaId', $maquinaria->id)->get();
         $vctEstatus = maquinariaEstatus::all();
         $marcas = marca::all();
@@ -283,7 +308,7 @@ class maquinariaController extends Controller
         $refaccionTipo = refaccionTipo::all();
         $categorias = maquinariaCategoria::all();
         $tipos = maquinariaTipo::all();
-        // dd( $docs );
+        // dd($maqDoc);
         return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'doc', 'fotos', 'bitacora', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos'));
     }
 
@@ -296,11 +321,31 @@ class maquinariaController extends Controller
     public function vista(maquinaria $maquinaria)
     {
         abort_if(Gate::denies('maquinaria_show'), 403);
-        // dd('vista');
+        // dd($maquinaria);
         $bitacora = bitacoras::all();
-        //$maquinaria = maquinaria::all();
-        // $docs = maqdocs::where('maquinariaId', $maquinaria->id)->get();
-        $doc = maqdocs::join('docs', "maqdocs.tipoId", "docs.id")
+        // $doc = maqdocs::leftJoin('docs', "maqdocs.tipoId", "docs.id")
+        //     ->select(
+        //         'docs.id',
+        //         'docs.nombre',
+        //         'maqdocs.fechaVencimiento',
+        //         'maqdocs.estatus',
+        //         'maqdocs.comentarios',
+        //         'maqdocs.ruta',
+        //         'maqdocs.requerido',
+        //         'maqdocs.id as idDoc'
+        //     )
+        //     // ->where('maquinariaId', $maquinaria->id)
+        //     ->where('docs.tipoId', '2')
+        //     // ->where('maqdocs.maquinariaId', $maquinaria->id)
+        //     ->groupBy('docs.id')
+        //     ->orderBy('nombre', 'asc')
+        //     ->get();
+        // dd($doc);
+
+        $doc = docs::leftJoin('maqdocs', function ($join) use ($maquinaria) {
+            $join->on('docs.id', '=', 'maqdocs.tipoId')
+                ->where('maqdocs.maquinariaId', '=', $maquinaria->id);
+        })
             ->select(
                 'docs.id',
                 'docs.nombre',
@@ -310,12 +355,10 @@ class maquinariaController extends Controller
                 'maqdocs.ruta',
                 'maqdocs.requerido',
                 'maqdocs.id as idDoc'
-            )
-            ->where('maquinariaId', $maquinaria->id)
-            ->where('maqdocs.requerido', '1')
-            ->orderBy('nombre', 'asc')
+            )->where('docs.tipoId', '2')
             ->get();
-        // dd($doc);
+
+
         $fotos = maqimagen::where('maquinariaId', $maquinaria->id)->get();
         $vctEstatus = maquinariaEstatus::all();
         $marcas = marca::all();
@@ -323,7 +366,7 @@ class maquinariaController extends Controller
         $refaccionTipo = refaccionTipo::all();
         $categorias = maquinariaCategoria::all();
         $tipos = maquinariaTipo::all();
-        // dd( $docs );
+        // dd($maqDoc);
         return view('maquinaria.verMaquinaria', compact('maquinaria', 'doc', 'fotos', 'bitacora', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos'));
     }
 
