@@ -1,96 +1,96 @@
 @extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Ver Equipos')])
 @section('content')
     <!--<div class="content">
-            <div class="container-fluid">
-                <div class="row justify-content-center">
-                    <div class="col-md-10 align-self-center">
-                        <div class="card">
-                            <div class="card-body contCart">
-                                <div class="p-1 align-self-start bacTituloPrincipal">
-                                    <h2 class="my-3 ms-3 texticonos ">Ver Equipos</h2>
-                                </div>
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-md-10 align-self-center">
+                            <div class="card">
+                                <div class="card-body contCart">
+                                    <div class="p-1 align-self-start bacTituloPrincipal">
+                                        <h2 class="my-3 ms-3 texticonos ">Ver Equipos</h2>
+                                    </div>
 
-                                <div class="col-10  mx-auto d-block my-4">
-                                    <div class="row d-flex ">
-                                        <div class="col-10 col-md-5  mx-auto d-block my-4 ">
-                                            <div class="row d-flex border">
-                                                    <div class="col-4 text-center colIcono p-2">
-                                                        <img src="{{ asset('img/equipos/maquinariaPesada.svg') }}" class="mx-auto d-block" width="65%">
-                                                    </div>
-                                                    <div class="col-8  p-2">
-                                                        <h2 class="text-start fs-5 textTitulo">Maquinaria Pesada</h2>
-                                                        <ul>
-                                                            <a class="textEquipo" href="{{ url('detalleEquipo', session('id')) }}"><li class="text-start my-3">Retroexcavadora</li></a>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Camión de Volteo</li></a>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Pipa de Agua</li></a>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Camión Orquesta</li></a>
-                                                        </ul>
+                                    <div class="col-10  mx-auto d-block my-4">
+                                        <div class="row d-flex ">
+                                            <div class="col-10 col-md-5  mx-auto d-block my-4 ">
+                                                <div class="row d-flex border">
+                                                        <div class="col-4 text-center colIcono p-2">
+                                                            <img src="{{ asset('img/equipos/maquinariaPesada.svg') }}" class="mx-auto d-block" width="65%">
+                                                        </div>
+                                                        <div class="col-8  p-2">
+                                                            <h2 class="text-start fs-5 textTitulo">Maquinaria Pesada</h2>
+                                                            <ul>
+                                                                <a class="textEquipo" href="{{ url('detalleEquipo', session('id')) }}"><li class="text-start my-3">Retroexcavadora</li></a>
+                                                                <a class="textEquipo" href="#"><li class="text-start my-3">Camión de Volteo</li></a>
+                                                                <a class="textEquipo" href="#"><li class="text-start my-3">Pipa de Agua</li></a>
+                                                                <a class="textEquipo" href="#"><li class="text-start my-3">Camión Orquesta</li></a>
+                                                            </ul>
 
-                                                    </div>
+                                                        </div>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="col-10 col-md-5  mx-auto d-block my-4 ">
-                                            <div class="row d-flex border">
-                                                    <div class="col-4 text-center colIcono p-2">
-                                                        <img src="{{ asset('img/equipos/maquinariaLigera.svg') }}" class="mx-auto d-block" width="65%" >
-                                                    </div>
-                                                    <div class="col-8  p-2">
-                                                        <h2 class="text-start fs-5 textTitulo">Maquinaria Ligera</h2>
-                                                        <ul>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Rodillo</li></a>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Bobcat</li></a>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Torre de Luz</li></a>
-                                                        </ul>
+                                            <div class="col-10 col-md-5  mx-auto d-block my-4 ">
+                                                <div class="row d-flex border">
+                                                        <div class="col-4 text-center colIcono p-2">
+                                                            <img src="{{ asset('img/equipos/maquinariaLigera.svg') }}" class="mx-auto d-block" width="65%" >
+                                                        </div>
+                                                        <div class="col-8  p-2">
+                                                            <h2 class="text-start fs-5 textTitulo">Maquinaria Ligera</h2>
+                                                            <ul>
+                                                                <a class="textEquipo" href="#"><li class="text-start my-3">Rodillo</li></a>
+                                                                <a class="textEquipo" href="#"><li class="text-start my-3">Bobcat</li></a>
+                                                                <a class="textEquipo" href="#"><li class="text-start my-3">Torre de Luz</li></a>
+                                                            </ul>
 
-                                                    </div>
+                                                        </div>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="col-10 col-md-5  mx-auto d-block my-4">
-                                            <div class="row d-flex border">
-                                                    <div class="col-4 text-center colIcono p-2">
-                                                        <img src="{{ asset('img/equipos/gruas.svg') }}" class="mx-auto d-block"width="65%">
-                                                    </div>
-                                                    <div class="col-8  p-2">
-                                                        <h2 class="text-start fs-5 textTitulo">Grúas</h2>
-                                                        <ul>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Grúa 1</li></a>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Grúa 2</li></a>
-                                                            <a class="textEquipo"  href="#"><li class="text-start my-3">Grúa 3</li></a>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Grúa 4</li></a>
-                                                        </ul>
+                                            <div class="col-10 col-md-5  mx-auto d-block my-4">
+                                                <div class="row d-flex border">
+                                                        <div class="col-4 text-center colIcono p-2">
+                                                            <img src="{{ asset('img/equipos/gruas.svg') }}" class="mx-auto d-block"width="65%">
+                                                        </div>
+                                                        <div class="col-8  p-2">
+                                                            <h2 class="text-start fs-5 textTitulo">Grúas</h2>
+                                                            <ul>
+                                                                <a class="textEquipo" href="#"><li class="text-start my-3">Grúa 1</li></a>
+                                                                <a class="textEquipo" href="#"><li class="text-start my-3">Grúa 2</li></a>
+                                                                <a class="textEquipo"  href="#"><li class="text-start my-3">Grúa 3</li></a>
+                                                                <a class="textEquipo" href="#"><li class="text-start my-3">Grúa 4</li></a>
+                                                            </ul>
 
-                                                    </div>
+                                                        </div>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="col-10 col-md-5  mx-auto d-block my-4">
-                                            <div class="row d-flex border">
-                                                    <div class="col-4 text-center colIcono p-2">
-                                                        <img src="{{ asset('img/equipos/accesorios.svg') }}" class="mx-auto d-block" width="70%" >
-                                                    </div>
-                                                    <div class="col-8  p-2">
-                                                        <h2 class="text-start fs-5 textTitulo">Accesorios</h2>
-                                                        <ul>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Accesorio 1</li></a>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Accesorio 2</li></a>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Accesorio 3</li></a>
-                                                            <a class="textEquipo"  href="#"><li class="text-start my-3">Accesorio 4</li></a>
-                                                        </ul>
+                                            <div class="col-10 col-md-5  mx-auto d-block my-4">
+                                                <div class="row d-flex border">
+                                                        <div class="col-4 text-center colIcono p-2">
+                                                            <img src="{{ asset('img/equipos/accesorios.svg') }}" class="mx-auto d-block" width="70%" >
+                                                        </div>
+                                                        <div class="col-8  p-2">
+                                                            <h2 class="text-start fs-5 textTitulo">Accesorios</h2>
+                                                            <ul>
+                                                                <a class="textEquipo" href="#"><li class="text-start my-3">Accesorio 1</li></a>
+                                                                <a class="textEquipo" href="#"><li class="text-start my-3">Accesorio 2</li></a>
+                                                                <a class="textEquipo" href="#"><li class="text-start my-3">Accesorio 3</li></a>
+                                                                <a class="textEquipo"  href="#"><li class="text-start my-3">Accesorio 4</li></a>
+                                                            </ul>
 
-                                                    </div>
+                                                        </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>-->
+            </div>-->
     <div class="content">
         @if ($errors->any())
             <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
@@ -183,32 +183,17 @@
 
                                                     <div class="col-12 col-lg-8">
                                                         <div class="row alin">
-                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                            <div class=" col-12 col-sm-8  mb-3 ">
                                                                 <label class="labelTitulo">Equipo:</label></br>
                                                                 <input type="text" class="inputCaja" id="nombre"
                                                                     placeholder="Especifique..." required name="nombre"
                                                                     value="{{ $maquinaria->nombre }}" disabled>
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                                <label class="labelTitulo">Bitácora:</label></br>
-                                                                <select id="bitacoraId" name="bitacoraId" disabled
-                                                                    class="form-select"
-                                                                    aria-label="Default select example">
-                                                                    <option value="">Seleccione</option>
-                                                                    @foreach ($bitacora as $item)
-                                                                        <option value="{{ $item->id }}"
-                                                                            {{ $item->id == $maquinaria->bitacoraId ? ' selected' : '' }}>
-                                                                            {{ $item->nombre }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Marca:</label></br>
-                                                                <select id="marcaId" name="marcaId" class="form-select" disabled
-                                                                    aria-label="Default select example">
+                                                                <select id="marcaId" name="marcaId" class="form-select"
+                                                                    disabled aria-label="Default select example">
                                                                     <option value="">Seleccione</option>
                                                                     @foreach ($marcas as $item)
                                                                         <option value="{{ $item->id }}"
@@ -315,6 +300,23 @@
                                                                     placeholder="ej: MT-00" disabled>
                                                             </div>
 
+                                                            <div class=" col-12 col-sm-12 mb-3 ">
+                                                                <label class="labelTitulo">Asignado en la
+                                                                    Obra:</label></br>
+                                                                <select id="obraId" name="obraId" disabled
+                                                                    class="form-select"
+                                                                    aria-label="Default select example">
+                                                                    <option value="">Seleccione</option>
+                                                                    @foreach ($obras as $item)
+                                                                        <option value="{{ $item->id }}"
+                                                                            {{ $item->id == $maquinaria->obraId ? ' selected' : '' }}>
+                                                                            {{ $item->nombre . ' [ ' . $item->cliente . ' ] ' }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+
+
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Motor:</label></br>
                                                                 <input type="text" class="inputCaja" id="motor"
@@ -401,12 +403,12 @@
                                                             </div>
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                                    <label class="labelTitulo">Combustible:</label></br>
-                                                                                    <input type="text" class="inputCaja" id="combustible"
-                                                                                        name="combustible"
-                                                                                        placeholder="Diesel / Gasolina / Especificar"
-                                                                                        value="{{ $maquinaria->combustible }}">
-                                                                                </div>-->
+                                                                                        <label class="labelTitulo">Combustible:</label></br>
+                                                                                        <input type="text" class="inputCaja" id="combustible"
+                                                                                            name="combustible"
+                                                                                            placeholder="Diesel / Gasolina / Especificar"
+                                                                                            value="{{ $maquinaria->combustible }}">
+                                                                                    </div>-->
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Motor:</label></br>
@@ -548,8 +550,8 @@
                                                                         class="col-12 col-sm-4 col-lg-2 my-3 text-center pt-3">
                                                                         <!--<i class="fas fa-clipboard-check"></i>-->
                                                                         <!--<span class="material-icons" style="font-size:40px; color: gray">
-                                                                            content_paste_search
-                                                                        </span>-->
+                                                                                content_paste_search
+                                                                            </span>-->
                                                                         @if ($refaccion->relacionInventarioId != null)
                                                                             <span class="material-icons"
                                                                                 style="font-size:40px; color: green">

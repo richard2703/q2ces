@@ -64,6 +64,7 @@
                                 class="alertaGuardar" enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
+
                                 <div class="d-md-flex p-3">
                                     <div class="col-12 col-md-4 px-2 ">
                                         <div class="text-center mx-auto border  mb-4">

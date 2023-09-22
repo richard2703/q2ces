@@ -79,25 +79,12 @@
                                                     <div class="col-12 col-md-8 ">
 
                                                         <div class="row alin">
-                                                            <div class=" col-12 col-sm-6 col-lg-4  mb-3 ">
+                                                            <div class=" col-12 col-sm-8 mb-3 ">
                                                                 <label class="labelTitulo">Equipo:
                                                                     <span>*</span></label></br>
                                                                 <input type="text" class="inputCaja" id="nombre"
                                                                     placeholder="Especifique..." required name="nombre"
                                                                     value="{{ old('nombre') }}">
-                                                            </div>
-
-                                                            <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                                <label class="labelTitulo">Bitácora:</label></br>
-                                                                <select id="bitacoraId" name="bitacoraId"
-                                                                    class="form-select" aria-label="Default select example">
-                                                                    <option value="">Seleccione</option>
-                                                                    @foreach ($bitacora as $item)
-                                                                        <option value="{{ $item->id }}">
-                                                                            {{ $item->nombre }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4  mb-3 ">
@@ -233,6 +220,19 @@
                                                                     value="{{ old('identificador') }}"
                                                                     placeholder="ej: MT-00">
                                                             </div>
+
+                                                            <div class=" col-12 col-sm-12 mb-3 ">
+                                                                <label class="labelTitulo">Asignado en la Obra:</label></br>
+                                                                <select id="obraId" name="obraId"
+                                                                    class="form-select" aria-label="Default select example">
+                                                                     @foreach ($obras as $item)
+                                                                        <option value="{{ $item->id }}">
+                                                                            {{ $item->nombre . ' [ '. $item->cliente . ' ] '  }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+
                                                             <div class=" col-12 col-sm-6 mb-3 ">
                                                                 <label class="labelTitulo">Número Económico:</label></br>
                                                                 <input type="text" class="inputCaja">
