@@ -441,7 +441,27 @@ class personalController extends Controller
         $nomina = nomina::where('personalId', $personal->id)->first();
         $equipo = equipo::where('personalId', $personal->id)->first();
         // $docs = userdocs::where( 'personalId', $personal->id )->first();
-        $docs = userdocs::rightJoin('docs', 'userdocs.tipoId', 'docs.id')
+        // $docs = userdocs::rightJoin('docs', 'userdocs.tipoId', 'docs.id')
+        //     ->select(
+        //         'docs.id',
+        //         'docs.nombre',
+        //         'userdocs.id as usuarioId',
+        //         'userdocs.fechaVencimiento',
+        //         'userdocs.estatus',
+        //         'userdocs.comentarios',
+        //         'userdocs.ruta',
+        //         'userdocs.requerido',
+        //         'userdocs.id as idDoc'
+        //     )
+        //     // ->where('personalId', $personal->id)
+        //     ->where('docs.tipoId', '1')
+        //     ->groupBy('docs.id')
+        //     ->get();
+
+        $docs = docs::leftJoin('userdocs', function ($join) use ($personal) {
+            $join->on('docs.id', '=', 'userdocs.tipoId')
+                ->where('userdocs.personalId', '=', $personal->id);
+        })
             ->select(
                 'docs.id',
                 'docs.nombre',
@@ -452,11 +472,9 @@ class personalController extends Controller
                 'userdocs.ruta',
                 'userdocs.requerido',
                 'userdocs.id as idDoc'
-            )
-            // ->where('personalId', $personal->id)
-            ->where('docs.tipoId', '1')
-            ->groupBy('docs.id')
+            )->where('docs.tipoId', '1')
             ->get();
+
 
         // dd($docs);
         $fiscal = fiscal::where('personalId', $personal->id)->first();
@@ -1086,7 +1104,27 @@ class personalController extends Controller
         $nomina = nomina::where('personalId', $personal->id)->first();
         $equipo = equipo::where('personalId', $personal->id)->first();
         // $docs = userdocs::where( 'personalId', $personal->id )->first();
-        $docs = userdocs::rightJoin('docs', 'userdocs.tipoId', 'docs.id')
+        // $docs = userdocs::rightJoin('docs', 'userdocs.tipoId', 'docs.id')
+        //     ->select(
+        //         'docs.id',
+        //         'docs.nombre',
+        //         'userdocs.id as usuarioId',
+        //         'userdocs.fechaVencimiento',
+        //         'userdocs.estatus',
+        //         'userdocs.comentarios',
+        //         'userdocs.ruta',
+        //         'userdocs.requerido',
+        //         'userdocs.id as idDoc'
+        //     )
+        //     ->where('personalId', $personal->id)
+        //     ->where('docs.tipoId', '1')
+        //     ->groupBy('docs.id')
+        //     ->get();
+
+        $docs = docs::leftJoin('userdocs', function ($join) use ($personal) {
+            $join->on('docs.id', '=', 'userdocs.tipoId')
+                ->where('userdocs.personalId', '=', $personal->id);
+        })
             ->select(
                 'docs.id',
                 'docs.nombre',
@@ -1097,10 +1135,7 @@ class personalController extends Controller
                 'userdocs.ruta',
                 'userdocs.requerido',
                 'userdocs.id as idDoc'
-            )
-            ->where('personalId', $personal->id)
-            ->where('docs.tipoId', '1')
-            ->groupBy('docs.id')
+            )->where('docs.tipoId', '1')
             ->get();
 
         // dd($docs);

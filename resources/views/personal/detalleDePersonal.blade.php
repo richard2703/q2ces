@@ -756,7 +756,8 @@
                                                                 Entrada Sábado:</label></br>
 
                                                             <input type="time" class="inputCaja "
-                                                                placeholder="Entrada" id="" name="hEntradaSabado"
+                                                                placeholder="Entrada" id=""
+                                                                name="hEntradaSabado"
                                                                 value="{{ $nomina->hEntradaSabado }}">
                                                         </div>
                                                         <div class="col-6  ps-1">
@@ -1103,8 +1104,7 @@
                                                                     onclick='cancelarOmitir("{{ $doc->id }}","{{ $doc->nombre }}")'>
                                                                     <P class="fs-5"> Cancelar</P>
                                                                 </button>
-                                                                <div class="text-center"
-                                                                    style="margin-top: -10px !important">
+                                                                <div class="text-center">
                                                                     <div class="form-check d-flex justify-content-between">
                                                                         <div class="text-center"></div>
                                                                         <label
