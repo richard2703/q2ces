@@ -65,7 +65,8 @@
                                                                             alt="" style="width:40px;">
                                                                     </div>
                                                                     <div style="width: 90%! important;">
-                                                                        <label class="labelTitulo">Cisterna de Carga:</label></br>
+                                                                        <label class="labelTitulo">Cisterna de
+                                                                            Carga:</label></br>
                                                                         <select id="cisternaId" name="tipoCisternaId"
                                                                             class="form-select"
                                                                             aria-label="Default select example" required>
@@ -151,10 +152,12 @@
                                                                     <div style="width: 90%! important;">
                                                                         <label class="labelTitulo">Hora de Carga:
                                                                             <span>*</span></label></br>
-                                                                            <input type="time" name="horaLlegadaCarga" id="horaActual" class="inputCaja" value="{{ date('H:i') }}" required>
+                                                                        <input type="time" name="horaLlegadaCarga"
+                                                                            id="horaActual" class="inputCaja"
+                                                                            value="{{ date('H:i') }}" required>
                                                                     </div>
                                                                 </div>
-                                                                
+
                                                                 <div class=" col-12 col-md-6 d-flex mb-4">
                                                                     <div class="me-2">
                                                                         <img src="{{ asset('/img/inventario/uso.svg') }}"
@@ -163,7 +166,8 @@
                                                                     <div style="width: 90%! important;">
                                                                         <label class="labelTitulo">Kilometraje:
                                                                             <span>*</span></label></br>
-                                                                            <input type="number" name="kilometraje" class="inputCaja" value="" required>
+                                                                        <input type="number" name="kilometraje"
+                                                                            class="inputCaja" value="" required>
                                                                     </div>
                                                                 </div>
 
@@ -175,11 +179,12 @@
                                                                     <div style="width: 90%! important;">
                                                                         <label class="labelTitulo">Observaciones:
                                                                             <span>*</span></label></br>
-                                                                            <textarea class="form-control-textarea border-green" value="{{ old('comentario') }}" name="comentario" id="observacionesDescarga" rows="3" placeholder="Agregar Observaciones..."></textarea>
+                                                                        <textarea class="form-control-textarea border-green" value="{{ old('comentario') }}" name="comentario"
+                                                                            id="observacionesDescarga" rows="3" placeholder="Agregar Observaciones..."></textarea>
                                                                     </div>
                                                                 </div>
 
-                                                            </div>                                                            
+                                                            </div>
 
                                                         </div>
 
@@ -237,7 +242,8 @@
                                                                             alt="" style="width:40px;">
                                                                     </div>
                                                                     <div style="width: 90%! important;">
-                                                                        <label class="labelTitulo">Cisterna de Descarga:</label></br>
+                                                                        <label class="labelTitulo">Cisterna de
+                                                                            Descarga:</label></br>
                                                                         <select id="cisternaId" name="tipoCisternaId"
                                                                             class="form-select"
                                                                             aria-label="Default select example" required>
@@ -470,41 +476,46 @@
                             @foreach ($cisterna as $almacenCisterna)
                                 <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
                                     <div class="card" style="margin: 15px">
-                                            <div class="card-body combustibleBorde">
-                                                <div class="bordeTitulo mb-3">
-                                                    <h2 class="combustibleTitulo fw-semibold  my-3 text-center"> {{ $almacenCisterna->nombre }}
-                                                    </h2>
+                                        <div class="card-body combustibleBorde">
+                                            <div class="bordeTitulo mb-3">
+                                                <h2 class="combustibleTitulo fw-semibold  my-3 text-center">
+                                                    {{ $almacenCisterna->nombre }}
+                                                </h2>
+                                            </div>
+                                            <div class="row ">
+                                                <div class="col-12 mb-1">
+                                                    <p class="text-center" style="font-weight: bold">Reserva:</p>
+                                                    <p class="combustibleLitros fw-semibold text-center">
+                                                        {{ number_format($almacenCisterna->contenido, 2) }} lts.
+                                                    </p>
                                                 </div>
-                                                <div class="row ">
-                                                    <div class="col-12 mb-1">
-                                                        <p class="text-center" style="font-weight: bold">Reserva:</p>
-                                                        <p class="combustibleLitros fw-semibold text-center">
-                                                            {{ number_format($almacenCisterna->contenido, 2) }} lts.
-                                                        </p>
-                                                    </div>
-                                                
-                                                    <div class="col-6" style="width: 150px !important">
-                                                        <p class=" "style="font-weight: bold">Última Carga:</p>
-                                                        <p class="combustiblefecha fw-semibold mb-3">
-                                                            {{ \Carbon\Carbon::parse($almacenCisterna->updated_at)->format('Y-m-d') }}
-                                                        </p>
-                                                    </div>
-                                                    
-                                                    <div class="col-5" style="width: 130px !important">
-                                                        <p class="d-flex align-content-end"style="font-weight: bold">Por Litro:</p>
-                                                        <p class="d-flex align-content-end combustibleLitros fw-semibold">
-                                                            $ {{ number_format($almacenCisterna->ultimoPrecio, 2) }}
-                                                        </p>
-                                                    </div>
-                                                    
-                                                    <div class="col-12 d-flex justify-content-center">
-                                                        <p class="text-center mt-1" style="font-weight: bold; margin-right:8px; width: 130px !important">Litros Cargados: </p><div class="combustibleLitros fw-semibold text-center mt-2">{{ number_format($almacenCisterna->ultimaCarga, 2) }} lts.</div>
-                                                    </div>
+
+                                                <div class="col-6" style="width: 150px !important">
+                                                    <p class=" "style="font-weight: bold">Última Carga:</p>
+                                                    <p class="combustiblefecha fw-semibold mb-3">
+                                                        {{ \Carbon\Carbon::parse($almacenCisterna->updated_at)->format('Y-m-d') }}
+                                                    </p>
+                                                </div>
+
+                                                <div class="col-5" style="width: 130px !important">
+                                                    <p class="d-flex align-content-end"style="font-weight: bold">Por
+                                                        Litro:</p>
+                                                    <p class="d-flex align-content-end combustibleLitros fw-semibold">
+                                                        $ {{ number_format($almacenCisterna->ultimoPrecio, 2) }}
+                                                    </p>
+                                                </div>
+
+                                                <div class="col-12 d-flex justify-content-center">
+                                                    <p class="text-center mt-1"
+                                                        style="font-weight: bold; margin-right:8px; width: 130px !important">
+                                                        Litros Cargados: </p>
+                                                    <div class="combustibleLitros fw-semibold text-center mt-2">
+                                                        {{ number_format($almacenCisterna->ultimaCarga, 2) }} lts.</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                
+                                </div>
                             @endforeach
 
                         </div>
@@ -555,20 +566,22 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <!-- <div class="card-header bacTituloPrincipal">
-                                                                                                                                                                                                                                                                                                                                                        <h4 class="card-title">Carga y descarga de combustible</h4>
+                                                                                                                                                                                                                                                                                                                                                                <h4 class="card-title">Carga y descarga de combustible</h4>
 
-                                                                                                                                                                                                                                                                                                                                                    </div>-->
+                                                                                                                                                                                                                                                                                                                                                            </div>-->
                                     <div class="card-body mb-3">
                                         <div class="nav nav-tabs justify-content-evenly" id="myTab" role="tablist">
                                             <button
                                                 class=" nav-item col-12 col-md-6 BTNbCargaDescarga py-3 border-0 active "
                                                 role="presentation" id="home-tab" data-bs-toggle="tab"
                                                 data-bs-target="#home-tab-pane" type="button" role="tab"
-                                                aria-controls="home-tab-pane" aria-selected="true"> Movimientos de Cargas en el Tote </button>
+                                                aria-controls="home-tab-pane" aria-selected="true"> Movimientos de Cargas
+                                                en el Tote </button>
                                             <button class="nav-item col-12 col-md-6 BTNbCargaDescarga "
                                                 role="presentation" id="profile-tab" data-bs-toggle="tab"
                                                 data-bs-target="#profile-tab-pane" type="button" role="tab"
-                                                aria-controls="profile-tab-pane" aria-selected="false"> Movimientos de Descargas en el Tote</button>
+                                                aria-controls="profile-tab-pane" aria-selected="false"> Movimientos de
+                                                Descargas en el Tote</button>
                                         </div>
 
                                         <div class="tab-content contentCargas" id="myTabContent">
@@ -614,21 +627,31 @@
                                                                                     <td>
                                                                                         {{ $carga->nombre }}
                                                                                     </td>
-                                                                                <td
-                                                                                    class="td-actions d-flex justify-content-center">
-                                                                                    <form action="{{route('printCarga.post', $carga->id)}}" method="POST" style="display: inline-block;">
-                                                                                        @csrf
-                                                                                        @method('POST')
-                                                                                        <input type="hidden" name="id" value="{{$carga->id}}" id="id">
-                                                                                        <button class="btnSinFondo" type="submit" rel="tooltip">
-                                                                                            <span class="material-icons mt-3" style="font-size:35px; color: #727176;">print</span>
-                                                                                        </button>
+                                                                                    <td
+                                                                                        class="td-actions d-flex justify-content-center">
+                                                                                        <form
+                                                                                            action="{{ route('printCarga.post', 0) }}"
+                                                                                            method="POST"
+                                                                                            style="display: inline-block;">
+                                                                                            @csrf
+                                                                                            @method('POST')
+                                                                                            <input type="hidden"
+                                                                                                name="id"
+                                                                                                value="{{ $carga->id }}"
+                                                                                                id="id">
+                                                                                            <button class="btnSinFondo"
+                                                                                                type="submit"
+                                                                                                rel="tooltip">
+                                                                                                <span
+                                                                                                    class="material-icons mt-3"
+                                                                                                    style="font-size:35px; color: #727176;">print</span>
+                                                                                            </button>
                                                                                         </form>
-                                                                                </td>
-                                                                                
+                                                                                    </td>
+
                                                                                     <td style="width: 400px"
                                                                                         class="td-actions justify-content-end">
-                                                                                        
+
                                                                                         @can('combustible_edit')
                                                                                             <a href="#" class=""
                                                                                                 data-bs-toggle="modal"
@@ -647,7 +670,7 @@
                                                                                                 </svg>
                                                                                             </a>
                                                                                         @endcan
-                                                                                        
+
 
                                                                                         <form
                                                                                             action="{{ route('inventario.deleteCarga', $carga->id) }}"
@@ -730,7 +753,7 @@
                                                                                     <td>{{ $descarga->receptor }}</td>
                                                                                     <td>{{ $descarga->km }}</td>
                                                                                     {{--  <td>{{ $descarga->horas }}</td>  --}}
-                                                                                    
+
                                                                                     <td>
                                                                                         {{ \Carbon\Carbon::parse($descarga->fecha)->format('H:m') }}
                                                                                     </td>
@@ -741,44 +764,60 @@
                                                                                         {{ \Carbon\Carbon::parse($descarga->fecha)->format('Y-m-d') }}
                                                                                     </td>
                                                                                     @if ($descarga->ticket == 0)
-                                                                                    <td class="td-actions d-flex justify-content-center">
-                                                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#printFormDescargaD"
-                                                                                            onclick="cargaItem('{{ $descarga->id }}')">
-                                                                                            <span class="material-icons mt-3" style="font-size:35px; color: #727176;">print</span>
-                                                                                        </a>
-                                                                                    </td>
-                                                                                    @else
-                                                                                    
-                                                                                    <td class="td-actions d-flex justify-content-center">
-                                                                                        @can('ticketDescarga_edit')
-                                                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#printFormDescargaEdit"
-                                                                                                onclick="cargaItemEdit('{{ $descarga->id }}', '{{ $descarga->nombreSolicitante }}', '{{ $descarga->costoTrabajo }}', '{{ $descarga->horaLlegada }}','{{ $descarga->observaciones }}','{{ $descarga->tipo_solicitud }}')">
-                                                                                                <svg style="color:#f7c90d; margin-top:20px;" xmlns="http://www.w3.org/2000/svg "
-                                                                                                    width="28"
-                                                                                                    height="28"
-                                                                                                    fill="currentColor"
-                                                                                                    class="bi bi-pencil accionesIconos"
-                                                                                                    viewBox="0 0 16 16">
-                                                                                                    <path
-                                                                                                        d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                                                                                </svg>
+                                                                                        <td
+                                                                                            class="td-actions d-flex justify-content-center">
+                                                                                            <a href="#"
+                                                                                                data-bs-toggle="modal"
+                                                                                                data-bs-target="#printFormDescargaD"
+                                                                                                onclick="cargaItem('{{ $descarga->id }}')">
+                                                                                                <span
+                                                                                                    class="material-icons mt-3"
+                                                                                                    style="font-size:35px; color: #727176;">print</span>
                                                                                             </a>
-                                                                                        @endcan
-                                                                                    
-                                                                                        <form action="{{ route('printOnlyTicket.post', $descarga->id) }}" method="POST" style="display: inline-block;">
-                                                                                            @csrf
-                                                                                            @method('POST')
-                                                                                            <input type="hidden" name="id" value="{{ $descarga->descargaDetalleId }}">
-                                                                                            <button class="btnSinFondo" type="submit" rel="tooltip">
-                                                                                                <span class="material-icons mt-3" style="font-size:35px; color: #727176;">print</span>
-                                                                                            </button>
-                                                                                        </form>
-                                                                                    </td>
-                                                                                    
+                                                                                        </td>
+                                                                                    @else
+                                                                                        <td
+                                                                                            class="td-actions d-flex justify-content-center">
+                                                                                            @can('ticketDescarga_edit')
+                                                                                                <a href="#"
+                                                                                                    data-bs-toggle="modal"
+                                                                                                    data-bs-target="#printFormDescargaEdit"
+                                                                                                    onclick="cargaItemEdit('{{ $descarga->id }}', '{{ $descarga->nombreSolicitante }}', '{{ $descarga->costoTrabajo }}', '{{ $descarga->horaLlegada }}','{{ $descarga->observaciones }}','{{ $descarga->tipo_solicitud }}')">
+                                                                                                    <svg style="color:#f7c90d; margin-top:20px;"
+                                                                                                        xmlns="http://www.w3.org/2000/svg "
+                                                                                                        width="28"
+                                                                                                        height="28"
+                                                                                                        fill="currentColor"
+                                                                                                        class="bi bi-pencil accionesIconos"
+                                                                                                        viewBox="0 0 16 16">
+                                                                                                        <path
+                                                                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                                                    </svg>
+                                                                                                </a>
+                                                                                            @endcan
+
+                                                                                            <form
+                                                                                                action="{{ route('printOnlyTicket.post', $descarga->id) }}"
+                                                                                                method="POST"
+                                                                                                style="display: inline-block;">
+                                                                                                @csrf
+                                                                                                @method('POST')
+                                                                                                <input type="hidden"
+                                                                                                    name="id"
+                                                                                                    value="{{ $descarga->descargaDetalleId }}">
+                                                                                                <button class="btnSinFondo"
+                                                                                                    type="submit"
+                                                                                                    rel="tooltip">
+                                                                                                    <span
+                                                                                                        class="material-icons mt-3"
+                                                                                                        style="font-size:35px; color: #727176;">print</span>
+                                                                                                </button>
+                                                                                            </form>
+                                                                                        </td>
                                                                                     @endif
                                                                                     <td
                                                                                         class="td-actions justify-content-end">
-                                                                                        
+
                                                                                         @can('combustible_edit')
                                                                                             <a href="#" class=""
                                                                                                 data-bs-toggle="modal"
@@ -798,7 +837,7 @@
                                                                                                 </svg>
                                                                                             </a>
                                                                                         @endcan
-                                                                                        
+
                                                                                         {{-- id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms, horas, imgHoras, fecha --}}
                                                                                         <form
                                                                                             action="{{ route('inventario.deleteDescarga', 0) }}"
@@ -860,7 +899,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="printFormDescargaD" tabindex="-1" aria-labelledby="printModalLabel" aria-hidden="true">
+    <div class="modal fade" id="printFormDescargaD" tabindex="-1" aria-labelledby="printModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
@@ -879,17 +919,21 @@
                                 <option value="{{ $item->nombres . ' ' . $item->apellidoP }}">{{ $item->nombres . ' ' . $item->apellidoP }}</option>
                             @endforeach
                         </select>  --}}
-                        <input type="text" name="nombreSolicitante" id="nombreSolicitanteDescarga" class="inputCaja" placeholder="Nombre del Solicitante...">
+                        <input type="text" name="nombreSolicitante" id="nombreSolicitanteDescarga" class="inputCaja"
+                            placeholder="Nombre del Solicitante...">
                         <div class="row">
                             <div class="col-12">
                                 <label for="costoTrabajoDescarga" class="labelTitulo mt-3">Costo de Trabajo:</label>
-                                <input type="number" name="costoTrabajo" id="costoTrabajoDescarga" class="inputCaja" placeholder="Costo del Trabajo...">
+                                <input type="number" name="costoTrabajo" id="costoTrabajoDescarga" class="inputCaja"
+                                    placeholder="Costo del Trabajo...">
                             </div>
-    
+
                             <div class="col-6" style="display:none">
                                 <div class="form-check mt-5 d-flex justify-content-center">
                                     <div class="form-check form-check-inline">
-                                        <input type="checkbox" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" id="checkbox_tipo_solicitud">
+                                        <input type="checkbox" name="tipo_solicitud"
+                                            class="form-check-input is-invalid align-self-end mb-2"
+                                            id="checkbox_tipo_solicitud">
                                         <label for="checkbox_reparacion">Para el Cliente</label>
                                     </div>
                                 </div>
@@ -897,16 +941,19 @@
                         </div>
 
                         <label for="horaActual" class="labelTitulo mt-3">Hora de Llegada:</label>
-                        <input type="time" name="horaLlegada" id="horaActual" class="inputCaja" value="" required>
+                        <input type="time" name="horaLlegada" id="horaActual" class="inputCaja" value=""
+                            required>
 
                         <label for="observacionesDescarga" class="labelTitulo mt-3">Observaciones:</label>
-                        <textarea class="form-control-textarea border-green" name="observaciones" id="observacionesDescarga" rows="3" placeholder="Agregar Observaciones..."></textarea>
+                        <textarea class="form-control-textarea border-green" name="observaciones" id="observacionesDescarga" rows="3"
+                            placeholder="Agregar Observaciones..."></textarea>
 
-                        
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn botonGral" data-bs-toggle="modal" data-bs-target="#confirmationModal">Imprimir</button>
+                        <button type="button" class="btn botonGral" data-bs-toggle="modal"
+                            data-bs-target="#confirmationModal">Imprimir</button>
                     </div>
                 </form>
                 {{--  <button type="submit" class="btn botonGral">Imprimir</button>  --}}
@@ -915,7 +962,8 @@
     </div>
 
     <!-- Confirmation Modal -->
-    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
@@ -927,10 +975,14 @@
                         <i class="fas fa-question-circle" style="color: #FFA500; font-size:75px"></i>
                     </div>
                     <br>
-                    <p class="modal-text" style="font-weight:bold; word-wrap: break-word; 
+                    <p class="modal-text"
+                        style="font-weight:bold; word-wrap: break-word; 
                     white-space: normal;">
-                        Asegúrate de que la información es correcta porque ya no podrás editar esta información una vez impresa.
-                        <br> <br><div style="color: red; font-weight:bold; word-wrap: break-word; white-space: normal;">Si subes mal la información, tendrás que solicitar una corrección con tu jefe directo.</div>
+                        Asegúrate de que la información es correcta porque ya no podrás editar esta información una vez
+                        impresa.
+                        <br> <br>
+                    <div style="color: red; font-weight:bold; word-wrap: break-word; white-space: normal;">Si subes mal la
+                        información, tendrás que solicitar una corrección con tu jefe directo.</div>
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -942,7 +994,8 @@
     </div>
 
 
-    <div class="modal fade" id="printFormDescargaEdit" tabindex="-1" aria-labelledby="printModalLabel" aria-hidden="true">
+    <div class="modal fade" id="printFormDescargaEdit" tabindex="-1" aria-labelledby="printModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
@@ -961,17 +1014,21 @@
                                 <option value="{{ $item->nombres . ' ' . $item->apellidoP }}">{{ $item->nombres . ' ' . $item->apellidoP }}</option>
                             @endforeach
                         </select>  --}}
-                        <input type="text" name="nombreSolicitante" id="nombreSolicitanteDescargaEdit" class="inputCaja" placeholder="Nombre del Solicitante...">
+                        <input type="text" name="nombreSolicitante" id="nombreSolicitanteDescargaEdit"
+                            class="inputCaja" placeholder="Nombre del Solicitante...">
                         <div class="row">
                             <div class="col-6">
                                 <label for="costoTrabajoDescarga" class="labelTitulo mt-3">Costo de Trabajo:</label>
-                                <input type="number" name="costoTrabajo" id="costoTrabajoDescargaEdit" class="inputCaja" placeholder="Costo del Trabajo...">
+                                <input type="number" name="costoTrabajo" id="costoTrabajoDescargaEdit"
+                                    class="inputCaja" placeholder="Costo del Trabajo...">
                             </div>
-    
+
                             <div class="col-6">
                                 <div class="form-check mt-5 d-flex justify-content-center">
                                     <div class="form-check form-check-inline">
-                                        <input type="checkbox" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" id="checkbox_tipo_solicitudEdit" checked>
+                                        <input type="checkbox" name="tipo_solicitud"
+                                            class="form-check-input is-invalid align-self-end mb-2"
+                                            id="checkbox_tipo_solicitudEdit" checked>
                                         <label for="checkbox_reparacion">Para el Cliente</label><br>
                                     </div>
                                 </div>
@@ -979,18 +1036,20 @@
                         </div>
 
                         <label for="horaActual" class="labelTitulo mt-3">Hora de Llegada:</label>
-                        <input type="time" name="horaLlegada" id="horaActualEdit" class="inputCaja" value="" required>
+                        <input type="time" name="horaLlegada" id="horaActualEdit" class="inputCaja" value=""
+                            required>
 
                         <label for="observacionesDescarga" class="labelTitulo mt-3">Observaciones:</label>
-                        <textarea class="form-control-textarea border-green" name="observaciones" id="observacionesDescargaEdit" rows="3" placeholder="Agregar Observaciones..."></textarea>
-                        
+                        <textarea class="form-control-textarea border-green" name="observaciones" id="observacionesDescargaEdit"
+                            rows="3" placeholder="Agregar Observaciones..."></textarea>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn botonGral">Imprimir</button>
                     </div>
                 </form>
-                
+
             </div>
         </div>
     </div>
@@ -1050,7 +1109,8 @@
 
                         <div class="col-3 my-3">
                             <label for="inputEmail4" class="form-label">Hora carga</label>
-                            <input type="time" class="form-control" id="cargaHora" name="horaLlegadaCarga" value="">
+                            <input type="time" class="form-control" id="cargaHora" name="horaLlegadaCarga"
+                                value="">
                         </div>
 
                         <div class="modal-footer">
@@ -1195,7 +1255,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="modal fade" id="printFormCargaD" tabindex="-1" aria-labelledby="printModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -1203,7 +1263,7 @@
                     <h5 class="modal-title fs-5" id="printModalLabel">Solicitud de Impresión Carga</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="printFormDescarga" action="{{ route('printCarga.post', $carga->id) }}" method="POST">
+                <form id="printFormDescarga" action="{{ route('printCarga.post', 0) }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">
@@ -1212,17 +1272,21 @@
                         <select class="form-select inputCaja" name="nombreSolicitante" id="nombreSolicitanteDescarga">
                             <option value="">Seleccione</option>
                             @foreach ($usuarios as $item)
-                                <option value="{{ $item->nombres . ' ' . $item->apellidoP }}">{{ $item->nombres . ' ' . $item->apellidoP }}</option>
+                                <option value="{{ $item->nombres . ' ' . $item->apellidoP }}">
+                                    {{ $item->nombres . ' ' . $item->apellidoP }}</option>
                             @endforeach
                         </select>
                         <label for="costoTrabajoDescarga" class="labelTitulo mt-3">Costo de Trabajo:</label>
-                        <input type="number" name="costoTrabajo" id="costoTrabajoDescarga" class="inputCaja" placeholder="Costo de Trabajo">
-                        
+                        <input type="number" name="costoTrabajo" id="costoTrabajoDescarga" class="inputCaja"
+                            placeholder="Costo de Trabajo">
+
                         <label for="horaActual" class="labelTitulo mt-3">Hora de Llegada:</label>
-                        <input type="time" name="horaLlegada" id="horaActual" class="inputCaja" value="{{ date('H:i') }}" required>
+                        <input type="time" name="horaLlegada" id="horaActual" class="inputCaja"
+                            value="{{ date('H:i') }}" required>
 
                         <label for="observacionesDescarga" class="labelTitulo mt-3">Observaciones:</label>
-                        <textarea class="form-control-textarea border-green" name="observaciones" id="observacionesDescarga" rows="3" placeholder="Agregar Observaciones..."></textarea>
+                        <textarea class="form-control-textarea border-green" name="observaciones" id="observacionesDescarga" rows="3"
+                            placeholder="Agregar Observaciones..."></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -1515,16 +1579,15 @@
     });
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('imprimirButton').addEventListener('click', function () {
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('imprimirButton').addEventListener('click', function() {
                 Swal.fire({
                     title: 'Solicitud de Impresión Carga',
-                    html:
-                        '<label class="labelTitulo">Solicito:</label></br>'+
-                        '<select readonly class="form-select inputCaja" name="nombreSolicitante" id="nombreSolicitante"> <option value="">Seleccione</option> @foreach ($usuarios as $item) <option value="{{ $item->nombres . ' ' . $item->apellidoP }}"> {{ $item->nombres . ' ' . $item->apellidoP }} </option> @endforeach </select>'+
+                    html: '<label class="labelTitulo">Solicito:</label></br>' +
+                        '<select readonly class="form-select inputCaja" name="nombreSolicitante" id="nombreSolicitante"> <option value="">Seleccione</option> @foreach ($usuarios as $item) <option value="{{ $item->nombres . ' ' . $item->apellidoP }}"> {{ $item->nombres . ' ' . $item->apellidoP }} </option> @endforeach </select>' +
                         '<label for="hora" class="labelTitulo mt-3">Costo de Trabajo:</label>' +
                         '<input type="number" id="costoTrabajo" class="inputCaja" placeholder="Costo de Trabajo">' +
-                        '<label for="descripcion" class="labelTitulo mt-3">Descripción:</label>'+
+                        '<label for="descripcion" class="labelTitulo mt-3">Descripción:</label>' +
                         //'<div class="mb-3 col-6"><label for="hora" class="labelTitulo">Hora de Llegada:</label><input type="time" class="inputCaja" name="hora" id="horaEdit"aria-describedby="helpId" placeholder="Fecha" readonly></div>'+
                         '<textarea class="form-control-textarea border-green" name="observaciones" id="observaciones" rows="3" placeholder="Agregar Observaciones..."></textarea>',
                     showCancelButton: true,
@@ -1534,14 +1597,18 @@
                         confirmButton: 'botonGral' // Clase personalizada para el botón
                     },
                     preConfirm: () => {
-                        const nombreSolicitante = Swal.getPopup().querySelector('#nombreSolicitanteDescarga').value;
-                        const costoTrabajo = Swal.getPopup().querySelector('#costoTrabajoDescarga').value;
-                        const observaciones = Swal.getPopup().querySelector('#observacionesDescarga').value;
-    
+                        const nombreSolicitante = Swal.getPopup().querySelector(
+                            '#nombreSolicitanteDescarga').value;
+                        const costoTrabajo = Swal.getPopup().querySelector(
+                            '#costoTrabajoDescarga').value;
+                        const observaciones = Swal.getPopup().querySelector(
+                            '#observacionesDescarga').value;
+
                         if (!nombreSolicitante || !costoTrabajo || !observaciones) {
-                            Swal.showValidationMessage('Complete los Campos, Solicitante y Costo');
+                            Swal.showValidationMessage(
+                                'Complete los Campos, Solicitante y Costo');
                         }
-    
+
                         return {
                             nombreSolicitante: nombreSolicitante,
                             costoTrabajo: costoTrabajo,
@@ -1552,7 +1619,7 @@
                     if (result.isConfirmed) {
                         // El usuario confirmó la solicitud, aquí puedes enviar los datos al servidor
                         const data = result.value;
-    
+
                         // Establece los valores en los campos ocultos del formulario
                         document.getElementById('nombreSolicitante').value = data.nombreSolicitante;
                         document.getElementById('costoTrabajo').value = data.costoTrabajo;
@@ -1570,7 +1637,7 @@
                             (minutos < 10 ? "0" : "") + minutos + ":" +
                             (segundos < 10 ? "0" : "") + segundos;
                             document.getElementById('horaEdit').value = horaActual;*/
-    
+
                         // Envía el formulario de manera programática
                         document.getElementById('printForm').submit();
                     }
@@ -1590,13 +1657,13 @@
         function cargaItemEdit(id, nombreSolicitante, costoTrabajo, horaLlegada, observaciones, tipo_solicitud) {
             const txtId = document.getElementById('idDescargaEdit');
             txtId.value = id;
-            
+
             const nombreSolicitanteId = document.getElementById('nombreSolicitanteDescargaEdit');
             nombreSolicitanteId.value = nombreSolicitante;
-            
+
             const costoTrabajoId = document.getElementById('costoTrabajoDescargaEdit');
             costoTrabajoId.value = costoTrabajo;
-            
+
             const horaLlegadaId = document.getElementById('horaActualEdit');
             horaLlegadaId.value = horaLlegada;
 
@@ -1634,6 +1701,7 @@
                 title: 'Guardado con exito'
             })
         }
+
         function NoGuardado() {
             Swal.fire({
                 icon: 'error',
@@ -1657,13 +1725,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             const confirmImprimir = document.getElementById('confirmImprimir');
             const printFormDescarga = document.getElementById('printFormDescarga');
-        
+
             confirmImprimir.addEventListener('click', function() {
                 // User clicked "Sí," submit the form
                 printFormDescarga.submit();
             });
         });
-        </script>
-        
-        
+    </script>
+
+
 @endsection
