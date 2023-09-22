@@ -41,7 +41,7 @@ class maquinariaController extends Controller
                 'marca.nombre as marca',
                 'maquinariaCategoria.nombre as categoria'
             )
-            ->whereNull('compania')->get();
+            ->whereNull('compania')->paginate(15);
         // $maquinaria = maquinaria::whereNull('compania')->get();
 
         // dd($maquinaria);
