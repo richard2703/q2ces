@@ -35,7 +35,7 @@ class maquinariaController extends Controller
         abort_if(Gate::denies('maquinaria_index'), 403);
         // $mtq = 'mtq';
         $maquinaria = maquinaria::join('marca', 'maquinaria.marcaId', 'marca.id')
-            ->join('maquinariacategoria', 'maquinaria.categoriaId', 'maquinariacategoria.id')
+            ->join('maquinariaCategoria', 'maquinaria.categoriaId', 'maquinariaCategoria.id')
             ->select(
                 'maquinaria.*',
                 'marca.nombre as marca',
