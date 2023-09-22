@@ -68,10 +68,11 @@ class printController extends Controller
         // $ticket->ticket = 1;
 
         $detalleEnDescarga = descargaDetalle::where('id', $request['id'])->first();
+        $nuevoSolicitante = $detalleEnDescarga;
         $data = $request->all();
         $detalleEnDescarga->update($data);
         // dd($solicitante);
-        return view('inventario.vistaPreviaImpresion', compact('descarga', 'solicitante', 'cliente'));
+        return view('inventario.vistaPreviaImpresion', compact('descarga', 'solicitante', 'cliente', 'nuevoSolicitante'));
     }
 
     public function printCarga(Request $request)
