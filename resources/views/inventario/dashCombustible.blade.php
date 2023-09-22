@@ -126,7 +126,7 @@
                                                                 </div>
                                                                 <div class=" col-12 col-md-6 d-flex mb-4">
                                                                     <div class="me-2">
-                                                                        <img src="{{ asset('/img/inventario/precio.svg') }}"
+                                                                        <img src="{{ asset('/img/inventario/RELOJ-01.svg') }}"
                                                                             alt="" style="width:40px;">
                                                                     </div>
                                                                     <div style="width: 90%! important;">
@@ -150,7 +150,7 @@
 
                                                                 <div class=" col-12 col-md-6 d-flex mb-4">
                                                                     <div class="me-2">
-                                                                        <img src="{{ asset('/img/inventario/precio.svg') }}"
+                                                                        <img src="{{ asset('/img/inventario/OBSERBACIONES-01.svg') }}"
                                                                             alt="" style="width:40px;">
                                                                     </div>
                                                                     <div style="width: 90%! important;">
@@ -427,45 +427,43 @@
                         <div class="row">
 
                             @foreach ($gasolinas as $gasolina)
-                                <div class="col-sm-4">
-                                    <div class="card">
+                                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                                    <div class="card" style="margin: 15px">
                                         <div class="card-body combustibleBorde">
                                             <div class="bordeTitulo mb-3">
-                                                <h2 class="combustibleTitulo fw-semibold  my-3"> {{ $gasolina->nombre }}
+                                                <h2 class="combustibleTitulo fw-semibold  my-3 text-center"> {{ $gasolina->nombre }}
                                                 </h2>
                                             </div>
                                             <div class="row ">
-                                                <div class="col-12 mb-5">
-                                                    <p class="text-end">Reserva</p>
-                                                    <p class="combustibleLitros fw-semibold text-end">
+                                                <div class="col-12 mb-1">
+                                                    <p class="text-center" style="font-weight: bold">Reserva</p>
+                                                    <p class="combustibleLitros fw-semibold text-center">
                                                         {{ number_format($gasolina->cisternaNivel, 2) }} lts.
                                                     </p>
                                                 </div>
-                                                <div class="col mb-3">
-                                                    <div class="row">
-                                                        <div class="col-6">
-                                                            <p class=" ">Última carga</p>
-                                                            <p class="combustiblefecha fw-semibold mb-3">
-                                                                {{ \Carbon\Carbon::parse($gasolina->created_at)->format('Y-m-d') }}
-                                                            </p>
-                                                            <p class="">por litro</p>
-                                                            <p class="combustibleLitros fw-semibold">
-                                                                $ {{ number_format($gasolina->precio, 2) }}
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <p class=" text-end">Litros Cargados</p>
-                                                            <p class="combustibleLitros fw-semibold text-end">
-                                                                {{ number_format($gasolina->litros, 2) }} lts.
-                                                        </div>
+
+                                                <div class="col-6" style="width: 150px !important">
+                                                        <p class=" "style="font-weight: bold">Última Carga:</p>
+                                                        <p class="combustiblefecha fw-semibold mb-3">
+                                                            {{ \Carbon\Carbon::parse($gasolina->created_at)->format('Y-m-d') }}
+                                                        </p>
                                                     </div>
-
+                                                    
+                                                    <div class="col-5" style="width: 130px !important">
+                                                        <p class="d-flex align-content-end"style="font-weight: bold">Por Litro:</p>
+                                                        <p class="d-flex align-content-end combustibleLitros fw-semibold">
+                                                            $ {{ number_format($gasolina->precio, 2) }}
+                                                        </p>
+                                                    </div>
+                                                    
+                                                    <div class="col-12 d-flex justify-content-center">
+                                                        <p class="text-center mt-1" style="font-weight: bold; margin-right:8px; width: 130px !important">Litros Cargados: </p><div class="combustibleLitros fw-semibold text-center mt-2">{{ number_format($gasolina->litros, 2) }} lts.</div>
+                                                    </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                
                             @endforeach
 
                         </div>
@@ -550,7 +548,7 @@
                                                                             <th class="fw-bolder">Litros</th>
                                                                             <th class="fw-bolder">Precio</th>
                                                                             <th class="fw-bolder">Fecha</th>
-                                                                            <th class="fw-bolder">Hora</th>
+                                                                            <th class="fw-bolder">Hora Carga</th>
                                                                             <th class="fw-bolder">Imprimir</th>
                                                                             <th class="fw-bolder text-right">Acciones</th>
                                                                         </thead>
@@ -571,7 +569,7 @@
                                                                                         {{ \Carbon\Carbon::parse($carga->fecha)->format('Y-m-d') }}
                                                                                     </td>
                                                                                     <td>
-                                                                                        {{ \Carbon\Carbon::parse($carga->fecha)->format('H:m') }}
+                                                                                        {{ substr($carga->horaLlegadaCarga, 0, 5) }}
                                                                                     </td>
 
                                                                                 <td
@@ -595,7 +593,7 @@
                                                                                                 data-bs-target="#cargaCombustible"
                                                                                                 onclick="loadCarga('{{ $carga->id }}','{{ $carga->maquinariaid }}','{{ $carga->operadorid }}'
                                                                                         ,'{{ $carga->litros }}','{{ $carga->precio }}'
-                                                                                        ,'{{ \Carbon\Carbon::parse($carga->fecha)->format('Y-m-d') }}','{{ \Carbon\Carbon::parse($carga->fecha)->format('H:m') }}')">
+                                                                                        ,'{{ \Carbon\Carbon::parse($carga->fecha)->format('Y-m-d') }}','{{ $carga->horaLlegadaCarga }}')">
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg "
                                                                                                     width="28"
                                                                                                     height="28"
@@ -652,7 +650,9 @@
                                                                     </table>
                                                                 </div>
                                                             </div>
-
+                                                            <div class="card-footer d-flex justify-content-center">
+                                                                {{ $cargas->links() }}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -672,7 +672,7 @@
                                                                             <th class="fw-bolder">Maquinaria</th>
                                                                             <th class="fw-bolder">Operador</th>
                                                                             <th class="fw-bolder">Kms</th>
-                                                                            <th class="fw-bolder">Horas</th>
+                                                                            <th class="fw-bolder">Hora Descarga</th>
                                                                             <th class="fw-bolder">Litros</th>
                                                                             <th class="fw-bolder">fecha</th>
                                                                             <th class="fw-bolder text-center">Imprimir</th>
@@ -796,6 +796,9 @@
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
+                                                            </div>
+                                                            <div class="card-footer d-flex justify-content-center">
+                                                                {{ $descargas->links() }}
                                                             </div>
 
                                                         </div>
