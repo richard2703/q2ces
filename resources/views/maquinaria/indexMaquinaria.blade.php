@@ -108,7 +108,7 @@
                                 </div>
                             </div>
                             <div class="card-footer d-flex justify-content-center">
-                                {{ $maquinaria->links() }}
+                                {{--  {{ $maquinaria->links() }}  --}}
                             </div>
                         </div>
                     </div>

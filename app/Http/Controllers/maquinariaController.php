@@ -34,15 +34,15 @@ class maquinariaController extends Controller
     {
         abort_if(Gate::denies('maquinaria_index'), 403);
         // $mtq = 'mtq';
-        $maquinaria = maquinaria::join('marca', 'maquinaria.marcaId', 'marca.id')
+        $maquinaria = maquinaria::leftjoin('marca', 'maquinaria.marcaId', 'marca.id')
             ->join('maquinariaCategoria', 'maquinaria.categoriaId', 'maquinariaCategoria.id')
             ->select(
                 'maquinaria.*',
                 'marca.nombre as marca',
                 'maquinariaCategoria.nombre as categoria'
             )
-            ->whereNull('compania')->paginate(15);
-        // $maquinaria = maquinaria::whereNotIn('compania', ['mtq'])->get();
+            ->whereNull('compania')->get();
+        // $maquinaria = maquinaria::whereNull('compania')->get();
 
         // dd($maquinaria);
         return view('maquinaria.indexMaquinaria', compact('maquinaria'));
