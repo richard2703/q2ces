@@ -1,6 +1,9 @@
 @extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Detalle de Equipo')])
 @section('content')
     <div class="content">
+        <?php
+        $objValida = new Validaciones();
+        ?>
         @if ($errors->any())
             <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
             <div class="alert alert-danger">
@@ -123,7 +126,7 @@
                                             @foreach ($marcas as $item)
                                                 <option value="{{ $item->id }}"
                                                     {{ $item->id == $maquinaria->marcaId ? ' selected' : '' }}>
-                                                    {{ $item->nombre  }}
+                                                    {{ $objValida->ucwords_accent($item->nombre) }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -149,7 +152,7 @@
                                             @foreach ($categorias as $item)
                                                 <option value="{{ $item->id }}"
                                                     {{ $item->id == $maquinaria->categoriaId ? ' selected' : '' }}>
-                                                    {{ $item->nombre }}
+                                                    {{ $objValida->ucwords_accent($item->nombre) }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -181,7 +184,7 @@
                                                     @foreach ($tipos as $item)
                                                         <option value="{{ $item->id }}"
                                                             {{ $item->id == $maquinaria->tipoId ? ' selected' : '' }}>
-                                                            {{ $item->nombre . ' [ '. $item->cliente . ' ] '  }}
+                                                            {{ $objValida->ucwords_accent($item->nombre) }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -358,12 +361,12 @@
                                                             </div>
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                                                                                    <label class="labelTitulo">Combustible:</label></br>
-                                                                                                                                    <input type="text" class="inputCaja" id="combustible"
-                                                                                                                                        name="combustible"
-                                                                                                                                        placeholder="Diesel / Gasolina / Especificar"
-                                                                                                                                        value="{{ $maquinaria->combustible }}">
-                                                                                                                                </div>-->
+                                                                                                                                                <label class="labelTitulo">Combustible:</label></br>
+                                                                                                                                                <input type="text" class="inputCaja" id="combustible"
+                                                                                                                                                    name="combustible"
+                                                                                                                                                    placeholder="Diesel / Gasolina / Especificar"
+                                                                                                                                                    value="{{ $maquinaria->combustible }}">
+                                                                                                                                            </div>-->
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Motor:</label></br>
@@ -467,7 +470,7 @@
                                                                             @foreach ($refaccionTipo as $item)
                                                                                 <option value="{{ $item->id }}"
                                                                                     {{ $refaccion->tipoRefaccionId == $item->id ? 'selected' : '' }}>
-                                                                                    {{ $item->nombre }}
+                                                                                    {{ $objValida->ucwords_accent($item->nombre) }}
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
@@ -481,7 +484,7 @@
                                                                             @foreach ($marcas as $item)
                                                                                 <option value="{{ $item->id }}"
                                                                                     {{ $refaccion->marcaId == $item->id ? 'selected' : '' }}>
-                                                                                    {{ $item->nombre }}
+                                                                                    {{ $objValida->ucwords_accent($item->nombre) }}
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
@@ -500,8 +503,8 @@
                                                                         class="col-12 col-sm-4 col-lg-2 my-3 text-center pt-3">
                                                                         <!--<i class="fas fa-clipboard-check"></i>-->
                                                                         <!--<span class="material-icons" style="font-size:40px; color: gray">
-                                                                                                                            content_paste_search
-                                                                                                                        </span>-->
+                                                                                                                                        content_paste_search
+                                                                                                                                    </span>-->
                                                                         @if ($refaccion->relacionInventarioId != null)
                                                                             <span class="material-icons"
                                                                                 style="font-size:40px; color: green">
@@ -535,7 +538,7 @@
                                                                             <option value="">Seleccione</option>
                                                                             @foreach ($refaccionTipo as $item)
                                                                                 <option value="{{ $item->id }}">
-                                                                                    {{ $item->nombre }}
+                                                                                    {{ $objValida->ucwords_accent($item->nombre) }}
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
@@ -548,7 +551,7 @@
                                                                             <option value="">Seleccione</option>
                                                                             @foreach ($marcas as $item)
                                                                                 <option value="{{ $item->id }}">
-                                                                                    {{ $item->nombre }}
+                                                                                    {{ $objValida->ucwords_accent($item->nombre) }}
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
@@ -613,7 +616,8 @@
                                                                                 title="Proximo a vencer"></i>
                                                                             <i class="fa fa-check-circle semaforo{{ $item->estatus }}"
                                                                                 style="display: {{ $item->estatus != '2' ? ' none' : '' }};"></i>
-                                                                            {{ ucwords(trans($item->nombre)) }} </label>
+                                                                            {{ ucwords(trans($item->nombre)) }}
+                                                                        </label>
                                                                     </div>
                                                                     @if ($item->ruta != null)
                                                                         <div
@@ -864,7 +868,7 @@
                                                             @foreach ($vctEstatus as $item)
                                                                 <option value="{{ $item->id }}"
                                                                     {{ $item->id == $maquinaria->estatusId ? ' selected' : '' }}>
-                                                                    {{ $item->nombre }} </option>
+                                                                    {{ $objValida->ucwords_accent($item->nombre) }} </option>
                                                             @endforeach
                                                         </select>
                                                     </div>

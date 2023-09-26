@@ -1,6 +1,9 @@
 @extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Alta de Maquinaria')])
 @section('content')
     <div class="content">
+        <?php
+        $objValida = new Validaciones();
+        ?>
         @if ($errors->any())
             <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
             <div class="alert alert-danger">
@@ -98,7 +101,7 @@
                                                                     <option value="">Seleccione</option>
                                                                     @foreach ($marcas as $marca)
                                                                         <option value="{{ $marca->id }}">
-                                                                            {{ ucwords($marca->nombre) }}
+                                                                            {{ $objValida->ucwords_accent($marca->nombre) }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
@@ -152,7 +155,7 @@
                                                                     <option value="">Seleccione</option>
                                                                     @foreach ($categorias as $cat)
                                                                         <option value="{{ $cat->id }}">
-                                                                            {{ $cat->nombre }}
+                                                                            {{ $objValida->ucwords_accent($cat->nombre) }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
@@ -186,7 +189,7 @@
                                                                     <option value="">Seleccione</option>
                                                                     @foreach ($tipos as $tipo)
                                                                         <option value="{{ $tipo->id }}">
-                                                                            {{ $tipo->nombre }}
+                                                                            {{ $objValida->ucwords_accent($tipo->nombre) }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
@@ -221,17 +224,17 @@
                                                                     placeholder="ej: MT-00">
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-12 mb-3 ">
+                                                            {{-- <div class=" col-12 col-sm-12 mb-3 ">
                                                                 <label class="labelTitulo">Asignado en la Obra:</label></br>
                                                                 <select id="obraId" name="obraId"
                                                                     class="form-select" aria-label="Default select example">
                                                                      @foreach ($obras as $item)
                                                                         <option value="{{ $item->id }}">
-                                                                            {{ $item->nombre . ' [ '. $item->cliente . ' ] '  }}
+                                                                            {{ $objValida->ucwords_accent($item->nombre . ' [ '. $item->cliente . ' ] ')  }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
-                                                            </div>
+                                                            </div> --}}
 
                                                             <div class=" col-12 col-sm-6 mb-3 ">
                                                                 <label class="labelTitulo">Número Económico:</label></br>
@@ -423,7 +426,7 @@
                                                                         <option value="">Seleccione</option>
                                                                         @foreach ($refaccionTipo as $item)
                                                                             <option value="{{ $item->id }}">
-                                                                                {{ ucwords($item->nombre) }}
+                                                                                {{ $objValida->ucwords_accent($item->nombre) }}
                                                                             </option>
                                                                         @endforeach
                                                                     </select>
@@ -436,7 +439,7 @@
                                                                         <option value="">Seleccione</option>
                                                                         @foreach ($marcas as $item)
                                                                             <option value="{{ $item->id }}">
-                                                                                {{ ucwords($item->nombre) }}
+                                                                                {{ $objValida->ucwords_accent($item->nombre) }}
                                                                             </option>
                                                                         @endforeach
                                                                     </select>

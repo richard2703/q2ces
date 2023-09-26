@@ -1,6 +1,9 @@
 @extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Lista de Maquinaria')])
 @section('content')
     <div class="content">
+        <?php
+        $objValida = new Validaciones();
+        ?>
         @if ($errors->any())
             <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
             <div class="alert alert-danger">
@@ -188,7 +191,7 @@
                                                 {{-- <option value="">Denegar Obra</option> --}}
                                                 @foreach ($vctObras as $item)
                                                     <option value="{{ $item->id }}">
-                                                        {{ $item->nombre . ' [' . $item->cliente . ']' }}
+                                                        {{ $objValida->ucwords_accent($item->nombre . ' [' . $item->cliente . ']') }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -209,7 +212,7 @@
                                                 <option value="">Denegar Equipo</option>
                                                 @foreach ($vctOperarios as $item)
                                                     <option value="{{ $item->id }}">
-                                                        {{ $item->personal . ' [' . $item->puesto . ']' }}
+                                                        {{ $objValida->ucwords_accent($item->personal . ' [' . $item->puesto . ']') }}
                                                     </option>
                                                 @endforeach
                                             </select>
