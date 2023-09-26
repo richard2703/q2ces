@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class obraMaqPer extends Model
 {
     use HasFactory;
-    protected $table = "obramaqper";
+    protected $table = "obraMaqPer";
 
     public $timestamps = false;
 

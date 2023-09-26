@@ -39,11 +39,12 @@ class CombustibleToteController extends Controller
             ->join('puestoNivel', 'puesto.puestoNivelId', 'puestoNivel.id')
             ->select('personal.id', 'personal.nombres', 'personal.apellidoP')
             ->where('puestoNivel.usoCombustible', 1)->get();
-        $maquinaria = maquinaria::where("cisterna", 0)->orderBy('nombre', 'asc')->get();
-        $cisternas = maquinaria::where("cisterna", 1)->orderBy('nombre', 'asc')->get();
+        $maquinaria = maquinaria::where("cisterna", 1)->orderBy('nombre', 'asc')->get();
+        $cisternas = maquinaria::where("cisterna", 0)->orderBy('nombre', 'asc')->get();
 
         // $lastcarga = carga::select('maquinariaId')->selectraw('max(id) as id')->groupBy('maquinariaId')->get();
         $lastcarga = carga::select('maquinariaId')->selectraw('max(id) as id')->groupBy('maquinariaId')->get();
+        // dd($lastcarga);
 
         // $cisternas = maquinaria::join('carga', 'maquinaria.id', '=', 'carga.maquinariaId')
         //     ->joinSub($lastcarga, 'last_carga', function ($join) {
@@ -86,7 +87,8 @@ class CombustibleToteController extends Controller
             'carga.precio',
             'carga.created_at AS fecha',
             'cisternas.nombre',
-            'carga.horaLlegadaCarga'
+            'carga.horaLlegadaCarga',
+            'carga.comentario'
         )
             ->join('maquinaria', 'maquinaria.id', '=', 'carga.maquinariaId')
             ->join('personal', 'personal.id', '=', 'carga.operadorId')
@@ -97,7 +99,7 @@ class CombustibleToteController extends Controller
             ->paginate(10);
         // dd($cargas);
         $descargas = descarga::select(
-            'descarga.id',
+            'descarga.id as descargaIdTote',
             'descarga.maquinariaId',
             'descarga.operadorId',
             db::raw("CONCAT(maquinaria.identificador,' ',maquinaria.nombre) AS maquinaria"),
@@ -116,7 +118,6 @@ class CombustibleToteController extends Controller
             'descarga.descargaDetalleId',
             'descarga.tipoCisternaId',
             'cisternas.nombre',
-            'descarga.id',
             'detalles.*',
         )
             ->join('maquinaria', 'maquinaria.id', '=', 'descarga.maquinariaId')
@@ -129,8 +130,9 @@ class CombustibleToteController extends Controller
             ->orderBy('descarga.created_at', 'desc')
             ->paginate(10);
 
-        // dd($descargas);
+        // dd($cisternas);
 
+        // en este caso solo recuerda que cisternas son las maquinarias pero tuvimos que ponerle ese nombre porque estaba causando conflicto si lo cambiamos a maquinaria y cisterna en singular son las cisternas todas las cisternas del TOTE
         return view('combustibleTote.indexCombustibleTote', compact('despachador', 'personal', 'maquinaria', 'cisternas', 'cisterna', 'suma', 'dia', 'despachadores', 'cargas', 'descargas', 'usuarios'));
         // return view('extintores.indexExtintores', compact('extintores', 'ubicaciones'));
     }
@@ -184,12 +186,27 @@ class CombustibleToteController extends Controller
 
         if ($request['kilometraje'] > $cisterna->kilometraje) {
             $cisterna->kilometraje = $request['kilometraje'];
-            carga::create($carga);
+
             $cisterna->update();
             $cisternaTipo = cisternas::where("id", $request['tipoCisternaId'])->first();
             $cisternaTipo->contenido = ($cisternaTipo->contenido + $request['litros']);
-            $cisternaTipo->ultimoPrecio = $request['precio'];
+
+            // Obtén la última carga que coincida con la maquinaria en la solicitud.
+            $ultimaCarga = carga::where('maquinariaId', $request['maquinariaId'])
+                ->latest()
+                ->first();
+
+            if ($ultimaCarga) {
+                // Asigna el precio de la última carga a la propiedad 'ultimoPrecio' de la cisterna.
+                $cisternaTipo->ultimoPrecio = $ultimaCarga->precio;
+                $carga['precio'] = $cisternaTipo->ultimoPrecio;
+                $cisternaTipo->save();
+                carga::create($carga);
+            } else {
+                dd('Este error se debe a que la carga a la kangoo o al equipo en cuestion no existe y al momento de asignar el ultimo precio al tote marca error.');
+            }
             $cisternaTipo->ultimaCarga = $request['litros'];
+
             $cisternaTipo->update();
             // dd($cisternaTipo);
             Session::flash('message', 1);
@@ -226,17 +243,17 @@ class CombustibleToteController extends Controller
         // ]);
 
 
-        if (is_null($request['horas']) == false && strlen(trim($request['horas'])) > 0) {
-            $blnHayDatos = true;
-        } else {
-            $request['horas'] = 0;
-        }
+        // if (is_null($request['horas']) == false && strlen(trim($request['horas'])) > 0) {
+        //     $blnHayDatos = true;
+        // } else {
+        //     $request['horas'] = 0;
+        // }
 
-        if (is_null($request['horas']) && strlen(trim($request['km'])) > 0) {
-            $blnHayDatos = true;
-        } else {
-            $request['km'] = 0;
-        }
+        // if (is_null($request['horas']) && strlen(trim($request['km'])) > 0) {
+        //     $blnHayDatos = true;
+        // } else {
+        //     $request['km'] = 0;
+        // }
 
         // $descarga = $request->only(
         //     'horas',
@@ -250,6 +267,8 @@ class CombustibleToteController extends Controller
         //     'servicioId',
         // );
         // dd($request);
+        // date_default_timezone_set('America/Mexico_City');
+        $descarga['horas'] = $request['horas'];
         $descarga = $request->all();
 
         if ($request->hasFile("imgKm")) {
@@ -265,68 +284,69 @@ class CombustibleToteController extends Controller
         }
 
         //buscamos el equipo para actualizar el nivel de la cisterna
+
         $cisterna =  maquinaria::where("id", $request['maquinariaId'])->first();
         $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $request['litros']);
         $descarga['userId'] = auth()->user()->id;
-        descarga::create($descarga);
 
-        if ($request['litros'] != null) {
-            $cisternaTipoTote = cisternas::where("nombre", 'Tote')->first();
-            $cisternaTipoTote->contenido = ($cisternaTipoTote->contenido - $request['litros']);
-            $cisternaTipoTote->update();
-        }
-
-        if ($request['grasa'] != null) {
-            $cisternaTipoGrasa = cisternas::where("nombre", 'Grasa')->first();
-            $cisternaTipoGrasa->contenido = ($cisternaTipoGrasa->contenido - $request['grasa']);
-            $cisterna->grasas = ($cisterna->grasas + $request['grasa']);
-            $cisternaTipoTote->update();
-        }
-
-        if ($request['hidraulico'] != null) {
-            $cisternaTipoHidraulico = cisternas::where("nombre", 'Aceite Hidraulico')->first();
-            $cisternaTipoHidraulico->contenido = ($cisternaTipoHidraulico->contenido - $request['hidraulico']);
-            $cisterna->aceitehidra = ($cisterna->aceitehidra + $request['hidraulico']);
-            $cisternaTipoHidraulico->update();
-        }
-
-        if ($request['Anticongelante'] != null) {
-            $cisternaTipoAnticongelante = cisternas::where("nombre", 'Anticongelante')->first();
-            $cisternaTipoAnticongelante->contenido = ($cisternaTipoAnticongelante->contenido - $request['Anticongelante']);
-            $cisterna->anticongelante = ($cisterna->anticongelante + $request['Anticongelante']);
-            $cisternaTipoAnticongelante->update();
-        }
-
-        if ($request['motor'] != null) {
-            $cisternaTipoMotor = cisternas::where("nombre", 'Aceite Motor')->first();
-            $cisternaTipoMotor->contenido = ($cisternaTipoMotor->contenido - $request['motor']);
-            $cisterna->aceitemotor = ($cisterna->aceitemotor + $request['motor']);
-            $cisternaTipoMotor->update();
-        }
-
-        if ($request['otro'] != null) {
-            $cisternaTipoOtros = cisternas::where("nombre", 'Otros')->first();
-            $cisternaTipoOtros->contenido = ($cisternaTipoOtros->contenido - $request['otro']);
-            $cisterna->otroCombustible = ($cisterna->otroCombustible + $request['otro']);
-            $cisternaTipoOtros->update();
-        }
-
-        if ($request['direccion'] != null) {
-            $cisternaTipoDireccion = cisternas::where("nombre", 'Aceite Direccion')->first();
-            $cisternaTipoDireccion->contenido = ($cisternaTipoDireccion->contenido - $request['direccion']);
-            $cisterna->aceitedirec = ($cisterna->aceitedirec + $request['direccion']);
-            $cisternaTipoDireccion->update();
-        }
-
-        if ($request['kilometraje'] > $cisterna->kilometraje) {
-            $cisterna->kilometraje = $request['kilometraje'];
+        if ($request['km'] > $cisterna->kilometraje) {
+            descarga::create($descarga);
+            $cisterna->kilometraje = $request['km'];
             $cisterna->update();
+
+
+            if ($request['litros'] != null) {
+                $cisternaTipoTote = cisternas::where("nombre", 'Tote')->first();
+                $cisternaTipoTote->contenido = ($cisternaTipoTote->contenido - $request['litros']);
+                $cisternaTipoTote->update();
+            }
+
+            if ($request['grasa'] != null) {
+                $cisternaTipoGrasa = cisternas::where("nombre", 'Grasa')->first();
+                $cisternaTipoGrasa->contenido = ($cisternaTipoGrasa->contenido - $request['grasa']);
+                $cisterna->grasas = ($cisterna->grasas + $request['grasa']);
+                $cisternaTipoTote->update();
+            }
+
+            if ($request['hidraulico'] != null) {
+                $cisternaTipoHidraulico = cisternas::where("nombre", 'Aceite Hidraulico')->first();
+                $cisternaTipoHidraulico->contenido = ($cisternaTipoHidraulico->contenido - $request['hidraulico']);
+                $cisterna->aceitehidra = ($cisterna->aceitehidra + $request['hidraulico']);
+                $cisternaTipoHidraulico->update();
+            }
+
+            if ($request['Anticongelante'] != null) {
+                $cisternaTipoAnticongelante = cisternas::where("nombre", 'Anticongelante')->first();
+                $cisternaTipoAnticongelante->contenido = ($cisternaTipoAnticongelante->contenido - $request['Anticongelante']);
+                $cisterna->anticongelante = ($cisterna->anticongelante + $request['Anticongelante']);
+                $cisternaTipoAnticongelante->update();
+            }
+
+            if ($request['motor'] != null) {
+                $cisternaTipoMotor = cisternas::where("nombre", 'Aceite Motor')->first();
+                $cisternaTipoMotor->contenido = ($cisternaTipoMotor->contenido - $request['motor']);
+                $cisterna->aceitemotor = ($cisterna->aceitemotor + $request['motor']);
+                $cisternaTipoMotor->update();
+            }
+
+            if ($request['otro'] != null) {
+                $cisternaTipoOtros = cisternas::where("nombre", 'Otros')->first();
+                $cisternaTipoOtros->contenido = ($cisternaTipoOtros->contenido - $request['otro']);
+                $cisterna->otroCombustible = ($cisterna->otroCombustible + $request['otro']);
+                $cisternaTipoOtros->update();
+            }
+
+            if ($request['direccion'] != null) {
+                $cisternaTipoDireccion = cisternas::where("nombre", 'Aceite Direccion')->first();
+                $cisternaTipoDireccion->contenido = ($cisternaTipoDireccion->contenido - $request['direccion']);
+                $cisterna->aceitedirec = ($cisterna->aceitedirec + $request['direccion']);
+                $cisternaTipoDireccion->update();
+            }
             // dd($cisternaTipo);
             Session::flash('message', 1);
         } else {
             Session::flash('message', 6);
         }
-        Session::flash('message', 1);
 
         return redirect()->route('combustibleTote.index');
 

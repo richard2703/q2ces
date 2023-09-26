@@ -24,7 +24,7 @@ class printController extends Controller
             ->join('personal as operador', 'descarga.operadorId', '=', 'operador.id')
             ->join('personal as receptor', 'descarga.receptorId', '=', 'receptor.id')
             ->leftJoin('maquinaria as despachado', 'descarga.servicioId', '=', 'despachado.id')
-            ->where('descarga.descargaDetalleId', $request['id'])
+            ->where('descarga.id', $request['id'])
             ->select('descarga.*', 'equipo.nombre as equipo_nombre', 'users.name as user_nombre', 'operador.nombres as operador_nombre', 'receptor.nombres as receptor_nombre', 'despachado.nombre as despachado_nombre')
             ->first();
 
@@ -37,7 +37,7 @@ class printController extends Controller
         $solicitante['descargaId'] = $descarga['id'];
         $solicitante['tipo_solicitud'] = $cliente;
         $nuevoSolicitante = descargaDetalle::create($solicitante);
-        $ticket = descarga::where('descargaDetalleId', $request['id'])->first();
+        $ticket = descarga::where('id', $request['id'])->first();
         $ticket->ticket = 1;
 
         $ticket->descargaDetalleId = $nuevoSolicitante['id'];
@@ -55,7 +55,7 @@ class printController extends Controller
             ->join('personal as operador', 'descarga.operadorId', '=', 'operador.id')
             ->join('personal as receptor', 'descarga.receptorId', '=', 'receptor.id')
             ->leftJoin('maquinaria as despachado', 'descarga.servicioId', '=', 'despachado.id')
-            ->where('descarga.descargaDetalleId', $request['id'])
+            ->where('descarga.id', $request['id'])
             ->select('descarga.*', 'equipo.nombre as equipo_nombre', 'users.name as user_nombre', 'operador.nombres as operador_nombre', 'receptor.nombres as receptor_nombre', 'despachado.nombre as despachado_nombre')
             ->first();
 
@@ -89,8 +89,6 @@ class printController extends Controller
 
     public function printOnlyTicket(Request $request)
     {
-        // 
-
         // dd($request);
         $descarga = descarga::join('maquinaria as equipo', 'descarga.maquinariaId', '=', 'equipo.id')
             ->join('users', 'descarga.userId', '=', 'users.id')
@@ -98,7 +96,7 @@ class printController extends Controller
             ->join('personal as receptor', 'descarga.receptorId', '=', 'receptor.id')
             ->leftJoin('maquinaria as despachado', 'descarga.servicioId', '=', 'despachado.id')
             ->join('descargaDetalle as detalles', 'descarga.descargaDetalleId', '=', 'detalles.id')
-            ->where('descarga.descargaDetalleId', $request['id'])
+            ->where('descarga.id', $request['id'])
             ->select('descarga.*', 'detalles.*', 'equipo.nombre as equipo_nombre', 'users.name as user_nombre', 'operador.nombres as operador_nombre', 'receptor.nombres as receptor_nombre', 'despachado.nombre as despachado_nombre')
             ->first();
 

@@ -168,10 +168,10 @@ class obrasController extends Controller
         $vctResidenteAsignado = residente::select('*')->where('obraId', '=', $obras->id)->get();
 
         $vctMaquinariaAsignada = obraMaqPer::select(
-            'obramaqper.*',
+            'obraMaqPer.*',
             db::raw("CONCAT(maquinaria.identificador,' ',maquinaria.nombre) AS maquinaria"),
         )
-            ->join('maquinaria', 'maquinaria.id', '=', 'obramaqper.maquinariaId')
+            ->join('maquinaria', 'maquinaria.id', '=', 'obraMaqPer.maquinariaId')
             ->where('obraId', '=', $obras->id)->get();
 
         // dd( $vctMaquinariaAsignada );
