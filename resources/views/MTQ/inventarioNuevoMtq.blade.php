@@ -50,10 +50,10 @@
                                         </label>
                                     </div>
 
-                                    <div class="col-12 text-center mb-3 ">
+                                    {{--  <div class="col-12 text-center mb-3 ">
                                         <button type="submit" class="btn botonGral"
                                             onclick="alertaGuardar()">Guardar</button>
-                                    </div>
+                                    </div>  --}}
                                 </div>
 
                                 <div class="col-12 col-md-8 my-3 ">
@@ -71,7 +71,7 @@
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Número de Parte: <span>*</span></label></br>
-                                            <input type="number" class="inputCaja text-right" required class="inputCaja"
+                                            <input type="text" class="inputCaja text-right" required class="inputCaja"
                                                 id="numparte" name="numparte" value="{{ old('numparte') }}" maxlength="10"
                                                 step="1" min="0">
                                         </div>
@@ -178,6 +178,10 @@
                                 {{--  <div class="col-12 text-end mb-3 ">
                                     <button type="submit" class="btn botonGral">Guardar</button>
                                 </div>  --}}
+                                <div class="col-12 text-center mb-3 ">
+                                    <button type="submit" class="btn botonGral"
+                                        onclick="alertaGuardar()">Guardar</button>
+                                </div>
                             </form>
                         </div>
                         {{--  <div class="card-footer mr-auto">
