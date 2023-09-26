@@ -40,7 +40,7 @@ class maquinariaController extends Controller
             'maquinaria.*',
             'maquinaria.nombre as maquina',
             'marca.nombre as marca',
-            'maquinariacategoria.nombre as categoria',
+            'maquinariaCategoria.nombre as categoria',
             'obras.nombre as obra',
             'obras.id as obraId',
             'personal.id as operadorId',
@@ -55,11 +55,15 @@ class maquinariaController extends Controller
         ->leftjoin( 'personal', 'personal.id', 'obraMaqPer.personalId' )
         ->leftjoin( 'obras', 'obras.id', 'obraMaqPer.obraId' )
         ->leftjoin('marca','marca.id','maquinaria.marcaId')
-        ->whereNull( 'compania' )->paginate( 15 );
+        ->leftjoin('maquinariaCategoria','maquinariaCategoria.id','maquinaria.categoriaId')
+        ->whereNull( 'compania' )
+        ->orderBy('maquinaria.identificador','asc')
+        ->paginate( 15 );
 
         $vctObras = obras::select('obras.*', 'clientes.nombre as cliente')
             ->join('clientes', 'clientes.id', 'obras.clienteId')
-            ->where('obras.id', '<>', 2)->get();
+            ->where('obras.id', '<>', 2)
+            ->orderBy('obras.nombre','asc')->get();
         //*** Todas excepto la de MTQ control */
 
         $vctOperarios = personal::select(
@@ -96,13 +100,15 @@ class maquinariaController extends Controller
     {
         abort_if(Gate::denies('maquinaria_create'), 403);
         $doc = docs::where('tipoId', '2')->orderBy('nombre', 'asc')->get();
+
         $obras = obras::select('obras.*', 'clientes.nombre as cliente')
             ->join('clientes', 'clientes.id', 'obras.clienteId')->where('obras.clienteId', '=', 1)->get();
         //*** asignamos al centro de control de Q2ces */
+
         $marcas = marca::select('marca.*')->orderBy('marca.nombre', 'asc')->get();
-        $categorias = maquinariaCategoria::all();
-        $tipos = maquinariaTipo::all();
-        $refaccionTipo = refaccionTipo::all();
+        $categorias = maquinariaCategoria::select('maquinariaCategoria.*')->orderBy('maquinariaCategoria.nombre', 'asc')->get();
+        $tipos = maquinariaTipo::select('maquinariaTipo.*')->orderBy('maquinariaTipo.nombre', 'asc')->get();;
+        $refaccionTipo = refaccionTipo::select('refaccionTipo.*')->orderBy('refaccionTipo.nombre', 'asc')->get();
 
         return view('maquinaria.altaDeMaquinaria', compact('obras', 'doc', 'marcas', 'categorias', 'tipos', 'refaccionTipo'));
     }
@@ -379,7 +385,7 @@ class maquinariaController extends Controller
     {
         abort_if(Gate::denies('maquinaria_show'), 403);
         // dd($maquinaria);
-        $bitacora = bitacoras::all();
+        // $bitacora = bitacoras::all();
         // $doc = maqdocs::leftJoin('docs', "maqdocs.tipoId", "docs.id")
         //     ->select(
         //         'docs.id',
@@ -424,7 +430,7 @@ class maquinariaController extends Controller
         $categorias = maquinariaCategoria::all();
         $tipos = maquinariaTipo::all();
         // dd($maqDoc);
-        return view('maquinaria.verMaquinaria', compact('maquinaria', 'doc', 'fotos', 'bitacora', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos'));
+        return view('maquinaria.verMaquinaria', compact('maquinaria', 'doc', 'fotos', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos'));
     }
 
     /**
@@ -436,10 +442,10 @@ class maquinariaController extends Controller
 
     public function edit(maquinaria $maquinaria)
     {
-        $bitacora = bitacoras::all();
+        // $bitacora = bitacoras::all();
         $doc = docs::where('tipoId', '2')->get();
         //$docs = maqdocs::where( 'maquinariaId', $maquinaria->id )->first();
-        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'bitacora', 'doc'));
+        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'doc'));
     }
 
     /**

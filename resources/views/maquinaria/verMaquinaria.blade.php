@@ -112,7 +112,7 @@
                                                                     value="{{ $maquinaria->nombre }}" disabled>
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                            {{-- <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                                                 <label class="labelTitulo">Bitácora:</label></br>
                                                                 <select id="bitacoraId" name="bitacoraId"
                                                                     class="form-select" aria-label="Default select example"
@@ -125,7 +125,7 @@
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
-                                                            </div>
+                                                            </div> --}}
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Marca:</label></br>
@@ -237,21 +237,21 @@
                                                                     placeholder="ej: MT-00" disabled>
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-12 mb-3 ">
+                                                            {{-- <div class=" col-12 col-sm-12 mb-3 ">
                                                                 <label class="labelTitulo">Asignado en la
                                                                     Obra:</label></br>
                                                                 <select id="obraId" name="obraId" disabled
                                                                     class="form-select"
                                                                     aria-label="Default select example">
                                                                     <option value="">Seleccione</option>
-                                                                    @foreach ($obras as $item)
+                                                                    @foreach ($vctObras as $item)
                                                                         <option value="{{ $item->id }}"
                                                                             {{ $item->id == $maquinaria->obraId ? ' selected' : '' }}>
                                                                             {{ $item->nombre . ' [ ' . $item->cliente . ' ] ' }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
-                                                            </div>
+                                                            </div> --}}
 
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">

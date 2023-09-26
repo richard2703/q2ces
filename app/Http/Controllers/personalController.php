@@ -1345,7 +1345,7 @@ class personalController extends Controller {
             return redirect()->back();
             // return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
         }
-    }
+
 
     public function cuenta()
     {
