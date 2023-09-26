@@ -1,6 +1,9 @@
 @extends('layouts.main', ['activePage' => 'personal', 'titlePage' => __('Vista de Personal')])
 @section('content')
     <div class="content">
+        <?php
+        $objValida = new Validaciones();
+        ?>
         @if ($errors->any())
             <div class="alert alert-danger">
                 <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
@@ -723,7 +726,7 @@
                                                         @foreach ($vctPuestos as $item)
                                                             <option value="{{ $item->id }}"
                                                                 {{ $nomina->puestoId == $item->id ? ' selected' : '' }}>
-                                                                {{ $item->nombre }}
+                                                                {{ $objValida->ucwords_accent($item->nombre) }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -790,7 +793,7 @@
                                                         @foreach ($vctPersonal as $persona)
                                                             <option value="{{ $persona->id }}"
                                                                 {{ $persona->id == $nomina->jefeId ? ' selected' : '' }}>
-                                                                {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                                                {{ $objValida->ucwords_accent($persona->nombres . ' ' . $persona->apellidoP. ' [' . $persona->puesto .']' ) }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -1288,7 +1291,7 @@
                                                 @foreach ($vctEstatus as $item)
                                                     <option value="{{ $item->id }}"
                                                         {{ $item->id == $personal->estatusId ? ' selected' : '' }}>
-                                                        {{ $item->nombre }} </option>
+                                                        {{ $objValida->ucwords_accent($item->nombre) }} </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -1393,7 +1396,7 @@
                                         <option value="">Denegar Equipo</option>
                                         @foreach ($vctMaquinaria as $item)
                                             <option value="{{ $item->id }}">
-                                                {{ $item->identificador . ' - ' . $item->maquina }}
+                                                {{ strtoupper($item->identificador) . ' - ' . $objValida->ucwords_accent($item->maquina) }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -1435,9 +1438,9 @@
     </div>
 
     <script>
-        function asignar(id , maquinariaId, maquina , recordId ) {
+        function asignar(id, maquinariaId, maquina, recordId) {
 
-            console.log(id , maquinariaId, maquina , recordId);
+            console.log(id, maquinariaId, maquina, recordId);
 
             const txtId = document.getElementById('asignacionPersona');
             txtId.value = id;

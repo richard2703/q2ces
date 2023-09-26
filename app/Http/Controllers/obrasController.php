@@ -43,7 +43,7 @@ class obrasController extends Controller
     {
         abort_if(Gate::denies('obra_create'), 403);
 
-        $vctMaquinaria = maquinaria::select('*')->where('compania', '=', null)->get();
+        $vctMaquinaria = maquinaria::select('*')->where('compania', '=', null)->orderBy('maquinaria.identificador', 'asc')->get();
         // $vctPersonal = personal::select('*', db::raw("puesto.nombre AS puesto") )
 
         // ->join('puesto', 'puesto.id', '=', 'personal.puestoId')
@@ -51,7 +51,7 @@ class obrasController extends Controller
 
         $vctPersonal = personal::select(
             'personal.id',
-            DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
+            DB::raw("CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal"),
             'obras.nombre AS obra',
             'maquinaria.identificador',
             'maquinaria.nombre AS auto',
@@ -60,15 +60,16 @@ class obrasController extends Controller
             'puesto.puestoNivelId',
             'puestoNIvel.nombre AS puestoNivel'
         )
-        ->join( 'nomina', 'nomina.personalId', 'personal.id' )
-        ->join( 'puesto', 'puesto.id', 'nomina.puestoId' )
-        ->join( 'puestoNivel', 'puestoNivel.id', 'puesto.puestoNivelId' )
-        ->leftjoin( 'maquinaria', 'maquinaria.id', '=', 'personal.maquinariaId' )
-        ->leftjoin( 'obras', 'obras.id', '=', 'maquinaria.obraId' )
-        ->where( 'puesto.puestoNivelId', '=', 5 ) //*** solo operarios de maquinaria */
-        ->orderBy( 'personal.nombres', 'asc' )->get();
+            ->join('nomina', 'nomina.personalId', 'personal.id')
+            ->join('puesto', 'puesto.id', 'nomina.puestoId')
+            ->join('puestoNivel', 'puestoNivel.id', 'puesto.puestoNivelId')
+            ->leftjoin('obraMaqPer', 'obraMaqPer.personalId', 'personal.id')
+            ->leftjoin('maquinaria', 'maquinaria.id', '=', 'obraMaqPer.maquinariaId')
+            ->leftjoin('obras', 'obras.id', '=', 'obraMaqPer.obraId')
+            ->where('puesto.puestoNivelId', '=', 5) //*** solo operarios de maquinaria */
+            ->orderBy('personal.nombres', 'asc')->get();
 
-        $Clientes = clientes::all();
+        $Clientes = clientes::orderBy('clientes.nombre', 'asc')->get();
 
         // dd($vctPersonal);
         return view('obra.altaObra', compact('vctMaquinaria', 'vctPersonal', 'Clientes'));
@@ -212,7 +213,7 @@ class obrasController extends Controller
     {
         abort_if(Gate::denies('obra_edit'), 403);
 
-        $vctMaquinaria =  maquinaria::select('*')->where('compania', '=', null)->get();
+        $vctMaquinaria =  maquinaria::select('*')->where('compania', '=', null)->orderBy('maquinaria.identificador', 'asc')->get();
 
         // $vctPersonal = personal::select('*', db::raw("puesto.nombre AS puesto") )
         // ->join('puesto', 'puesto.id', '=', 'personal.puestoId')
@@ -220,27 +221,28 @@ class obrasController extends Controller
 
         $vctPersonal = personal::select(
             'personal.id',
-            DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
+            DB::raw("CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal"),
             'obras.nombre AS obra',
             'maquinaria.identificador',
             'maquinaria.nombre AS auto',
             'nomina.puestoId',
             'puesto.nombre AS puesto',
             'puesto.puestoNivelId',
-            'puestoNivel.nombre AS puestoNivel'
+            'puestoNIvel.nombre AS puestoNivel'
         )
-        ->join( 'nomina', 'nomina.personalId', 'personal.id' )
-        ->join( 'puesto', 'puesto.id', 'nomina.puestoId' )
-        ->join( 'puestoNivel', 'puestoNivel.id', 'puesto.puestoNivelId' )
-        ->leftjoin( 'maquinaria', 'maquinaria.id', '=', 'personal.maquinariaId' )
-        ->leftjoin( 'obras', 'obras.id', '=', 'maquinaria.obraId' )
-        ->where( 'puesto.puestoNivelId', '=', 5 ) //*** solo operarios de maquinaria */
-        ->orderBy( 'personal.nombres', 'asc' )->get();
+            ->join('nomina', 'nomina.personalId', 'personal.id')
+            ->join('puesto', 'puesto.id', 'nomina.puestoId')
+            ->join('puestoNivel', 'puestoNivel.id', 'puesto.puestoNivelId')
+            ->leftjoin('obraMaqPer', 'obraMaqPer.personalId', 'personal.id')
+            ->leftjoin('maquinaria', 'maquinaria.id', '=', 'obraMaqPer.maquinariaId')
+            ->leftjoin('obras', 'obras.id', '=', 'obraMaqPer.obraId')
+            ->where('puesto.puestoNivelId', '=', 5) //*** solo operarios de maquinaria */
+            ->orderBy('personal.nombres', 'asc')->get();
 
 
         $vctMaquinariaAsignada = obraMaqPer::select('*')->where('obraId', '=', $obras->id)->get();
         $vctResidenteAsignado = residente::select('*')->where('obraId', '=', $obras->id)->get();
-        $Clientes = clientes::all();
+        $Clientes = clientes::orderBy('clientes.nombre', 'asc')->get();
 
         // dd( $vctResidenteAsignado );
         return view('obra.detalleObra', compact('obras', 'vctPersonal', 'vctMaquinaria', 'vctResidenteAsignado', 'vctMaquinariaAsignada', 'Clientes'));

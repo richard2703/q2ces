@@ -66,7 +66,10 @@ class personalController extends Controller {
     public function create() {
         abort_if ( Gate::denies( 'personal_create' ), 403 );
 
-        $vctPersonal = personal::all();
+        $vctPersonal = personal::select('personal.*','puesto.nombre as puesto')
+        ->join('nomina','nomina.personalId','personal.id')
+        ->join('puesto','puesto.id','nomina.puestoId')
+        ->orderBy('nombres', 'asc')->get();
         $vctPuestos = puesto::orderBy( 'nombre', 'asc' )->get();
         $vctNiveles = puestoNivel::orderBy( 'nombre', 'asc' )->get();
         $docs = docs::where( 'tipoId', '1' )->orderBy( 'nombre', 'asc' )->get();
@@ -479,7 +482,10 @@ class personalController extends Controller {
         $vctPuestos = puesto::orderBy('nombre', 'asc')->get();
         $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->get();
         $vctEstatus = userEstatus::all();
-        $vctPersonal = personal::all();
+        $vctPersonal = personal::select('personal.*','puesto.nombre as puesto')
+        ->join('nomina','nomina.personalId','personal.id')
+        ->join('puesto','puesto.id','nomina.puestoId')
+        ->orderBy('nombres', 'asc')->get();
         // $documentos = docs::where( 'tipoId', '1' )->orderBy( 'nombre', 'asc' )->get();
 
         $nomina->decSalarioDiario = ( $nomina->diario );

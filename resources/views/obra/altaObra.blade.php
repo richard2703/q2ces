@@ -1,6 +1,9 @@
 @extends('layouts.main', ['activePage' => 'obra', 'titlePage' => __('Alta de Obra')])
 @section('content')
     <div class="content">
+        <?php
+        $objValida = new Validaciones();
+        ?>
         @if ($errors->any())
             <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
             <div class="alert alert-danger">
@@ -83,7 +86,7 @@
                                             required name="clienteId">
                                             @foreach ($Clientes as $Cliente)
                                                 <option value="{{ $Cliente->id }}">
-                                                    {{ $Cliente->nombre }}
+                                                    {{ $objValida->ucwords_accent($Cliente->nombre) }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -197,7 +200,7 @@
                                                     <option value="">Seleccione</option>
                                                     @foreach ($vctMaquinaria as $maquina)
                                                         <option value="{{ $maquina->id }}">
-                                                            {{ $maquina->identificador . ' ' . $maquina->nombre }}
+                                                            {{ strtoupper($maquina->identificador) . ' - ' . $objValida->ucwords_accent($maquina->nombre) }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -210,7 +213,7 @@
                                                     <option value="">Seleccione</option>
                                                     @foreach ($vctPersonal as $item)
                                                         <option value="{{ $item->id }}">
-                                                            {{ $item->personal . ' [' . $item->puesto . ']' }}
+                                                            {{ $objValida->ucwords_accent($item->personal . ' [' . $item->puesto . ']') }}
                                                         </option>
                                                     @endforeach
                                                 </select>

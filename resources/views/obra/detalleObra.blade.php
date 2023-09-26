@@ -1,6 +1,9 @@
 @extends('layouts.main', ['activePage' => 'obra', 'titlePage' => __('Edición de Obra')])
 @section('content')
     <div class="content">
+        <?php
+        $objValida = new Validaciones();
+        ?>
         @if ($errors->any())
             <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
             <div class="alert alert-danger">
@@ -78,13 +81,13 @@
                                             placeholder="Especifique..." value="{{ $obras->nombre }}">
                                     </div>
                                     <div class="col-12 col-sm-6  col-lg-4 my-3 ">
-                                        <label class="labelTitulo">Tipo: <span>*</span></label></br>
+                                        <label class="labelTitulo">Empresa: <span>*</span></label></br>
                                         <select class="form-select" aria-label="Default select example" id="tipo"
                                             required name="clienteId">
                                             @foreach ($Clientes as $Cliente)
                                                 <option value="{{ $Cliente->id }}"
                                                     {{ $obras->clienteId == $Cliente->id ? ' selected' : '' }}>
-                                                    {{ $Cliente->nombre }}
+                                                    {{ $objValida->ucwords_accent($Cliente->nombre) }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -204,7 +207,7 @@
                                                         @foreach ($vctMaquinaria as $maquina)
                                                             <option value="{{ $maquina->id }}"
                                                                 {{ $maquina->id == $maquinaria->maquinariaId ? ' selected' : '' }}>
-                                                                {{ $maquina->identificador . ' ' . $maquina->nombre }}
+                                                                {{ strtouppr($maquina->identificador) . ' - ' . $objValida->ucwords_accent($maquina->nombre) }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -222,11 +225,11 @@
                                                             </option>
                                                         @endforeach --}}
                                                         @foreach ($vctPersonal as $item)
-                                                        <option value="{{ $item->id }}"
-                                                            {{ $item->id == $maquinaria->personalId ? ' selected' : '' }} >
-                                                            {{ $item->personal . ' [' . $item->puesto . ']' }}
-                                                        </option>
-                                                    @endforeach
+                                                            <option value="{{ $item->id }}"
+                                                                {{ $item->id == $maquinaria->personalId ? ' selected' : '' }}>
+                                                                {{ $objValida->ucwords_accent($item->personal . ' [' . $item->puesto . ']') }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
 
@@ -284,7 +287,7 @@
                                                         <option value="">Seleccione</option>
                                                         @foreach ($vctMaquinaria as $maquina)
                                                             <option value="{{ $maquina->id }}">
-                                                                {{ $maquina->identificador . ' ' . $maquina->nombre }}
+                                                                {{ strtoupper($maquina->identificador) . ' - ' . $objValida->ucwords_accent($maquina->nombre) }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -297,7 +300,7 @@
                                                         <option value="">Seleccione</option>
                                                         @foreach ($vctPersonal as $item)
                                                             <option value="{{ $item->id }}">
-                                                                {{ $item->personal . ' [' . $item->puesto . ']' }}
+                                                                {{ $objValida->ucwords_accent($item->personal . ' [' . $item->puesto . ']') }}
                                                             </option>
                                                         @endforeach
                                                     </select>

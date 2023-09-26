@@ -1,6 +1,9 @@
 @extends('layouts.main', ['activePage' => 'personal', 'titlePage' => __('Vista de Personal')])
 @section('content')
     <div class="content">
+        <?php
+        $objValida = new Validaciones();
+        ?>
         @if ($errors->any())
             <div class="alert alert-danger">
                 <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
@@ -194,7 +197,7 @@
                                                     <option value="">Seleccione</option>
                                                     @foreach ($inventario as $item)
                                                         <option value="{{ $item->id }}">
-                                                            {{ $item->nombre }}
+                                                            {{ $objValida->ucwords_accent($item->nombre) }}
                                                         </option>
                                                     @endforeach
                                                 </select>

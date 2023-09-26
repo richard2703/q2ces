@@ -80,8 +80,9 @@ class maquinariaController extends Controller
             ->join('nomina', 'nomina.personalId', 'personal.id')
             ->join('puesto', 'puesto.id', 'nomina.puestoId')
             ->join('puestoNivel', 'puestoNivel.id', 'puesto.puestoNivelId')
-            ->leftjoin('maquinaria', 'maquinaria.id', '=', 'personal.maquinariaId')
-            ->leftjoin('obras', 'obras.id', '=', 'maquinaria.obraId')
+            ->leftjoin('obraMaqPer', 'obraMaqPer.personalId', 'personal.id')
+            ->leftjoin('maquinaria', 'maquinaria.id', '=', 'obraMaqPer.maquinariaId')
+            ->leftjoin('obras', 'obras.id', '=', 'obraMaqPer.obraId')
             ->where('puesto.puestoNivelId', '=', 5) //*** solo operarios de maquinaria */
             ->orderBy('personal.nombres', 'asc')->get();
 
@@ -327,7 +328,7 @@ class maquinariaController extends Controller
     {
         abort_if(Gate::denies('maquinaria_show'), 403);
         // dd($maquinaria);
-        $bitacora = bitacoras::all();
+        // $bitacora = bitacoras::all();
         // $doc = maqdocs::leftJoin('docs', "maqdocs.tipoId", "docs.id")
         //     ->select(
         //         'docs.id',
@@ -366,13 +367,13 @@ class maquinariaController extends Controller
 
         $fotos = maqimagen::where('maquinariaId', $maquinaria->id)->get();
         $vctEstatus = maquinariaEstatus::all();
-        $marcas = marca::all();
-        $refacciones = refacciones::where('maquinariaId', $maquinaria->id)->get();
-        $refaccionTipo = refaccionTipo::all();
-        $categorias = maquinariaCategoria::all();
-        $tipos = maquinariaTipo::all();
+        $marcas = marca::select('marca.*')->orderBy('marca.nombre','asc')->get();
+        $refacciones = refacciones::select('refacciones.*')->where('maquinariaId', $maquinaria->id)->orderBy('refacciones.nombre','asc')->get();
+        $refaccionTipo = refaccionTipo::select('refaccionTipo.*')->orderBy('refaccionTipo.nombre','asc')->get();
+        $categorias = maquinariaCategoria::select('maquinariaCategoria.*')->orderBy('maquinariaCategoria.nombre','asc')->get();
+        $tipos = maquinariaTipo::select('maquinariaTipo.*')->orderBy('maquinariaTipo.nombre','asc')->get();
         // dd($maqDoc);
-        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'doc', 'fotos', 'bitacora', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos'));
+        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'doc', 'fotos',  'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos'));
     }
 
     /**
