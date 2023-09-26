@@ -138,6 +138,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('ubicaciones', App\Http\Controllers\ubicacionesController::class);
 
     //Crud personal
+    Route::get('personal/cuenta', [App\Http\Controllers\personalController::class, 'cuenta'])->name('personal.cuenta');
+    Route::put('personal/{id}', [App\Http\Controllers\personalController::class, 'cuentaUpdate'])->name('personal.cuentaUpdate');
+
     Route::get('/personal/nuevo', [App\Http\Controllers\personalController::class, 'create'])->name('personal.create');
     Route::post('/personal', [App\Http\Controllers\personalController::class, 'store'])->name('personal.store');
     Route::get('/personal', [App\Http\Controllers\personalController::class, 'index'])->name('personal.index');
@@ -368,7 +371,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/calendario/solicitudes/editar', [App\Http\Controllers\solicitudesController::class, 'update'])->name('solicitudes.update');
 
 
-    //Crud personal
+    //Crud asistencia
     Route::get('/asistencia', [App\Http\Controllers\asistenciaController::class, 'index'])->name('asistencia.index');
     Route::get('/asistencia/diaria', [App\Http\Controllers\asistenciaController::class, 'create'])->name('asistencia.create');
     Route::post('/asistencia/diaria', [App\Http\Controllers\asistenciaController::class, 'store'])->name('asistencia.store');
@@ -488,9 +491,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/printOnlyTicket-combustible', 'App\Http\Controllers\printController@printOnlyTicket')->name('printOnlyTicket.post');
     Route::post('/printOnlyTicketEdit-combustible', 'App\Http\Controllers\printController@printEdit')->name('printEdit.post');
 
-    Route::get('/comprobar-descarga/{id}', 'detalleDescargaController@comprobarDescarga');
+    // Route::get('/comprobar-descarga/{id}', 'detalleDescargaController@comprobarDescarga');
     // Route::post('/import-excel', 'App\Http\Controllers\ImportExcelController@import')->name('importExcel.post');
     //
 
     Route::resource('combustibleTote', App\Http\Controllers\CombustibleToteController::class);
+    Route::post('/combustibleToteDescarga/', [App\Http\Controllers\CombustibleToteController::class, 'storeDescarga'])->name('descarga.post');
 });
