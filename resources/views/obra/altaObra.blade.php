@@ -16,7 +16,7 @@
             <div class="justify-content-center">
                 <div class="card">
                     <div class="card-header bacTituloPrincipal">
-                        <h4 class="card-title">Alta De Obras</h4>
+                        <h4 class="card-title">Alta de Obra</h4>
                         {{-- <p class="card-category">Usuarios registrados</p> --}}
                     </div>
                     <div class="card-body">
@@ -73,7 +73,7 @@
                             <div class="col-12 ">
                                 <div class="row">
                                     <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                        <label class="labelTitulo">Nombre De La Obra: <span>*</span></label></br>
+                                        <label class="labelTitulo">Nombre de la Obra: <span>*</span></label></br>
                                         <input type="text" class="inputCaja" id="nombre" name="nombre" required
                                             placeholder="Especifique..." value="{{ old('nombre') }}">
                                     </div>
@@ -166,7 +166,7 @@
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Código De Confirmación:</label></br>
+                                                    <label class="labelTitulo">Código de Confirmación:</label></br>
                                                     <input type="text" class="inputCaja" id="rfirma"
                                                         placeholder="Especifique..." name="rfirma[]" value="">
                                                 </div>
@@ -180,7 +180,7 @@
                                     <div class="col-12 my-5 ">
                                         <div class="d-flex">
                                             <div class="col-6 divBorder">
-                                                <h2 class="tituloEncabezado ">Detalle De Obra</h2>
+                                                <h2 class="tituloEncabezado ">Detalle de Obra</h2>
                                             </div>
                                             <div class="col-6 divBorder pb-3 text-end" style="text-align: right;">
                                                 <button type="button" id="removeRow" class="btnRojo"></button>
@@ -208,9 +208,9 @@
                                                 <select id="personalId" name="personalId[]" class="form-select"
                                                     aria-label="Default select example">
                                                     <option value="">Seleccione</option>
-                                                    @foreach ($vctPersonal as $persona)
-                                                        <option value="{{ $persona->id }}">
-                                                            {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                                    @foreach ($vctPersonal as $item)
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->personal . ' [' . $item->puesto . ']' }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -236,7 +236,6 @@
                                                 <input type="date" class="inputCaja" id="fin" name="fin[]"
                                                     value="">
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>

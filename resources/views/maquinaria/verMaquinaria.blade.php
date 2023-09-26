@@ -105,7 +105,7 @@
                                                         id="arrayFotosPersistente" value="">
                                                     <div class="col-12 col-lg-8">
                                                         <div class="row alin">
-                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                            <div class=" col-12 col-sm-8  mb-3 ">
                                                                 <label class="labelTitulo">Equipo:</label></br>
                                                                 <input type="text" class="inputCaja" id="nombre"
                                                                     placeholder="Especifique..." required name="nombre"
@@ -236,6 +236,23 @@
                                                                     value="{{ $maquinaria->identificador }}"
                                                                     placeholder="ej: MT-00" disabled>
                                                             </div>
+
+                                                            <div class=" col-12 col-sm-12 mb-3 ">
+                                                                <label class="labelTitulo">Asignado en la
+                                                                    Obra:</label></br>
+                                                                <select id="obraId" name="obraId" disabled
+                                                                    class="form-select"
+                                                                    aria-label="Default select example">
+                                                                    <option value="">Seleccione</option>
+                                                                    @foreach ($obras as $item)
+                                                                        <option value="{{ $item->id }}"
+                                                                            {{ $item->id == $maquinaria->obraId ? ' selected' : '' }}>
+                                                                            {{ $item->nombre . ' [ ' . $item->cliente . ' ] ' }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+
 
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Motor:</label></br>

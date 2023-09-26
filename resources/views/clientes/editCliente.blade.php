@@ -75,7 +75,7 @@
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">RFC: </label></br>
-                                            <input type="number" class="inputCaja" id="rfc" name="rfc"
+                                            <input type="text" class="inputCaja" id="rfc" name="rfc"
                                                 placeholder="Especifique..." value="{{ $cliente->rfc }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
@@ -90,7 +90,7 @@
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">No. Interior: <span>*</span></label></br>
-                                            <input type="text" class="inputCaja" id="interior" name="interior" 
+                                            <input type="text" class="inputCaja" id="interior" name="interior"
                                                 placeholder="Especifique..." value="{{ $cliente->interior }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
@@ -140,15 +140,16 @@
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Correo:</label></br>
-                                                    <input type="text" class="inputCaja" id="rEmail"
-                                                        placeholder="Especifique..." name="rEmail[]"
+                                                    <input type="email" class="inputCaja" id="rEmail"
+                                                    placeholder="ej. elcorreo@delresponsable.com" min="6" name="rEmail[]"
                                                         value="{{ $residente->email }}">
                                                 </div>
 
                                                 <div class=" col-11 col-sm-5 col-lg-3 my-3 ">
                                                     <label class="labelTitulo">Teléfono:</label></br>
-                                                    <input type="text" class="inputCaja" id="rTelefono"
-                                                        placeholder="Especifique..." name="rTelefono[]"
+                                                    <input type="tel" class="inputCaja" id="rTelefono"
+                                                    pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}"
+                                                    placeholder="ej. 00-0000-0000" name="rTelefono[]"
                                                         value="{{ $residente->telefono }}">
                                                 </div>
 

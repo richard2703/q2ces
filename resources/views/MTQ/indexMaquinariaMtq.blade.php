@@ -612,7 +612,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
-                    <h5 class="modal-title fs-5" id="modalTitleId">Asignar Vehiculo</h5>
+                    <h5 class="modal-title fs-5" id="modalTitleId">Asignar Vehículo</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -625,7 +625,7 @@
 
                             <div class="row">
                                 <div class="mb-3 col-12 text-center">
-                                    <h3 class="labelTitulo fs-3" id="nombreAuto">Asignar Vehiculo</h3>
+                                    <h3 class="labelTitulo fs-3" id="nombreAuto">Asignar Vehículo</h3>
                                 </div>
 
                                 <div class="mb-3 col-6">

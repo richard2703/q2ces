@@ -90,7 +90,7 @@
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">No. Interior: <span>*</span></label></br>
-                                            <input type="text" class="inputCaja" id="interior" name="interior" 
+                                            <input type="text" class="inputCaja" id="interior" name="interior"
                                                 placeholder="Especifique..." value="{{ old('interior') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
@@ -132,21 +132,22 @@
 
                                             {{--  <input type="hidden" name="asignado[]" value="">  --}}
                                             <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                <label class="labelTitulo">Nombre:</label></br>
+                                                <label class="labelTitulo">Nombre: <span>*</span></label></br>
                                                 <input type="text" class="inputCaja" id="rNombre"
                                                     placeholder="Especifique..." name="rNombre[]" value="">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                <label class="labelTitulo">Correo:</label></br>
-                                                <input type="text" class="inputCaja" id="rEmail"
-                                                    placeholder="Especifique..." name="rEmail[]" value="">
+                                                <label class="labelTitulo">Correo: <span>*</span></label></br>
+                                                <input type="email" class="inputCaja" id="rEmail" required
+                                                placeholder="ej. elcorreo@delresponsable.com" min="6" name="rEmail[]" value="">
                                             </div>
 
                                             <div class=" col-11 col-sm-5 col-lg-3 my-3 ">
                                                 <label class="labelTitulo">Teléfono:</label></br>
-                                                <input type="text" class="inputCaja" id="rTelefono"
-                                                    placeholder="Especifique..." name="rTelefono[]" value="">
+                                                <input type="tel" class="inputCaja" id="rTelefono"
+                                                 pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}"
+                                                placeholder="ej. 00-0000-0000" name="rTelefono[]" value="">
                                             </div>
 
                                             <div class="col-lg-1 my-3 text-end">

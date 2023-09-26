@@ -156,6 +156,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('personal/asignar/{personal}/uniforme', [App\Http\Controllers\personalController::class, 'asignacionUniforme'])->name('personal.uniforme.asignacion');
     Route::get('personal/show/{personal}', [App\Http\Controllers\personalController::class, 'ver'])->name('personal.ver');
 
+    Route::put('/personal/asignaciones/{id}', [App\Http\Controllers\personalController::class, 'asignaciones'])->name('personal.asignaciones');
+
     //*** catalogos */
     Route::get('/catalogos/', [App\Http\Controllers\catalogosController::class, 'index'])->name('catalogos.index');
 
@@ -287,6 +289,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'destroy'])->name('maquinaria.delete');
     // Maquinaria Imagen Borrar
     Route::put('/maquinaria/imagen/delete', [App\Http\Controllers\maquinariaController::class, 'destroyImage'])->name('maquinaria.destroyImage');
+    Route::put('/maquinaria/asignacion/personal', [App\Http\Controllers\maquinariaController::class, 'asignacion'])->name('maquinaria.asignacion');
     // Route::get('maquinaria/uso', [App\Http\Controllers\maquinariaController::class, 'uso'])->name('maquinaria.uso');
 
     //Crud accesorios
@@ -412,7 +415,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/checkList/registros/editar/{id}', [App\Http\Controllers\checkListRegistrosController::class, 'show'])->name('checkListRegistros.show');
     Route::put('/checkList/registros/editar/', [App\Http\Controllers\checkListRegistrosController::class, 'update'])->name('checkListRegistros.update');
 
-    // Equipos MTQ    
+    // Equipos MTQ
     // Route::get('mtq/inventario/dash', [App\Http\Controllers\inventarioMtqController::class, 'dash'])->name('inventarioMtq.dash');
     // Route::resource('mtq/inventario', App\Http\Controllers\inventarioMtqController::class, ['except' => 'index', 'create'])->names([
     //     // 'index' => 'inventarioMtq.index',
