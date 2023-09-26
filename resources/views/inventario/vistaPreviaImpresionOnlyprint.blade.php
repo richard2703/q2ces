@@ -13,6 +13,7 @@
                     <div class="card-body">
                         <div class="row divBorder">
                             <div class="col-6 text-right">
+                                @if ($descarga->tipoCisternaId == null)
                                 <a href="{{ route('inventario.dashCombustible') }}">
                                     <button class="btn regresar">
                                         <span class="material-icons">
@@ -20,7 +21,17 @@
                                         </span>
                                         Regresar
                                     </button>
+                                </a>    
+                                @else
+                                <a href="{{ route('combustibleTote.index') }}">
+                                    <button class="btn regresar">
+                                        <span class="material-icons">
+                                            reply
+                                        </span>
+                                        Regresar
+                                    </button>
                                 </a>
+                                @endif
                             </div>
 
                             <div class="col-6 pb-3 text-end">

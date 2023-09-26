@@ -1637,6 +1637,33 @@ create table refacciones (
     CONSTRAINT FK_refacciones_inventario FOREIGN KEY (relacionInventarioId) REFERENCES inventario(id)
 );
 
+create table cisternas(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(255) NULL,
+    contenido float(100, 2) NULL,
+    ultimoPrecio float(100, 2) NULL,
+    ultimaCarga float(100, 2) NULL,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id)
+);
+
+create table movimientosCisterna(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    tipo varchar(255) NULL,
+    descargaId bigint(20) unsigned NULL,
+    cisternaId bigint(20) unsigned NULL,
+    maquinariaId bigint(20) unsigned NULL,
+    litros bigint(20) unsigned NULL,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id),
+    CONSTRAINT FK_movimientosCisterna_descarga foreign key (descargaId) references descarga(id),
+    CONSTRAINT FK_movimientosCisterna_cisternas foreign key (cisternaId) references cisternas(id),
+    CONSTRAINT FK_movimientosCisterna_maquinaria foreign key (maquinariaId) references maquinaria(id)
+);
+
+
 CREATE TABLE extintores(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 	identificador varchar(200) null,

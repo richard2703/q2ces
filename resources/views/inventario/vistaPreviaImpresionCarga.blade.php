@@ -15,6 +15,7 @@
 
                             <div class="col-6 text-right">
 
+                                @if ($carga->tipoCisternaId == null)
                                 <a href="{{ route('inventario.dashCombustible') }}">
                                     <button class="btn regresar">
                                         <span class="material-icons">
@@ -22,7 +23,19 @@
                                         </span>
                                         Regresar
                                     </button>
+                                </a>    
+                                @else
+                                    
+                                <a href="{{ route('combustibleTote.index') }}">
+                                    <button class="btn regresar">
+                                        <span class="material-icons">
+                                            reply
+                                        </span>
+                                        Regresar
+                                    </button>
                                 </a>
+                                @endif
+                                
                             </div>
 
                             <div class="col-6 pb-3 text-end">
@@ -40,7 +53,7 @@
                             <br>
                             <div class="text-center" id="fecha-hora"></div>
                             <p class="text-center" id="hora"></p>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">Q2S/COMB-</span>{{ sprintf("%03d", $carga->descargaDetalleId) }}</div>
+                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">Q2S/COMB-</span>{{ sprintf("%03d", $carga->id) }}</div>
                             
                             
                             {{--  <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">SOLICITO: -- </span> {{$solicitante['nombreSolicitante']}}</div>  --}}
