@@ -41,15 +41,15 @@ class maquinariaController extends Controller {
             'obras.nombre as obra',
             'obras.id as obraId',
             'personal.id as operadorId',
-            'obramaqper.combustible as cargaCombustible',
-            'obramaqper.inicio as fechaInicial',
-            'obramaqper.fin as fechaFinal',
-            'obramaqper.id as recordId',
+            'obraMaqPer.combustible as cargaCombustible',
+            'obraMaqPer.inicio as fechaInicial',
+            'obraMaqPer.fin as fechaFinal',
+            'obraMaqPer.id as recordId',
             DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as operador" )
         )
-        ->leftjoin( 'obramaqper', 'obramaqper.maquinariaId', 'maquinaria.id' )
-        ->leftjoin( 'personal', 'personal.id', 'obramaqper.personalId' )
-        ->leftjoin( 'obras', 'obras.id', 'obramaqper.obraId' )
+        ->leftjoin( 'obraMaqPer', 'obraMaqPer.maquinariaId', 'maquinaria.id' )
+        ->leftjoin( 'personal', 'personal.id', 'obraMaqPer.personalId' )
+        ->leftjoin( 'obras', 'obras.id', 'obraMaqPer.obraId' )
         ->whereNull( 'compania' )->paginate( 15 );
 
         $vctObras = obras::select( 'obras.*', 'clientes.nombre as cliente' )

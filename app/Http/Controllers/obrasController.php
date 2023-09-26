@@ -190,11 +190,11 @@ class obrasController extends Controller
         $vctResidenteAsignado = residente::select('*')->where('obraId', '=', $obras->id)->get();
 
         $vctMaquinariaAsignada = obraMaqPer::select(
-            'obramaqper.*',
+            'obraMaqPer.*',
             db::raw("CONCAT(maquinaria.identificador,' ',maquinaria.nombre) AS maquinaria"),
         )
-            ->join('maquinaria', 'maquinaria.id', '=', 'obramaqper.maquinariaId')
-            ->where('obramaqper.obraId', '=', $obras->id)->get();
+            ->join('maquinaria', 'maquinaria.id', '=', 'obraMaqPer.maquinariaId')
+            ->where('obraMaqPer.obraId', '=', $obras->id)->get();
 
         // dd( $vctMaquinariaAsignada );
 
@@ -227,7 +227,7 @@ class obrasController extends Controller
             'nomina.puestoId',
             'puesto.nombre AS puesto',
             'puesto.puestoNivelId',
-            'puestoNIvel.nombre AS puestoNivel'
+            'puestoNivel.nombre AS puestoNivel'
         )
         ->join( 'nomina', 'nomina.personalId', 'personal.id' )
         ->join( 'puesto', 'puesto.id', 'nomina.puestoId' )

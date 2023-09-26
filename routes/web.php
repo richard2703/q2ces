@@ -153,6 +153,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('personal/asignar/{personal}/uniforme', [App\Http\Controllers\personalController::class, 'asignacionUniforme'])->name('personal.uniforme.asignacion');
     Route::get('personal/show/{personal}', [App\Http\Controllers\personalController::class, 'ver'])->name('personal.ver');
 
+    Route::put('/personal/asignaciones/{id}', [App\Http\Controllers\personalController::class, 'asignaciones'])->name('personal.asignaciones');
+
     //*** catalogos */
     Route::get('/catalogos/', [App\Http\Controllers\catalogosController::class, 'index'])->name('catalogos.index');
 
