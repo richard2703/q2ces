@@ -98,7 +98,7 @@
                                                                     <option value="">Seleccione</option>
                                                                     @foreach ($marcas as $marca)
                                                                         <option value="{{ $marca->id }}">
-                                                                            {{ $marca->nombre }}
+                                                                            {{ ucwords($marca->nombre) }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
@@ -423,7 +423,7 @@
                                                                         <option value="">Seleccione</option>
                                                                         @foreach ($refaccionTipo as $item)
                                                                             <option value="{{ $item->id }}">
-                                                                                {{ $item->nombre }}
+                                                                                {{ ucwords($item->nombre) }}
                                                                             </option>
                                                                         @endforeach
                                                                     </select>
@@ -436,7 +436,7 @@
                                                                         <option value="">Seleccione</option>
                                                                         @foreach ($marcas as $item)
                                                                             <option value="{{ $item->id }}">
-                                                                                {{ $item->nombre }}
+                                                                                {{ ucwords($item->nombre) }}
                                                                             </option>
                                                                         @endforeach
                                                                     </select>

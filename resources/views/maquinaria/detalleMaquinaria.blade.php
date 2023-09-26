@@ -214,19 +214,19 @@
                                             value="{{ $maquinaria->identificador }}" placeholder="ej: MT-00">
                                     </div>
 
-                                    <div class=" col-12 col-sm-12 mb-3 ">
+                                    {{-- <div class=" col-12 col-sm-12 mb-3 ">
                                         <label class="labelTitulo">Asignado en la Obra:</label></br>
                                         <select id="obraId" name="obraId" class="form-select"
                                             aria-label="Default select example">
                                             <option value="">Seleccione</option>
-                                            @foreach ($obras as $item)
+                                            @foreach ($vctObras as $item)
                                                 <option value="{{ $item->id }}"
                                                     {{ $item->id == $maquinaria->obraId ? ' selected' : '' }}>
                                                     {{ $item->nombre . ' [ '. $item->cliente . ' ] '  }}
                                                 </option>
                                             @endforeach
                                         </select>
-                                    </div>
+                                    </div> --}}
 
                                 </div>
 
