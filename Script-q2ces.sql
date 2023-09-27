@@ -1685,6 +1685,10 @@ CREATE TABLE extintores(
     CONSTRAINT FK_extintores_maquinariaId foreign key (maquinariaId) references maquinaria(id)
 );
 
+ALTER TABLE carga ADD kilometraje BIGINT(100) NOT NULL;
+ALTER TABLE descarga DROP COLUMN horas;
+ALTER TABLE descarga ADD horas TIME NOT NULL;
+
 /***************************************FIN Tablas Relacionadas*/
 
 /***************************************DATOS Tablas Relacionadas*/

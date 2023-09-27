@@ -908,15 +908,13 @@
                                 <option value="{{ $item->nombres . ' ' . $item->apellidoP }}">{{ $item->nombres . ' ' . $item->apellidoP }}</option>
                             @endforeach
                         </select>  --}}
-                        <input type="text" name="nombreSolicitante" id="nombreSolicitanteDescarga" class="inputCaja"
-                            placeholder="Nombre del Solicitante...">
+                        <input type="text" name="nombreSolicitante" id="nombreSolicitanteDescarga" class="inputCaja" placeholder="Nombre del Solicitante..." required>
                         <div class="row">
-                            <div class="col-12">
+                            {{--  <div class="col-12">
                                 <label for="costoTrabajoDescarga" class="labelTitulo mt-3">Costo de Trabajo:</label>
-                                <input type="number" name="costoTrabajo" id="costoTrabajoDescarga" class="inputCaja"
-                                    placeholder="Costo del Trabajo...">
-                            </div>
-
+                                <input type="number" name="costoTrabajo" id="costoTrabajoDescarga" class="inputCaja" placeholder="Costo del Trabajo...">
+                            </div>  --}}
+    
                             <div class="col-6" style="display:none">
                                 <div class="form-check mt-5 d-flex justify-content-center">
                                     <div class="form-check form-check-inline">

@@ -193,8 +193,8 @@ class CombustibleToteController extends Controller
             $cisternaTipo = cisternas::where("id", $request['tipoCisternaId'])->first();
             $cisternaTipo->contenido = ($cisternaTipo->contenido + $request['litros']);
 
-            // Obtén la última carga que coincida con la maquinaria en la solicitud.
             $ultimaCarga = carga::where('maquinariaId', $request['maquinariaId'])
+                ->whereNull('tipoCisternaId') // Agrega esta condición
                 ->latest()
                 ->first();
 

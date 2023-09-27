@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\carga;
+use App\Models\cisternas;
 use App\Models\descarga;
 use App\Models\descargaDetalle;
 use Illuminate\Http\Request;
@@ -35,10 +36,11 @@ class printController extends Controller
 
 
         // dd($descarga);
-        $ultimaCarga = carga::where('maquinariaId', $descarga['maquinariaId'])
+        $ultimaCargaSinTote = carga::where('maquinariaId', $descarga['maquinariaId'])
+            ->whereNull('tipoCisternaId')
             ->latest()
             ->first();
-        // dd($ultimaCarga);
+        $ultimaCarga = cisternas::where('id', '=', '1')->get('ultimoPrecio');
         $solicitante['descargaId'] = $descarga['id'];
         $solicitante['tipo_solicitud'] = $cliente;
         $nuevoSolicitante = descargaDetalle::create($solicitante);
@@ -48,7 +50,7 @@ class printController extends Controller
         $ticket->descargaDetalleId = $nuevoSolicitante['id'];
         $ticket->save();
 
-        return view('inventario.vistaPreviaImpresion', compact('descarga', 'solicitante', 'cliente', 'nuevoSolicitante', 'ultimaCarga'));
+        return view('inventario.vistaPreviaImpresion', compact('descarga', 'solicitante', 'cliente', 'nuevoSolicitante', 'ultimaCarga', 'ultimaCargaSinTote'));
     }
 
     public function printEdit(Request $request)
@@ -60,7 +62,7 @@ class printController extends Controller
             ->join('personal as operador', 'descarga.operadorId', '=', 'operador.id')
             ->join('personal as receptor', 'descarga.receptorId', '=', 'receptor.id')
             ->leftJoin('maquinaria as despachado', 'descarga.servicioId', '=', 'despachado.id')
-            ->where('descarga.id', $request['id'])
+            ->where('descarga.descargaDetalleId', $request['id'])
             ->select('descarga.*', 'equipo.nombre as equipo_nombre', 'users.name as user_nombre', 'operador.nombres as operador_nombre', 'receptor.nombres as receptor_nombre', 'despachado.nombre as despachado_nombre')
             ->first();
 
@@ -69,17 +71,19 @@ class printController extends Controller
             $cliente = true;
         }
 
-        // dd($descarga);
-        // $ticket->ticket = 1;
-        $ultimaCarga = carga::where('maquinariaId', $descarga['maquinariaId'])
+        $ultimaCargaSinTote = carga::where('maquinariaId', $descarga['maquinariaId'])
+            ->whereNull('tipoCisternaId')
             ->latest()
             ->first();
+        // dd($ultimaCargaSinTote);
+        $ultimaCarga = cisternas::where('id', '=', '1')->get('ultimoPrecio');
         $detalleEnDescarga = descargaDetalle::where('id', $request['id'])->first();
         $nuevoSolicitante = $detalleEnDescarga;
         $data = $request->all();
         $detalleEnDescarga->update($data);
-        // dd($solicitante);
-        return view('inventario.vistaPreviaImpresion', compact('descarga', 'solicitante', 'cliente', 'nuevoSolicitante', 'ultimaCarga'));
+
+        // dd($descarga);
+        return view('inventario.vistaPreviaImpresion', compact('descarga', 'solicitante', 'cliente', 'nuevoSolicitante', 'ultimaCarga', 'ultimaCargaSinTote'));
     }
 
     public function printCarga(Request $request)
@@ -103,12 +107,18 @@ class printController extends Controller
             ->join('personal as receptor', 'descarga.receptorId', '=', 'receptor.id')
             ->leftJoin('maquinaria as despachado', 'descarga.servicioId', '=', 'despachado.id')
             ->join('descargaDetalle as detalles', 'descarga.descargaDetalleId', '=', 'detalles.id')
-            ->where('descarga.id', $request['id'])
+            ->where('descarga.descargaDetalleId', $request['id'])
             ->select('descarga.*', 'detalles.*', 'equipo.nombre as equipo_nombre', 'users.name as user_nombre', 'operador.nombres as operador_nombre', 'receptor.nombres as receptor_nombre', 'despachado.nombre as despachado_nombre')
             ->first();
 
-        // dd($descarga);
+        // dd($descarga, $request['id']);
+        $ultimaCarga = cisternas::where('id', '=', '1')->get('ultimoPrecio');
+        $ultimaCargaSinTote = carga::where('maquinariaId', $descarga['maquinariaId'])
+            ->whereNull('tipoCisternaId')
+            ->latest()
+            ->first();
 
-        return view('inventario.vistaPreviaImpresionOnlyprint', compact('descarga'));
+
+        return view('inventario.vistaPreviaImpresionOnlyprint', compact('descarga', 'ultimaCarga', 'ultimaCargaSinTote'));
     }
 }
