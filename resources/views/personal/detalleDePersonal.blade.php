@@ -58,15 +58,18 @@
                                         <button class="btn botonGral">Asignar Uniforme</button>
                                     </a>
 
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#asignar"
-                                        onclick="asignar(
+                                    <!-- Solo si su rol es de operador -->
+                                    @if ($nomina->puestoNivelId == 5)
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#asignar"
+                                            onclick="asignar(
                                         '{{ $personal->id }}',
                                         '{{ is_null($vctAsignacion->maquinariaId) == false ? $vctAsignacion->maquinariaId : 0 }}',
                                         '{{ is_null($vctAsignacion->maquina) == false ? $vctAsignacion->maquina : '' }}',
                                         '{{ is_null($vctAsignacion->recordId) == false ? $vctAsignacion->recordId : 0 }}'
                                         )">
-                                        <button class="btn botonGral">Asignar Maquinaría</button>
-                                    </a>
+                                            <button class="btn botonGral">Asignar Maquinaría</button>
+                                        </a>
+                                    @endif
                                     {{--  @endcan  --}}
 
 
@@ -793,7 +796,7 @@
                                                         @foreach ($vctPersonal as $persona)
                                                             <option value="{{ $persona->id }}"
                                                                 {{ $persona->id == $nomina->jefeId ? ' selected' : '' }}>
-                                                                {{ $objValida->ucwords_accent($persona->nombres . ' ' . $persona->apellidoP. ' [' . $persona->puesto .']' ) }}
+                                                                {{ $objValida->ucwords_accent($persona->nombres . ' ' . $persona->apellidoP . ' [' . $persona->puesto . ']') }}
                                                             </option>
                                                         @endforeach
                                                     </select>

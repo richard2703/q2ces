@@ -180,6 +180,7 @@
                                             <label for="obraAsignada" class="labelTitulo">Asignado en la Obra:</label>
                                             <input type="hidden" name="obraId" id="obraId">
                                             <input type="hidden" name="recordId" id="recordId">
+                                            <input type="hidden" name="usuarioId" id="usuarioId" value="{{ auth()->user()->id }}">
                                             <input autofocus type="text" class="inputCaja" id="obraAsignada" name="obraAsignada"
                                                 placeholder="Nombre Obra..." readonly>
                                         </div>

@@ -32,6 +32,7 @@ use App\Models\inventarioMovimientos;
 use App\Models\tipoUniforme;
 use App\Models\marca;
 use App\Models\obraMaqPer;
+use App\Models\obraMaqPerHistorico;
 use Carbon\Carbon;
 
 class personalController extends Controller {
@@ -439,7 +440,9 @@ class personalController extends Controller {
         // dd( $personal );
         $contacto = contactos::where( 'personalId', $personal->id )->first();
         $beneficiario = beneficiario::where( 'personalId', $personal->id )->first();
-        $nomina = nomina::where( 'personalId', $personal->id )->first();
+        $nomina = nomina::select('nomina.*','puesto.puestoNivelId')
+        ->join('puesto','puesto.id','nomina.puestoId')
+        ->where( 'personalId', $personal->id )->first();
         $equipo = equipo::where( 'personalId', $personal->id )->first();
         // $docs = userdocs::where( 'personalId', $personal->id )->first();
         // $docs = userdocs::rightJoin('docs', 'userdocs.tipoId', 'docs.id')
@@ -1214,6 +1217,7 @@ class personalController extends Controller {
             $data = $request->all();
             // dd( $request, $data );
             $vctDebug = array();
+            $objHistorico = new obraMaqPerHistorico();
 
             //*** preguntamos si es un registro existente */
             if ( $data[ 'recordId' ] !== null &&  $data[ 'recordId' ] > 0 ) {
@@ -1235,6 +1239,7 @@ class personalController extends Controller {
                         if ( $objRecord ) {
                             $objRecord->personalId = null;
                             $objRecord->save();
+                            $objHistorico->registraHistorico($objRecord) ;
                             $vctDebug[] = ( 'Se Borra la referencia del operador: ' . $data[ 'personalId' ] . ' en el registro '. $data[ 'recordId' ] );
                         } else {
                             $vctDebug[] = ( 'No se puede Borrar referencia (No existe registro): ' . $data[ 'recordId' ] );
@@ -1258,9 +1263,11 @@ class personalController extends Controller {
                                     //*** la persona no esta en el registro */
                                     $objRecord->personalId = null;
                                     $objRecord->save();
+                                    $objHistorico->registraHistorico($objRecord) ;
                                     $vctDebug[] = ( 'Se libera el operador del registro: '  . $objRecord->id );
 
                                     $objEnObra->personalId = $data[ 'personalId' ];
+                                    $objHistorico->registraHistorico($objEnObra) ;
                                     $objEnObra->save();
 
                                     $blnMaquinariaEnObra = true;
@@ -1300,6 +1307,7 @@ class personalController extends Controller {
                     $vctDebug[] = ( 'El operador esta asignado en el registro: ' . $objOtro->id );
                     $objOtro->personalId = null;
                     $objOtro->save();
+                    $objHistorico->registraHistorico($objOtro) ;
                     $vctDebug[] = ( 'Se libera el operador del registro: '  . $objOtro->id );
                 } else {
                     $vctDebug[] = ( 'El operador No esta asignado a otro registro' );
@@ -1316,6 +1324,7 @@ class personalController extends Controller {
                         //*** la persona no esta en el registro */
                         $objEnObra->personalId = $data[ 'personalId' ];
                         $objEnObra->save();
+                        $objHistorico->registraHistorico($objEnObra) ;
 
                         $blnMaquinariaEnObra = true;
                         $vctDebug[] = ( 'Se asigna el operador al registro: '  . $objEnObra->id );
@@ -1339,6 +1348,7 @@ class personalController extends Controller {
                     $objRecord->inicio = null;
                     $objRecord->fin = null;
                     $objRecord->save();
+                    $objHistorico->registraHistorico($objRecord) ;
 
                     $vctDebug[] = ( 'Se creo el registro: ' . $objRecord->id );
                     $vctDebug[] = $objRecord;

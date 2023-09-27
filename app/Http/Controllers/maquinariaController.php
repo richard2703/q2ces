@@ -23,6 +23,7 @@ use App\Models\inventario;
 use App\Models\maquinariaCategoria;
 use App\Models\maquinariaTipo;
 use App\Models\obraMaqPer;
+use App\Models\obraMaqPerHistorico;
 use Carbon\Carbon;
 
 class maquinariaController extends Controller
@@ -866,6 +867,8 @@ class maquinariaController extends Controller
         $data = $request->all();
         // dd( $request, $data );
         $vctDebug = array();
+        $objHistorico = new obraMaqPerHistorico();
+
 
         //*** preguntamos si es un registro existente */
         if ($data['recordId'] !== null &&  $data['recordId'] > 0) {
@@ -880,6 +883,7 @@ class maquinariaController extends Controller
                 $objRecord->inicio = $data['inicio'];
                 $objRecord->fin = $data['fin'];
                 $objRecord->save();
+                $objHistorico->registraHistorico($objRecord) ;
 
                 //*** TRABAJO CON EL OPERADOR */
                 if ($data['NpersonalId'] == null || $data['NpersonalId'] == '') {
@@ -887,6 +891,7 @@ class maquinariaController extends Controller
                     if ($objRecord) {
                         $objRecord->personalId = null;
                         $objRecord->save();
+                        $objHistorico->registraHistorico($objRecord) ;
                         $vctDebug[] = ('Se Borra la referencia del operador: ' . $data['personalId'] . ' en el registro ' . $data['recordId']);
                     } else {
                         $vctDebug[] = ('No se puede Borrar referencia (No existe registro): ' . $data['recordId']);
@@ -906,6 +911,7 @@ class maquinariaController extends Controller
                             $vctDebug[] = ('Esta asignado en el registro: ' . $objOtro->id);
                             $objOtro->personalId = null;
                             $objOtro->save();
+                            $objHistorico->registraHistorico($objOtro) ;
                             $vctDebug[] = ('Se libera el operador del registro: '  . $objOtro->id);
                         } else {
                             $vctDebug[] = ('No esta asignado a otro registro');
@@ -914,6 +920,7 @@ class maquinariaController extends Controller
                         $objRecord->personalId = $data['NpersonalId'];
                         $vctDebug[] = ('Se asigna el operador: ' . $data['NpersonalId'] . ' al registro ' . $objRecord->id);
                         $objRecord->save();
+                        $objHistorico->registraHistorico($objRecord) ;
                     }
                 } else {
                     $vctDebug[] = ('Sin cambios');
@@ -954,6 +961,7 @@ class maquinariaController extends Controller
                         $objRecord->obraId = $data['NobraId'];
                         $vctDebug[] = ('Se asigna la Obra: ' . $data['NobraId'] . ' al registro ' . $objRecord->id);
                         $objRecord->save();
+                        $objHistorico->registraHistorico($objRecord) ;
                     }
                 } else {
                     $vctDebug[] = ('Sin cambios');
@@ -972,6 +980,7 @@ class maquinariaController extends Controller
                 $vctDebug[] = ('Esta asignado en el registro: ' . $objOtro->id);
                 $objOtro->personalId = null;
                 $objOtro->save();
+                $objHistorico->registraHistorico($objOtro) ;
                 $vctDebug[] = ('Se libera el operador del registro: '  . $objOtro->id);
             } else {
                 $vctDebug[] = ('No esta asignado a otro registro');
@@ -985,9 +994,11 @@ class maquinariaController extends Controller
             $objRecord->inicio = $data['inicio'];
             $objRecord->fin = $data['fin'];
             $objRecord->save();
+            $objHistorico->registraHistorico($objRecord) ;
 
             $vctDebug[] = ('Se creo el registro: ' . $objRecord->id);
             $vctDebug[] = $objRecord;
+
         }
 
         // dd( $vctDebug, $data );
