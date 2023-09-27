@@ -126,16 +126,6 @@ Route::group(['middleware' => 'auth'], function () {
     // Crud Clientes
     Route::resource('clientes', App\Http\Controllers\clientesController::class);
 
-    // Crud TiposDocs
-    Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
-
-    // Crud TiposServicios
-    Route::resource('tiposServicios', App\Http\Controllers\tiposServiciosController::class);
-
-    // Crud Lugares
-    Route::resource('lugares', App\Http\Controllers\lugaresController::class);
-    // Crud Ubicaciones
-    Route::resource('ubicaciones', App\Http\Controllers\ubicacionesController::class);
 
     //Crud personal
     Route::get('personal/cuenta', [App\Http\Controllers\personalController::class, 'cuenta'])->name('personal.cuenta');
@@ -432,8 +422,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('mtq', App\Http\Controllers\maquinariaMtqController::class);
     Route::put('asignacion', [App\Http\Controllers\maquinariaMtqController::class, 'asignacion'])->name('mtq.asignacion');
 
-    // Crud ServiciosMtq
-    Route::resource('serviciosMtq', App\Http\Controllers\serviciosMtqController::class);
+    // // Crud ServiciosMtq
+    // Route::resource('serviciosMtq', App\Http\Controllers\serviciosMtqController::class);
 
 
     Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');
@@ -463,8 +453,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     //*** Mtq */
     Route::resource('residentes', App\Http\Controllers\residenteController::class);
-    Route::resource('docs', App\Http\Controllers\docsController::class);
-    Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
+    // Route::resource('docs', App\Http\Controllers\docsController::class);
+    // Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
     Route::resource('uso', App\Http\Controllers\usoMaquinariasController::class);
     Route::resource('calendarioMtq', App\Http\Controllers\calendarioMtqController::class);
     Route::put('calendarioMtq/editar/{evento}', [App\Http\Controllers\calendarioMtqController::class, 'update'])->name('calendarioMtq.update');
