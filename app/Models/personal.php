@@ -31,6 +31,11 @@ class personal extends Model
         return "{$this->nombres} {$this->apellidoP} {$this->apellidoM}";
     }
 
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public function getFullLastNameAttribute()
     {
         return "{$this->apellidoP} {$this->apellidoM}, {$this->nombres}";

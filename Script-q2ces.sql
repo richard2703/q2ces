@@ -1264,10 +1264,10 @@ CREATE TABLE obraMaqPerHistorico(
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
-    CONSTRAINT FK_obraMaqPer_maquinaria foreign key (maquinariaId) references maquinaria(id),
-    CONSTRAINT FK_obraMaqPer_persona foreign key (personalId) references personal(id),
-    CONSTRAINT FK_obraMaqPer_obras foreign key (obraId) references obras(id),
-    CONSTRAINT FK_inventarioMovimiento_usuario foreign key (usuarioId) references users(id)
+    CONSTRAINT FK_obraMaqPerHistorico_maquinaria foreign key (maquinariaId) references maquinaria(id),
+    CONSTRAINT FK_obraMaqPerHistorico_persona foreign key (personalId) references personal(id),
+    CONSTRAINT FK_obraMaqPerHistorico_obras foreign key (obraId) references obras(id),
+    CONSTRAINT FK_obraMaqPerHistorico_usuario foreign key (usuarioId) references users(id)
 );
 
 CREATE TABLE maqimagen(
