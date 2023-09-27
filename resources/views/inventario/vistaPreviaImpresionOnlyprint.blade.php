@@ -42,54 +42,52 @@
                         </div>
                     </div>
                     <div id="print-content" class="content-print">
-                        <img src="{{ asset('/img/login/002-sin-slogan.png') }}" alt="" width="160px;" class="mb-2" style="margin-left: -15px;">
+                        <img src="{{ asset('/img/login/002-sin-slogan.png') }}" alt="" width="200px;" class="mb-2" style="margin-left: -15px;">
                         
-                        <div class="text-start">
+                        
                             <img src="{{ asset('/img/login/Header11GenericoGrande.svg') }}" alt="" class="mb-2">
-                            <br>
+
+                            <h1 class="text-center" style="font-weight: 1000;">Q2S/COMB-{{ sprintf("%03d", $descarga->descargaDetalleId) }}</h1><br>
+                            <div class="text-center" style="font-weight: 1000; ">FECHA DE IMPRESIÓN:</div>
                             <div class="text-center" id="fecha-hora"></div>
                             <p class="text-center" id="hora"></p>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">Q2S/COMB-</span>{{ sprintf("%03d", $descarga->descargaDetalleId) }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">DESPACHADOR: -- </span> {{ $descarga->receptor_nombre }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">EQUIPO DESPACHADO: -- </span> {{ $descarga->despachado_nombre }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">OPERADOR: -- </span> {{ $descarga->operador_nombre }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">EQUIPO DESPACHADOR: -- </span> {{ $descarga->equipo_nombre }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">SOLICITO: -- </span> {{$descarga->nombreSolicitante}}</div>
+                            <br>
+                            
+                            <h5 style="font-weight: 1000; text-center">DESPACHADOR:</h5> <div style="font-size:14px;">{{ $descarga->receptor_nombre }}</div>
+                            <h5 style="font-weight: 1000; text-center">EQUIPO DESPACHADO:</h5><div style="font-size:14px;"> {{ $descarga->despachado_nombre }}</div>
+                            <h5 style="font-weight: 1000; text-center">OPERADOR:</h5> <div style="font-size:14px;">{{ $descarga->operador_nombre }}</div>
+                            <h5 style="font-weight: 1000; text-center">EQUIPO DESPACHADOR:</h5><div style="font-size:14px;"> {{ $descarga->equipo_nombre }}</div>
+                            <h5 style="font-weight: 1000; text-center">SOLICITO:</h5> <div style="font-size:14px;">{{$descarga->nombreSolicitante}}</div>
+                            <h5 style="font-weight: 1000; text-center">KM: {{ $descarga->km }} KM</h5>
+
                             @if (!empty($descarga->litros))
-                                <div class="text-center">
-                                    <span style="font-weight: 1000; font-size: 16px important;">LITROS: -- </span>{{ $descarga->litros }} L
-                                </div>
+                                <h5 style="font-weight: 1000; text-center">LITROS: {{ $descarga->litros }} L</h5>
                             @endif
 
-                            @if (!empty($descarga->km))
-                                <div class="text-center">
-                                    <span style="font-weight: 1000; font-size: 16px important;">KM: -- </span>{{ $descarga->km }} KM
-                                </div>
-                            @endif
-
-                            @if (!empty($descarga->Grasa))
-                                <div class="text-center">
-                                    <span style="font-weight: 1000; font-size: 16px important;">GRASA: -- </span> {{ $descarga->Grasa }} L
-                                </div>
+                            @if (!empty($descarga->grasa))
+                                <h5 style="font-weight: 1000; text-center">GRASA: {{ $descarga->grasa }} L</h5>
                             @endif
 
                             @if (!empty($descarga->motor))
-                                <div class="text-center">
-                                    <span style="font-weight: 1000; font-size: 16px important;">ACEITE MOTOR: -- </span>{{ $descarga->motor }} L
-                                </div>
+                                <h5 style="font-weight: 1000; text-center">ACEITE MOTOR: {{ $descarga->motor }} L</h5>
+                            @endif
+
+                            @if (!empty($descarga->anticongelante))
+                                <h5 style="font-weight: 1000; text-center">ANTICONGELANTE: {{ $descarga->anticongelante }} L</h5>
+                            @endif
+
+                            @if (!empty($descarga->hidraulico))
+                                <h5 style="font-weight: 1000; text-center">ACEITE HIDRÁULICO: {{ $descarga->hidraulico }} L</h5>
                             @endif
 
                             @if (!empty($descarga->direccion))
-                                <div class="text-center">
-                                    <span style="font-weight: 1000; font-size: 16px important;">ACEITE DIRECCION: -- </span>{{ $descarga->direccion }} L
-                                </div>
+                                <h5 style="font-weight: 1000; text-center">ACEITE DIRECCIÓN: {{ $descarga->direccion }} L</h5>
                             @endif
 
                             @if (!empty($descarga->otro))
-                                <div class="text-center">
-                                    <span style="font-weight: 1000; font-size: 16px important;">OTRO: -- </span>{{ $descarga->otro }} L
-                                </div>
+                                <h5 style="font-weight: 1000; text-center">OTRO: {{ $descarga->otro }} L</h5>
                             @endif
+                            
                             @if ($descarga->tipo_solicitud == false)
                                 <p class="pt-5" style="margin-top: 20px; text-align: center;">
                                     ______________________________________<br>
@@ -97,25 +95,26 @@
                                     <p class="text-center">:{{$descarga->nombreSolicitante}}</p>
                                 </p>
                             @endif
-                            <!--<div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">HORA: -- </span>{{ $descarga->horas }}</div>-->
+                            <!--<div class="text-center"><h5 style="font-weight: 1000; ">HORA DESCARGA: </h5>{{ $descarga->horas }}</div>-->
                             @if ($descarga->tipo_solicitud != false)
                                 <img src="{{ asset('/img/login/Header2GenericoGrande.svg') }}" alt="" class="mb-2">
-                                {{--  <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">HORA SALIDA: -- </span>11:00 pm</div>  --}}
-                                <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">HORA LLEGADA: -- </span>{{ \Carbon\Carbon::parse($descarga->horaLlegada)->format('h:i A') }}</div>
-                                {{--  <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">HORARIO: -- </span>8:00 am - 7:30 pm</div>  --}}
-                                {{--  <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">TOTAL HORAS EXTRAS: -- </span>1.30 hrs</div>  --}}
-                                <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">ODOMETRO CARGA: -- </span>125445.5</div>
-                                <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">ODOMETRO LLEGADA: -- </span>125345.5</div>
-                                <p class="text-center"><span style="font-weight: 1000; font-size: 16px important; margin-top: 10px;">OBSERVACIONES: -- </span>{{$descarga->observaciones}}</p>
+                                {{--  <div class="text-center"><h5 style="font-weight: 1000; ">HORA SALIDA: </h5>11:00 pm</div>  --}}
+                                <div class="text-center"><h5 style="font-weight: 1000; ">HORA LLEGADA: </h5>{{ \Carbon\Carbon::parse($descarga->horaLlegada)->format('h:i A') }}</div>
+                                {{--  <div class="text-center"><h5 style="font-weight: 1000; ">HORARIO:</h5>8:00 am - 7:30 pm</div>  --}}
+                                {{--  <div class="text-center"><h5 style="font-weight: 1000; ">TOTAL HORAS EXTRAS:</h5>1.30 hrs</div>  --}}
+                                {{--  <div class="text-center"><h5 style="font-weight: 1000; ">ODOMETRO CARGA: </h5>125445.5</div>
+                                <div class="text-center"><h5 style="font-weight: 1000; ">ODOMETRO LLEGADA: </h5>125345.5</div>  --}}
+                                <div class="text-center"><h5 style="font-weight: 1000; ">KM: </h5>{{$descarga->km}}</div>
+                                <div class="text-center"><h5 style="font-weight: 1000;  margin-top: 10px;">OBSERVACIONES: </h5>{{$descarga->observaciones}}</div>
                                 <p class="pt-5" style="margin-top: 20px; text-align: center;">
                                     ______________________________________<br>
                                     Nombre Y Firma De Recibido<br>
                                     <p class="text-center">:{{$descarga->nombreSolicitante}}</p>
                                 </p>
                                 <img src="{{ asset('/img/login/Header3DescargaGrande.svg') }}" alt="" class="mb-2">
-                                <div><span style="font-weight: 1000; font-size: 16px important;">COSTO DE COMBUSTIBLE: -- </span>$100.00</div>
-                                <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">COSTO DE TRABAJO: -- </span>${{$descarga->costoTrabajo}}</div>
-                                <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">TOTAL: -- </span>$125.00</div>
+                                <div class="text-center"><h5 style="font-weight: 1000; ">COSTO DE COMBUSTIBLE:</h5>$100.00</div>
+                                <div class="text-center"><h5 style="font-weight: 1000; ">COSTO DE TRABAJO:</h5>${{$descarga->costoTrabajo}}</div>
+                                <h5 style="font-weight: 1000; ">TOTAL: $125.00</h5>
                             @endif
                             
                             <div class="copyright text-center" style="font-size: 10px;">
@@ -160,6 +159,7 @@
         @page {
             size: 90mm 105mm; /* Tamaño ISO C7 en milímetros */
             margin-top: 0mm; /* Ajustar según sea necesario */
+            margin-bottom: 105mm;
         }
         body {
             margin: 0 !important;
@@ -180,7 +180,7 @@
         text-align: left !important;
         font-family: Arial, sans-serif;
         padding-top: 15px;
-        font-size: 12px;
+        {{--  font-size: 12px;  --}}
         font-weight: bold;
         align-items: center;
         margin: 0;

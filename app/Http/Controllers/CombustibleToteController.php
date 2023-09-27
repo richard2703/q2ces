@@ -88,7 +88,8 @@ class CombustibleToteController extends Controller
             'carga.created_at AS fecha',
             'cisternas.nombre',
             'carga.horaLlegadaCarga',
-            'carga.comentario'
+            'carga.comentario',
+            'carga.kilometraje'
         )
             ->join('maquinaria', 'maquinaria.id', '=', 'carga.maquinariaId')
             ->join('personal', 'personal.id', '=', 'carga.operadorId')
@@ -175,7 +176,8 @@ class CombustibleToteController extends Controller
             'precio',
             'horaLlegadaCarga',
             'comentario',
-            'tipoCisternaId'
+            'tipoCisternaId',
+            'kilometraje'
         );
         $carga['userId'] = auth()->user()->id;
         //*** guardamos el registro */

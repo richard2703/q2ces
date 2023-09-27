@@ -523,13 +523,13 @@
                                                 class=" nav-item col-12 col-md-6 BTNbCargaDescarga py-3 border-0 active "
                                                 role="presentation" id="home-tab" data-bs-toggle="tab"
                                                 data-bs-target="#home-tab-pane" type="button" role="tab"
-                                                aria-controls="home-tab-pane" aria-selected="true">Relación Cargas De
+                                                aria-controls="home-tab-pane" aria-selected="true">Relación Cargas de
                                                 Combustible</button>
                                             <button class="nav-item col-12 col-md-6 BTNbCargaDescarga "
                                                 role="presentation" id="profile-tab" data-bs-toggle="tab"
                                                 data-bs-target="#profile-tab-pane" type="button" role="tab"
                                                 aria-controls="profile-tab-pane" aria-selected="false"> Relación Descargas
-                                                De Combustible</button>
+                                                de Combustible</button>
                                         </div>
 
                                         <div class="tab-content contentCargas" id="myTabContent">
@@ -546,6 +546,7 @@
                                                                             <th class="fw-bolder">Equipos</th>
                                                                             <th class="fw-bolder">Despachador</th>
                                                                             <th class="fw-bolder">Litros</th>
+                                                                            <th class="fw-bolder">KM</th>
                                                                             <th class="fw-bolder">Precio</th>
                                                                             <th class="fw-bolder">Fecha</th>
                                                                             <th class="fw-bolder">Hora Carga</th>
@@ -560,6 +561,9 @@
                                                                                     <td>{{ $carga->operador }} </td>
                                                                                     <td>
                                                                                         {{ number_format($carga->litros, 2, '.', ',') }}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{ ($carga->kilometraje) }}
                                                                                     </td>
                                                                                     <td>
                                                                                         $
@@ -671,10 +675,10 @@
                                                                             <th class="fw-bolder">Despachador</th>
                                                                             <th class="fw-bolder">Maquinaria</th>
                                                                             <th class="fw-bolder">Operador</th>
-                                                                            <th class="fw-bolder">Kms</th>
+                                                                            <th class="fw-bolder">Km</th>
                                                                             <th class="fw-bolder">Hora Descarga</th>
                                                                             <th class="fw-bolder">Litros</th>
-                                                                            <th class="fw-bolder">fecha</th>
+                                                                            <th class="fw-bolder">Fecha</th>
                                                                             <th class="fw-bolder text-center">Imprimir</th>
                                                                             <th class="fw-bolder text-right">Acciones</th>
                                                                         </thead>
@@ -860,7 +864,7 @@
                                 <div class="form-check mt-5 d-flex justify-content-center">
                                     <div class="form-check form-check-inline">
                                         <input type="checkbox" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" id="checkbox_tipo_solicitud">
-                                        <label for="checkbox_reparacion">Para el Cliente</label>
+                                        <label for="checkbox_reparacion">Ticket Administrativo</label>
                                     </div>
                                 </div>
                             </div>
@@ -942,7 +946,7 @@
                                 <div class="form-check mt-5 d-flex justify-content-center">
                                     <div class="form-check form-check-inline">
                                         <input type="checkbox" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" id="checkbox_tipo_solicitudEdit" checked>
-                                        <label for="checkbox_reparacion">Para el Cliente</label><br>
+                                        <label for="checkbox_reparacion">Ticket Administrativo</label><br>
                                     </div>
                                 </div>
                             </div>
