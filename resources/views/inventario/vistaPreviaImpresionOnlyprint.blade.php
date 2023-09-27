@@ -109,6 +109,7 @@
                             @if ($descarga->tipo_solicitud != false)
                                 <img src="{{ asset('/img/login/Header2GenericoGrande.svg') }}" alt="" class="mb-2">
                                 {{--  <div class="text-center"><h5 style="font-weight: 1000; ">HORA SALIDA: </h5>11:00 pm</div>  --}}
+                                <div class="text-center"><h5 style="font-weight: 1000;   ">FECHA DE DESCARGA:</h5>{{ \Carbon\Carbon::parse($descarga->updated_at)->format( 'Y-m-d' ) }}</div>
                                 <div class="text-center"><h5 style="font-weight: 1000; ">HORA LLEGADA: </h5>{{ \Carbon\Carbon::parse($descarga->horaLlegada)->format('h:i A') }}</div>
                                 {{--  <div class="text-center"><h5 style="font-weight: 1000; ">HORARIO:</h5>8:00 am - 7:30 pm</div>  --}}
                                 {{--  <div class="text-center"><h5 style="font-weight: 1000; ">TOTAL HORAS EXTRAS:</h5>1.30 hrs</div>  --}}
