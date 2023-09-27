@@ -597,6 +597,7 @@
                                                                             <th class="fw-bolder">Equipos</th>
                                                                             <th class="fw-bolder">Despachador</th>
                                                                             <th class="fw-bolder">Litros</th>
+                                                                            <th class="fw-bolder">KM</th>
                                                                             <th class="fw-bolder">Precio</th>
                                                                             <th class="fw-bolder">Fecha</th>
                                                                             <th class="fw-bolder">Hora Carga</th>
@@ -612,6 +613,9 @@
                                                                                     <td>{{ $carga->operador }} </td>
                                                                                     <td>
                                                                                         {{ number_format($carga->litros, 2, '.', ',') }}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{ ($carga->kilometraje) }}
                                                                                     </td>
                                                                                     <td>
                                                                                         $
@@ -725,10 +729,10 @@
                                                                             <th class="fw-bolder">Despachador</th>
                                                                             <th class="fw-bolder">Cisterna</th>
                                                                             <th class="fw-bolder">Operador</th>
-                                                                            <th class="fw-bolder">Kms</th>
+                                                                            <th class="fw-bolder">Km</th>
                                                                             <th class="fw-bolder">Hora Descarga</th>
                                                                             <th class="fw-bolder">Litros</th>
-                                                                            <th class="fw-bolder">fecha</th>
+                                                                            <th class="fw-bolder">Fecha</th>
                                                                             <th class="fw-bolder text-center">Imprimir</th>
                                                                             <th class="fw-bolder text-right">Acciones</th>
                                                                         </thead>
@@ -916,10 +920,8 @@
                             <div class="col-6" style="display:none">
                                 <div class="form-check mt-5 d-flex justify-content-center">
                                     <div class="form-check form-check-inline">
-                                        <input type="checkbox" name="tipo_solicitud"
-                                            class="form-check-input is-invalid align-self-end mb-2"
-                                            id="checkbox_tipo_solicitud">
-                                        <label for="checkbox_reparacion">Para el Cliente</label>
+                                        <input type="checkbox" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" id="checkbox_tipo_solicitud">
+                                        <label for="checkbox_reparacion">Ticket Administrativo</label>
                                     </div>
                                 </div>
                             </div>
@@ -1011,10 +1013,8 @@
                             <div class="col-6">
                                 <div class="form-check mt-5 d-flex justify-content-center">
                                     <div class="form-check form-check-inline">
-                                        <input type="checkbox" name="tipo_solicitud"
-                                            class="form-check-input is-invalid align-self-end mb-2"
-                                            id="checkbox_tipo_solicitudEdit" checked>
-                                        <label for="checkbox_reparacion">Para el Cliente</label><br>
+                                        <input type="checkbox" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" id="checkbox_tipo_solicitudEdit" checked>
+                                        <label for="checkbox_reparacion">Ticket Administrativo</label><br>
                                     </div>
                                 </div>
                             </div>

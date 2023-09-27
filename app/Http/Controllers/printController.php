@@ -33,7 +33,12 @@ class printController extends Controller
             $cliente = true;
         }
 
+
         // dd($descarga);
+        $ultimaCarga = carga::where('maquinariaId', $descarga['maquinariaId'])
+            ->latest()
+            ->first();
+        // dd($ultimaCarga);
         $solicitante['descargaId'] = $descarga['id'];
         $solicitante['tipo_solicitud'] = $cliente;
         $nuevoSolicitante = descargaDetalle::create($solicitante);
@@ -43,7 +48,7 @@ class printController extends Controller
         $ticket->descargaDetalleId = $nuevoSolicitante['id'];
         $ticket->save();
 
-        return view('inventario.vistaPreviaImpresion', compact('descarga', 'solicitante', 'cliente', 'nuevoSolicitante'));
+        return view('inventario.vistaPreviaImpresion', compact('descarga', 'solicitante', 'cliente', 'nuevoSolicitante', 'ultimaCarga'));
     }
 
     public function printEdit(Request $request)
@@ -66,13 +71,15 @@ class printController extends Controller
 
         // dd($descarga);
         // $ticket->ticket = 1;
-
+        $ultimaCarga = carga::where('maquinariaId', $descarga['maquinariaId'])
+            ->latest()
+            ->first();
         $detalleEnDescarga = descargaDetalle::where('id', $request['id'])->first();
         $nuevoSolicitante = $detalleEnDescarga;
         $data = $request->all();
         $detalleEnDescarga->update($data);
         // dd($solicitante);
-        return view('inventario.vistaPreviaImpresion', compact('descarga', 'solicitante', 'cliente', 'nuevoSolicitante'));
+        return view('inventario.vistaPreviaImpresion', compact('descarga', 'solicitante', 'cliente', 'nuevoSolicitante', 'ultimaCarga'));
     }
 
     public function printCarga(Request $request)
