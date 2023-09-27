@@ -139,8 +139,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Crud personal
     Route::get('personal/cuenta', [App\Http\Controllers\personalController::class, 'cuenta'])->name('personal.cuenta');
-    Route::put('personal/{id}', [App\Http\Controllers\personalController::class, 'cuentaUpdate'])->name('personal.cuentaUpdate');
-
     Route::get('/personal/nuevo', [App\Http\Controllers\personalController::class, 'create'])->name('personal.create');
     Route::post('/personal', [App\Http\Controllers\personalController::class, 'store'])->name('personal.store');
     Route::get('/personal', [App\Http\Controllers\personalController::class, 'index'])->name('personal.index');
@@ -155,6 +153,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('personal/asignar/{personal}/uniforme', [App\Http\Controllers\personalController::class, 'editUniforme'])->name('personal.uniforme');
     Route::put('personal/asignar/{personal}/uniforme', [App\Http\Controllers\personalController::class, 'asignacionUniforme'])->name('personal.uniforme.asignacion');
     Route::get('personal/show/{personal}', [App\Http\Controllers\personalController::class, 'ver'])->name('personal.ver');
+    Route::put('personal/pass/{id}', [App\Http\Controllers\personalController::class, 'cuentaUpdate'])->name('personal.cuentaUpdate');
 
     Route::put('/personal/asignaciones/{id}', [App\Http\Controllers\personalController::class, 'asignaciones'])->name('personal.asignaciones');
 
