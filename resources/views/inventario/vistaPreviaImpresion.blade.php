@@ -54,9 +54,19 @@
 
                             <br>
                             <h5 class="text-center" style="font-weight: 1000; ">DESPACHADOR: </h5> <div style="font-size:14px;">{{ $descarga->receptor_nombre }}</div>
-                            <h5 class="text-center" style="font-weight: 1000; ">EQUIPO DESPACHADO: </h5> <div style="font-size:14px;">{{ $descarga->despachado_nombre }}</div>
                             <h5 class="text-center" style="font-weight: 1000; ">OPERADOR: </h5> <div style="font-size:14px;">{{ $descarga->operador_nombre }}</div>
-                            <h5 class="text-center" style="font-weight: 1000; ">EQUIPO DESPACHADOR: </h5> <div class="text-center">{{ $descarga->equipo_nombre }}</div>
+                            @if ($descarga->tipoCisternaId == null)
+                                <h5 style="font-weight: 1000; text-center">EQUIPO DESPACHADO:</h5><div style="font-size:14px;"> {{ $descarga->despachado_nombre }}</div>
+                            @else
+                            <h5 style="font-weight: 1000; text-center">EQUIPO DESPACHADO:</h5><div style="font-size:14px;"> {{ $descarga->equipo_nombre }}</div>
+                            @endif
+                            
+                            @if ($descarga->tipoCisternaId == null)
+                                <h5 class="text-center" style="font-weight: 1000; ">EQUIPO DESPACHADOR: </h5> <div class="text-center">{{ $descarga->equipo_nombre }}</div>
+                            @else
+                                <h5 class="text-center" style="font-weight: 1000; ">DESPACHADOR: </h5> <div class="text-center">CISTERNA TOTE</div>
+                            @endif
+                            
                             <h5 class="text-center" style="font-weight: 1000; ">SOLICITO: </h5> <div style="font-size:14px;">{{$solicitante['nombreSolicitante']}}</div>
                             
                             @if (!empty($descarga->litros))
@@ -111,9 +121,14 @@
                                     <p class="text-center">:{{$solicitante['nombreSolicitante']}}</p>
                                 </p>
                                 <img src="{{ asset('/img/login/Header3DescargaGrande.svg') }}" alt="" class="mb-2">
-                                <div class="text-center"><h5 style="font-weight: 1000; ">COSTO DE COMBUSTIBLE: </h5>${{$ultimaCarga->precio}}</div>
-                                <div class="text-center"><h5 style="font-weight: 1000; ">COSTO DE TRABAJO: </h5>${{$solicitante['costoTrabajo']}}</div>
-                                <h5 style="font-weight: 1000; ">TOTAL: ${{($ultimaCarga->precio*$descarga->litros)+$solicitante['costoTrabajo']}}</h5>
+                                <div class="text-center"><h5 style="font-weight: 1000; ">COSTO DE TRABAJO:</h5>${{$solicitante['costoTrabajo']}}</div>
+                                @if ($descarga->tipoCisternaId == null)
+                                    <div class="text-center"><h5 style="font-weight: 1000;">COSTO DE COMBUSTIBLE:</h5>${{$ultimaCargaSinTote->precio}}</div>
+                                    <h5 style="font-weight: 1000; ">TOTAL: ${{($ultimaCargaSinTote->precio*$descarga->litros)+$solicitante['costoTrabajo']}}</h5>
+                                @else
+                                    <div class="text-center"><h5 style="font-weight: 1000;">COSTO DE COMBUSTIBLE:</h5>${{$ultimaCarga[0]->ultimoPrecio}}</div>
+                                    <h5 style="font-weight: 1000; ">TOTAL: ${{($ultimaCarga[0]->ultimoPrecio*$descarga->litros)+$solicitante['costoTrabajo']}}</h5>
+                                @endif
                             @endif
                             
                             <div class="copyright text-center" style="font-size: 10px;">
