@@ -1667,6 +1667,10 @@ CREATE TABLE extintores(
 ALTER TABLE carga ADD kilometraje BIGINT(100) NOT NULL;
 ALTER TABLE descarga DROP COLUMN horas;
 ALTER TABLE descarga ADD horas TIME NOT NULL;
+ALTER TABLE descarga ADD odometro BIGINT(100) NULL;
+ALTER TABLE descarga ADD odometroNuevo BIGINT(100) NULL;
+ALTER TABLE descarga ADD kilometrajeNuevo BIGINT(100) NULL;
+ALTER TABLE descarga ADD kilometrajeAnterior BIGINT(100) NULL;
 
 /***************************************FIN Tablas Relacionadas*/
 

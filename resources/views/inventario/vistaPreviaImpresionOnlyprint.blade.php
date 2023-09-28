@@ -68,7 +68,12 @@
                                 <h5 class="text-center" style="font-weight: 1000; ">DESPACHADOR: </h5> <div class="text-center">CISTERNA TOTE</div>
                             @endif
                             <h5 style="font-weight: 1000; text-center">SOLICITO:</h5> <div style="font-size:14px;">{{$descarga->nombreSolicitante}}</div>
-                            <h5 style="font-weight: 1000; text-center">KM: {{ $descarga->km }} KM</h5>
+                            <div class="text-center"><h5 style="font-weight: 1000; ">KM SALIDA: </h5>{{$descarga->km}}</div>
+                                @if ($descarga->equipo_kilometraje == null)
+                                    <div class="text-center"><h5 style="font-weight: 1000; ">KM LLEGADA: </h5>{{$descarga->equipo_kilometraje}}</div>
+                                @else
+                                    <div class="text-center"><h5 style="font-weight: 1000; ">KM LLEGADA: </h5>{{$solicitante['kilometrajeAnterior']}}</div>
+                                @endif
 
                             @if (!empty($descarga->litros))
                                 <h5 style="font-weight: 1000; text-center">LITROS: {{ $descarga->litros }} L</h5>
@@ -177,7 +182,6 @@
         @page {
             size: 90mm 105mm; /* Tamaño ISO C7 en milímetros */
             margin-top: 0mm; /* Ajustar según sea necesario */
-            margin-bottom: 105mm;
         }
         body {
             margin: 0 !important;
