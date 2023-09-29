@@ -45,7 +45,7 @@
                         <img src="{{ asset('/img/login/002-sin-slogan.png') }}" alt="" width="200px;" class="mb-2" style="margin-left: -15px;">
                         
                         
-                            <img src="{{ asset('/img/login/Header11GenericoGrande.svg') }}" alt="" class="mb-2">
+                            <img width="300px;" src="{{ asset('/img/login/Header11GenericoGrande.svg') }}" alt="" class="mb-2">
             
                             <h1 class="text-center" style="font-weight: 1000;">Q2S/COMB-{{ sprintf("%03d", $nuevoSolicitante['id']) }}</h1><br>
                             <div class="text-center" style="font-weight: 1000; ">FECHA DE IMPRESIÓN:</div>
@@ -53,48 +53,81 @@
                             <p class="text-center" id="hora"></p>
 
                             <br>
+                            @if ($descarga->tipoCisternaId == null)
+                                @if ($descarga->nombre_cliente)
+                                <h5 class="text-center" style="font-weight: 1000; ">CLIENTE: </h5> <div style="font-size:14px;">{{ $descarga->nombre_cliente }}</div>    
+                                @else
+                                    <h5 class="text-center" style="font-weight: 1000; ">CLIENTE: </h5> <div style="font-size:14px;">SIN CLIENTE</div>    
+                                @endif
+                                <br>
+                                @if ($descarga->obras_nombre)
+                                    <h5 class="text-center" style="font-weight: 1000; ">OBRA: </h5> <div style="font-size:14px;">{{ $descarga->obras_nombre }}</div>
+                                @else
+                                    <h5 class="text-center" style="font-weight: 1000; ">OBRA: </h5> <div style="font-size:14px;">SIN OBRA</div>    
+                                @endif
+                            @else
+                                @if ($descarga->nombre_clienteTote)
+                                <h5 class="text-center" style="font-weight: 1000; ">CLIENTE: </h5> <div style="font-size:14px;">{{ $descarga->nombre_clienteTote }}</div>    
+                                @else
+                                    <h5 class="text-center" style="font-weight: 1000; ">CLIENTE: </h5> <div style="font-size:14px;">SIN CLIENTE</div>    
+                                @endif
+                                <br>
+                                @if ($descarga->obrasTote_nombre)
+                                    <h5 class="text-center" style="font-weight: 1000; ">OBRA: </h5> <div style="font-size:14px;">{{ $descarga->obrasTote_nombre }}</div>
+                                @else
+                                    <h5 class="text-center" style="font-weight: 1000; ">OBRA: </h5> <div style="font-size:14px;">SIN OBRA</div>    
+                                @endif
+                            @endif
+                           
+                            
+                            
                             <h5 class="text-center" style="font-weight: 1000; ">DESPACHADOR: </h5> <div style="font-size:14px;">{{ $descarga->receptor_nombre }}</div>
                             <h5 class="text-center" style="font-weight: 1000; ">OPERADOR: </h5> <div style="font-size:14px;">{{ $descarga->operador_nombre }}</div>
                             @if ($descarga->tipoCisternaId == null)
-                                <h5 style="font-weight: 1000; text-center">EQUIPO DESPACHADO:</h5><div style="font-size:14px;"> {{ $descarga->despachado_nombre }}</div>
+                                <h5 style="font-weight: 1000; text-center">EQUIPO DESPACHADO:</h5><div class="text-center" style="font-size:14px;"> {{ $descarga->despachado_nombre }}</div>
                             @else
-                            <h5 style="font-weight: 1000; text-center">EQUIPO DESPACHADO:</h5><div style="font-size:14px;"> {{ $descarga->equipo_nombre }}</div>
+                            <h5 style="font-weight: 1000; text-center">EQUIPO DESPACHADO:</h5><div class="text-center" style="font-size:14px;"> {{ $descarga->equipo_nombre }}</div>
                             @endif
                             
                             @if ($descarga->tipoCisternaId == null)
                                 <h5 class="text-center" style="font-weight: 1000; ">EQUIPO DESPACHADOR: </h5> <div class="text-center">{{ $descarga->equipo_nombre }}</div>
                             @else
-                                <h5 class="text-center" style="font-weight: 1000; ">DESPACHADOR: </h5> <div class="text-center">CISTERNA TOTE</div>
+                                <h5 class="text-center" style="font-weight: 1000; ">EQUIPO DESPACHADOR: </h5> <div class="text-center">CISTERNA TOTE</div>
                             @endif
                             
                             <h5 class="text-center" style="font-weight: 1000; ">SOLICITO: </h5> <div style="font-size:14px;">{{$solicitante['nombreSolicitante']}}</div>
+                            @if ($descarga->tipoCisternaId == null)
+                                <h6 style="font-weight: 1000;" class="text-center">LITROS COMBUSTIBLE: </h6> <div class="text-center" style="font-size:12px;"> Unidades: {{ $descarga->litros }} </div> <div class="text-center" style="font-size:12px;">costo: ${{$ultimaCargaSinTote->precio}} Total: ${{($descarga->litros*$ultimaCargaSinTote->precio)}} </div>
+                            @else
+                                <h6 style="font-weight: 1000;" class="text-center">LITROS COMBUSTIBLE: </h6> <div class="text-center" style="font-size:12px;"> Unidades: {{ $descarga->litros }} </div> <div class="text-center" style="font-size:12px;">costo: ${{$ultimaCarga[0]->ultimoPrecio}} Total: ${{($descarga->litros*$ultimaCarga[0]->ultimoPrecio)}} </div>
+                            @endif
                             
-                            @if (!empty($descarga->litros))
-                                <h5 style="font-weight: 1000; text-center">LITROS: {{ $descarga->litros }} L</h5>
-                            @endif
+                            <h6 style="font-weight: 1000;" class="text-center">GRASA PARA AUTO: </h6> <div class="text-center" style="font-size:12px;"> Unidades: {{ $descarga->grasa }} </div> <div class="text-center" style="font-size:12px;">costo: ${{ $descarga->grasaUnitario }} Total: ${{($descarga->grasa*$descarga->grasaUnitario)}} </div> <br> <br>
+                            <h5 style="font-weight: 1000;" class="text-center">ACEITE MOTOR: </h5> <div class="text-center"> Unidades: {{ $descarga->motor }} </div> costo: ${{ $descarga->mototUnitario }} Total: ${{($descarga->motor*$descarga->mototUnitario)}}
+                            <h5 style="font-weight: 1000;" class="text-center">ANTICONGELANTE: </h5> <div class="text-center"> Unidades: {{ $descarga->anticongelante }} </div> costo: ${{ $descarga->anticongelanteUnitario }} Total: ${{($descarga->anticongelante*$descarga->anticongelanteUnitario)}}
+                            <h5 style="font-weight: 1000;" class="text-center">ACEITE HIDRÁULICO: </h5> <div class="text-center"> Unidades: {{ $descarga->hidraulico }} </div> costo: ${{ $descarga->hidraulicoUnitario }} Total: ${{($descarga->hidraulico*$descarga->hidraulicoUnitario)}}
+                            <h5 style="font-weight: 1000;" class="text-center">ACEITE DIRECCIÓN: </h5> <div class="text-center"> Unidades: {{$descarga->direccion}}  </div> costo: ${{ $descarga->direccionUnitario }} Total: ${{($descarga->direccion*$descarga->direccionUnitario)}}
 
-                            @if (!empty($descarga->grasa))
-                                <h5 style="font-weight: 1000; text-center">GRASA: {{ $descarga->grasa }} L</h5>
-                            @endif
+                            @php
+                            $totalProductosSinTote = (isset($descarga->litros) ? $descarga->litros * (isset($ultimaCargaSinTote->precio) ? $ultimaCargaSinTote->precio : 0) : 0) +
+                            (isset($descarga->grasa) ? $descarga->grasa * (isset($descarga->grasaUnitario) ? $descarga->grasaUnitario : 0) : 0) +
+                            (isset($descarga->motor) ? $descarga->motor * (isset($descarga->mototUnitario) ? $descarga->mototUnitario : 0) : 0) +
+                            (isset($descarga->anticongelante) ? $descarga->anticongelante * (isset($descarga->anticongelanteUnitario) ? $descarga->anticongelanteUnitario : 0) : 0) +
+                            (isset($descarga->hidraulico) ? $descarga->hidraulico * (isset($descarga->hidraulicoUnitario) ? $descarga->hidraulicoUnitario : 0) : 0) +
+                            (isset($descarga->direccion) ? $descarga->direccion * (isset($descarga->direccionUnitario) ? $descarga->direccionUnitario : 0) : 0);
 
-                            @if (!empty($descarga->motor))
-                                <h5 style="font-weight: 1000; text-center">ACEITE MOTOR: {{ $descarga->motor }} L</h5>
-                            @endif
-
-                            @if (!empty($descarga->anticongelante))
-                                <h5 style="font-weight: 1000; text-center">ANTICONGELANTE: {{ $descarga->anticongelante }} L</h5>
-                            @endif
-
-                            @if (!empty($descarga->hidraulico))
-                                <h5 style="font-weight: 1000; text-center">ACEITE HIDRÁULICO: {{ $descarga->hidraulico }} L</h5>
-                            @endif
-
-                            @if (!empty($descarga->direccion))
-                                <h5 style="font-weight: 1000; text-center">ACEITE DIRECCIÓN: {{ $descarga->direccion }} L</h5>
-                            @endif
+    
+                            
+                            $totalProductos = ($descarga->litros*$ultimaCarga[0]->ultimoPrecio) +
+                                            ($descarga->grasa*$descarga->grasaUnitario) +
+                                            ($descarga->motor*$descarga->mototUnitario) +
+                                            ($descarga->anticongelante*$descarga->anticongelanteUnitario) +
+                                            ($descarga->hidraulico*$descarga->hidraulicoUnitario) +
+                                            ($descarga->direccion*$descarga->direccionUnitario);    
+                            @endphp
 
                             @if (!empty($descarga->otro))
-                                <h5 style="font-weight: 1000; text-center">OTRO: {{ $descarga->otro }} L</h5>
+                                <h5 style="font-weight: 1000;" class="text-center">OTRO: {{ $descarga->otro }} L</h5>
                             @endif
                             
                             @if ($cliente == false)
@@ -107,28 +140,42 @@
                             <!--<div class="text-center"><h5 style="font-weight: 1000; ">HORA DESCARGA: </h5>{{ $descarga->horas }}</div>-->
                             @if ($cliente != false)
                                 <br><br>
-                                <img src="{{ asset('/img/login/Header2GenericoGrande.svg') }}" alt="" class="mb-2">
+                                <img width="300px;" src="{{ asset('/img/login/Header2GenericoGrande.svg') }}" alt="" class="mb-2">
                                 {{--  <div class="text-center"><h5 style="font-weight: 1000; ">HORA SALIDA:...</h5>11:00 pm</div>  --}}
+                                <br> <br>
                                 <div class="text-center"><h5 style="font-weight: 1000;   ">FECHA DE DESCARGA:</h5>{{ \Carbon\Carbon::parse($descarga->updated_at)->format( 'Y-m-d' ) }}</div>
                                 <div class="text-center"><h5 style="font-weight: 1000; ">HORA LLEGADA: </h5>{{ \Carbon\Carbon::parse($solicitante['horaLlegada'])->format('h:i A') }}</div>
                                 {{--  <div class="text-center"><h5 style="font-weight: 1000; ">HORARIO: </h5>8:00 am - 7:30 pm</div>  --}}
                                 {{--  <div class="text-center"><h5 style="font-weight: 1000; ">TOTAL HORAS EXTRAS: </h5>1.30 hrs</div>  --}}
                                 {{--  <div class="text-center"><h5 style="font-weight: 1000; ">ODOMETRO CARGA: </h5>125445.5</div>  --}}
-                                <div class="text-center"><h5 style="font-weight: 1000; ">KM: </h5>{{$descarga->km}}</div>
+                                @if (isset($descarga->odometro))
+                                <div class="text-center"><h5 style="font-weight: 1000; ">ODOMETRO SALIDA: </h5></div>{{$descarga->odometro}}  {{$descarga->despachado_kom}}
+                                <div class="text-center"><h5 style="font-weight: 1000; ">ODOMETRO LLEGADA: </h5></div>{{$descarga->odometroNuevo}} {{$descarga->despachado_kom}}
+                                @endif
+                                <div class="text-center"><h5 style="font-weight: 1000; ">KILOMETRAJE SALIDA: </h5>{{$descarga->kilometrajeAnterior}} {{$descarga->equipo_kom}} </div>
+                                @if ($descarga->kilometrajeAnterior != null)
+                                <div class="text-center"><h5 style="font-weight: 1000; ">KILOMETRAJE LLEGADA: </h5></div>{{$descarga->kilometrajeNuevo}}  {{$descarga->equipo_kom}}
+                                @else
+                                    <div class="text-center"><h5 style="font-weight: 1000; ">KILOMETRAJE LLEGADA: </h5></div>No Habia Un Kilometraje Anterior.
+                                @endif
+                                <div class="text-center"><h5 style="font-weight: 1000; ">TOTAL KM/MI: </h5></div>{{$descarga->kilometrajeNuevo-$descarga->kilometrajeAnterior}} {{$descarga->equipo_kom}}
+                                
                                 <div class="text-center"><h5 style="font-weight: 1000;  margin-top: 10px;">OBSERVACIONES: </h5>{{$solicitante['observaciones']}}</div>
                                 <p class="pt-5" style="margin-top: 20px; text-align: center;">
                                     ______________________________________<br>
                                     Nombre Y Firma De Recibido<br>
                                     <p class="text-center">:{{$solicitante['nombreSolicitante']}}</p>
                                 </p>
-                                <img src="{{ asset('/img/login/Header3DescargaGrande.svg') }}" alt="" class="mb-2">
+                                <img width="300px;" src="{{ asset('/img/login/Header3DescargaGrande.svg') }}" alt="" class="mb-2">
                                 <div class="text-center"><h5 style="font-weight: 1000; ">COSTO DE TRABAJO:</h5>${{$solicitante['costoTrabajo']}}</div>
                                 @if ($descarga->tipoCisternaId == null)
-                                    <div class="text-center"><h5 style="font-weight: 1000;">COSTO DE COMBUSTIBLE:</h5>${{$ultimaCargaSinTote->precio}}</div>
-                                    <h5 style="font-weight: 1000; ">TOTAL: ${{($ultimaCargaSinTote->precio*$descarga->litros)+$solicitante['costoTrabajo']}}</h5>
+                                    <div class="text-center"><h5 style="font-weight: 1000;">COSTO DE COMBUSTIBLE:</h5>${{$ultimaCargaSinTote->precio*$descarga->litros}}</div>
+                                    <h5 style="font-weight: 1000; ">COSTO DE FLUIDOS: </h5> ${{$totalProductosSinTote}}
+                                    <h5 style="font-weight: 1000; ">TOTAL: ${{($ultimaCargaSinTote->precio*$descarga->litros)+$solicitante['costoTrabajo']+$totalProductosSinTote}}</h5>
                                 @else
-                                    <div class="text-center"><h5 style="font-weight: 1000;">COSTO DE COMBUSTIBLE:</h5>${{$ultimaCarga[0]->ultimoPrecio}}</div>
-                                    <h5 style="font-weight: 1000; ">TOTAL: ${{($ultimaCarga[0]->ultimoPrecio*$descarga->litros)+$solicitante['costoTrabajo']}}</h5>
+                                    <div class="text-center"><h5 style="font-weight: 1000;">COSTO DE COMBUSTIBLE:</h5>${{$ultimaCarga[0]->ultimoPrecio*$descarga->litros}}</div>
+                                    <h5 style="font-weight: 1000; ">COSTO DE FLUIDOS: </h5> ${{$totalProductos}}
+                                    <h5 style="font-weight: 1000; ">TOTAL: ${{($ultimaCarga[0]->ultimoPrecio*$descarga->litros)+$solicitante['costoTrabajo']+$totalProductos}}</h5>
                                 @endif
                             @endif
                             
@@ -174,11 +221,12 @@
         @page {
             size: 90mm 105mm; /* Tamaño ISO C7 en milímetros */
             margin-top: 0mm; /* Ajustar según sea necesario */
-            margin-bottom: -25mm;
+            margin-bottom: 0mm;
         }
         body {
             margin: 0 !important;
             padding: 0 !important;
+            
         }
         .content-print {
             position: absolute;

@@ -290,8 +290,20 @@ class CombustibleToteController extends Controller
         $cisterna =  maquinaria::where("id", $request['maquinariaId'])->first();
         $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $request['litros']);
         $descarga['userId'] = auth()->user()->id;
+        $grasa = cisternas::where("nombre", 'Grasa')->get('ultimoPrecio');
+        $anticongelante = cisternas::where("nombre", 'Anticongelante')->get('ultimoPrecio');
+        $hidraulico = cisternas::where("nombre", 'Aceite Hidraulico')->get('ultimoPrecio');
+        $motor = cisternas::where("nombre", 'Aceite Motor')->get('ultimoPrecio');
+        $direccion = cisternas::where("nombre", 'Aceite Direccion')->get('ultimoPrecio');
 
         if ($request['km'] > $cisterna->kilometraje) {
+            $descarga['grasaUnitario'] = $grasa[0]['ultimoPrecio'];
+            $descarga['hidraulicoUnitario'] = $hidraulico[0]['ultimoPrecio'];
+            $descarga['anticongelanteUnitario'] = $anticongelante[0]['ultimoPrecio'];
+            $descarga['mototUnitario'] = $motor[0]['ultimoPrecio'];
+            $descarga['direccionUnitario'] = $direccion[0]['ultimoPrecio'];
+            $descarga['kilometrajeAnterior'] = $cisterna->kilometraje;
+            $descarga['kilometrajeNuevo'] = $request['km'];
             descarga::create($descarga);
             $cisterna->kilometraje = $request['km'];
             $cisterna->update();
