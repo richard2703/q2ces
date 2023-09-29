@@ -86,11 +86,12 @@
                                                                     </div>
                                                                     <div style="width: 90%! important;">
                                                                         <label class="labelTitulo">Equipo:</label></br>
-                                                                        <select id="maquinariaId" name="maquinariaId"
+                                                                        <select id="maquinariaIdC" name="maquinariaId"
                                                                             class="form-select"
                                                                             aria-label="Default select example">
+                                                                            <option value="">Seleccione</option>
                                                                             @foreach ($maquinaria as $maquina)
-                                                                                <option value="{{ $maquina->id }}">
+                                                                                <option value="{{ $maquina->id }}" data-horometro="{{ $maquina->horometro }}">
                                                                                     {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
                                                                                 </option>
                                                                             @endforeach
@@ -114,6 +115,17 @@
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/uso.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 90%! important;">
+                                                                        <label class="labelTitulo">Horometro:
+                                                                            <span>*</span></label></br>
+                                                                            <input type="number" name="kilometraje" class="inputCaja" id="horometroCarga" value="" required>
                                                                     </div>
                                                                 </div>
 
@@ -157,19 +169,7 @@
                                                                             value="{{ date('H:i') }}" required>
                                                                     </div>
                                                                 </div>
-
-                                                                <div class=" col-12 col-md-6 d-flex mb-4">
-                                                                    <div class="me-2">
-                                                                        <img src="{{ asset('/img/inventario/uso.svg') }}"
-                                                                            alt="" style="width:40px;">
                                                                     </div>
-                                                                    <div style="width: 90%! important;">
-                                                                        <label class="labelTitulo">Uso en Km/Mi/Hr:
-                                                                            <span>*</span></label></br>
-                                                                        <input type="number" name="kilometraje"
-                                                                            class="inputCaja" value="" required>
-                                                                    </div>
-                                                                </div>
 
                                                                 <div class=" col-12 col-md-6 d-flex mb-4">
                                                                     <div class="me-2">
@@ -225,7 +225,7 @@
                                                                             src="{{ asset('/img/inventario/descarga.svg') }}"></i>
                                                                     <span class="mi-archivo2"> <input class="mb-4 ver "
                                                                             type="file" name="imgHoras" id="mi-archivo2"
-                                                                            accept="image/*" multiple></span>
+                                                                            accept="image/"></span>
                                                                     <label for="mi-archivo2">
                                                                         <span class="">Tomar Foto</span>
                                                                     </label>
@@ -262,11 +262,12 @@
                                                                     </div>
                                                                     <div style="width: 100%! important;">
                                                                         <label class="labelTitulo">Equipo:</label></br>
-                                                                        <select id="maquinariaId" name="maquinariaId"
+                                                                        <select id="maquinariaIdD" name="maquinariaId"
                                                                             class="form-select"
-                                                                            aria-label="Default select example">
+                                                                            aria-label="Default select example" required>
+                                                                            <option value="">Seleccione</option>
                                                                             @foreach ($cisternas as $maquina)
-                                                                                <option value="{{ $maquina->id }}">
+                                                                                <option value="{{ $maquina->id }}" data-km="{{ $maquina->kilometraje }}">
                                                                                     {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
                                                                                 </option>
                                                                             @endforeach
@@ -353,7 +354,7 @@
                                                                     <div style="width: 100%! important;">
                                                                         <label class="labelTitulo">Uso en
                                                                             Km/Mi/Hr:</label></br>
-                                                                        <input type="number" step="1" min="0"
+                                                                        <input id="kilometrajeDescarga" type="number" step="1" min="0"
                                                                             class="inputCaja" id="km" name="km"
                                                                             value="{{ old('km') }}" required>
                                                                     </div>
@@ -597,7 +598,7 @@
                                                                             <th class="fw-bolder">Equipos</th>
                                                                             <th class="fw-bolder">Despachador</th>
                                                                             <th class="fw-bolder">Litros</th>
-                                                                            <th class="fw-bolder">KM</th>
+                                                                            <th class="fw-bolder">Horometro</th>
                                                                             <th class="fw-bolder">Precio</th>
                                                                             <th class="fw-bolder">Fecha</th>
                                                                             <th class="fw-bolder">Hora Carga</th>
@@ -766,7 +767,7 @@
                                                                                         {{ number_format($descarga->litros, 2, '.', ',') }}
                                                                                     </td>
                                                                                     <td>
-                                                                                        {{ \Carbon\Carbon::parse($descarga->fecha)->format('Y-m-d') }}
+                                                                                        {{ $descarga->fechaLlegada }}
                                                                                     </td>
                                                                                     @if ($descarga->ticket == 0)
                                                                                     <td class="td-actions d-flex justify-content-center">
@@ -812,9 +813,9 @@
                                                                                                 data-bs-toggle="modal"
                                                                                                 data-bs-target="#descargaCombustible"
                                                                                                 onclick="loadDescarga('{{ $descarga->descargaIdTote }}','{{ $descarga->maquinariaId }}','{{ $descarga->operadorId }}',
-                                                                                        '{{ $descarga->servicioId }}','{{ $descarga->receptorId }}','{{ $descarga->litros }}',
-                                                                                        '{{ $descarga->km }}','{{ $descarga->imgKm ? $descarga->imgKm : '0' }}','{{ $descarga->horas }}','{{ $descarga->imgHoras ? $descarga->imgHoras : '0' }}'
-                                                                                        ,'{{ \Carbon\Carbon::parse($descarga->fecha)->format('Y-m-d') }}','{{ \Carbon\Carbon::parse($descarga->fecha)->format('H:m') }}')">
+                                                                                        '{{ $descarga->receptorId }}','{{ $descarga->litros }}',
+                                                                                        '{{ $descarga->kilometrajeNuevo }}','{{ $descarga->imgKm ? $descarga->imgKm : '0' }}'
+                                                                                        ,'{{ \Carbon\Carbon::parse($descarga->updated_at)->format('Y-m-d') }}','{{ substr($descarga->horas, 0, 5) }}')">
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg "
                                                                                                     width="28"
                                                                                                     height="28"
@@ -1039,7 +1040,7 @@
 
     <div class="modal fade" id="cargaCombustible" tabindex="-1" aria-labelledby="cargaCombustibleLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
                     <h1 class="modal-title fs-5" id="cargaCombustibleLabel">Modificar Carga de Combustible</h1>
@@ -1124,113 +1125,81 @@
                         @csrf
                         @method('put')
 
-                        <input type="hidden" name="id" id="descargaId" value="">
+                        <input type="hidden" name="descargaId" id="descargaId" value="">
 
-                        <div class="col-6 my-3">
-                            <label for="inputEmail4" class="form-label">Equipo</label>
-                            <select id="descargaMaquinaria" name="descargaMaquinaria" class="form-select">
-                                @foreach ($cisternas as $maquina)
-                                    <option value="{{ $maquina->id }}">
-                                        {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="col-6 my-3">
-                            <label for="inputEmail4" class="form-label">Despachador</label>
-                            <select id="descargaOperador" name="descargaOperador" class="form-select">
-                                @foreach ($despachadores as $persona)
-                                    <option value="{{ $persona->id }}">
-                                        {{ $persona->nombres . ' ' . $persona->apellidoP }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        {{--  <div class="col-6 my-3">
-                            <label for="inputEmail4" class="form-label">Maquinaria</label>
-                            <select id="descargaServicio" name="descargaServicio" class="form-select">
-                                @foreach ($maquinaria as $maquina)
-                                    <option value="{{ $maquina->id }}">
-                                        {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>  --}}
-
-                        <div class="col-6 my-3">
-                            <label for="inputEmail4" class="form-label">Operador</label>
-                            <select id="descargaDespachador" name="descargaDespachador" class="form-select"
-                                style="width: 200px !important;">
-                                @foreach ($despachadores as $persona)
-                                    <option value="{{ $persona->id }}">
-                                        {{ $persona->nombres . ' ' . $persona->apellidoP }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="col-4 my-3">
-                            <label for="inputEmail4" class="form-label">Litros</label>
-                            <input type="number" step="0.01" min="0.01" class="form-control"
-                                id="descargaLitros" name="descargaLitros">
-                        </div>
-
-                        <div class="col-4 my-3">
-                            <label for="inputEmail4" class="form-label">Fecha</label>
-                            <input type="datetime" class="form-control" id="descargaFecha" name="descargaFecha"
-                                value="">
-                        </div>
-                        {{-- <div class="col-4 my-3">
-                            <label for="inputEmail4" class="form-label">Hora Carga</label>
-                            <input type="time" class="form-control" id="">
-                        </div> --}}
-
-                        <div class="col-4 my-3">
-                            <label for="inputEmail4" class="form-label">Hora descarga</label>
-                            <input type="time" class="form-control" id="descargaHora" name="descargaHora"
-                                value="">
-                        </div>
-
-                        <div class="col-4 my-3">
-                            <label for="inputEmail4" class="form-label">Horómetro</label>
-                            <input type="number"step="1" min="1" class="form-control" id="descargaHoras"
-                                name="descargaHoras">
-                        </div>
-
-                        <div class="col-4 my-3">
-                            <label for="inputEmail4" class="form-label">Km Mi</label>
-                            <input type="number" step="1" min="1" class="form-control" id="descargaKms"
-                                name="descargaKms">
-                        </div>
-
-                        <div class="col my-3">
-                            <div class="row justify-content-evenly ">
-                                <div class="col-5 my-3">
-                                    <div class=" mx-auto border vistaFoto mb-4">
-                                        <i><img class=" img-fluid mb-5" id="descargaImgKms"
-                                                src="{{ asset('/img/general/default.jpg') }}"></i>
-                                        <span class="mi-archivo3"> <input class="mb-4 ver" type="file"
-                                                name="descargaFileImgKms" id="mi-archivo3" accept="image/*"></span>
-                                        <label for="mi-archivo3">
-                                            <span class="text-center">Fotografía</span>
-                                        </label>
-                                    </div>
+                        <div class="row">
+                            <div class="col-12 my-3 d-flex justify-content-center">
+                                <div class=" mx-auto border vistaFoto mb-4">
+                                    <i><img class=" img-fluid mb-5" id="descargaImgKms"
+                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                    <span class="mi-archivo3"> <input class="mb-4 ver" type="file"
+                                            name="descargaFileImgKms" id="mi-archivo3" accept="image/*"></span>
+                                    <label for="mi-archivo3">
+                                        <span class="text-center">Fotografía</span>
+                                    </label>
                                 </div>
+                            </div>
+    
+                            <div class="col-6 my-3">
+                                <label for="inputEmail4" class="labelTitulo">Equipo:</label>
+                                <select id="descargaMaquinaria" name="descargaMaquinaria" class="form-select">
+                                    @foreach ($cisternas as $maquina)
+                                        <option value="{{ $maquina->id }}">
+                                            {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+    
+                            <div class="col-6 my-3">
+                                <label for="inputEmail4" class="labelTitulo">Despachador:</label>
+                                <select id="descargaOperador" name="descargaOperador" class="form-select">
+                                    @foreach ($despachadores as $persona)
+                                        <option value="{{ $persona->id }}">
+                                            {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+    
+                            <div class="col-6 my-3">
+                                <label for="inputEmail4" class="labelTitulo">Operador:</label>
+                                <select id="descargaDespachador" name="descargaDespachador" class="form-select"
+                                    style="width: 200px !important;">
+                                    @foreach ($despachadores as $persona)
+                                        <option value="{{ $persona->id }}">
+                                            {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+    
+                            <div class="col-6 my-3">
+                                <label for="inputEmail4" class="labelTitulo">Fecha:</label>
+                                <input type="date" class="inputCaja" class="form-control" id="descargaFecha" name="fechaLlegada"
+                                    value="">
+                            </div>
+                            {{-- <div class="col-4 my-3">
+                                <label for="inputEmail4" class="labelTitulo">Hora Carga</label>
+                                <input type="time" class="form-control" id="">
+                            </div> --}}
+    
+                            <div class="col-6 my-3">
+                                <label for="inputEmail4" class="labelTitulo">Hora Descarga:</label>
+                                <input type="time" class="inputCaja" class="form-control" id="descargaHoras" name="horas"
+                                    value="">
+                            </div>
 
-                                <div class="col-5  my-3">
-                                    <div class=" mx-auto border vistaFotoModalCarga-Desc mb-4">
-                                        <i><img class=" img-fluid mb-5" id="descargaImgHoras"
-                                                src="{{ asset('/img/general/default.jpg') }}"></i>
-                                        <span class="mi-archivo4"> <input class="mb-4 ver" type="file"
-                                                name="descargaFileImgHoras" id="mi-archivo4" accept="image/*"></span>
-                                        <label for="mi-archivo4">
-                                            <span>logo</span>
-                                        </label>
-                                    </div>
-
-                                </div>
+                            <div class="col-6 my-3">
+                                <label for="inputEmail4" class="labelTitulo">Litros:</label>
+                                <input type="number" class="inputCaja" step="0.01" min="0.01" class="form-control"
+                                    id="descargaLitros" name="descargaLitros">
+                            </div>
+    
+                            <div class="col-6 my-3">
+                                <label for="inputEmail4" class="labelTitulo">Km:</label>
+                                <input type="number" class="inputCaja" step="1" min="1" class="form-control" id="descargaKms"
+                                    name="kilometrajeNuevo">
                             </div>
                         </div>
 
@@ -1519,8 +1488,7 @@
     </script>
 
     <script>
-        function loadDescarga(id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms, horas, imgHoras,
-            fecha, hora) {
+        function loadDescarga(id, maquinariaId, operadorId, receptorId, litros, kms, imagenKms,fecha, horas) {
 
             const txtId = document.getElementById('descargaId');
             txtId.value = id;
@@ -1528,8 +1496,6 @@
             const lstEquipo = document.getElementById('descargaMaquinaria').value = maquinariaId;
 
             const lstOperador = document.getElementById('descargaOperador').value = operadorId;
-
-            const lstServicio = document.getElementById('descargaServicio').value = servicioId;
 
             const lstReceptor = document.getElementById('descargaDespachador').value = receptorId;
 
@@ -1543,16 +1509,10 @@
             txtHoras.value = horas;
 
             const dteFecha = document.getElementById('descargaFecha').value = fecha;
-            const dteHora = document.getElementById('descargaHora').value = hora;
 
-            const imagen1 = document.getElementById('descargaImgKms');
+            const imagen2 = document.getElementById('descargaImgKms');
             if (imagenKms != 0) {
-                imagen1.src = '/storage/combustibles/' + imagenKms;
-            }
-
-            const imagen2 = document.getElementById('descargaImgHoras');
-            if (imgHoras != 0) {
-                imagen2.src = '/storage/combustibles/' + imgHoras;
+                imagen2.src = "{{ asset('/storage/app/public/combustibles') }}/" + imagenKms;
             }
 
         }
@@ -1720,6 +1680,49 @@
         }
     </script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Captura el evento de cambio en el select
+            $('#servicioId').on('change', function () {
+                // Obtiene el valor del atributo 'data-km' de la opción seleccionada
+                var selectedOption = $(this).find(':selected');
+                var kmValue = selectedOption.data('km');
+                
+                // Actualiza el valor del input 'km'
+                $('#km').val(kmValue);
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Captura el evento de cambio en el select
+            $('#maquinariaIdD').on('change', function () {
+                // Obtiene el valor del atributo 'data-odometro' de la opción seleccionada
+                var selectedOption = $(this).find(':selected');
+                var odometroValue = selectedOption.data('km');
+                
+                // Actualiza el valor del input 'horometro'
+                $('#kilometrajeDescarga').val(odometroValue);
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Captura el evento de cambio en el select
+            $('#maquinariaIdC').on('change', function () {
+                // Obtiene el valor del atributo 'data-odometro' de la opción seleccionada
+                var selectedOption = $(this).find(':selected');
+                var kmValue = selectedOption.data('horometro');
+                
+                // Actualiza el valor del input 'horometro'
+                $('#horometroCarga').val(kmValue);
+            });
+        });
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const confirmImprimir = document.getElementById('confirmImprimir');
@@ -1731,6 +1734,6 @@
             });
         });
     </script>
-
-
+        
+        
 @endsection
