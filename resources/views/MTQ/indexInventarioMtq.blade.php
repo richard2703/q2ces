@@ -69,40 +69,38 @@
                                                         <td class="text-center align-middle">{{ $inventario->reorden }}</td>
                                                         <td class="text-center align-middle">{{ $inventario->maximo }}</td>
                                                         <td class="td-actions text-center align-middle">
-                                                            {{--  @can('inventario_restock')
-                                                                <a href="{{ route('maquinaria.vista', $maquina->id) }}"  class="">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
-                                                                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-                                                                    <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
-                                                                </svg>
-                                                            </a>
-                                                                <button type="button"
-                                                                    class="botonSinFondo mx-2"title="Resurtir"
-                                                                    data-bs-toggle="modal" data-bs-target="#modal-cliente"
-                                                                    onclick="cargar('{{ $inventario->nombre }}','{{ $inventario->imagen }}','{{ $inventario->tipo }}','{{ $inventario->id }}')">
-                                                                    <img
-                                                                        style="width: 30px;"src="{{ '/img/inventario/reestock.svg' }}">
-                                                                </button>
-                                                                <p class="botonTitulos mt-2">Resurtir</p>
-                                                            @endcan  --}}
+                                                            @can('inventario_restock')
+                                                                <a href="#" data-bs-toggle="modal"
+                                                                    data-bs-target="#modal-entrada"
+                                                                    onclick="cargar('{{ $inventario->nombre }}','{{ $inventario->imagen }}','{{ $inventario->tipo }}','{{ $inventario->id }}',1)">
+                                                                    <i class="fas fa-sign-in-alt iconoTablas"
+                                                                        title="Entradas"></i>
+                                                                </a>
+                                                            @endcan
                                                             @can('inventario_edit')
-                                                                {{--  <a href="{{ route('maquinaria.show', $maquina->id) }}"
-                                                                    class="">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg " width="28"
+                                                                <a href="{{ route('inventarioMtq.show', $inventario->id) }}"
+                                                                    <button type="button" title="Detalles">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                         height="28" fill="currentColor"
-                                                                        class="bi bi-pencil accionesIconos"
+                                                                        class="bi bi-card-text accionesIconos"
                                                                         viewBox="0 0 16 16">
                                                                         <path
-                                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                            d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                                                        <path
+                                                                            d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
                                                                     </svg>
-                                                                </a>  --}}
-                                                                <a href="{{ route('inventarioMtq.show', $inventario->id) }}"
-                                                                    <button type="button"
-                                                                    class="botonSinFondo mx-2"title="Detalle"><img
-                                                                        style="width: 30px;"src="{{ '/img/inventario/detalle.svg' }}">
                                                                     </button>
-                                                                    {{--  <p class="botonTitulos mt-2">Detalle</p>  --}}
-                                                                @endcan
+                                                                </a>
+                                                            @endcan
+                                                            @can('inventario_restock')
+                                                                <a href="#" data-bs-toggle="modal"
+                                                                    data-bs-target="#modal-entrada"
+                                                                    onclick="cargar('{{ $inventario->nombre }}','{{ $inventario->imagen }}','{{ $inventario->tipo }}','{{ $inventario->id }}',2)">
+                                                                    <i class="fas fa-sign-out-alt iconoTablas"
+                                                                        title="Salidas"></i>
+                                                                </a>
+                                                            @endcan
+
                                                         </td>
                                                     </tr>
                                                 @empty
@@ -126,20 +124,20 @@
     </div>
 
     {{-- //Modales --}}
-    <div class="modal fade" id="modal-cliente" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-cliente"
+    <div class="modal fade" id="modal-entrada" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-entrada"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="col-12">
                     <div class="card ">
-                        <form action="{{ route('inventario.restock', 0) }}" method="post">
+                        <form action="{{ route('inventario.movimiento', $inventario->id) }}" method="post">
                             @csrf
-                            @method('put')
+                            {{--  @method('put')  --}}
                             <div class="card-header bacTituloPrincipal ">
                                 <div class="nav-tabs-navigation">
                                     <div class="nav-tabs-wrapper">
                                         <span class="nav-tabs-title">
-                                            <h2 class="titulos text-capitalize">Restock </h2>
+                                            <h2 class="titulos text-capitalize"><span id="tituloModal">Editar</span> </h2>
                                         </span>
                                     </div>
                                 </div>
@@ -147,8 +145,9 @@
                             <div class="row  card-body">
                                 <div class="row card-body" style="
                          text-align: center;">
-                                    <input type="hidden" name="productoid" id="productoid" value="">
+                                    {{--  <input type="hidden" name="productoid" id="productoid" value="">  --}}
                                     <input type="hidden" name="usuarioId" id="usuarioId" value="{{ auth()->user()->id }}">
+                                    <input type="hidden" name="movimiento" id="movimientoTipo">
 
                                     <div class="col-12 ">
                                         <img style="width: 100px;" id="imagenM">
@@ -158,8 +157,8 @@
                                     </div>
                                     <div class="col-12 col-lg-6">
                                         <label class="labelTitulo" for="">Cantidad:</label></br>
-                                        <input class="inputCaja" type="number" step="0.01" min="0.01" id="cantidad"
-                                            name="cantidad" value="" required></br>
+                                        <input class="inputCaja" type="number" step="0.01" min="0.01"
+                                            id="cantidad" name="cantidad" value="" required></br>
                                     </div>
                                     <div class="col-12 col-lg-6">
                                         <label class="labelTitulo" for="">Costo unitario:</label></br>
@@ -180,6 +179,7 @@
         </div>
     </div>
 
+
     <script src="{{ asset('js/alertas.js') }}"></script>
     <script src="https://cdn.lordicon.com/qjzruarw.js"></script>
 
@@ -194,14 +194,22 @@
         });
     </script>
     <script>
-        function cargar(nombre, img, tipo, id) {
+        function cargar(nombre, img, tipo, id, mov) {
 
             const imagen = document.getElementById('imagenM');
             imagen.src = '/storage/inventario/' + tipo + '/' + img;
             const p = document.getElementById('nombreM');
             p.innerText = nombre;
-            const productoid = document.getElementById('productoid');
-            productoid.value = id;
+
+            const movimiento = document.getElementById('movimientoTipo');
+            movimiento.value = mov;
+
+            const tituloModal = document.getElementById('tituloModal');
+            if (mov == 1) {
+                tituloModal.textContent = 'Entrada';
+            } else {
+                tituloModal.textContent = 'Salida';
+            }
         }
     </script>
     <script>

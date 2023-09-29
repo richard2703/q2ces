@@ -953,4 +953,33 @@ class inventarioController extends Controller
             return redirect()->back()->with('failed', 'No se encuentra el movimiento especificado!');
         }
     }
+    public function movimiento(Request $request, inventario $producto)
+    {
+        // abort_if(Gate::denies('inventario_restock'), 403);
+        $movimiento = $request->all();
+        // dd($producto, $movimiento);
+
+        $objMovimiento = new inventarioMovimientos();
+        $objMovimiento->movimiento = 1; //*** agrega al inventario */
+        $objMovimiento->inventarioId = $producto->id;
+        $objMovimiento->usuarioId = $movimiento['usuarioId'];
+        $objMovimiento->cantidad = $movimiento['cantidad'];
+        $objMovimiento->precioUnitario = $movimiento['costo'];
+        $objMovimiento->total = ($movimiento['costo'] * $movimiento['cantidad']);
+        $objMovimiento->Save();
+
+        if ($movimiento['movimiento'] == 1) {
+            //*** creamos el registro del stock */
+
+            $producto->cantidad = ($producto->cantidad + $movimiento['cantidad']);
+            $producto->valor =  $movimiento['costo'];
+            $producto->save();
+        } else if ($movimiento['movimiento'] == 2) {
+            $producto->cantidad = ($producto->cantidad - $movimiento['cantidad']);
+            $producto->save();
+        }
+
+        Session::flash('message', 1);
+        return redirect()->route('inventario.index', $producto->tipo);
+    }
 }

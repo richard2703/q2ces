@@ -304,6 +304,7 @@ Route::group(['middleware' => 'auth'], function () {
     ]);
     Route::get('/mtq/inventario/index/{tipo}', [App\Http\Controllers\inventarioMtqController::class, 'index'])->name('inventarioMtq.index');
     Route::get('/mtq/inventario/create/{tipo}', [App\Http\Controllers\inventarioMtqController::class, 'create'])->name('inventarioMtq.create');
+    Route::post('/mtq/inventario/movimiento/{producto}', [App\Http\Controllers\inventarioMtqController::class, 'movimiento'])->name('inventarioMtq.movimiento');
 
     //Crud Inventario
     Route::get('/inventarios', [App\Http\Controllers\inventarioController::class, 'dash'])->name('inventario.dash');
@@ -312,6 +313,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/inventario', [App\Http\Controllers\inventarioController::class, 'store'])->name('inventario.store');
     Route::put('/inventario/{producto}/restock', [App\Http\Controllers\inventarioController::class, 'restock'])->name('inventario.restock');
     Route::put('/inventario/{producto}/mover', [App\Http\Controllers\inventarioController::class, 'mover'])->name('inventario.mover');
+    Route::post('/inventario/movimiento/{producto}', [App\Http\Controllers\inventarioController::class, 'movimiento'])->name('inventario.movimiento');
     Route::get('/inventario/producto/{inventario}', [App\Http\Controllers\inventarioController::class, 'show'])->name('inventario.show');
     Route::get('/inventario/producto/{inventario}/edit', [App\Http\Controllers\inventarioController::class, 'edit'])->name('inventario.edit');
     Route::put('/inventario/{inventario}', [App\Http\Controllers\inventarioController::class, 'update'])->name('inventario.update');
