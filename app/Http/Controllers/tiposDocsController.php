@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\tiposDocs;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
@@ -97,8 +98,22 @@ class tiposDocsController extends Controller
      * @param  \App\Models\tiposDocs  $tiposDocs
      * @return \Illuminate\Http\Response
      */
-    public function destroy(tiposDocs $tiposDocs)
+    public function destroy(tiposDocs $tiposDoc)
     {
-        //
+        try {
+            $tiposDoc->delete(); // Intenta eliminar 
+        } catch (QueryException $e) {
+            if ($e->getCode() === 23000) {
+                return redirect()->back()->with('faild', 'No Puedes Eliminar ');
+                // Esto es un error de restricción de clave externa (FOREIGN KEY constraint)
+                // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
+            } else {
+                return redirect()->back()->with('faild', 'No Puedes Eliminar un puesto en uso');
+                // Otro tipo de error de base de datos
+                // Maneja según sea necesario
+            }
+        }
+
+        return redirect()->back()->with('success', 'Puesto Eliminado correctamente');
     }
 }

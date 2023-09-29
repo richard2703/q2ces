@@ -87,6 +87,14 @@
                         </li>
 
                         <li>
+                            <a href="{{ route('personal.cuenta') }}">
+                                <button class="dropdown-item d-flex align-items-center" type="button" rel="tooltip">
+                                    <i class="far fa-edit"></i>
+                                    <span>Gestionar Cuenta</span>
+                                </button>
+                            </a>
+                        </li>
+                        <li>
                             <form action="{{ route('logout') }}" method="POST" style="display: inline-block;"
                                 onsubmit="return confirm('Seguro?')">
                                 @csrf

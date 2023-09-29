@@ -6,6 +6,7 @@ use App\Models\docs;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\tiposDocs;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 
@@ -107,8 +108,22 @@ class docsController extends Controller
      * @param  \App\Models\docs  $docs
      * @return \Illuminate\Http\Response
      */
-    public function destroy(docs $docs)
+    public function destroy(docs $doc)
     {
-        //
+        try {
+            $doc->delete(); // Intenta eliminar 
+        } catch (QueryException $e) {
+            if ($e->getCode() === 23000) {
+                return redirect()->back()->with('faild', 'No Puedes Eliminar ');
+                // Esto es un error de restricción de clave externa (FOREIGN KEY constraint)
+                // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
+            } else {
+                return redirect()->back()->with('faild', 'No Puedes Eliminar un puesto en uso');
+                // Otro tipo de error de base de datos
+                // Maneja según sea necesario
+            }
+        }
+
+        return redirect()->back()->with('success', 'Puesto Eliminado correctamente');
     }
 }

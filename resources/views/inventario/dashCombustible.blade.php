@@ -126,7 +126,7 @@
                                                                 </div>
                                                                 <div class=" col-12 col-md-6 d-flex mb-4">
                                                                     <div class="me-2">
-                                                                        <img src="{{ asset('/img/inventario/precio.svg') }}"
+                                                                        <img src="{{ asset('/img/inventario/RELOJ-01.svg') }}"
                                                                             alt="" style="width:40px;">
                                                                     </div>
                                                                     <div style="width: 90%! important;">
@@ -142,7 +142,7 @@
                                                                             alt="" style="width:40px;">
                                                                     </div>
                                                                     <div style="width: 90%! important;">
-                                                                        <label class="labelTitulo">Kilometraje:
+                                                                        <label class="labelTitulo">Uso en Km/Mi/Hr:
                                                                             <span>*</span></label></br>
                                                                             <input type="number" name="kilometraje" class="inputCaja" value="" required>
                                                                     </div>
@@ -150,12 +150,12 @@
 
                                                                 <div class=" col-12 col-md-6 d-flex mb-4">
                                                                     <div class="me-2">
-                                                                        <img src="{{ asset('/img/inventario/precio.svg') }}"
+                                                                        <img src="{{ asset('/img/inventario/OBSERBACIONES-01.svg') }}"
                                                                             alt="" style="width:40px;">
                                                                     </div>
                                                                     <div style="width: 90%! important;">
                                                                         <label class="labelTitulo">Observaciones:
-                                                                            <span>*</span></label></br>
+                                                                            </label></br>
                                                                             <textarea class="form-control-textarea border-green" value="{{ old('comentario') }}" name="comentario" id="observacionesDescarga" rows="3" placeholder="Agregar Observaciones..."></textarea>
                                                                     </div>
                                                                 </div>
@@ -193,7 +193,7 @@
                                                                         <span class="">Tomar Foto</span>
                                                                     </label>
                                                                 </div>  --}}
-
+                                                                <input type="hidden" name="horas" id="horaActualS">
                                                                 <div
                                                                     class="col-12 col-md-6 col-lg-12 text-center mx-auto border vistaFotoCombustibles mb-4">
                                                                     <i><img class="imgVistaCombustible img-fluid mb-2"
@@ -314,6 +314,18 @@
                                                                     </div>
                                                                 </div>
 
+                                                                <div class="col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/uso.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 90%! important;">
+                                                                        <label class="labelTitulo">ODOMETRO:
+                                                                            <span>*</span></label></br>
+                                                                            <input type="number" name="horometro" class="inputCaja" value="" required>
+                                                                    </div>
+                                                                </div>
+
                                                                 <div class=" col-12 col-md-6 d-flex mb-4">
                                                                     <div class="me-2">
                                                                         <img src="{{ asset('/img/inventario/grasa.svg') }}"
@@ -414,7 +426,7 @@
                                                 </div>
                                                 <div class="col-12 text-center mb-3 ">
                                                     <button type="submit" class="btn botonGral"
-                                                        onclick="test()">Guardar</button>
+                                                        onclick="test2()">Guardar</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -427,45 +439,43 @@
                         <div class="row">
 
                             @foreach ($gasolinas as $gasolina)
-                                <div class="col-sm-4">
-                                    <div class="card">
+                                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                                    <div class="card" style="margin: 15px">
                                         <div class="card-body combustibleBorde">
                                             <div class="bordeTitulo mb-3">
-                                                <h2 class="combustibleTitulo fw-semibold  my-3"> {{ $gasolina->nombre }}
+                                                <h2 class="combustibleTitulo fw-semibold  my-3 text-center"> {{ $gasolina->nombre }}
                                                 </h2>
                                             </div>
                                             <div class="row ">
-                                                <div class="col-12 mb-5">
-                                                    <p class="text-end">Reserva</p>
-                                                    <p class="combustibleLitros fw-semibold text-end">
+                                                <div class="col-12 mb-1">
+                                                    <p class="text-center" style="font-weight: bold">Reserva</p>
+                                                    <p class="combustibleLitros fw-semibold text-center">
                                                         {{ number_format($gasolina->cisternaNivel, 2) }} lts.
                                                     </p>
                                                 </div>
-                                                <div class="col mb-3">
-                                                    <div class="row">
-                                                        <div class="col-6">
-                                                            <p class=" ">Última carga</p>
-                                                            <p class="combustiblefecha fw-semibold mb-3">
-                                                                {{ \Carbon\Carbon::parse($gasolina->created_at)->format('Y-m-d') }}
-                                                            </p>
-                                                            <p class="">por litro</p>
-                                                            <p class="combustibleLitros fw-semibold">
-                                                                $ {{ number_format($gasolina->precio, 2) }}
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <p class=" text-end">Litros Cargados</p>
-                                                            <p class="combustibleLitros fw-semibold text-end">
-                                                                {{ number_format($gasolina->litros, 2) }} lts.
-                                                        </div>
+
+                                                <div class="col-6" style="width: 150px !important">
+                                                        <p class=" "style="font-weight: bold">Última Carga:</p>
+                                                        <p class="combustiblefecha fw-semibold mb-3">
+                                                            {{ \Carbon\Carbon::parse($gasolina->created_at)->format('Y-m-d') }}
+                                                        </p>
                                                     </div>
-
+                                                    
+                                                    <div class="col-5" style="width: 130px !important">
+                                                        <p class="d-flex align-content-end"style="font-weight: bold">Por Litro:</p>
+                                                        <p class="d-flex align-content-end combustibleLitros fw-semibold">
+                                                            $ {{ number_format($gasolina->precio, 2) }}
+                                                        </p>
+                                                    </div>
+                                                    
+                                                    <div class="col-12 d-flex justify-content-center">
+                                                        <p class="text-center mt-1" style="font-weight: bold; margin-right:8px; width: 130px !important">Litros Cargados: </p><div class="combustibleLitros fw-semibold text-center mt-2">{{ number_format($gasolina->litros, 2) }} lts.</div>
+                                                    </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                
                             @endforeach
 
                         </div>
@@ -525,13 +535,13 @@
                                                 class=" nav-item col-12 col-md-6 BTNbCargaDescarga py-3 border-0 active "
                                                 role="presentation" id="home-tab" data-bs-toggle="tab"
                                                 data-bs-target="#home-tab-pane" type="button" role="tab"
-                                                aria-controls="home-tab-pane" aria-selected="true">Relación Cargas De
+                                                aria-controls="home-tab-pane" aria-selected="true">Relación Cargas de
                                                 Combustible</button>
                                             <button class="nav-item col-12 col-md-6 BTNbCargaDescarga "
                                                 role="presentation" id="profile-tab" data-bs-toggle="tab"
                                                 data-bs-target="#profile-tab-pane" type="button" role="tab"
                                                 aria-controls="profile-tab-pane" aria-selected="false"> Relación Descargas
-                                                De Combustible</button>
+                                                de Combustible</button>
                                         </div>
 
                                         <div class="tab-content contentCargas" id="myTabContent">
@@ -544,13 +554,14 @@
                                                                 <div class="table-responsive">
                                                                     <table class="table">
                                                                         <thead class="labelTitulo">
-                                                                            <th class="fw-bolder">ID</th>
+                                                                            <th class="fw-bolder">Ticket ID</th>
                                                                             <th class="fw-bolder">Equipos</th>
                                                                             <th class="fw-bolder">Despachador</th>
                                                                             <th class="fw-bolder">Litros</th>
+                                                                            <th class="fw-bolder">KM</th>
                                                                             <th class="fw-bolder">Precio</th>
                                                                             <th class="fw-bolder">Fecha</th>
-                                                                            <th class="fw-bolder">Hora</th>
+                                                                            <th class="fw-bolder">Hora Carga</th>
                                                                             <th class="fw-bolder">Imprimir</th>
                                                                             <th class="fw-bolder text-right">Acciones</th>
                                                                         </thead>
@@ -564,6 +575,9 @@
                                                                                         {{ number_format($carga->litros, 2, '.', ',') }}
                                                                                     </td>
                                                                                     <td>
+                                                                                        {{ ($carga->kilometraje) }}
+                                                                                    </td>
+                                                                                    <td>
                                                                                         $
                                                                                         {{ number_format($carga->precio, 2, '.', ',') }}
                                                                                     </td>
@@ -571,12 +585,12 @@
                                                                                         {{ \Carbon\Carbon::parse($carga->fecha)->format('Y-m-d') }}
                                                                                     </td>
                                                                                     <td>
-                                                                                        {{ \Carbon\Carbon::parse($carga->fecha)->format('H:m') }}
+                                                                                        {{ substr($carga->horaLlegadaCarga, 0, 5) }}
                                                                                     </td>
 
                                                                                 <td
                                                                                     class="td-actions d-flex justify-content-center">
-                                                                                    <form action="{{route('printCarga.post', $carga->id)}}" method="POST" style="display: inline-block;">
+                                                                                    <form action="{{route('printCarga.post', 0)}}" method="POST" style="display: inline-block;">
                                                                                         @csrf
                                                                                         @method('POST')
                                                                                         <input type="hidden" name="id" value="{{$carga->id}}" id="id">
@@ -595,7 +609,7 @@
                                                                                                 data-bs-target="#cargaCombustible"
                                                                                                 onclick="loadCarga('{{ $carga->id }}','{{ $carga->maquinariaid }}','{{ $carga->operadorid }}'
                                                                                         ,'{{ $carga->litros }}','{{ $carga->precio }}'
-                                                                                        ,'{{ \Carbon\Carbon::parse($carga->fecha)->format('Y-m-d') }}','{{ \Carbon\Carbon::parse($carga->fecha)->format('H:m') }}')">
+                                                                                        ,'{{ \Carbon\Carbon::parse($carga->fecha)->format('Y-m-d') }}','{{ $carga->horaLlegadaCarga }}','{{ $carga->comentario }}')">
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg "
                                                                                                     width="28"
                                                                                                     height="28"
@@ -652,7 +666,9 @@
                                                                     </table>
                                                                 </div>
                                                             </div>
-
+                                                            <div class="card-footer d-flex justify-content-center">
+                                                                {{ $cargas->links() }}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -666,22 +682,33 @@
                                                                 <div class="table-responsive">
                                                                     <table class="table">
                                                                         <thead class="labelTitulo">
-                                                                            <th class="fw-bolder">ID</th>
+                                                                            <th class="fw-bolder">Ticket ID</th>
                                                                             <th class="fw-bolder">Equipo</th>
                                                                             <th class="fw-bolder">Despachador</th>
                                                                             <th class="fw-bolder">Maquinaria</th>
                                                                             <th class="fw-bolder">Operador</th>
-                                                                            <th class="fw-bolder">Kms</th>
-                                                                            <th class="fw-bolder">Horas</th>
+                                                                            <th class="fw-bolder">Km</th>
+                                                                            <th class="fw-bolder">Hora Descarga</th>
                                                                             <th class="fw-bolder">Litros</th>
-                                                                            <th class="fw-bolder">fecha</th>
+                                                                            <th class="fw-bolder">Fecha</th>
                                                                             <th class="fw-bolder text-center">Imprimir</th>
                                                                             <th class="fw-bolder text-right">Acciones</th>
                                                                         </thead>
                                                                         <tbody>
                                                                             @forelse ($descargas as $descarga)
                                                                                 <tr>
-                                                                                    <td>{{ $descarga->id }}</td>
+                                                                                    <td>@if($descarga->id != null)
+                                                                                        <div style="margin-left: 15px;">{{ $descarga->id }}</div>
+                                                                                        <span class="material-icons"
+                                                                                    style="font-size:40px; color: green">
+                                                                                    receipt_long
+                                                                                </span>
+                                                                                    @else
+                                                                                    <span class="material-icons"
+                                                                                    style="font-size:40px; color: red">
+                                                                                    receipt_long
+                                                                                </span>
+                                                                                    @endif</td>
                                                                                     <td>{{ $descarga->maquinaria }}</td>
                                                                                     <td>{{ $descarga->operador }}</td>
                                                                                     <td>{{ $descarga->servicio }}</td>
@@ -690,7 +717,7 @@
                                                                                     {{--  <td>{{ $descarga->horas }}</td>  --}}
                                                                                     
                                                                                     <td>
-                                                                                        {{ \Carbon\Carbon::parse($descarga->fecha)->format('H:m') }}
+                                                                                        {{ substr($descarga->horas, 0, 5) }}
                                                                                     </td>
                                                                                     <td>
                                                                                         {{ number_format($descarga->litros, 2, '.', ',') }}
@@ -701,7 +728,7 @@
                                                                                     @if ($descarga->ticket == 0)
                                                                                     <td class="td-actions d-flex justify-content-center">
                                                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#printFormDescargaD"
-                                                                                            onclick="cargaItem('{{ $descarga->id }}')">
+                                                                                            onclick="cargaItem('{{ $descarga->descargaIdTote }}')">
                                                                                             <span class="material-icons mt-3" style="font-size:35px; color: #727176;">print</span>
                                                                                         </a>
                                                                                     </td>
@@ -723,10 +750,10 @@
                                                                                             </a>
                                                                                         @endcan
                                                                                     
-                                                                                        <form action="{{ route('printOnlyTicket.post', $descarga->id) }}" method="POST" style="display: inline-block;">
+                                                                                        <form action="{{ route('printOnlyTicket.post', 0) }}" method="POST" style="display: inline-block;">
                                                                                             @csrf
                                                                                             @method('POST')
-                                                                                            <input type="hidden" name="id" value="{{ $descarga->descargaDetalleId }}">
+                                                                                            <input type="hidden" name="id" value="{{ $descarga->id }}">
                                                                                             <button class="btnSinFondo" type="submit" rel="tooltip">
                                                                                                 <span class="material-icons mt-3" style="font-size:35px; color: #727176;">print</span>
                                                                                             </button>
@@ -734,17 +761,15 @@
                                                                                     </td>
                                                                                     
                                                                                     @endif
-                                                                                    <td
-                                                                                        class="td-actions justify-content-end">
-                                                                                        
+                                                                                    <td class="td-actions justify-content-end">
                                                                                         @can('combustible_edit')
                                                                                             <a href="#" class=""
                                                                                                 data-bs-toggle="modal"
                                                                                                 data-bs-target="#descargaCombustible"
-                                                                                                onclick="loadDescarga('{{ $descarga->id }}','{{ $descarga->maquinariaId }}','{{ $descarga->operadorId }}',
+                                                                                                onclick="loadDescarga('{{ $descarga->descargaIdTote }}','{{ $descarga->maquinariaId }}','{{ $descarga->operadorId }}',
                                                                                         '{{ $descarga->servicioId }}','{{ $descarga->receptorId }}','{{ $descarga->litros }}',
-                                                                                        '{{ $descarga->km }}','{{ $descarga->imgKm ? $descarga->imgKm : '0' }}','{{ $descarga->horas }}','{{ $descarga->imgHoras ? $descarga->imgHoras : '0' }}'
-                                                                                        ,'{{ \Carbon\Carbon::parse($descarga->fecha)->format('Y-m-d') }}','{{ \Carbon\Carbon::parse($descarga->fecha)->format('H:m') }}')">
+                                                                                        '{{ $descarga->kilometrajeNuevo }}','{{ $descarga->imgHoras ? $descarga->imgHoras : '0' }}'
+                                                                                        ,'{{ \Carbon\Carbon::parse($descarga->updated_at)->format('Y-m-d') }}','{{ substr($descarga->horas, 0, 5) }}')">
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg "
                                                                                                     width="28"
                                                                                                     height="28"
@@ -797,6 +822,9 @@
                                                                     </table>
                                                                 </div>
                                                             </div>
+                                                            <div class="card-footer d-flex justify-content-center">
+                                                                {{ $descargas->links() }}
+                                                            </div>
 
                                                         </div>
                                                     </div>
@@ -823,11 +851,11 @@
                     <h5 class="modal-title fs-5" id="printModalLabel">Solicitud de Impresión Descarga</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="printFormDescarga" action="{{ route('print.post', $descarga->id) }}" method="POST">
+                <form id="printFormDescarga" action="{{ route('print.post', 0) }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">
-                        <input type="hidden" name="id" value="{{$descarga->id}}" id="idDescarga">
+                        <input type="hidden" name="id" value="{{$descarga->descargaIdTote}}" id="idDescarga">
                         <label class="labelTitulo">Solicito:</label>
                         {{--  <select class="form-select inputCaja" name="nombreSolicitante" id="nombreSolicitanteDescarga" required>
                             <option value="">Seleccione</option>
@@ -835,18 +863,18 @@
                                 <option value="{{ $item->nombres . ' ' . $item->apellidoP }}">{{ $item->nombres . ' ' . $item->apellidoP }}</option>
                             @endforeach
                         </select>  --}}
-                        <input type="text" name="nombreSolicitante" id="nombreSolicitanteDescarga" class="inputCaja" placeholder="Nombre del Solicitante...">
+                        <input type="text" name="nombreSolicitante" id="nombreSolicitanteDescarga" class="inputCaja" placeholder="Nombre del Solicitante..." required>
                         <div class="row">
-                            <div class="col-12">
+                            {{--  <div class="col-12">
                                 <label for="costoTrabajoDescarga" class="labelTitulo mt-3">Costo de Trabajo:</label>
                                 <input type="number" name="costoTrabajo" id="costoTrabajoDescarga" class="inputCaja" placeholder="Costo del Trabajo...">
-                            </div>
+                            </div>  --}}
     
                             <div class="col-6" style="display:none">
                                 <div class="form-check mt-5 d-flex justify-content-center">
                                     <div class="form-check form-check-inline">
                                         <input type="checkbox" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" id="checkbox_tipo_solicitud">
-                                        <label for="checkbox_reparacion">Para el Cliente</label>
+                                        <label for="checkbox_reparacion">Ticket Administrativo</label>
                                     </div>
                                 </div>
                             </div>
@@ -905,11 +933,11 @@
                     <h5 class="modal-title fs-5" id="printModalLabel">Solicitud de Impresión Descarga</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="printFormDescarga" action="{{ route('printEdit.post', $descarga->id) }}" method="POST">
+                <form id="printFormDescarga" action="{{ route('printEdit.post', 0) }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">
-                        <input type="hidden" name="id" value="{{$descarga->id}}" id="idDescargaEdit">
+                        <input type="hidden" name="id" value="{{$descarga->descargaIdTote}}" id="idDescargaEdit">
                         <label class="labelTitulo">Solicito:</label>
                         {{--  <select class="form-select inputCaja" name="nombreSolicitante" id="nombreSolicitanteDescarga" required>
                             <option value="">Seleccione</option>
@@ -928,7 +956,7 @@
                                 <div class="form-check mt-5 d-flex justify-content-center">
                                     <div class="form-check form-check-inline">
                                         <input type="checkbox" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" id="checkbox_tipo_solicitudEdit" checked>
-                                        <label for="checkbox_reparacion">Para el Cliente</label><br>
+                                        <label for="checkbox_reparacion">Ticket Administrativo</label><br>
                                     </div>
                                 </div>
                             </div>
@@ -953,7 +981,7 @@
 
     <div class="modal fade" id="cargaCombustible" tabindex="-1" aria-labelledby="cargaCombustibleLabel"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
                     <h1 class="modal-title fs-5" id="cargaCombustibleLabel">Modificar Carga de Combustible</h1>
@@ -966,8 +994,8 @@
 
                         <input type="hidden" name="cargaId" id="cargaId" value="">
                         <div class="col-6 my-3">
-                            <label for="inputEmail4" class="form-label">Equipo</label>
-                            <select id="cargaMaquinaria" name="cargaMaquinaria" class="form-select">
+                            <label for="inputEmail4" class="labelTitulo">Equipo:</label>
+                            <select id="cargaMaquinaria" name="cargaMaquinaria" class="form-select border-green">
                                 @foreach ($cisternas as $maquina)
                                     <option value="{{ $maquina->id }}">
                                         {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
@@ -977,8 +1005,8 @@
                         </div>
 
                         <div class="col-6 my-3">
-                            <label for="inputEmail4" class="form-label">Despachador</label>
-                            <select id="cargaOperador" name="cargaOperador" class="form-select">
+                            <label for="inputEmail4" class="labelTitulo">Despachador:</label>
+                            <select id="cargaOperador" name="cargaOperador" class="form-select border-green">
                                 @foreach ($despachadores as $persona)
                                     <option value="{{ $persona->id }}">
                                         {{ $persona->nombres . ' ' . $persona->apellidoP }}
@@ -987,26 +1015,31 @@
                             </select>
                         </div>
 
-                        <div class="col-3 my-3">
-                            <label for="inputEmail4" class="form-label">Litros</label>
-                            <input type="number" step="0.01" min="0.01" class="form-control" id="cargaLitros"
+                        <div class="col-6 my-3">
+                            <label for="inputEmail4" class="labelTitulo">Litros:</label>
+                            <input type="number" step="0.01" min="0.01" class="inputCaja" id="cargaLitros"
                                 name="cargaLitros">
                         </div>
-                        <div class="col-3 my-3">
-                            <label for="inputEmail4" class="form-label">Precio</label>
-                            <input type="number" step="0.01" min="0.01" class="form-control" id="cargaPrecio"
+                        <div class="col-6 my-3">
+                            <label for="inputEmail4" class="labelTitulo">Precio:</label>
+                            <input type="number" step="0.01" min="0.01" class="inputCaja" id="cargaPrecio"
                                 name="cargaPrecio">
                         </div>
 
-                        <div class="col-3 my-3">
-                            <label for="inputEmail4" class="form-label">Fecha</label>
-                            <input type="datetime" class="form-control" id="cargaFecha" name="cargaFecha"
+                        <div class="col-6 my-3">
+                            <label for="inputEmail4" class="labelTitulo">Fecha:</label>
+                            <input type="date" class="inputCaja" id="cargaFecha" name="cargaFecha"
                                 value="">
                         </div>
 
-                        <div class="col-3 my-3">
-                            <label for="inputEmail4" class="form-label">Hora carga</label>
-                            <input type="time" class="form-control" id="cargaHora" name="cargaHora" value="">
+                        <div class="col-6 my-3">
+                            <label for="inputEmail4" class="labelTitulo">Hora Carga:</label>
+                            <input type="time" class="inputCaja" id="cargaHora" name="cargaHora" value="">
+                        </div>
+
+                        <div class="col-12 my-3">
+                            <label class="labelTitulo">Observaciones:</label></br>
+                            <textarea class="form-control-textarea border-green" value="" name="comentario" id="observacionesCargaEdit" rows="3" placeholder="Agregar Observaciones..."></textarea>
                         </div>
 
                         <div class="modal-footer">
@@ -1035,111 +1068,90 @@
 
                         <input type="hidden" name="descargaId" id="descargaId" value="">
 
-                        <div class="col-6 my-3">
-                            <label for="inputEmail4" class="form-label">Equipo</label>
-                            <select id="descargaMaquinaria" name="descargaMaquinaria" class="form-select">
-                                @foreach ($cisternas as $maquina)
-                                    <option value="{{ $maquina->id }}">
-                                        {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="col-6 my-3">
-                            <label for="inputEmail4" class="form-label">Despachador</label>
-                            <select id="descargaOperador" name="descargaOperador" class="form-select">
-                                @foreach ($despachadores as $persona)
-                                    <option value="{{ $persona->id }}">
-                                        {{ $persona->nombres . ' ' . $persona->apellidoP }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="col-6 my-3">
-                            <label for="inputEmail4" class="form-label">Maquinaria</label>
-                            <select id="descargaServicio" name="descargaServicio" class="form-select">
-                                @foreach ($maquinaria as $maquina)
-                                    <option value="{{ $maquina->id }}">
-                                        {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="col-6 my-3">
-                            <label for="inputEmail4" class="form-label">Operador</label>
-                            <select id="descargaDespachador" name="descargaDespachador" class="form-select"
-                                style="width: 200px !important;">
-                                @foreach ($despachadores as $persona)
-                                    <option value="{{ $persona->id }}">
-                                        {{ $persona->nombres . ' ' . $persona->apellidoP }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="col-4 my-3">
-                            <label for="inputEmail4" class="form-label">Litros</label>
-                            <input type="number" step="0.01" min="0.01" class="form-control"
-                                id="descargaLitros" name="descargaLitros">
-                        </div>
-
-                        <div class="col-4 my-3">
-                            <label for="inputEmail4" class="form-label">Fecha</label>
-                            <input type="datetime" class="form-control" id="descargaFecha" name="descargaFecha"
-                                value="">
-                        </div>
-                        {{-- <div class="col-4 my-3">
-                            <label for="inputEmail4" class="form-label">Hora Carga</label>
-                            <input type="time" class="form-control" id="">
-                        </div> --}}
-
-                        <div class="col-4 my-3">
-                            <label for="inputEmail4" class="form-label">Hora descarga</label>
-                            <input type="time" class="form-control" id="descargaHora" name="descargaHora"
-                                value="">
-                        </div>
-
-                        <div class="col-4 my-3">
-                            <label for="inputEmail4" class="form-label">Horómetro</label>
-                            <input type="number"step="1" min="1" class="form-control" id="descargaHoras"
-                                name="descargaHoras">
-                        </div>
-
-                        <div class="col-4 my-3">
-                            <label for="inputEmail4" class="form-label">Km Mi</label>
-                            <input type="number" step="1" min="1" class="form-control" id="descargaKms"
-                                name="descargaKms">
-                        </div>
-
-                        <div class="col my-3">
-                            <div class="row justify-content-evenly ">
-                                <div class="col-5 my-3">
-                                    <div class=" mx-auto border vistaFoto mb-4">
-                                        <i><img class=" img-fluid mb-5" id="descargaImgKms"
-                                                src="{{ asset('/img/general/default.jpg') }}"></i>
-                                        <span class="mi-archivo3"> <input class="mb-4 ver" type="file"
-                                                name="descargaFileImgKms" id="mi-archivo3" accept="image/*"></span>
-                                        <label for="mi-archivo3">
-                                            <span class="text-center">Fotografía</span>
-                                        </label>
-                                    </div>
+                        <div class="row">
+                            <div class="col-12 my-3 d-flex justify-content-center">
+                                <div class=" mx-auto border vistaFoto mb-4">
+                                    <i><img class=" img-fluid mb-5" id="descargaImgKms"
+                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                    <span class="mi-archivo3"> <input class="mb-4 ver" type="file"
+                                            name="descargaFileImgKms" id="mi-archivo3" accept="image/*"></span>
+                                    <label for="mi-archivo3">
+                                        <span class="text-center">Fotografía</span>
+                                    </label>
                                 </div>
+                            </div>
+    
+                            <div class="col-6 my-3">
+                                <label for="inputEmail4" class="labelTitulo">Equipo:</label>
+                                <select id="descargaMaquinaria" name="descargaMaquinaria" class="form-select">
+                                    @foreach ($cisternas as $maquina)
+                                        <option value="{{ $maquina->id }}">
+                                            {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+    
+                            <div class="col-6 my-3">
+                                <label for="inputEmail4" class="labelTitulo">Despachador:</label>
+                                <select id="descargaOperador" name="descargaOperador" class="form-select">
+                                    @foreach ($despachadores as $persona)
+                                        <option value="{{ $persona->id }}">
+                                            {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+    
+                            <div class="col-6 my-3">
+                                <label for="inputEmail4" class="labelTitulo">Maquinaria:</label>
+                                <select id="descargaServicio" name="descargaServicio" class="form-select">
+                                    @foreach ($maquinaria as $maquina)
+                                        <option value="{{ $maquina->id }}">
+                                            {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+    
+                            <div class="col-6 my-3">
+                                <label for="inputEmail4" class="labelTitulo">Operador:</label>
+                                <select id="descargaDespachador" name="descargaDespachador" class="form-select"
+                                    style="width: 200px !important;">
+                                    @foreach ($despachadores as $persona)
+                                        <option value="{{ $persona->id }}">
+                                            {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+    
+                            <div class="col-6 my-3">
+                                <label for="inputEmail4" class="labelTitulo">Fecha:</label>
+                                <input type="date" class="inputCaja" class="form-control" id="descargaFecha" name="descargaFecha"
+                                    value="">
+                            </div>
+                            {{-- <div class="col-4 my-3">
+                                <label for="inputEmail4" class="labelTitulo">Hora Carga</label>
+                                <input type="time" class="form-control" id="">
+                            </div> --}}
+    
+                            <div class="col-6 my-3">
+                                <label for="inputEmail4" class="labelTitulo">Hora Descarga:</label>
+                                <input type="time" class="inputCaja" class="form-control" id="descargaHoras" name="horas"
+                                    value="">
+                            </div>
 
-                                <div class="col-5  my-3">
-                                    <div class=" mx-auto border vistaFotoModalCarga-Desc mb-4">
-                                        <i><img class=" img-fluid mb-5" id="descargaImgHoras"
-                                                src="{{ asset('/img/general/default.jpg') }}"></i>
-                                        <span class="mi-archivo4"> <input class="mb-4 ver" type="file"
-                                                name="descargaFileImgHoras" id="mi-archivo4" accept="image/*"></span>
-                                        <label for="mi-archivo4">
-                                            <span>logo</span>
-                                        </label>
-                                    </div>
-
-                                </div>
+                            <div class="col-6 my-3">
+                                <label for="inputEmail4" class="labelTitulo">Litros:</label>
+                                <input type="number" class="inputCaja" step="0.01" min="0.01" class="form-control"
+                                    id="descargaLitros" name="descargaLitros">
+                            </div>
+    
+                            <div class="col-6 my-3">
+                                <label for="inputEmail4" class="labelTitulo">Km:</label>
+                                <input type="number" class="inputCaja" step="1" min="1" class="form-control" id="descargaKms"
+                                    name="kilometrajeNuevo">
                             </div>
                         </div>
 
@@ -1159,7 +1171,7 @@
                     <h5 class="modal-title fs-5" id="printModalLabel">Solicitud de Impresión Carga</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="printFormDescarga" action="{{ route('printCarga.post', $carga->id) }}" method="POST">
+                <form id="printFormDescarga" action="{{ route('printCarga.post', 0) }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">
@@ -1398,9 +1410,20 @@
             image.src = "{{ asset('img/inventario/cargaGris.svg') }}";
         }
     </script>
+    
+    <script>
+        function test2(){
+        // Obtener la hora actual en el formato HH:MM:SS
+        let fechaActual = new Date();
+        let horaActual = ('0' + fechaActual.getHours()).slice(-2) + ':' + ('0' + fechaActual.getMinutes()).slice(-2) + ':' + ('0' + fechaActual.getSeconds()).slice(-2);
+      
+        // Asignar la hora actual al campo oculto
+        document.getElementById('horaActualS').value = horaActual;
+        }
+    </script>
 
     <script>
-        function loadCarga(id, maquinariaId, operadorId, litros, precio, fecha, hora) {
+        function loadCarga(id, maquinariaId, operadorId, litros, precio, fecha, hora, comentario) {
 
             const txtId = document.getElementById('cargaId');
             txtId.value = id;
@@ -1415,14 +1438,16 @@
             const txtPrecio = document.getElementById('cargaPrecio');
             txtPrecio.value = precio;
 
+            const txtComentario = document.getElementById('observacionesCargaEdit');
+            txtComentario.value = comentario;
+
             const dteFecha = document.getElementById('cargaFecha').value = fecha;
             const dteHora = document.getElementById('cargaHora').value = hora;
         }
     </script>
 
     <script>
-        function loadDescarga(id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms, horas, imgHoras,
-            fecha, hora) {
+        function loadDescarga(id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms,fecha, horas) {
 
             const txtId = document.getElementById('descargaId');
             txtId.value = id;
@@ -1445,12 +1470,6 @@
             txtHoras.value = horas;
 
             const dteFecha = document.getElementById('descargaFecha').value = fecha;
-            const dteHora = document.getElementById('descargaHora').value = hora;
-
-            const imagen1 = document.getElementById('descargaImgKms');
-            if (imagenKms != 0) {
-                imagen1.src = '/storage/combustibles/' + imagenKms;
-            }
 
             const imagen2 = document.getElementById('descargaImgHoras');
             if (imgHoras != 0) {

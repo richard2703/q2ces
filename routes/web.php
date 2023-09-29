@@ -126,18 +126,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Crud Clientes
     Route::resource('clientes', App\Http\Controllers\clientesController::class);
 
-    // Crud TiposDocs
-    Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
-
-    // Crud TiposServicios
-    Route::resource('tiposServicios', App\Http\Controllers\tiposServiciosController::class);
-
-    // Crud Lugares
-    Route::resource('lugares', App\Http\Controllers\lugaresController::class);
-    // Crud Ubicaciones
-    Route::resource('ubicaciones', App\Http\Controllers\ubicacionesController::class);
 
     //Crud personal
+    Route::get('personal/cuenta', [App\Http\Controllers\personalController::class, 'cuenta'])->name('personal.cuenta');
     Route::get('/personal/nuevo', [App\Http\Controllers\personalController::class, 'create'])->name('personal.create');
     Route::post('/personal', [App\Http\Controllers\personalController::class, 'store'])->name('personal.store');
     Route::get('/personal', [App\Http\Controllers\personalController::class, 'index'])->name('personal.index');
@@ -152,6 +143,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('personal/asignar/{personal}/uniforme', [App\Http\Controllers\personalController::class, 'editUniforme'])->name('personal.uniforme');
     Route::put('personal/asignar/{personal}/uniforme', [App\Http\Controllers\personalController::class, 'asignacionUniforme'])->name('personal.uniforme.asignacion');
     Route::get('personal/show/{personal}', [App\Http\Controllers\personalController::class, 'ver'])->name('personal.ver');
+    Route::put('personal/pass/{id}', [App\Http\Controllers\personalController::class, 'cuentaUpdate'])->name('personal.cuentaUpdate');
+
+    Route::put('/personal/asignaciones/{id}', [App\Http\Controllers\personalController::class, 'asignaciones'])->name('personal.asignaciones');
 
     //*** catalogos */
     Route::get('/catalogos/', [App\Http\Controllers\catalogosController::class, 'index'])->name('catalogos.index');
@@ -284,6 +278,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'destroy'])->name('maquinaria.delete');
     // Maquinaria Imagen Borrar
     Route::put('/maquinaria/imagen/delete', [App\Http\Controllers\maquinariaController::class, 'destroyImage'])->name('maquinaria.destroyImage');
+    Route::put('/maquinaria/asignacion/personal', [App\Http\Controllers\maquinariaController::class, 'asignacion'])->name('maquinaria.asignacion');
     // Route::get('maquinaria/uso', [App\Http\Controllers\maquinariaController::class, 'uso'])->name('maquinaria.uso');
 
     //Crud accesorios
@@ -309,6 +304,7 @@ Route::group(['middleware' => 'auth'], function () {
     ]);
     Route::get('/mtq/inventario/index/{tipo}', [App\Http\Controllers\inventarioMtqController::class, 'index'])->name('inventarioMtq.index');
     Route::get('/mtq/inventario/create/{tipo}', [App\Http\Controllers\inventarioMtqController::class, 'create'])->name('inventarioMtq.create');
+    Route::post('/mtq/inventario/movimiento/{producto}', [App\Http\Controllers\inventarioMtqController::class, 'movimiento'])->name('inventarioMtq.movimiento');
 
     //Crud Inventario
     Route::get('/inventarios', [App\Http\Controllers\inventarioController::class, 'dash'])->name('inventario.dash');
@@ -317,6 +313,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/inventario', [App\Http\Controllers\inventarioController::class, 'store'])->name('inventario.store');
     Route::put('/inventario/{producto}/restock', [App\Http\Controllers\inventarioController::class, 'restock'])->name('inventario.restock');
     Route::put('/inventario/{producto}/mover', [App\Http\Controllers\inventarioController::class, 'mover'])->name('inventario.mover');
+    Route::post('/inventario/movimiento/{producto}', [App\Http\Controllers\inventarioController::class, 'movimiento'])->name('inventario.movimiento');
     Route::get('/inventario/producto/{inventario}', [App\Http\Controllers\inventarioController::class, 'show'])->name('inventario.show');
     Route::get('/inventario/producto/{inventario}/edit', [App\Http\Controllers\inventarioController::class, 'edit'])->name('inventario.edit');
     Route::put('/inventario/{inventario}', [App\Http\Controllers\inventarioController::class, 'update'])->name('inventario.update');
@@ -365,7 +362,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/calendario/solicitudes/editar', [App\Http\Controllers\solicitudesController::class, 'update'])->name('solicitudes.update');
 
 
-    //Crud personal
+    //Crud asistencia
     Route::get('/asistencia', [App\Http\Controllers\asistenciaController::class, 'index'])->name('asistencia.index');
     Route::get('/asistencia/diaria', [App\Http\Controllers\asistenciaController::class, 'create'])->name('asistencia.create');
     Route::post('/asistencia/diaria', [App\Http\Controllers\asistenciaController::class, 'store'])->name('asistencia.store');
@@ -409,7 +406,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/checkList/registros/editar/{id}', [App\Http\Controllers\checkListRegistrosController::class, 'show'])->name('checkListRegistros.show');
     Route::put('/checkList/registros/editar/', [App\Http\Controllers\checkListRegistrosController::class, 'update'])->name('checkListRegistros.update');
 
-    // Equipos MTQ    
+    // Equipos MTQ
     // Route::get('mtq/inventario/dash', [App\Http\Controllers\inventarioMtqController::class, 'dash'])->name('inventarioMtq.dash');
     // Route::resource('mtq/inventario', App\Http\Controllers\inventarioMtqController::class, ['except' => 'index', 'create'])->names([
     //     // 'index' => 'inventarioMtq.index',
@@ -427,8 +424,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('mtq', App\Http\Controllers\maquinariaMtqController::class);
     Route::put('asignacion', [App\Http\Controllers\maquinariaMtqController::class, 'asignacion'])->name('mtq.asignacion');
 
-    // Crud ServiciosMtq
-    Route::resource('serviciosMtq', App\Http\Controllers\serviciosMtqController::class);
+    // // Crud ServiciosMtq
+    // Route::resource('serviciosMtq', App\Http\Controllers\serviciosMtqController::class);
 
 
     Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');
@@ -458,8 +455,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     //*** Mtq */
     Route::resource('residentes', App\Http\Controllers\residenteController::class);
-    Route::resource('docs', App\Http\Controllers\docsController::class);
-    Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
+    // Route::resource('docs', App\Http\Controllers\docsController::class);
+    // Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
     Route::resource('uso', App\Http\Controllers\usoMaquinariasController::class);
     Route::resource('calendarioMtq', App\Http\Controllers\calendarioMtqController::class);
     Route::put('calendarioMtq/editar/{evento}', [App\Http\Controllers\calendarioMtqController::class, 'update'])->name('calendarioMtq.update');
@@ -485,9 +482,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/printOnlyTicket-combustible', 'App\Http\Controllers\printController@printOnlyTicket')->name('printOnlyTicket.post');
     Route::post('/printOnlyTicketEdit-combustible', 'App\Http\Controllers\printController@printEdit')->name('printEdit.post');
 
-    Route::get('/comprobar-descarga/{id}', 'detalleDescargaController@comprobarDescarga');
+    // Route::get('/comprobar-descarga/{id}', 'detalleDescargaController@comprobarDescarga');
     // Route::post('/import-excel', 'App\Http\Controllers\ImportExcelController@import')->name('importExcel.post');
     //
 
     Route::resource('combustibleTote', App\Http\Controllers\CombustibleToteController::class);
+    Route::post('/combustibleToteDescarga/', [App\Http\Controllers\CombustibleToteController::class, 'storeDescarga'])->name('descarga.post');
 });

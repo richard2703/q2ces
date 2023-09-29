@@ -1,6 +1,9 @@
 @extends('layouts.main', ['activePage' => 'obra', 'titlePage' => __('Alta de Obra')])
 @section('content')
     <div class="content">
+        <?php
+        $objValida = new Validaciones();
+        ?>
         @if ($errors->any())
             <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
             <div class="alert alert-danger">
@@ -16,7 +19,7 @@
             <div class="justify-content-center">
                 <div class="card">
                     <div class="card-header bacTituloPrincipal">
-                        <h4 class="card-title">Alta De Obras</h4>
+                        <h4 class="card-title">Alta de Obra</h4>
                         {{-- <p class="card-category">Usuarios registrados</p> --}}
                     </div>
                     <div class="card-body">
@@ -73,7 +76,7 @@
                             <div class="col-12 ">
                                 <div class="row">
                                     <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                        <label class="labelTitulo">Nombre De La Obra: <span>*</span></label></br>
+                                        <label class="labelTitulo">Nombre de la Obra: <span>*</span></label></br>
                                         <input type="text" class="inputCaja" id="nombre" name="nombre" required
                                             placeholder="Especifique..." value="{{ old('nombre') }}">
                                     </div>
@@ -83,7 +86,7 @@
                                             required name="clienteId">
                                             @foreach ($Clientes as $Cliente)
                                                 <option value="{{ $Cliente->id }}">
-                                                    {{ $Cliente->nombre }}
+                                                    {{ $objValida->ucwords_accent($Cliente->nombre) }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -166,7 +169,7 @@
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Código De Confirmación:</label></br>
+                                                    <label class="labelTitulo">Código de Confirmación:</label></br>
                                                     <input type="text" class="inputCaja" id="rfirma"
                                                         placeholder="Especifique..." name="rfirma[]" value="">
                                                 </div>
@@ -180,7 +183,7 @@
                                     <div class="col-12 my-5 ">
                                         <div class="d-flex">
                                             <div class="col-6 divBorder">
-                                                <h2 class="tituloEncabezado ">Detalle De Obra</h2>
+                                                <h2 class="tituloEncabezado ">Detalle de Obra</h2>
                                             </div>
                                             <div class="col-6 divBorder pb-3 text-end" style="text-align: right;">
                                                 <button type="button" id="removeRow" class="btnRojo"></button>
@@ -197,7 +200,7 @@
                                                     <option value="">Seleccione</option>
                                                     @foreach ($vctMaquinaria as $maquina)
                                                         <option value="{{ $maquina->id }}">
-                                                            {{ $maquina->identificador . ' ' . $maquina->nombre }}
+                                                            {{ strtoupper($maquina->identificador) . ' - ' . $objValida->ucwords_accent($maquina->nombre) }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -208,9 +211,9 @@
                                                 <select id="personalId" name="personalId[]" class="form-select"
                                                     aria-label="Default select example">
                                                     <option value="">Seleccione</option>
-                                                    @foreach ($vctPersonal as $persona)
-                                                        <option value="{{ $persona->id }}">
-                                                            {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                                    @foreach ($vctPersonal as $item)
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $objValida->ucwords_accent($item->personal . ' [' . $item->puesto . ']') }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -236,7 +239,6 @@
                                                 <input type="date" class="inputCaja" id="fin" name="fin[]"
                                                     value="">
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>

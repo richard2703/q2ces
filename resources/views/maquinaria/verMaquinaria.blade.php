@@ -1,97 +1,9 @@
-@extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Ver Equipos')])
+@extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Detalle de Equipo')])
 @section('content')
-    <!--<div class="content">
-            <div class="container-fluid">
-                <div class="row justify-content-center">
-                    <div class="col-md-10 align-self-center">
-                        <div class="card">
-                            <div class="card-body contCart">
-                                <div class="p-1 align-self-start bacTituloPrincipal">
-                                    <h2 class="my-3 ms-3 texticonos ">Ver Equipos</h2>
-                                </div>
-
-                                <div class="col-10  mx-auto d-block my-4">
-                                    <div class="row d-flex ">
-                                        <div class="col-10 col-md-5  mx-auto d-block my-4 ">
-                                            <div class="row d-flex border">
-                                                    <div class="col-4 text-center colIcono p-2">
-                                                        <img src="{{ asset('img/equipos/maquinariaPesada.svg') }}" class="mx-auto d-block" width="65%">
-                                                    </div>
-                                                    <div class="col-8  p-2">
-                                                        <h2 class="text-start fs-5 textTitulo">Maquinaria Pesada</h2>
-                                                        <ul>
-                                                            <a class="textEquipo" href="{{ url('detalleEquipo', session('id')) }}"><li class="text-start my-3">Retroexcavadora</li></a>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Camión de Volteo</li></a>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Pipa de Agua</li></a>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Camión Orquesta</li></a>
-                                                        </ul>
-
-                                                    </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-10 col-md-5  mx-auto d-block my-4 ">
-                                            <div class="row d-flex border">
-                                                    <div class="col-4 text-center colIcono p-2">
-                                                        <img src="{{ asset('img/equipos/maquinariaLigera.svg') }}" class="mx-auto d-block" width="65%" >
-                                                    </div>
-                                                    <div class="col-8  p-2">
-                                                        <h2 class="text-start fs-5 textTitulo">Maquinaria Ligera</h2>
-                                                        <ul>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Rodillo</li></a>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Bobcat</li></a>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Torre de Luz</li></a>
-                                                        </ul>
-
-                                                    </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-10 col-md-5  mx-auto d-block my-4">
-                                            <div class="row d-flex border">
-                                                    <div class="col-4 text-center colIcono p-2">
-                                                        <img src="{{ asset('img/equipos/gruas.svg') }}" class="mx-auto d-block"width="65%">
-                                                    </div>
-                                                    <div class="col-8  p-2">
-                                                        <h2 class="text-start fs-5 textTitulo">Grúas</h2>
-                                                        <ul>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Grúa 1</li></a>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Grúa 2</li></a>
-                                                            <a class="textEquipo"  href="#"><li class="text-start my-3">Grúa 3</li></a>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Grúa 4</li></a>
-                                                        </ul>
-
-                                                    </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-10 col-md-5  mx-auto d-block my-4">
-                                            <div class="row d-flex border">
-                                                    <div class="col-4 text-center colIcono p-2">
-                                                        <img src="{{ asset('img/equipos/accesorios.svg') }}" class="mx-auto d-block" width="70%" >
-                                                    </div>
-                                                    <div class="col-8  p-2">
-                                                        <h2 class="text-start fs-5 textTitulo">Accesorios</h2>
-                                                        <ul>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Accesorio 1</li></a>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Accesorio 2</li></a>
-                                                            <a class="textEquipo" href="#"><li class="text-start my-3">Accesorio 3</li></a>
-                                                            <a class="textEquipo"  href="#"><li class="text-start my-3">Accesorio 4</li></a>
-                                                        </ul>
-
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>-->
     <div class="content">
+        <?php
+        $objValida = new Validaciones();
+        ?>
         @if ($errors->any())
             <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
             <div class="alert alert-danger">
@@ -119,7 +31,6 @@
                                         Regresar
                                     </button>
                                 </a>
-
                                 <div class="col-8 text-end">
                                 </div>
                             </div>
@@ -157,44 +68,58 @@
                                                         <div class="row mb-5">
 
                                                             <div class="col-12 contFotoMaquinaria" id="visor">
+
                                                                 <img src="{{ empty($fotos[0]) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $fotos[0]->ruta) }}"
                                                                     class="mx-auto d-block img-fluid imgMaquinaria">
                                                             </div>
 
-                                                            <div class="col-12 my-3 d-flex justify-content-around"
+                                                            <div class="col-12 my-3 d-flex justify-content-start"
                                                                 id="selectores">
                                                                 @forelse ($fotos as $foto)
                                                                     <img onclick="abre(this)"
                                                                         title="'{{ $maquinaria->nombre }}'."
                                                                         src="{{ asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $foto->ruta) }}"
-                                                                        class="img-fluid mb-5" id="{{ $foto->id }}"
-                                                                        style="margin-right:-20px;">
+                                                                        class="img-fluid mb-5" id="img{{ $foto->id }}"
+                                                                        style="margin-right:3px;">
                                                                     <div class="form-group">
-                                                                        <div class="col-md-8">
-                                                                            <!--<button type="button" class="btn btn-secondary btn-sm buttonImage" onclick="esconde_div('{{ $foto->id }}','{{ $fotos }}', (this));">X</button>-->
+                                                                        <div class="divButtonImage">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary btn-sm buttonImage"
+                                                                                id="btnDelete{{ $foto->id }}"
+                                                                                onclick="esconde_div('{{ $foto->id }}','{{ $fotos }}', (this));">X</button>
                                                                         </div>
                                                                     </div>
                                                                 @empty
                                                                 @endforelse
                                                             </div>
+
+                                                            {{--  @if (count($fotos) <= 3)
+                                                                <span class="mi-archivo"> <input class="mb-4 ver "
+                                                                        type="file" name="ruta[]" id="mi-archivo"
+                                                                        accept="image/*" multiple></span>
+                                                                <label for="mi-archivo">
+                                                                    <span class="">Sube Imagen</span>
+                                                                </label>
+                                                            @endif  --}}
                                                         </div>
 
                                                     </div>
-
+                                                    <input type="hidden" name="arrayFotosPersistente"
+                                                        id="arrayFotosPersistente" value="">
                                                     <div class="col-12 col-lg-8">
                                                         <div class="row alin">
-                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                            <div class=" col-12 col-sm-8  mb-3 ">
                                                                 <label class="labelTitulo">Equipo:</label></br>
                                                                 <input type="text" class="inputCaja" id="nombre"
                                                                     placeholder="Especifique..." required name="nombre"
                                                                     value="{{ $maquinaria->nombre }}" disabled>
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                            {{-- <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                                                 <label class="labelTitulo">Bitácora:</label></br>
-                                                                <select id="bitacoraId" name="bitacoraId" disabled
-                                                                    class="form-select"
-                                                                    aria-label="Default select example">
+                                                                <select id="bitacoraId" name="bitacoraId"
+                                                                    class="form-select" aria-label="Default select example"
+                                                                    disabled>
                                                                     <option value="">Seleccione</option>
                                                                     @foreach ($bitacora as $item)
                                                                         <option value="{{ $item->id }}"
@@ -203,17 +128,17 @@
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
-                                                            </div>
+                                                            </div> --}}
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Marca:</label></br>
-                                                                <select id="marcaId" name="marcaId" class="form-select" disabled
-                                                                    aria-label="Default select example">
+                                                                <select id="marcaId" name="marcaId" class="form-select"
+                                                                    aria-label="Default select example" disabled>
                                                                     <option value="">Seleccione</option>
                                                                     @foreach ($marcas as $item)
                                                                         <option value="{{ $item->id }}"
                                                                             {{ $item->id == $maquinaria->marcaId ? ' selected' : '' }}>
-                                                                            {{ $item->nombre }}
+                                                                            {{ $objValida->ucwords_accent($item->nombre) }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
@@ -236,14 +161,14 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Categoría:</label></br>
-                                                                <select id="categoriaId" name="categoriaId" disabled
+                                                                <select id="categoriaId" name="categoriaId"
                                                                     class="form-select"
-                                                                    aria-label="Default select example">
+                                                                    aria-label="Default select example" disabled>
                                                                     <option value="">Seleccione</option>
                                                                     @foreach ($categorias as $item)
                                                                         <option value="{{ $item->id }}"
                                                                             {{ $item->id == $maquinaria->categoriaId ? ' selected' : '' }}>
-                                                                            {{ $item->nombre }}
+                                                                            {{ $objValida->ucwords_accent($item->nombre) }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
@@ -251,9 +176,9 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Uso:</label></br>
-                                                                <select class="form-select" disabled
+                                                                <select class="form-select"
                                                                     aria-label="Default select example" id="uso"
-                                                                    name="uso">
+                                                                    name="uso" disabled>
                                                                     <option
                                                                         value="Mov. Tierras"{{ $maquinaria->uso == 'Mov. Tierras' ? ' selected' : '' }}>
                                                                         Mov. Tierras</option>
@@ -270,14 +195,14 @@
                                                                 <div class="row align-items-end">
                                                                     <div class="pl-2">
                                                                         <label class="labelTitulo">Tipo:</label></br>
-                                                                        <select id="tipoId" name="tipoId" disabled
+                                                                        <select id="tipoId" name="tipoId"
                                                                             class="form-select"
-                                                                            aria-label="Default select example">
+                                                                            aria-label="Default select example" disabled>
                                                                             <option value="">Seleccione</option>
-                                                                            @foreach ($categorias as $item)
+                                                                            @foreach ($tipos as $item)
                                                                                 <option value="{{ $item->id }}"
                                                                                     {{ $item->id == $maquinaria->tipoId ? ' selected' : '' }}>
-                                                                                    {{ $item->nombre }}
+                                                                                    {{ $objValida->ucwords_accent($item->nombre) }}
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
@@ -315,6 +240,23 @@
                                                                     placeholder="ej: MT-00" disabled>
                                                             </div>
 
+                                                            {{-- <div class=" col-12 col-sm-12 mb-3 ">
+                                                                <label class="labelTitulo">Asignado en la
+                                                                    Obra:</label></br>
+                                                                <select id="obraId" name="obraId" disabled
+                                                                    class="form-select"
+                                                                    aria-label="Default select example">
+                                                                    <option value="">Seleccione</option>
+                                                                    @foreach ($vctObras as $item)
+                                                                        <option value="{{ $item->id }}"
+                                                                            {{ $item->id == $maquinaria->obraId ? ' selected' : '' }}>
+                                                                            {{ $item->nombre . ' [ ' . $item->cliente . ' ] ' }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div> --}}
+
+
                                                             <div class=" col-12 col-sm-6  mb-3 ">
                                                                 <label class="labelTitulo">Motor:</label></br>
                                                                 <input type="text" class="inputCaja" id="motor"
@@ -337,7 +279,7 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 mb-3 ">
-                                                                <label class="labelTitulo">Capacidad En KW:</label></br>
+                                                                <label class="labelTitulo">Capacidad en Kg:</label></br>
                                                                 <input type="number" class="inputCaja" id="capacidad"
                                                                     placeholder="Capacidad" name="capacidad"
                                                                     value="{{ $maquinaria->capacidad }}" placeholder=""
@@ -383,13 +325,13 @@
                                                                 <label class="labelTitulo">Llanta Trasera:</label></br>
                                                                 <input type="number" class="inputCaja" id="llantaT"
                                                                     placeholder="Cantidad" name="llantaT"
-                                                                    value="{{ $maquinaria->llantaT }}" disabled>
+                                                                    value="{{ $maquinaria->llantaT }} " disabled>
                                                             </div>
 
                                                             <div class="col-12 col-sm-6 col-lg-4 mb-3">
                                                                 <label class="labelTitulo">Combustible*:</label></br>
-                                                                <select class="form-select" id="combustible" disabled
-                                                                    name="combustible">
+                                                                <select class="form-select" id="combustible"
+                                                                    name="combustible" disabled>
                                                                     <option value="">Seleccione</option>
                                                                     <option
                                                                         value="Diesel"{{ $maquinaria->combustible == 'Diesel' ? ' selected' : '' }}>
@@ -399,14 +341,6 @@
                                                                         Gasolina</option>
                                                                 </select>
                                                             </div>
-
-                                                            <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                                    <label class="labelTitulo">Combustible:</label></br>
-                                                                                    <input type="text" class="inputCaja" id="combustible"
-                                                                                        name="combustible"
-                                                                                        placeholder="Diesel / Gasolina / Especificar"
-                                                                                        value="{{ $maquinaria->combustible }}">
-                                                                                </div>-->
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Motor:</label></br>
@@ -437,18 +371,11 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Horómetro Inicial:</label></br>
-                                                                <input type="number" class="inputCaja" id="horometro"
-                                                                    name="horometro" placeholder="Numérico"
-                                                                    value="{{ $maquinaria->horometro }}" disabled>
-                                                            </div>
-
-                                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Uso Como
                                                                     Cisterna:</label></br>
-                                                                <select class="form-select" disabled
+                                                                <select class="form-select"
                                                                     aria-label="Default select example" id="cisterna"
-                                                                    name="cisterna">
+                                                                    name="cisterna" disabled>
                                                                     <option value="0"
                                                                         {{ $maquinaria->cisterna == 0 ? ' selected' : '' }}>
                                                                         No</option>
@@ -458,37 +385,39 @@
                                                                 </select>
                                                             </div>
 
-                                                            <div class=" col-12 col-sm-6 col-lg-4   mb-3 ">
+                                                            <div class="col-12 col-sm-6  mb-3">
                                                                 <div class="row align-items-end">
-                                                                    <label class="labelTitulo">Kilometraje / Millaje
-                                                                        Inicial:</label></br>
-                                                                    <div class="col-7 inputNumberKilometrajeEdit">
+                                                                    <label class="labelTitulo">Medicion de uso</label></br>
+                                                                    <div
+                                                                        class="col-6 col-md-6 col-lg-4 col-xl-7 inputNumberKilometraje">
 
                                                                         <input type="number" class="inputCaja"
                                                                             id="kilometraje" name="kilometraje"
                                                                             placeholder="Numérico"
-                                                                            value="{{ $maquinaria->kilometraje }}"
-                                                                            disabled>
+                                                                            value="{{ old('kilometraje') }}" disabled>
 
                                                                     </div>
-                                                                    <div class="col-5 inputKilometrajeEdit">
-                                                                        <select class="form-select" disabled
+                                                                    <div class="col-12 col-md-6 col-lg-4 inputKilometraje">
+                                                                        <select class="form-select"
                                                                             aria-label="Default select example"
-                                                                            name="kom">
-                                                                            <option
-                                                                                value="Km"{{ $maquinaria->kom == 'Km' ? ' selected' : '' }}>
+                                                                            name="kom" disabled>
+                                                                            <option value="Km"
+                                                                                {{ $maquinaria->kom == 'Km' ? ' selected' : '' }}>
                                                                                 Km</option>
-                                                                            <option
-                                                                                value="Ml"{{ $maquinaria->kom == 'Ml' ? ' selected' : '' }}>
+                                                                            <option value="Ml"
+                                                                                {{ $maquinaria->kom == 'MI' ? ' selected' : '' }}>
                                                                                 Ml</option>
+                                                                            <option value="Hr"
+                                                                                {{ $maquinaria->kom == 'Hr' ? ' selected' : '' }}>
+                                                                                Hr</option>
                                                                         </select>
-
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
 
                                                     </div>
+
                                                     <div class="d-flex p-3">
                                                         <div class="col-12" id="elementos">
                                                             <div class="d-flex">
@@ -497,7 +426,8 @@
                                                                 </div>
 
                                                                 <div class="col-6 divBorder pb-3 text-end">
-                                                                    <button type="button" class="btnVerde">
+                                                                    <button type="button" class="btnVerde"
+                                                                        onclick="crearItems()">
                                                                     </button>
                                                                 </div>
                                                             </div>
@@ -506,16 +436,16 @@
                                                                     <input type="hidden" name="idRefaccion[]"
                                                                         value="{{ $refaccion->id }}">
                                                                     <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
-                                                                        <label class="labelTitulo">Tipo De
+                                                                        <label class="labelTitulo">Tipo de
                                                                             Refacción:</label></br>
                                                                         <select id="tipoRefaccion"
-                                                                            name="tipoRefaccionId[]" disabled
-                                                                            class="form-select">
+                                                                            name="tipoRefaccionId[]" class="form-select"
+                                                                            disabled>
                                                                             <option value="">Seleccione</option>
                                                                             @foreach ($refaccionTipo as $item)
                                                                                 <option value="{{ $item->id }}"
                                                                                     {{ $refaccion->tipoRefaccionId == $item->id ? 'selected' : '' }}>
-                                                                                    {{ $item->nombre }}
+                                                                                    {{ $objValida->ucwords_accent($item->nombre) }}
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
@@ -524,12 +454,12 @@
                                                                     <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
                                                                         <label class="labelTitulo">Marca:</label></br>
                                                                         <select id="marcaRefaccion" name="marca[]"
-                                                                            disabled class="form-select">
+                                                                            class="form-select" disabled>
                                                                             <option value="">Seleccione</option>
                                                                             @foreach ($marcas as $item)
                                                                                 <option value="{{ $item->id }}"
                                                                                     {{ $refaccion->marcaId == $item->id ? 'selected' : '' }}>
-                                                                                    {{ $item->nombre }}
+                                                                                    {{ $objValida->ucwords_accent($item->nombre) }}
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
@@ -538,18 +468,15 @@
                                                                     <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
                                                                         <label class="labelTitulo">Número De
                                                                             Parte:</label></br>
-                                                                        <input type="text" class="inputCaja" disabled
+                                                                        <input type="text" class="inputCaja"
                                                                             id="numeroParte" placeholder="Especifique..."
                                                                             name="numeroParte[]"
-                                                                            value="{{ $refaccion->numeroParte }}">
+                                                                            value="{{ $refaccion->numeroParte }}"
+                                                                            disabled>
                                                                     </div>
 
                                                                     <div
                                                                         class="col-12 col-sm-4 col-lg-2 my-3 text-center pt-3">
-                                                                        <!--<i class="fas fa-clipboard-check"></i>-->
-                                                                        <!--<span class="material-icons" style="font-size:40px; color: gray">
-                                                                            content_paste_search
-                                                                        </span>-->
                                                                         @if ($refaccion->relacionInventarioId != null)
                                                                             <span class="material-icons"
                                                                                 style="font-size:40px; color: green">
@@ -571,10 +498,62 @@
 
                                                                 </div>
                                                             @empty
-                                                                Sin Refacciones
+                                                                <div class="row opcion divBorderItems" id="opc">
+
+                                                                    <input type="hidden" name="idRefaccion[]"
+                                                                        value="">
+                                                                    <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
+                                                                        <label class="labelTitulo">Tipo De
+                                                                            Refacción:</label></br>
+                                                                        <select id="tipoRefaccion"
+                                                                            name='tipoRefaccionId[]' class="form-select"
+                                                                            disabled>
+                                                                            <option value="">Seleccione</option>
+                                                                            @foreach ($refaccionTipo as $item)
+                                                                                <option value="{{ $item->id }}">
+                                                                                    {{ $objValida->ucwords_accent($item->nombre) }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+
+                                                                    <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
+                                                                        <label class="labelTitulo">Marca:</label></br>
+                                                                        <select id="marcaRefaccion" name='marca[]'
+                                                                            class="form-select" disabled>
+                                                                            <option value="">Seleccione</option>
+                                                                            @foreach ($marcas as $item)
+                                                                                <option value="{{ $item->id }}">
+                                                                                    {{ $objValida->ucwords_accent($item->nombre) }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+
+                                                                    <div class=" col-12 col-sm-6 col-lg-3 my-3 ">
+                                                                        <label class="labelTitulo">Número De
+                                                                            Parte:</label></br>
+                                                                        <input type="text" class="inputCaja"
+                                                                            name='numeroParte[]' id="numeroParte"
+                                                                            placeholder="Especifique..." value=""
+                                                                            disabled>
+                                                                    </div>
+                                                                    <div class="col-lg-2 my-3 text-center pt-3">
+                                                                        <span class="material-icons"
+                                                                            style="font-size:40px; color: gray">
+                                                                            content_paste_search
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="col-lg-1 my-3 text-end">
+                                                                        <button type="button" id="removeRow"
+                                                                            class="btnRojo"></button>
+                                                                    </div>
+
+                                                                </div>
                                                             @endforelse
                                                         </div>
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -864,11 +843,11 @@
                                                         <label class="labelTitulo">Estatus:</label></br>
 
                                                         <select class="form-select" aria-label="Default select example"
-                                                            disabled id="estatusId" name="estatusId">
+                                                            id="estatusId" name="estatusId">
                                                             @foreach ($vctEstatus as $item)
                                                                 <option value="{{ $item->id }}"
                                                                     {{ $item->id == $maquinaria->estatusId ? ' selected' : '' }}>
-                                                                    {{ $item->nombre }} </option>
+                                                                    {{ $objValida->ucwords_accent($item->nombre) }} </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -878,7 +857,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </form>
                         </div>
                     </div>
@@ -886,6 +864,17 @@
             </div>
         </div>
     </div>
+
+    <script type="application/javascript">
+        jQuery('input[type=file]').change(function(){
+         var filename = jQuery(this).val().split('\\').pop();
+         var idname = jQuery(this).attr('id');
+         console.log(jQuery(this));
+         console.log(filename);
+         console.log(idname);
+         jQuery('span.'+idname).next().find('span').html(filename);
+        });
+    </script>
 @endsection
 <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@accessible360/accessible-slick@1.0.1/slick/slick.min.js"></script>

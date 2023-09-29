@@ -1,6 +1,9 @@
 @extends('layouts.main', ['activePage' => 'obra', 'titlePage' => __('Vista de Obra')])
 @section('content')
     <div class="content">
+        <?php
+        $objValida = new Validaciones();
+        ?>
         @if ($errors->any())
             <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
             <div class="alert alert-danger">
@@ -18,7 +21,7 @@
                     <div class="card">
                         <div class="card-body contCart">
                             <div class="p-1 align-self-start bacTituloPrincipal">
-                                <h2 class="my-3 ms-3 texticonos ">Obra: {{ $obras->nombre }}</h2>
+                                <h2 class="my-3 ms-3 texticonos ">Obra: {{ $objValida->ucwords_accent($obras->nombre) }}</h2>
                             </div>
                             <form class="row">
 
@@ -33,7 +36,7 @@
                                 <div class="col-12 col-md-8 my-3">
                                     <div class="row">
                                         <div class=" col-12 col-sm-6 col-lg-4 my-3 order-1">
-                                            <h2 class="fs-5 textTitulo">Dirección De Obra:</h2></br>
+                                            <h2 class="fs-5 textTitulo">Dirección de Obra:</h2></br>
                                             <a href="https://maps.google.com/?q={{ $obras->calle }} {{ $obras->numero }} {{ $obras->colonia }} {{ $obras->cp }} {{ $obras->estado }}"
                                                 target="blank">
                                                 <p class="txtVistaObra">{{ $obras->calle }} {{ $obras->numero }},

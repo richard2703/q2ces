@@ -94,4 +94,22 @@ class Validaciones
             return false;
         }
     }
+
+    /**
+     * Convierte la primer letra de cada palabra a mayuscula
+     *
+     * @param string $string
+     * @return void
+     */
+   public function ucwords_accent($string)
+    {
+        if (mb_detect_encoding($string) != 'UTF-8') {
+            $string = mb_convert_case(utf8_encode($string), MB_CASE_TITLE, 'UTF-8');
+        } else {
+            $string = mb_convert_case($string, MB_CASE_TITLE, 'UTF-8');
+        }
+        return $string;
+    }
+
+
 }

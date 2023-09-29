@@ -1,6 +1,9 @@
-@extends('layouts.main', ['activePage' => 'obra', 'titlePage' => __('Alta de Obra')])
+@extends('layouts.main', ['activePage' => 'obra', 'titlePage' => __('Edición de Obra')])
 @section('content')
     <div class="content">
+        <?php
+        $objValida = new Validaciones();
+        ?>
         @if ($errors->any())
             <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
             <div class="alert alert-danger">
@@ -16,7 +19,7 @@
             <div class="justify-content-center">
                 <div class="card">
                     <div class="card-header bacTituloPrincipal">
-                        <h4 class="card-title">Alta De Obras</h4>
+                        <h4 class="card-title">Edición de Obra</h4>
                         {{-- <p class="card-category">Usuarios registrados</p> --}}
                     </div>
                     <div class="card-body">
@@ -73,18 +76,18 @@
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                        <label class="labelTitulo">Nombre De La Obra: <span>*</span></label></br>
+                                        <label class="labelTitulo">Nombre de la Obra: <span>*</span></label></br>
                                         <input type="text" class="inputCaja" id="nombre" name="nombre" required
                                             placeholder="Especifique..." value="{{ $obras->nombre }}">
                                     </div>
                                     <div class="col-12 col-sm-6  col-lg-4 my-3 ">
-                                        <label class="labelTitulo">Tipo: <span>*</span></label></br>
+                                        <label class="labelTitulo">Empresa: <span>*</span></label></br>
                                         <select class="form-select" aria-label="Default select example" id="tipo"
                                             required name="clienteId">
                                             @foreach ($Clientes as $Cliente)
                                                 <option value="{{ $Cliente->id }}"
                                                     {{ $obras->clienteId == $Cliente->id ? ' selected' : '' }}>
-                                                    {{ $Cliente->nombre }}
+                                                    {{ $objValida->ucwords_accent($Cliente->nombre) }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -167,7 +170,7 @@
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Código De Confirmación:</label></br>
+                                                    <label class="labelTitulo">Código de Confirmación:</label></br>
                                                     <input type="text" class="inputCaja" id="rfirma"
                                                         placeholder="Especifique..." name="rfirma[]" value="">
                                                 </div>
@@ -183,7 +186,7 @@
                                     <div class="row opcionB" id="opcB">
                                         <div class="col-12 my-5 ">
                                             <div class="">
-                                                <h2 class="tituloEncabezado ">Detalle De Obra</h2>
+                                                <h2 class="tituloEncabezado ">Detalle de Obra</h2>
                                             </div>
                                             <div class="col-12 divBorder pb-3" style="text-align: right;">
                                                 <button type="button" id="removeRow" class="btnRojo"></button>
@@ -197,28 +200,34 @@
                                                     value="{{ $maquinaria->id }}">
 
                                                 <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Equipo:</label></br>
+                                                    <label class="labelTitulo">Equipo: <span>*</span></label></br>
                                                     <select id="maquinariaId" name="maquinariaId[]" class="form-select"
                                                         aria-label="Default select example">
                                                         <option value="">Seleccione</option>
                                                         @foreach ($vctMaquinaria as $maquina)
                                                             <option value="{{ $maquina->id }}"
                                                                 {{ $maquina->id == $maquinaria->maquinariaId ? ' selected' : '' }}>
-                                                                {{ $maquina->identificador . ' ' . $maquina->nombre }}
+                                                                {{ strtouppr($maquina->identificador) . ' - ' . $objValida->ucwords_accent($maquina->nombre) }}
                                                             </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
 
                                                 <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Operador:</label></br>
+                                                    <label class="labelTitulo">Operador: <span>*</span></label></br>
                                                     <select id="personalId" name="personalId[]" class="form-select"
-                                                        aria-label="Default select example">
+                                                        required aria-label="Default select example">
                                                         <option value="">Seleccione</option>
-                                                        @foreach ($vctPersonal as $persona)
+                                                        {{-- @foreach ($vctPersonal as $persona)
                                                             <option value="{{ $persona->id }}"
                                                                 {{ $persona->id == $maquinaria->personalId ? ' selected' : '' }}>
-                                                                {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                                                {{ $persona->nombres . ' ' . $persona->apellidoP . ' [' . $persona->puesto . ' ]' }}
+                                                            </option>
+                                                        @endforeach --}}
+                                                        @foreach ($vctPersonal as $item)
+                                                            <option value="{{ $item->id }}"
+                                                                {{ $item->id == $maquinaria->personalId ? ' selected' : '' }}>
+                                                                {{ $objValida->ucwords_accent($item->personal . ' [' . $item->puesto . ']') }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -238,14 +247,14 @@
                                                 </div>
 
                                                 <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Fecha De Inicio:</label></br>
+                                                    <label class="labelTitulo">Fecha de Inicio:</label></br>
                                                     <input type="date" class="inputCaja" id="inicio"
                                                         name="inicio[]"
                                                         value="{{ \Carbon\Carbon::parse($maquinaria->inicio)->format('Y-m-d') }}">
                                                 </div>
 
                                                 <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Fecha De Término:</label></br>
+                                                    <label class="labelTitulo">Fecha de Término:</label></br>
                                                     <input type="date" class="inputCaja" id="fin"
                                                         name="fin[]"
                                                         value="{{ \Carbon\Carbon::parse($maquinaria->fin)->format('Y-m-d') }}">
@@ -259,7 +268,7 @@
                                     <div class="row opcionB" id="opcB">
                                         <div class="col-12 my-5 ">
                                             <div class="">
-                                                <h2 class="tituloEncabezado ">Detalle De Obra</h2>
+                                                <h2 class="tituloEncabezado ">Detalle de Obra</h2>
                                             </div>
                                             <div class="col-12 divBorder pb-3" style="text-align: right;">
                                                 <button type="button" id="removeRow" class="btnRojo"></button>
@@ -272,26 +281,26 @@
                                                 <input type="hidden" name="idObraMaqPer[]" value="">
 
                                                 <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Equipo:</label></br>
+                                                    <label class="labelTitulo">Equipo: <span>*</span></label></br>
                                                     <select id="maquinariaId" name="maquinariaId[]" class="form-select"
-                                                        aria-label="Default select example">
+                                                        required aria-label="Default select example">
                                                         <option value="">Seleccione</option>
                                                         @foreach ($vctMaquinaria as $maquina)
                                                             <option value="{{ $maquina->id }}">
-                                                                {{ $maquina->identificador . ' ' . $maquina->nombre }}
+                                                                {{ strtoupper($maquina->identificador) . ' - ' . $objValida->ucwords_accent($maquina->nombre) }}
                                                             </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
 
                                                 <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Operador:</label></br>
+                                                    <label class="labelTitulo">Operador: <span>*</span></label></br>
                                                     <select id="personalId" name="personalId[]" class="form-select"
-                                                        aria-label="Default select example">
+                                                        required aria-label="Default select example">
                                                         <option value="">Seleccione</option>
-                                                        @foreach ($vctPersonal as $persona)
-                                                            <option value="{{ $persona->id }}">
-                                                                {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                                        @foreach ($vctPersonal as $item)
+                                                            <option value="{{ $item->id }}">
+                                                                {{ $objValida->ucwords_accent($item->personal . ' [' . $item->puesto . ']') }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -309,13 +318,13 @@
                                                 </div>
 
                                                 <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Fecha De Inicio:</label></br>
+                                                    <label class="labelTitulo">Fecha de Inicio:</label></br>
                                                     <input type="date" class="inputCaja" id="inicio"
                                                         name="inicio[]" value="">
                                                 </div>
 
                                                 <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Fecha De Término:</label></br>
+                                                    <label class="labelTitulo">Fecha de Término:</label></br>
                                                     <input type="date" class="inputCaja" id="fin"
                                                         name="fin[]" value="">
                                                 </div>

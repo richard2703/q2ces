@@ -6,6 +6,7 @@ use App\Models\asignacionEquipo;
 use App\Models\asignacionUniforme;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use stdClass;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
@@ -19,6 +20,8 @@ use App\Models\nomina;
 use App\Models\equipo;
 use App\Models\User;
 use App\Models\userdocs;
+use App\Models\obras;
+use App\Models\maquinaria;
 use App\Models\fiscal;
 use App\Models\userEstatus;
 use App\Models\puesto;
@@ -28,8 +31,9 @@ use App\Models\inventario;
 use App\Models\inventarioMovimientos;
 use App\Models\tipoUniforme;
 use App\Models\marca;
+use App\Models\obraMaqPer;
+use App\Models\obraMaqPerHistorico;
 use Carbon\Carbon;
-
 
 class personalController extends Controller
 {
@@ -52,7 +56,7 @@ class personalController extends Controller
             ->join('userEstatus', 'userEstatus.id', '=', 'personal.estatusId')
             ->leftJoin('puesto', 'puesto.id', '=', 'nomina.puestoId')
             ->orderBy('created_at', 'desc')->paginate(15);
-        // dd($personal);
+        // dd( $personal );
         return view('personal.indexPersonal', compact('personal'));
     }
 
@@ -66,7 +70,10 @@ class personalController extends Controller
     {
         abort_if(Gate::denies('personal_create'), 403);
 
-        $vctPersonal = personal::all();
+        $vctPersonal = personal::select('personal.*', 'puesto.nombre as puesto')
+            ->join('nomina', 'nomina.personalId', 'personal.id')
+            ->join('puesto', 'puesto.id', 'nomina.puestoId')
+            ->orderBy('nombres', 'asc')->get();
         $vctPuestos = puesto::orderBy('nombre', 'asc')->get();
         $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->get();
         $docs = docs::where('tipoId', '1')->orderBy('nombre', 'asc')->get();
@@ -269,7 +276,7 @@ class personalController extends Controller
             //** guardamos el id de usuario para el registro de personal */
             $personal['userId'] = $newuser->id;
         }
-        // dd($request);
+        // dd( $request );
 
         $personal = personal::create($personal);
 
@@ -438,10 +445,32 @@ class personalController extends Controller
         // dd( $personal );
         $contacto = contactos::where('personalId', $personal->id)->first();
         $beneficiario = beneficiario::where('personalId', $personal->id)->first();
-        $nomina = nomina::where('personalId', $personal->id)->first();
+        $nomina = nomina::select('nomina.*', 'puesto.puestoNivelId')
+            ->join('puesto', 'puesto.id', 'nomina.puestoId')
+            ->where('personalId', $personal->id)->first();
         $equipo = equipo::where('personalId', $personal->id)->first();
         // $docs = userdocs::where( 'personalId', $personal->id )->first();
-        $docs = userdocs::rightJoin('docs', 'userdocs.tipoId', 'docs.id')
+        // $docs = userdocs::rightJoin('docs', 'userdocs.tipoId', 'docs.id')
+        //     ->select(
+        //         'docs.id',
+        //         'docs.nombre',
+        //         'userdocs.id as usuarioId',
+        //         'userdocs.fechaVencimiento',
+        //         'userdocs.estatus',
+        //         'userdocs.comentarios',
+        //         'userdocs.ruta',
+        //         'userdocs.requerido',
+        //         'userdocs.id as idDoc'
+        //     )
+        //     // ->where('personalId', $personal->id)
+        //     ->where('docs.tipoId', '1')
+        //     ->groupBy('docs.id')
+        //     ->get();
+
+        $docs = docs::leftJoin('userdocs', function ($join) use ($personal) {
+            $join->on('docs.id', '=', 'userdocs.tipoId')
+                ->where('userdocs.personalId', '=', $personal->id);
+        })
             ->select(
                 'docs.id',
                 'docs.nombre',
@@ -452,18 +481,19 @@ class personalController extends Controller
                 'userdocs.ruta',
                 'userdocs.requerido',
                 'userdocs.id as idDoc'
-            )
-            // ->where('personalId', $personal->id)
-            ->where('docs.tipoId', '1')
-            ->groupBy('docs.id')
+            )->where('docs.tipoId', '1')
             ->get();
+
 
         // dd($docs);
         $fiscal = fiscal::where('personalId', $personal->id)->first();
         $vctPuestos = puesto::orderBy('nombre', 'asc')->get();
         $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->get();
         $vctEstatus = userEstatus::all();
-        $vctPersonal = personal::all();
+        $vctPersonal = personal::select('personal.*', 'puesto.nombre as puesto')
+            ->join('nomina', 'nomina.personalId', 'personal.id')
+            ->join('puesto', 'puesto.id', 'nomina.puestoId')
+            ->orderBy('nombres', 'asc')->get();
         // $documentos = docs::where( 'tipoId', '1' )->orderBy( 'nombre', 'asc' )->get();
 
         $nomina->decSalarioDiario = ($nomina->diario);
@@ -480,9 +510,48 @@ class personalController extends Controller
         $nomina->decAguinaldo = round($nomina->decSalarioDiario * 15, 2);
         $nomina->decTotal = round($nomina->decSalarioMensual + $nomina->decEstado + $nomina->decImss + $nomina->decImssRiesgo +
             $nomina->decAfore + $nomina->decInfonavit + $nomina->decVacaciones + $nomina->decPrimaVacacional + $nomina->decAguinaldo + $nomina->isr, 2);
+        //*** listado de maquinaria que puede asignarse */
+        $vctMaquinaria = maquinaria::select(
+            'maquinaria.*',
+            'maquinaria.nombre as maquina',
+            'obras.nombre as obra',
+            'obras.id as obraId',
+            'personal.id as operadorId',
+            'obraMaqPer.combustible as cargaCombustible',
+            'obraMaqPer.inicio as fechaInicial',
+            'obraMaqPer.fin as fechaFinal',
+            'obraMaqPer.id as recordId',
+            DB::raw("CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as operador")
+        )
+            ->leftjoin('obraMaqPer', 'obraMaqPer.maquinariaId', 'maquinaria.id')
+            ->leftjoin('personal', 'personal.id', 'obraMaqPer.personalId')
+            ->leftjoin('obras', 'obras.id', 'obraMaqPer.obraId')
+            ->whereNull('compania')->paginate(15);
+        //*** listado de obras */
+        $vctObras = obras::select('obras.*', 'clientes.nombre as cliente')
+            ->join('clientes', 'clientes.id', 'obras.clienteId')
+            ->where('obras.id', '<>', 2)->get();
+        //*** asignaciones */
+        $vctAsignacion = obraMaqPer::select(
+            'obraMaqPer.*',
+            'obraMaqPer.id as recordId',
+            'obras.nombre as obra',
+            'maquinaria.nombre as maquina'
+        )
+            ->leftjoin('obras', 'obras.id', 'obraMaqPer.obraId')
+            ->leftjoin('maquinaria', 'maquinaria.id', 'obraMaqPer.maquinariaId')
+            ->where('personalId', $personal->id)->first();
 
-        // dd( $docs );
-        return view('personal.detalleDePersonal', compact('personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal', 'vctPersonal', 'vctEstatus', 'vctPuestos', 'vctNiveles'));
+        if (!$vctAsignacion) {
+            //*** si no existe asignacion */
+            $vctAsignacion = new stdClass;
+            $vctAsignacion->recordId = 0;
+            $vctAsignacion->obraId = 0;
+            $vctAsignacion->maquinariaId = 0;
+            $vctAsignacion->maquina = '';
+        }
+        // dd( $vctAsignacion );
+        return view('personal.detalleDePersonal', compact('personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal', 'vctPersonal', 'vctEstatus', 'vctPuestos', 'vctNiveles', 'vctMaquinaria', 'vctObras', 'vctAsignacion'));
     }
 
     /**
@@ -497,6 +566,8 @@ class personalController extends Controller
         $equipos = tipoEquipo::orderBy('nombre', 'asc')->get();
         $marcas = marca::orderBy('nombre', 'asc')->get();
         $asignados = asignacionEquipo::where('personalId', $personal->id)->get();
+
+        //*** Todas excepto la de MTQ control */
         // dd( $asignados );
         return view('personal.asignarEquipoPersonal', compact('personal', 'equipos', 'asignados', 'marcas'));
     }
@@ -593,7 +664,8 @@ class personalController extends Controller
                 $nuevaLista->push($asiEquipo->id);
 
                 $objMovimiento = new inventarioMovimientos();
-                $objMovimiento->movimiento = 2; //*** resta al inventario  */
+                $objMovimiento->movimiento = 2;
+                //*** resta al inventario  */
                 $objMovimiento->inventarioId = $request['inventarioId'][$i];
                 $objMovimiento->cantidad = $request['cantidad'][$i];
                 $objMovimiento->precioUnitario = 0;
@@ -616,6 +688,7 @@ class personalController extends Controller
     public function update(Request $request, personal $personal)
     {
         abort_if(Gate::denies('personal_edit'), 403);
+        // dd('update');
         $request->validate([
             'nombres' => 'required|max:150',
             'apellidoP' => 'required|max:150',
@@ -862,7 +935,11 @@ class personalController extends Controller
         // dd( $request->archivo );
         //*** hay archivos */
         if ($request->archivo) {
-            for ($i = 0; $i < count($request->archivo); $i++) {
+            for (
+                $i = 0;
+                $i < count($request->archivo);
+                $i++
+            ) {
                 $documento = null;
                 if ($request->archivo[$i]['idDoc'] == null) {
                     $documento = new userdocs();
@@ -893,16 +970,18 @@ class personalController extends Controller
                         if (isset($request->archivo[$i]['fecha'])) {
                             $documento['fechaVencimiento'] = $request->archivo[$i]['fecha'];
                             $fechaActual = Carbon::now();
-                            // Obtén la fecha que deseas evaluar (por ejemplo, desde una base de datos)
+                            // Obtén la fecha que deseas evaluar ( por ejemplo, desde una base de datos )
                             $fechaProximaAVencer = Carbon::parse($request->archivo[$i]['fecha']);
                             // Calcula la diferencia en meses entre las dos fechas
                             $mesesRestantes = $fechaActual->diffInMonths($fechaProximaAVencer, false);
                             if ($mesesRestantes <= 1) {
-                                $documento['estatus'] = '1'; //Si es 1 Esta proximo a vencer
+                                $documento['estatus'] = '1';
+                                //Si es 1 Esta proximo a vencer
                             } else {
-                                $documento['estatus'] = '2'; //Si es 2 Esta Bien
+                                $documento['estatus'] = '2';
+                                //Si es 2 Esta Bien
                             }
-                            // dd('entro');
+                            // dd( 'entro' );
                         }
                     } else {
                         $documento['vencimiento'] = 0;
@@ -996,21 +1075,21 @@ class personalController extends Controller
         }
     }
 
-    // public function download($id, $doc)
+    // public function download( $id, $doc )
     // {
-    //     $book = userdocs::where('id', $id)->firstOrFail();
+    //     $book = userdocs::where( 'id', $id )->firstOrFail();
 
-    //     if (empty($book) === false) {
+    //     if ( empty( $book ) === false ) {
 
     //         /*** directorio contenedor de su información */
-    //         $pathPesonal = str_pad($book->personalId, 4, '0', STR_PAD_LEFT);
-    //         $pathToFile = storage_path('app/public/personal/' . $pathPesonal . '/' . $book->$doc);
+    //         $pathPesonal = str_pad( $book->personalId, 4, '0', STR_PAD_LEFT );
+    //         $pathToFile = storage_path( 'app/public/personal/' . $pathPesonal . '/' . $book->$doc );
     //         // dd( $pathToFile );
-    //         if (file_exists($pathToFile) === true &&  is_file($pathToFile) === true) {
+    //         if ( file_exists( $pathToFile ) === true &&  is_file( $pathToFile ) === true ) {
     //             // return response()->download( $pathToFile );
-    //             return response()->file($pathToFile);
+    //             return response()->file( $pathToFile );
     //         } else {
-    //             return redirect('404');
+    //             return redirect( '404' );
     //         }
     //     }
     // }
@@ -1086,7 +1165,27 @@ class personalController extends Controller
         $nomina = nomina::where('personalId', $personal->id)->first();
         $equipo = equipo::where('personalId', $personal->id)->first();
         // $docs = userdocs::where( 'personalId', $personal->id )->first();
-        $docs = userdocs::rightJoin('docs', 'userdocs.tipoId', 'docs.id')
+        // $docs = userdocs::rightJoin('docs', 'userdocs.tipoId', 'docs.id')
+        //     ->select(
+        //         'docs.id',
+        //         'docs.nombre',
+        //         'userdocs.id as usuarioId',
+        //         'userdocs.fechaVencimiento',
+        //         'userdocs.estatus',
+        //         'userdocs.comentarios',
+        //         'userdocs.ruta',
+        //         'userdocs.requerido',
+        //         'userdocs.id as idDoc'
+        //     )
+        //     ->where('personalId', $personal->id)
+        //     ->where('docs.tipoId', '1')
+        //     ->groupBy('docs.id')
+        //     ->get();
+
+        $docs = docs::leftJoin('userdocs', function ($join) use ($personal) {
+            $join->on('docs.id', '=', 'userdocs.tipoId')
+                ->where('userdocs.personalId', '=', $personal->id);
+        })
             ->select(
                 'docs.id',
                 'docs.nombre',
@@ -1097,13 +1196,10 @@ class personalController extends Controller
                 'userdocs.ruta',
                 'userdocs.requerido',
                 'userdocs.id as idDoc'
-            )
-            ->where('personalId', $personal->id)
-            ->where('docs.tipoId', '1')
-            ->groupBy('docs.id')
+            )->where('docs.tipoId', '1')
             ->get();
 
-        // dd($docs);
+        // dd( $docs );
         $fiscal = fiscal::where('personalId', $personal->id)->first();
         $vctPuestos = puesto::orderBy('nombre', 'asc')->get();
         $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->get();
@@ -1126,7 +1222,190 @@ class personalController extends Controller
         $nomina->decTotal = round($nomina->decSalarioMensual + $nomina->decEstado + $nomina->decImss + $nomina->decImssRiesgo +
             $nomina->decAfore + $nomina->decInfonavit + $nomina->decVacaciones + $nomina->decPrimaVacacional + $nomina->decAguinaldo + $nomina->isr, 2);
 
-        // dd( $docs );        
+        // dd( $docs );
+
         return view('personal.showDePersonal', compact('personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal', 'vctPersonal', 'vctEstatus', 'vctPuestos', 'vctNiveles'));
+    }
+
+    /**
+     * Ejecuta el cambio de asignación del personal a una maquina que ya esta asignada
+     *
+     * @param Request $request
+     * @return void
+     */
+
+    public function asignaciones(Request $request)
+    {
+
+        $data = $request->all();
+        // dd( $request, $data );
+        $vctDebug = array();
+        $objHistorico = new obraMaqPerHistorico();
+
+        //*** preguntamos si es un registro existente */
+        if ($data['recordId'] !== null &&  $data['recordId'] > 0) {
+            $vctDebug[] = ('El registro existe: ' . $data['recordId']);
+            //*** obtenemos el registro */
+            $objRecord = obraMaqPer::where('id', $data['recordId'])->first();
+
+            if ($objRecord) {
+
+                //*** actualizamos los valores  */
+                // $objRecord->combustible = $data[ 'combustible' ];
+                // $objRecord->inicio = $data[ 'inicio' ];
+                // $objRecord->fin = $data[ 'fin' ];
+                // $objRecord->save();
+
+                //*** TRABAJO CON EL EQUIPO */
+                if ($data['NmaquinariaId'] == null || $data['NmaquinariaId'] == '') {
+                    //*** se elimina la referencia del equipo en este registro */
+                    if ($objRecord) {
+                        $objRecord->personalId = null;
+                        $objRecord->save();
+                        $objHistorico->registraHistorico($objRecord);
+                        $vctDebug[] = ('Se Borra la referencia del operador: ' . $data['personalId'] . ' en el registro ' . $data['recordId']);
+                    } else {
+                        $vctDebug[] = ('No se puede Borrar referencia (No existe registro): ' . $data['recordId']);
+                    }
+                } else if ($data['NmaquinariaId'] != 0) {
+
+                    /*** se cambiara el el operador asignado */
+                    if ($objRecord->maquinariaId == $data['NmaquinariaId']) {
+                        $vctDebug[] = ('Es el mismo equipo al que se trata de asignar, no hay cambio');
+                    } else {
+                        $vctDebug[] = ('Son dos equipos diferentes');
+
+                        $objEnObra = obraMaqPer::where('maquinariaId', $data['NmaquinariaId'])->first();
+                        $blnMaquinariaEnObra = false;
+
+                        if ($objEnObra) {
+                            $vctDebug[] = ('El equipo esta asignado en el registro: ' . $objEnObra->id);
+
+                            if ($objEnObra->personalId != $objRecord->personalId) {
+                                //*** la persona no esta en el registro */
+                                $objRecord->personalId = null;
+                                $objRecord->save();
+                                $objHistorico->registraHistorico($objRecord);
+                                $vctDebug[] = ('Se libera el operador del registro: '  . $objRecord->id);
+
+                                $objEnObra->personalId = $data['personalId'];
+                                $objHistorico->registraHistorico($objEnObra);
+                                $objEnObra->save();
+
+                                $blnMaquinariaEnObra = true;
+                                $vctDebug[] = ('Se asigna el operador al registro: '  . $objEnObra->id);
+                                $vctDebug[] = ('Se actualizó el registro: ' . $objEnObra->id);
+                                $vctDebug[] = $objEnObra;
+                            } else {
+                                $vctDebug[] = ('El operador ya esta en el registro del equipo: '  . $objEnObra->id);
+                            }
+                        } else {
+                            $vctDebug[] = ('El equipo No esta asignado a otro registro');
+                        }
+
+                        // if ( $blnMaquinariaEnObra == false ) {
+
+                        //     $objRecord->personalId = $data[ 'personalId' ];
+                        //     $objRecord->save();
+                        //     $vctDebug[] = ( 'Se asigna el operador: ' . $data[ 'personalId' ] . ' al registro '. $objRecord->id );
+                        // }
+                    }
+                } else {
+                    $vctDebug[] = ('Sin cambios');
+                }
+                //*** FIN TRABAJO CON EL EQUIPO */
+
+            } else {
+                'El registro No existe en la BD: ' . $data['recordId'];
+            }
+        } else {
+            $vctDebug[] = ('El registro No existe: ' . $data['recordId']);
+
+            //*** buscamos si el operador tiene un registro en otro lado  */
+            $objOtro = obraMaqPer::where('personalId', $data['personalId'])->first();
+            if ($objOtro) {
+                $vctDebug[] = ('El operador esta asignado en el registro: ' . $objOtro->id);
+                $objOtro->personalId = null;
+                $objOtro->save();
+                $objHistorico->registraHistorico($objOtro);
+                $vctDebug[] = ('Se libera el operador del registro: '  . $objOtro->id);
+            } else {
+                $vctDebug[] = ('El operador No esta asignado a otro registro');
+            }
+
+            //*** buscamos si el equipo tiene un registro en otro lado */
+            $blnMaquinariaEnObra = false;
+            $objEnObra = obraMaqPer::where('maquinariaId', $data['NmaquinariaId'])->first();
+
+            if ($objEnObra) {
+                $vctDebug[] = ('El equipo esta asignado en el registro: ' . $objEnObra->id);
+
+                if ($objEnObra->personalId != $data['personalId']) {
+                    //*** la persona no esta en el registro */
+                    $objEnObra->personalId = $data['personalId'];
+                    $objEnObra->save();
+                    $objHistorico->registraHistorico($objEnObra);
+
+                    $blnMaquinariaEnObra = true;
+                    $vctDebug[] = ('Se asigna el operador al registro: '  . $objEnObra->id);
+                    $vctDebug[] = ('Se actualizó el registro: ' . $objEnObra->id);
+                    $vctDebug[] = $objEnObra;
+                } else {
+                    $vctDebug[] = ('El operador ya esta en el registro del equipo: '  . $objEnObra->id);
+                }
+            } else {
+                $vctDebug[] = ('El equipo No esta asignado a otro registro');
+            }
+
+            if ($blnMaquinariaEnObra == false) {
+
+                $objRecord = new obraMaqPer();
+                $objRecord->obraId = 1;
+                //*** centro de control de q2ces */
+                $objRecord->maquinariaId = $data['NmaquinariaId'];
+                $objRecord->personalId = $data['personalId'];
+                $objRecord->combustible = 0;
+                $objRecord->inicio = null;
+                $objRecord->fin = null;
+                $objRecord->save();
+                $objHistorico->registraHistorico($objRecord);
+
+                $vctDebug[] = ('Se creo el registro: ' . $objRecord->id);
+                $vctDebug[] = $objRecord;
+            }
+        }
+
+        // dd( $vctDebug, $data );
+
+        return redirect()->back();
+        // return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
+    }
+
+
+    public function cuenta()
+    {
+        $user = User::where('id', auth()->user()->id)->first();
+        return view('personal.pass', compact('user'));
+    }
+
+    public function cuentaUpdate(Request $request, User $id)
+    {
+        // dd('pass');
+        $Validator = $request->validate([
+            'password' => 'required|min:4',
+            'Rpassword' => 'required|same:password'
+        ], [
+            'password.required' => 'La contraseña es Obligatorio',
+            'Rpassword.required' => 'La confirmacion de contraseña es Obligatorio',
+            'Rpassword.same' => 'Las Contraseñas no coinciden',
+        ]);
+        $password = $request->input('password');
+        if ($password)
+            $id->password = bcrypt($password);
+
+        $id->save();
+        // $id->update($data);
+        $user = User::where('id', auth()->user()->id)->first();
+        return view('personal.pass', compact('user'));
     }
 }

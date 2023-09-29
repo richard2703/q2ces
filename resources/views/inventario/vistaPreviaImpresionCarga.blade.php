@@ -15,6 +15,7 @@
 
                             <div class="col-6 text-right">
 
+                                @if ($carga->tipoCisternaId == null)
                                 <a href="{{ route('inventario.dashCombustible') }}">
                                     <button class="btn regresar">
                                         <span class="material-icons">
@@ -22,7 +23,19 @@
                                         </span>
                                         Regresar
                                     </button>
+                                </a>    
+                                @else
+                                    
+                                <a href="{{ route('combustibleTote.index') }}">
+                                    <button class="btn regresar">
+                                        <span class="material-icons">
+                                            reply
+                                        </span>
+                                        Regresar
+                                    </button>
                                 </a>
+                                @endif
+                                
                             </div>
 
                             <div class="col-6 pb-3 text-end">
@@ -33,33 +46,34 @@
                         </div>
                     </div>
                     <div id="print-content" class="content-print">
-                        <img src="{{ asset('/img/login/002-sin-slogan.png') }}" alt="" width="160px;" class="mb-2" style="margin-left: -15px;">
+                        <img src="{{ asset('/img/login/002-sin-slogan.png') }}" alt="" width="200px;" class="mb-2" style="margin-left: -15px;">
                         
                         <div class="text-start">
                             <img src="{{ asset('/img/login/Header1CargaGrande.svg') }}" alt="" class="mb-2">
                             <br>
+                            <h1 class="text-center" style="font-weight: 1000;">Q2S/COMB-{{ sprintf("%03d", $carga->id) }}</h1><br>
+                            <h5 class="text-center" style="font-weight: 1000; ">FECHA DE IMPRESIÓN:</h5>
                             <div class="text-center" id="fecha-hora"></div>
                             <p class="text-center" id="hora"></p>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">Q2S/COMB-</span>{{ sprintf("%03d", $carga->descargaDetalleId) }}</div>
                             
-                            
-                            {{--  <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">SOLICITO: -- </span> {{$solicitante['nombreSolicitante']}}</div>  --}}
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">LITROS: -- </span>{{ $carga->litros }} L</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">COSTO: -- </span>${{ $carga->precio }}</div>
-                            <!--<div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">HORA DE DESPACHO: -- </span>{{ $carga->horas }}</div>-->
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">TOTAL: -- </span>$125.00</div>
+                            {{--  <div class="text-center"><h5 style="font-weight: 1000; ">SOLICITO: ...</h5> {{$solicitante['nombreSolicitante']}}</div>  --}}
+                            <div class="text-center"><h5 style="font-weight: 1000;   ">LITROS:  </h5>{{ number_format($carga->litros, 2) }}                                LTS</div>
+                            <div class="text-center"><h5 style="font-weight: 1000;   ">COSTO COMBUSTIBLE:</h5>${{ number_format($carga->precio, 2) }}                            </div>
+                            <!--<div class="text-center"><h5 style="font-weight: 1000;   ">HORA DE DESPACHO:  ...</h5>{{ $carga->horas }}</div>-->
+                            <h5 class="text-center" style="font-weight: 1000; ">TOTAL:  ${{ number_format($carga->precio * $carga->litros, 2) }}</h5>
                             <br>
                             <img src="{{ asset('/img/login/Header2GenericoGrande.svg') }}" alt="" class="mb-2">
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">OPERADOR: -- </span> {{ $carga->operador_nombre }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">EQUIPO Y/O MAQUINARIA: -- </span> {{ $carga->maquinaria_nombre }}</div>
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">HORA DE CARGA: -- </span>{{ \Carbon\Carbon::parse($carga->horaLlegadaCarga)->format('h:i A') }}</div>
-                            {{--  <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">HORA SALIDA: -- </span>11:00 pm</div>  --}}
-                            {{--  <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">HORA LLEGADA: -- </span>{{ \Carbon\Carbon::parse($solicitante['horaLlegada'])->format('h:i A') }}</div>  --}}
-                            {{--  <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">HORARIO: -- </span>8:00 am - 7:30 pm</div>  --}}
-                            {{--  <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">TOTAL HORAS EXTRAS: -- </span>1.30 hrs</div>  --}}
-                            <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">KILOMETRAJE DE CARGA: -- </span>{{$carga->maquinaria_kilometraje}} / {{$carga->maquinaria_kom}}</div>
-                            {{--  <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">ODOMETRO LLEGADA: -- </span>125345.5</div>  --}}
-                            <p class="text-center"><span style="font-weight: 1000; font-size: 16px important; margin-top: 10px;">OBSERVACIONES: -- </span>{{ $carga->comentario }}</p>
+                            <div class="text-center"><h5 style="font-weight: 1000;   ">OPERADOR:</h5>{{ $carga->operador_nombre }}</div>
+                            <div class="text-center"><h5 style="font-weight: 1000;   ">EQUIPO Y/O MAQUINARIA:</h5> {{ $carga->maquinaria_nombre }}</div><br><br>
+                            <div class="text-center"><h5 style="font-weight: 1000;   ">FECHA DE CARGA:</h5>{{ \Carbon\Carbon::parse($carga->updated_at)->format( 'Y-m-d' ) }}</div>
+                            <div class="text-center"><h5 style="font-weight: 1000;   ">HORA DE CARGA:</h5>{{ substr($carga->horaLlegadaCarga, 0, 5) }}</div>
+                            {{--  <div class="text-center"><h5 style="font-weight: 1000; ">HORA SALIDA:</h5>11:00 pm</div>  --}}
+                            {{--  <div class="text-center"><h5 style="font-weight: 1000; ">HORA LLEGADA:</h5>{{ \Carbon\Carbon::parse($solicitante['horaLlegada'])->format('h:i A') }}</div>  --}}
+                            {{--  <div class="text-center"><h5 style="font-weight: 1000; ">HORARIO:</h5>8:00 am - 7:30 pm</div>  --}}
+                            {{--  <div class="text-center"><h5 style="font-weight: 1000; ">TOTAL HORAS EXTRAS:</h5>1.30 hrs</div>  --}}
+                            <div class="text-center"><h5 style="font-weight: 1000;   ">KILOMETRAJE DE CARGA:</h5>{{$carga->kilometraje}} / {{$carga->maquinaria_kom}}</div>
+                            {{--  <div class="text-center"><h5 style="font-weight: 1000; ">ODOMETRO LLEGADA:</h5>125345.5</div>  --}}
+                            <div class="text-center"><h5 style="font-weight: 1000;  margin-top: 10px;  ">OBSERVACIONES:</h5>{{ $carga->comentario }}</div>
                             <p class="pt-5" style="margin-top: 20px; text-align: center;">
                                 ______________________________________<br>
                                 Nombre y Firma de Recibido<br>
@@ -67,8 +81,8 @@
                             </p>
                             <br>
                             {{--  <img src="{{ asset('/img/login/Header3DescargaGrande.svg') }}" alt="" class="mb-2">  --}}
-                            {{--  <div><span style="font-weight: 1000; font-size: 16px important;">COSTO DE COMBUSTIBLE: -- </span>100.00</div>  --}}
-                            {{--  <div class="text-center"><span style="font-weight: 1000; font-size: 16px important;">COSTO DE TRABAJO: -- </span>{{$solicitante['costoTrabajo']}}</div>  --}}
+                            {{--  <div><h5 style="font-weight: 1000; ">COSTO DE COMBUSTIBLE: ...</h5>100.00</div>  --}}
+                            {{--  <div class="text-center"><h5 style="font-weight: 1000; ">COSTO DE TRABAJO: ...</h5>{{$solicitante['costoTrabajo']}}</div>  --}}
                             <div class="copyright text-center" style="font-size: 10px;">
                                 &copy; Copyright <strong><span>Q2Ces</span></strong>. All Rights Reserved
                             </div>
@@ -131,7 +145,7 @@
         text-align: left !important;
         font-family: Arial, sans-serif;
         padding-top: 15px;
-        font-size: 12px;
+        {{--  font-size: 12px;  --}}
         font-weight: bold;
         align-items: center;
         margin: 0;

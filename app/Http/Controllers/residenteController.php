@@ -32,6 +32,7 @@ class residenteController extends Controller
         )
             ->leftjoin('obras', 'obras.id', '=', 'residente.obraId')
             ->leftjoin('maquinaria', 'maquinaria.id', '=', 'residente.autoId')
+            ->where('residente.clienteId','=' , 2)
             ->orderBy('nombre', 'asc')->paginate(10);
 
         $vctObras = obras::where('clienteId', 1)->where('estatus', 'Activa')
@@ -43,7 +44,7 @@ class residenteController extends Controller
             ->leftJoin('residente', 'residente.autoId', 'maquinaria.id')
             ->select('maquinaria.*')
             ->get();
-        // dd($maquinaria);
+       // dd($records);
         return view('MTQ.residentes', compact('records', 'vctObras', 'maquinaria'));
     }
 
@@ -79,6 +80,8 @@ class residenteController extends Controller
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
         ]);
         $record = $request->all();
+
+        $record['clienteId']=2; //*** el cliente 2 de MTQ */
 
         residente::create($record);
         Session::flash('message', 1);

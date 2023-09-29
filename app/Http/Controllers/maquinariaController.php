@@ -6,6 +6,8 @@ use App\Models\maquinaria;
 use App\Models\maqdocs;
 use App\Models\maqimagen;
 use App\Models\bitacoras;
+use App\Models\obras;
+use App\Models\personal;
 use App\Models\marca;
 use App\Models\docs;
 use App\Models\maquinariaEstatus;
@@ -13,14 +15,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use PhpParser\Node\Stmt\Switch_;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\DB;
 use LengthException;
 use App\Models\refacciones;
 use App\Models\refaccionTipo;
 use App\Models\inventario;
 use App\Models\maquinariaCategoria;
 use App\Models\maquinariaTipo;
+use App\Models\obraMaqPer;
+use App\Models\obraMaqPerHistorico;
 use Carbon\Carbon;
-
 
 class maquinariaController extends Controller
 {
@@ -29,14 +33,63 @@ class maquinariaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     public function index()
     {
         abort_if(Gate::denies('maquinaria_index'), 403);
+        // $mtq = 'mtq';
+        $maquinaria = maquinaria::select(
+            'maquinaria.*',
+            'maquinaria.nombre as maquina',
+            'marca.nombre as marca',
+            'maquinariaCategoria.nombre as categoria',
+            'obras.nombre as obra',
+            'obras.id as obraId',
+            'personal.id as operadorId',
+            'obraMaqPer.combustible as cargaCombustible',
+            'obraMaqPer.inicio as fechaInicial',
+            'obraMaqPer.fin as fechaFinal',
+            'obraMaqPer.id as recordId',
+            'marca.nombre as marca',
+            DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as operador" )
+        )
+        ->leftjoin( 'obraMaqPer', 'obraMaqPer.maquinariaId', 'maquinaria.id' )
+        ->leftjoin( 'personal', 'personal.id', 'obraMaqPer.personalId' )
+        ->leftjoin( 'obras', 'obras.id', 'obraMaqPer.obraId' )
+        ->leftjoin('marca','marca.id','maquinaria.marcaId')
+        ->leftjoin('maquinariaCategoria','maquinariaCategoria.id','maquinaria.categoriaId')
+        ->whereNull( 'compania' )
+        ->orderBy('maquinaria.identificador','asc')
+        ->paginate( 15 );
 
-        $maquinaria = maquinaria::whereNull('compania')->paginate(15);
-        // dd( 'test' );
-        return view('maquinaria.indexMaquinaria', compact('maquinaria'));
+        $vctObras = obras::select('obras.*', 'clientes.nombre as cliente')
+            ->join('clientes', 'clientes.id', 'obras.clienteId')
+            ->where('obras.id', '<>', 2)
+            ->orderBy('obras.nombre','asc')->get();
+        //*** Todas excepto la de MTQ control */
+
+        $vctOperarios = personal::select(
+            'personal.id',
+            DB::raw("CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal"),
+            'obras.nombre AS obra',
+            'maquinaria.identificador',
+            'maquinaria.nombre AS auto',
+            'nomina.puestoId',
+            'puesto.nombre AS puesto',
+            'puesto.puestoNivelId',
+            'puestoNIvel.nombre AS puestoNivel'
+        )
+            ->join('nomina', 'nomina.personalId', 'personal.id')
+            ->join('puesto', 'puesto.id', 'nomina.puestoId')
+            ->join('puestoNivel', 'puestoNivel.id', 'puesto.puestoNivelId')
+            ->leftjoin('obraMaqPer', 'obraMaqPer.personalId', 'personal.id')
+            ->leftjoin('maquinaria', 'maquinaria.id', '=', 'obraMaqPer.maquinariaId')
+            ->leftjoin('obras', 'obras.id', '=', 'obraMaqPer.obraId')
+            ->where('puesto.puestoNivelId', '=', 5) //*** solo operarios de maquinaria */
+            ->orderBy('personal.nombres', 'asc')->get();
+
+        // dd( $vctMaquinaria );
+
+        return view('maquinaria.indexMaquinaria', compact('maquinaria', 'vctOperarios', 'vctObras'));
     }
 
     /**
@@ -49,13 +102,17 @@ class maquinariaController extends Controller
     {
         abort_if(Gate::denies('maquinaria_create'), 403);
         $doc = docs::where('tipoId', '2')->orderBy('nombre', 'asc')->get();
-        $bitacora = bitacoras::all();
-        $marcas = marca::all();
-        $categorias = maquinariaCategoria::all();
-        $tipos = maquinariaTipo::all();
-        $refaccionTipo = refaccionTipo::all();
 
-        return view('maquinaria.altaDeMaquinaria', compact('bitacora', 'doc', 'marcas', 'categorias', 'tipos', 'refaccionTipo'));
+        $obras = obras::select('obras.*', 'clientes.nombre as cliente')
+            ->join('clientes', 'clientes.id', 'obras.clienteId')->where('obras.clienteId', '=', 1)->get();
+        //*** asignamos al centro de control de Q2ces */
+
+        $marcas = marca::select('marca.*')->orderBy('marca.nombre', 'asc')->get();
+        $categorias = maquinariaCategoria::select('maquinariaCategoria.*')->orderBy('maquinariaCategoria.nombre', 'asc')->get();
+        $tipos = maquinariaTipo::select('maquinariaTipo.*')->orderBy('maquinariaTipo.nombre', 'asc')->get();;
+        $refaccionTipo = refaccionTipo::select('refaccionTipo.*')->orderBy('refaccionTipo.nombre', 'asc')->get();
+
+        return view('maquinaria.altaDeMaquinaria', compact('obras', 'doc', 'marcas', 'categorias', 'tipos', 'refaccionTipo'));
     }
 
     /**
@@ -67,7 +124,7 @@ class maquinariaController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->archivo);
+        // dd( $request->archivo );
         abort_if(Gate::denies('maquinaria_create'), 403);
         $request->validate([
             'nombre' => 'required|max:250',
@@ -143,15 +200,14 @@ class maquinariaController extends Controller
         $maquinaria = $request->all();
 
         //** Generamos el identificador de la maquinaria */
-        // $maquinaria['identificador'] = $this->generaCodigoIdentificacion($maquinaria['categoriaId']);
+        // $maquinaria[ 'identificador' ] = $this->generaCodigoIdentificacion( $maquinaria[ 'categoriaId' ] );
         $maquinaria['estatusId'] = 1;
         // dd( $maquinaria[ 'identificador' ] );
 
         /*** directorio contenedor de su información */
         $pathMaquinaria = str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT);
 
-
-        // $maquinaria['marcaId'] = strtoupper($maquinaria['marcaId']);
+        // $maquinaria[ 'marcaId' ] = strtoupper( $maquinaria[ 'marcaId' ] );
         $maquinaria['marcaId'] = $request->marca[0];
         $maquinaria['placas'] = strtoupper($maquinaria['placas']);
         $maquinaria['nummotor'] = strtoupper($maquinaria['nummotor']);
@@ -161,11 +217,17 @@ class maquinariaController extends Controller
         $maquinaria = maquinaria::create($maquinaria);
         $cont = 0;
 
-        for ($i = 0; $i < count($request->archivo); $i++) {
+        for (
+            $i = 0;
+            $i < count($request->archivo);
+            $i++
+        ) {
             $documento = new maqdocs();
             $documento->maquinariaId = $maquinaria->id;
-            $documento->tipoId = $request->archivo[$i]['tipoDocs']; // Obtenemos el tipo de documento
-            $tipoDocumentoNombre = $request->archivo[$i]['tipoDocsNombre']; // Obtenemos el tipo de documento
+            $documento->tipoId = $request->archivo[$i]['tipoDocs'];
+            // Obtenemos el tipo de documento
+            $tipoDocumentoNombre = $request->archivo[$i]['tipoDocsNombre'];
+            // Obtenemos el tipo de documento
 
             if ($request->archivo[$i]['omitido'] == 0) {
                 // OBLIGATORIO
@@ -176,31 +238,41 @@ class maquinariaController extends Controller
                     $file = $request->file('archivo')[$i]['docs'];
                     $documento->ruta = time() . '_' . $file->getClientOriginalName();
                     $file->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos/' .  $tipoDocumentoNombre, $documento->ruta);
-                    $documento->estatus = '2'; //Si es 2 Esta  OK
+                    $documento->estatus = '2';
+                    //Si es 2 Esta  OK
                 }
 
                 if ((isset($request->archivo[$i]['check']) && $request->archivo[$i]['check'] == 'on')) {
-                    $documento->vencimiento = 1; //Si es 1 SI vence el documento
-                    $documento->estatus = '0'; //Si esta en 0 Esta MAL
+                    $documento->vencimiento = 1;
+                    //Si es 1 SI vence el documento
+                    $documento->estatus = '0';
+                    //Si esta en 0 Esta MAL
                     if (isset($request->archivo[$i]['fecha'])) {
                         $documento->fechaVencimiento = $request->archivo[$i]['fecha'];
                         // Evaluar fecha de vencimiento
-                        $documento->estatus = '1'; //Si es 1 Esta proximo a vencer
+                        $documento->estatus = '1';
+                        //Si es 1 Esta proximo a vencer
                     }
                 } else {
-                    $documento->vencimiento = 0; //Si es 0 no vence el documento
+                    $documento->vencimiento = 0;
+                    //Si es 0 no vence el documento
                 }
             } else {
                 // NO REQUERIDO
                 $documento->requerido = '0';
-                $documento->estatus = '2'; //Si es 2 Esta  OK
+                $documento->estatus = '2';
+                //Si es 2 Esta  OK
             }
             $documento->comentarios = $request->archivo[$i]['comentario'];
 
             $documento->save();
         }
 
-        for ($i = 0; $i < count($request['tipoRefaccionId']); $i++) {
+        for (
+            $i = 0;
+            $i < count($request['tipoRefaccionId']);
+            $i++
+        ) {
             //* se guarda solo si se selecciono una máquina */
             if ($request['marca'][$i] && $request['tipoRefaccionId'][$i]) {
                 if ($request['tipoRefaccionId'][$i] != '' || $request['tipoRefaccionId'][$i] != null) {
@@ -214,31 +286,33 @@ class maquinariaController extends Controller
                     $objResidente->maquinariaId = $maquinaria->id;
                     $objResidente->marcaId  = $request['marca'][$i];
                     $objResidente->tipoRefaccionId = $request['tipoRefaccionId'][$i];
-                    // $objResidente->puesto = $request['rpuesto'][$i];
+                    // $objResidente->puesto = $request[ 'rpuesto' ][ $i ];
                     $objResidente->numeroParte = $request['numeroParte'][$i];
                     $objResidente->save();
                 }
                 $objResidente->maquinariaId = $maquinaria->id;
                 $objResidente->marcaId  = $request['marca'][$i];
                 $objResidente->tipoRefaccionId = $request['tipoRefaccionId'][$i];
-                // $objResidente->puesto = $request['rpuesto'][$i];
+                // $objResidente->puesto = $request[ 'rpuesto' ][ $i ];
                 $objResidente->numeroParte = $request['numeroParte'][$i];
                 $objResidente->save();
             }
         }
-        // for ($i = 0; $i < count($request->refaccion); $i++) {
-        //     $ref = new refacciones();
-        //     $ref->maquinariaId = $maquinaria->id;
-        //
-        //     $ref->tipoRefaccionId = $request->refaccion[$i]['tipoRefaccionId'];
-        //     $ref->marcaId = $request->refaccion[$i]['marcaId'];
-        //     //$activo = $request->refaccion[$i]['activo'];
-        //     //$ref->comentario = $request->refaccion[$i]['comentario'];
-        //     //$ref->nombre = 'prueba';
-        //     $ref->numeroParte = $request->refaccion[$i]['numeroParte'];
-
-        //     $ref->save();
-        // }
+        /*
+        // for ( $i = 0; $i < count( $request->refaccion );
+        $i++ ) {
+            //     $ref = new refacciones();
+            //     $ref->maquinariaId = $maquinaria->id;
+            //
+            //     $ref->tipoRefaccionId = $request->refaccion[ $i ][ 'tipoRefaccionId' ];
+            //     $ref->marcaId = $request->refaccion[ $i ][ 'marcaId' ];
+            //     //$activo = $request->refaccion[ $i ][ 'activo' ];
+            //     //$ref->comentario = $request->refaccion[ $i ][ 'comentario' ];
+            //     //$ref->nombre = 'prueba';
+            //     $ref->numeroParte = $request->refaccion[ $i ][ 'numeroParte' ];
+            //     $ref->save();
+            // }
+            */
 
         Session::flash('message', 1);
         return redirect()->route('maquinaria.index');
@@ -255,12 +329,30 @@ class maquinariaController extends Controller
     {
         abort_if(Gate::denies('maquinaria_show'), 403);
         // dd($maquinaria);
-        $bitacora = bitacoras::all();
-        //$maquinaria = maquinaria::all();
-        // $docs = maqdocs::where('maquinariaId', $maquinaria->id)->get();
-        // $doc = docs::where('tipoId', '2')->orderBy('nombre', 'asc')->get();
+        // $bitacora = bitacoras::all();
+        // $doc = maqdocs::leftJoin('docs', "maqdocs.tipoId", "docs.id")
+        //     ->select(
+        //         'docs.id',
+        //         'docs.nombre',
+        //         'maqdocs.fechaVencimiento',
+        //         'maqdocs.estatus',
+        //         'maqdocs.comentarios',
+        //         'maqdocs.ruta',
+        //         'maqdocs.requerido',
+        //         'maqdocs.id as idDoc'
+        //     )
+        //     // ->where('maquinariaId', $maquinaria->id)
+        //     ->where('docs.tipoId', '2')
+        //     // ->where('maqdocs.maquinariaId', $maquinaria->id)
+        //     ->groupBy('docs.id')
+        //     ->orderBy('nombre', 'asc')
+        //     ->get();
+        // dd($doc);
 
-        $doc = maqdocs::rightJoin('docs', "maqdocs.tipoId", "docs.id")
+        $doc = docs::leftJoin('maqdocs', function ($join) use ($maquinaria) {
+            $join->on('docs.id', '=', 'maqdocs.tipoId')
+                ->where('maqdocs.maquinariaId', '=', $maquinaria->id);
+        })
             ->select(
                 'docs.id',
                 'docs.nombre',
@@ -270,21 +362,19 @@ class maquinariaController extends Controller
                 'maqdocs.ruta',
                 'maqdocs.requerido',
                 'maqdocs.id as idDoc'
-            )
-            // ->where('maquinariaId', $maquinaria->id)
-            ->where('docs.tipoId', '2')
-            ->groupBy('docs.id')
-            ->orderBy('nombre', 'asc')
+            )->where('docs.tipoId', '2')
             ->get();
+
+
         $fotos = maqimagen::where('maquinariaId', $maquinaria->id)->get();
         $vctEstatus = maquinariaEstatus::all();
-        $marcas = marca::all();
-        $refacciones = refacciones::where('maquinariaId', $maquinaria->id)->get();
-        $refaccionTipo = refaccionTipo::all();
-        $categorias = maquinariaCategoria::all();
-        $tipos = maquinariaTipo::all();
-        // dd( $docs );
-        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'doc', 'fotos', 'bitacora', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos'));
+        $marcas = marca::select('marca.*')->orderBy('marca.nombre','asc')->get();
+        $refacciones = refacciones::select('refacciones.*')->where('maquinariaId', $maquinaria->id)->orderBy('refacciones.nombre','asc')->get();
+        $refaccionTipo = refaccionTipo::select('refaccionTipo.*')->orderBy('refaccionTipo.nombre','asc')->get();
+        $categorias = maquinariaCategoria::select('maquinariaCategoria.*')->orderBy('maquinariaCategoria.nombre','asc')->get();
+        $tipos = maquinariaTipo::select('maquinariaTipo.*')->orderBy('maquinariaTipo.nombre','asc')->get();
+        // dd($maqDoc);
+        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'doc', 'fotos',  'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos'));
     }
 
     /**
@@ -296,11 +386,31 @@ class maquinariaController extends Controller
     public function vista(maquinaria $maquinaria)
     {
         abort_if(Gate::denies('maquinaria_show'), 403);
-        // dd('vista');
-        $bitacora = bitacoras::all();
-        //$maquinaria = maquinaria::all();
-        // $docs = maqdocs::where('maquinariaId', $maquinaria->id)->get();
-        $doc = maqdocs::join('docs', "maqdocs.tipoId", "docs.id")
+        // dd($maquinaria);
+        // $bitacora = bitacoras::all();
+        // $doc = maqdocs::leftJoin('docs', "maqdocs.tipoId", "docs.id")
+        //     ->select(
+        //         'docs.id',
+        //         'docs.nombre',
+        //         'maqdocs.fechaVencimiento',
+        //         'maqdocs.estatus',
+        //         'maqdocs.comentarios',
+        //         'maqdocs.ruta',
+        //         'maqdocs.requerido',
+        //         'maqdocs.id as idDoc'
+        //     )
+        //     // ->where('maquinariaId', $maquinaria->id)
+        //     ->where('docs.tipoId', '2')
+        //     // ->where('maqdocs.maquinariaId', $maquinaria->id)
+        //     ->groupBy('docs.id')
+        //     ->orderBy('nombre', 'asc')
+        //     ->get();
+        // dd($doc);
+
+        $doc = docs::leftJoin('maqdocs', function ($join) use ($maquinaria) {
+            $join->on('docs.id', '=', 'maqdocs.tipoId')
+                ->where('maqdocs.maquinariaId', '=', $maquinaria->id);
+        })
             ->select(
                 'docs.id',
                 'docs.nombre',
@@ -310,12 +420,10 @@ class maquinariaController extends Controller
                 'maqdocs.ruta',
                 'maqdocs.requerido',
                 'maqdocs.id as idDoc'
-            )
-            ->where('maquinariaId', $maquinaria->id)
-            ->where('maqdocs.requerido', '1')
-            ->orderBy('nombre', 'asc')
+            )->where('docs.tipoId', '2')
             ->get();
-        // dd($doc);
+
+
         $fotos = maqimagen::where('maquinariaId', $maquinaria->id)->get();
         $vctEstatus = maquinariaEstatus::all();
         $marcas = marca::all();
@@ -323,8 +431,8 @@ class maquinariaController extends Controller
         $refaccionTipo = refaccionTipo::all();
         $categorias = maquinariaCategoria::all();
         $tipos = maquinariaTipo::all();
-        // dd( $docs );
-        return view('maquinaria.verMaquinaria', compact('maquinaria', 'doc', 'fotos', 'bitacora', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos'));
+        // dd($maqDoc);
+        return view('maquinaria.verMaquinaria', compact('maquinaria', 'doc', 'fotos', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos'));
     }
 
     /**
@@ -336,10 +444,10 @@ class maquinariaController extends Controller
 
     public function edit(maquinaria $maquinaria)
     {
-        $bitacora = bitacoras::all();
+        // $bitacora = bitacoras::all();
         $doc = docs::where('tipoId', '2')->get();
         //$docs = maqdocs::where( 'maquinariaId', $maquinaria->id )->first();
-        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'bitacora', 'doc'));
+        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'doc'));
     }
 
     /**
@@ -427,39 +535,49 @@ class maquinariaController extends Controller
         ]);
 
         $data = $request->all();
-        // dd($data);
+        // dd( $data );
 
         $data['identificador'] = strtoupper($data['identificador']);
         $data['placas'] = strtoupper($data['placas']);
         $data['nummotor'] = strtoupper($data['nummotor']);
         $data['numserie'] = strtoupper($data['numserie']);
-        // $data['marcaId'] = $request->marca[0];
+        // $data[ 'marcaId' ] = $request->marca[ 0 ];
 
         /*** directorio contenedor de su información */
         $pathMaquinaria = str_pad($data['identificador'], 4, '0', STR_PAD_LEFT);
 
         $eliminarFotos = json_decode($request->arrayFotosPersistente);
-        // dd($data['bitacoraId']);
+        // dd( $data[ 'bitacoraId' ] );
         $maquinaria->update($data);
 
         if ($eliminarFotos != null) {
-            for ($i = 0; $i < count($eliminarFotos); $i++) {
-                // dd($eliminarFotos[$i]->id);
+            for (
+                $i = 0;
+                $i < count($eliminarFotos);
+                $i++
+            ) {
+                // dd( $eliminarFotos[ $i ]->id );
                 $test = maqimagen::where('id', $eliminarFotos[$i]->id)->delete();
-                // dd($test);
+                // dd( $test );
             }
         }
 
         if ($request->archivo) {
-            for ($i = 0; $i < count($request->archivo); $i++) {
+            for (
+                $i = 0;
+                $i < count($request->archivo);
+                $i++
+            ) {
                 $documento = null;
-                // dd($request->archivo[$i]['idDoc']);
+                // dd( $request->archivo[ $i ][ 'idDoc' ] );
                 if ($request->archivo[$i]['idDoc'] == null) {
                     $documento = new maqdocs();
                 }
                 $documento['maquinariaId'] = $maquinaria->id;
-                $documento['tipoId'] = $request->archivo[$i]['tipoDocs']; // Obtenemos el tipo de documento
-                $tipoDocumentoNombre = $request->archivo[$i]['tipoDocsNombre']; // Obtenemos el tipo de documento
+                $documento['tipoId'] = $request->archivo[$i]['tipoDocs'];
+                // Obtenemos el tipo de documento
+                $tipoDocumentoNombre = $request->archivo[$i]['tipoDocsNombre'];
+                // Obtenemos el tipo de documento
 
                 if ($request->archivo[$i]['omitido'] == 0) {
                     // OBLIGATORIO
@@ -469,36 +587,43 @@ class maquinariaController extends Controller
                         $file = $request->file('archivo')[$i]['docs'];
                         $documento['ruta'] = time() . '_' . $file->getClientOriginalName();
                         $file->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos/' .  $tipoDocumentoNombre, $documento['ruta']);
-                        $documento['estatus'] = '2'; //Si es 2 Esta  OK
+                        $documento['estatus'] = '2';
+                        //Si es 2 Esta  OK
                     }
 
                     if ((isset($request->archivo[$i]['check']) && $request->archivo[$i]['check'] == 'on')) {
-                        $documento['vencimiento'] = 1; //Si es 1 SI vence el documento
-                        $documento['estatus'] = '0'; //Si esta en 0 Esta MAL
-                        // dd('check', $request->archivo[$i]['fecha']);
+                        $documento['vencimiento'] = 1;
+                        //Si es 1 SI vence el documento
+                        $documento['estatus'] = '0';
+                        //Si esta en 0 Esta MAL
+                        // dd( 'check', $request->archivo[ $i ][ 'fecha' ] );
                         if (isset($request->archivo[$i]['fecha'])) {
                             $documento['fechaVencimiento'] = $request->archivo[$i]['fecha'];
                             // Evaluar fecha de vencimiento
                             $fechaActual = Carbon::now();
-                            // Obtén la fecha que deseas evaluar (por ejemplo, desde una base de datos)
+                            // Obtén la fecha que deseas evaluar ( por ejemplo, desde una base de datos )
                             $fechaProximaAVencer = Carbon::parse($request->archivo[$i]['fecha']);
                             // Calcula la diferencia en meses entre las dos fechas
                             $mesesRestantes = $fechaActual->diffInMonths($fechaProximaAVencer, false);
                             if ($mesesRestantes <= 1) {
-                                $documento['estatus'] = '1'; //Si es 1 Esta proximo a vencer
+                                $documento['estatus'] = '1';
+                                //Si es 1 Esta proximo a vencer
                             } else {
-                                $documento['estatus'] = '2'; //Si es 2 Esta Bien
+                                $documento['estatus'] = '2';
+                                //Si es 2 Esta Bien
                             }
-                            // dd('entro');
+                            // dd( 'entro' );
                         }
                     } else {
-                        $documento['vencimiento'] = 0; //Si es 0 no vence el documento
+                        $documento['vencimiento'] = 0;
+                        //Si es 0 no vence el documento
                         // $documento->estatus = '1';
                     }
                 } else {
                     // NO REQUERIDO
                     $documento['requerido'] = '0';
-                    $documento['estatus'] = '2'; //Si es 2 Esta  OK
+                    $documento['estatus'] = '2';
+                    //Si es 2 Esta  OK
                 }
 
                 $documento['comentarios'] = $request->archivo[$i]['comentario'];
@@ -506,12 +631,11 @@ class maquinariaController extends Controller
                     $documento->save();
                 } else {
                     $docu = maqdocs::where('id', $request->archivo[$i]['idDoc'])->first();
-                    // dd($request->archivo[$i]['idDoc']);
+                    // dd( $request->archivo[ $i ][ 'idDoc' ] );
                     $docu->update($documento);
                 }
             }
         }
-
 
         if ($request->hasFile('ruta')) {
             foreach ($request->file('ruta') as $ruta) {
@@ -523,7 +647,11 @@ class maquinariaController extends Controller
         }
         $nuevaLista = collect();
 
-        for ($i = 0; $i < count($request['idRefaccion']); $i++) {
+        for (
+            $i = 0;
+            $i < count($request['idRefaccion']);
+            $i++
+        ) {
             $relacion = inventario::where('numparte', $request['numeroParte'][$i])->first();
 
             if ($request['marca'][$i] && $request['tipoRefaccionId'][$i]) {
@@ -725,5 +853,156 @@ class maquinariaController extends Controller
         }
 
         return $strCodigo;
+    }
+    /**
+     * Asigna una maquinaria a personal
+     *
+     * @param Request $request
+     * @return void
+     */
+
+    public function asignacion(Request $request)
+    {
+
+        $data = $request->all();
+        // dd( $request, $data );
+        $vctDebug = array();
+        $objHistorico = new obraMaqPerHistorico();
+
+
+        //*** preguntamos si es un registro existente */
+        if ($data['recordId'] !== null &&  $data['recordId'] > 0) {
+            $vctDebug[] = ('El registro existe: ' . $data['recordId']);
+            //*** obtenemos el registro */
+            $objRecord = obraMaqPer::where('id', $data['recordId'])->first();
+
+            if ($objRecord) {
+
+                //*** actualizamos los valores  */
+                $objRecord->combustible = $data['combustible'];
+                $objRecord->inicio = $data['inicio'];
+                $objRecord->fin = $data['fin'];
+                $objRecord->save();
+                $objHistorico->registraHistorico($objRecord) ;
+
+                //*** TRABAJO CON EL OPERADOR */
+                if ($data['NpersonalId'] == null || $data['NpersonalId'] == '') {
+                    //*** se elimina la referencia del operador en este registro */
+                    if ($objRecord) {
+                        $objRecord->personalId = null;
+                        $objRecord->save();
+                        $objHistorico->registraHistorico($objRecord) ;
+                        $vctDebug[] = ('Se Borra la referencia del operador: ' . $data['personalId'] . ' en el registro ' . $data['recordId']);
+                    } else {
+                        $vctDebug[] = ('No se puede Borrar referencia (No existe registro): ' . $data['recordId']);
+                    }
+                } else if ($data['NpersonalId'] != 0) {
+
+                    /*** se cambiara el el operador asignado */
+                    if ($objRecord->personalId == $data['NpersonalId']) {
+                        $vctDebug[] = ('Es el mismo operador que se trata de asignar, no hay cambio');
+                    } else {
+                        $vctDebug[] = ('Son dos operadores diferentes');
+
+                        //*** buscamos si el operador tiene un registro en otro lado */
+                        $objOtro = obraMaqPer::where('personalId', $data['NpersonalId'])->first();
+
+                        if ($objOtro) {
+                            $vctDebug[] = ('Esta asignado en el registro: ' . $objOtro->id);
+                            $objOtro->personalId = null;
+                            $objOtro->save();
+                            $objHistorico->registraHistorico($objOtro) ;
+                            $vctDebug[] = ('Se libera el operador del registro: '  . $objOtro->id);
+                        } else {
+                            $vctDebug[] = ('No esta asignado a otro registro');
+                        }
+
+                        $objRecord->personalId = $data['NpersonalId'];
+                        $vctDebug[] = ('Se asigna el operador: ' . $data['NpersonalId'] . ' al registro ' . $objRecord->id);
+                        $objRecord->save();
+                        $objHistorico->registraHistorico($objRecord) ;
+                    }
+                } else {
+                    $vctDebug[] = ('Sin cambios');
+                }
+                //*** FIN TRABAJO CON EL OPERADOR */
+
+                //*** TRABAJO CON LA OBRA */
+                if ($data['NobraId'] == null || $data['NobraId'] == '') {
+                    //*** se elimina la referencia del operador en este registro */
+                    if ($objRecord) {
+                        // $objRecord->obraId = null;
+                        // $objRecord->save();
+                        $vctDebug[] = ('Se Borra la referencia de la obra: ' . $data['obraId'] . ' en el registro ' . $data['recordId']);
+                    } else {
+                        $vctDebug[] = ('No se puede Borrar referencia (No existe registro): ' . $data['recordId']);
+                    }
+                } else if ($data['NobraId'] != 0) {
+
+                    /*** se cambiara el el operador asignado */
+                    if ($objRecord->obraId == $data['NobraId']) {
+                        $vctDebug[] = ('Es la misma obra que se trata de asignar, no hay cambio');
+                    } else {
+                        $vctDebug[] = ('Son dos obras diferentes');
+
+                        //*** buscamos si la obra tiene un registro en otro lado */
+                        // $objOtro = obraMaqPer::where( 'obraId', $data[ 'NobraId' ] )->first();
+
+                        // if ( $objOtro ) {
+                        //     $vctDebug[] = ( 'Esta asignado en el registro: ' . $objOtro->id );
+                        //     // $objOtro->obraId = null;
+                        //     // $objOtro->save();
+                        //     $vctDebug[] = ( 'Se libera el operador del registro: '  . $objOtro->id );
+
+                        // } else {
+                        //     $vctDebug[] = ( 'No esta asignado a otro registro' );
+                        // }
+
+                        $objRecord->obraId = $data['NobraId'];
+                        $vctDebug[] = ('Se asigna la Obra: ' . $data['NobraId'] . ' al registro ' . $objRecord->id);
+                        $objRecord->save();
+                        $objHistorico->registraHistorico($objRecord) ;
+                    }
+                } else {
+                    $vctDebug[] = ('Sin cambios');
+                }
+                //*** FIN TRABAJO CON LA OBRA */
+
+            } else {
+                'El registro No existe en la BD: ' . $data['recordId'];
+            }
+        } else {
+            $vctDebug[] = ('El registro No existe: ' . $data['recordId']);
+
+            //*** buscamos si el operador tiene un registro en otro lado */
+            $objOtro = obraMaqPer::where('personalId', $data['NpersonalId'])->first();
+            if ($objOtro) {
+                $vctDebug[] = ('Esta asignado en el registro: ' . $objOtro->id);
+                $objOtro->personalId = null;
+                $objOtro->save();
+                $objHistorico->registraHistorico($objOtro) ;
+                $vctDebug[] = ('Se libera el operador del registro: '  . $objOtro->id);
+            } else {
+                $vctDebug[] = ('No esta asignado a otro registro');
+            }
+
+            $objRecord = new obraMaqPer();
+            $objRecord->obraId = $data['NobraId'];
+            $objRecord->maquinariaId = $data['autoId'];
+            $objRecord->personalId = $data['NpersonalId'];
+            $objRecord->combustible = $data['combustible'];
+            $objRecord->inicio = $data['inicio'];
+            $objRecord->fin = $data['fin'];
+            $objRecord->save();
+            $objHistorico->registraHistorico($objRecord) ;
+
+            $vctDebug[] = ('Se creo el registro: ' . $objRecord->id);
+            $vctDebug[] = $objRecord;
+
+        }
+
+        // dd( $vctDebug, $data );
+
+        return redirect()->route('maquinaria.index');
     }
 }

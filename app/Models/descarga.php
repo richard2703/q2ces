@@ -14,6 +14,6 @@ class descarga extends Model
 
     protected $fillable = [
         'horas', 'imgHoras', 'imgKm', 'km', 'litros', 'maquinariaId', 'operadorId', 'receptorId', 'servicioId', 'userId',
-        'grasa', 'hidraulico', 'Anticongelante', 'motor', 'otro', 'direccion'
+        'grasa', 'hidraulico', 'Anticongelante', 'motor', 'otro', 'direccion', 'tipoCisternaId', 'kilometrajeAnterior', 'odometro', 'kilometrajeNuevo', 'odometroNuevo', 'grasaUnitario', 'hidraulicoUnitario', 'anticongelanteUnitario', 'mototUnitario', 'direccionUnitario'
     ];
 }
