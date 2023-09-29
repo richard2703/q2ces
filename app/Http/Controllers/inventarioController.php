@@ -127,6 +127,8 @@ class inventarioController extends Controller
                 db::raw("CONCAT(m2.identificador,' ',m2.nombre) AS servicio"),
                 DB::raw("CONCAT(p2.nombres,' ',p2.apellidoP) AS receptor"),
                 'descarga.km',
+                'descarga.odometroNuevo',
+                'descarga.fechaLlegada',
                 'descarga.kilometrajeNuevo',
                 'descarga.horas',
                 'descarga.imgHoras',
@@ -582,7 +584,7 @@ class inventarioController extends Controller
         // );
         $descarga['horas'] = $request['horas'];
         $descarga = $request->all();
-        // dd($request);
+        // dd($descarga);
 
         if ($request->hasFile("imgKm")) {
             $descarga['imgKm'] = time() . '_' . 'imgKm.' . $request->file('imgKm')->getClientOriginalExtension();
@@ -634,6 +636,7 @@ class inventarioController extends Controller
             $cisternaKango->update();
             // dd($descarga);
             $descarga['userId'] = auth()->user()->id;
+            $descarga['fechaLlegada'] = Carbon::now();
             descarga::create($descarga);
             $cisterna->cisternaNivel = ($cisterna->cisternaNivel - $request['litros']);
             $cisterna->update();
@@ -739,6 +742,7 @@ class inventarioController extends Controller
         $descarga->operadorId = $request['descargaOperador'];
         $descarga->servicioId = $request['descargaServicio'];
         $descarga->receptorId = $request['descargaDespachador'];
+        $descarga->fechaLlegada = $request['fechaLlegada'];
 
         // $descarga->created_at = ($request['descargaFecha'] . " " . $request['descargaHora'] . ":" . $strSegundos);
 

@@ -66,11 +66,12 @@
                                                                     </div>
                                                                     <div style="width: 90%! important;">
                                                                         <label class="labelTitulo">Equipo:</label></br>
-                                                                        <select id="maquinariaId" name="maquinariaId"
+                                                                        <select id="maquinariaIdC" name="maquinariaId"
                                                                             class="form-select"
-                                                                            aria-label="Default select example">
+                                                                            aria-label="Default select example" required>
+                                                                            <option value="">Seleccione</option>
                                                                             @foreach ($cisternas as $maquina)
-                                                                                <option value="{{ $maquina->id }}">
+                                                                                <option value="{{ $maquina->id }}" data-km="{{ $maquina->horometro }}">
                                                                                     {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
                                                                                 </option>
                                                                             @endforeach
@@ -94,6 +95,18 @@
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/uso.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 90%! important;">
+                                                                        <label class="labelTitulo">Horometro:
+                                                                            <span>*</span></label></br>
+                                                                            <input id="kilometrajeCarga" type="number" name="kilometraje" class="inputCaja" value="" required>
                                                                     </div>
                                                                 </div>
 
@@ -133,18 +146,6 @@
                                                                         <label class="labelTitulo">Hora de Carga:
                                                                             <span>*</span></label></br>
                                                                             <input type="time" name="horaLlegadaCarga" id="horaActual" class="inputCaja" value="{{ date('H:i') }}" required>
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                                <div class=" col-12 col-md-6 d-flex mb-4">
-                                                                    <div class="me-2">
-                                                                        <img src="{{ asset('/img/inventario/uso.svg') }}"
-                                                                            alt="" style="width:40px;">
-                                                                    </div>
-                                                                    <div style="width: 90%! important;">
-                                                                        <label class="labelTitulo">Uso en Km/Mi/Hr:
-                                                                            <span>*</span></label></br>
-                                                                            <input type="number" name="kilometraje" class="inputCaja" value="" required>
                                                                     </div>
                                                                 </div>
 
@@ -199,8 +200,8 @@
                                                                     <i><img class="imgVistaCombustible img-fluid mb-2"
                                                                             src="{{ asset('/img/inventario/descarga.svg') }}"></i>
                                                                     <span class="mi-archivo2"> <input class="mb-4 ver "
-                                                                            type="file" name="imgHoras" id="mi-archivo2"
-                                                                            accept="image/*" multiple></span>
+                                                                            type="file" name="imgKm" id="mi-archivo2"
+                                                                            accept="image/"></span>
                                                                     <label for="mi-archivo2">
                                                                         <span class="">Tomar Foto</span>
                                                                     </label>
@@ -210,18 +211,16 @@
                                                         </div>
                                                         <div class="col-12 col-md-12 col-lg-9">
                                                             <div class="row ">
-                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                <div class="col-12 col-md-6 d-flex mb-4">
                                                                     <div class="me-2">
-                                                                        <img src="{{ asset('/img/inventario/equipo_1.svg') }}"
-                                                                            alt="" style="width:40px;">
+                                                                        <img src="{{ asset('/img/inventario/equipo_1.svg') }}" alt="" style="width:40px;">
                                                                     </div>
                                                                     <div style="width: 100%! important;">
                                                                         <label class="labelTitulo">Equipo:</label></br>
-                                                                        <select id="maquinariaId" name="maquinariaId"
-                                                                            class="form-select"
-                                                                            aria-label="Default select example">
+                                                                        <select id="maquinariaIdD" name="maquinariaId" class="form-select" aria-label="Default select example" required>
+                                                                            <option value="">Seleccione</option>
                                                                             @foreach ($cisternas as $maquina)
-                                                                                <option value="{{ $maquina->id }}">
+                                                                                <option value="{{ $maquina->id }}" data-odometro="{{ $maquina->horometro }}">
                                                                                     {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
                                                                                 </option>
                                                                             @endforeach
@@ -229,18 +228,16 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                <div class="col-12 col-md-6 d-flex mb-4">
                                                                     <div class="me-2">
-                                                                        <img src="{{ asset('/img/navs/eqiposMenu.svg') }}"
-                                                                            alt="" style="width:40px;">
+                                                                        <img src="{{ asset('/img/navs/eqiposMenu.svg') }}" alt="" style="width:40px;">
                                                                     </div>
                                                                     <div style="width: 100%! important;">
                                                                         <label class="labelTitulo">Maquinaria:</label></br>
-                                                                        <select id="servicioId" name="servicioId"
-                                                                            class="form-select"
-                                                                            aria-label="Default select example">
+                                                                        <select id="servicioId" name="servicioId" class="form-select" aria-label="Default select example" required>
+                                                                            <option value="">Seleccione</option>
                                                                             @foreach ($maquinaria as $maquina)
-                                                                                <option value="{{ $maquina->id }}">
+                                                                                <option value="{{ $maquina->id }}" data-km="{{ $maquina->kilometraje }}">
                                                                                     {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
                                                                                 </option>
                                                                             @endforeach
@@ -287,6 +284,28 @@
                                                                     </div>
                                                                 </div>
 
+                                                                <div class="col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/uso.svg') }}" alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 90%! important;">
+                                                                        <label class="labelTitulo">Horometro:</label>
+                                                                        <span>*</span>
+                                                                        </br>
+                                                                        <input type="number" name="horometro" class="inputCaja" value="" required>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/uso.svg') }}" alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Uso en Km/Mi/Hr:</label></br>
+                                                                        <input type="number" step="1" min="0" class="inputCaja" id="km" name="km" value="{{ old('km') }}">
+                                                                    </div>
+                                                                </div>
+
                                                                 <div class=" col-12 col-md-6 d-flex mb-4">
                                                                     <div class="me-2">
                                                                         <img src="{{ asset('/img/inventario/litros.svg') }}"
@@ -300,31 +319,7 @@
                                                                             name="litros" value="{{ old('litros') }}">
                                                                     </div>
                                                                 </div>
-                                                                <div class=" col-12 col-md-6 d-flex mb-4">
-                                                                    <div class="me-2">
-                                                                        <img src="{{ asset('/img/inventario/uso.svg') }}"
-                                                                            alt="" style="width:40px;">
-                                                                    </div>
-                                                                    <div style="width: 100%! important;">
-                                                                        <label class="labelTitulo">Uso en
-                                                                            Km/Mi/Hr:</label></br>
-                                                                        <input type="number" step="1" min="0"
-                                                                            class="inputCaja" id="km" name="km"
-                                                                            value="{{ old('km') }}">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-12 col-md-6 d-flex mb-4">
-                                                                    <div class="me-2">
-                                                                        <img src="{{ asset('/img/inventario/uso.svg') }}"
-                                                                            alt="" style="width:40px;">
-                                                                    </div>
-                                                                    <div style="width: 90%! important;">
-                                                                        <label class="labelTitulo">ODOMETRO:
-                                                                            <span>*</span></label></br>
-                                                                            <input type="number" name="horometro" class="inputCaja" value="" required>
-                                                                    </div>
-                                                                </div>
+                                                                
 
                                                                 <div class=" col-12 col-md-6 d-flex mb-4">
                                                                     <div class="me-2">
@@ -558,7 +553,7 @@
                                                                             <th class="fw-bolder">Equipos</th>
                                                                             <th class="fw-bolder">Despachador</th>
                                                                             <th class="fw-bolder">Litros</th>
-                                                                            <th class="fw-bolder">KM</th>
+                                                                            <th class="fw-bolder">Horometro</th>
                                                                             <th class="fw-bolder">Precio</th>
                                                                             <th class="fw-bolder">Fecha</th>
                                                                             <th class="fw-bolder">Hora Carga</th>
@@ -688,6 +683,7 @@
                                                                             <th class="fw-bolder">Maquinaria</th>
                                                                             <th class="fw-bolder">Operador</th>
                                                                             <th class="fw-bolder">Km</th>
+                                                                            <th class="fw-bolder">Horometro</th>
                                                                             <th class="fw-bolder">Hora Descarga</th>
                                                                             <th class="fw-bolder">Litros</th>
                                                                             <th class="fw-bolder">Fecha</th>
@@ -713,7 +709,9 @@
                                                                                     <td>{{ $descarga->operador }}</td>
                                                                                     <td>{{ $descarga->servicio }}</td>
                                                                                     <td>{{ $descarga->receptor }}</td>
-                                                                                    <td>{{ $descarga->km }}</td>
+                                                                                    <td>{{ $descarga->kilometrajeNuevo }}</td>
+                                                                                    <td>{{ $descarga->odometroNuevo }}</td>
+                                                                                    
                                                                                     {{--  <td>{{ $descarga->horas }}</td>  --}}
                                                                                     
                                                                                     <td>
@@ -723,7 +721,7 @@
                                                                                         {{ number_format($descarga->litros, 2, '.', ',') }}
                                                                                     </td>
                                                                                     <td>
-                                                                                        {{ \Carbon\Carbon::parse($descarga->fecha)->format('Y-m-d') }}
+                                                                                        {{ $descarga->fechaLlegada }}
                                                                                     </td>
                                                                                     @if ($descarga->ticket == 0)
                                                                                     <td class="td-actions d-flex justify-content-center">
@@ -768,8 +766,8 @@
                                                                                                 data-bs-target="#descargaCombustible"
                                                                                                 onclick="loadDescarga('{{ $descarga->descargaIdTote }}','{{ $descarga->maquinariaId }}','{{ $descarga->operadorId }}',
                                                                                         '{{ $descarga->servicioId }}','{{ $descarga->receptorId }}','{{ $descarga->litros }}',
-                                                                                        '{{ $descarga->kilometrajeNuevo }}','{{ $descarga->imgHoras ? $descarga->imgHoras : '0' }}'
-                                                                                        ,'{{ \Carbon\Carbon::parse($descarga->updated_at)->format('Y-m-d') }}','{{ substr($descarga->horas, 0, 5) }}')">
+                                                                                        '{{ $descarga->kilometrajeNuevo }}','{{ $descarga->imgKm ? $descarga->imgKm : '0' }}'
+                                                                                        ,'{{ $descarga->fechaLlegada }}','{{ substr($descarga->horas, 0, 5) }}')">
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg "
                                                                                                     width="28"
                                                                                                     height="28"
@@ -873,7 +871,7 @@
                             <div class="col-6" style="display:none">
                                 <div class="form-check mt-5 d-flex justify-content-center">
                                     <div class="form-check form-check-inline">
-                                        <input type="checkbox" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" id="checkbox_tipo_solicitud">
+                                        <input type="checkbox" name="tipo_solicitud" class="form-check-input is-invalid align-self-end mb-2" id="checkbox_tipo_solicitud" readonly>
                                         <label for="checkbox_reparacion">Ticket Administrativo</label>
                                     </div>
                                 </div>
@@ -981,7 +979,7 @@
 
     <div class="modal fade" id="cargaCombustible" tabindex="-1" aria-labelledby="cargaCombustibleLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
                     <h1 class="modal-title fs-5" id="cargaCombustibleLabel">Modificar Carga de Combustible</h1>
@@ -1128,7 +1126,7 @@
     
                             <div class="col-6 my-3">
                                 <label for="inputEmail4" class="labelTitulo">Fecha:</label>
-                                <input type="date" class="inputCaja" class="form-control" id="descargaFecha" name="descargaFecha"
+                                <input type="date" class="inputCaja" class="form-control" id="descargaFecha" name="fechaLlegada"
                                     value="">
                             </div>
                             {{-- <div class="col-4 my-3">
@@ -1471,9 +1469,9 @@
 
             const dteFecha = document.getElementById('descargaFecha').value = fecha;
 
-            const imagen2 = document.getElementById('descargaImgHoras');
-            if (imgHoras != 0) {
-                imagen2.src = '/storage/combustibles/' + imgHoras;
+            const imagen2 = document.getElementById('descargaImgKms');
+            if (imagenKms != 0) {
+                imagen2.src = "{{ asset('/storage/app/public/combustibles') }}/" + imagenKms;
             }
 
         }
@@ -1627,7 +1625,49 @@
 
         }
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Captura el evento de cambio en el select
+            $('#servicioId').on('change', function () {
+                // Obtiene el valor del atributo 'data-km' de la opción seleccionada
+                var selectedOption = $(this).find(':selected');
+                var kmValue = selectedOption.data('km');
+                
+                // Actualiza el valor del input 'km'
+                $('#km').val(kmValue);
+            });
+        });
+    </script>
 
+    <script>
+        $(document).ready(function () {
+            // Captura el evento de cambio en el select
+            $('#maquinariaIdD').on('change', function () {
+                // Obtiene el valor del atributo 'data-odometro' de la opción seleccionada
+                var selectedOption = $(this).find(':selected');
+                var odometroValue = selectedOption.data('odometro');
+                
+                // Actualiza el valor del input 'horometro'
+                $('input[name="horometro"]').val(odometroValue);
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Captura el evento de cambio en el select
+            $('#maquinariaIdC').on('change', function () {
+                // Obtiene el valor del atributo 'data-odometro' de la opción seleccionada
+                var selectedOption = $(this).find(':selected');
+                var kmValue = selectedOption.data('km');
+                
+                // Actualiza el valor del input 'horometro'
+                $('#kilometrajeCarga').val(kmValue);
+            });
+        });
+    </script>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const confirmImprimir = document.getElementById('confirmImprimir');

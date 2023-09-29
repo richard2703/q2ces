@@ -49,7 +49,7 @@
                         <img src="{{ asset('/img/login/002-sin-slogan.png') }}" alt="" width="200px;" class="mb-2" style="margin-left: -15px;">
                         
                         <div class="text-start">
-                            <img src="{{ asset('/img/login/Header1CargaGrande.svg') }}" alt="" class="mb-2">
+                            <img width="300px;" src="{{ asset('/img/login/Header1CargaGrande.svg') }}" alt="" class="mb-2">
                             <br>
                             <h1 class="text-center" style="font-weight: 1000;">Q2S/COMB-{{ sprintf("%03d", $carga->id) }}</h1><br>
                             <h5 class="text-center" style="font-weight: 1000; ">FECHA DE IMPRESIÓN:</h5>
@@ -62,7 +62,7 @@
                             <!--<div class="text-center"><h5 style="font-weight: 1000;   ">HORA DE DESPACHO:  ...</h5>{{ $carga->horas }}</div>-->
                             <h5 class="text-center" style="font-weight: 1000; ">TOTAL:  ${{ number_format($carga->precio * $carga->litros, 2) }}</h5>
                             <br>
-                            <img src="{{ asset('/img/login/Header2GenericoGrande.svg') }}" alt="" class="mb-2">
+                            <img width="300px;" src="{{ asset('/img/login/Header2GenericoGrande.svg') }}" alt="" class="mb-2">
                             <div class="text-center"><h5 style="font-weight: 1000;   ">OPERADOR:</h5>{{ $carga->operador_nombre }}</div>
                             <div class="text-center"><h5 style="font-weight: 1000;   ">EQUIPO Y/O MAQUINARIA:</h5> {{ $carga->maquinaria_nombre }}</div><br><br>
                             <div class="text-center"><h5 style="font-weight: 1000;   ">FECHA DE CARGA:</h5>{{ \Carbon\Carbon::parse($carga->updated_at)->format( 'Y-m-d' ) }}</div>
@@ -80,7 +80,7 @@
                                 {{--  <p class="text-center">:{{$solicitante['nombreSolicitante']}}</p>  --}}
                             </p>
                             <br>
-                            {{--  <img src="{{ asset('/img/login/Header3DescargaGrande.svg') }}" alt="" class="mb-2">  --}}
+                            {{--  <img width="300px;" src="{{ asset('/img/login/Header3DescargaGrande.svg') }}" alt="" class="mb-2">  --}}
                             {{--  <div><h5 style="font-weight: 1000; ">COSTO DE COMBUSTIBLE: ...</h5>100.00</div>  --}}
                             {{--  <div class="text-center"><h5 style="font-weight: 1000; ">COSTO DE TRABAJO: ...</h5>{{$solicitante['costoTrabajo']}}</div>  --}}
                             <div class="copyright text-center" style="font-size: 10px;">
