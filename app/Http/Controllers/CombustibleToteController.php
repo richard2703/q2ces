@@ -110,6 +110,8 @@ class CombustibleToteController extends Controller
             db::raw("CONCAT(m2.identificador,' ',m2.nombre) AS servicio"),
             DB::raw("CONCAT(p2.nombres,' ',p2.apellidoP) AS receptor"),
             'descarga.km',
+            'descarga.kilometrajeNuevo',
+            'descarga.fechaLlegada',
             'descarga.horas',
             'descarga.imgHoras',
             'descarga.imgKm',
@@ -272,6 +274,7 @@ class CombustibleToteController extends Controller
         // date_default_timezone_set('America/Mexico_City');
         $descarga['horas'] = $request['horas'];
         $descarga = $request->all();
+        // dd($descarga);
 
         if ($request->hasFile("imgKm")) {
             $descarga['imgKm'] = time() . '_' . 'imgKm.' . $request->file('imgKm')->getClientOriginalExtension();
@@ -304,6 +307,7 @@ class CombustibleToteController extends Controller
             $descarga['direccionUnitario'] = $direccion[0]['ultimoPrecio'];
             $descarga['kilometrajeAnterior'] = $cisterna->kilometraje;
             $descarga['kilometrajeNuevo'] = $request['km'];
+            $descarga['fechaLlegada'] = Carbon::now();
             descarga::create($descarga);
             $cisterna->kilometraje = $request['km'];
             $cisterna->update();
