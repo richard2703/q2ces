@@ -64,6 +64,9 @@
                             <br>
                             <img width="300px;" src="{{ asset('/img/login/Header2GenericoGrande.svg') }}" alt="" class="mb-2">
                             <div class="text-center"><h5 style="font-weight: 1000;   ">OPERADOR:</h5>{{ $carga->operador_nombre }}</div>
+                            @if ($carga->tipoCisternaId != null)
+                            <div class="text-center"><h5 style="font-weight: 1000;   ">EQUIPO DESPACHADO:</h5> Cisterna Tote</div>
+                            @endif
                             <div class="text-center"><h5 style="font-weight: 1000;   ">EQUIPO Y/O MAQUINARIA:</h5> {{ $carga->maquinaria_nombre }}</div><br><br>
                             <div class="text-center"><h5 style="font-weight: 1000;   ">FECHA DE CARGA:</h5>{{ \Carbon\Carbon::parse($carga->updated_at)->format( 'Y-m-d' ) }}</div>
                             <div class="text-center"><h5 style="font-weight: 1000;   ">HORA DE CARGA:</h5>{{ substr($carga->horaLlegadaCarga, 0, 5) }}</div>

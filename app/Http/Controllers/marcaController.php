@@ -67,6 +67,7 @@ class marcaController extends Controller
         ]);
         $record = $request->all();
 
+        dd($request, $record);
         marca::create($record);
         Session::flash('message', 1);
 

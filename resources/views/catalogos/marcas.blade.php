@@ -161,19 +161,30 @@
                                 value="{{ old('nombre') }}" required placeholder="Especifique...">
                         </div>
 
-                        <div class=" col-12 col-sm-6 mb-3 ">
+                        <div class="col-12 col-sm-6 mb-3">
                             <label class="labelTitulo">Tipo:</label></br>
-                            <select name='tipo' class="form-select" required>
-                                <option value="">Seleccione</option>
-                                {{--  @foreach ($marcas as $item)  --}}
-                                <option value="herramientas">Herramientas</option>
-                                <option value="refacciones">Refacciones</option>
-                                <option value="consumibles">Consumibles</option>
-                                <option value="uniformes">Uniformes</option>
-                                <option value="maquinaria">Maquinaria - Autos</option>
-                                {{--  @endforeach  --}}
-                            </select>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value="herramientas" id="chkHerramientas">
+                                <label class="form-check-label" style="color: black;" for="chkHerramientas">Herramientas</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value="refacciones" id="chkRefacciones">
+                                <label class="form-check-label" style="color: black;" for="chkRefacciones">Refacciones</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value="consumibles" id="chkConsumibles">
+                                <label class="form-check-label" style="color: black;" for="chkConsumibles">Consumibles</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value="uniformes" id="chkUniformes">
+                                <label class="form-check-label" style="color: black;" for="chkUniformes">Uniformes</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value="maquinaria" id="chkMaquinaria">
+                                <label class="form-check-label" style="color: black;" for="chkMaquinaria">Maquinaria - Autos</label>
+                            </div>
                         </div>
+                        
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
@@ -211,19 +222,30 @@
                             <input type="text" class="inputCaja" id="controlNombre" name="nombre" value="">
                         </div>
 
-                        <div class=" col-12 col-sm-6 mb-3 ">
+                        <div class="col-12 col-sm-6 mb-3">
                             <label class="labelTitulo">Tipo:</label></br>
-                            <select name='tipo' id="marca" class="form-select" required>
-                                <option value="">Seleccione</option>
-                                {{--  @foreach ($marcas as $item)  --}}
-                                <option value="herramientas">Herramientas</option>
-                                <option value="refacciones">Refacciones</option>
-                                <option value="consumibles">Consumibles</option>
-                                <option value="uniformes">Uniformes</option>
-                                <option value="maquinaria">Maquinaria - Autos</option>
-                                {{--  @endforeach  --}}
-                            </select>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value="herramientas" id="chkHerramientas">
+                                <label class="form-check-label" style="color: black;" for="chkHerramientas">Herramientas</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value="refacciones" id="chkRefacciones">
+                                <label class="form-check-label" style="color: black;" for="chkRefacciones">Refacciones</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value="consumibles" id="chkConsumibles">
+                                <label class="form-check-label" style="color: black;" for="chkConsumibles">Consumibles</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value="uniformes" id="chkUniformes">
+                                <label class="form-check-label" style="color: black;" for="chkUniformes">Uniformes</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value="maquinaria" id="chkMaquinaria">
+                                <label class="form-check-label" style="color: black;" for="chkMaquinaria">Maquinaria - Autos</label>
+                            </div>
                         </div>
+                        
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
