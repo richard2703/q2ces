@@ -43,6 +43,7 @@
                             @csrf
                             @method('put')
 
+                            <input type="hidden" name="obraId" value="{{ $obras->id }}">
                             <div class="col-12 my-3 ">
 
                                 <div class="row d-flex justify-content-around">
@@ -189,15 +190,16 @@
                                                 <h2 class="tituloEncabezado ">Detalle de Obra</h2>
                                             </div>
                                             <div class="col-12 divBorder pb-3" style="text-align: right;">
-                                                <button type="button" id="removeRow" class="btnRojo"></button>
+                                                @if ($obras->id > 2)
+                                                    <button type="button" id="removeRow" class="btnRojo"></button>
+                                                @endif
                                                 <button type="button" class="btnVerde" onclick="crearItemsB()">
                                                 </button>
                                             </div>
 
                                             <div class="row">
 
-                                                <input type="hidden" name="idObraMaqPer[]"
-                                                    value="{{ $maquinaria->id }}">
+                                                <input type="hidden" name="idObraMaqPer[]" value="{{ $maquinaria->id }}">
 
                                                 <div class="col-12 col-sm-6 col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Equipo: <span>*</span></label></br>
@@ -207,7 +209,7 @@
                                                         @foreach ($vctMaquinaria as $maquina)
                                                             <option value="{{ $maquina->id }}"
                                                                 {{ $maquina->id == $maquinaria->maquinariaId ? ' selected' : '' }}>
-                                                                {{ strtouppr($maquina->identificador) . ' - ' . $objValida->ucwords_accent($maquina->nombre) }}
+                                                                {{ strtoupper($maquina->identificador) . ' - ' . $objValida->ucwords_accent($maquina->nombre) }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -218,13 +220,9 @@
                                                     <select id="personalId" name="personalId[]" class="form-select"
                                                         required aria-label="Default select example">
                                                         <option value="">Seleccione</option>
-                                                        {{-- @foreach ($vctPersonal as $persona)
-                                                            <option value="{{ $persona->id }}"
-                                                                {{ $persona->id == $maquinaria->personalId ? ' selected' : '' }}>
-                                                                {{ $persona->nombres . ' ' . $persona->apellidoP . ' [' . $persona->puesto . ' ]' }}
-                                                            </option>
-                                                        @endforeach --}}
                                                         @foreach ($vctPersonal as $item)
+                                                            {{-- <option value="0">Sin Cambios</option>
+                                                            <option value="">Denegar Equipo</option> --}}
                                                             <option value="{{ $item->id }}"
                                                                 {{ $item->id == $maquinaria->personalId ? ' selected' : '' }}>
                                                                 {{ $objValida->ucwords_accent($item->personal . ' [' . $item->puesto . ']') }}
@@ -271,7 +269,9 @@
                                                 <h2 class="tituloEncabezado ">Detalle de Obra</h2>
                                             </div>
                                             <div class="col-12 divBorder pb-3" style="text-align: right;">
-                                                <button type="button" id="removeRow" class="btnRojo"></button>
+                                                @if ($obras->id > 2)
+                                                    <button type="button" id="removeRow" class="btnRojo"></button>
+                                                @endif
                                                 <button type="button" class="btnVerde" onclick="crearItemsB()">
                                                 </button>
                                             </div>
@@ -298,6 +298,8 @@
                                                     <select id="personalId" name="personalId[]" class="form-select"
                                                         required aria-label="Default select example">
                                                         <option value="">Seleccione</option>
+                                                        {{-- <option value="0">Sin Cambios</option>
+                                                        <option value="">Denegar Equipo</option> --}}
                                                         @foreach ($vctPersonal as $item)
                                                             <option value="{{ $item->id }}">
                                                                 {{ $objValida->ucwords_accent($item->personal . ' [' . $item->puesto . ']') }}

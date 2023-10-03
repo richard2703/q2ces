@@ -1261,6 +1261,7 @@ CREATE TABLE obraMaqPerHistorico(
     inicio datetime NULL,
     fin datetime NULL,
     combustible int DEFAULT 0,
+    comentario text,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
