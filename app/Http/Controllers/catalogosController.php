@@ -29,6 +29,7 @@ use App\Models\marcasTipo;
 use App\Models\tipoEquipo;
 use App\Models\tipoHoraExtra;
 use App\Models\tipoMantenimiento;
+use App\Models\tiposMarcas;
 use App\Models\tipoValorTarea;
 use Illuminate\Support\Arr;
 
@@ -190,12 +191,15 @@ class catalogosController extends Controller
         // dd( $records );
         $records = marca::orderBy('nombre', 'asc')
             ->paginate(15);
-
+        // $tiposMarcas = tiposMarcas::all()->pluck('nombre', 'id');
+        $records->load('tiposMarcas');
+        // dd($records);
         // for ($i = 0; $i < count($records); $i++) {
         //     $relacion = marcasTipo::where('marcasTipo.marcaId', '=', $records[$i]['id'])->get();
         //     dd($relacion);
         //     $records = Arr::flatten($relacion);
         // }
+        // 
         // dd($records);
         $tipos = marcasTipo::all();
         // dd($tipos);

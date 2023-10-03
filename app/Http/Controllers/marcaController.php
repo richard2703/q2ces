@@ -74,14 +74,14 @@ class marcaController extends Controller
         $record = $request->all();
         $newMarca = marca::create($record);
         // dd($newMarca->id);
+        $newMarca->tiposMarcas()->sync($request->input('tipo', []));
 
+        // for ($i = 0; $i < count($record['tipo']); $i++) {
 
-        for ($i = 0; $i < count($record['tipo']); $i++) {
-
-            $newTipoMarca['nombre'] = $record['tipo'][$i];
-            $newTipoMarca['marcaId'] = $newMarca->id;
-            marcasTipo::create($newTipoMarca);
-        }
+        //     $newTipoMarca['nombre'] = $record['tipo'][$i];
+        //     $newTipoMarca['marcaId'] = $newMarca->id;
+        //     marcasTipo::create($newTipoMarca);
+        // }
 
         Session::flash('message', 1);
         return redirect()->route('catalogoMarca.index');
@@ -125,7 +125,7 @@ class marcaController extends Controller
 
         abort_if(Gate::denies('catalogos_edit'), 403);
 
-        // dd( $request );
+        // dd($request);
 
         $request->validate([
             'nombre' => 'required|max:250|unique:marca,nombre,' . $request['controlId'],
@@ -143,6 +143,7 @@ class marcaController extends Controller
         if (is_null($record) == false) {
             // dd( $data );
             $record->update($data);
+            $record->tiposMarcas()->sync($request->input('tipo', []));
             Session::flash('message', 1);
         }
 
