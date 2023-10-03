@@ -169,7 +169,7 @@
                                 @method('put')
                                 <div class="container-fluid">
 
-                                    <input type="hidden" name="autoId" id="asignacionMaquinaria">
+                                    <input type="hidden" name="maquinariaId" id="asignacionMaquinaria">
 
                                     <div class="row">
                                         <div class="mb-3 col-12 text-center">
@@ -210,7 +210,7 @@
                                             <label for="NpersonalId" class="labelTitulo">Asignar al Operador:</label>
                                             <select name="NpersonalId" id="NpersonalId" required class="form-select">
                                                 <option value="0">Sin Cambios</option>
-                                                <option value="">Denegar Equipo</option>
+                                                <option value="-1">Denegar Equipo</option>
                                                 @foreach ($vctOperarios as $item)
                                                     <option value="{{ $item->id }}">
                                                         {{ $objValida->ucwords_accent($item->personal . ' [' . $item->puesto . ']') }}
