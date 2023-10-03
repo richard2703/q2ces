@@ -15,4 +15,9 @@ class marca extends Model
     protected $fillable = [
         'nombre', 'comentario', 'activo',
     ];
+
+    public function tiposMarcas()
+    {
+        return $this->belongsToMany(tiposMarcas::class, 'marcasTipo');
+    }
 }

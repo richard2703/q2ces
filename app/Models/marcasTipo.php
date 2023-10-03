@@ -14,6 +14,6 @@ class marcasTipo extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nombre', 'marcaId'
+        'tipos_marcas_id', 'marca_id'
     ];
 }
