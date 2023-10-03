@@ -163,7 +163,7 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Tipo de licencia:</label></br>
-                                                                <input type="email" class="inputCaja" id="tipoLicencia"
+                                                                <input type="text" class="inputCaja" id="tipoLicencia"
                                                                     name="tipoLicencia"
                                                                     value="{{ old('tipoLicencia') }}">
                                                             </div>
@@ -708,7 +708,8 @@
 
                                                                         <input type="time" class="inputCaja "
                                                                             placeholder="Salida" id=""
-                                                                            name="hSalidaSabado" value="{{ old('hSalidaSabado') }}">
+                                                                            name="hSalidaSabado"
+                                                                            value="{{ old('hSalidaSabado') }}">
                                                                     </div>
                                                                 </div>
 
@@ -729,7 +730,7 @@
                                                                     <option value="">Seleccione</option>
                                                                     @foreach ($vctPersonal as $persona)
                                                                         <option value="{{ $persona->id }}">
-                                                                            {{ $objValida->ucwords_accent( $persona->nombres . ' ' . $persona->apellidoP. ' [' . $persona->puesto .']') }}
+                                                                            {{ $objValida->ucwords_accent($persona->nombres . ' ' . $persona->apellidoP . ' [' . $persona->puesto . ']') }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
