@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\marca;
+use App\Models\marcasTipo;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
@@ -24,7 +25,12 @@ class marcaController extends Controller
 
         abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = marca::orderBy('nombre', 'asc')->paginate(15);
+        $records = marca::join('marca', 'marcasTipo.marcaId', '=', 'marca.id')
+            ->orderBy('nombre', 'asc')
+            ->select('marca.*')
+            ->paginate(15);
+
+        dd($records);
 
         return view('catalogo.marcas', compact('records'));
     }
@@ -49,29 +55,38 @@ class marcaController extends Controller
 
     public function store(Request $request)
     {
-
         abort_if(Gate::denies('catalogos_create'), 403);
 
-        // dd( $request );
         $request->validate([
             'nombre' => 'required|max:250|unique:marca,nombre,' . $request['nombre'],
             'comentarios' => 'nullable|max:500',
-            'tipo' => 'required|max:250',
+            'tipo' => 'required|array', // Asegúrate de que 'tipo' sea un array
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
-            'nombre.unique' => 'El valor del campo nombre ya esta en uso.',
+            'nombre.unique' => 'El valor del campo nombre ya está en uso.',
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
             'tipo.required' => 'El campo tipo es obligatorio.',
+            'tipo.array' => 'El campo tipo debe ser un array.', // Agrega una validación para 'tipo'
             'tipo.max' => 'El campo tipo excede el límite de caracteres permitidos.',
             'comentarios.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
         ]);
+
         $record = $request->all();
+        $newMarca = marca::create($record);
+        // dd($newMarca->id);
+        $newMarca->tiposMarcas()->sync($request->input('tipo', []));
 
-        marca::create($record);
+        // for ($i = 0; $i < count($record['tipo']); $i++) {
+
+        //     $newTipoMarca['nombre'] = $record['tipo'][$i];
+        //     $newTipoMarca['marcaId'] = $newMarca->id;
+        //     marcasTipo::create($newTipoMarca);
+        // }
+
         Session::flash('message', 1);
-
         return redirect()->route('catalogoMarca.index');
     }
+
 
     /**
      * Display the specified resource.
@@ -110,7 +125,7 @@ class marcaController extends Controller
 
         abort_if(Gate::denies('catalogos_edit'), 403);
 
-        // dd( $request );
+        // dd($request);
 
         $request->validate([
             'nombre' => 'required|max:250|unique:marca,nombre,' . $request['controlId'],
@@ -128,6 +143,7 @@ class marcaController extends Controller
         if (is_null($record) == false) {
             // dd( $data );
             $record->update($data);
+            $record->tiposMarcas()->sync($request->input('tipo', []));
             Session::flash('message', 1);
         }
 

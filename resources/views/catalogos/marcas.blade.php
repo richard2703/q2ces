@@ -18,7 +18,6 @@
                     <div class="card">
                         <div class="card-header bacTituloPrincipal">
                             <h4 class="card-title">Marcas</h4>
-
                         </div>
                         <div class="card-body">
                             @if (session('success'))
@@ -76,14 +75,20 @@
                                         <tr>
                                             <td>{{ $item->id }}</td>
                                             <td class="text-left">{{ $item->nombre }}</td>
-                                            <td class="text-left">{{ $item->tipo }}</td>
+                                            <td class="text-left">
+                                                @forelse ($item->tiposMarcas as $tiposMarca)
+                                                    {{$tiposMarca->nombre}}
+                                                @empty
+                                                    Sin Tipos
+                                                @endforelse
+                                            </td>
                                             <td class="text-left">{{ $item->comentario }}</td>
 
                                             <td class="td-actions text-right">
                                                 @can('catalogos_show')
                                                     <a href="#" class="" data-bs-toggle="modal"
                                                         data-bs-target="#editarItem"
-                                                        onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->comentario }}','{{ $item->tipo }}','{{ true }}')">
+                                                        onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->comentario }}','{{ $item->tiposMarcas }}','{{ true }}')">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
                                                             fill="currentColor" class="bi bi-card-text accionesIconos"
                                                             viewBox="0 0 16 16">
@@ -97,7 +102,7 @@
                                                 @can('catalogos_edit')
                                                     <a href="#" class="" data-bs-toggle="modal"
                                                         data-bs-target="#editarItem"
-                                                        onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->comentario }}','{{ $item->tipo }}','{{ false }}')">
+                                                        onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->comentario }}','{{ $item->tiposMarcas }}','{{ false }}')">
                                                         <svg xmlns="http://www.w3.org/2000/svg " width="28" height="28"
                                                             fill="currentColor" class="bi bi-pencil accionesIconos"
                                                             viewBox="0 0 16 16">
@@ -133,7 +138,7 @@
 
                                 </tbody>
                             </table>
-                            <div class="card-footer mr-auto">
+                            <div class="card-footer mr-auto d-flex justify-content-center">
                                 {{ $records->links() }}
                             </div>
                         </div>
@@ -161,19 +166,30 @@
                                 value="{{ old('nombre') }}" required placeholder="Especifique...">
                         </div>
 
-                        <div class=" col-12 col-sm-6 mb-3 ">
+                        <div class="col-12 col-sm-6 mb-3">
                             <label class="labelTitulo">Tipo:</label></br>
-                            <select name='tipo' class="form-select" required>
-                                <option value="">Seleccione</option>
-                                {{--  @foreach ($marcas as $item)  --}}
-                                <option value="herramientas">Herramientas</option>
-                                <option value="refacciones">Refacciones</option>
-                                <option value="consumibles">Consumibles</option>
-                                <option value="uniformes">Uniformes</option>
-                                <option value="maquinaria">Maquinaria - Autos</option>
-                                {{--  @endforeach  --}}
-                            </select>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value=1 id="chkHerramientas">
+                                <label class="form-check-label" style="color: black;" for="chkHerramientas">Herramientas</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value=2 id="chkRefacciones">
+                                <label class="form-check-label" style="color: black;" for="chkRefacciones">Refacciones</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value=3 id="chkConsumibles">
+                                <label class="form-check-label" style="color: black;" for="chkConsumibles">Consumibles</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value=4 id="chkUniformes">
+                                <label class="form-check-label" style="color: black;" for="chkUniformes">Uniformes</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value=5 id="chkMaquinaria">
+                                <label class="form-check-label" style="color: black;" for="chkMaquinaria">Maquinaria - Autos</label>
+                            </div>
                         </div>
+                        
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
@@ -211,19 +227,30 @@
                             <input type="text" class="inputCaja" id="controlNombre" name="nombre" value="">
                         </div>
 
-                        <div class=" col-12 col-sm-6 mb-3 ">
+                        <div class="col-12 col-sm-6 mb-3">
                             <label class="labelTitulo">Tipo:</label></br>
-                            <select name='tipo' id="marca" class="form-select" required>
-                                <option value="">Seleccione</option>
-                                {{--  @foreach ($marcas as $item)  --}}
-                                <option value="herramientas">Herramientas</option>
-                                <option value="refacciones">Refacciones</option>
-                                <option value="consumibles">Consumibles</option>
-                                <option value="uniformes">Uniformes</option>
-                                <option value="maquinaria">Maquinaria - Autos</option>
-                                {{--  @endforeach  --}}
-                            </select>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value=1 id="herramientas">
+                                <label class="form-check-label" style="color: black;" for="chkHerramientas">Herramientas</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value=2 id="refacciones">
+                                <label class="form-check-label" style="color: black;" for="chkRefacciones">Refacciones</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value=3 id="consumibles">
+                                <label class="form-check-label" style="color: black;" for="chkConsumibles">Consumibles</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value=4 id="uniformes">
+                                <label class="form-check-label" style="color: black;" for="chkUniformes">Uniformes</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input is-invalid" type="checkbox" name="tipo[]" value=5 id="maquinaria">
+                                <label class="form-check-label" style="color: black;" for="chkMaquinaria">Maquinaria - Autos</label>
+                            </div>
                         </div>
+                        
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
@@ -309,6 +336,21 @@
             const txtComentarios = document.getElementById('controlComentarios');
             txtComentarios.value = comentarios;
             txtComentarios.readOnly = modalTipo;
+            const objMarca = JSON.parse(marca);
+            console.log('objMarca',objMarca);
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                const checkboxId = checkbox.id;
+                const found = objMarca.find(item => item.nombre === checkboxId);
+
+                if (found) {
+                    checkbox.checked = true; // Marca el checkbox si se encuentra
+                } else {
+                    checkbox.checked = false; // Desmarca el checkbox si no se encuentra
+                }
+            });
+            // Recorre el objeto 'marca' y muestra solo las propiedades con nombre
+           
 
             const txtMarca = document.getElementById('marca');
             const contenedorBotonGuardar = document.getElementById('contenedorBotonGuardar');

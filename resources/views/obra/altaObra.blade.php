@@ -98,7 +98,7 @@
                                     </div>
                                     <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                         <label class="labelTitulo">Número: </label></br>
-                                        <input type="number" class="inputCaja" id="numero" name="numero"
+                                        <input type="text" class="inputCaja" id="numero" name="numero"
                                             placeholder="Especifique..." value="{{ old('numero') }}">
                                     </div>
                                     <div class=" col-12 col-sm-6  col-lg-4 my-3 ">

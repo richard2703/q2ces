@@ -42,23 +42,13 @@
                                             Regresar
                                         </button>
                                     </a>
-                                    {{--  @can('asistencia_cortesemanal')
-                                    <a href="{{ route('asistencia.corteSemanal') }}">
-                                        <button type="button" class="btn botonGral">Corte Semanal</button>
-                                    </a>
-                                @endcan  --}}
                                 </div>
                                 <div class="col-8 text-end">
-                                    {{--  @can('asistencia_horasextra')
-                                    <a href="{{ route('asistencia.horasExtra') }}">
-                                        <button type="button" class="btn botonGral">Horas Extra</button>
-                                    </a>
-                                @endcan  --}}
+
                                     {{--  @can('asistencia_create')  --}}
                                     <a href="{{ route('maquinaria.update', $maquinaria->id) }}" method="get">
                                         <button class="btn botonGral">Asignar Equipo</button>
                                     </a>
-
 
                                     <a href="{{ route('maquinaria.update', $maquinaria->id) }}" method="get">
                                         <button class="btn botonGral">Asignar Uniforme</button>
@@ -107,133 +97,140 @@
                                     <input type="hidden" name="arrayFotosPersistente" id="arrayFotosPersistente"
                                         value="">
                                 </div>
-                            </div>
+                                <div class="col-12 col-md-8 px-2">
+                                    <div class="row alin">
+                                        <div class=" col-12 col-sm-8 mb-3 ">
+                                            <label class="labelTitulo">Equipo:</label></br>
+                                            <input type="text" class="inputCaja" id="nombre"
+                                                placeholder="Especifique..." required name="nombre"
+                                                value="{{ $maquinaria->nombre }}">
+                                        </div>
 
-                            <div class="col-12 col-md-8 px-2">
-                                <div class="row alin">
-                                    <div class=" col-12 col-sm-8 mb-3 ">
-                                        <label class="labelTitulo">Equipo:</label></br>
-                                        <input type="text" class="inputCaja" id="nombre" placeholder="Especifique..."
-                                            required name="nombre" value="{{ $maquinaria->nombre }}">
-                                    </div>
 
+                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <label class="labelTitulo">Marca:</label></br>
+                                            <select id="marcaId" name="marcaId" class="form-select"
+                                                aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($marcas as $item)
+                                                    <option value="{{ $item->id }}"
+                                                        {{ $item->id == $maquinaria->marcaId ? ' selected' : '' }}>
+                                                        {{ $objValida->ucwords_accent($item->nombre) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
 
-                                    <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                        <label class="labelTitulo">Marca:</label></br>
-                                        <select id="marcaId" name="marcaId" class="form-select"
-                                            aria-label="Default select example">
-                                            <option value="">Seleccione</option>
-                                            @foreach ($marcas as $item)
-                                                <option value="{{ $item->id }}"
-                                                    {{ $item->id == $maquinaria->marcaId ? ' selected' : '' }}>
-                                                    {{ $objValida->ucwords_accent($item->nombre) }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <label class="labelTitulo">Modelo:</label></br>
+                                            <input type="text" class="inputCaja" id="modelo"
+                                                placeholder="Especifique..." name="modelo"
+                                                value="{{ $maquinaria->modelo }}">
+                                        </div>
 
-                                    <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                        <label class="labelTitulo">Modelo:</label></br>
-                                        <input type="text" class="inputCaja" id="modelo" placeholder="Especifique..."
-                                            name="modelo" value="{{ $maquinaria->modelo }}">
-                                    </div>
+                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <label class="labelTitulo">Sub Marca:</label></br>
+                                            <input type="text" class="inputCaja" id="submarca"
+                                                placeholder="Especifique..." name="submarca"
+                                                value="{{ $maquinaria->submarca }}">
+                                        </div>
 
-                                    <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                        <label class="labelTitulo">Sub Marca:</label></br>
-                                        <input type="text" class="inputCaja" id="submarca" placeholder="Especifique..."
-                                            name="submarca" value="{{ $maquinaria->submarca }}">
-                                    </div>
+                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <label class="labelTitulo">Categoría:</label></br>
+                                            <select id="categoriaId" name="categoriaId" class="form-select"
+                                                aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($categorias as $item)
+                                                    <option value="{{ $item->id }}"
+                                                        {{ $item->id == $maquinaria->categoriaId ? ' selected' : '' }}>
+                                                        {{ $objValida->ucwords_accent($item->nombre) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
 
-                                    <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                        <label class="labelTitulo">Categoría:</label></br>
-                                        <select id="categoriaId" name="categoriaId" class="form-select"
-                                            aria-label="Default select example">
-                                            <option value="">Seleccione</option>
-                                            @foreach ($categorias as $item)
-                                                <option value="{{ $item->id }}"
-                                                    {{ $item->id == $maquinaria->categoriaId ? ' selected' : '' }}>
-                                                    {{ $objValida->ucwords_accent($item->nombre) }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <label class="labelTitulo">Uso:</label></br>
+                                            <select class="form-select" aria-label="Default select example"
+                                                id="uso" name="uso">
+                                                <option
+                                                    value="Mov. Tierras"{{ $maquinaria->uso == 'Mov. Tierras' ? ' selected' : '' }}>
+                                                    Mov. Tierras</option>
+                                                <option
+                                                    value="Completo"{{ $maquinaria->uso == 'Completo' ? ' selected' : '' }}>
+                                                    Completo</option>
+                                                <option
+                                                    value="Utilitario"{{ $maquinaria->uso == 'Utilitario' ? ' selected' : '' }}>
+                                                    Utilitario</option>
+                                            </select>
+                                        </div>
 
-                                    <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                        <label class="labelTitulo">Uso:</label></br>
-                                        <select class="form-select" aria-label="Default select example" id="uso"
-                                            name="uso">
-                                            <option
-                                                value="Mov. Tierras"{{ $maquinaria->uso == 'Mov. Tierras' ? ' selected' : '' }}>
-                                                Mov. Tierras</option>
-                                            <option
-                                                value="Completo"{{ $maquinaria->uso == 'Completo' ? ' selected' : '' }}>
-                                                Completo</option>
-                                            <option
-                                                value="Utilitario"{{ $maquinaria->uso == 'Utilitario' ? ' selected' : '' }}>
-                                                Utilitario</option>
-                                        </select>
-                                    </div>
+                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <div class="row align-items-end">
+                                                <div class="pl-2">
+                                                    <label class="labelTitulo">Tipo:</label></br>
+                                                    <select id="tipoId" name="tipoId" class="form-select"
+                                                        aria-label="Default select example">
+                                                        <option value="">Seleccione</option>
+                                                        @foreach ($tipos as $item)
+                                                            <option value="{{ $item->id }}"
+                                                                {{ $item->id == $maquinaria->tipoId ? ' selected' : '' }}>
+                                                                {{ $objValida->ucwords_accent($item->nombre) }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
 
-                                    <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                        <div class="row align-items-end">
-                                            <div class="pl-2">
-                                                <label class="labelTitulo">Tipo:</label></br>
-                                                <select id="tipoId" name="tipoId" class="form-select"
-                                                    aria-label="Default select example">
-                                                    <option value="">Seleccione</option>
-                                                    @foreach ($tipos as $item)
-                                                        <option value="{{ $item->id }}"
-                                                            {{ $item->id == $maquinaria->tipoId ? ' selected' : '' }}>
-                                                            {{ $objValida->ucwords_accent($item->nombre) }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                        <label class="labelTitulo">Año:</label></br>
-                                        <input type="text" class="inputCaja" id="ano" maxlength="4"
-                                            placeholder="Ej. 2000" name="ano" value="{{ $maquinaria->ano }}">
-                                    </div>
+                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <label class="labelTitulo">Año:</label></br>
+                                            <input type="text" class="inputCaja" id="ano" maxlength="4"
+                                                placeholder="Ej. 2000" name="ano" value="{{ $maquinaria->ano }}">
+                                        </div>
 
-                                    <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                        <label class="labelTitulo">Color:</label></br>
-                                        <input type="text" class="inputCaja" id="color"
-                                            placeholder="Ej. Amarillo" name="color" value="{{ $maquinaria->color }}">
-                                    </div>
+                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <label class="labelTitulo">Color:</label></br>
+                                            <input type="text" class="inputCaja" id="color"
+                                                placeholder="Ej. Amarillo" name="color"
+                                                value="{{ $maquinaria->color }}">
+                                        </div>
 
-                                    <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                        <label class="labelTitulo">Placas:</label></br>
-                                        <input type="text" class="inputCaja" id="placas"
-                                            placeholder="Ej. JAL-0000" name="placas" value="{{ $maquinaria->placas }}">
-                                    </div>
+                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <label class="labelTitulo">Placas:</label></br>
+                                            <input type="text" class="inputCaja" id="placas"
+                                                placeholder="Ej. JAL-0000" name="placas"
+                                                value="{{ $maquinaria->placas }}">
+                                        </div>
 
-                                    <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                        <label class="labelTitulo">Identificador:</label></br>
-                                        <input type="text" class="inputCaja" id="identificador" name="identificador"
-                                            value="{{ $maquinaria->identificador }}" placeholder="ej: MT-00">
-                                    </div>
+                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <label class="labelTitulo">Identificador:</label></br>
+                                            <input type="text" class="inputCaja" id="identificador"
+                                                name="identificador" value="{{ $maquinaria->identificador }}"
+                                                placeholder="ej: MT-00">
+                                        </div>
 
-                                    {{-- <div class=" col-12 col-sm-12 mb-3 ">
-                                        <label class="labelTitulo">Asignado en la Obra:</label></br>
-                                        <select id="obraId" name="obraId" class="form-select"
-                                            aria-label="Default select example">
-                                            <option value="">Seleccione</option>
-                                            @foreach ($vctObras as $item)
-                                                <option value="{{ $item->id }}"
-                                                    {{ $item->id == $maquinaria->obraId ? ' selected' : '' }}>
-                                                    {{ $item->nombre . ' [ '. $item->cliente . ' ] '  }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div> --}}
+                                        {{-- <div class=" col-12 col-sm-12 mb-3 ">
+                                            <label class="labelTitulo">Asignado en la Obra:</label></br>
+                                            <select id="obraId" name="obraId" class="form-select"
+                                                aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($vctObras as $item)
+                                                    <option value="{{ $item->id }}"
+                                                        {{ $item->id == $maquinaria->obraId ? ' selected' : '' }}>
+                                                        {{ $item->nombre . ' [ '. $item->cliente . ' ] '  }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div> --}}
+
+                                    </div>
 
                                 </div>
-
                             </div>
+
+
 
                             <div class="row p-3">
                                 <div class=" col-12   mb-3 ">
@@ -361,12 +358,12 @@
                                                             </div>
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                                                                                                <label class="labelTitulo">Combustible:</label></br>
-                                                                                                                                                <input type="text" class="inputCaja" id="combustible"
-                                                                                                                                                    name="combustible"
-                                                                                                                                                    placeholder="Diesel / Gasolina / Especificar"
-                                                                                                                                                    value="{{ $maquinaria->combustible }}">
-                                                                                                                                            </div>-->
+                                                                                                                                                                <label class="labelTitulo">Combustible:</label></br>
+                                                                                                                                                                <input type="text" class="inputCaja" id="combustible"
+                                                                                                                                                                    name="combustible"
+                                                                                                                                                                    placeholder="Diesel / Gasolina / Especificar"
+                                                                                                                                                                    value="{{ $maquinaria->combustible }}">
+                                                                                                                                                            </div>-->
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Motor:</label></br>
@@ -503,8 +500,8 @@
                                                                         class="col-12 col-sm-4 col-lg-2 my-3 text-center pt-3">
                                                                         <!--<i class="fas fa-clipboard-check"></i>-->
                                                                         <!--<span class="material-icons" style="font-size:40px; color: gray">
-                                                                                                                                        content_paste_search
-                                                                                                                                    </span>-->
+                                                                                                                                                        content_paste_search
+                                                                                                                                                    </span>-->
                                                                         @if ($refaccion->relacionInventarioId != null)
                                                                             <span class="material-icons"
                                                                                 style="font-size:40px; color: green">
@@ -712,7 +709,7 @@
                                                                                         id='fecha{{ $item->id }}'
                                                                                         class="inputCaja text-center"
                                                                                         name='archivo[{{ $count }}][fecha]'
-                                                                                        style="display: block;" readonly
+                                                                                        style="display: block;"
                                                                                         value="{{ $item->fechaVencimiento }}">
                                                                                 </div>
                                                                                 <div class="col-12">
@@ -868,7 +865,8 @@
                                                             @foreach ($vctEstatus as $item)
                                                                 <option value="{{ $item->id }}"
                                                                     {{ $item->id == $maquinaria->estatusId ? ' selected' : '' }}>
-                                                                    {{ $objValida->ucwords_accent($item->nombre) }} </option>
+                                                                    {{ $objValida->ucwords_accent($item->nombre) }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>

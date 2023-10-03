@@ -1396,7 +1396,7 @@
                                     <label for="NmaquinariaId" class="labelTitulo">Asignar a Maquinaria:</label>
                                     <select name="NmaquinariaId" id="NmaquinariaId" required class="form-select">
                                         <option value="0">Sin Cambios</option>
-                                        <option value="">Denegar Equipo</option>
+                                        <option value="-1">Denegar Equipo</option>
                                         @foreach ($vctMaquinaria as $item)
                                             <option value="{{ $item->id }}">
                                                 {{ strtoupper($item->identificador) . ' - ' . $objValida->ucwords_accent($item->maquina) }}

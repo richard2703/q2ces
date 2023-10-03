@@ -1261,6 +1261,7 @@ CREATE TABLE obraMaqPerHistorico(
     inicio datetime NULL,
     fin datetime NULL,
     combustible int DEFAULT 0,
+    comentario text,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
@@ -1692,6 +1693,14 @@ ALTER TABLE descarga ADD odometro BIGINT(100) NULL;
 ALTER TABLE descarga ADD odometroNuevo BIGINT(100) NULL;
 ALTER TABLE descarga ADD kilometrajeNuevo BIGINT(100) NULL;
 ALTER TABLE descarga ADD kilometrajeAnterior BIGINT(100) NULL;
+
+ALTER TABLE descarga
+ADD COLUMN obraId bigint(20) unsigned NULL,
+ADD CONSTRAINT FK_descarga_obraId FOREIGN KEY (obraId) REFERENCES obras(id);
+
+ALTER TABLE descarga
+ADD COLUMN clienteId bigint(20) unsigned NULL,
+ADD CONSTRAINT FK_descarga_clienteId FOREIGN KEY (clienteId) REFERENCES clientes(id);
 
 /***************************************FIN Tablas Relacionadas*/
 

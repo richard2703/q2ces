@@ -12,10 +12,10 @@ class obraMaqPerHistorico extends Model {
     public $timestamps = true;
 
     protected $fillable = [
-        'maquinariaId', 'personalId', 'obraId', 'inicio', 'fin', 'combustible', 'usuarioId'
+        'maquinariaId', 'personalId', 'obraId', 'inicio', 'fin', 'combustible', 'usuarioId','comentario'
     ];
 
-    public function registraHistorico( $objOperMaqPer ) {
+    public function registraHistorico( $objOperMaqPer, $strComentario = '---' ) {
         $blnExito = false;
 
         if ( $objOperMaqPer ) {
@@ -28,6 +28,7 @@ class obraMaqPerHistorico extends Model {
             $objRecord->combustible = $objOperMaqPer->combustible;
             $objRecord->inicio = $objOperMaqPer->inicio;
             $objRecord->fin = $objOperMaqPer->fin;
+            $objRecord->comentario = $strComentario;
             // dd( $objRecord );
             $objRecord->save();
             $blnExito = true;
