@@ -25,10 +25,12 @@ use App\Models\refacciones;
 use App\Models\maquinaria;
 use App\Models\maquinariaCategoria;
 use App\Models\maquinariaTipo;
+use App\Models\marcasTipo;
 use App\Models\tipoEquipo;
 use App\Models\tipoHoraExtra;
 use App\Models\tipoMantenimiento;
 use App\Models\tipoValorTarea;
+use Illuminate\Support\Arr;
 
 class catalogosController extends Controller
 {
@@ -184,10 +186,20 @@ class catalogosController extends Controller
     public function indexCatalogoMarca()
     {
         abort_if(Gate::denies('catalogos_index'), 403);
-
-        $records = marca::orderBy('nombre', 'asc')->paginate(10);
+        // $records = marca::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
-        return view('catalogos.marcas', compact('records'));
+        $records = marca::orderBy('nombre', 'asc')
+            ->paginate(15);
+
+        // for ($i = 0; $i < count($records); $i++) {
+        //     $relacion = marcasTipo::where('marcasTipo.marcaId', '=', $records[$i]['id'])->get();
+        //     dd($relacion);
+        //     $records = Arr::flatten($relacion);
+        // }
+        // dd($records);
+        $tipos = marcasTipo::all();
+        // dd($tipos);
+        return view('catalogos.marcas', compact('records', 'tipos'));
     }
 
     public function indexCatalogoConceptos()

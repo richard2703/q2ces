@@ -76,7 +76,17 @@
                                         <tr>
                                             <td>{{ $item->id }}</td>
                                             <td class="text-left">{{ $item->nombre }}</td>
-                                            <td class="text-left">{{ $item->tipo }}</td>
+                                            <td class="text-left">
+                                                @forelse ($tipos as $tipo)
+                                                    @if ($tipo->marcaId == $item->id)
+                                                        {{ $tipo->nombre }}
+                                                    @else
+                                                        
+                                                    @endif
+                                                @empty
+                                                    Sin Tipos
+                                                @endforelse
+                                            </td>
                                             <td class="text-left">{{ $item->comentario }}</td>
 
                                             <td class="td-actions text-right">
@@ -133,7 +143,7 @@
 
                                 </tbody>
                             </table>
-                            <div class="card-footer mr-auto">
+                            <div class="card-footer mr-auto d-flex justify-content-center">
                                 {{ $records->links() }}
                             </div>
                         </div>
