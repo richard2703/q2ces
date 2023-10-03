@@ -88,7 +88,8 @@ class CombustibleToteController extends Controller
             'carga.created_at AS fecha',
             'cisternas.nombre',
             'carga.horaLlegadaCarga',
-            'carga.comentario'
+            'carga.comentario',
+            'carga.kilometraje'
         )
             ->join('maquinaria', 'maquinaria.id', '=', 'carga.maquinariaId')
             ->join('personal', 'personal.id', '=', 'carga.operadorId')
@@ -109,6 +110,8 @@ class CombustibleToteController extends Controller
             db::raw("CONCAT(m2.identificador,' ',m2.nombre) AS servicio"),
             DB::raw("CONCAT(p2.nombres,' ',p2.apellidoP) AS receptor"),
             'descarga.km',
+            'descarga.kilometrajeNuevo',
+            'descarga.fechaLlegada',
             'descarga.horas',
             'descarga.imgHoras',
             'descarga.imgKm',
@@ -175,7 +178,8 @@ class CombustibleToteController extends Controller
             'precio',
             'horaLlegadaCarga',
             'comentario',
-            'tipoCisternaId'
+            'tipoCisternaId',
+            'kilometraje'
         );
         $carga['userId'] = auth()->user()->id;
         //*** guardamos el registro */
@@ -191,8 +195,8 @@ class CombustibleToteController extends Controller
             $cisternaTipo = cisternas::where("id", $request['tipoCisternaId'])->first();
             $cisternaTipo->contenido = ($cisternaTipo->contenido + $request['litros']);
 
-            // Obtén la última carga que coincida con la maquinaria en la solicitud.
             $ultimaCarga = carga::where('maquinariaId', $request['maquinariaId'])
+                ->whereNull('tipoCisternaId') // Agrega esta condición
                 ->latest()
                 ->first();
 
@@ -270,6 +274,7 @@ class CombustibleToteController extends Controller
         // date_default_timezone_set('America/Mexico_City');
         $descarga['horas'] = $request['horas'];
         $descarga = $request->all();
+        // dd($descarga);
 
         if ($request->hasFile("imgKm")) {
             $descarga['imgKm'] = time() . '_' . 'imgKm.' . $request->file('imgKm')->getClientOriginalExtension();
@@ -288,8 +293,21 @@ class CombustibleToteController extends Controller
         $cisterna =  maquinaria::where("id", $request['maquinariaId'])->first();
         $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $request['litros']);
         $descarga['userId'] = auth()->user()->id;
+        $grasa = cisternas::where("nombre", 'Grasa')->get('ultimoPrecio');
+        $anticongelante = cisternas::where("nombre", 'Anticongelante')->get('ultimoPrecio');
+        $hidraulico = cisternas::where("nombre", 'Aceite Hidraulico')->get('ultimoPrecio');
+        $motor = cisternas::where("nombre", 'Aceite Motor')->get('ultimoPrecio');
+        $direccion = cisternas::where("nombre", 'Aceite Direccion')->get('ultimoPrecio');
 
         if ($request['km'] > $cisterna->kilometraje) {
+            $descarga['grasaUnitario'] = $grasa[0]['ultimoPrecio'];
+            $descarga['hidraulicoUnitario'] = $hidraulico[0]['ultimoPrecio'];
+            $descarga['anticongelanteUnitario'] = $anticongelante[0]['ultimoPrecio'];
+            $descarga['mototUnitario'] = $motor[0]['ultimoPrecio'];
+            $descarga['direccionUnitario'] = $direccion[0]['ultimoPrecio'];
+            $descarga['kilometrajeAnterior'] = $cisterna->kilometraje;
+            $descarga['kilometrajeNuevo'] = $request['km'];
+            $descarga['fechaLlegada'] = Carbon::now();
             descarga::create($descarga);
             $cisterna->kilometraje = $request['km'];
             $cisterna->update();

@@ -35,15 +35,17 @@ use App\Models\obraMaqPer;
 use App\Models\obraMaqPerHistorico;
 use Carbon\Carbon;
 
-class personalController extends Controller {
+class personalController extends Controller
+{
     /**
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
-    public function index() {
-        abort_if ( Gate::denies( 'personal_index' ), 403 );
+    public function index()
+    {
+        abort_if(Gate::denies('personal_index'), 403);
 
         $personal = personal::select(
             'personal.*',
@@ -55,17 +57,18 @@ class personalController extends Controller {
         ->leftJoin( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
         ->orderBy( 'nombres', 'asc' )->paginate( 15 );
         // dd( $personal );
-        return view( 'personal.indexPersonal', compact( 'personal' ) );
+        return view('personal.indexPersonal', compact('personal'));
     }
 
     /**
-    * Show the form for creating a new resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
-    public function create() {
-        abort_if ( Gate::denies( 'personal_create' ), 403 );
+    public function create()
+    {
+        abort_if(Gate::denies('personal_create'), 403);
 
         $vctPersonal = personal::select( 'personal.*', 'puesto.nombre as puesto' )
         ->join( 'nomina', 'nomina.personalId', 'personal.id' )
@@ -77,238 +80,240 @@ class personalController extends Controller {
 
         // dd( $docs );
         // return view( 'personal.altaDePersonal', compact( 'vctPersonal', 'vctPuestos', 'vctNiveles' ) )->with( 'personal', $vctPersonal, $vctPuestos );
-        return view( 'personal.altaDePersonal', compact( 'vctPersonal', 'vctPuestos', 'vctNiveles', 'docs' ) );
+        return view('personal.altaDePersonal', compact('vctPersonal', 'vctPuestos', 'vctNiveles', 'docs'));
     }
 
     /**
-    * Store a newly created resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
-    */
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
 
-    public function store( Request $request ) {
-        abort_if ( Gate::denies( 'personal_create' ), 403 );
+    public function store(Request $request)
+    {
+        abort_if(Gate::denies('personal_create'), 403);
 
         // $request->file( 'docs' )[ $cont ]
 
         // dd( $request->archivo );
-        $request->validate( [
-            'nombres' => 'required|max:150',
-            'apellidoP' => 'required|max:150',
-            'apellidoM' => 'nullable|max:150',
-            'aler' => 'nullable|max:150',
-            'celular' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
-            'mailEmpresarial' => 'nullable|email|max:200',
-            'fechaNacimiento' => 'nullable|date|date_format:Y-m-d',
-            // 'puestoNivelId' => 'required',
-            'puestoId' => 'required',
-            'ingreso' => 'required|date|date_format:Y-m-d',
-            'diario' => 'required',
+        // $request->validate([
+        //     'nombres' => 'required|max:150',
+        //     'apellidoP' => 'required|max:150',
+        //     'apellidoM' => 'nullable|max:150',
+        //     'aler' => 'nullable|max:150',
+        //     'celular' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
+        //     'mailEmpresarial' => 'nullable|email|max:200',
+        //     'fechaNacimiento' => 'nullable|date|date_format:Y-m-d',
+        //     // 'puestoNivelId' => 'required',
+        //     'puestoId' => 'required',
+        //     'ingreso' => 'required|date|date_format:Y-m-d',
+        //     'diario' => 'required',
 
-            'lugarNacimiento' => 'nullable|max:200',
-            'civil' => 'nullable|max:150',
-            'curp' => 'required|unique|max:20',
-            'rfc' => 'nullable|max:20',
-            'ine' => 'nullable|max:20',
-            'licencia' => 'nullable|max:20',
-            'cpf' => 'nullable|max:25',
-            'cpe' => 'nullable|max:25',
-            'hijos' => 'nullable|numeric',
-            'profe' => 'nullable|max:150',
-            'mailpersonal' => 'nullable|email|max:200',
+        //     'lugarNacimiento' => 'nullable|max:200',
+        //     'civil' => 'nullable|max:150',
+        //     'curp' => 'required|unique|max:20',
+        //     'rfc' => 'nullable|max:20',
+        //     'ine' => 'nullable|max:20',
+        //     'licencia' => 'nullable|max:20',
+        //     'cpf' => 'nullable|max:25',
+        //     'cpe' => 'nullable|max:25',
+        //     'hijos' => 'nullable|numeric',
+        //     'profe' => 'nullable|max:150',
+        //     'mailpersonal' => 'nullable|email|max:200',
 
-            'calle' => 'nullable|max:200',
-            'numero' => 'nullable|max:20',
-            'interior' => 'nullable|max:20',
-            'colonia' => 'nullable|max:200',
-            'cp' => 'nullable|max:99999',
-            'municipio' => 'nullable|max:200',
-            'estado' => 'nullable|max:200',
-            'casa' => 'nullable|max:200',
+        //     'calle' => 'nullable|max:200',
+        //     'numero' => 'nullable|max:20',
+        //     'interior' => 'nullable|max:20',
+        //     'colonia' => 'nullable|max:200',
+        //     'cp' => 'nullable|max:99999',
+        //     'municipio' => 'nullable|max:200',
+        //     'estado' => 'nullable|max:200',
+        //     'casa' => 'nullable|max:200',
 
-            'callef' => 'nullable|max:200',
-            'numerof' => 'nullable|max:20',
-            'interiorf' => 'nullable|max:20',
-            'coloniaf' => 'nullable|max:200',
-            'cp_f' => 'nullable|max:99999',
-            'municipiof' => 'nullable|max:200',
-            'estadof' => 'nullable|max:200',
-            'entref' => 'nullable|max:200',
+        //     'callef' => 'nullable|max:200',
+        //     'numerof' => 'nullable|max:20',
+        //     'interiorf' => 'nullable|max:20',
+        //     'coloniaf' => 'nullable|max:200',
+        //     'cp_f' => 'nullable|max:99999',
+        //     'municipiof' => 'nullable|max:200',
+        //     'estadof' => 'nullable|max:200',
+        //     'entref' => 'nullable|max:200',
 
-            'nombreE' => 'nullable|max:150',
-            'nombreP' => 'nullable|max:150',
-            'nombreM' => 'nullable|max:150',
-            'parentesco' => 'nullable|max:150',
-            'particularE' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
-            'celularE' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
+        //     'nombreE' => 'nullable|max:150',
+        //     'nombreP' => 'nullable|max:150',
+        //     'nombreM' => 'nullable|max:150',
+        //     'parentesco' => 'nullable|max:150',
+        //     'particularE' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
+        //     'celularE' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
 
-            'nombreB' => 'nullable|max:150',
-            'apellidoPB' => 'nullable|max:150',
-            'apellidoMB' => 'nullable|max:150',
-            'particularB' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
-            'celularB' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
-            'nacimientoB' => 'nullable|date|date_format:Y-m-d',
+        //     'nombreB' => 'nullable|max:150',
+        //     'apellidoPB' => 'nullable|max:150',
+        //     'apellidoMB' => 'nullable|max:150',
+        //     'particularB' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
+        //     'celularB' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
+        //     'nacimientoB' => 'nullable|date|date_format:Y-m-d',
 
-            'nomina' => 'nullable|numeric',
-            'imss' => 'nullable|numeric',
-            'clinica' => 'nullable|max:150',
-            'infonavit' => 'nullable|max:20',
-            'afore' => 'nullable|max:20',
-            'tarjeta' => 'nullable|max:20',
-            'banco' => 'nullable|max:150',
-            'puesto' => 'nullable|max:150',
-            'horario' => 'nullable|max:150',
-            'jefeId' => 'nullable|numeric',
-            'neto' => 'nullable|numeric',
-            'ingreso' => 'nullable|date|date_format:Y-m-d',
+        //     'nomina' => 'nullable|numeric',
+        //     'imss' => 'nullable|numeric',
+        //     'clinica' => 'nullable|max:150',
+        //     'infonavit' => 'nullable|max:20',
+        //     'afore' => 'nullable|max:20',
+        //     'tarjeta' => 'nullable|max:20',
+        //     'banco' => 'nullable|max:150',
+        //     'puesto' => 'nullable|max:150',
+        //     'horario' => 'nullable|max:150',
+        //     'jefeId' => 'nullable|numeric',
+        //     'neto' => 'nullable|numeric',
+        //     'ingreso' => 'nullable|date|date_format:Y-m-d',
 
-            'botas' => 'nullable|numeric|max:8',
-            'pc' => 'nullable|max:200',
-            'pcSerial' => 'nullable|max:50',
-            'celularEquipo' => 'nullable|max:200',
-            'celularImei' => 'nullable|numeric',
-            'radio' => 'nullable|max:200',
-            'radioSerial' => 'nullable|numeric',
-            'cargadorSerial' => 'nullable|numeric',
-        ], [
-            'nombres.required' => 'El campo nombre(s) es obligatorio.',
-            'nombres.max' => 'El campo nombre(s) excede el límite de caracteres permitidos.',
-            'apellidoP.required' => 'El campo apellido paterno es obligatorio.',
-            'apellidoP.max' => 'El campo apellido paterno excede el límite de caracteres permitidos.',
-            'apellidoM.max' => 'El campo apellido materno excede el límite de caracteres permitidos.',
-            // 'puestoNivelId' => 'El campo de nivel de puesto es obligatorio',
-            'puestoId' => 'El campo de puesto es obligatorio',
-            'ingreso' => 'El campo de fecha de ingreso es obligatorio',
-            'ingreso.date_format' => 'El campo fecha de ingreso tiene un formato inválido.',
-            'diario' => 'El campo de salario diario es obligatorio',
-            'aler.max' => 'El campo alergías excede el límite de caracteres permitidos.',
-            'lugarNacimiento.max' => 'El campo lugar de nacimiento excede el límite de caracteres permitidos.',
-            'fechaNacimiento.date_format' => 'El campo fecha de nacimiento tiene un formato inválido.',
-            'rfc.max' => 'El campo RFC excede el límite de caracteres permitidos.',
-            'curp.max' => 'El campo CURP excede el límite de caracteres permitidos.',
-            'ine.max' => 'El campo folio INE excede el límite de caracteres permitidos.',
-            'licencia.max' => 'El campo licencia excede el límite de caracteres permitidos.',
-            'cpf.max' => 'El campo Cédula Profesional Federal excede el límite de caracteres permitidos.',
-            'cpe.max' => 'El campo Cédula Profesional Estatal excede el límite de caracteres permitidos.',
-            'civil.max' => 'El campo estado civil excede el límite de caracteres permitidos.',
-            'profe.max' => 'El campo profesión excede el límite de caracteres permitidos.',
-            'celular.numeric' => 'El campo celular solo acepta números.',
-            'celular.min' => 'El campo celular requiere de al menos 10 caracteres.',
-            'calle.max' => 'El campo calle excede el límite de caracteres permitidos.',
-            'numero.max' => 'El campo número excede el límite de caracteres permitidos.',
-            'interior.max' => 'El campo interior excede el límite de caracteres permitidos.',
-            'colonia.max' => 'El campo colonia excede el límite de caracteres permitidos.',
-            'cp.min' => 'El campo código postal requiere de al menos 5 caracteres.',
-            'municipio.max' => 'El campo municipio excede el límite de caracteres permitidos.',
-            'estado.max' => 'El campo estado excede el límite de caracteres permitidos.',
-            'casa.max' => 'El campo casa en domicilio fiscal excede el límite de caracteres permitidos.',
-            'callef.max' => 'El campo calle en domicilio fiscal excede el límite de caracteres permitidos.',
-            'numerof.max' => 'El campo número en domicilio fiscal excede el límite de caracteres permitidos.',
-            'interiorf.max' => 'El campo interior en domicilio fiscal excede el límite de caracteres permitidos.',
-            'coloniaf.max' => 'El campo colonia en domicilio fiscal excede el límite de caracteres permitidos.',
-            'cp_f.min' => 'El campo código postal en domicilio fiscal requiere de al menos 5 caracteres.',
-            'municipiof.max' => 'El campo municipio en domicilio fiscal excede el límite de caracteres permitidos.',
-            'estadof.max' => 'El campo estado en domicilio fiscal excede el límite de caracteres permitidos.',
-            'entref.max' => 'El campo entre calles en domicilio fiscal excede el límite de caracteres permitidos.',
-            'nombreE.max' => 'El campo nombre en personales excede el límite de caracteres permitidos.',
-            'nombreP.max' => 'El campo apellido paterno en personales excede el límite de caracteres permitidos.',
-            'nombreM.max' => 'El campo apellido materno en personales excede el límite de caracteres permitidos.',
-            'parentesco.max' => 'El campo parentesco en personales excede el límite de caracteres permitidos.',
-            'particularE.min' => 'El campo teléfono particular en personales requiere de al menos 10 caracteres.',
-            'celularE.min' => 'El campo celular en personales requiere de al menos 10 caracteres.',
-            'nombreB.max' => 'El campo nombre en beneficiario excede el límite de caracteres permitidos.',
-            'apellidoPB.max' => 'El campo apellido paterno en beneficiario excede el límite de caracteres permitidos.',
-            'apellidoMB.max' => 'El campo apellido materno en beneficiario excede el límite de caracteres permitidos.',
-            'particularB.min' => 'El campo teléfono beneficiario en contacto requiere de al menos 10 caracteres.',
-            'celularB.min' => 'El campo celular en beneficiario requiere de al menos 10 caracteres.',
-            'nomina.max' => 'El campo número de nómina excede el límite de caracteres permitidos.',
-            'imss.max' => 'El campo número de IMSS excede el límite de caracteres permitidos.',
-            'clinica.max' => 'El campo nombre de clínica excede el límite de caracteres permitidos.',
-            'infonavit.max' => 'El campo número de Infonavit excede el límite de caracteres permitidos.',
-            'afore.max' => 'El campo afore excede el límite de caracteres permitidos.',
-            'tarjeta.max' => 'El campo tarjeta excede el límite de caracteres permitidos.',
-            'banco.max' => 'El campo nombre de banco excede el límite de caracteres permitidos.',
-            'puesto.max' => 'El campo nombre de puesto excede el límite de caracteres permitidos.',
-            'horario.max' => 'El campo horario excede el límite de caracteres permitidos.',
-            'botas.max' => 'El campo botas excede el límite de caracteres permitidos.',
-            'pc.max' => 'El campo Equipo de cómputo excede el límite de caracteres permitidos.',
-            'pcSerial.max' => 'El campo serial de equipo de cómputo excede el límite de caracteres permitidos.',
-            'celularEquipo.max' => 'El campo equipo celular excede el límite de caracteres permitidos.',
-            'celularEmei.max' => 'El campo IMEI de celular excede el límite de caracteres permitidos.',
-            'radio.max' => 'El campo radio excede el límite de caracteres permitidos.',
-            'radioSerial.max' => 'El campo serial de radio excede el límite de caracteres permitidos.',
-            'radioSerial.numeric' => 'El campo serial de radio debe de ser númerico.',
-            'cargadorSerial.max' => 'El campo serial de cargador excede el límite de caracteres permitidos.',
-            'cargadorSerial.numeric' => 'El campo serial del cargador debe de ser númerico.',
-        ] );
+        //     'botas' => 'nullable|numeric|max:8',
+        //     'pc' => 'nullable|max:200',
+        //     'pcSerial' => 'nullable|max:50',
+        //     'celularEquipo' => 'nullable|max:200',
+        //     'celularImei' => 'nullable|numeric',
+        //     'radio' => 'nullable|max:200',
+        //     'radioSerial' => 'nullable|numeric',
+        //     'cargadorSerial' => 'nullable|numeric',
+        // ], [
+        //     'nombres.required' => 'El campo nombre(s) es obligatorio.',
+        //     'nombres.max' => 'El campo nombre(s) excede el límite de caracteres permitidos.',
+        //     'apellidoP.required' => 'El campo apellido paterno es obligatorio.',
+        //     'apellidoP.max' => 'El campo apellido paterno excede el límite de caracteres permitidos.',
+        //     'apellidoM.max' => 'El campo apellido materno excede el límite de caracteres permitidos.',
+        //     // 'puestoNivelId' => 'El campo de nivel de puesto es obligatorio',
+        //     'puestoId' => 'El campo de puesto es obligatorio',
+        //     'ingreso' => 'El campo de fecha de ingreso es obligatorio',
+        //     'ingreso.date_format' => 'El campo fecha de ingreso tiene un formato inválido.',
+        //     'diario' => 'El campo de salario diario es obligatorio',
+        //     'aler.max' => 'El campo alergías excede el límite de caracteres permitidos.',
+        //     'lugarNacimiento.max' => 'El campo lugar de nacimiento excede el límite de caracteres permitidos.',
+        //     'fechaNacimiento.date_format' => 'El campo fecha de nacimiento tiene un formato inválido.',
+        //     'rfc.max' => 'El campo RFC excede el límite de caracteres permitidos.',
+        //     'curp.max' => 'El campo CURP excede el límite de caracteres permitidos.',
+        //     'ine.max' => 'El campo folio INE excede el límite de caracteres permitidos.',
+        //     'licencia.max' => 'El campo licencia excede el límite de caracteres permitidos.',
+        //     'cpf.max' => 'El campo Cédula Profesional Federal excede el límite de caracteres permitidos.',
+        //     'cpe.max' => 'El campo Cédula Profesional Estatal excede el límite de caracteres permitidos.',
+        //     'civil.max' => 'El campo estado civil excede el límite de caracteres permitidos.',
+        //     'profe.max' => 'El campo profesión excede el límite de caracteres permitidos.',
+        //     'celular.numeric' => 'El campo celular solo acepta números.',
+        //     'celular.min' => 'El campo celular requiere de al menos 10 caracteres.',
+        //     'calle.max' => 'El campo calle excede el límite de caracteres permitidos.',
+        //     'numero.max' => 'El campo número excede el límite de caracteres permitidos.',
+        //     'interior.max' => 'El campo interior excede el límite de caracteres permitidos.',
+        //     'colonia.max' => 'El campo colonia excede el límite de caracteres permitidos.',
+        //     'cp.min' => 'El campo código postal requiere de al menos 5 caracteres.',
+        //     'municipio.max' => 'El campo municipio excede el límite de caracteres permitidos.',
+        //     'estado.max' => 'El campo estado excede el límite de caracteres permitidos.',
+        //     'casa.max' => 'El campo casa en domicilio fiscal excede el límite de caracteres permitidos.',
+        //     'callef.max' => 'El campo calle en domicilio fiscal excede el límite de caracteres permitidos.',
+        //     'numerof.max' => 'El campo número en domicilio fiscal excede el límite de caracteres permitidos.',
+        //     'interiorf.max' => 'El campo interior en domicilio fiscal excede el límite de caracteres permitidos.',
+        //     'coloniaf.max' => 'El campo colonia en domicilio fiscal excede el límite de caracteres permitidos.',
+        //     'cp_f.min' => 'El campo código postal en domicilio fiscal requiere de al menos 5 caracteres.',
+        //     'municipiof.max' => 'El campo municipio en domicilio fiscal excede el límite de caracteres permitidos.',
+        //     'estadof.max' => 'El campo estado en domicilio fiscal excede el límite de caracteres permitidos.',
+        //     'entref.max' => 'El campo entre calles en domicilio fiscal excede el límite de caracteres permitidos.',
+        //     'nombreE.max' => 'El campo nombre en personales excede el límite de caracteres permitidos.',
+        //     'nombreP.max' => 'El campo apellido paterno en personales excede el límite de caracteres permitidos.',
+        //     'nombreM.max' => 'El campo apellido materno en personales excede el límite de caracteres permitidos.',
+        //     'parentesco.max' => 'El campo parentesco en personales excede el límite de caracteres permitidos.',
+        //     'particularE.min' => 'El campo teléfono particular en personales requiere de al menos 10 caracteres.',
+        //     'celularE.min' => 'El campo celular en personales requiere de al menos 10 caracteres.',
+        //     'nombreB.max' => 'El campo nombre en beneficiario excede el límite de caracteres permitidos.',
+        //     'apellidoPB.max' => 'El campo apellido paterno en beneficiario excede el límite de caracteres permitidos.',
+        //     'apellidoMB.max' => 'El campo apellido materno en beneficiario excede el límite de caracteres permitidos.',
+        //     'particularB.min' => 'El campo teléfono beneficiario en contacto requiere de al menos 10 caracteres.',
+        //     'celularB.min' => 'El campo celular en beneficiario requiere de al menos 10 caracteres.',
+        //     'nomina.max' => 'El campo número de nómina excede el límite de caracteres permitidos.',
+        //     'imss.max' => 'El campo número de IMSS excede el límite de caracteres permitidos.',
+        //     'clinica.max' => 'El campo nombre de clínica excede el límite de caracteres permitidos.',
+        //     'infonavit.max' => 'El campo número de Infonavit excede el límite de caracteres permitidos.',
+        //     'afore.max' => 'El campo afore excede el límite de caracteres permitidos.',
+        //     'tarjeta.max' => 'El campo tarjeta excede el límite de caracteres permitidos.',
+        //     'banco.max' => 'El campo nombre de banco excede el límite de caracteres permitidos.',
+        //     'puesto.max' => 'El campo nombre de puesto excede el límite de caracteres permitidos.',
+        //     'horario.max' => 'El campo horario excede el límite de caracteres permitidos.',
+        //     'botas.max' => 'El campo botas excede el límite de caracteres permitidos.',
+        //     'pc.max' => 'El campo Equipo de cómputo excede el límite de caracteres permitidos.',
+        //     'pcSerial.max' => 'El campo serial de equipo de cómputo excede el límite de caracteres permitidos.',
+        //     'celularEquipo.max' => 'El campo equipo celular excede el límite de caracteres permitidos.',
+        //     'celularEmei.max' => 'El campo IMEI de celular excede el límite de caracteres permitidos.',
+        //     'radio.max' => 'El campo radio excede el límite de caracteres permitidos.',
+        //     'radioSerial.max' => 'El campo serial de radio excede el límite de caracteres permitidos.',
+        //     'radioSerial.numeric' => 'El campo serial de radio debe de ser númerico.',
+        //     'cargadorSerial.max' => 'El campo serial de cargador excede el límite de caracteres permitidos.',
+        //     'cargadorSerial.numeric' => 'El campo serial del cargador debe de ser númerico.',
+        // ]);
 
         $personal = $request->all();
         // conversion a mayuscula de algunos campos
-        $personal[ 'curp' ] = strtoupper( $personal[ 'curp' ] );
-        $personal[ 'ine' ] = strtoupper( $personal[ 'ine' ] );
-        $personal[ 'rfc' ] = strtoupper( $personal[ 'rfc' ] );
-        $personal[ 'licencia' ] = strtoupper( $personal[ 'licencia' ] );
-        $personal[ 'cpf' ] = strtoupper( $personal[ 'cpf' ] );
+        $personal['curp'] = strtoupper($personal['curp']);
+        $personal['ine'] = strtoupper($personal['ine']);
+        $personal['rfc'] = strtoupper($personal['rfc']);
+        $personal['licencia'] = strtoupper($personal['licencia']);
+        $personal['cpf'] = strtoupper($personal['cpf']);
         // conversion a minuscula de algunos campos
-        $personal[ 'mailpersonal' ] = strtolower( $personal[ 'mailpersonal' ] );
+        $personal['mailpersonal'] = strtolower($personal['mailpersonal']);
         /* Generación del email empresarial */
-        $personal[ 'mailEmpresarial' ] =  strtolower( $this->generarCorreoEmpresarial( $personal[ 'nombres' ], $personal[ 'apellidoP' ], $personal[ 'apellidoM' ] ) );
+        $personal['mailEmpresarial'] =  strtolower($this->generarCorreoEmpresarial($personal['nombres'], $personal['apellidoP'], $personal['apellidoM']));
 
-        $existeUsuario = User::where( 'email', $personal[ 'mailEmpresarial' ] )->get();
+        $existeUsuario = User::where('email', $personal['mailEmpresarial'])->get();
 
-        if ( $existeUsuario->isEmpty() == true ) {
+        if ($existeUsuario->isEmpty() == true) {
 
             $roles[] = 2;
 
             $newuser = new User();
-            $newuser->name = Str::substr( $personal[ 'nombres' ], 0, 1 ) . ' ' . str_replace( ' ', '', $personal[ 'apellidoP' ] ) . ' ' . str_replace( ' ', '', $personal[ 'apellidoM' ] );
+            $newuser->name = Str::substr($personal['nombres'], 0, 1) . ' ' . str_replace(' ', '', $personal['apellidoP']) . ' ' . str_replace(' ', '', $personal['apellidoM']);
             // $newuser->username =  Str::substr( $personal[ 'nombres' ], 0, 1 ) . $personal[ 'apellidoP' ];
-            $newuser->email =  $personal[ 'mailEmpresarial' ];
-            $newuser->password = bcrypt( '12345678' );
-            $newuser->syncRoles( $roles );
+            $newuser->email =  $personal['mailEmpresarial'];
+            $newuser->password = bcrypt('12345678');
+            $newuser->syncRoles($roles);
             $newuser->save();
 
             //** guardamos el id de usuario para el registro de personal */
-            $personal[ 'userId' ] = $newuser->id;
+            $personal['userId'] = $newuser->id;
         }
         // dd( $request );
 
-        $personal = personal::create( $personal );
+        $personal = personal::create($personal);
 
         /*** directorio contenedor de su información */
-        $pathPesonal = str_pad( $personal->id, 4, '0', STR_PAD_LEFT );
+        $pathPesonal = str_pad($personal->id, 4, '0', STR_PAD_LEFT);
 
         for (
-            $i = 0; $i < count( $request->archivo );
+            $i = 0;
+            $i < count($request->archivo);
             $i++
         ) {
             $documento = new userdocs();
             $documento->personalId = $personal->id;
-            $documento->tipoId = $request->archivo[ $i ][ 'tipoDocs' ];
+            $documento->tipoId = $request->archivo[$i]['tipoDocs'];
             // Obtenemos el tipo de documento
-            $tipoDocumentoNombre = $request->archivo[ $i ][ 'tipoDocsNombre' ];
+            $tipoDocumentoNombre = $request->archivo[$i]['tipoDocsNombre'];
             // Obtenemos el tipo de documento
 
-            if ( $request->archivo[ $i ][ 'omitido' ] == 0 ) {
+            if ($request->archivo[$i]['omitido'] == 0) {
                 // OBLIGATORIO
                 $documento->requerido = '1';
                 $documento->estatus = '0';
-                if ( isset( ( $request->archivo[ $i ][ 'docs' ] ) ) ) {
-                    $file = $request->file( 'archivo' )[ $i ][ 'docs' ];
+                if (isset(($request->archivo[$i]['docs']))) {
+                    $file = $request->file('archivo')[$i]['docs'];
                     $documento->ruta = time() . '_' . $file->getClientOriginalName();
-                    $file->storeAs( '/public/personal/' . $pathPesonal . '/documentos/' .  $tipoDocumentoNombre, $documento->ruta );
+                    $file->storeAs('/public/personal/' . $pathPesonal . '/documentos/' .  $tipoDocumentoNombre, $documento->ruta);
                     $documento->estatus = '2';
                     //Si es 2 Esta  OK
                 }
 
-                if ( ( isset( $request->archivo[ $i ][ 'check' ] ) && $request->archivo[ $i ][ 'check' ] == 'on' ) ) {
+                if ((isset($request->archivo[$i]['check']) && $request->archivo[$i]['check'] == 'on')) {
                     $documento->vencimiento = 1;
                     //Si es 1 SI vence el documento
                     $documento->estatus = '0';
                     //Si esta en 0 Esta MAL
-                    if ( isset( $request->archivo[ $i ][ 'fecha' ] ) ) {
-                        $documento->fechaVencimiento = $request->archivo[ $i ][ 'fecha' ];
+                    if (isset($request->archivo[$i]['fecha'])) {
+                        $documento->fechaVencimiento = $request->archivo[$i]['fecha'];
                         // Evaluar fecha de vencimiento
                         $documento->estatus = '1';
                         //Si es 1 Esta proximo a vencer
@@ -324,7 +329,7 @@ class personalController extends Controller {
                 $documento->estatus = '2';
                 //Si es 2 Esta  OK
             }
-            $documento->comentarios = $request->archivo[ $i ][ 'comentario' ];
+            $documento->comentarios = $request->archivo[$i]['comentario'];
 
             $documento->save();
         }
@@ -373,8 +378,7 @@ class personalController extends Controller {
         $newnomina->fechaPagoPrimaVac = $request->fechaPagoPrimaVac;
         $newnomina->puestoId = $request->puestoId;
         $newnomina->asistencia =  $request->asistencia;
-        $newnomina->diario = $request->diario;
-        ;
+        $newnomina->diario = $request->diario;;
         $newnomina->save();
 
         $newequipo = new equipo();
@@ -393,7 +397,7 @@ class personalController extends Controller {
         // $newequipo->cargadorSerial = $request->cargadorSerial;
         $newequipo->save();
 
-        if ( $request->cp != '' ) {
+        if ($request->cp != '') {
             $newfiscal =  new fiscal();
             $newfiscal->personalId = $personal->id;
             $newfiscal->calle = $request->calle;
@@ -423,19 +427,20 @@ class personalController extends Controller {
             $newfiscal->save();
         }
 
-        Session::flash( 'message', 1 );
-        return redirect()->route( 'personal.index' );
+        Session::flash('message', 1);
+        return redirect()->route('personal.index');
     }
 
     /**
-    * Display the specified resource.
-    *
-    * @param  \App\Models\personal  $personal
-    * @return \Illuminate\Http\Response
-    */
+     * Display the specified resource.
+     *
+     * @param  \App\Models\personal  $personal
+     * @return \Illuminate\Http\Response
+     */
 
-    public function show( personal $personal ) {
-        abort_if ( Gate::denies( 'personal_edit' ), 403 );
+    public function show(personal $personal)
+    {
+        abort_if(Gate::denies('personal_edit'), 403);
 
         // dd( $personal );
         $contacto = contactos::where( 'personalId', $personal->id )->first();

@@ -159,7 +159,7 @@
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Número de Parte: <span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="NumeroParte" name="numeroParte" value=""
+                            <input type="text" class="inputCaja" id="numeroParte" name="numeroParte" value=""
                                 required placeholder="Especifique...">
                         </div>
 
@@ -241,7 +241,7 @@
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Número De Parte: <span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="controlNumeroParte" name="NumeroParte"
+                            <input type="text" class="inputCaja" id="controlNumeroParte" name="numeroParte"
                                 value="">
                         </div>
 

@@ -1686,6 +1686,22 @@ CREATE TABLE extintores(
     CONSTRAINT FK_extintores_maquinariaId foreign key (maquinariaId) references maquinaria(id)
 );
 
+ALTER TABLE carga ADD kilometraje BIGINT(100) NOT NULL;
+ALTER TABLE descarga DROP COLUMN horas;
+ALTER TABLE descarga ADD horas TIME NOT NULL;
+ALTER TABLE descarga ADD odometro BIGINT(100) NULL;
+ALTER TABLE descarga ADD odometroNuevo BIGINT(100) NULL;
+ALTER TABLE descarga ADD kilometrajeNuevo BIGINT(100) NULL;
+ALTER TABLE descarga ADD kilometrajeAnterior BIGINT(100) NULL;
+
+ALTER TABLE descarga
+ADD COLUMN obraId bigint(20) unsigned NULL,
+ADD CONSTRAINT FK_descarga_obraId FOREIGN KEY (obraId) REFERENCES obras(id);
+
+ALTER TABLE descarga
+ADD COLUMN clienteId bigint(20) unsigned NULL,
+ADD CONSTRAINT FK_descarga_clienteId FOREIGN KEY (clienteId) REFERENCES clientes(id);
+
 /***************************************FIN Tablas Relacionadas*/
 
 /***************************************DATOS Tablas Relacionadas*/

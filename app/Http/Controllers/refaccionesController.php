@@ -105,7 +105,7 @@ class refaccionesController extends Controller
     {
         abort_if(Gate::denies('catalogos_edit'), 403);
 
-        // dd( $request );
+        // dd($request);
 
         $request->validate([
             'nombre' => 'required|max:250',

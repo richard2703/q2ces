@@ -24,7 +24,7 @@ use App\Models\proveedorCategoria;
 use App\Models\tipoEquipo;
 use App\Models\tipoUniforme;
 use App\Models\asignacionUniforme;
-
+use App\Models\cisternas;
 
 class inventarioController extends Controller
 {
@@ -104,7 +104,8 @@ class inventarioController extends Controller
                 'carga.precio',
                 'carga.created_at AS fecha',
                 'carga.horaLlegadaCarga',
-                'carga.comentario'
+                'carga.comentario',
+                'carga.kilometraje'
             )
                 ->join('maquinaria', 'maquinaria.id', '=', 'carga.maquinariaId')
                 ->join('personal', 'personal.id', '=', 'carga.operadorId')
@@ -112,6 +113,8 @@ class inventarioController extends Controller
                 ->whereNull('carga.tipoCisternaId')
                 ->orderBy('carga.created_at', 'desc')
                 ->paginate(10);
+
+            // dd($cargas);
 
             $descargas = descarga::select(
                 'descarga.id as descargaIdTote',
@@ -124,6 +127,9 @@ class inventarioController extends Controller
                 db::raw("CONCAT(m2.identificador,' ',m2.nombre) AS servicio"),
                 DB::raw("CONCAT(p2.nombres,' ',p2.apellidoP) AS receptor"),
                 'descarga.km',
+                'descarga.odometroNuevo',
+                'descarga.fechaLlegada',
+                'descarga.kilometrajeNuevo',
                 'descarga.horas',
                 'descarga.imgHoras',
                 'descarga.imgKm',
@@ -498,6 +504,7 @@ class inventarioController extends Controller
             'precio',
             'horaLlegadaCarga',
             'comentario',
+            'kilometraje'
         );
         $carga['userId'] = auth()->user()->id;
         //*** guardamos el registro */
@@ -577,7 +584,7 @@ class inventarioController extends Controller
         // );
         $descarga['horas'] = $request['horas'];
         $descarga = $request->all();
-        // dd($request);
+        // dd($descarga);
 
         if ($request->hasFile("imgKm")) {
             $descarga['imgKm'] = time() . '_' . 'imgKm.' . $request->file('imgKm')->getClientOriginalExtension();
@@ -603,10 +610,33 @@ class inventarioController extends Controller
         // }
 
         //buscamos el equipo para actulizar el nivel de la cisterna
-        $cisterna =   maquinaria::where("id", $request['maquinariaId'])->first();
+        // dd($request);
+        $cisterna =   maquinaria::where("id", $request['servicioId'])->first();
+        $cisternaKango =   maquinaria::where("id", $request['maquinariaId'])->first();
+        $grasa = cisternas::where("nombre", 'Grasa')->get('ultimoPrecio');
+        $anticongelante = cisternas::where("nombre", 'Anticongelante')->get('ultimoPrecio');
+        $hidraulico = cisternas::where("nombre", 'Aceite Hidraulico')->get('ultimoPrecio');
+        $motor = cisternas::where("nombre", 'Aceite Motor')->get('ultimoPrecio');
+        $direccion = cisternas::where("nombre", 'Aceite Direccion')->get('ultimoPrecio');
+
+        // dd($grasa);
         if ($request['km'] > $cisterna->kilometraje) {
+            $descarga['kilometrajeAnterior'] = $cisterna->kilometraje;
+            $descarga['kilometrajeNuevo'] = $request['km'];
             $cisterna->kilometraje = $request['km'];
+            $descarga['odometro'] = $cisternaKango->horometro;
+            $descarga['odometroNuevo'] = $request['horometro'];
+            // $descarga['odometro'] = $cisterna->kilometraje;
+            $cisternaKango->horometro = $request['horometro'];
+            $descarga['grasaUnitario'] = $grasa[0]['ultimoPrecio'];
+            $descarga['hidraulicoUnitario'] = $hidraulico[0]['ultimoPrecio'];
+            $descarga['anticongelanteUnitario'] = $anticongelante[0]['ultimoPrecio'];
+            $descarga['mototUnitario'] = $motor[0]['ultimoPrecio'];
+            $descarga['direccionUnitario'] = $direccion[0]['ultimoPrecio'];
+            $cisternaKango->update();
+            // dd($descarga);
             $descarga['userId'] = auth()->user()->id;
+            $descarga['fechaLlegada'] = Carbon::now();
             descarga::create($descarga);
             $cisterna->cisternaNivel = ($cisterna->cisternaNivel - $request['litros']);
             $cisterna->update();
@@ -680,38 +710,41 @@ class inventarioController extends Controller
 
         $objCalculo = new Calculos();
 
-        $request->validate([
-            'descargaLitros' => 'required|numeric',
-            'descargaKms' => 'required|numeric',
-            'descargaHoras' => 'required|numeric',
-            'descargaFileImgKms' => 'nullable',
-            'descargaFileImgHoras' => 'nullable',
-        ], [
-            'descargaLitros.required' => 'El campo litros es obligatorio.',
-            'descargaKms.required' => 'El campo Km/Mi es obligatorio.',
-            'descargaHoras.required' => 'El campo horómetro es obligatorio.',
-            'descargaImgenKms.required' => 'El campo imagen de kilometraje es obligatorio.',
-            'descargaImgenHoras.required' => 'El campo imagen de horómetro es obligatorio.',
-            'descargaLitros.numeric' => 'El campo litros debe de ser numérico.',
-            'descargaKms.numeric' => 'El campo Km/Mi debe de ser numérico.',
-            'descargaHoras.numeric' => 'El campo horometro debe de ser numérico.',
-        ]);
-        //*** guardamos el registro */
+        // $request->validate([
+        //     'descargaLitros' => 'required|numeric',
+        //     'descargaKms' => 'required|numeric',
+        //     'descargaHoras' => 'required|numeric',
+        //     'descargaFileImgKms' => 'nullable',
+        //     'descargaFileImgHoras' => 'nullable',
+        // ], [
+        //     'descargaLitros.required' => 'El campo litros es obligatorio.',
+        //     'descargaKms.required' => 'El campo Km/Mi es obligatorio.',
+        //     'descargaHoras.required' => 'El campo horómetro es obligatorio.',
+        //     'descargaImgenKms.required' => 'El campo imagen de kilometraje es obligatorio.',
+        //     'descargaImgenHoras.required' => 'El campo imagen de horómetro es obligatorio.',
+        //     'descargaLitros.numeric' => 'El campo litros debe de ser numérico.',
+        //     'descargaKms.numeric' => 'El campo Km/Mi debe de ser numérico.',
+        //     'descargaHoras.numeric' => 'El campo horometro debe de ser numérico.',
+        // ]);
+        //*** buscamos el registro */
         $descarga = descarga::where("id", $request['descargaId'])->first();
 
+        // dd($request);
         //*** obtenemos informacion para ajustes */
         $strSegundos = substr($descarga->created_at, -2);
         $decLitros = $descarga->litros;
 
+
         $descarga->litros = $request['descargaLitros'];
-        $descarga->km = $request['descargaKms'];
-        $descarga->horas = $request['descargaHoras'];
+        $descarga->kilometrajeNuevo = $request['kilometrajeNuevo'];
+        $descarga->horas = $request['horas'];
         $descarga->maquinariaId = $request['descargaMaquinaria'];
         $descarga->operadorId = $request['descargaOperador'];
         $descarga->servicioId = $request['descargaServicio'];
         $descarga->receptorId = $request['descargaDespachador'];
+        $descarga->fechaLlegada = $request['fechaLlegada'];
 
-        $descarga->created_at = ($request['descargaFecha'] . " " . $request['descargaHora'] . ":" . $strSegundos);
+        // $descarga->created_at = ($request['descargaFecha'] . " " . $request['descargaHora'] . ":" . $strSegundos);
 
         if ($request->hasFile("descargaFileImgKms")) {
             $descarga->imgKm = time() . '_' . 'imgKm.' . $request->file('descargaFileImgKms')->getClientOriginalExtension();
@@ -948,5 +981,34 @@ class inventarioController extends Controller
             Session::flash('message', 0);
             return redirect()->back()->with('failed', 'No se encuentra el movimiento especificado!');
         }
+    }
+    public function movimiento(Request $request, inventario $producto)
+    {
+        // abort_if(Gate::denies('inventario_restock'), 403);
+        $movimiento = $request->all();
+        // dd($producto, $movimiento);
+
+        $objMovimiento = new inventarioMovimientos();
+        $objMovimiento->movimiento = 1; //*** agrega al inventario */
+        $objMovimiento->inventarioId = $producto->id;
+        $objMovimiento->usuarioId = $movimiento['usuarioId'];
+        $objMovimiento->cantidad = $movimiento['cantidad'];
+        $objMovimiento->precioUnitario = $movimiento['costo'];
+        $objMovimiento->total = ($movimiento['costo'] * $movimiento['cantidad']);
+        $objMovimiento->Save();
+
+        if ($movimiento['movimiento'] == 1) {
+            //*** creamos el registro del stock */
+
+            $producto->cantidad = ($producto->cantidad + $movimiento['cantidad']);
+            $producto->valor =  $movimiento['costo'];
+            $producto->save();
+        } else if ($movimiento['movimiento'] == 2) {
+            $producto->cantidad = ($producto->cantidad - $movimiento['cantidad']);
+            $producto->save();
+        }
+
+        Session::flash('message', 1);
+        return redirect()->route('inventario.index', $producto->tipo);
     }
 }

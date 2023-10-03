@@ -91,7 +91,7 @@
                                                         {{-- @can('user_edit') --}}
                                                         <a href="#" class="" data-bs-toggle="modal"
                                                             data-bs-target="#editarItem"
-                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->categoriaId }}','{{ $item->comentario }}')">
+                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->razonSocial }}','{{ $item->categoriaId }}','{{ $item->comentario }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                 height="28" fill="currentColor"
                                                                 class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -152,9 +152,15 @@
                         @csrf
                         {{-- <input type="hidden" name="userId" id="userId" value="{{ $usuario->id }}"> --}}
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Nombre:<span>*</span></label></br>
+                            <label class="labelTitulo">Nombre Comercial:<span>*</span></label></br>
                             <input type="text" class="inputCaja" id="nombre" name="nombre"
                                 value="{{ old('nombre') }}" required placeholder="Especifique...">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Razon Social:<span>*</span></label></br>
+                            <input type="text" class="inputCaja" id="razonSocial" name="razonSocial"
+                                value="{{ old('razonSocial') }}" required placeholder="Especifique...">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
@@ -205,6 +211,12 @@
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Nombre:</label></br>
                             <input type="text" class="inputCaja" id="puestoNombre" name="nombre" value="">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Razon Social:<span>*</span></label></br>
+                            <input type="text" class="inputCaja" id="UrazonSocial" name="UrazonSocial"
+                                value="{{ old('razonSocial') }}" required placeholder="Especifique...">
                         </div>
 
                         <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
@@ -275,13 +287,16 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, nivel, comentarios) {
+        function cargaItem(id, nombre, razonSocial, nivel, comentarios) {
 
             const txtId = document.getElementById('controlId');
             txtId.value = id;
 
             const txtNombre = document.getElementById('puestoNombre');
             txtNombre.value = nombre;
+
+            const txtRazonSocial = document.getElementById('UrazonSocial');
+            txtRazonSocial.value = razonSocial;
 
             const lstNivel = document.getElementById('editPuestoNivelId').value = nivel;
 
