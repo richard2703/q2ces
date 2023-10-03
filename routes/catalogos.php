@@ -22,6 +22,10 @@ Route::prefix('catalogos')->middleware('auth')->group(function () {
 	Route::get('/puestosNivel', [App\Http\Controllers\catalogosController::class, 'indexPuestosNivel'])->name('catalogoPuestosNivel.index');
 	Route::resource('puestoNivel', App\Http\Controllers\puestoNivelController::class);
 
+	Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
+
+	Route::resource('/docs', App\Http\Controllers\docsController::class);
+
 	Route::get('/catalogos/tiposEquipo', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposEquipo'])->name('catalogoTiposEquipo.index');
 	Route::resource('tipoEquipo', App\Http\Controllers\tipoEquipoController::class);
 
@@ -44,6 +48,10 @@ Route::prefix('catalogos')->middleware('auth')->group(function () {
 	Route::get('/catalogos/tiposRefaccion', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTipoRefaccion'])->name('catalogoTipoRefaccion.index');
 	Route::resource('refaccionTipo', App\Http\Controllers\refaccionTipoController::class);
 
+	Route::resource('lugares', App\Http\Controllers\lugaresController::class);
+
+	Route::resource('ubicaciones', App\Http\Controllers\ubicacionesController::class);
+
 	//Maquinaria
 	Route::get('/catalogos/categoriasMaquinaria', [App\Http\Controllers\catalogosController::class, 'indexCatalogoCategoriasMaquinaria'])->name('catalogoCategoriasMaquinaria.index');
 	Route::resource('maquinariaCategoria', App\Http\Controllers\maquinariaCategoriaController::class);
@@ -64,11 +72,16 @@ Route::prefix('catalogos')->middleware('auth')->group(function () {
 	Route::get('/catalogos/ubicacionesTareas', [App\Http\Controllers\catalogosController::class, 'indexCatalogoUbicacionesTareas'])->name('catalogoUbicacionesTareas.index');
 	Route::resource('tareaUbicacion', App\Http\Controllers\tareaUbicacionController::class);
 
+	Route::resource('tiposServicios', App\Http\Controllers\tiposServiciosController::class);
+
+	Route::resource('serviciosMtq', App\Http\Controllers\serviciosMtqController::class);
+
 	Route::get('/tiposValorTarea', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposValorTarea'])->name('catalogoTiposValorTarea.index');
 	Route::resource('tipoValorTarea', App\Http\Controllers\tipoValorTareaController::class);
 
 	Route::get('/catalogos/tiposMantenimiento', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposMantenimiento'])->name('catalogoTiposMantenimiento.index');
 	Route::resource('tipoMantenimiento', App\Http\Controllers\tipoMantenimientoController::class);
+
 
 	//Caja Chica
 	Route::get('/catalogos/conceptos', [App\Http\Controllers\catalogosController::class, 'indexCatalogoConceptos'])->name('catalogoConceptos.index');

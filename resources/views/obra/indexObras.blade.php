@@ -1,6 +1,9 @@
 @extends('layouts.main', ['activePage' => 'obra', 'titlePage' => __('Lista de Obras')])
 @section('content')
     <div class="content">
+        <?php
+        $objValida = new Validaciones();
+        ?>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -23,7 +26,7 @@
                                         </div>
                                     @endif
                                     <div class="row">
-                                        
+
                                         <div class="d-flex p-3 divBorder">
                                             <div class="col-12 text-end">
                                             @can('obra_create')

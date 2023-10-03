@@ -1,6 +1,9 @@
 @extends('layouts.main', ['activePage' => 'personal', 'titlePage' => __('Vista de Personal')])
 @section('content')
     <div class="content">
+        <?php
+        $objValida = new Validaciones();
+        ?>
         @if ($errors->any())
             <div class="alert alert-danger">
                 <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
@@ -1188,8 +1191,7 @@
                                                                         onclick='cancelarOmitir("{{ $doc->id }}","{{ $doc->nombre }}")'>
                                                                         <P class="fs-5"> Cancelar</P>
                                                                     </button>
-                                                                    <div class="text-center"
-                                                                        style="margin-top: -10px !important">
+                                                                    <div class="text-center">
                                                                         <div
                                                                             class="form-check d-flex justify-content-between">
                                                                             <div class="text-center"></div>
