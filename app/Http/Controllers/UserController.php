@@ -37,8 +37,12 @@ class UserController extends Controller
             + [
                 'password' => bcrypt($request->input('password')),
             ]);
-        $roles = $request->input('roles', 'id');
-        $user->syncRoles($roles);
+        // dd($request);
+        if (isset($request['roles'])) {
+            $roles = $request->input('roles', 'id');
+            $user->syncRoles($roles);
+        }
+
         Session::flash('message', 1);
         // return redirect()->route('users.index', $user->id)->with('success', 'Usuario Guardado');
         return redirect()->route('users.index');

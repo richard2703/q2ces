@@ -97,37 +97,72 @@
                             
                             <h5 class="text-center" style="font-weight: 1000; ">SOLICITO: </h5> <div style="font-size:14px;">{{$solicitante['nombreSolicitante']}}</div>
                             @if ($descarga->tipoCisternaId == null)
-                                <h6 style="font-weight: 1000;" class="text-center">LITROS COMBUSTIBLE: </h6> <div class="text-center" style="font-size:12px;"> Unidades: {{ $descarga->litros }} </div> <div class="text-center" style="font-size:12px;"> 
-                                    @if ($cliente != false) 
+                                <h6 style="font-weight: 1000;" class="text-center">LITROS COMBUSTIBLE: </h6> <div class="text-center" style="font-size:12px;"> Unidades: @if ($descarga->litros)
+                                    {{ $descarga->litros }} </div> <div class="text-center" style="font-size:12px;"> 
+                                        @if ($cliente != false) 
                                     costo: ${{$ultimaCargaSinTote->precio}} Total: ${{($descarga->litros*$ultimaCargaSinTote->precio)}} </div>
                                     @endif
+                                @else
+                                    0 </div> <div class="text-center" style="font-size:12px;"> 
+                                @endif 
+                                    
                             @else
-                                <h6 style="font-weight: 1000;" class="text-center">LITROS COMBUSTIBLE: </h6> <div class="text-center" style="font-size:12px;"> Unidades: {{ $descarga->litros }} </div> <div class="text-center" style="font-size:12px;"> 
-                                    @if ($cliente != false) 
-                                    costo: ${{$ultimaCarga[0]->ultimoPrecio}} Total: ${{($descarga->litros*$ultimaCarga[0]->ultimoPrecio)}} </div>
-                                    @endif
+                                <h6 style="font-weight: 1000;" class="text-center">LITROS COMBUSTIBLE: </h6> <div class="text-center" style="font-size:12px;"> Unidades: @if ($descarga->litros)
+                                    {{ $descarga->litros }} </div> <div class="text-center" style="font-size:12px;"> 
+                                        @if ($cliente != false) 
+                                        costo: ${{$ultimaCarga[0]->ultimoPrecio}} Total: ${{($descarga->litros*$ultimaCarga[0]->ultimoPrecio)}} </div>
+                                        @endif
+                                @else
+                                    0 </div> <div class="text-center" style="font-size:12px;"> 
+                                @endif 
+                                   
                             @endif
                             
-                            <h6 style="font-weight: 1000;" class="text-center">GRASA PARA AUTO: </h6> <div class="text-center" style="font-size:12px;"> Unidades: {{ $descarga->grasa }} </div> <div class="text-center" style="font-size:12px;"> 
-                                @if ($cliente != false) 
+                            <h6 style="font-weight: 1000;" class="text-center">GRASA PARA AUTO: </h6> <div class="text-center" style="font-size:12px;"> Unidades: @if ($descarga->grasa)
+                                {{ $descarga->grasa }} </div> <div class="text-center" style="font-size:12px;"> 
+                                    @if ($cliente != false) 
                                 costo: ${{ $descarga->grasaUnitario }} Total: ${{($descarga->grasa*$descarga->grasaUnitario)}} </div> <br> <br>
                                 @endif
-                            <h5 style="font-weight: 1000;" class="text-center">ACEITE MOTOR: </h5> <div class="text-center"> Unidades: {{ $descarga->motor }} </div>  
-                            @if ($cliente != false) 
+                            @else
+                                0 </div> <div class="text-center" style="font-size:12px;"> 
+                            @endif 
+                                
+                            <h5 style="font-weight: 1000;" class="text-center">ACEITE MOTOR: </h5> <div class="text-center"> Unidades: @if ($descarga->motor)
+                                {{ $descarga->motor }} </div>  
+                                @if ($cliente != false) 
                             costo: ${{ $descarga->mototUnitario }} Total: ${{($descarga->motor*$descarga->mototUnitario)}}
                             @endif
-                            <h5 style="font-weight: 1000;" class="text-center">ANTICONGELANTE: </h5> <div class="text-center"> Unidades: {{ $descarga->anticongelante }} </div>  
-                            @if ($cliente != false) 
+                            @else
+                                0 </div>  
+                            @endif 
+                            
+                            <h5 style="font-weight: 1000;" class="text-center">ANTICONGELANTE: </h5> <div class="text-center"> Unidades: @if ($descarga->anticongelante)
+                                {{ $descarga->anticongelante }} </div> 
+                                @if ($cliente != false) 
                             costo: ${{ $descarga->anticongelanteUnitario }} Total: ${{($descarga->anticongelante*$descarga->anticongelanteUnitario)}}
-                            @endif
-                            <h5 style="font-weight: 1000;" class="text-center">ACEITE HIDRÁULICO: </h5> <div class="text-center"> Unidades: {{ $descarga->hidraulico }} </div>  
-                            @if ($cliente != false) 
+                            @endif 
+                            @else
+                                0 </div>  
+                            @endif 
+                            
+                            <h5 style="font-weight: 1000;" class="text-center">ACEITE HIDRÁULICO: </h5> <div class="text-center"> Unidades: @if ($descarga->hidraulico)
+                                {{ $descarga->hidraulico }} </div>  
+                                @if ($cliente != false) 
                             costo: ${{ $descarga->hidraulicoUnitario }} Total: ${{($descarga->hidraulico*$descarga->hidraulicoUnitario)}}
                             @endif
-                            <h5 style="font-weight: 1000;" class="text-center">ACEITE DIRECCIÓN: </h5> <div class="text-center"> Unidades: {{$descarga->direccion}}  </div>  
-                            @if ($cliente != false) 
+                            @else
+                                0 </div>  
+                            @endif 
+                            
+                            <h5 style="font-weight: 1000;" class="text-center">ACEITE DIRECCIÓN: </h5> <div class="text-center"> Unidades: @if ($descarga->direccion)
+                                {{$descarga->direccion}}  </div>  
+                                @if ($cliente != false) 
                             costo: ${{ $descarga->direccionUnitario }} Total: ${{($descarga->direccion*$descarga->direccionUnitario)}}
                             @endif
+                            @else
+                                0  </div>  
+                            @endif
+                            
 
                             @php
                             $totalProductosSinTote = (isset($descarga->litros) ? $descarga->litros * (isset($ultimaCargaSinTote->precio) ? $ultimaCargaSinTote->precio : 0) : 0) +
