@@ -26,7 +26,7 @@ class tareaController extends Controller
     public function index()
     {
 
-        abort_if(Gate::denies('tarea_index'), 403);
+        abort_if(Gate::denies('catalogos_index'), 403);
 
         $vctCategorias = tareaCategoria::all();
         $vctTipos = tareaTipo::all();
@@ -67,7 +67,7 @@ class tareaController extends Controller
 
     public function store(Request $request)
     {
-        abort_if(Gate::denies('tarea_create'), 403);
+        abort_if(Gate::denies('catalogos_create'), 403);
 
         $request->validate( [
             'nombre' => 'required|max:250|unique:tarea,nombre,' . $request['nombre'],
@@ -122,7 +122,7 @@ class tareaController extends Controller
     public function update(Request $request, $id)
     {
 
-        abort_if(Gate::denies('tarea_edit'), 403);
+        abort_if(Gate::denies('catalogos_edit'), 403);
 
         // dd( $request );
 
@@ -158,6 +158,22 @@ class tareaController extends Controller
 
     public function destroy($id)
     {
-        //
+
+        // abort_if ( Gate::denies( 'catalogos_destroy' ), 403 );
+        // try {
+        //     $id->delete();
+        //     // Intenta eliminar
+        // } catch ( QueryException $e ) {
+        //     if ( $e->getCode() === 23000 ) {
+        //         return redirect()->back()->with( 'faild', 'No Puedes Eliminar ' );
+        //         // Esto es un error de restricción de clave externa ( FOREIGN KEY constraint )
+        //         // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
+        //     } else {
+        //         return redirect()->back()->with( 'faild', 'No Puedes Eliminar si esta en uso' );
+        //         // Otro tipo de error de base de datos
+        //         // Maneja según sea necesario
+        //     }
+        // }
+        // return redirect()->back()->with( 'success', 'Eliminado correctamente' );
     }
 }

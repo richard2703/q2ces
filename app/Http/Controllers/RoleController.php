@@ -32,7 +32,7 @@ class RoleController extends Controller
     {
         abort_if(Gate::denies('role_create'), 403);
 
-        $permissions = Permission::all()->pluck('name', 'id');
+        $permissions = Permission::all()->sortBy('name')->pluck('name', 'id');
         // dd($permissions);
         return view('roles.create', compact('permissions'));
     }
@@ -63,8 +63,8 @@ class RoleController extends Controller
     {
         abort_if(Gate::denies('role_show'), 403);
 
-        $permissions = Permission::whereIn('id', $role->permissions->pluck('id'))->pluck('name', 'id');
-        $role->load('permissions');
+        $permissions = Permission::whereIn('id', $role->permissions->sortBy('name')->pluck('id'))->pluck('name', 'id');
+        $role->load('permissions') ;
 
         return view('roles.show', compact('role', 'permissions'));
     }
@@ -79,7 +79,7 @@ class RoleController extends Controller
     {
         abort_if(Gate::denies('role_edit'), 403);
 
-        $permissions = Permission::all()->pluck('name', 'id');
+        $permissions = Permission::all()->sortBy('name')->pluck('name', 'id');
 
         $role->load('permissions');
         // dd($role);

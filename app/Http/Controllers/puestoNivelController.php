@@ -11,142 +11,136 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\QueryException;
 
-class puestoNivelController extends Controller
-{
+class puestoNivelController extends Controller {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
 
-    public function index()
-    {
-        abort_if(Gate::denies('catalogos_index'), 403);
-        // dd('test');
-        $records = puestoNivel::orderBy('nombre', 'asc')->paginate(15);
+    public function index() {
+        abort_if ( Gate::denies( 'catalogos_index' ), 403 );
+        // dd( 'test' );
+        $records = puestoNivel::orderBy( 'nombre', 'asc' )->paginate( 15 );
 
-        return view('catalogo.indexPuestosNivel', compact('records'));
+        return view( 'catalogo.indexPuestosNivel', compact( 'records' ) );
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Show the form for creating a new resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
 
-    public function create()
-    {
+    public function create() {
         //
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
 
-    public function store(Request $request)
-    {
-        abort_if(Gate::denies('catalogos_create'), 403);
+    public function store( Request $request ) {
+        abort_if ( Gate::denies( 'catalogos_create' ), 403 );
 
-        $request->validate([
-            'nombre' => 'required|max:250|unique:puestoNivel,nombre,' . $request['nombre'],
+        $request->validate( [
+            'nombre' => 'required|max:250|unique:puestoNivel,nombre,' . $request[ 'nombre' ],
             'comentarios' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.unique' => 'El valor del campo nombre ya esta en uso.',
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
             'comentarios.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
-        ]);
+        ] );
         $record = $request->all();
 
-        puestoNivel::create($record);
-        Session::flash('message', 1);
+        puestoNivel::create( $record );
+        Session::flash( 'message', 1 );
 
-        return redirect()->route('catalogoPuestosNivel.index');
+        return redirect()->route( 'catalogoPuestosNivel.index' );
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Display the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
 
-    public function show($id)
-    {
+    public function show( $id ) {
         //
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Show the form for editing the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
 
-    public function edit($id)
-    {
+    public function edit( $id ) {
         //
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
 
-    public function update(Request $request, $id)
-    {
-        abort_if(Gate::denies('catalogos_edit'), 403);
+    public function update( Request $request, $id ) {
+        abort_if ( Gate::denies( 'catalogos_edit' ), 403 );
 
-        // dd($request);
+        // dd( $request );
 
-        $request->validate([
-            'nombre' => 'required|max:250|max:250|unique:puestoNivel,nombre,' . $request['puestoId'],
+        $request->validate( [
+            'nombre' => 'required|max:250|max:250|unique:puestoNivel,nombre,' . $request[ 'puestoId' ],
             'comentarios' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.unique' => 'El valor del campo nombre ya esta en uso.',
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
             'comentarios.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
-        ]);
+        ] );
         $data = $request->all();
 
-        $record = puestoNivel::where('id', $data['puestoId'])->first();
-        $record->update($data);
-        Session::flash('message', 1);
+        $record = puestoNivel::where( 'id', $data[ 'puestoId' ] )->first();
+        $record->update( $data );
+        Session::flash( 'message', 1 );
 
-        return redirect()->route('catalogoPuestosNivel.index');
+        return redirect()->route( 'catalogoPuestosNivel.index' );
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Remove the specified resource from storage.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
 
-    public function destroy(puestoNivel $puestoNivel)
-    {
+    public function destroy( puestoNivel $puestoNivel ) {
 
+        abort_if ( Gate::denies( 'catalogos_destroy' ), 403 );
         try {
-            $puestoNivel->delete(); // Intenta eliminar 
-        } catch (QueryException $e) {
-            if ($e->getCode() === 23000) {
-                return redirect()->back()->with('faild', 'No Puedes Eliminar ');
-                // Esto es un error de restricción de clave externa (FOREIGN KEY constraint)
+            $puestoNivel->delete();
+            // Intenta eliminar
+        } catch ( QueryException $e ) {
+            if ( $e->getCode() === 23000 ) {
+                return redirect()->back()->with( 'faild', 'No Puedes Eliminar ' );
+                // Esto es un error de restricción de clave externa ( FOREIGN KEY constraint )
                 // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
             } else {
-                return redirect()->back()->with('faild', 'No Puedes Eliminar un puesto en uso');
+                return redirect()->back()->with( 'faild', 'No Puedes Eliminar un puesto en uso' );
                 // Otro tipo de error de base de datos
                 // Maneja según sea necesario
             }
         }
 
-        return redirect()->back()->with('success', 'Puesto Eliminado correctamente');
+        return redirect()->back()->with( 'success', 'Puesto Eliminado correctamente' );
     }
 }

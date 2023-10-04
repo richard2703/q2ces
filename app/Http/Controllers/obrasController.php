@@ -909,6 +909,7 @@ class obrasController extends Controller {
 
     public function destroy( obras $obras ) {
         // dd( 'test' );
+        abort_if ( Gate::denies( 'obra_destroy' ), 403 );
         return redirect()->back()->with( 'failed', 'No se puede eliminar' );
     }
 }

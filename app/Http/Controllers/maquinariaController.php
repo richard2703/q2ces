@@ -769,6 +769,8 @@ class maquinariaController extends Controller
 
     public function download($id, $doc)
     {
+
+        abort_if(Gate::denies('maquinaria_edit'), 403);
         $book = maqdocs::where('id', $id)->firstOrFail();
 
         if (empty($book) === false) {
@@ -863,6 +865,7 @@ class maquinariaController extends Controller
 
     public function asignacion(Request $request)
     {
+        abort_if(Gate::denies('maquinaria_assign_personal'), 403);
         $data = $request->all();
         $vctDebug = array();
         $objAsigna = new obraMaqPer();
