@@ -854,7 +854,7 @@
                     @method('POST')
                     <div class="modal-body">
                         <input type="hidden" name="id" value="{{$descarga->descargaIdTote}}" id="idDescarga">
-                        <label class="labelTitulo">Solicito:</label>
+                        <label class="labelTitulo">Solicito*:</label>
                         {{--  <select class="form-select inputCaja" name="nombreSolicitante" id="nombreSolicitanteDescarga" required>
                             <option value="">Seleccione</option>
                             @foreach ($usuarios as $item)
@@ -878,7 +878,7 @@
                             </div>
                         </div>
 
-                        <label for="horaActual" class="labelTitulo mt-3">Hora de Llegada:</label>
+                        <label for="horaActual" class="labelTitulo mt-3">Hora de Llegada*:</label>
                         <input type="time" name="horaLlegada" id="horaActual" class="inputCaja" value="{{ date('H:i') }}" required>
 
                         <label for="observacionesDescarga" class="labelTitulo mt-3">Observaciones:</label>
@@ -888,7 +888,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn botonGral" data-bs-toggle="modal" data-bs-target="#confirmationModal">Imprimir</button>
+                        <button type="button" class="btn botonGral" data-bs-toggle="modal" onclick="mostrarModalConfirmacion()">Imprimir</button>
                     </div>
                 </form>
                 {{--  <button type="submit" class="btn botonGral">Imprimir</button>  --}}
@@ -936,18 +936,18 @@
                     @method('POST')
                     <div class="modal-body">
                         <input type="hidden" name="id" value="{{$descarga->descargaIdTote}}" id="idDescargaEdit">
-                        <label class="labelTitulo">Solicito:</label>
+                        <label class="labelTitulo">Solicito*:</label>
                         {{--  <select class="form-select inputCaja" name="nombreSolicitante" id="nombreSolicitanteDescarga" required>
                             <option value="">Seleccione</option>
                             @foreach ($usuarios as $item)
                                 <option value="{{ $item->nombres . ' ' . $item->apellidoP }}">{{ $item->nombres . ' ' . $item->apellidoP }}</option>
                             @endforeach
                         </select>  --}}
-                        <input type="text" name="nombreSolicitante" id="nombreSolicitanteDescargaEdit" class="inputCaja" placeholder="Nombre del Solicitante...">
+                        <input type="text" name="nombreSolicitante" id="nombreSolicitanteDescargaEdit" class="inputCaja" placeholder="Nombre del Solicitante..." required>
                         <div class="row">
                             <div class="col-6">
-                                <label for="costoTrabajoDescarga" class="labelTitulo mt-3">Costo de Trabajo:</label>
-                                <input type="number" name="costoTrabajo" id="costoTrabajoDescargaEdit" class="inputCaja" placeholder="Costo del Trabajo...">
+                                <label for="costoTrabajoDescarga" class="labelTitulo mt-3">Costo de Trabajo*:</label>
+                                <input type="number" name="costoTrabajo" id="costoTrabajoDescargaEdit" class="inputCaja" placeholder="Costo del Trabajo..." required>
                             </div>
     
                             <div class="col-6">
@@ -960,7 +960,7 @@
                             </div>
                         </div>
 
-                        <label for="horaActual" class="labelTitulo mt-3">Hora de Llegada:</label>
+                        <label for="horaActual" class="labelTitulo mt-3">Hora de Llegada*:</label>
                         <input type="time" name="horaLlegada" id="horaActualEdit" class="inputCaja" value="{{ date('H:i') }}" required>
 
                         <label for="observacionesDescarga" class="labelTitulo mt-3">Observaciones:</label>
@@ -1185,7 +1185,7 @@
                         <input type="number" name="costoTrabajo" id="costoTrabajoDescarga" class="inputCaja" placeholder="Costo de Trabajo">
                         
                         <label for="horaActual" class="labelTitulo mt-3">Hora de Llegada:</label>
-                        <input type="time" name="horaLlegada" id="horaActual" class="inputCaja" value="{{ date('H:i') }}" required>
+                        <input type="time" name="horaLlegada" id="horaActualM" class="inputCaja" value="{{ date('H:i') }}" required>
 
                         <label for="observacionesDescarga" class="labelTitulo mt-3">Observaciones:</label>
                         <textarea class="form-control-textarea border-green" name="observaciones" id="observacionesDescarga" rows="3" placeholder="Agregar Observaciones..."></textarea>
@@ -1200,6 +1200,18 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function mostrarModalConfirmacion() {
+            let nombreSolicitante = document.getElementById("nombreSolicitanteDescarga").value;
+            let hora = document.getElementById("horaActualM").value;
+    
+            if (nombreSolicitante.trim() === "" || hora.trim() === "") {
+                alert("Por favor, llena todos los campos requeridos.");
+            } else {
+                $('#confirmationModal').modal('show');
+            }
+        }
+    </script>
     <script>
         function actualizar(id) {
 

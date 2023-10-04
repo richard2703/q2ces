@@ -505,7 +505,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                
                             @endforeach
 
                         </div>
@@ -768,7 +767,7 @@
                                                                                     
                                                                                     <td class="td-actions d-flex justify-content-center">
                                                                                         @can('ticketDescarga_edit')
-                                                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#printFormDescargaEdit"
+                                                                                            {{--  <a href="#" data-bs-toggle="modal" data-bs-target="#printFormDescargaEdit"
                                                                                                 onclick="cargaItemEdit('{{ $descarga->id }}', '{{ $descarga->nombreSolicitante }}', '{{ $descarga->costoTrabajo }}', '{{ $descarga->horaLlegada }}','{{ $descarga->observaciones }}','{{ $descarga->tipo_solicitud }}')">
                                                                                                 <svg style="color:#f7c90d; margin-top:20px;" xmlns="http://www.w3.org/2000/svg "
                                                                                                     width="28"
@@ -779,7 +778,7 @@
                                                                                                     <path
                                                                                                         d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                                                                                 </svg>
-                                                                                            </a>
+                                                                                            </a>  --}}
                                                                                         @endcan
                                                                                     
                                                                                         <form action="{{ route('printOnlyTicket.post', $descarga->id) }}" method="POST" style="display: inline-block;">
@@ -889,7 +888,7 @@
                     @method('POST')
                     <div class="modal-body">
                         <input type="hidden" name="id" value="" id="idDescarga">
-                        <label class="labelTitulo">Solicito:</label>
+                        <label class="labelTitulo">Solicito*:</label>
                         {{--  <select class="form-select inputCaja" name="nombreSolicitante" id="nombreSolicitanteDescarga" required>
                             <option value="">Seleccione</option>
                             @foreach ($usuarios as $item)
@@ -913,9 +912,6 @@
                             </div>
                         </div>
 
-                        <label for="horaActual" class="labelTitulo mt-3">Hora de Llegada:</label>
-                        <input type="time" name="horaLlegada" id="horaActual" class="inputCaja" value="" required>
-
                         <label for="observacionesDescarga" class="labelTitulo mt-3">Observaciones:</label>
                         <textarea class="form-control-textarea border-green" name="observaciones" id="observacionesDescarga" rows="3" placeholder="Agregar Observaciones..."></textarea>
 
@@ -923,7 +919,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn botonGral" data-bs-toggle="modal" data-bs-target="#confirmationModal">Imprimir</button>
+                        <button type="button" class="btn botonGral" data-bs-toggle="modal" onclick="mostrarModalConfirmacion()">Imprimir</button>
                     </div>
                 </form>
                 {{--  <button type="submit" class="btn botonGral">Imprimir</button>  --}}
@@ -1224,6 +1220,23 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function mostrarModalConfirmacion() {
+            // Obtén el valor del campo de texto y del campo de entrada
+            let nombreSolicitante = document.getElementById("nombreSolicitanteDescarga").value;
+            let observaciones = document.getElementById("observacionesDescarga").value;
+    
+            // Verifica que ambos campos estén completos
+            if (nombreSolicitante.trim() === "") {
+                alert("Por favor, llena todos los campos requeridos.");
+            } else {
+                // Muestra el modal de confirmación si los campos están completos
+                $('#confirmationModal').modal('show');
+            }
+        }
+    </script>
+    
+    
     <script>
         function actualizar(id) {
 

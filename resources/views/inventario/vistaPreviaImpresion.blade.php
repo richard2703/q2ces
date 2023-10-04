@@ -154,7 +154,7 @@
                             
 
                             @php
-                            $totalProductosSinTote = (isset($descarga->litros) ? $descarga->litros * (isset($ultimaCargaSinTote->precio) ? $ultimaCargaSinTote->precio : 0) : 0) +
+                            $totalProductosSinTote =
                             (isset($descarga->grasa) ? $descarga->grasa * (isset($descarga->grasaUnitario) ? $descarga->grasaUnitario : 0) : 0) +
                             (isset($descarga->motor) ? $descarga->motor * (isset($descarga->mototUnitario) ? $descarga->mototUnitario : 0) : 0) +
                             (isset($descarga->anticongelante) ? $descarga->anticongelante * (isset($descarga->anticongelanteUnitario) ? $descarga->anticongelanteUnitario : 0) : 0) +
@@ -163,13 +163,27 @@
 
     
                             
-                            $totalProductos = ($descarga->litros*$ultimaCarga[0]->ultimoPrecio) +
+                            $totalProductos =
                                             ($descarga->grasa*$descarga->grasaUnitario) +
                                             ($descarga->motor*$descarga->mototUnitario) +
                                             ($descarga->anticongelante*$descarga->anticongelanteUnitario) +
                                             ($descarga->hidraulico*$descarga->hidraulicoUnitario) +
                                             ($descarga->direccion*$descarga->direccionUnitario);    
                             @endphp
+
+                            @if ($descarga->tipoCisternaId != null)
+                                <img width="300px;" src="{{ asset('/img/login/Header2GenericoGrande.svg') }}" alt="" class="mb-2">
+                                @if ($descarga->kilometrajeNuevo != null)
+                                    <div class="text-center"><h6 style="font-weight: 1000; ">KILOMETRAJE ACTUAL: </h6></div>{{$descarga->kilometrajeNuevo}}  {{$descarga->equipo_kom}}
+                                @else
+                                    <div class="text-center"><h6 style="font-weight: 1000; ">KILOMETRAJE ACTUAL: </h6></div>No Habia Un Kilometraje Anterior.
+                                @endif
+                                <div class="text-center"><h6 style="font-weight: 1000;  margin-top: 10px;">OBSERVACIONES: </h6>{{$solicitante['observaciones']}}</div>
+                                <img width="300px;" src="{{ asset('/img/login/Header3DescargaGrande.svg') }}" alt="" class="mb-2">
+                                <div class="text-center"><h6 style="font-weight: 1000;">COSTO DE COMBUSTIBLE:</h6>${{ number_format($ultimaCarga[0]->ultimoPrecio * $descarga->litros, 2) }}</div>
+                                <h6 style="font-weight: 1000; ">COSTO DE FLUIDOS: </h6> ${{number_format($totalProductos,2)}}
+                                <h6 style="font-weight: 1000; ">TOTAL: ${{number_format(($ultimaCarga[0]->ultimoPrecio*$descarga->litros)+$totalProductos, 2)}}</h6>
+                            @endif
 
                             @if (!empty($descarga->otro))
                                 <h6 style="font-weight: 1000;" class="text-center">OTRO: {{ $descarga->otro }} L</h6>

@@ -68,8 +68,8 @@
                                 @else
                                     <h6 class="text-center" style="font-weight: 1000; ">OBRA: </h6> <div style="font-size:14px;">SIN OBRA</div>    
                                 @endif
-                            @else
-                                @if ($descarga->nombre_clienteTote)
+                            @endif
+                                {{--  @if ($descarga->nombre_clienteTote)
                                 <h6 class="text-center" style="font-weight: 1000; ">CLIENTE: </h6> <div style="font-size:14px;">{{ $descarga->nombre_clienteTote }}</div>    
                                 @else
                                     <h6 class="text-center" style="font-weight: 1000; ">CLIENTE: </h6> <div style="font-size:14px;">SIN CLIENTE</div>    
@@ -79,8 +79,8 @@
                                     <h6 class="text-center" style="font-weight: 1000; ">OBRA: </h6> <div style="font-size:14px;">{{ $descarga->obrasTote_nombre }}</div>
                                 @else
                                     <h6 class="text-center" style="font-weight: 1000; ">OBRA: </h6> <div style="font-size:14px;">SIN OBRA</div>    
-                                @endif
-                            @endif
+                                @endif  --}}
+                            
                             
                             <h6 style="font-weight: 1000; text-center">DESPACHADOR:</h6> <div style="font-size:14px;">{{ $descarga->receptor_nombre }}</div>
                             <h6 style="font-weight: 1000; text-center">OPERADOR:</h6> <div style="font-size:14px;">{{ $descarga->operador_nombre }}</div>
@@ -162,11 +162,41 @@
                             @else
                                 0  </div>  
                             @endif 
+                            @php
+                            $totalProductosSinTote =
+                            (isset($descarga->grasa) ? $descarga->grasa * (isset($descarga->grasaUnitario) ? $descarga->grasaUnitario : 0) : 0) +
+                            (isset($descarga->motor) ? $descarga->motor * (isset($descarga->mototUnitario) ? $descarga->mototUnitario : 0) : 0) +
+                            (isset($descarga->anticongelante) ? $descarga->anticongelante * (isset($descarga->anticongelanteUnitario) ? $descarga->anticongelanteUnitario : 0) : 0) +
+                            (isset($descarga->hidraulico) ? $descarga->hidraulico * (isset($descarga->hidraulicoUnitario) ? $descarga->hidraulicoUnitario : 0) : 0) +
+                            (isset($descarga->direccion) ? $descarga->direccion * (isset($descarga->direccionUnitario) ? $descarga->direccionUnitario : 0) : 0);
+    
+                            
+                            $totalProductos =
+                                            ($descarga->grasa*$descarga->grasaUnitario) +
+                                            ($descarga->motor*$descarga->mototUnitario) +
+                                            ($descarga->anticongelante*$descarga->anticongelanteUnitario) +
+                                            ($descarga->hidraulico*$descarga->hidraulicoUnitario) +
+                                            ($descarga->direccion*$descarga->direccionUnitario);    
+                            @endphp
+                            @if ($descarga->tipoCisternaId != null)
+                                <img width="300px;" src="{{ asset('/img/login/Header2GenericoGrande.svg') }}" alt="" class="mb-2">
+                                @if ($descarga->kilometrajeNuevo != null)
+                                    <div class="text-center"><h6 style="font-weight: 1000; ">KILOMETRAJE ACTUAL: </h6></div>{{$descarga->kilometrajeNuevo}}  {{$descarga->equipo_kom}}
+                                @else
+                                    <div class="text-center"><h6 style="font-weight: 1000; ">KILOMETRAJE ACTUAL: </h6></div>No Habia Un Kilometraje Anterior.
+                                @endif
+                                <div class="text-center"><h6 style="font-weight: 1000;  margin-top: 10px;">OBSERVACIONES: </h6>{{$descarga->detalles_observaciones}}</div>
+                                <img width="300px;" src="{{ asset('/img/login/Header3DescargaGrande.svg') }}" alt="" class="mb-2">
+                                <div class="text-center"><h6 style="font-weight: 1000;">COSTO DE COMBUSTIBLE:</h6>${{ number_format($ultimaCarga[0]->ultimoPrecio * $descarga->litros, 2) }}</div>
+                                <h6 style="font-weight: 1000; ">COSTO DE FLUIDOS: </h6> ${{number_format($totalProductos,2)}}
+                                <h6 style="font-weight: 1000; ">TOTAL: ${{number_format(($ultimaCarga[0]->ultimoPrecio*$descarga->litros)+$totalProductos, 2)}}</h6>
+                            @endif
                             @if ($cliente != false) 
                             costo: ${{ $descarga->direccionUnitario }} Total: ${{($descarga->direccion*$descarga->direccionUnitario)}}
                             @endif
-                                <div class="text-center"><h6 style="font-weight: 1000;  margin-top: 10px;">OBSERVACIONES: </h6>{{$descarga->detalles_observaciones}}</div>
+                                
                                 @if ($descarga->tipoCisternaId == null)
+                                <div class="text-center"><h6 style="font-weight: 1000;  margin-top: 10px;">OBSERVACIONES: </h6>{{$descarga->detalles_observaciones}}</div>
                                 <p class="pt-5" style="margin-top: 20px; text-align: center;">
                                     ______________________________________<br>
                                     Nombre Y Firma De Recibido<br>
@@ -203,6 +233,7 @@
                             
                             <!--<div class="text-center"><h6 style="font-weight: 1000; ">HORA DESCARGA: </h6>{{ $descarga->horas }}</div>-->
                             @if ($descarga->tipo_solicitud != false)
+
                                 <img width="300px;" src="{{ asset('/img/login/Header2GenericoGrande.svg') }}" alt="" class="mb-2">
                                 {{--  <div class="text-center"><h6 style="font-weight: 1000; ">HORA SALIDA: </h6>11:00 pm</div>  --}}
                                 <div class="text-center"><h6 style="font-weight: 1000;   ">FECHA DE DESCARGA:</h6>{{ \Carbon\Carbon::parse($descarga->fechaLlegada)->format( 'Y-m-d' ) }}</div>
