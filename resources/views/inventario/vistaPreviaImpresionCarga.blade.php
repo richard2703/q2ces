@@ -49,7 +49,12 @@
                         <img src="{{ asset('/img/login/002-sin-slogan.png') }}" alt="" width="200px;" class="mb-2" style="margin-left: -15px;">
                         
                         <div class="text-start">
-                            <img width="300px;" src="{{ asset('/img/login/Header1CargaGrande.svg') }}" alt="" class="mb-2">
+                            @if ($carga->tipoCisternaId == null)
+                                <img width="300px;" src="{{ asset('/img/login/Header1CargaGrande.svg') }}" alt="" class="mb-2">
+                            @else
+                                <img width="300px;" src="{{ asset('/img/login/Header6GenericoGrande.svg') }}" alt="" class="mb-2">
+                            @endif
+                            
                             <br>
                             <h1 class="text-center" style="font-weight: 1000;">Q2S/COMB-{{ sprintf("%03d", $carga->id) }}</h1><br>
                             <h5 class="text-center" style="font-weight: 1000; ">FECHA DE IMPRESIÓN:</h5>
