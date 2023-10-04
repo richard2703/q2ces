@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\tiposServicios;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -55,7 +56,7 @@ class tiposServiciosController extends Controller
         $tiposServicios = $request->all();
         if ((isset($request->check) && $request->check == 'on')) {
             $tiposServicios['activo'] = 1;
-        }else{
+        } else {
             $tiposServicios['activo'] = 0;
         }
         // dd( $tiposServicios );
@@ -109,7 +110,7 @@ class tiposServiciosController extends Controller
         $tipoServicio = tiposServicios::where('id', $data['controlId'])->first();
         if ((isset($request->check) && $request->check == 'on')) {
             $tipoServicio['activo'] = 1;
-        }else{
+        } else {
             $tipoServicio['activo'] = 0;
         }
         if (is_null($tipoServicio) == false) {
@@ -127,8 +128,21 @@ class tiposServiciosController extends Controller
      * @param  \App\Models\tiposServicios  $tiposServicios
      * @return \Illuminate\Http\Response
      */
-    public function destroy(tiposServicios $tiposServicios)
+    public function destroy(tiposServicios $tiposServicio)
     {
-        //
+        try {
+            $tiposServicio->delete(); // Intenta eliminar 
+        } catch (QueryException $e) {
+            if ($e->getCode() === 23000) {
+                return redirect()->back()->with('faild', 'No Puedes Eliminar ');
+                // Esto es un error de restricción de clave externa (FOREIGN KEY constraint)
+                // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
+            } else {
+                return redirect()->back()->with('faild', 'No Puedes Eliminar si esta en uso');
+                // Otro tipo de error de base de datos
+                // Maneja según sea necesario
+            }
+        }
+        return redirect()->back()->with('success', 'Eliminado correctamente');
     }
 }

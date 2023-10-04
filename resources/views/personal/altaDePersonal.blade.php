@@ -1,6 +1,9 @@
 @extends('layouts.main', ['activePage' => 'personal', 'titlePage' => __('Alta de Personal')])
 @section('content')
     <div class="content">
+        <?php
+        $objValida = new Validaciones();
+        ?>
         @if ($errors->any())
             <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
             <div class="alert alert-danger">
@@ -608,7 +611,7 @@
                                                                     <option value="">Seleccione</option>
                                                                     @foreach ($vctPuestos as $item)
                                                                         <option value="{{ $item->id }}">
-                                                                            {{ $item->nombre }}
+                                                                            {{ $objValida->ucwords_accent($item->nombre) }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
@@ -726,7 +729,7 @@
                                                                     <option value="">Seleccione</option>
                                                                     @foreach ($vctPersonal as $persona)
                                                                         <option value="{{ $persona->id }}">
-                                                                            {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                                                            {{ $objValida->ucwords_accent( $persona->nombres . ' ' . $persona->apellidoP. ' [' . $persona->puesto .']') }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>

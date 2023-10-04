@@ -54,7 +54,7 @@
                                                 @endcan
                                             </div>
                                         </div>
-                                        <div class="row divBorder">
+                                        <div class="divBorder">
                                             <p>Catálogo General de Categorías de Maquinaría, Es Utilizado para Asignar y
                                                 Agrupar
                                                 la Maquinario y/o Equipos en Bloque de Datos.</p>

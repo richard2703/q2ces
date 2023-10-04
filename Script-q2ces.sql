@@ -1138,8 +1138,9 @@ CREATE TABLE nomina(
 CREATE TABLE maquinaria(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     estatusId bigint(20) unsigned NULL,
-    bitacoraId bigint(20) unsigned NULL,
     nombre varchar(255) NULL,
+    obraId bigint(20) unsigned NULL,
+    operadorId bigint(20) unsigned NULL,
     identificador varchar(32) NULL,
     tipoId bigint(20) unsigned NULL,
     categoriaId bigint(20) unsigned NULL,
@@ -1191,7 +1192,9 @@ CREATE TABLE maquinaria(
     CONSTRAINT FK_maquinaria_bitacoraId FOREIGN KEY (bitacoraId) REFERENCES bitacoras (id),
     CONSTRAINT FK_maquinaria_categoriaId foreign key (categoriaId) references maquinariaCategoria(id),
     constraint FK_maquinaria_marcaId foreign key (marcaId) references marca(id),
-    CONSTRAINT FK_maquinaria_tipoId foreign key (tipoId) references maquinariaTipo(id)
+    CONSTRAINT FK_maquinaria_tipoId foreign key (tipoId) references maquinariaTipo(id),
+    CONSTRAINT FK_maquinaria_obraId foreign key (obraId) references obras(id),
+    CONSTRAINT FK_maquinaria_operadorId foreign key (operadorId) references personal(id)
 );
 
 CREATE TABLE maqdocs (
@@ -1247,6 +1250,25 @@ CREATE TABLE obraMaqPer(
     CONSTRAINT FK_obraMaqPer_maquinaria foreign key (maquinariaId) references maquinaria(id),
     CONSTRAINT FK_obraMaqPer_persona foreign key (personalId) references personal(id),
     CONSTRAINT FK_obraMaqPer_obras foreign key (obraId) references obras(id)
+);
+
+CREATE TABLE obraMaqPerHistorico(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    maquinariaId bigint(20) unsigned NOT NULL,
+    usuarioId bigint(20) unsigned NOT NULL,
+    personalId bigint(20) unsigned NOT NULL,
+    obraId bigint(20) unsigned NOT NULL,
+    inicio datetime NULL,
+    fin datetime NULL,
+    combustible int DEFAULT 0,
+    comentario text,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_obraMaqPerHistorico_maquinaria foreign key (maquinariaId) references maquinaria(id),
+    CONSTRAINT FK_obraMaqPerHistorico_persona foreign key (personalId) references personal(id),
+    CONSTRAINT FK_obraMaqPerHistorico_obras foreign key (obraId) references obras(id),
+    CONSTRAINT FK_obraMaqPerHistorico_usuario foreign key (usuarioId) references users(id)
 );
 
 CREATE TABLE maqimagen(

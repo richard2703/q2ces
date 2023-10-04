@@ -124,7 +124,7 @@
                                                     <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
                                                         onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marcaId }}','{{ $maquina->modelo }}',
                                                     '{{ $maquina->submarca }}','{{ $maquina->ano }}','{{ $maquina->color }}','{{ $maquina->placas }}','{{ $maquina->numserie }}','{{ $maquina->nummotor }}',
-                                                    '{{ $maquina->foto }}','{{ $maquina->frente }}','{{ $maquina->derecho }}','{{ $maquina->izquierdo }}','{{ $maquina->trasero }}','{{ false }}')">
+                                                    '{{ $maquina->foto }}','{{ $maquina->frente }}','{{ $maquina->derecho }}','{{ $maquina->izquierdo }}','{{ $maquina->trasero }}','{{ $maquina->mantenimiento }}','{{ false }}')">
                                                         <svg xmlns="http://www.w3.org/2000/svg " width="28" height="28"
                                                             fill="currentColor" class="bi bi-pencil accionesIconos"
                                                             viewBox="0 0 16 16">
@@ -491,6 +491,12 @@
                                 name="nummotor" value="">
                         </div>
 
+                        <div class=" col-12 col-sm-6  mb-3 ">
+                            <label class="labelTitulo">Proximo Mantenimiento:</label></br>
+                            <input type="text" class="inputCaja" id="mantenimiento"
+                                placeholder="Kilometraje para proximo mantenimiento" name="mantenimiento" value="">
+                        </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <div id="contenedorBotonGuardar">
@@ -606,7 +612,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
-                    <h5 class="modal-title fs-5" id="modalTitleId">Asignar Vehiculo</h5>
+                    <h5 class="modal-title fs-5" id="modalTitleId">Asignar Vehículo</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -619,7 +625,7 @@
 
                             <div class="row">
                                 <div class="mb-3 col-12 text-center">
-                                    <h3 class="labelTitulo fs-3" id="nombreAuto">Asignar Vehiculo</h3>
+                                    <h3 class="labelTitulo fs-3" id="nombreAuto">Asignar Vehículo</h3>
                                 </div>
 
                                 <div class="mb-3 col-6">
@@ -781,7 +787,7 @@
     </script>
     <script>
         function cargaItem(id, identificador, nombre, marca, modelo, submarca, ano, color, placas, numserie, nummotor, img,
-            imgF, imgD, imgI, imgT, modalTipo) {
+            imgF, imgD, imgI, imgT, mantenimiento, modalTipo) {
             console.log("Foto", img, "FotoF", imgF);
 
             const txtId = document.getElementById('id');
@@ -878,6 +884,10 @@
             const txtNummotor = document.getElementById('nummotor');
             txtNummotor.value = nummotor;
             txtNummotor.readOnly = modalTipo;
+
+            const txtMantenimiento = document.getElementById('mantenimiento');
+            txtMantenimiento.value = mantenimiento;
+            txtMantenimiento.readOnly = modalTipo;
 
 
             const imagenVista = document.getElementById('fotoImg');

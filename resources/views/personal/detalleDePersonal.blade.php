@@ -1,6 +1,9 @@
 @extends('layouts.main', ['activePage' => 'personal', 'titlePage' => __('Vista de Personal')])
 @section('content')
     <div class="content">
+        <?php
+        $objValida = new Validaciones();
+        ?>
         @if ($errors->any())
             <div class="alert alert-danger">
                 <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
@@ -47,13 +50,26 @@
                                     @endcan  --}}
                                     {{--  @can('asistencia_create')  --}}
                                     <a href="{{ route('personal.equipo', $personal->id) }}" method="get">
-                                        <button class="btn botonGral">Asignar Equipo</button>
+                                        <button class="btn botonGral">Asignar Equipo Personal</button>
                                     </a>
 
 
                                     <a href="{{ route('personal.uniforme', $personal->id) }}" method="get">
                                         <button class="btn botonGral">Asignar Uniforme</button>
                                     </a>
+
+                                    <!-- Solo si su rol es de operador -->
+                                    @if ($nomina->puestoNivelId == 5)
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#asignar"
+                                            onclick="asignar(
+                                        '{{ $personal->id }}',
+                                        '{{ is_null($vctAsignacion->maquinariaId) == false ? $vctAsignacion->maquinariaId : 0 }}',
+                                        '{{ is_null($vctAsignacion->maquina) == false ? $vctAsignacion->maquina : '' }}',
+                                        '{{ is_null($vctAsignacion->recordId) == false ? $vctAsignacion->recordId : 0 }}'
+                                        )">
+                                            <button class="btn botonGral">Asignar Maquinaría</button>
+                                        </a>
+                                    @endif
                                     {{--  @endcan  --}}
 
 
@@ -64,6 +80,7 @@
                                 class="alertaGuardar" enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
+
                                 <div class="d-md-flex p-3">
                                     <div class="col-12 col-md-4 px-2 ">
                                         <div class="text-center mx-auto border  mb-4">
@@ -712,7 +729,7 @@
                                                         @foreach ($vctPuestos as $item)
                                                             <option value="{{ $item->id }}"
                                                                 {{ $nomina->puestoId == $item->id ? ' selected' : '' }}>
-                                                                {{ $item->nombre }}
+                                                                {{ $objValida->ucwords_accent($item->nombre) }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -756,7 +773,8 @@
                                                                 Entrada Sábado:</label></br>
 
                                                             <input type="time" class="inputCaja "
-                                                                placeholder="Entrada" id="" name="hEntradaSabado"
+                                                                placeholder="Entrada" id=""
+                                                                name="hEntradaSabado"
                                                                 value="{{ $nomina->hEntradaSabado }}">
                                                         </div>
                                                         <div class="col-6  ps-1">
@@ -778,7 +796,7 @@
                                                         @foreach ($vctPersonal as $persona)
                                                             <option value="{{ $persona->id }}"
                                                                 {{ $persona->id == $nomina->jefeId ? ' selected' : '' }}>
-                                                                {{ $persona->nombres . ' ' . $persona->apellidoP }}
+                                                                {{ $objValida->ucwords_accent($persona->nombres . ' ' . $persona->apellidoP . ' [' . $persona->puesto . ']') }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -1103,8 +1121,7 @@
                                                                     onclick='cancelarOmitir("{{ $doc->id }}","{{ $doc->nombre }}")'>
                                                                     <P class="fs-5"> Cancelar</P>
                                                                 </button>
-                                                                <div class="text-center"
-                                                                    style="margin-top: -10px !important">
+                                                                <div class="text-center">
                                                                     <div class="form-check d-flex justify-content-between">
                                                                         <div class="text-center"></div>
                                                                         <label
@@ -1277,7 +1294,7 @@
                                                 @foreach ($vctEstatus as $item)
                                                     <option value="{{ $item->id }}"
                                                         {{ $item->id == $personal->estatusId ? ' selected' : '' }}>
-                                                        {{ $item->nombre }} </option>
+                                                        {{ $objValida->ucwords_accent($item->nombre) }} </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -1323,6 +1340,161 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Asignar-->
+    <div class="modal fade" id="asignar" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bacTituloPrincipal">
+                    <h5 class="modal-title fs-5" id="modalTitleId">Asignar Vehículo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('personal.asignaciones', $persona->id) }}" method="post">
+                        @csrf
+                        @method('put')
+                        <div class="container-fluid">
+
+                            <input type="hidden" name="personalId" id="asignacionPersona">
+                            <input type="hidden" name="recordId" id="recordId">
+
+                            <div class="row">
+                                <div class="mb-3 col-12 text-center">
+                                    <h3 class="labelTitulo fs-3" id="nombreAuto">Asignar Vehículo</h3>
+                                </div>
+
+                                {{-- <div class="mb-3 col-6">
+                                            <label for="obraAsignada" class="labelTitulo">Asignado en la Obra:</label>
+                                            <input type="hidden" name="obraId" id="obraId">
+
+                                            <input autofocus type="text" class="inputCaja" id="obraAsignada" name="obraAsignada"
+                                                placeholder="Nombre Obra..." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6">
+                                            <label for="NobraId" class="labelTitulo">Asignar a la Obra:</label>
+                                            <select name="NobraId" id="NobraId" required class="form-select">
+                                                <option value="0">Sin Cambios</option>
+                                                <option value="">Denegar Obra</option>
+                                                @foreach ($vctObras as $item)
+                                                    <option value="{{ $item->id }}" >
+                                                        {{ $item->nombre . ' [' . $item->cliente . ']' }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div> --}}
+
+                                <div class="mb-3 col-6">
+                                    <label for="maquinariaAsignada" class="labelTitulo">Asignado a
+                                        Maquinaría:</label>
+                                    <input type="hidden" name="maquinariaId" id="maquinariaId">
+                                    <input autofocus type="text" class="inputCaja" id="maquinariaAsignada"
+                                        name="maquinariaAsignada" placeholder="Nombre Equipo..." readonly>
+                                </div>
+
+                                <div class="mb-3 col-6">
+                                    <label for="NmaquinariaId" class="labelTitulo">Asignar a Maquinaria:</label>
+                                    <select name="NmaquinariaId" id="NmaquinariaId" required class="form-select">
+                                        <option value="0">Sin Cambios</option>
+                                        <option value="-1">Denegar Equipo</option>
+                                        @foreach ($vctMaquinaria as $item)
+                                            <option value="{{ $item->id }}">
+                                                {{ strtoupper($item->identificador) . ' - ' . $objValida->ucwords_accent($item->maquina) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+                                {{-- <div class="mb-3 col-4">
+                                            <label for="combustible" class="labelTitulo">Combustible:</label></br>
+                                            <select class="form-select" aria-label="Default select example"
+                                                id="combustible" name="combustible">
+                                                <option value="0">No</option>
+                                                <option value="1">Sí</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3 col-4">
+                                            <label for="inicio" class="labelTitulo">Fecha de Inicio:</label></br>
+                                            <input type="date" class="inputCaja" id="inicio" name="inicio"
+                                                pattern="\d{2}/\d{2}/\d{4}" placeholder="dd/mm/yyyy" value="">
+                                        </div>
+
+                                        <div class="mb-3 col-4">
+                                            <label for="fin" class="labelTitulo">Fecha de Término:</label></br>
+                                            <input type="date" class="inputCaja" id="fin" name="fin"
+                                                pattern="\d{2}/\d{2}/\d{4}" placeholder="dd/mm/yyyy" value="">
+                                        </div> --}}
+
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn botonGral">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function asignar(id, maquinariaId, maquina, recordId) {
+
+            console.log(id, maquinariaId, maquina, recordId);
+
+            const txtId = document.getElementById('asignacionPersona');
+            txtId.value = id;
+
+            const txtRId = document.getElementById('recordId');
+            txtRId.value = recordId;
+
+            const txtOperadorA = document.getElementById('maquinariaId');
+            txtOperadorA.value = maquinariaId;
+
+            const txtOperadorB = document.getElementById('maquinariaAsignada');
+            txtOperadorB.value = maquina;
+            txtOperadorB.readOnly = true;
+
+            // const tituloModal = document.getElementById('nombreAuto');
+            // tituloModal.textContent = identificador + ' ' + maquinaria;
+
+            // const txtObraA = document.getElementById('obraId');
+            // txtObraA.value = obraId;
+
+            // const txtObraB = document.getElementById('obraAsignada');
+            // txtObraB.value = obra;
+            // txtObraB.readOnly = true;
+
+            // const lstCombustible = document.getElementById('combustible').value = combustible;
+            // const dteFechaInicio = document.getElementById('inicio').value = inicio;
+            // const dteFechaFin = document.getElementById('fin').value = fin;
+
+
+
+            // Obtener todos los campos del formulario
+            const campos = document.querySelectorAll('input[type="text"], textarea');
+
+            // Aplicar color gris a los campos con readonly
+            campos.forEach((campo) => {
+                if (modalTipo) {
+                    campo.readOnly = true;
+
+                    // campo.style.cursor:no-drop;
+                } else {
+                    campo.readOnly = false;
+                    campo.style.color = 'initial';
+                    // campo.style.cursor:no-drop;
+                }
+                if (campo == txtIdentificador) {
+                    campo.readOnly = true;
+                    campo.style.color = 'grey';
+                }
+            });
+        }
+    </script>
     <script src="{{ asset('js/cardArchivos.js') }}"></script>
     <script>
         function evaluar(id, requerido) {

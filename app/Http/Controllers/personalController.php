@@ -6,6 +6,7 @@ use App\Models\asignacionEquipo;
 use App\Models\asignacionUniforme;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use stdClass;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
@@ -19,6 +20,8 @@ use App\Models\nomina;
 use App\Models\equipo;
 use App\Models\User;
 use App\Models\userdocs;
+use App\Models\obras;
+use App\Models\maquinaria;
 use App\Models\fiscal;
 use App\Models\userEstatus;
 use App\Models\puesto;
@@ -28,8 +31,9 @@ use App\Models\inventario;
 use App\Models\inventarioMovimientos;
 use App\Models\tipoUniforme;
 use App\Models\marca;
+use App\Models\obraMaqPer;
+use App\Models\obraMaqPerHistorico;
 use Carbon\Carbon;
-
 
 class personalController extends Controller
 {
@@ -48,11 +52,11 @@ class personalController extends Controller
             'puesto.nombre as puesto',
             'userEstatus.nombre AS estatus',
         )
-            ->join('nomina', 'nomina.personalId', '=', 'personal.id')
-            ->join('userEstatus', 'userEstatus.id', '=', 'personal.estatusId')
-            ->leftJoin('puesto', 'puesto.id', '=', 'nomina.puestoId')
-            ->orderBy('created_at', 'desc')->paginate(15);
-        // dd($personal);
+        ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
+        ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
+        ->leftJoin( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
+        ->orderBy( 'nombres', 'asc' )->paginate( 15 );
+        // dd( $personal );
         return view('personal.indexPersonal', compact('personal'));
     }
 
@@ -66,10 +70,13 @@ class personalController extends Controller
     {
         abort_if(Gate::denies('personal_create'), 403);
 
-        $vctPersonal = personal::all();
-        $vctPuestos = puesto::orderBy('nombre', 'asc')->get();
-        $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->get();
-        $docs = docs::where('tipoId', '1')->orderBy('nombre', 'asc')->get();
+        $vctPersonal = personal::select( 'personal.*', 'puesto.nombre as puesto' )
+        ->join( 'nomina', 'nomina.personalId', 'personal.id' )
+        ->join( 'puesto', 'puesto.id', 'nomina.puestoId' )
+        ->orderBy( 'nombres', 'asc' )->get();
+        $vctPuestos = puesto::orderBy( 'nombre', 'asc' )->get();
+        $vctNiveles = puestoNivel::orderBy( 'nombre', 'asc' )->get();
+        $docs = docs::where( 'tipoId', '1' )->orderBy( 'nombre', 'asc' )->get();
 
         // dd( $docs );
         // return view( 'personal.altaDePersonal', compact( 'vctPersonal', 'vctPuestos', 'vctNiveles' ) )->with( 'personal', $vctPersonal, $vctPuestos );
@@ -90,155 +97,155 @@ class personalController extends Controller
         // $request->file( 'docs' )[ $cont ]
 
         // dd( $request->archivo );
-        $request->validate([
-            'nombres' => 'required|max:150',
-            'apellidoP' => 'required|max:150',
-            'apellidoM' => 'nullable|max:150',
-            'aler' => 'nullable|max:150',
-            'celular' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
-            'mailEmpresarial' => 'nullable|email|max:200',
-            'fechaNacimiento' => 'nullable|date|date_format:Y-m-d',
-            // 'puestoNivelId' => 'required',
-            'puestoId' => 'required',
-            'ingreso' => 'required|date|date_format:Y-m-d',
-            'diario' => 'required',
+        // $request->validate([
+        //     'nombres' => 'required|max:150',
+        //     'apellidoP' => 'required|max:150',
+        //     'apellidoM' => 'nullable|max:150',
+        //     'aler' => 'nullable|max:150',
+        //     'celular' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
+        //     'mailEmpresarial' => 'nullable|email|max:200',
+        //     'fechaNacimiento' => 'nullable|date|date_format:Y-m-d',
+        //     // 'puestoNivelId' => 'required',
+        //     'puestoId' => 'required',
+        //     'ingreso' => 'required|date|date_format:Y-m-d',
+        //     'diario' => 'required',
 
-            'lugarNacimiento' => 'nullable|max:200',
-            'civil' => 'nullable|max:150',
-            'curp' => 'required|unique|max:20',
-            'rfc' => 'nullable|max:20',
-            'ine' => 'nullable|max:20',
-            'licencia' => 'nullable|max:20',
-            'cpf' => 'nullable|max:25',
-            'cpe' => 'nullable|max:25',
-            'hijos' => 'nullable|numeric',
-            'profe' => 'nullable|max:150',
-            'mailpersonal' => 'nullable|email|max:200',
+        //     'lugarNacimiento' => 'nullable|max:200',
+        //     'civil' => 'nullable|max:150',
+        //     'curp' => 'required|unique|max:20',
+        //     'rfc' => 'nullable|max:20',
+        //     'ine' => 'nullable|max:20',
+        //     'licencia' => 'nullable|max:20',
+        //     'cpf' => 'nullable|max:25',
+        //     'cpe' => 'nullable|max:25',
+        //     'hijos' => 'nullable|numeric',
+        //     'profe' => 'nullable|max:150',
+        //     'mailpersonal' => 'nullable|email|max:200',
 
-            'calle' => 'nullable|max:200',
-            'numero' => 'nullable|max:20',
-            'interior' => 'nullable|max:20',
-            'colonia' => 'nullable|max:200',
-            'cp' => 'nullable|max:99999',
-            'municipio' => 'nullable|max:200',
-            'estado' => 'nullable|max:200',
-            'casa' => 'nullable|max:200',
+        //     'calle' => 'nullable|max:200',
+        //     'numero' => 'nullable|max:20',
+        //     'interior' => 'nullable|max:20',
+        //     'colonia' => 'nullable|max:200',
+        //     'cp' => 'nullable|max:99999',
+        //     'municipio' => 'nullable|max:200',
+        //     'estado' => 'nullable|max:200',
+        //     'casa' => 'nullable|max:200',
 
-            'callef' => 'nullable|max:200',
-            'numerof' => 'nullable|max:20',
-            'interiorf' => 'nullable|max:20',
-            'coloniaf' => 'nullable|max:200',
-            'cp_f' => 'nullable|max:99999',
-            'municipiof' => 'nullable|max:200',
-            'estadof' => 'nullable|max:200',
-            'entref' => 'nullable|max:200',
+        //     'callef' => 'nullable|max:200',
+        //     'numerof' => 'nullable|max:20',
+        //     'interiorf' => 'nullable|max:20',
+        //     'coloniaf' => 'nullable|max:200',
+        //     'cp_f' => 'nullable|max:99999',
+        //     'municipiof' => 'nullable|max:200',
+        //     'estadof' => 'nullable|max:200',
+        //     'entref' => 'nullable|max:200',
 
-            'nombreE' => 'nullable|max:150',
-            'nombreP' => 'nullable|max:150',
-            'nombreM' => 'nullable|max:150',
-            'parentesco' => 'nullable|max:150',
-            'particularE' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
-            'celularE' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
+        //     'nombreE' => 'nullable|max:150',
+        //     'nombreP' => 'nullable|max:150',
+        //     'nombreM' => 'nullable|max:150',
+        //     'parentesco' => 'nullable|max:150',
+        //     'particularE' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
+        //     'celularE' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
 
-            'nombreB' => 'nullable|max:150',
-            'apellidoPB' => 'nullable|max:150',
-            'apellidoMB' => 'nullable|max:150',
-            'particularB' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
-            'celularB' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
-            'nacimientoB' => 'nullable|date|date_format:Y-m-d',
+        //     'nombreB' => 'nullable|max:150',
+        //     'apellidoPB' => 'nullable|max:150',
+        //     'apellidoMB' => 'nullable|max:150',
+        //     'particularB' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
+        //     'celularB' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:16',
+        //     'nacimientoB' => 'nullable|date|date_format:Y-m-d',
 
-            'nomina' => 'nullable|numeric',
-            'imss' => 'nullable|numeric',
-            'clinica' => 'nullable|max:150',
-            'infonavit' => 'nullable|max:20',
-            'afore' => 'nullable|max:20',
-            'tarjeta' => 'nullable|max:20',
-            'banco' => 'nullable|max:150',
-            'puesto' => 'nullable|max:150',
-            'horario' => 'nullable|max:150',
-            'jefeId' => 'nullable|numeric',
-            'neto' => 'nullable|numeric',
-            'ingreso' => 'nullable|date|date_format:Y-m-d',
+        //     'nomina' => 'nullable|numeric',
+        //     'imss' => 'nullable|numeric',
+        //     'clinica' => 'nullable|max:150',
+        //     'infonavit' => 'nullable|max:20',
+        //     'afore' => 'nullable|max:20',
+        //     'tarjeta' => 'nullable|max:20',
+        //     'banco' => 'nullable|max:150',
+        //     'puesto' => 'nullable|max:150',
+        //     'horario' => 'nullable|max:150',
+        //     'jefeId' => 'nullable|numeric',
+        //     'neto' => 'nullable|numeric',
+        //     'ingreso' => 'nullable|date|date_format:Y-m-d',
 
-            'botas' => 'nullable|numeric|max:8',
-            'pc' => 'nullable|max:200',
-            'pcSerial' => 'nullable|max:50',
-            'celularEquipo' => 'nullable|max:200',
-            'celularImei' => 'nullable|numeric',
-            'radio' => 'nullable|max:200',
-            'radioSerial' => 'nullable|numeric',
-            'cargadorSerial' => 'nullable|numeric',
-        ], [
-            'nombres.required' => 'El campo nombre(s) es obligatorio.',
-            'nombres.max' => 'El campo nombre(s) excede el límite de caracteres permitidos.',
-            'apellidoP.required' => 'El campo apellido paterno es obligatorio.',
-            'apellidoP.max' => 'El campo apellido paterno excede el límite de caracteres permitidos.',
-            'apellidoM.max' => 'El campo apellido materno excede el límite de caracteres permitidos.',
-            // 'puestoNivelId' => 'El campo de nivel de puesto es obligatorio',
-            'puestoId' => 'El campo de puesto es obligatorio',
-            'ingreso' => 'El campo de fecha de ingreso es obligatorio',
-            'ingreso.date_format' => 'El campo fecha de ingreso tiene un formato inválido.',
-            'diario' => 'El campo de salario diario es obligatorio',
-            'aler.max' => 'El campo alergías excede el límite de caracteres permitidos.',
-            'lugarNacimiento.max' => 'El campo lugar de nacimiento excede el límite de caracteres permitidos.',
-            'fechaNacimiento.date_format' => 'El campo fecha de nacimiento tiene un formato inválido.',
-            'rfc.max' => 'El campo RFC excede el límite de caracteres permitidos.',
-            'curp.max' => 'El campo CURP excede el límite de caracteres permitidos.',
-            'ine.max' => 'El campo folio INE excede el límite de caracteres permitidos.',
-            'licencia.max' => 'El campo licencia excede el límite de caracteres permitidos.',
-            'cpf.max' => 'El campo Cédula Profesional Federal excede el límite de caracteres permitidos.',
-            'cpe.max' => 'El campo Cédula Profesional Estatal excede el límite de caracteres permitidos.',
-            'civil.max' => 'El campo estado civil excede el límite de caracteres permitidos.',
-            'profe.max' => 'El campo profesión excede el límite de caracteres permitidos.',
-            'celular.numeric' => 'El campo celular solo acepta números.',
-            'celular.min' => 'El campo celular requiere de al menos 10 caracteres.',
-            'calle.max' => 'El campo calle excede el límite de caracteres permitidos.',
-            'numero.max' => 'El campo número excede el límite de caracteres permitidos.',
-            'interior.max' => 'El campo interior excede el límite de caracteres permitidos.',
-            'colonia.max' => 'El campo colonia excede el límite de caracteres permitidos.',
-            'cp.min' => 'El campo código postal requiere de al menos 5 caracteres.',
-            'municipio.max' => 'El campo municipio excede el límite de caracteres permitidos.',
-            'estado.max' => 'El campo estado excede el límite de caracteres permitidos.',
-            'casa.max' => 'El campo casa en domicilio fiscal excede el límite de caracteres permitidos.',
-            'callef.max' => 'El campo calle en domicilio fiscal excede el límite de caracteres permitidos.',
-            'numerof.max' => 'El campo número en domicilio fiscal excede el límite de caracteres permitidos.',
-            'interiorf.max' => 'El campo interior en domicilio fiscal excede el límite de caracteres permitidos.',
-            'coloniaf.max' => 'El campo colonia en domicilio fiscal excede el límite de caracteres permitidos.',
-            'cp_f.min' => 'El campo código postal en domicilio fiscal requiere de al menos 5 caracteres.',
-            'municipiof.max' => 'El campo municipio en domicilio fiscal excede el límite de caracteres permitidos.',
-            'estadof.max' => 'El campo estado en domicilio fiscal excede el límite de caracteres permitidos.',
-            'entref.max' => 'El campo entre calles en domicilio fiscal excede el límite de caracteres permitidos.',
-            'nombreE.max' => 'El campo nombre en personales excede el límite de caracteres permitidos.',
-            'nombreP.max' => 'El campo apellido paterno en personales excede el límite de caracteres permitidos.',
-            'nombreM.max' => 'El campo apellido materno en personales excede el límite de caracteres permitidos.',
-            'parentesco.max' => 'El campo parentesco en personales excede el límite de caracteres permitidos.',
-            'particularE.min' => 'El campo teléfono particular en personales requiere de al menos 10 caracteres.',
-            'celularE.min' => 'El campo celular en personales requiere de al menos 10 caracteres.',
-            'nombreB.max' => 'El campo nombre en beneficiario excede el límite de caracteres permitidos.',
-            'apellidoPB.max' => 'El campo apellido paterno en beneficiario excede el límite de caracteres permitidos.',
-            'apellidoMB.max' => 'El campo apellido materno en beneficiario excede el límite de caracteres permitidos.',
-            'particularB.min' => 'El campo teléfono beneficiario en contacto requiere de al menos 10 caracteres.',
-            'celularB.min' => 'El campo celular en beneficiario requiere de al menos 10 caracteres.',
-            'nomina.max' => 'El campo número de nómina excede el límite de caracteres permitidos.',
-            'imss.max' => 'El campo número de IMSS excede el límite de caracteres permitidos.',
-            'clinica.max' => 'El campo nombre de clínica excede el límite de caracteres permitidos.',
-            'infonavit.max' => 'El campo número de Infonavit excede el límite de caracteres permitidos.',
-            'afore.max' => 'El campo afore excede el límite de caracteres permitidos.',
-            'tarjeta.max' => 'El campo tarjeta excede el límite de caracteres permitidos.',
-            'banco.max' => 'El campo nombre de banco excede el límite de caracteres permitidos.',
-            'puesto.max' => 'El campo nombre de puesto excede el límite de caracteres permitidos.',
-            'horario.max' => 'El campo horario excede el límite de caracteres permitidos.',
-            'botas.max' => 'El campo botas excede el límite de caracteres permitidos.',
-            'pc.max' => 'El campo Equipo de cómputo excede el límite de caracteres permitidos.',
-            'pcSerial.max' => 'El campo serial de equipo de cómputo excede el límite de caracteres permitidos.',
-            'celularEquipo.max' => 'El campo equipo celular excede el límite de caracteres permitidos.',
-            'celularEmei.max' => 'El campo IMEI de celular excede el límite de caracteres permitidos.',
-            'radio.max' => 'El campo radio excede el límite de caracteres permitidos.',
-            'radioSerial.max' => 'El campo serial de radio excede el límite de caracteres permitidos.',
-            'radioSerial.numeric' => 'El campo serial de radio debe de ser númerico.',
-            'cargadorSerial.max' => 'El campo serial de cargador excede el límite de caracteres permitidos.',
-            'cargadorSerial.numeric' => 'El campo serial del cargador debe de ser númerico.',
-        ]);
+        //     'botas' => 'nullable|numeric|max:8',
+        //     'pc' => 'nullable|max:200',
+        //     'pcSerial' => 'nullable|max:50',
+        //     'celularEquipo' => 'nullable|max:200',
+        //     'celularImei' => 'nullable|numeric',
+        //     'radio' => 'nullable|max:200',
+        //     'radioSerial' => 'nullable|numeric',
+        //     'cargadorSerial' => 'nullable|numeric',
+        // ], [
+        //     'nombres.required' => 'El campo nombre(s) es obligatorio.',
+        //     'nombres.max' => 'El campo nombre(s) excede el límite de caracteres permitidos.',
+        //     'apellidoP.required' => 'El campo apellido paterno es obligatorio.',
+        //     'apellidoP.max' => 'El campo apellido paterno excede el límite de caracteres permitidos.',
+        //     'apellidoM.max' => 'El campo apellido materno excede el límite de caracteres permitidos.',
+        //     // 'puestoNivelId' => 'El campo de nivel de puesto es obligatorio',
+        //     'puestoId' => 'El campo de puesto es obligatorio',
+        //     'ingreso' => 'El campo de fecha de ingreso es obligatorio',
+        //     'ingreso.date_format' => 'El campo fecha de ingreso tiene un formato inválido.',
+        //     'diario' => 'El campo de salario diario es obligatorio',
+        //     'aler.max' => 'El campo alergías excede el límite de caracteres permitidos.',
+        //     'lugarNacimiento.max' => 'El campo lugar de nacimiento excede el límite de caracteres permitidos.',
+        //     'fechaNacimiento.date_format' => 'El campo fecha de nacimiento tiene un formato inválido.',
+        //     'rfc.max' => 'El campo RFC excede el límite de caracteres permitidos.',
+        //     'curp.max' => 'El campo CURP excede el límite de caracteres permitidos.',
+        //     'ine.max' => 'El campo folio INE excede el límite de caracteres permitidos.',
+        //     'licencia.max' => 'El campo licencia excede el límite de caracteres permitidos.',
+        //     'cpf.max' => 'El campo Cédula Profesional Federal excede el límite de caracteres permitidos.',
+        //     'cpe.max' => 'El campo Cédula Profesional Estatal excede el límite de caracteres permitidos.',
+        //     'civil.max' => 'El campo estado civil excede el límite de caracteres permitidos.',
+        //     'profe.max' => 'El campo profesión excede el límite de caracteres permitidos.',
+        //     'celular.numeric' => 'El campo celular solo acepta números.',
+        //     'celular.min' => 'El campo celular requiere de al menos 10 caracteres.',
+        //     'calle.max' => 'El campo calle excede el límite de caracteres permitidos.',
+        //     'numero.max' => 'El campo número excede el límite de caracteres permitidos.',
+        //     'interior.max' => 'El campo interior excede el límite de caracteres permitidos.',
+        //     'colonia.max' => 'El campo colonia excede el límite de caracteres permitidos.',
+        //     'cp.min' => 'El campo código postal requiere de al menos 5 caracteres.',
+        //     'municipio.max' => 'El campo municipio excede el límite de caracteres permitidos.',
+        //     'estado.max' => 'El campo estado excede el límite de caracteres permitidos.',
+        //     'casa.max' => 'El campo casa en domicilio fiscal excede el límite de caracteres permitidos.',
+        //     'callef.max' => 'El campo calle en domicilio fiscal excede el límite de caracteres permitidos.',
+        //     'numerof.max' => 'El campo número en domicilio fiscal excede el límite de caracteres permitidos.',
+        //     'interiorf.max' => 'El campo interior en domicilio fiscal excede el límite de caracteres permitidos.',
+        //     'coloniaf.max' => 'El campo colonia en domicilio fiscal excede el límite de caracteres permitidos.',
+        //     'cp_f.min' => 'El campo código postal en domicilio fiscal requiere de al menos 5 caracteres.',
+        //     'municipiof.max' => 'El campo municipio en domicilio fiscal excede el límite de caracteres permitidos.',
+        //     'estadof.max' => 'El campo estado en domicilio fiscal excede el límite de caracteres permitidos.',
+        //     'entref.max' => 'El campo entre calles en domicilio fiscal excede el límite de caracteres permitidos.',
+        //     'nombreE.max' => 'El campo nombre en personales excede el límite de caracteres permitidos.',
+        //     'nombreP.max' => 'El campo apellido paterno en personales excede el límite de caracteres permitidos.',
+        //     'nombreM.max' => 'El campo apellido materno en personales excede el límite de caracteres permitidos.',
+        //     'parentesco.max' => 'El campo parentesco en personales excede el límite de caracteres permitidos.',
+        //     'particularE.min' => 'El campo teléfono particular en personales requiere de al menos 10 caracteres.',
+        //     'celularE.min' => 'El campo celular en personales requiere de al menos 10 caracteres.',
+        //     'nombreB.max' => 'El campo nombre en beneficiario excede el límite de caracteres permitidos.',
+        //     'apellidoPB.max' => 'El campo apellido paterno en beneficiario excede el límite de caracteres permitidos.',
+        //     'apellidoMB.max' => 'El campo apellido materno en beneficiario excede el límite de caracteres permitidos.',
+        //     'particularB.min' => 'El campo teléfono beneficiario en contacto requiere de al menos 10 caracteres.',
+        //     'celularB.min' => 'El campo celular en beneficiario requiere de al menos 10 caracteres.',
+        //     'nomina.max' => 'El campo número de nómina excede el límite de caracteres permitidos.',
+        //     'imss.max' => 'El campo número de IMSS excede el límite de caracteres permitidos.',
+        //     'clinica.max' => 'El campo nombre de clínica excede el límite de caracteres permitidos.',
+        //     'infonavit.max' => 'El campo número de Infonavit excede el límite de caracteres permitidos.',
+        //     'afore.max' => 'El campo afore excede el límite de caracteres permitidos.',
+        //     'tarjeta.max' => 'El campo tarjeta excede el límite de caracteres permitidos.',
+        //     'banco.max' => 'El campo nombre de banco excede el límite de caracteres permitidos.',
+        //     'puesto.max' => 'El campo nombre de puesto excede el límite de caracteres permitidos.',
+        //     'horario.max' => 'El campo horario excede el límite de caracteres permitidos.',
+        //     'botas.max' => 'El campo botas excede el límite de caracteres permitidos.',
+        //     'pc.max' => 'El campo Equipo de cómputo excede el límite de caracteres permitidos.',
+        //     'pcSerial.max' => 'El campo serial de equipo de cómputo excede el límite de caracteres permitidos.',
+        //     'celularEquipo.max' => 'El campo equipo celular excede el límite de caracteres permitidos.',
+        //     'celularEmei.max' => 'El campo IMEI de celular excede el límite de caracteres permitidos.',
+        //     'radio.max' => 'El campo radio excede el límite de caracteres permitidos.',
+        //     'radioSerial.max' => 'El campo serial de radio excede el límite de caracteres permitidos.',
+        //     'radioSerial.numeric' => 'El campo serial de radio debe de ser númerico.',
+        //     'cargadorSerial.max' => 'El campo serial de cargador excede el límite de caracteres permitidos.',
+        //     'cargadorSerial.numeric' => 'El campo serial del cargador debe de ser númerico.',
+        // ]);
 
         $personal = $request->all();
         // conversion a mayuscula de algunos campos
@@ -269,7 +276,7 @@ class personalController extends Controller
             //** guardamos el id de usuario para el registro de personal */
             $personal['userId'] = $newuser->id;
         }
-        // dd($request);
+        // dd( $request );
 
         $personal = personal::create($personal);
 
@@ -436,174 +443,232 @@ class personalController extends Controller
         abort_if(Gate::denies('personal_edit'), 403);
 
         // dd( $personal );
-        $contacto = contactos::where('personalId', $personal->id)->first();
-        $beneficiario = beneficiario::where('personalId', $personal->id)->first();
-        $nomina = nomina::where('personalId', $personal->id)->first();
-        $equipo = equipo::where('personalId', $personal->id)->first();
+        $contacto = contactos::where( 'personalId', $personal->id )->first();
+        $beneficiario = beneficiario::where( 'personalId', $personal->id )->first();
+        $nomina = nomina::select( 'nomina.*', 'puesto.puestoNivelId' )
+        ->join( 'puesto', 'puesto.id', 'nomina.puestoId' )
+        ->where( 'personalId', $personal->id )->first();
+        $equipo = equipo::where( 'personalId', $personal->id )->first();
         // $docs = userdocs::where( 'personalId', $personal->id )->first();
-        $docs = userdocs::rightJoin('docs', 'userdocs.tipoId', 'docs.id')
-            ->select(
-                'docs.id',
-                'docs.nombre',
-                'userdocs.id as usuarioId',
-                'userdocs.fechaVencimiento',
-                'userdocs.estatus',
-                'userdocs.comentarios',
-                'userdocs.ruta',
-                'userdocs.requerido',
-                'userdocs.id as idDoc'
-            )
-            // ->where('personalId', $personal->id)
-            ->where('docs.tipoId', '1')
-            ->groupBy('docs.id')
-            ->get();
+        // $docs = userdocs::rightJoin( 'docs', 'userdocs.tipoId', 'docs.id' )
+        //     ->select(
+        //         'docs.id',
+        //         'docs.nombre',
+        //         'userdocs.id as usuarioId',
+        //         'userdocs.fechaVencimiento',
+        //         'userdocs.estatus',
+        //         'userdocs.comentarios',
+        //         'userdocs.ruta',
+        //         'userdocs.requerido',
+        //         'userdocs.id as idDoc'
+        // )
+        //     // ->where( 'personalId', $personal->id )
+        //     ->where( 'docs.tipoId', '1' )
+        //     ->groupBy( 'docs.id' )
+        //     ->get();
 
-        // dd($docs);
-        $fiscal = fiscal::where('personalId', $personal->id)->first();
-        $vctPuestos = puesto::orderBy('nombre', 'asc')->get();
-        $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->get();
-        $vctEstatus = userEstatus::all();
-        $vctPersonal = personal::all();
-        // $documentos = docs::where( 'tipoId', '1' )->orderBy( 'nombre', 'asc' )->get();
+        $docs = docs::leftJoin( 'userdocs', function ( $join ) use ( $personal ) {
+            $join->on( 'docs.id', '=', 'userdocs.tipoId' )
+            ->where( 'userdocs.personalId', '=', $personal->id );
+        }
+    )
+    ->select(
+        'docs.id',
+        'docs.nombre',
+        'userdocs.id as usuarioId',
+        'userdocs.fechaVencimiento',
+        'userdocs.estatus',
+        'userdocs.comentarios',
+        'userdocs.ruta',
+        'userdocs.requerido',
+        'userdocs.id as idDoc'
+    )->where( 'docs.tipoId', '1' )
+    ->get();
 
-        $nomina->decSalarioDiario = ($nomina->diario);
-        $nomina->decSalarioDiarioIntegrado = round($nomina->decSalarioDiario * 1.05137, 2);
-        $nomina->decSalarioMensual = round($nomina->decSalarioDiario * 30, 2);
-        $nomina->decSalarioMensualIntegrado = round($nomina->decSalarioDiarioIntegrado * 30, 2);
-        $nomina->decEstado = round($nomina->decSalarioMensual * 0.025, 2);
-        $nomina->decImss = round($nomina->decSalarioMensualIntegrado  * 0.0938, 2);
-        $nomina->decImssRiesgo = round($nomina->decSalarioMensualIntegrado * 0.0658875, 2);
-        $nomina->decAfore = round($nomina->decSalarioMensualIntegrado * 0.0628, 2);
-        $nomina->decInfonavit = round($nomina->decSalarioMensualIntegrado * 0.05, 2);
-        $nomina->decVacaciones = round($nomina->decSalarioDiario * 6, 2);
-        $nomina->decPrimaVacacional = round($nomina->decVacaciones * 0.25, 2);
-        $nomina->decAguinaldo = round($nomina->decSalarioDiario * 15, 2);
-        $nomina->decTotal = round($nomina->decSalarioMensual + $nomina->decEstado + $nomina->decImss + $nomina->decImssRiesgo +
-            $nomina->decAfore + $nomina->decInfonavit + $nomina->decVacaciones + $nomina->decPrimaVacacional + $nomina->decAguinaldo + $nomina->isr, 2);
+    // dd( $docs );
+    $fiscal = fiscal::where( 'personalId', $personal->id )->first();
+    $vctPuestos = puesto::orderBy( 'nombre', 'asc' )->get();
+    $vctNiveles = puestoNivel::orderBy( 'nombre', 'asc' )->get();
+    $vctEstatus = userEstatus::all();
+    $vctPersonal = personal::select( 'personal.*', 'puesto.nombre as puesto' )
+    ->join( 'nomina', 'nomina.personalId', 'personal.id' )
+    ->join( 'puesto', 'puesto.id', 'nomina.puestoId' )
+    ->orderBy( 'nombres', 'asc' )->get();
+    // $documentos = docs::where( 'tipoId', '1' )->orderBy( 'nombre', 'asc' )->get();
 
-        // dd( $docs );
-        return view('personal.detalleDePersonal', compact('personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal', 'vctPersonal', 'vctEstatus', 'vctPuestos', 'vctNiveles'));
+    $nomina->decSalarioDiario = ( $nomina->diario );
+    $nomina->decSalarioDiarioIntegrado = round( $nomina->decSalarioDiario * 1.05137, 2 );
+    $nomina->decSalarioMensual = round( $nomina->decSalarioDiario * 30, 2 );
+    $nomina->decSalarioMensualIntegrado = round( $nomina->decSalarioDiarioIntegrado * 30, 2 );
+    $nomina->decEstado = round( $nomina->decSalarioMensual * 0.025, 2 );
+    $nomina->decImss = round( $nomina->decSalarioMensualIntegrado  * 0.0938, 2 );
+    $nomina->decImssRiesgo = round( $nomina->decSalarioMensualIntegrado * 0.0658875, 2 );
+    $nomina->decAfore = round( $nomina->decSalarioMensualIntegrado * 0.0628, 2 );
+    $nomina->decInfonavit = round( $nomina->decSalarioMensualIntegrado * 0.05, 2 );
+    $nomina->decVacaciones = round( $nomina->decSalarioDiario * 6, 2 );
+    $nomina->decPrimaVacacional = round( $nomina->decVacaciones * 0.25, 2 );
+    $nomina->decAguinaldo = round( $nomina->decSalarioDiario * 15, 2 );
+    $nomina->decTotal = round( $nomina->decSalarioMensual + $nomina->decEstado + $nomina->decImss + $nomina->decImssRiesgo +
+    $nomina->decAfore + $nomina->decInfonavit + $nomina->decVacaciones + $nomina->decPrimaVacacional + $nomina->decAguinaldo + $nomina->isr, 2 );
+    //*** listado de maquinaria que puede asignarse */
+    $vctMaquinaria = maquinaria::select(
+        'maquinaria.*',
+        'maquinaria.nombre as maquina',
+        'obras.nombre as obra',
+        'obras.id as obraId',
+        'personal.id as operadorId',
+        'obraMaqPer.combustible as cargaCombustible',
+        'obraMaqPer.inicio as fechaInicial',
+        'obraMaqPer.fin as fechaFinal',
+        'obraMaqPer.id as recordId',
+        DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as operador" )
+    )
+    ->leftjoin( 'obraMaqPer', 'obraMaqPer.maquinariaId', 'maquinaria.id' )
+    ->leftjoin( 'personal', 'personal.id', 'obraMaqPer.personalId' )
+    ->leftjoin( 'obras', 'obras.id', 'obraMaqPer.obraId' )
+    ->whereNull( 'compania' )->paginate( 15 );
+    //*** listado de obras */
+    $vctObras = obras::select( 'obras.*', 'clientes.nombre as cliente' )
+    ->join( 'clientes', 'clientes.id', 'obras.clienteId' )
+    ->where( 'obras.id', '<>', 2 )->get();
+    //*** asignaciones */
+    $vctAsignacion = obraMaqPer::select(
+        'obraMaqPer.*',
+        'obraMaqPer.id as recordId',
+        'obras.nombre as obra',
+        'maquinaria.nombre as maquina' )
+        ->leftjoin( 'obras', 'obras.id', 'obraMaqPer.obraId' )
+        ->leftjoin( 'maquinaria', 'maquinaria.id', 'obraMaqPer.maquinariaId' )
+        ->where( 'personalId', $personal->id )->first();
+
+        if ( !$vctAsignacion ) {
+            //*** si no existe asignacion */
+            $vctAsignacion = new stdClass;
+            $vctAsignacion->recordId = 0;
+            $vctAsignacion->obraId = 0;
+            $vctAsignacion->maquinariaId = 0;
+            $vctAsignacion->maquina = '';
+        }
+        // dd( $vctAsignacion );
+        return view( 'personal.detalleDePersonal', compact( 'personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal', 'vctPersonal', 'vctEstatus', 'vctPuestos', 'vctNiveles', 'vctMaquinaria', 'vctObras', 'vctAsignacion' ) );
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\personal  $personal
-     * @return \Illuminate\Http\Response
-     */
+    * Show the form for editing the specified resource.
+    *
+    * @param  \App\Models\personal  $personal
+    * @return \Illuminate\Http\Response
+    */
 
-    public function edit(personal $personal)
-    {
-        $equipos = tipoEquipo::orderBy('nombre', 'asc')->get();
-        $marcas = marca::orderBy('nombre', 'asc')->get();
-        $asignados = asignacionEquipo::where('personalId', $personal->id)->get();
+    public function edit( personal $personal ) {
+        $equipos = tipoEquipo::orderBy( 'nombre', 'asc' )->get();
+        $marcas = marca::orderBy( 'nombre', 'asc' )->get();
+        $asignados = asignacionEquipo::where( 'personalId', $personal->id )->get();
+
+        //*** Todas excepto la de MTQ control */
         // dd( $asignados );
-        return view('personal.asignarEquipoPersonal', compact('personal', 'equipos', 'asignados', 'marcas'));
+        return view( 'personal.asignarEquipoPersonal', compact( 'personal', 'equipos', 'asignados', 'marcas' ) );
     }
 
-    public function asignacion(Request $request, $personal)
-    {
+    public function asignacion( Request $request, $personal ) {
         $nuevaLista = collect();
         for (
-            $i = 0;
-            $i < count($request['asignado']);
+            $i = 0; $i < count( $request[ 'asignado' ] );
             $i++
         ) {
-            $registroExistente = asignacionEquipo::where('id', $request['asignado'][$i])->first();
-            if ($registroExistente) {
+            $registroExistente = asignacionEquipo::where( 'id', $request[ 'asignado' ][ $i ] )->first();
+            if ( $registroExistente ) {
                 // Registro existente, se debe actualizar
-                $registroExistente->cantidad = $request['cantidad'][$i];
-                $registroExistente->equipoId  = $request['equipoId'][$i];
-                $registroExistente->marcaId  = $request['marcaId'][$i];
-                $registroExistente->serie  = $request['serie'][$i];
-                $registroExistente->comentario  = $request['comentario'][$i];
+                $registroExistente->cantidad = $request[ 'cantidad' ][ $i ];
+                $registroExistente->equipoId  = $request[ 'equipoId' ][ $i ];
+                $registroExistente->marcaId  = $request[ 'marcaId' ][ $i ];
+                $registroExistente->serie  = $request[ 'serie' ][ $i ];
+                $registroExistente->comentario  = $request[ 'comentario' ][ $i ];
                 $registroExistente->save();
-                $nuevaLista->push($registroExistente->id);
+                $nuevaLista->push( $registroExistente->id );
             } else {
                 // Registro nuevo, se debe crear
                 $asiEquipo = new asignacionEquipo();
                 $asiEquipo->personalId  = $personal;
-                $asiEquipo->cantidad = $request['cantidad'][$i];
-                $asiEquipo->equipoId  = $request['equipoId'][$i];
-                $asiEquipo->marcaId  = $request['marcaId'][$i];
-                $asiEquipo->serie  = $request['serie'][$i];
-                $asiEquipo->comentario  = $request['comentario'][$i];
+                $asiEquipo->cantidad = $request[ 'cantidad' ][ $i ];
+                $asiEquipo->equipoId  = $request[ 'equipoId' ][ $i ];
+                $asiEquipo->marcaId  = $request[ 'marcaId' ][ $i ];
+                $asiEquipo->serie  = $request[ 'serie' ][ $i ];
+                $asiEquipo->comentario  = $request[ 'comentario' ][ $i ];
                 $asiEquipo->save();
-                $nuevaLista->push($asiEquipo->id);
+                $nuevaLista->push( $asiEquipo->id );
             }
-            asignacionEquipo::where('personalId', $personal)->whereNotIn('id', $nuevaLista)->delete();
+            asignacionEquipo::where( 'personalId', $personal )->whereNotIn( 'id', $nuevaLista )->delete();
         }
         return redirect()->back();
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\personal  $personal
-     * @return \Illuminate\Http\Response
-     */
+    * Show the form for editing the specified resource.
+    *
+    * @param  \App\Models\personal  $personal
+    * @return \Illuminate\Http\Response
+    */
 
-    public function editUniforme(personal $personal)
-    {
-        $inventario = tipoUniforme::orderBy('nombre', 'asc')->get();
+    public function editUniforme( personal $personal ) {
+        $inventario = tipoUniforme::orderBy( 'nombre', 'asc' )->get();
         $asignados = asignacionUniforme::select(
             'asignacionUniforme.*',
-            DB::raw('tipoUniforme.nombre AS uniformeTipo'),
-            DB::raw('tipoUniforme.id AS uniformeTipoId'),
-            DB::raw('inventario.uniformeTalla AS talla'),
+            DB::raw( 'tipoUniforme.nombre AS uniformeTipo' ),
+            DB::raw( 'tipoUniforme.id AS uniformeTipoId' ),
+            DB::raw( 'inventario.uniformeTalla AS talla' ),
         )
-            ->join('inventario', 'inventario.id', '=', 'asignacionUniforme.inventarioId')
-            ->join('tipoUniforme', 'tipoUniforme.id', '=', 'inventario.uniformeTipoId')
-            ->where('personalId', $personal->id)->get();
+        ->join( 'inventario', 'inventario.id', '=', 'asignacionUniforme.inventarioId' )
+        ->join( 'tipoUniforme', 'tipoUniforme.id', '=', 'inventario.uniformeTipoId' )
+        ->where( 'personalId', $personal->id )->get();
 
         // dd( $asignados );
 
-        return view('personal.asignarUniformePersonal', compact('personal', 'inventario', 'asignados'));
+        return view( 'personal.asignarUniformePersonal', compact( 'personal', 'inventario', 'asignados' ) );
     }
 
-    public function asignacionUniforme(Request $request, $personal)
-    {
+    public function asignacionUniforme( Request $request, $personal ) {
         // dd( $request );
         $nuevaLista = collect();
         for (
-            $i = 0;
-            $i < count($request['asignado']);
+            $i = 0; $i < count( $request[ 'asignado' ] );
             $i++
         ) {
-            $registroExistente = asignacionUniforme::where('id', $request['asignado'][$i])->first();
-            if ($registroExistente) {
+            $registroExistente = asignacionUniforme::where( 'id', $request[ 'asignado' ][ $i ] )->first();
+            if ( $registroExistente ) {
                 // Registro existente, se debe actualizar
-                $registroExistente->cantidad = $request['cantidad'][$i];
-                $registroExistente->inventarioId  = $request['inventarioId'][$i];
+                $registroExistente->cantidad = $request[ 'cantidad' ][ $i ];
+                $registroExistente->inventarioId  = $request[ 'inventarioId' ][ $i ];
                 // $registroExistente->marca  = $request[ 'marca' ][ $i ];
                 // $registroExistente->serie  = $request[ 'serie' ][ $i ];
-                $registroExistente->comentario  = $request['comentario'][$i];
+                $registroExistente->comentario  = $request[ 'comentario' ][ $i ];
                 $registroExistente->save();
-                $nuevaLista->push($registroExistente->id);
+                $nuevaLista->push( $registroExistente->id );
             } else {
                 // Registro nuevo, se debe crear
                 $asiEquipo = new asignacionUniforme();
                 $asiEquipo->personalId  = $personal;
-                $asiEquipo->cantidad = $request['cantidad'][$i];
-                $asiEquipo->inventarioId  = $request['inventarioId'][$i];
+                $asiEquipo->cantidad = $request[ 'cantidad' ][ $i ];
+                $asiEquipo->inventarioId  = $request[ 'inventarioId' ][ $i ];
                 // $asiEquipo->marca  = $request[ 'marca' ][ $i ];
                 // $asiEquipo->serie  = $request[ 'serie' ][ $i ];
-                $asiEquipo->comentario  = $request['comentario'][$i];
+                $asiEquipo->comentario  = $request[ 'comentario' ][ $i ];
                 $asiEquipo->save();
-                $nuevaLista->push($asiEquipo->id);
+                $nuevaLista->push( $asiEquipo->id );
 
                 $objMovimiento = new inventarioMovimientos();
-                $objMovimiento->movimiento = 2; //*** resta al inventario  */
-                $objMovimiento->inventarioId = $request['inventarioId'][$i];
-                $objMovimiento->cantidad = $request['cantidad'][$i];
+                $objMovimiento->movimiento = 2;
+                //*** resta al inventario  */
+                $objMovimiento->inventarioId = $request[ 'inventarioId' ][ $i ];
+                $objMovimiento->cantidad = $request[ 'cantidad' ][ $i ];
                 $objMovimiento->precioUnitario = 0;
                 $objMovimiento->total = 0;
-                $objMovimiento->usuarioId = $request['usuarioId'];
+                $objMovimiento->usuarioId = $request[ 'usuarioId' ];
                 $objMovimiento->Save();
 
-                $objInventario = inventario::where('id', '=', $request['inventarioId'][$i])->first();
-                if ($objInventario) {
-                    $objInventario->cantidad = $objInventario->cantidad - $request['cantidad'][$i];
+                $objInventario = inventario::where( 'id', '=', $request[ 'inventarioId' ][ $i ] )->first();
+                if ( $objInventario ) {
+                    $objInventario->cantidad = $objInventario->cantidad - $request[ 'cantidad' ][ $i ];
                     $objInventario->save();
                 }
             }
@@ -613,10 +678,9 @@ class personalController extends Controller
         return redirect()->back();
     }
 
-    public function update(Request $request, personal $personal)
-    {
-        abort_if(Gate::denies('personal_edit'), 403);
-        $request->validate([
+    public function update( Request $request, personal $personal ) {
+        abort_if ( Gate::denies( 'personal_edit' ), 403 );
+        $request->validate( [
             'nombres' => 'required|max:150',
             'apellidoP' => 'required|max:150',
             'apellidoM' => 'nullable|max:150',
@@ -762,31 +826,31 @@ class personalController extends Controller
             'radioSerial.numeric' => 'El campo serial de radio debe de ser númerico.',
             'cargadorSerial.max' => 'El campo serial de cargador excede el límite de caracteres permitidos.',
             'cargadorSerial.numeric' => 'El campo serial del cargador debe de ser númerico.',
-        ]);
+        ] );
 
         $data = $request->all();
 
         /*** directorio contenedor de su información */
-        $pathPesonal = str_pad($personal->id, 4, '0', STR_PAD_LEFT);
+        $pathPesonal = str_pad( $personal->id, 4, '0', STR_PAD_LEFT );
 
-        if ($request->hasFile('foto')) {
-            $data['foto'] = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
-            $request->file('foto')->storeAs('/public/personal/' . $pathPesonal, $data['foto']);
+        if ( $request->hasFile( 'foto' ) ) {
+            $data[ 'foto' ] = time() . '_' . 'foto.' . $request->file( 'foto' )->getClientOriginalExtension();
+            $request->file( 'foto' )->storeAs( '/public/personal/' . $pathPesonal, $data[ 'foto' ] );
         }
 
         // conversion a mayuscula de algunos campos
-        $data['curp'] = strtoupper($data['curp']);
-        $data['ine'] = strtoupper($data['ine']);
-        $data['rfc'] = strtoupper($data['rfc']);
-        $data['licencia'] = strtoupper($data['licencia']);
-        $data['cpf'] = strtoupper($data['cpf']);
+        $data[ 'curp' ] = strtoupper( $data[ 'curp' ] );
+        $data[ 'ine' ] = strtoupper( $data[ 'ine' ] );
+        $data[ 'rfc' ] = strtoupper( $data[ 'rfc' ] );
+        $data[ 'licencia' ] = strtoupper( $data[ 'licencia' ] );
+        $data[ 'cpf' ] = strtoupper( $data[ 'cpf' ] );
         // conversion a minuscula de algunos campos
-        $data['mailEmpresarial'] = strtolower($data['mailEmpresarial']);
-        $data['mailpersonal'] = strtolower($data['mailpersonal']);
+        $data[ 'mailEmpresarial' ] = strtolower( $data[ 'mailEmpresarial' ] );
+        $data[ 'mailpersonal' ] = strtolower( $data[ 'mailpersonal' ] );
 
-        $personal->update($data);
+        $personal->update( $data );
 
-        $contacto = contactos::where('personalId', $personal->id)->first();
+        $contacto = contactos::where( 'personalId', $personal->id )->first();
         $contacto->nombre = $request->nombreE;
         $contacto->particular = $request->particularE;
         $contacto->celular = $request->celularE;
@@ -795,7 +859,7 @@ class personalController extends Controller
         $contacto->nombreM = $request->nombreM;
         $contacto->save();
 
-        $beneficiario = beneficiario::where('personalId', $personal->id)->first();
+        $beneficiario = beneficiario::where( 'personalId', $personal->id )->first();
         $beneficiario->nombres = $request->nombreB;
         $beneficiario->emailB = $request->emailB;
         $beneficiario->apellidoP = $request->apellidoPB;
@@ -805,7 +869,7 @@ class personalController extends Controller
         $beneficiario->nacimiento = $request->nacimientoB;
         $beneficiario->save();
 
-        $nomina = nomina::where('personalId', $personal->id)->first();
+        $nomina = nomina::where( 'personalId', $personal->id )->first();
         $nomina->nomina = $request->nomina;
         $nomina->imss = $request->imss;
         $nomina->clinica = $request->clinica;
@@ -831,7 +895,7 @@ class personalController extends Controller
         // dd( $nomina, $request );
         $nomina->save();
 
-        $equipo = equipo::where('personalId', $personal->id)->first();
+        $equipo = equipo::where( 'personalId', $personal->id )->first();
         $equipo->chaleco = $request->chaleco;
         $equipo->camisa = $request->camisa;
         $equipo->botas = $request->botas;
@@ -846,7 +910,7 @@ class personalController extends Controller
         $equipo->cargadorSerial = $request->cargadorSerial;
         $equipo->save();
 
-        $newfiscal =   fiscal::where('personalId', $personal->id)->first();
+        $newfiscal =   fiscal::where( 'personalId', $personal->id )->first();
         $newfiscal->calle = $request->callef;
         $newfiscal->numero = $request->numerof;
         $newfiscal->interior = $request->interiorf;
@@ -861,132 +925,133 @@ class personalController extends Controller
 
         // dd( $request->archivo );
         //*** hay archivos */
-        if ($request->archivo) {
-            for ($i = 0; $i < count($request->archivo); $i++) {
+        if ( $request->archivo ) {
+            for ( $i = 0; $i < count( $request->archivo );
+            $i++ ) {
                 $documento = null;
-                if ($request->archivo[$i]['idDoc'] == null) {
+                if ( $request->archivo[ $i ][ 'idDoc' ] == null ) {
                     $documento = new userdocs();
                 }
-                $documento['personalId'] = $personal->id;
-                $documento['tipoId'] = $request->archivo[$i]['tipoDocs'];
+                $documento[ 'personalId' ] = $personal->id;
+                $documento[ 'tipoId' ] = $request->archivo[ $i ][ 'tipoDocs' ];
                 // Obtenemos el tipo de documento
-                $tipoDocumentoNombre = $request->archivo[$i]['tipoDocsNombre'];
+                $tipoDocumentoNombre = $request->archivo[ $i ][ 'tipoDocsNombre' ];
                 // Obtenemos el tipo de documento
 
-                if ($request->archivo[$i]['omitido'] == 0) {
+                if ( $request->archivo[ $i ][ 'omitido' ] == 0 ) {
                     // OBLIGATORIO
-                    $documento['requerido'] = '1';
-                    $documento['estatus'] = '0';
-                    if (isset(($request->archivo[$i]['docs']))) {
-                        $file = $request->file('archivo')[$i]['docs'];
-                        $documento['ruta'] = time() . '_' . $file->getClientOriginalName();
-                        $file->storeAs('/public/personal/' . $pathPesonal . '/documentos/' .  $tipoDocumentoNombre, $documento['ruta']);
-                        $documento['estatus'] = '2';
+                    $documento[ 'requerido' ] = '1';
+                    $documento[ 'estatus' ] = '0';
+                    if ( isset( ( $request->archivo[ $i ][ 'docs' ] ) ) ) {
+                        $file = $request->file( 'archivo' )[ $i ][ 'docs' ];
+                        $documento[ 'ruta' ] = time() . '_' . $file->getClientOriginalName();
+                        $file->storeAs( '/public/personal/' . $pathPesonal . '/documentos/' .  $tipoDocumentoNombre, $documento[ 'ruta' ] );
+                        $documento[ 'estatus' ] = '2';
                         //Si es 2 Esta  OK
                     }
 
-                    if ((isset($request->archivo[$i]['check']) && $request->archivo[$i]['check'] == 'on')) {
-                        $documento['vencimiento'] = 1;
+                    if ( ( isset( $request->archivo[ $i ][ 'check' ] ) && $request->archivo[ $i ][ 'check' ] == 'on' ) ) {
+                        $documento[ 'vencimiento' ] = 1;
                         //Si es 1 SI vence el documento
-                        $documento['estatus'] = '0';
+                        $documento[ 'estatus' ] = '0';
                         //Si esta en 0 Esta MAL
-                        if (isset($request->archivo[$i]['fecha'])) {
-                            $documento['fechaVencimiento'] = $request->archivo[$i]['fecha'];
+                        if ( isset( $request->archivo[ $i ][ 'fecha' ] ) ) {
+                            $documento[ 'fechaVencimiento' ] = $request->archivo[ $i ][ 'fecha' ];
                             $fechaActual = Carbon::now();
-                            // Obtén la fecha que deseas evaluar (por ejemplo, desde una base de datos)
-                            $fechaProximaAVencer = Carbon::parse($request->archivo[$i]['fecha']);
+                            // Obtén la fecha que deseas evaluar ( por ejemplo, desde una base de datos )
+                            $fechaProximaAVencer = Carbon::parse( $request->archivo[ $i ][ 'fecha' ] );
                             // Calcula la diferencia en meses entre las dos fechas
-                            $mesesRestantes = $fechaActual->diffInMonths($fechaProximaAVencer, false);
-                            if ($mesesRestantes <= 1) {
-                                $documento['estatus'] = '1'; //Si es 1 Esta proximo a vencer
+                            $mesesRestantes = $fechaActual->diffInMonths( $fechaProximaAVencer, false );
+                            if ( $mesesRestantes <= 1 ) {
+                                $documento[ 'estatus' ] = '1';
+                                //Si es 1 Esta proximo a vencer
                             } else {
-                                $documento['estatus'] = '2'; //Si es 2 Esta Bien
+                                $documento[ 'estatus' ] = '2';
+                                //Si es 2 Esta Bien
                             }
-                            // dd('entro');
+                            // dd( 'entro' );
                         }
                     } else {
-                        $documento['vencimiento'] = 0;
+                        $documento[ 'vencimiento' ] = 0;
                         //Si es 0 no vence el documento
                         // $documento->estatus = '1';
                     }
                 } else {
                     // NO REQUERIDO
-                    $documento['requerido'] = '0';
-                    $documento['estatus'] = '2';
+                    $documento[ 'requerido' ] = '0';
+                    $documento[ 'estatus' ] = '2';
                     //Si es 2 Esta  OK
                 }
 
-                $documento['comentarios'] = $request->archivo[$i]['comentario'];
+                $documento[ 'comentarios' ] = $request->archivo[ $i ][ 'comentario' ];
 
-                if ($request->archivo[$i]['idDoc'] == null) {
+                if ( $request->archivo[ $i ][ 'idDoc' ] == null ) {
                     $documento->save();
                 } else {
-                    $docu = userdocs::where('id', $request->archivo[$i]['idDoc'])->first();
+                    $docu = userdocs::where( 'id', $request->archivo[ $i ][ 'idDoc' ] )->first();
                     // dd( $docu );
-                    $docu->update($documento);
+                    $docu->update( $documento );
                 }
             }
         }
-        Session::flash('message', 1);
+        Session::flash( 'message', 1 );
         //dd( $request );
 
         // $this->cambiaEstatusUsuario( $personal->id, $personal->estatusId );
 
-        return redirect()->route('personal.index');
+        return redirect()->route( 'personal.index' );
     }
 
-    public function destroy($id, $estatusId = 2)
-    {
-        abort_if(Gate::denies('personal_destroy'), 403);
-        $this->cambiaEstatusUsuario($id, $estatusId);
+    public function destroy( $id, $estatusId = 2 ) {
+        abort_if ( Gate::denies( 'personal_destroy' ), 403 );
+        $this->cambiaEstatusUsuario( $id, $estatusId );
     }
 
-    public function cambiaEstatusUsuario($id, $estatusId)
-    {
-        $objPersona = personal::where('id', '=', $id)->firstOrFail();
+    public function cambiaEstatusUsuario( $id, $estatusId ) {
+        $objPersona = personal::where( 'id', '=', $id )->firstOrFail();
 
-        $vctEstatus = userEstatus::select('userEstatus.nombre')->get()->toArray();
+        $vctEstatus = userEstatus::select( 'userEstatus.nombre' )->get()->toArray();
         $aEstatus = array();
-        foreach ($vctEstatus as   $value) {
-            $aEstatus[] = strtolower($value['nombre'] . '_');
+        foreach ( $vctEstatus as   $value ) {
+            $aEstatus[] = strtolower( $value[ 'nombre' ] . '_' );
         }
 
-        if (empty($objPersona) === false) {
+        if ( empty( $objPersona ) === false ) {
             $strPrefijo = '';
-            $objEstatus = userEstatus::where('id', $estatusId)->firstOrFail();
+            $objEstatus = userEstatus::where( 'id', $estatusId )->firstOrFail();
 
-            $objUser = User::where('id', $objPersona->userId)->firstOrFail();
+            $objUser = User::where( 'id', $objPersona->userId )->firstOrFail();
 
-            if (empty($objUser) === false) {
+            if ( empty( $objUser ) === false ) {
                 //** si el estatus es mayor de 1 se debe de realizar ajustes */
-                if (empty($objEstatus) === false && $objEstatus->id > 1) {
+                if ( empty( $objEstatus ) === false && $objEstatus->id > 1 ) {
                     //** para todos los estatus */
                     $strPrefijo = $objEstatus->nombre . '_';
 
-                    $strUserEmail = $strPrefijo .  str_replace($aEstatus, '', $objUser->email);
-                    $strUserPwd =  bcrypt($strPrefijo . $objUser->email . now()->toString());
+                    $strUserEmail = $strPrefijo .  str_replace( $aEstatus, '', $objUser->email );
+                    $strUserPwd =  bcrypt( $strPrefijo . $objUser->email . now()->toString() );
 
-                    $objUser->email = strtolower($strUserEmail);
+                    $objUser->email = strtolower( $strUserEmail );
                     $objUser->password = $strUserPwd;
                     $objUser->update();
 
-                    $strPersonalEmail = $strPrefijo . str_replace($aEstatus, '', $objPersona->mailEmpresarial);
+                    $strPersonalEmail = $strPrefijo . str_replace( $aEstatus, '', $objPersona->mailEmpresarial );
 
-                    $objPersona->mailEmpresarial = strtolower($strPersonalEmail);
+                    $objPersona->mailEmpresarial = strtolower( $strPersonalEmail );
                     $objPersona->estatusId = $estatusId;
                     $objPersona->update();
 
                     // dd( $objPersona );
                 } else {
                     /** es activacion */
-                    $strUserEmail =  str_replace($aEstatus, '', $objUser->email);
-                    $strUserPwd =  bcrypt('12345678');
+                    $strUserEmail =  str_replace( $aEstatus, '', $objUser->email );
+                    $strUserPwd =  bcrypt( '12345678' );
 
                     $objUser->email = $strUserEmail;
                     $objUser->password = $strUserPwd;
                     $objUser->update();
 
-                    $strPersonalEmail =  str_replace($aEstatus, '', $objPersona->mailEmpresarial);
+                    $strPersonalEmail =  str_replace( $aEstatus, '', $objPersona->mailEmpresarial );
 
                     $objPersona->mailEmpresarial = $strPersonalEmail;
                     $objPersona->estatusId = $estatusId;
@@ -996,68 +1061,66 @@ class personalController extends Controller
         }
     }
 
-    // public function download($id, $doc)
+    // public function download( $id, $doc )
     // {
-    //     $book = userdocs::where('id', $id)->firstOrFail();
+    //     $book = userdocs::where( 'id', $id )->firstOrFail();
 
-    //     if (empty($book) === false) {
+    //     if ( empty( $book ) === false ) {
 
     //         /*** directorio contenedor de su información */
-    //         $pathPesonal = str_pad($book->personalId, 4, '0', STR_PAD_LEFT);
-    //         $pathToFile = storage_path('app/public/personal/' . $pathPesonal . '/' . $book->$doc);
+    //         $pathPesonal = str_pad( $book->personalId, 4, '0', STR_PAD_LEFT );
+    //         $pathToFile = storage_path( 'app/public/personal/' . $pathPesonal . '/' . $book->$doc );
     //         // dd( $pathToFile );
-    //         if (file_exists($pathToFile) === true &&  is_file($pathToFile) === true) {
+    //         if ( file_exists( $pathToFile ) === true &&  is_file( $pathToFile ) === true ) {
     //             // return response()->download( $pathToFile );
-    //             return response()->file($pathToFile);
+    //             return response()->file( $pathToFile );
     //         } else {
-    //             return redirect('404');
+    //             return redirect( '404' );
     //         }
     //     }
     // }
 
     /**
-     * Limpieza de caracteres invalidos de un email
-     *
-     * @param string $strEmail Correo a sanitizar
-     * @return void
-     */
+    * Limpieza de caracteres invalidos de un email
+    *
+    * @param string $strEmail Correo a sanitizar
+    * @return void
+    */
 
-    public function sanitizaEmail($strEmail)
-    {
+    public function sanitizaEmail( $strEmail ) {
         return  str_replace(
-            array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª', 'É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê', 'Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î', 'Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô', 'Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û', 'Ñ', 'ñ', 'Ç', 'ç'),
-            array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a', 'E', 'E', 'E', 'E', 'e', 'e', 'e', 'e', 'I', 'I', 'I', 'I', 'i', 'i', 'i', 'i', 'O', 'O', 'O', 'O', 'o', 'o', 'o', 'o', 'U', 'U', 'U', 'U', 'u', 'u', 'u', 'u', 'N', 'n', 'C', 'c'),
+            array( 'Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª', 'É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê', 'Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î', 'Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô', 'Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û', 'Ñ', 'ñ', 'Ç', 'ç' ),
+            array( 'A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a', 'E', 'E', 'E', 'E', 'e', 'e', 'e', 'e', 'I', 'I', 'I', 'I', 'i', 'i', 'i', 'i', 'O', 'O', 'O', 'O', 'o', 'o', 'o', 'o', 'U', 'U', 'U', 'U', 'u', 'u', 'u', 'u', 'N', 'n', 'C', 'c' ),
             $strEmail
         );
     }
 
     /**
-     * Genera el correo empresarial del usuario
-     *
-     * @param [ type ] $strNombre
-     * @param [ type ] $strPaterno
-     * @param [ type ] $strMaterno
-     * @return string email
-     */
+    * Genera el correo empresarial del usuario
+    *
+    * @param [ type ] $strNombre
+    * @param [ type ] $strPaterno
+    * @param [ type ] $strMaterno
+    * @return string email
+    */
 
-    public function generarCorreoEmpresarial($strNombre, $strPaterno, $strMaterno = null)
-    {
-        $strEmail =  $this->sanitizaEmail(mb_strtolower(Str::substr($strNombre, 0, 1) . str_replace(' ', '', $strPaterno) . '@q2ces.com', 'UTF-8'));
+    public function generarCorreoEmpresarial( $strNombre, $strPaterno, $strMaterno = null ) {
+        $strEmail =  $this->sanitizaEmail( mb_strtolower( Str::substr( $strNombre, 0, 1 ) . str_replace( ' ', '', $strPaterno ) . '@q2ces.com', 'UTF-8' ) );
 
         // existe el correo
-        $objCorreo = personal::where('mailEmpresarial', $strEmail)->first();
+        $objCorreo = personal::where( 'mailEmpresarial', $strEmail )->first();
 
-        if ($objCorreo) {
-            if ($strMaterno != '') {
+        if ( $objCorreo ) {
+            if ( $strMaterno != '' ) {
                 $strEmail2 =  $this->sanitizaEmail(
-                    mb_strtolower(Str::substr($strNombre, 0, 1) . str_replace(' ', '', $strPaterno) . str_replace(' ', '', $strMaterno) . '@q2ces.com', 'UTF-8')
+                    mb_strtolower( Str::substr( $strNombre, 0, 1 ) . str_replace( ' ', '', $strPaterno ) . str_replace( ' ', '', $strMaterno ) . '@q2ces.com', 'UTF-8' )
                 );
 
-                $objCorreo = personal::where('mailEmpresarial', $strEmail2)->first();
-                if ($objCorreo) {
+                $objCorreo = personal::where( 'mailEmpresarial', $strEmail2 )->first();
+                if ( $objCorreo ) {
                     // existe y se regresa con el dia
                     $strEmail3 =  $this->sanitizaEmail(
-                        mb_strtolower(Str::substr($strNombre, 0, 1) . str_replace(' ', '', $strPaterno) . str_replace(' ', '', $strMaterno) . date('d') . '@q2ces.com', 'UTF-8')
+                        mb_strtolower( Str::substr( $strNombre, 0, 1 ) . str_replace( ' ', '', $strPaterno ) . str_replace( ' ', '', $strMaterno ) . date( 'd' ) . '@q2ces.com', 'UTF-8' )
                     );
                     return $strEmail3;
                 } else {
@@ -1067,7 +1130,7 @@ class personalController extends Controller
             } else {
                 // no existe segundo apellido y se pone el dia
                 $strEmail3 =  $this->sanitizaEmail(
-                    mb_strtolower(Str::substr($strNombre, 0, 1) .  str_replace(' ', '', $strPaterno)  . date('d') . '@q2ces.com', 'UTF-8')
+                    mb_strtolower( Str::substr( $strNombre, 0, 1 ) .  str_replace( ' ', '', $strPaterno )  . date( 'd' ) . '@q2ces.com', 'UTF-8' )
                 );
                 return $strEmail3;
             }
@@ -1076,57 +1139,128 @@ class personalController extends Controller
         }
     }
 
-    public function ver(personal $personal)
-    {
-        abort_if(Gate::denies('personal_show'), 403);
+    public function ver( personal $personal ) {
+        abort_if ( Gate::denies( 'personal_show' ), 403 );
 
         // dd( $personal );
-        $contacto = contactos::where('personalId', $personal->id)->first();
-        $beneficiario = beneficiario::where('personalId', $personal->id)->first();
-        $nomina = nomina::where('personalId', $personal->id)->first();
-        $equipo = equipo::where('personalId', $personal->id)->first();
+        $contacto = contactos::where( 'personalId', $personal->id )->first();
+        $beneficiario = beneficiario::where( 'personalId', $personal->id )->first();
+        $nomina = nomina::where( 'personalId', $personal->id )->first();
+        $equipo = equipo::where( 'personalId', $personal->id )->first();
         // $docs = userdocs::where( 'personalId', $personal->id )->first();
-        $docs = userdocs::rightJoin('docs', 'userdocs.tipoId', 'docs.id')
-            ->select(
-                'docs.id',
-                'docs.nombre',
-                'userdocs.id as usuarioId',
-                'userdocs.fechaVencimiento',
-                'userdocs.estatus',
-                'userdocs.comentarios',
-                'userdocs.ruta',
-                'userdocs.requerido',
-                'userdocs.id as idDoc'
-            )
-            ->where('personalId', $personal->id)
-            ->where('docs.tipoId', '1')
-            ->groupBy('docs.id')
-            ->get();
+        // $docs = userdocs::rightJoin( 'docs', 'userdocs.tipoId', 'docs.id' )
+        //     ->select(
+        //         'docs.id',
+        //         'docs.nombre',
+        //         'userdocs.id as usuarioId',
+        //         'userdocs.fechaVencimiento',
+        //         'userdocs.estatus',
+        //         'userdocs.comentarios',
+        //         'userdocs.ruta',
+        //         'userdocs.requerido',
+        //         'userdocs.id as idDoc'
+        // )
+        //     ->where( 'personalId', $personal->id )
+        //     ->where( 'docs.tipoId', '1' )
+        //     ->groupBy( 'docs.id' )
+        //     ->get();
 
-        // dd($docs);
-        $fiscal = fiscal::where('personalId', $personal->id)->first();
-        $vctPuestos = puesto::orderBy('nombre', 'asc')->get();
-        $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->get();
-        $vctEstatus = userEstatus::all();
-        $vctPersonal = personal::all();
-        // $documentos = docs::where( 'tipoId', '1' )->orderBy( 'nombre', 'asc' )->get();
+        $docs = docs::leftJoin( 'userdocs', function ( $join ) use ( $personal ) {
+            $join->on( 'docs.id', '=', 'userdocs.tipoId' )
+            ->where( 'userdocs.personalId', '=', $personal->id );
+        }
+    )
+    ->select(
+        'docs.id',
+        'docs.nombre',
+        'userdocs.id as usuarioId',
+        'userdocs.fechaVencimiento',
+        'userdocs.estatus',
+        'userdocs.comentarios',
+        'userdocs.ruta',
+        'userdocs.requerido',
+        'userdocs.id as idDoc'
+    )->where( 'docs.tipoId', '1' )
+    ->get();
 
-        $nomina->decSalarioDiario = ($nomina->diario);
-        $nomina->decSalarioDiarioIntegrado = round($nomina->decSalarioDiario * 1.05137, 2);
-        $nomina->decSalarioMensual = round($nomina->decSalarioDiario * 30, 2);
-        $nomina->decSalarioMensualIntegrado = round($nomina->decSalarioDiarioIntegrado * 30, 2);
-        $nomina->decEstado = round($nomina->decSalarioMensual * 0.025, 2);
-        $nomina->decImss = round($nomina->decSalarioMensualIntegrado  * 0.0938, 2);
-        $nomina->decImssRiesgo = round($nomina->decSalarioMensualIntegrado * 0.0658875, 2);
-        $nomina->decAfore = round($nomina->decSalarioMensualIntegrado * 0.0628, 2);
-        $nomina->decInfonavit = round($nomina->decSalarioMensualIntegrado * 0.05, 2);
-        $nomina->decVacaciones = round($nomina->decSalarioDiario * 6, 2);
-        $nomina->decPrimaVacacional = round($nomina->decVacaciones * 0.25, 2);
-        $nomina->decAguinaldo = round($nomina->decSalarioDiario * 15, 2);
-        $nomina->decTotal = round($nomina->decSalarioMensual + $nomina->decEstado + $nomina->decImss + $nomina->decImssRiesgo +
-            $nomina->decAfore + $nomina->decInfonavit + $nomina->decVacaciones + $nomina->decPrimaVacacional + $nomina->decAguinaldo + $nomina->isr, 2);
+    // dd( $docs );
+    $fiscal = fiscal::where( 'personalId', $personal->id )->first();
+    $vctPuestos = puesto::orderBy( 'nombre', 'asc' )->get();
+    $vctNiveles = puestoNivel::orderBy( 'nombre', 'asc' )->get();
+    $vctEstatus = userEstatus::all();
+    $vctPersonal = personal::all();
+    // $documentos = docs::where( 'tipoId', '1' )->orderBy( 'nombre', 'asc' )->get();
 
-        // dd( $docs );        
-        return view('personal.showDePersonal', compact('personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal', 'vctPersonal', 'vctEstatus', 'vctPuestos', 'vctNiveles'));
+    $nomina->decSalarioDiario = ( $nomina->diario );
+    $nomina->decSalarioDiarioIntegrado = round( $nomina->decSalarioDiario * 1.05137, 2 );
+    $nomina->decSalarioMensual = round( $nomina->decSalarioDiario * 30, 2 );
+    $nomina->decSalarioMensualIntegrado = round( $nomina->decSalarioDiarioIntegrado * 30, 2 );
+    $nomina->decEstado = round( $nomina->decSalarioMensual * 0.025, 2 );
+    $nomina->decImss = round( $nomina->decSalarioMensualIntegrado  * 0.0938, 2 );
+    $nomina->decImssRiesgo = round( $nomina->decSalarioMensualIntegrado * 0.0658875, 2 );
+    $nomina->decAfore = round( $nomina->decSalarioMensualIntegrado * 0.0628, 2 );
+    $nomina->decInfonavit = round( $nomina->decSalarioMensualIntegrado * 0.05, 2 );
+    $nomina->decVacaciones = round( $nomina->decSalarioDiario * 6, 2 );
+    $nomina->decPrimaVacacional = round( $nomina->decVacaciones * 0.25, 2 );
+    $nomina->decAguinaldo = round( $nomina->decSalarioDiario * 15, 2 );
+    $nomina->decTotal = round( $nomina->decSalarioMensual + $nomina->decEstado + $nomina->decImss + $nomina->decImssRiesgo +
+    $nomina->decAfore + $nomina->decInfonavit + $nomina->decVacaciones + $nomina->decPrimaVacacional + $nomina->decAguinaldo + $nomina->isr, 2 );
+
+    // dd( $docs );
+
+    return view( 'personal.showDePersonal', compact( 'personal', 'contacto', 'beneficiario', 'nomina', 'equipo', 'docs', 'fiscal', 'vctPersonal', 'vctEstatus', 'vctPuestos', 'vctNiveles' ) );
+}
+
+/**
+* Ejecuta el cambio de asignación del personal a una maquina que ya esta asignada
+*
+* @param Request $request
+* @return void
+*/
+
+public function asignaciones( Request $request ) {
+
+    $data = $request->all();
+    // dd( $request, $data );
+    $vctDebug = array();
+    $objAsigna = new obraMaqPer();
+    $objHistorico = new obraMaqPerHistorico();
+
+    if(  $data[ 'NmaquinariaId' ] == 0){
+        //*** eliminamos la referencia del operador */
+        $objResult = $objAsigna->eliminarReferenciaDeOperador( $data[ 'recordId' ] ) ;
+    }elseif( $data[ 'NmaquinariaId' ] == -1 && $data[ 'recordId' ] > 0 ){
+        //*** eliminamos la referencia del operador */
+        $objResult = $objAsigna->eliminarReferenciaDeOperador( $data[ 'recordId' ] ) ;
+    }else{
+        //*** realizamos el registro de movimiento */
+        $objResult = $objAsigna->registraMovimiento( $data[ 'NmaquinariaId' ], $data[ 'personalId' ], 1, $data[ 'recordId' ] ) ;
+    }
+
+    return redirect()->back();
+    }
+
+    public function cuenta() {
+        $user = User::where( 'id', auth()->user()->id )->first();
+        return view( 'personal.pass', compact( 'user' ) );
+    }
+
+    public function cuentaUpdate( Request $request, User $id ) {
+        $Validator = $request->validate( [
+            'password' => 'required|min:4',
+            'Rpassword' => 'required|same:password'
+        ], [
+            'password.required' => 'La contraseña es Obligatorio',
+            'Rpassword.required' => 'La confirmacion de contraseña es Obligatorio',
+            'Rpassword.same' => 'Las Contraseñas no coinciden',
+        ] );
+        $password = $request->input( 'password' );
+        if ( $password )
+        $id->password = bcrypt( $password );
+
+        $id->save();
+        // $id->update( $data );
+        $user = User::where( 'id', auth()->user()->id )->first();
+        return view( 'personal.pass', compact( 'user' ) );
     }
 }
