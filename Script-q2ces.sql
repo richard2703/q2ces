@@ -562,6 +562,16 @@ create table tipoMantenimiento(
     primary key (id)
 );
 
+CREATE TABLE corteCajaChica(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    inicio datetime not null,
+    fin datetime not NULL,
+    saldo float (10, 2) not NULL,
+    Movimientos int null, 
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    PRIMARY KEY (id));
+
 /***************************************FIN Tablas de Sin FK*/
 
 /***************************************DATOS Tablas de Sin FK*/
