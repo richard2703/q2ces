@@ -26,7 +26,8 @@ class accesoriosController extends Controller
         abort_if(Gate::denies('maquinaria_index'), '403');
         $accesorios = accesorios::select('accesorios.*', db::raw("CONCAT(maquinaria.identificador,' ',maquinaria.nombre) AS maquinaria"),)
             ->join('maquinaria', 'maquinaria.id', '=', 'accesorios.maquinariaId')
-            ->paginate(5);
+            ->paginate(10);
+        // dd($accesorios);
         return view('accesorios.indexAccesorios', compact('accesorios'));
     }
 
@@ -87,8 +88,12 @@ class accesoriosController extends Controller
         );
         $accesorio['serie'] = strtoupper($accesorio['serie']);
         // dd($request);
+
+        /*** directorio contenedor de su información */
+
         // $accesorioPath = str_pad($accesorio['identificador'], 4, '0', STR_PAD_LEFT);
         $accesorio = accesorios::create($accesorio);
+
         $cont = 0;
 
 
@@ -100,7 +105,7 @@ class accesoriosController extends Controller
             // Obtenemos el tipo de documento
             $tipoDocumentoNombre = $request->archivo[$i]['tipoDocsNombre'];
             // Obtenemos el tipo de documento
-
+            $pathAccesorio = str_pad($accesorio['serie'] . $documento->accesorioId, 4, '0', STR_PAD_LEFT);
             if ($request->archivo[$i]['omitido'] == 0) {
                 // OBLIGATORIO
                 $documento->requerido = '1';
@@ -109,7 +114,7 @@ class accesoriosController extends Controller
                 if (isset(($request->archivo[$i]['docs']))) {
                     $file = $request->file('archivo')[$i]['docs'];
                     $documento->ruta = time() . '_' . $file->getClientOriginalName();
-                    $file->storeAs('/public/maquinaria/accesorios/documentos/' .  $tipoDocumentoNombre, $documento->ruta);
+                    $file->storeAs('/public/accesorios/ ' . $pathAccesorio . '/documentos/', $documento->ruta);
                     $documento->estatus = '2';
                     //Si es 2 Esta  OK
                 }
@@ -140,12 +145,10 @@ class accesoriosController extends Controller
             $documento->save();
         }
 
-        /*** directorio contenedor de su información */
-        $pathAccesorio = str_pad($accesorio->id, 4, '0', STR_PAD_LEFT);
 
         if ($request->hasFile('foto')) {
             $accesorio->foto = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
-            $request->file('foto')->storeAs('/public/maquinaria/accesorios/' . $pathAccesorio, $accesorio->foto);
+            $request->file('foto')->storeAs('/public/accesorios/ ' . $pathAccesorio . '/documentos/', $accesorio->foto);
             $accesorio->save();
         }
 
@@ -242,6 +245,7 @@ class accesoriosController extends Controller
             'maquinariaId'
         );
         // dd($request);
+        $pathAccesorio = str_pad($data['serie'] . $accesorios->id, 4, '0', STR_PAD_LEFT);
         if ($request->archivo) {
             for (
                 $i = 0;
@@ -266,7 +270,7 @@ class accesoriosController extends Controller
                     if (isset(($request->archivo[$i]['docs']))) {
                         $file = $request->file('archivo')[$i]['docs'];
                         $documento['ruta'] = time() . '_' . $file->getClientOriginalName();
-                        $file->storeAs('/public/maquinaria/accesorios/documentos/' .  $tipoDocumentoNombre, $documento['ruta']);
+                        $file->storeAs('/public/accesorios/ ' . $pathAccesorio . '/documentos/', $documento['ruta']);
                         $documento['estatus'] = '2';
                         //Si es 2 Esta  OK
                     }
@@ -319,11 +323,11 @@ class accesoriosController extends Controller
 
         $data['serie'] = strtoupper($data['serie']);
         /*** directorio contenedor de su información */
-        $pathAccesorio = str_pad($accesorios->id, 4, '0', STR_PAD_LEFT);
+        $pathAccesorio = str_pad($data['serie'] . $accesorios->id, 4, '0', STR_PAD_LEFT);
 
         if ($request->hasFile('foto')) {
             $data['foto'] = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
-            $request->file('foto')->storeAs('/public/maquinaria/accesorios/' . $pathAccesorio, $data['foto']);
+            $request->file('foto')->storeAs('/public/accesorios/ ' . $pathAccesorio . '/documentos/', $data['foto']);
         }
 
         $accesorios->update($data);
