@@ -424,11 +424,12 @@
         if (requerido == 0) {
             console.log('requerido');
             omitir(id);
-
-        }
-        let downloadButton = document.getElementById("downloadButton"+ id);
+            let downloadButton = document.getElementById("downloadButton"+ id);
         let removeButton = document.getElementById("removeButton"+ id);
         downloadButton.style.display = "none";
         removeButton.style.display = "none";
+
+        }
+        
     }
 </script>
