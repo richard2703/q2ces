@@ -105,7 +105,8 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('permission_create','web','2022-07-25 19:54:15','2022-07-25 19:54:15'),
 	 ('permission_show','web','2022-07-25 19:54:15','2022-07-25 19:54:15'),
 	 ('permission_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('permission_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('permission_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('role_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('role_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('role_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -116,18 +117,22 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('user_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('user_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('user_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('user_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('user_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('asistencia_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('asistencia_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('asistencia_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('asistencia_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('asistencia_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	 ('asistencia_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+     ('asistencia_execute_corte_semanal','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('personal_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('personal_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('personal_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('personal_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('personal_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+     ('personal_assign_maquinaria','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('cajachica_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('cajachica_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('cajachica_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -138,7 +143,8 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('maquinaria_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('maquinaria_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('maquinaria_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('maquinaria_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('maquinaria_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('calendario_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('calendario_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('calendario_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -149,28 +155,28 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('combustible_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('combustible_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('combustible_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('combustible_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('combustible_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('inventario_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('inventario_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('inventario_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('inventario_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('inventario_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	 ('inventario_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('inventario_restock','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('inventario_mover','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('obra_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('obra_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('obra_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('obra_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('obra_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('puesto_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('puesto_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('puesto_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('puesto_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('puesto_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+     ('obra_assign_maquinaria','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	--  ('puesto_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	--  ('puesto_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	--  ('puesto_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	--  ('puesto_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	--  ('puesto_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
-	 ('inventario_restock','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('inventario_mover','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('asistencia_cortesemanal','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('asistencia_horasextra','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('catalogos_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('catalogos_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('catalogos_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -182,37 +188,46 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('maquinaria_mtq_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('maquinaria_mtq_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('maquinaria_mtq_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('maquinaria_mtq_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	 ('maquinaria_mtq_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+     ('maquinaria_assign_personal','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
-	 ('docs_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('docs_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('docs_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('docs_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('docs_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
-INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
-	 ('tiposDocs_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('tiposDocs_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('tiposDocs_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('tiposDocs_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('tiposDocs_destroy','web','2022-07-25 19:54:16','2022-07-25�19:54:16');
-INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
-	 ('ubicaciones_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('ubicaciones_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('ubicaciones_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('ubicaciones_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('ubicaciones_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
-INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
-	 ('lugares_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('lugares_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('lugares_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('lugares_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('lugares_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
-INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
-	 ('tipoServicios_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('tipoServicios_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('tipoServicios_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('tipoServicios_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('tipoServicios_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	 ('inventario_mtq_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('inventario_mtq_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('inventario_mtq_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('inventario_mtq_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('inventario_mtq_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('inventario_mtq_restock','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('inventario_mtq_mover','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+-- INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+-- 	 ('docs_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('docs_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('docs_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('docs_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('docs_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+-- INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+-- 	 ('tiposDocs_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('tiposDocs_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('tiposDocs_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('tiposDocs_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('tiposDocs_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+-- INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+-- 	 ('ubicaciones_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('ubicaciones_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('ubicaciones_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('ubicaciones_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('ubicaciones_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+-- INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+-- 	 ('lugares_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('lugares_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('lugares_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('lugares_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('lugares_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+-- INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+-- 	 ('tipoServicios_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('tipoServicios_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('tipoServicios_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('tipoServicios_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+-- 	 ('tipoServicios_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('calendarioMtq_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('calendarioMtq_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -236,17 +251,17 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('bitacora_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('bitacora_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('bitacora_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('bitacora_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('grupo_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('grupo_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('grupo_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('grupo_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('grupo_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('tarea_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('tarea_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('tarea_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('tarea_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('tarea_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	 ('bitacora_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	--  ('grupo_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	--  ('grupo_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	--  ('grupo_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	--  ('grupo_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	--  ('grupo_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	--  ('tarea_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	--  ('tarea_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	--  ('tarea_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	--  ('tarea_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	--  ('tarea_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('cliente_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),

@@ -35,42 +35,35 @@
                                             Regresar
                                         </button>
                                     </a>
-                                    {{--  @can('asistencia_cortesemanal')
-                                        <a href="{{ route('asistencia.corteSemanal') }}">
-                                            <button type="button" class="btn botonGral">Corte Semanal</button>
-                                        </a>
-                                    @endcan  --}}
+
                                 </div>
 
                                 <div class="col-8 text-end">
-                                    {{--  @can('asistencia_horasextra')
-                                        <a href="{{ route('asistencia.horasExtra') }}">
-                                            <button type="button" class="btn botonGral">Horas Extra</button>
+                                    @can('personal_edit')
+                                        <a href="{{ route('personal.equipo', $personal->id) }}" method="get">
+                                            <button class="btn botonGral">Asignar Equipo Personal</button>
                                         </a>
-                                    @endcan  --}}
-                                    {{--  @can('asistencia_create')  --}}
-                                    <a href="{{ route('personal.equipo', $personal->id) }}" method="get">
-                                        <button class="btn botonGral">Asignar Equipo Personal</button>
-                                    </a>
 
 
-                                    <a href="{{ route('personal.uniforme', $personal->id) }}" method="get">
-                                        <button class="btn botonGral">Asignar Uniforme</button>
-                                    </a>
+                                        <a href="{{ route('personal.uniforme', $personal->id) }}" method="get">
+                                            <button class="btn botonGral">Asignar Uniforme</button>
+                                        </a>
+                                    @endcan
 
                                     <!-- Solo si su rol es de operador -->
                                     @if ($nomina->puestoNivelId == 5)
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#asignar"
-                                            onclick="asignar(
+                                        @can('personal_assign_maquinaria')
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#asignar"
+                                                onclick="asignar(
                                         '{{ $personal->id }}',
                                         '{{ is_null($vctAsignacion->maquinariaId) == false ? $vctAsignacion->maquinariaId : 0 }}',
                                         '{{ is_null($vctAsignacion->maquina) == false ? $vctAsignacion->maquina : '' }}',
                                         '{{ is_null($vctAsignacion->recordId) == false ? $vctAsignacion->recordId : 0 }}'
                                         )">
-                                            <button class="btn botonGral">Asignar Maquinaría</button>
-                                        </a>
+                                                <button class="btn botonGral">Asignar Maquinaría</button>
+                                            </a>
+                                        @endcan
                                     @endif
-                                    {{--  @endcan  --}}
 
 
                                 </div>

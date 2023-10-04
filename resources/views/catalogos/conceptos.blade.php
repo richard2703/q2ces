@@ -98,7 +98,7 @@
                                                         </svg>
                                                     </a>
                                                 @endcan
-                                                @can('user_destroy')
+                                                @can('catalogos_destroy')
                                                     <form action="{{ route('conceptos.destroy', $item->id) }}" method="POST"
                                                         style="display: inline-block;" onsubmit="return confirm('Seguro?')">
                                                         @csrf

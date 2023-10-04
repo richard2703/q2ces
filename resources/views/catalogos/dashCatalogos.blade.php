@@ -25,44 +25,45 @@
                                         <div class="accordion-body">
                                             <div class="row mt-3 d-flex">
 
-                                                <div class="col-12 col-md-6 col-lg-3 text-center my-4">
-                                                    <a href="{{ route('catalogoPuestos.index') }}" class="">
-                                                        <img src="/img/catalogos/puestos.svg" alt="Puestos" title="Puestos"
-                                                            width="30%" class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">Puestos</p>
-                                                    </a>
-                                                </div>
+                                                @can('catalogos_edit')
+                                                    <div class="col-12 col-md-6 col-lg-3 text-center my-4">
+                                                        <a href="{{ route('catalogoPuestos.index') }}" class="">
+                                                            <img src="/img/catalogos/puestos.svg" alt="Puestos" title="Puestos"
+                                                                width="30%" class="botonIconoPrincipal">
+                                                            <p class="mt-4 texticonos">Puestos</p>
+                                                        </a>
+                                                    </div>
 
-                                                <div class="col-12 col-md-6 col-lg-3 text-center my-4">
-                                                    <a href="{{ route('catalogoPuestosNivel.index') }}" class="">
-                                                        <img src="/img/catalogos/nivelPuestos.svg" alt="Nivel de Puestos"
-                                                            title="Nivel de Puestos" width="30%"
-                                                            class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">Nivel de
-                                                            Puestos</p>
-                                                    </a>
-                                                </div>
+                                                    <div class="col-12 col-md-6 col-lg-3 text-center my-4">
+                                                        <a href="{{ route('catalogoPuestosNivel.index') }}" class="">
+                                                            <img src="/img/catalogos/nivelPuestos.svg" alt="Nivel de Puestos"
+                                                                title="Nivel de Puestos" width="30%"
+                                                                class="botonIconoPrincipal">
+                                                            <p class="mt-4 texticonos">Nivel de
+                                                                Puestos</p>
+                                                        </a>
+                                                    </div>
 
-                                                <div class="col-12 col-md-6 col-lg-3 text-center my-4">
-                                                    <a href="{{ route('tiposDocs.index') }}" class="">
-                                                        <img src="/img/inventario/TIPOS DE DOCUMENTOS-01.svg"
-                                                            alt="Tipos Docs" title="Tipos Docs" width="30%"
-                                                            class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">Tipos de Documentos</p>
-                                                    </a>
-                                                </div>
+                                                    <div class="col-12 col-md-6 col-lg-3 text-center my-4">
+                                                        <a href="{{ route('tiposDocs.index') }}" class="">
+                                                            <img src="/img/inventario/TIPOS DE DOCUMENTOS-01.svg"
+                                                                alt="Tipos Docs" title="Tipos Docs" width="30%"
+                                                                class="botonIconoPrincipal">
+                                                            <p class="mt-4 texticonos">Tipos de Documentos</p>
+                                                        </a>
+                                                    </div>
 
-                                                <div class="col-12 col-md-6 col-lg-3 text-center my-4">
-                                                    <a href="{{ route('docs.index') }}" class="">
-                                                        <img src="/img/inventario/ADMINISTRACIÓN DE DOCUMENTOS-01.svg"
-                                                            alt="Manage Docs" title="Manage Docs" width="30%"
-                                                            class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">
-                                                            Administración de Documentos</p>
-                                                    </a>
-                                                </div>
+                                                    <div class="col-12 col-md-6 col-lg-3 text-center my-4">
+                                                        <a href="{{ route('docs.index') }}" class="">
+                                                            <img src="/img/inventario/ADMINISTRACIÓN DE DOCUMENTOS-01.svg"
+                                                                alt="Manage Docs" title="Manage Docs" width="30%"
+                                                                class="botonIconoPrincipal">
+                                                            <p class="mt-4 texticonos">
+                                                                Administración de Documentos</p>
+                                                        </a>
+                                                    </div>
 
-                                                {{-- <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                                    {{-- <div class="col-12 col-sm-6 col-md-3 text-center my-4">
                                                     <a href="{{ route('catalogoTipoHorasExtra.index') }}" class="">
                                                         <img src="/img/catalogos/horasextra.svg" alt="Horas Extras"
                                                             title="Horas Extras" width="30%" class="botonIconoPrincipal">
@@ -71,15 +72,15 @@
                                                     </a>
                                                 </div>
                                                  --}}
-                                                <div class="col-12 col-md-6 col-lg-3 text-center my-4">
-                                                    <a href="{{ route('catalogoTiposEquipo.index') }}" class="">
-                                                        <img src="/img/catalogos/tiposDeEquipo.svg" alt="Tipos de Equipo"
-                                                            title="Tipos de Refacción" width="30%"
-                                                            class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">Tipos de Equipo</p>
-                                                    </a>
-                                                </div>
-
+                                                    <div class="col-12 col-md-6 col-lg-3 text-center my-4">
+                                                        <a href="{{ route('catalogoTiposEquipo.index') }}" class="">
+                                                            <img src="/img/catalogos/tiposDeEquipo.svg" alt="Tipos de Equipo"
+                                                                title="Tipos de Refacción" width="30%"
+                                                                class="botonIconoPrincipal">
+                                                            <p class="mt-4 texticonos">Tipos de Equipo</p>
+                                                        </a>
+                                                    </div>
+                                                @endcan
                                             </div>
                                         </div>
                                     </div>

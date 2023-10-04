@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="col-12 col-lg-6 pb-3 divAñadir">
 
-                                    @can('tiposDocs_create')
+                                    @can('catalogos_create')
                                         <a href="{{ route('tiposDocs.create') }}">
                                             <button type="button" class="btn botonGral align-it">Añadir Tipo</button>
                                         </a>
@@ -63,8 +63,9 @@
                                                 <td class="text-center">{{ $tiposDoc->comentario }}</td>
 
                                                 <td class="td-actions text-center">
-                                                    @can('tiposDocs_edit')
-                                                        <a href="{{ route('tiposDocs.edit', $tiposDoc->id) }}" class="">
+                                                    @can('catalogos_edit')
+                                                        <a href="{{ route('tiposDocs.edit', $tiposDoc->id) }}"
+                                                            class="">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                 height="28" fill="currentColor"
                                                                 class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">

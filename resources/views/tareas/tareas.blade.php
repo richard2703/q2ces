@@ -33,7 +33,7 @@
                                         </div>
                                     @endif
 
-                                    @can('tarea_create')
+                                    @can('catalogos_create')
                                         <div class="row">
                                             <div class="col-12 text-right" data-bs-toggle="modal" data-bs-target="#nuevaTarea">
                                                 <button type="button" class="btn botonGral">Nueva Tarea</button>
@@ -66,7 +66,7 @@
 
                                                         <td class="td-actions text-center">
 
-                                                            @can('tarea_edit')
+                                                            @can('catalogos_edit')
                                                                 <a href="#" class="" data-bs-toggle="modal"
                                                                     data-bs-target="#editarTarea"
                                                                     onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->categoriaId }}','{{ $item->ubicacionId }}','{{ $item->tipoId }}','{{ $item->comentario }}','{{ $item->activa }}','{{ $item->tipoValorId }}')">
@@ -79,7 +79,7 @@
                                                                 </a>
                                                             @endcan
                                                             {{--
-                                                            @can('tarea_destroy')
+                                                            @can('catalogos_destroy')
                                                                 <form action="#" method="POST"
                                                                     style="display: inline-block;"
                                                                     onsubmit="return confirm('¿Estás Seguro?')">

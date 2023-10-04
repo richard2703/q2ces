@@ -333,6 +333,7 @@ class asistenciaController extends Controller {
     */
 
     public function horasExtra() {
+        abort_if ( Gate::denies( 'asistencia_edit' ), '403' );
 
         $objCalendario = new Calendario();
 
@@ -414,6 +415,7 @@ class asistenciaController extends Controller {
 
     public function HEstore( Request $request ) {
         // dd( $request );
+        abort_if ( Gate::denies( 'asistencia_edit' ), '403' );
 
         $vctItems =   array();
         for (
@@ -565,7 +567,9 @@ class asistenciaController extends Controller {
     }
 
     public function corteSemanal( $intAnio = null, $intMes = null, $intDia = null ) {
+        abort_if ( Gate::denies( 'asistencia_execute_corte_semanal' ), '403' );
 
+        abort_if ( Gate::denies( 'asistencia_index' ), '403' );
         $objCalendario = new Calendario();
 
         $data = request()->all();
@@ -1164,7 +1168,7 @@ class asistenciaController extends Controller {
                 $decCostoHorasExtrasDescuento +=   $value->horasExtrasDescuentoPagar ;
                 $intHorasExtras += $value->horasExtras ;
                 $intHorasExtrasDescuento += $value->horasExtrasDescuento ;
-                $intTiempoExtra += ($value->tiempoExtra + $value->tiempoAnticipado);
+                $intTiempoExtra += ( $value->tiempoExtra + $value->tiempoAnticipado );
 
             }
 
@@ -1176,7 +1180,7 @@ class asistenciaController extends Controller {
             $objItem->nominaHorasExtrasDescuento =  $intHorasExtrasDescuento ;
             $objItem->nominaImporteHorasExtrasDescuento =  $decCostoHorasExtrasDescuento ;
             $objItem->nominaPagoSemanalDescuento =  $objItem->nominaImporte + $decCostoHorasExtrasDescuento ;
-            $objItem->nominaTiempoExtra =  str_pad((int) ($intTiempoExtra/60), 2, '0', STR_PAD_LEFT ) . ':' . str_pad( ($intTiempoExtra % 60), 2, '0', STR_PAD_LEFT ) ;
+            $objItem->nominaTiempoExtra =  str_pad( ( int ) ( $intTiempoExtra/60 ), 2, '0', STR_PAD_LEFT ) . ':' . str_pad( ( $intTiempoExtra % 60 ), 2, '0', STR_PAD_LEFT ) ;
 
         }
         // dd( $vctAsistencias );
@@ -1332,6 +1336,7 @@ class asistenciaController extends Controller {
     }
 
     public function reporteExcel( Request $request ) {
+        abort_if ( Gate::denies( 'asistencia_show' ), '403' );
         $objCalendario = new Calendario();
 
         $data = request()->all();

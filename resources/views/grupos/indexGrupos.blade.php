@@ -34,7 +34,7 @@
                                         </div>
                                     @endif
 
-                                    @can('grupo_create')
+                                    @can('catalogos_create')
                                         <div class="row">
                                             <div class="col-12 text-right">
 
@@ -66,7 +66,7 @@
 
                                                         <td class="td-actions text-right">
 
-                                                            @can('grupo_edit')
+                                                            @can('catalogos_edit')
                                                                 <a href="{{ url('/bitacoras/grupos/editar/' . $item->id) }}"
                                                                     class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
@@ -78,7 +78,7 @@
                                                                 </a>
                                                             @endcan
 
-                                                            {{--  @can('grupo_destroy')
+                                                            {{--  @can('catalogos_destroy')
                                                                 <form action="" method="POST"
                                                                     style="display: inline-block;"
                                                                     onsubmit="return confirm('Seguro?')">
