@@ -1214,6 +1214,55 @@ CREATE TABLE maqdocs (
     CONSTRAINT FK_maqdocs_maquinariaId FOREIGN KEY (maquinariaId) REFERENCES maquinaria(id),
     CONSTRAINT FK_maqdocs_tipoId FOREIGN KEY (tipoId) REFERENCES docs(id)
 );
+create table tiposMarcas(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(255) NULL,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id)
+);
+
+drop table marcastipo;
+
+CREATE TABLE marcasTipo (
+    id BIGINT(20) NOT NULL AUTO_INCREMENT,
+    marca_id BIGINT(20) unsigned NOT NULL,
+    tipos_marcas_id BIGINT(20) unsigned NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_marcasTipo_marca_id foreign key (marca_id) REFERENCES marca(id),
+    CONSTRAINT FK_marcasTipo_tipos_marcas_id foreign key (tipos_marcas_id) REFERENCES tiposMarcas(id)
+);
+
+INSERT INTO `tiposMarcas` (`id`, `nombre`) VALUES
+(1, 'herramientas'),
+(2, 'refacciones'),
+(3, 'consumibles'),
+(4, 'uniformes'),
+(5, 'maquinaria');
+
+INSERT INTO `tiposDocs` (`id`, `nombre`, `comentario`) VALUES
+(3, 'Accesorios', 'Documentos de accesorios para la maquinaria');
+
+INSERT INTO `docs` (`nombre`, `tipoId`, `comentario`) VALUES
+('Factura', 3, 'Factura de compra de un articulo o accesorio');
+
+CREATE TABLE accesoriosDocs (
+    id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    accesorioId BIGINT(20) UNSIGNED NOT NULL,
+    ruta VARCHAR(255) NULL,
+    tipo VARCHAR(255) NULL,
+    fechaVencimiento DATE NOT NULL,
+    estatus VARCHAR(255) NULL,
+    comentarios TEXT NULL,
+    tipoId BIGINT(20) UNSIGNED NULL,
+    requerido INT NULL,
+    vencimiento INT NULL,
+    created_at DATETIME NULL,
+    updated_at DATETIME NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_accesoriosDocs_accesorioId FOREIGN KEY (accesorioId) REFERENCES accesorios(id),
+    CONSTRAINT FK_accesoriosDocs_tipoId FOREIGN KEY (tipoId) REFERENCES docs(id)
+);
 
 CREATE TABLE accesorios(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
