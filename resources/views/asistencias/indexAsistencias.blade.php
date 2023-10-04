@@ -85,7 +85,7 @@ $anioSeleccionado = $intAnio;
                                         </div>
                                         <div class="row">
                                             <div class="col-4 text-left">
-                                                @can('asistencia_cortesemanal')
+                                                @can('asistencia_execute_corte_semanal')
                                                     <a href="{{ route('asistencia.corteSemanal') }}">
                                                         <button type="button" class="btn botonGral">Corte Semanal</button>
                                                     </a>
@@ -93,7 +93,7 @@ $anioSeleccionado = $intAnio;
                                             </div>
 
                                             <div class="col-8 text-end">
-                                                @can('asistencia_horasextra')
+                                                @can('asistencia_edit')
                                                     <a href="{{ route('asistencia.horasExtra') }}">
                                                         <button type="button" class="btn botonGral">Tiempo Extra</button>
                                                     </a>

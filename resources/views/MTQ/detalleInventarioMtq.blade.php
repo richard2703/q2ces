@@ -54,11 +54,11 @@
 
                                     </div>
 
-                                    {{--  <div class="col-12 text-center mb-3 ">
+                                     <div class="col-12 text-center mb-3 ">
 
                                         <button type="submit" class="btn botonGral"
                                             onclick="alertaGuardar()">Guardar</button>
-                                    </div>  --}}
+                                    </div>
                                 </div>
 
                                 <div class="col-12 col-md-8 my-3 ">

@@ -984,7 +984,7 @@ class inventarioController extends Controller
     }
     public function movimiento(Request $request, inventario $producto)
     {
-        // abort_if(Gate::denies('inventario_restock'), 403);
+        abort_if(Gate::denies('inventario_edit'), 403);
         $movimiento = $request->all();
         // dd($producto, $movimiento);
 

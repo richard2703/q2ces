@@ -43,7 +43,7 @@
                                             </button>
                                         </a>
 
-                                        @can('tipoServicios_create')
+                                        @can('catalogos_create')
                                             <button class="btn botonGral float-end" data-bs-toggle="modal"
                                                 data-bs-target="#nuevoItem" onclick="cargaItem(' ',' ',' ',' ',' ',' ','')">
                                                 Añadir un Tipo de Servicio
@@ -78,7 +78,7 @@
                                                 <td class="text-center">{{ $item->comentario }}</td>
 
                                                 <td class="td-actions text-center">
-                                                    @can('tipoServicios_show')
+                                                    @can('catalogos_show')
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
                                                             onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->codigo }}','{{ $item->costo }}','{{ $item->comentario }}','{{ $item->activo }}','{{ true }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="28"
@@ -91,7 +91,7 @@
                                                             </svg>
                                                         </a>
                                                     @endcan
-                                                    @can('tipoServicios_edit')
+                                                    @can('catalogos_edit')
                                                         <a href="#" class="" data-bs-toggle="modal"
                                                             data-bs-target="#editarItem"
                                                             onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->codigo }}','{{ $item->costo }}','{{ $item->comentario }}','{{ $item->activo }}','{{ false }}')">
@@ -103,7 +103,7 @@
                                                             </svg>
                                                         </a>
                                                     @endcan
-                                                    @can('tipoServicios_destroy')
+                                                    @can('catalogos_destroy')
                                                         <form action="{{ route('tiposServicios.destroy', $item->id) }}"
                                                             method="POST" style="display: inline-block;"
                                                             onsubmit="return confirm('Seguro?')">
