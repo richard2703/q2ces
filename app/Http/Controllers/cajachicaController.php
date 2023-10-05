@@ -235,7 +235,10 @@ class cajaChicaController extends Controller
     {
         abort_if(Gate::denies('cajachica_destroy'), 403);
 
-        dd('destroy');
+        // dd($cajaChica);
+        Session::flash('message', 1);
+        $cajaChica->delete();
+        return redirect()->action([cajaChicaController::class, 'index']);
     }
 
     public function reporte(Request $request)
