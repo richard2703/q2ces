@@ -1,6 +1,9 @@
 @extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Alta de Accesorios')])
 @section('content')
     <div class="content">
+        <?php
+        $objValida = new Validaciones();
+        ?>
         @if ($errors->any())
             <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
             <div class="alert alert-danger">
@@ -65,10 +68,21 @@
                                                     placeholder="Ej. 2000" name="ano" value="{{ old('ano') }}">
                                             </div>
 
-                                            <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                            <div class=" col-12 col-sm-6 col-lg-4  mb-3 ">
                                                 <label class="labelTitulo">Marca:</label></br>
-                                                <input type="text" class="inputCaja" id="marca" name="marca" placeholder="Especifique..."
-                                                    value="{{ old('marca') }}">
+                                                {{-- <input type="text" class="inputCaja" id="marca"
+                                                    placeholder="Especifique..." name="marca"
+                                                    value="{{ old('marca') }}"> --}}
+                                                <select class="form-select"
+                                                    aria-label="Default select example" id="marcaId"
+                                                    name="marcaId">
+                                                    <option value="">Seleccione</option>
+                                                    @foreach ($marcas as $marca)
+                                                        <option value="{{ $marca->id }}">
+                                                            {{ $objValida->ucwords_accent($marca->nombre) }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
 
 
@@ -231,7 +245,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 text-end mb-3 ">
+                                    <div class="col-12 text-center mb-3 ">
                                         <button type="submit" class="btn botonGral"
                                             onclick="alertaGuardar()">Guardar</button>
                                     </div>

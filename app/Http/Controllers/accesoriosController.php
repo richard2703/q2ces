@@ -6,6 +6,8 @@ use App\Models\accesorios;
 use App\Models\accesoriosDocs;
 use App\Models\docs;
 use App\Models\maquinaria;
+use App\Models\marca;
+use App\Models\marcasTipo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -24,8 +26,9 @@ class accesoriosController extends Controller
     public function index()
     {
         abort_if(Gate::denies('maquinaria_index'), '403');
-        $accesorios = accesorios::select('accesorios.*', db::raw("CONCAT(maquinaria.identificador,' ',maquinaria.nombre) AS maquinaria"),)
+        $accesorios = accesorios::select('accesorios.*', db::raw("CONCAT(maquinaria.identificador,' ',maquinaria.nombre) AS maquinaria"), 'marca.nombre as marca',)
             ->join('maquinaria', 'maquinaria.id', '=', 'accesorios.maquinariaId')
+            ->leftjoin('marca', 'marca.id', 'accesorios.marcaId')
             ->paginate(10);
         // dd($accesorios);
         return view('accesorios.indexAccesorios', compact('accesorios'));
@@ -40,9 +43,16 @@ class accesoriosController extends Controller
     public function create()
     {
         abort_if(Gate::denies('maquinaria_create'), '403');
+        // $marcasTipo = marcasTipo::->get();
+
+        // dd($marcasTipo);
+        $marcas = marca::select('marca.*', 'marcasFilter.tipos_marcas_id')->leftJoin('marcasTipo as marcasFilter', 'marca.id', '=', 'marcasFilter.marca_id')->orderBy('nombre', 'asc')
+            ->where('marcasFilter.tipos_marcas_id', '5')
+            ->get();
+        // dd($marcas);
         $doc = docs::where('tipoId', '3')->orderBy('nombre', 'asc')->get();
         $vctMaquinaria = maquinaria::all();
-        return view('accesorios.altaDeAccesorios', compact('vctMaquinaria', 'doc'));
+        return view('accesorios.altaDeAccesorios', compact('vctMaquinaria', 'doc', 'marcas'));
     }
 
     /**
@@ -78,7 +88,7 @@ class accesoriosController extends Controller
         ]);
         $accesorio = $request->only(
             'nombre',
-            'marca',
+            'marcaId',
             'modelo',
             'color',
             'serie',
@@ -114,7 +124,8 @@ class accesoriosController extends Controller
                 if (isset(($request->archivo[$i]['docs']))) {
                     $file = $request->file('archivo')[$i]['docs'];
                     $documento->ruta = time() . '_' . $file->getClientOriginalName();
-                    $file->storeAs('/public/accesorios/ ' . $pathAccesorio . '/documentos/', $documento->ruta);
+                    $file->storeAs('/public/accesorios/' . $pathAccesorio . '/documentos/' .  $tipoDocumentoNombre, $documento->ruta);
+                    // $file->storeAs('/public/accesorios/ ' .  . '/documentos/', $documento->ruta);
                     $documento->estatus = '2';
                     //Si es 2 Esta  OK
                 }
@@ -141,14 +152,15 @@ class accesoriosController extends Controller
                 //Si es 2 Esta  OK
             }
             $documento->comentarios = $request->archivo[$i]['comentario'];
-
             $documento->save();
         }
 
+        $pathAccesorioFoto = str_pad($accesorio->id, 4, '0', STR_PAD_LEFT);
 
         if ($request->hasFile('foto')) {
             $accesorio->foto = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
-            $request->file('foto')->storeAs('/public/accesorios/ ' . $pathAccesorio . '/documentos/', $accesorio->foto);
+
+            $request->file('foto')->storeAs('/public/accesorios/' . $pathAccesorioFoto . '/', $accesorio->foto);
             $accesorio->save();
         }
 
@@ -166,9 +178,11 @@ class accesoriosController extends Controller
     public function show(accesorios $accesorios)
     {
         abort_if(Gate::denies('maquinaria_show'), '403');
-
+        $marcas = marca::select('marca.*', 'marcasFilter.tipos_marcas_id')->leftJoin('marcasTipo as marcasFilter', 'marca.id', '=', 'marcasFilter.marca_id')->orderBy('nombre', 'asc')
+            ->where('marcasFilter.tipos_marcas_id', '5')
+            ->get();
         $vctMaquinaria = maquinaria::all();
-        return view('accesorios.detalleAccesorios', compact('accesorios', 'vctMaquinaria'));
+        return view('accesorios.detalleAccesorios', compact('accesorios', 'vctMaquinaria', 'marcas'));
     }
 
     /**
@@ -181,6 +195,10 @@ class accesoriosController extends Controller
     public function edit(accesorios $accesorios)
     {
         abort_if(Gate::denies('maquinaria_edit'), '403');
+        $marcasTipo = marcasTipo::where('tipos_marcas_id', '=', '5');
+        $marcas = marca::select('marca.*', 'marcasFilter.tipos_marcas_id')->leftJoin('marcasTipo as marcasFilter', 'marca.id', '=', 'marcasFilter.marca_id')->orderBy('nombre', 'asc')
+            ->where('marcasFilter.tipos_marcas_id', '5')
+            ->get();
         $doc = docs::leftJoin('accesoriosDocs', function ($join) use ($accesorios) {
             $join->on('docs.id', '=', 'accesoriosDocs.tipoId')
                 ->where('accesoriosDocs.accesorioId', '=', $accesorios->id);
@@ -198,8 +216,10 @@ class accesoriosController extends Controller
             ->get();
 
         // dd($doc);
+        // dd($accesorios);
         $vctMaquinaria = maquinaria::all();
-        return view('accesorios.detalleAccesorios', compact('accesorios', 'vctMaquinaria', 'doc'));
+        // 
+        return view('accesorios.detalleAccesorios', compact('accesorios', 'vctMaquinaria', 'doc', 'marcas'));
     }
 
     /**
@@ -236,7 +256,7 @@ class accesoriosController extends Controller
         ]);
         $data = $request->only(
             'nombre',
-            'marca',
+            'marcaId',
             'modelo',
             'color',
             'serie',
@@ -270,7 +290,9 @@ class accesoriosController extends Controller
                     if (isset(($request->archivo[$i]['docs']))) {
                         $file = $request->file('archivo')[$i]['docs'];
                         $documento['ruta'] = time() . '_' . $file->getClientOriginalName();
-                        $file->storeAs('/public/accesorios/ ' . $pathAccesorio . '/documentos/', $documento['ruta']);
+                        $file->storeAs('/public/accesorios/' . $pathAccesorio . '/documentos/' .  $tipoDocumentoNombre, $documento['ruta']);
+                        // $file->storeAs('/public/accesorios/ ' . $pathAccesorio . '/documentos/'. $tipoDocumentoNombre, $documento['ruta']);
+                        // $file->storeAs('/public/maquinaria/' . $pathMaquinaria . '/documentos/' .  $tipoDocumentoNombre, $documento->ruta);
                         $documento['estatus'] = '2';
                         //Si es 2 Esta  OK
                     }
@@ -324,10 +346,11 @@ class accesoriosController extends Controller
         $data['serie'] = strtoupper($data['serie']);
         /*** directorio contenedor de su información */
         $pathAccesorio = str_pad($data['serie'] . $accesorios->id, 4, '0', STR_PAD_LEFT);
+        $pathAccesorioFoto = str_pad($accesorios->id, 4, '0', STR_PAD_LEFT);
 
         if ($request->hasFile('foto')) {
             $data['foto'] = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
-            $request->file('foto')->storeAs('/public/accesorios/ ' . $pathAccesorio . '/documentos/', $data['foto']);
+            $request->file('foto')->storeAs('/public/accesorios/' . $pathAccesorioFoto . '/', $data['foto']);
         }
 
         $accesorios->update($data);
