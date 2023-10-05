@@ -15,12 +15,13 @@ use Illuminate\Support\Facades\Session;
 class inventarioMtqController extends Controller {
 
     public function dash() {
-        // abort_if ( Gate::denies( 'inventario_index' ), 403 );
+        abort_if ( Gate::denies( 'inventario_mtq_index' ), 403 );
 
         return view( 'MTQ.inventarioDashMtq' );
     }
 
     public function index( $tipo ) {
+        abort_if ( Gate::denies( 'inventario_mtq_index' ), 403 );
         $inventarios = inventarioMtq::where( 'tipo',  $tipo )->orderBy( 'created_at', 'desc' )->paginate( 15 );
 
         return view( 'MTQ.indexInventarioMtq', compact( 'inventarios', 'tipo' ) );
@@ -29,7 +30,7 @@ class inventarioMtqController extends Controller {
     }
 
     public function create( $tipo ) {
-        abort_if ( Gate::denies( 'inventario_create' ), 403 );
+        abort_if ( Gate::denies( 'inventario_mtq_create' ), 403 );
 
         // $vctTipos = tipoUniforme::all();
         $vctMarcas = marca::all();
@@ -47,6 +48,7 @@ class inventarioMtqController extends Controller {
 
     public function store( Request $request ) {
         // dd( 'store,' );
+        abort_if ( Gate::denies( 'inventario_mtq_create' ), 403 );
         $producto = $request->all();
 
         if ( $request->hasFile( 'imagen' ) ) {
@@ -81,6 +83,7 @@ class inventarioMtqController extends Controller {
     */
 
     public function show( inventarioMtq $inventario ) {
+        abort_if ( Gate::denies( 'inventario_mtq_show' ), 403 );
         // dd( $inventario );
         $vctDesde = maquinaria::all();
         $vctHasta = maquinaria::all();
@@ -114,6 +117,7 @@ class inventarioMtqController extends Controller {
     */
 
     public function update( Request $request, inventarioMtq $inventario ) {
+        abort_if ( Gate::denies( 'inventario_mtq_edit' ), 403 );
         $data = $request->all();
 
         if ( $request->hasFile( 'imagen' ) ) {
@@ -140,7 +144,7 @@ class inventarioMtqController extends Controller {
     }
 
     public function movimiento( Request $request, inventarioMtq $producto ) {
-        // abort_if ( Gate::denies( 'inventario_restock' ), 403 );
+        abort_if ( Gate::denies( 'inventario_mtq_restock' ), 403 );
         $movimiento = $request->all();
         // dd( $producto, $movimiento );
 

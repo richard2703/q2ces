@@ -10,8 +10,8 @@
         </tr>
         <tr>
             <th>CÓDIGO</th>
-            <th>PUESTO</th>
             <th>EMPLEADO</th>
+            <th>PUESTO</th>
             <th>DÍAS</th>
             <th>SALARIO POR DÍA</th>
             <th>IMPORTE SEMANAL</th>
@@ -30,8 +30,8 @@
         @foreach ($vctAsistencias as $item)
             <tr>
                 <td>{{ $item->numEmpleado }}</td>
-                <td>{{ $item->puesto }}</td>
                 <td>{{ $item->empleado }}</td>
+                <td>{{ $item->puesto }}</td>
                 <td>{{ $item->nominaDias }}</td>
                 <td>$ {{ number_format($item->sueldo, 2) }}</td>
                 <td>$ {{ number_format($item->nominaImporte, 2) }}</td>

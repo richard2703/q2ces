@@ -1,6 +1,9 @@
 @extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Detalle de Accesorios')])
 @section('content')
     <div class="content">
+        <?php
+        $objValida = new Validaciones();
+        ?>
         @if ($errors->any())
         <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
         <div class="alert alert-danger">
@@ -36,14 +39,14 @@
                             </div>
 
                             <form action="{{ route('accesorios.update', $accesorios->id) }}"
-                                method="post"class="row alertaGuardar" enctype="multipart/form-data">
+                                method="post" class="row alertaGuardar" enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
                                 <div class="row mt-3" style="padding-left:35px;">
                                     <div class="col-12 col-md-4  my-3">
                                         <div class="text-center mx-auto border vistaFoto mb-4">
                                             <i><img class="imgVista img-fluid mb-2"
-                                                    src="{{  $accesorios->foto == '' ? '/img/general/default.jpg' : asset('/storage/maquinaria/accesorios/' . str_pad($accesorios->id, 4, '0', STR_PAD_LEFT) . '/' . $accesorios->foto ) }}"
+                                                    src="{{  $accesorios->foto == '' ? '/img/general/default.jpg' : asset('/storage/accesorios/' . str_pad($accesorios->id, 4, '0', STR_PAD_LEFT) . '/' . $accesorios->foto ) }}"
                                                     {{-- src="'/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $fotos[0]->ruta) " --}}
                                                     ></i>
                                             <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="foto"
@@ -70,10 +73,28 @@
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Marca:</label></br>
-                                                <input type="text" class="inputCaja" id="marca" name="marca"
-                                                    placeholder="Especifique..." value="{{ $accesorios->marca }}">
-                                            </div>
+                                                <select id="marcaId" name="marcaId" class="form-select"
+                                                    aria-label="Default select example">
+                                                    <option value="">Seleccione</option>
+                                                    @foreach ($marcas as $item)
+                                                        <option value="{{ $item->id }}"
+                                                            {{ $item->id == $accesorios->marcaId ? ' selected' : '' }}>
+                                                            {{ $objValida->ucwords_accent($item->nombre) }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
 
+                                                {{--  <select id="marcaId" name="marcaId" class="form-select"
+                                                aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($marcas as $item)
+                                                    <option value="{{ $item->id }}"
+                                                        {{ $item->id == $maquinaria->marcaId ? ' selected' : '' }}>
+                                                        {{$item->id - $objValida->ucwords_accent($item->nombre) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>  --}}
+                                            </div>
 
                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                 <label class="labelTitulo">Número Serie:</label></br>
@@ -181,7 +202,7 @@
                                                                     <a id='downloadButton{{ $item->id }}'
                                                                         class="btnViewDescargar btn btn-outline-success btnView"
                                                                         download
-                                                                        href="{{ asset('/public/maquinaria/accesorios/' . $item->nombre . '/' . $item->ruta) }}">
+                                                                        href="{{ asset('/storage/accesorios/' . str_pad($accesorios->serie . $accesorios->id, 4, '0', STR_PAD_LEFT) . '/documentos/' . $item->nombre . '/' . $item->ruta) }}">
                                                                         <span class="btn-text">Descargar</span>
                                                                         <span class="icon">
                                                                             <i class="far fa-eye mt-2"></i>
@@ -366,7 +387,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 text-end mb-3 ">
+                                    <div class="col-12 text-center mb-3 ">
                                         <button type="submit" class="btn botonGral"
                                             onclick="alertaGuardar()">Guardar</button>
                                     </div>

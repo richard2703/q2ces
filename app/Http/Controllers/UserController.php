@@ -27,6 +27,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('user_create'), '403');
         // $request->validate([
         //     'name' => 'required|min:3|max:100',
         //     // 'username' => 'required',
@@ -74,6 +75,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
 
+        abort_if(Gate::denies('user_edit'), '403');
         $data = $request->only('name', 'username', 'email');
         $password = $request->input('password');
         if ($password)

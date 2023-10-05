@@ -140,8 +140,8 @@ if ($asistencias->isEmpty() == true) {
                                         <table class="table">
                                             <thead class="labelTitulo text-center">
                                                 <th class="labelTitulo">Código</th>
-                                                <th class="labelTitulo">Puesto</th>
                                                 <th class="labelTitulo">Nombre</th>
+                                                <th class="labelTitulo">Puesto</th>
                                                 <th class="labelTitulo">Horario Salida</th>
                                                 <th class="labelTitulo">Salida</th>
                                                 {{-- <th class="labelTitulo">Tipo</th> <!-- Se calculan de forma dinamica --> --}}
@@ -157,11 +157,11 @@ if ($asistencias->isEmpty() == true) {
                                                             <input type="hidden" name="personalId[]"
                                                                 value="{{ $item->id }}">
                                                         </td>
-                                                        <td>
-                                                            {{ $item->puesto }}
-                                                        </td>
                                                         <td class="text-left">
                                                             {{ $item->getFullLastNameAttribute() }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $item->puesto }}
                                                         </td>
                                                         <td>
                                                             <?php
@@ -211,9 +211,9 @@ if ($asistencias->isEmpty() == true) {
                                                             <td style="color: {{ $item->estatusColor }};">
                                                                 <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                             </td>
-                                                            <td>{{ $item->puesto }}</td>
                                                             <td class="text-left">
                                                                 {{ $item->getFullLastNameAttribute() }}</td>
+                                                            <td>{{ $item->puesto }}</td>
                                                             <td>---</td>
                                                             <td>---</td>
                                                             {{-- <td>---</td> --}}

@@ -12,6 +12,7 @@ use App\Models\grupoTareas;
 use App\Models\grupo;
 use App\Models\tarea;
 use App\Models\maquinaria;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
@@ -76,6 +77,7 @@ class checkListController extends Controller
 
     public function create($bitacoraId, $maquinariaId)
     {
+        abort_if(Gate::denies('checkList_create'), 403);
 
         $maquinaria = maquinaria::select('maquinaria.*')->where('id', '=', $maquinariaId)->first();
         $bitacora = bitacoras::select('bitacoras.*')->where('id', '=', $bitacoraId)->first();
@@ -185,6 +187,24 @@ class checkListController extends Controller
 
     public function destroy($id)
     {
-        //
+
+        abort_if ( Gate::denies( 'checkList_destroy' ), 403 );
+        try {
+
+        $bitacora = bitacoras::where( 'id', '=', $id )->first();
+            $bitacora->delete();
+            // Intenta eliminar
+        } catch ( QueryException $e ) {
+            if ( $e->getCode() === 23000 ) {
+                return redirect()->back()->with( 'faild', 'No Puedes Eliminar ' );
+                // Esto es un error de restricción de clave externa ( FOREIGN KEY constraint )
+                // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
+            } else {
+                return redirect()->back()->with( 'faild', 'No Puedes Eliminar si esta en uso' );
+                // Otro tipo de error de base de datos
+                // Maneja según sea necesario
+            }
+        }
+        return redirect()->back()->with( 'success', 'Eliminado correctamente' );
     }
 }
