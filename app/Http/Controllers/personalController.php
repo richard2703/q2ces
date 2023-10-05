@@ -438,9 +438,8 @@ class personalController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function show(personal $personal)
-    {
-        abort_if(Gate::denies('personal_edit'), 403);
+    public function show( personal $personal ) {
+        abort_if ( Gate::denies( 'personal_show' ), 403 );
 
         // dd( $personal );
         $contacto = contactos::where( 'personalId', $personal->id )->first();
@@ -561,6 +560,9 @@ class personalController extends Controller
     */
 
     public function edit( personal $personal ) {
+
+    abort_if ( Gate::denies( 'personal_edit' ), 403 );
+
         $equipos = tipoEquipo::orderBy( 'nombre', 'asc' )->get();
         $marcas = marca::orderBy( 'nombre', 'asc' )->get();
         $asignados = asignacionEquipo::where( 'personalId', $personal->id )->get();
@@ -611,6 +613,8 @@ class personalController extends Controller
     */
 
     public function editUniforme( personal $personal ) {
+        abort_if ( Gate::denies( 'personal_edit' ), 403 );
+
         $inventario = tipoUniforme::orderBy( 'nombre', 'asc' )->get();
         $asignados = asignacionUniforme::select(
             'asignacionUniforme.*',
@@ -629,6 +633,9 @@ class personalController extends Controller
 
     public function asignacionUniforme( Request $request, $personal ) {
         // dd( $request );
+
+        abort_if ( Gate::denies( 'personal_edit' ), 403 );
+
         $nuevaLista = collect();
         for (
             $i = 0; $i < count( $request[ 'asignado' ] );
@@ -1219,6 +1226,8 @@ class personalController extends Controller
 */
 
 public function asignaciones( Request $request ) {
+
+    abort_if ( Gate::denies( 'personal_assign_maquinaria' ), 403 );
 
     $data = $request->all();
     // dd( $request, $data );

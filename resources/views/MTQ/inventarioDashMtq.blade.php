@@ -8,7 +8,7 @@
                         <div class="card-body">
                             <div class="row d-flex ">
 
-                                @can('inventario_show')
+                                @can('inventario_mtq_show')
                                     <div class="col-12 col-sm-6 col-md-4 text-center my-4">
                                         <a href="{{ route('inventarioMtq.index', 'herramientas') }}" class="">
                                             <img src="/img/inventario/herramientas.svg" alt="equipos" title="Herramientas"

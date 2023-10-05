@@ -96,7 +96,7 @@
                                                                 </svg>
                                                             </a>
                                                         @endcan
-                                                        @can('maquinaria_edit')
+                                                        @can('maquinaria_assign_personal')
                                                             <a href="#" data-bs-toggle="modal" data-bs-target="#asignar"
                                                                 onclick="asignar(
                                                                     '{{ $maquina->id }}',
@@ -122,7 +122,7 @@
                                                             {{-- Obra:{{ (is_null($maquina->obra ) == false ? $maquina->obra : 0 )}} --}}
                                                             {{-- ObraId:{{ (is_null($maquina->obraId ) == false ? $maquina->obraId : 0 )}} --}}
                                                         @endcan
-                                                        {{-- @can('user_destroy') --}}
+                                                        {{-- @can('maquinaria_destroy') --}}
                                                         {{-- <form action="{{ route('maquinaria.delete', $maquina->id) }}"
                                                         method="POST" style="display: inline-block;"
                                                         onsubmit="return confirm('Seguro?')">

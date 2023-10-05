@@ -12,164 +12,160 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
+class inventarioMtqController extends Controller {
 
-class inventarioMtqController extends Controller
-{
+    public function dash() {
+        // abort_if ( Gate::denies( 'inventario_index' ), 403 );
 
-    public function dash()
-    {
-        // abort_if(Gate::denies('inventario_index'), 403);
-
-        return view('MTQ.inventarioDashMtq');
+        return view( 'MTQ.inventarioDashMtq' );
     }
 
-    public function index($tipo)
-    {
-        $inventarios = inventarioMtq::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(15);
-        // dd($inventarios);
-        return view('MTQ.indexInventarioMtq', compact('inventarios', 'tipo'));
+    public function index( $tipo ) {
+        $inventarios = inventarioMtq::where( 'tipo',  $tipo )->orderBy( 'created_at', 'desc' )->paginate( 15 );
 
-        dd('index inventarioMtq.index');
+        return view( 'MTQ.indexInventarioMtq', compact( 'inventarios', 'tipo' ) );
+
+        dd( 'index inventarioMtq.index' );
     }
 
-    public function create($tipo)
-    {
-        abort_if(Gate::denies('inventario_create'), 403);
+    public function create( $tipo ) {
+        abort_if ( Gate::denies( 'inventario_create' ), 403 );
 
         // $vctTipos = tipoUniforme::all();
         $vctMarcas = marca::all();
         $vctProveedores = proveedor::all();
 
-        return view('MTQ.inventarioNuevoMtq', compact('tipo', 'vctMarcas', 'vctProveedores'));
+        return view( 'MTQ.inventarioNuevoMtq', compact( 'tipo', 'vctMarcas', 'vctProveedores' ) );
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        // dd('store,');
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+
+    public function store( Request $request ) {
+        // dd( 'store,' );
         $producto = $request->all();
 
-        if ($request->hasFile("imagen")) {
-            $producto['imagen'] = time() . '_' . 'imagen.' . $request->file('imagen')->getClientOriginalExtension();
-            $request->file('imagen')->storeAs('/public/inventario/' . $producto['tipo'], $producto['imagen']);
+        if ( $request->hasFile( 'imagen' ) ) {
+            $producto[ 'imagen' ] = time() . '_' . 'imagen.' . $request->file( 'imagen' )->getClientOriginalExtension();
+            $request->file( 'imagen' )->storeAs( '/public/inventario/' . $producto[ 'tipo' ], $producto[ 'imagen' ] );
         }
 
-        $objProducto = inventarioMtq::create($producto);
+        $objProducto = inventarioMtq::create( $producto );
 
-        if ($objProducto->id > 0) {
+        if ( $objProducto->id > 0 ) {
             $objMovimiento = new inventarioMovimientosMtq();
-            $objMovimiento->movimiento = 1; //*** agrega al inventario */
+            $objMovimiento->movimiento = 1;
+            //*** agrega al inventario */
             $objMovimiento->inventarioId = $objProducto->id;
             $objMovimiento->cantidad = $objProducto->cantidad;
             $objMovimiento->precioUnitario = $objProducto->valor;
-            $objMovimiento->total = ($objProducto->valor * $objProducto->cantidad);
-            $objMovimiento->usuarioId = $request['usuarioId'];
+            $objMovimiento->total = ( $objProducto->valor * $objProducto->cantidad );
+            $objMovimiento->usuarioId = $request[ 'usuarioId' ];
             $objMovimiento->Save();
         }
 
-        Session::flash('message', 1);
+        Session::flash( 'message', 1 );
 
-        return redirect()->route('inventarioMtq.index', $producto['tipo']);
+        return redirect()->route( 'inventarioMtq.index', $producto[ 'tipo' ] );
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\inventarioMtq  $inventarioMtq
-     * @return \Illuminate\Http\Response
-     */
-    public function show(inventarioMtq $inventario)
-    {
-        // dd($inventario);
+    * Display the specified resource.
+    *
+    * @param  \App\Models\inventarioMtq  $inventarioMtq
+    * @return \Illuminate\Http\Response
+    */
+
+    public function show( inventarioMtq $inventario ) {
+        // dd( $inventario );
         $vctDesde = maquinaria::all();
         $vctHasta = maquinaria::all();
         $vctMarcas = marca::all();
         $vctProveedores = proveedor::all();
         $vctMaquinaria = maquinaria::all();
-        // dd($vctDesde);
-        $inventario = inventarioMtq::where("id", $inventario->id)->first();
-        // dd($inventario);
+        // dd( $vctDesde );
+        $inventario = inventarioMtq::where( 'id', $inventario->id )->first();
+        // dd( $inventario );
 
-        return view('MTQ.detalleInventarioMtq ', compact('inventario', 'vctDesde', 'vctHasta', 'vctMarcas', 'vctProveedores', 'vctMaquinaria'));
+        return view( 'MTQ.detalleInventarioMtq ', compact( 'inventario', 'vctDesde', 'vctHasta', 'vctMarcas', 'vctProveedores', 'vctMaquinaria' ) );
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\inventarioMtq  $inventarioMtq
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(inventarioMtq $inventarioMtq)
-    {
+    * Show the form for editing the specified resource.
+    *
+    * @param  \App\Models\inventarioMtq  $inventarioMtq
+    * @return \Illuminate\Http\Response
+    */
+
+    public function edit( inventarioMtq $inventarioMtq ) {
         //
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\inventarioMtq  $inventarioMtq
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, inventarioMtq $inventario)
-    {
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Models\inventarioMtq  $inventarioMtq
+    * @return \Illuminate\Http\Response
+    */
+
+    public function update( Request $request, inventarioMtq $inventario ) {
         $data = $request->all();
 
-        if ($request->hasFile("imagen")) {
-            $data['imagen'] = time() . '_' . 'imagen.' . $request->file('imagen')->getClientOriginalExtension();
-            $request->file('imagen')->storeAs('/public/inventario/' . $data['tipo'], $data['imagen']);
+        if ( $request->hasFile( 'imagen' ) ) {
+            $data[ 'imagen' ] = time() . '_' . 'imagen.' . $request->file( 'imagen' )->getClientOriginalExtension();
+            $request->file( 'imagen' )->storeAs( '/public/inventario/' . $data[ 'tipo' ], $data[ 'imagen' ] );
         }
 
-        $inventario->update($data);
+        $inventario->update( $data );
 
-        Session::flash('message', 1);
-        // dd($request);
-        return redirect()->route('inventarioMtq.index', $inventario->tipo);
+        Session::flash( 'message', 1 );
+        // dd( $request );
+        return redirect()->route( 'inventarioMtq.index', $inventario->tipo );
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\inventarioMtq  $inventarioMtq
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(inventarioMtq $inventarioMtq)
-    {
+    * Remove the specified resource from storage.
+    *
+    * @param  \App\Models\inventarioMtq  $inventarioMtq
+    * @return \Illuminate\Http\Response
+    */
+
+    public function destroy( inventarioMtq $inventarioMtq ) {
         //
     }
 
-    public function movimiento(Request $request, inventarioMtq $producto)
-    {
-        // abort_if(Gate::denies('inventario_restock'), 403);
+    public function movimiento( Request $request, inventarioMtq $producto ) {
+        // abort_if ( Gate::denies( 'inventario_restock' ), 403 );
         $movimiento = $request->all();
-        // dd($producto, $movimiento);
+        // dd( $producto, $movimiento );
 
         $objMovimiento = new inventarioMovimientosMtq();
-        $objMovimiento->movimiento = 1; //*** agrega al inventario */
+        $objMovimiento->movimiento = 1;
+        //*** agrega al inventario */
         $objMovimiento->inventarioId = $producto->id;
-        $objMovimiento->usuarioId = $movimiento['usuarioId'];
-        $objMovimiento->cantidad = $movimiento['cantidad'];
-        $objMovimiento->precioUnitario = $movimiento['costo'];
-        $objMovimiento->total = ($movimiento['costo'] * $movimiento['cantidad']);
+        $objMovimiento->usuarioId = $movimiento[ 'usuarioId' ];
+        $objMovimiento->cantidad = $movimiento[ 'cantidad' ];
+        $objMovimiento->precioUnitario = $movimiento[ 'costo' ];
+        $objMovimiento->total = ( $movimiento[ 'costo' ] * $movimiento[ 'cantidad' ] );
         $objMovimiento->Save();
 
-        if ($movimiento['movimiento'] == 1) {
+        if ( $movimiento[ 'movimiento' ] == 1 ) {
             //*** creamos el registro del stock */
 
-            $producto->cantidad = ($producto->cantidad + $movimiento['cantidad']);
-            $producto->valor =  $movimiento['costo'];
+            $producto->cantidad = ( $producto->cantidad + $movimiento[ 'cantidad' ] );
+            $producto->valor =  $movimiento[ 'costo' ];
             $producto->save();
-        } else if ($movimiento['movimiento'] == 2) {
-            $producto->cantidad = ($producto->cantidad - $movimiento['cantidad']);
+        } else if ( $movimiento[ 'movimiento' ] == 2 ) {
+            $producto->cantidad = ( $producto->cantidad - $movimiento[ 'cantidad' ] );
             $producto->save();
         }
 
-        Session::flash('message', 1);
-        return redirect()->route('inventarioMtq.index', $producto->tipo);
+        Session::flash( 'message', 1 );
+        return redirect()->route( 'inventarioMtq.index', $producto->tipo );
     }
 }

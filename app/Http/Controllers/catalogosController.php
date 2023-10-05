@@ -49,7 +49,7 @@ class catalogosController extends Controller
 
     public function indexPuestos()
     {
-        abort_if(Gate::denies('puesto_index'), 403);
+        abort_if(Gate::denies('catalogos_index'), 403);
 
         $records = puesto::select('puesto.*', 'puestoNivel.nombre as puestoNivel')
             ->leftJoin('puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId')
