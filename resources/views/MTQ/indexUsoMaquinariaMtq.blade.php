@@ -55,11 +55,11 @@
                                     </form>
                                 </div>  --}}
                                 <div class="col-12 pb-3 text-end">
-                                    @can('maquinaria_mtq_create')
+                                    @can('calendario_mtq_create_mantenimiento')
                                         <button data-bs-toggle="modal" data-bs-target="#modalEvento" type="button"
                                             style="height: 40px" class="btn botonGral ">Agregar Mantenimiento</button>
                                     @endcan
-                                    @can('maquinaria_mtq_create')
+                                    @can('maquinaria_mtq_update_uso_bloque')
                                         <a href="{{ route('uso.create') }}">
                                             <button type="button" class="btn botonGral">Registrar Uso</button>
                                         </a>
@@ -173,12 +173,14 @@
                                 id="km">
                         </div>
 
-                        <div class=" col-12 col-sm-6  mb-3 ">
-                            <label class="labelTitulo">Edicion de Uso:</label></br>
-                            <input type="hidden" name="id" id="id" value="" id="idmaq">
-                            <input type="text" class="inputCaja" placeholder="Ej. NS01234ABCD" name="valor"
-                                value="{{ old('numserie') }}" id="valor">
-                        </div>
+                        @can('maquinaria_mtq_update_uso')
+                            <div class=" col-12 col-sm-6  mb-3 ">
+                                <label class="labelTitulo">Edicion de Uso:</label></br>
+                                <input type="hidden" name="id" id="id" value="" id="idmaq">
+                                <input type="text" class="inputCaja" placeholder="Ej. NS01234ABCD" name="valor"
+                                    value="{{ old('numserie') }}" id="valor">
+                            </div>
+                        @endcan
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

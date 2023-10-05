@@ -36,7 +36,7 @@
                                         </div>
 
                                         <div class="col-6 pb-3 text-end">
-                                            @can('inventario_create')
+                                            @can('inventario_mtq_create')
                                                 <a href="{{ route('inventarioMtq.create', $tipo) }}">
                                                     <button type="button" class="btn botonGral text-capitalize">Añadir al
                                                         Inventario</button>

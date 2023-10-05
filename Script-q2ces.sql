@@ -229,11 +229,11 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 -- 	 ('tipoServicios_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 -- 	 ('tipoServicios_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
-	 ('calendarioMtq_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('calendarioMtq_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('calendarioMtq_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('calendarioMtq_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('calendarioMtq_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	 ('calendario_mtq_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('calendario_mtq_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('calendario_mtq_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('calendario_mtq_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('calendario_mtq_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('checkList_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('checkList_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -582,7 +582,7 @@ CREATE TABLE corteCajaChica(
     inicio datetime not null,
     fin datetime not NULL,
     saldo float (10, 2) not NULL,
-    Movimientos int null, 
+    Movimientos int null,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id));

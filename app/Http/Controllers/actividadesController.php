@@ -101,7 +101,7 @@ class actividadesController extends Controller
      */
     public function update(Request $request, actividades $actividades)
     {
-        abort_if(Gate::denies('calendarioMtq_edit'), 404);
+        abort_if(Gate::denies('calendario_mtq_edit'), 404);
         $calendarioPrincipal = calendarioPrincipal::where('id', $request->id)->first();
         $data = $request->all();
         // dd($calendarioPrincipal, $data);

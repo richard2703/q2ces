@@ -124,7 +124,7 @@
                                         </a>
                                     </div>
                                 @endcan
-                                @can('calendarioMtq_index')
+                                @can('calendario_mtq_index')
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ route('calendarioMtq.index') }}" class="">
                                             <img src="/img/dash/calendarioMTQ.svg" alt="inventario" title="inventario"
