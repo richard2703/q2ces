@@ -44,6 +44,7 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         // dd($request);
+        abort_if(Gate::denies('permission_create'), 403);
         $objUso = new Permission();
         $objUso->name  = $request['name'];
         $objUso->apodo = $request['apodo'];
@@ -89,6 +90,7 @@ class PermissionController extends Controller
      */
     public function update(Request $request, Permission $permission)
     {
+        abort_if(Gate::denies('permission_edit'), 403);
         $permission->update($request->all());
         Session::flash('message', 1);
         return redirect()->route('permissions.index');
@@ -101,7 +103,7 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        abort_if(Gate::denies('permission_delete'), 403);
+        abort_if(Gate::denies('permission_destroy'), 403);
 
         $permission->delete();
 

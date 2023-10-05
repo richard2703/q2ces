@@ -235,37 +235,53 @@
                                         aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
                                             <div class="row mt-3">
-                                                <div class="col-12 col-md-6 col-lg-3 text-center my-4">
-                                                    <a href="{{ route('catalogoCategoriasTareas.index') }}"
-                                                        class="">
-                                                        <img src="/img/catalogos/categoriasDeTareas.svg"
-                                                            alt="Categoría de tareas" title="Categoría de tareas"
-                                                            width="30%" class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">Categoría de
-                                                            Tareas</p>
-                                                    </a>
-                                                </div>
 
-                                                <div class="col-12 col-md-6 col-lg-3 text-center my-4">
-                                                    <a href="{{ route('catalogoTiposTareas.index') }}" class="">
-                                                        <img src="/img/catalogos/tiposDeTarea.svg" alt="Tipos de tareas"
-                                                            title="Tipos de tareas" width="30%"
-                                                            class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">Tipos de
-                                                            Tareas</p>
-                                                    </a>
-                                                </div>
+                                                @can('tarea_index')
+                                                    <div class="col-12 col-md-6 col-lg-3 text-center my-4">
+                                                        <a href="{{ route('catalogoCategoriasTareas.index') }}"
+                                                            class="">
+                                                            <img src="/img/catalogos/categoriasDeTareas.svg"
+                                                                alt="Categoría de tareas" title="Categoría de tareas"
+                                                                width="30%" class="botonIconoPrincipal">
+                                                            <p class="mt-4 texticonos">Categoría de
+                                                                Tareas</p>
+                                                        </a>
+                                                    </div>
 
-                                                <div class="col-12 col-md-6 col-lg-3 text-center my-4">
-                                                    <a href="{{ route('catalogoUbicacionesTareas.index') }}"
-                                                        class="">
-                                                        <img src="/img/catalogos/ubicacionesTareas.svg"
-                                                            alt="Ubicaciones de tareas" title="Ubicaciones de tareas"
-                                                            width="30%" class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">Ubicaciones
-                                                            de Tareas</p>
-                                                    </a>
-                                                </div>
+                                                    <div class="col-12 col-md-6 col-lg-3 text-center my-4">
+                                                        <a href="{{ route('catalogoTiposTareas.index') }}" class="">
+                                                            <img src="/img/catalogos/tiposDeTarea.svg" alt="Tipos de tareas"
+                                                                title="Tipos de tareas" width="30%"
+                                                                class="botonIconoPrincipal">
+                                                            <p class="mt-4 texticonos">Tipos de
+                                                                Tareas</p>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-6 col-lg-3 text-center my-4">
+                                                        <a href="{{ route('catalogoUbicacionesTareas.index') }}"
+                                                            class="">
+                                                            <img src="/img/catalogos/ubicacionesTareas.svg"
+                                                                alt="Ubicaciones de tareas" title="Ubicaciones de tareas"
+                                                                width="30%" class="botonIconoPrincipal">
+                                                            <p class="mt-4 texticonos">Ubicaciones
+                                                                de Tareas</p>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                                        <a href="{{ route('catalogoTiposValorTarea.index') }}"
+                                                            class="">
+                                                            <img src="/img/catalogos/valordetareas.svg"
+                                                                alt="Tipos de Valor de Tarea" title="Tipos de Valor de Tarea"
+                                                                width="30%" class="botonIconoPrincipal">
+                                                            <p class="mt-4 texticonos">Tipos de
+                                                                Valor de Tarea</p>
+                                                        </a>
+                                                    </div>
+                                                @endcan
+
+
 
                                                 <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                                     <a href="{{ route('tiposServicios.index') }}" class="">
@@ -287,16 +303,6 @@
                                                     </a>
                                                 </div>
 
-                                                <div class="col-12 col-sm-6 col-md-3 text-center my-4">
-                                                    <a href="{{ route('catalogoTiposValorTarea.index') }}"
-                                                        class="">
-                                                        <img src="/img/catalogos/valordetareas.svg"
-                                                            alt="Tipos de Valor de Tarea" title="Tipos de Valor de Tarea"
-                                                            width="30%" class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">Tipos de
-                                                            Valor de Tarea</p>
-                                                    </a>
-                                                </div>
 
                                                 <div class="col-12 col-sm-6 col-md-3 text-center my-4">
                                                     <a href="{{ route('catalogoTiposMantenimiento.index') }}"

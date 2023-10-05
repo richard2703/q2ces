@@ -70,7 +70,7 @@
                                         </a>
                                     </div>
                                 @endcan
-                                @can('grupo_index')
+                                @can('bitacora_grupo_index')
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ route('grupo.index') }}" class="">
                                             <img src="/img/equipos/TIPOS DE DOCUMENTOS-01.svg" alt="bitacoras" title="bitacoras"
@@ -79,7 +79,7 @@
                                         </a>
                                     </div>
                                 @endcan
-                                @can('tarea_index')
+                                @can('bitacora_tarea_index')
                                     <div class="col-12 col-md-6  col-lg-3 text-center my-4">
                                         <a href="{{ route('tarea.index') }}" class="">
                                             <img src="/img/equipos/TIPOS DE TAREAS-01.svg" alt="formatos" title="formatos"
