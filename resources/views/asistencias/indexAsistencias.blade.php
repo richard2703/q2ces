@@ -165,9 +165,9 @@ $anioSeleccionado = $intAnio;
                                                             <td style="color: {{ $item->estatusColor }};">
                                                                 <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                             </td>
-                                                            <td>{{ $item->puesto }}</td>
                                                             <td class="text-left">{{ $item->apellidoP }}
                                                                 {{ $item->apellidoM }}, {{ $item->nombres }}</td>
+                                                            <td>{{ $item->puesto }}</td>
                                                             <td>---</td>
                                                             <td>---</td>
                                                             <td>---</td>
