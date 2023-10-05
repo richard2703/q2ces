@@ -34,15 +34,13 @@ class printController extends Controller
             ->leftJoin('obras as obrasTote', 'obraMaqPerTote.obraId', '=', 'obrasTote.id')
             ->leftJoin('clientes as clientesTote', 'obrasTote.clienteId', '=', 'clientesTote.id')
             ->where('descarga.id', $request['id'])
-            ->select('descarga.*', 'obras.nombre as obras_nombre', 'obras.clienteId as obras_clienteId', 'obras.id as obras_Id', 'obrasTote.id as obrasTote_id', 'clientesTote.id as clienteTote_id', 'clientes.nombre as nombre_cliente', 'clientesTote.nombre as nombre_clienteTote', DB::raw("CONCAT(equipo.nombre, ' ',equipo.ano, ' ', equipo.placas, ' ', equipo.color, ' ', equipo.numserie) as equipo_nombre"), 'equipo.kom as equipo_kom', 'users.name as user_nombre', 'operador.nombres as operador_nombre', 'receptor.nombres as receptor_nombre', DB::raw("CONCAT(despachado.nombre, ' ',despachado.ano, ' ', despachado.placas, ' ', despachado.color, ' ', despachado.numserie) as despachado_nombre"), 'despachado.kom as despachado_kom')
+            ->select('descarga.*', 'obras.nombre as obras_nombre', 'obras.clienteId as obras_clienteId', 'obras.id as obras_Id', 'obrasTote.id as obrasTote_id', 'clientesTote.id as clienteTote_id', 'clientes.nombre as nombre_cliente', 'clientesTote.nombre as nombre_clienteTote', DB::raw("CONCAT(equipo.nombre, ' ',equipo.placas ) as equipo_nombre"), 'equipo.kom as equipo_kom', 'users.name as user_nombre', 'operador.nombres as operador_nombre', 'receptor.nombres as receptor_nombre', DB::raw("CONCAT(despachado.nombre, ' ',despachado.ano, ' ', despachado.placas, ' ', despachado.color, ' ', despachado.numserie) as despachado_nombre"), 'despachado.kom as despachado_kom')
             ->first();
 
         $cliente = false;
         if (isset($request['tipo_solicitud'])) {
             $cliente = true;
         }
-
-
 
         // dd($descarga);
         $ultimaCargaSinTote = carga::where('maquinariaId', $descarga['maquinariaId'])
@@ -70,7 +68,6 @@ class printController extends Controller
             $ticket->save();
         }
 
-
         return view('inventario.vistaPreviaImpresion', compact('descarga', 'solicitante', 'cliente', 'nuevoSolicitante', 'ultimaCarga', 'ultimaCargaSinTote'));
     }
 
@@ -86,7 +83,7 @@ class printController extends Controller
             ->leftJoin('obras', 'descarga.obraId', '=', 'obras.id')
             ->leftJoin('clientes', 'descarga.clienteId', '=', 'clientes.id')
             ->where('descarga.descargaDetalleId', $request['id'])
-            ->select('descarga.*', 'obras.nombre as obras_nombre', 'clientes.nombre as nombre_cliente', DB::raw("CONCAT(equipo.nombre, ' ',equipo.ano, ' ', equipo.placas, ' ', equipo.color, ' ', equipo.numserie) as equipo_nombre"), 'equipo.kom as equipo_kom', 'users.name as user_nombre', 'operador.nombres as operador_nombre', 'receptor.nombres as receptor_nombre', DB::raw("CONCAT(despachado.nombre, ' ',despachado.ano, ' ', despachado.placas, ' ', despachado.color, ' ', despachado.numserie) as despachado_nombre"), 'despachado.kom as despachado_kom')
+            ->select('descarga.*', 'obras.nombre as obras_nombre', 'clientes.nombre as nombre_cliente', DB::raw("CONCAT(equipo.nombre, ' ',equipo.placas ) as equipo_nombre"), 'equipo.kom as equipo_kom', 'users.name as user_nombre', 'operador.nombres as operador_nombre', 'receptor.nombres as receptor_nombre', DB::raw("CONCAT(despachado.nombre, ' ',despachado.ano, ' ', despachado.placas, ' ', despachado.color, ' ', despachado.numserie) as despachado_nombre"), 'despachado.kom as despachado_kom')
             ->first();
 
         // dd($descarga);
@@ -95,12 +92,10 @@ class printController extends Controller
             $cliente = true;
         }
 
-
         $ultimaCargaSinTote = carga::where('maquinariaId', $descarga['maquinariaId'])
             ->whereNull('tipoCisternaId')
             ->latest()
             ->first();
-
 
         // dd($ultimaCargaSinTote);
         $ultimaCarga = cisternas::where('id', '=', '1')->get('ultimoPrecio');
@@ -147,7 +142,7 @@ class printController extends Controller
             ->leftJoin('clientes', 'descarga.clienteId', '=', 'clientes.id')
             ->leftJoin('descargaDetalle as detallesSolicitud', 'descarga.descargaDetalleId', '=', 'detallesSolicitud.id')
             ->where('descarga.descargaDetalleId', $request['id'])
-            ->select('descarga.*', 'detallesSolicitud.observaciones as detalles_observaciones', 'detallesSolicitud.nombreSolicitante as detalles_nombreSolicitante', 'obras.nombre as obras_nombre', 'obras.clienteId as obras_clienteId', 'clientes.nombre as nombre_cliente', DB::raw("CONCAT(equipo.nombre, ' ',equipo.ano, ' ', equipo.placas, ' ', equipo.color, ' ', equipo.numserie) as equipo_nombre"), 'equipo.kom as equipo_kom', 'users.name as user_nombre', 'operador.nombres as operador_nombre', 'receptor.nombres as receptor_nombre', DB::raw("CONCAT(despachado.nombre, ' ',despachado.ano, ' ', despachado.placas, ' ', despachado.color, ' ', despachado.numserie) as despachado_nombre"), 'despachado.kom as despachado_kom')
+            ->select('descarga.*', 'detallesSolicitud.observaciones as detalles_observaciones', 'detallesSolicitud.nombreSolicitante as detalles_nombreSolicitante', 'obras.nombre as obras_nombre', 'obras.clienteId as obras_clienteId', 'clientes.nombre as nombre_cliente', DB::raw("CONCAT(equipo.nombre, ' ',equipo.placas ) as equipo_nombre"), 'equipo.kom as equipo_kom', 'users.name as user_nombre', 'operador.nombres as operador_nombre', 'receptor.nombres as receptor_nombre', DB::raw("CONCAT(despachado.nombre, ' ',despachado.ano, ' ', despachado.placas, ' ', despachado.color, ' ', despachado.numserie) as despachado_nombre"), 'despachado.kom as despachado_kom')
             ->first();
 
         // dd($descarga);

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\accesorios;
+use App\Models\accesoriosDocs;
+use App\Models\docs;
 use App\Models\maquinaria;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
@@ -36,9 +39,9 @@ class accesoriosController extends Controller
     public function create()
     {
         abort_if(Gate::denies('maquinaria_create'), '403');
-
+        $doc = docs::where('tipoId', '3')->orderBy('nombre', 'asc')->get();
         $vctMaquinaria = maquinaria::all();
-        return view('accesorios.altaDeAccesorios', compact('vctMaquinaria'));
+        return view('accesorios.altaDeAccesorios', compact('vctMaquinaria', 'doc'));
     }
 
     /**
@@ -83,8 +86,59 @@ class accesoriosController extends Controller
             'foto'
         );
         $accesorio['serie'] = strtoupper($accesorio['serie']);
-
+        // dd($request);
+        // $accesorioPath = str_pad($accesorio['identificador'], 4, '0', STR_PAD_LEFT);
         $accesorio = accesorios::create($accesorio);
+        $cont = 0;
+
+
+
+        for ($i = 0; $i < count($request->archivo); $i++) {
+            $documento = new accesoriosDocs();
+            $documento->accesorioId = $accesorio->id;
+            $documento->tipoId = $request->archivo[$i]['tipoDocs'];
+            // Obtenemos el tipo de documento
+            $tipoDocumentoNombre = $request->archivo[$i]['tipoDocsNombre'];
+            // Obtenemos el tipo de documento
+
+            if ($request->archivo[$i]['omitido'] == 0) {
+                // OBLIGATORIO
+                $documento->requerido = '1';
+                $documento->estatus = '0';
+
+                if (isset(($request->archivo[$i]['docs']))) {
+                    $file = $request->file('archivo')[$i]['docs'];
+                    $documento->ruta = time() . '_' . $file->getClientOriginalName();
+                    $file->storeAs('/public/maquinaria/accesorios/documentos/' .  $tipoDocumentoNombre, $documento->ruta);
+                    $documento->estatus = '2';
+                    //Si es 2 Esta  OK
+                }
+
+                if ((isset($request->archivo[$i]['check']) && $request->archivo[$i]['check'] == 'on')) {
+                    $documento->vencimiento = 1;
+                    //Si es 1 SI vence el documento
+                    $documento->estatus = '0';
+                    //Si esta en 0 Esta MAL
+                    if (isset($request->archivo[$i]['fecha'])) {
+                        $documento->fechaVencimiento = $request->archivo[$i]['fecha'];
+                        // Evaluar fecha de vencimiento
+                        $documento->estatus = '1';
+                        //Si es 1 Esta proximo a vencer
+                    }
+                } else {
+                    $documento->vencimiento = 0;
+                    //Si es 0 no vence el documento
+                }
+            } else {
+                // NO REQUERIDO
+                $documento->requerido = '0';
+                $documento->estatus = '2';
+                //Si es 2 Esta  OK
+            }
+            $documento->comentarios = $request->archivo[$i]['comentario'];
+
+            $documento->save();
+        }
 
         /*** directorio contenedor de su información */
         $pathAccesorio = str_pad($accesorio->id, 4, '0', STR_PAD_LEFT);
@@ -124,9 +178,25 @@ class accesoriosController extends Controller
     public function edit(accesorios $accesorios)
     {
         abort_if(Gate::denies('maquinaria_edit'), '403');
+        $doc = docs::leftJoin('accesoriosDocs', function ($join) use ($accesorios) {
+            $join->on('docs.id', '=', 'accesoriosDocs.tipoId')
+                ->where('accesoriosDocs.accesorioId', '=', $accesorios->id);
+        })
+            ->select(
+                'docs.id',
+                'docs.nombre',
+                'accesoriosDocs.fechaVencimiento',
+                'accesoriosDocs.estatus',
+                'accesoriosDocs.comentarios',
+                'accesoriosDocs.ruta',
+                'accesoriosDocs.requerido',
+                'accesoriosDocs.id as idDoc'
+            )->where('docs.tipoId', '3')
+            ->get();
 
+        // dd($doc);
         $vctMaquinaria = maquinaria::all();
-        return view('accesorios.detalleAccesorios', compact('accesorios', 'vctMaquinaria'));
+        return view('accesorios.detalleAccesorios', compact('accesorios', 'vctMaquinaria', 'doc'));
     }
 
     /**
@@ -171,6 +241,81 @@ class accesoriosController extends Controller
             'foto',
             'maquinariaId'
         );
+        // dd($request);
+        if ($request->archivo) {
+            for (
+                $i = 0;
+                $i < count($request->archivo);
+                $i++
+            ) {
+                $documento = null;
+                // dd( $request->archivo[ $i ][ 'idDoc' ] );
+                if ($request->archivo[$i]['idDoc'] == null) {
+                    $documento = new accesoriosDocs();
+                }
+                $documento['maquinariaId'] = $accesorios->id;
+                $documento['tipoId'] = $request->archivo[$i]['tipoDocs'];
+                // Obtenemos el tipo de documento
+                $tipoDocumentoNombre = $request->archivo[$i]['tipoDocsNombre'];
+                // Obtenemos el tipo de documento
+
+                if ($request->archivo[$i]['omitido'] == 0) {
+                    // OBLIGATORIO
+                    $documento['requerido'] = '1';
+                    $documento['estatus'] = '0';
+                    if (isset(($request->archivo[$i]['docs']))) {
+                        $file = $request->file('archivo')[$i]['docs'];
+                        $documento['ruta'] = time() . '_' . $file->getClientOriginalName();
+                        $file->storeAs('/public/maquinaria/accesorios/documentos/' .  $tipoDocumentoNombre, $documento['ruta']);
+                        $documento['estatus'] = '2';
+                        //Si es 2 Esta  OK
+                    }
+
+                    if ((isset($request->archivo[$i]['check']) && $request->archivo[$i]['check'] == 'on')) {
+                        $documento['vencimiento'] = 1;
+                        //Si es 1 SI vence el documento
+                        $documento['estatus'] = '0';
+                        //Si esta en 0 Esta MAL
+                        // dd( 'check', $request->archivo[ $i ][ 'fecha' ] );
+                        if (isset($request->archivo[$i]['fecha'])) {
+                            $documento['fechaVencimiento'] = $request->archivo[$i]['fecha'];
+                            // Evaluar fecha de vencimiento
+                            $fechaActual = Carbon::now();
+                            // Obtén la fecha que deseas evaluar ( por ejemplo, desde una base de datos )
+                            $fechaProximaAVencer = Carbon::parse($request->archivo[$i]['fecha']);
+                            // Calcula la diferencia en meses entre las dos fechas
+                            $mesesRestantes = $fechaActual->diffInMonths($fechaProximaAVencer, false);
+                            if ($mesesRestantes <= 1) {
+                                $documento['estatus'] = '1';
+                                //Si es 1 Esta proximo a vencer
+                            } else {
+                                $documento['estatus'] = '2';
+                                //Si es 2 Esta Bien
+                            }
+                            // dd( 'entro' );
+                        }
+                    } else {
+                        $documento['vencimiento'] = 0;
+                        //Si es 0 no vence el documento
+                        // $documento->estatus = '1';
+                    }
+                } else {
+                    // NO REQUERIDO
+                    $documento['requerido'] = '0';
+                    $documento['estatus'] = '2';
+                    //Si es 2 Esta  OK
+                }
+
+                $documento['comentarios'] = $request->archivo[$i]['comentario'];
+                if ($request->archivo[$i]['idDoc'] == null) {
+                    $documento->save();
+                } else {
+                    $docu = accesoriosDocs::where('id', $request->archivo[$i]['idDoc'])->first();
+                    // dd( $request->archivo[ $i ][ 'idDoc' ] );
+                    $docu->update($documento);
+                }
+            }
+        }
 
         $data['serie'] = strtoupper($data['serie']);
         /*** directorio contenedor de su información */
