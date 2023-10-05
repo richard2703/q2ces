@@ -19,7 +19,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Movimientos de Caja Chica</h4>
+                                    <h4 class="card-title">Corte de Caja Chica</h4>
                                     {{-- <p class="card-category">Usuarios Registrados</p> --}}
                                 </div>
                                 <div class="card-body">
@@ -43,18 +43,6 @@
                                         </div>
 
                                         <div class="col-3 col-md-2 text-center">
-                                            <p class="">Semana Pasada</p>
-                                            <p class="combustibleLitros fw-semibold text-black-50 ">$
-                                                {{ isset($ultimoCorte->saldo) ? number_format($ultimoCorte->saldo, 2) : '0.00' }}
-                                            </p>
-                                            {{--  <p class="combustibleLitros fw-semibold text-black-50 ">$
-                                                {{ $dias = date_diff(now(), now()->addDay(1))->format('%D%') }}
-                                                {{ $dias = date_diff(now()->addDays(), $domingo->addDays(1))->format('%D%') }}
-                                                {{ date_diff(now(), $domingo)->format('%D%') <= 1 ? number_format($ultimoCorte->saldo, 2) : '0.00' }}
-
-                                            </p>  --}}
-                                        </div>
-                                        <div class="col-3 col-md-2 text-center">
                                             <p class="">Ingreso</p>
                                             <p class="combustibleLitros fw-semibold text-success">$
                                                 {{ number_format($ingreso, 2) }}</p>
@@ -70,40 +58,22 @@
                                             </p>
                                         </div>
                                         <div class="row">
-                                            <div class="col-6 text-left">
+                                            <div class="col-12 text-end">
                                                 @can('cajachica_create')
-                                                    <button type="button" class="btn botonGral" data-bs-toggle="modal"
-                                                        data-bs-target="#modal-reporte">
-                                                        Reporte de Movimientos
-                                                    </button>
+                                                    <form action="{{ route('cajaChica.cerrar') }}" method="post"
+                                                        class="advertencia">
+                                                        @csrf
+                                                        <input type="hidden" name="fin" value={{ $domingo }}>
+                                                        <input type="hidden" name="inicio" value={{ $lunes }}>
+                                                        <button type="submit" class="btn botonGral"
+                                                            onClick=advertencia()>Cerrar Corte</button>
+                                                    </form>
                                                 @endcan
+
+
                                             </div>
 
-                                            <div class="col-6 d-flex justify-content-end">
 
-                                                @if (date_diff(now(), $domingo->addDays(1))->format('%D%') <= 1 || !isset($ultimoCorte->saldo))
-                                                    @can('cajachica_create')
-                                                        <form action="{{ route('cajaChica.corte') }}" method="post">
-                                                            @csrf
-                                                            <input type="hidden" name="fin"
-                                                                value={{ $lunes->subDays(1) }}>
-                                                            <input type="hidden" name="inicio"
-                                                                value={{ $lunes->subDays(6) }}>
-                                                            <button type="submit" class="btn botonGral">Corte de
-                                                                Caja</button>
-                                                        </form>
-                                                    @endcan
-                                                @else
-                                                    {{--  {{ date_diff(now(), $domingo)->format('%D%') }}  --}}
-                                                @endif
-
-
-                                                @can('cajachica_create')
-                                                    <a href="{{ route('cajaChica.create') }}" class="ps-1">
-                                                        <button type="button" class="btn botonGral">Nuevo Movimiento</button>
-                                                    </a>
-                                                @endcan
-                                            </div>
                                         </div>
 
                                     </div>
@@ -204,24 +174,20 @@
                                                                     </svg>
                                                                 </a>
                                                             @endcan
-                                                            @can('user_destroy')
-                                                                <form action="{{ route('cajaChica.destroy', $registro->id) }}"
-                                                                    method="POST" style="display: inline-block;"
-                                                                    onsubmit="return confirm('Seguro?')">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button class="btnSinFondo" type="submit" rel="tooltip">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="28"
-                                                                            height="28" fill="currentColor"
-                                                                            class="bi bi-x-circle" viewBox="0 0 16 16">
-                                                                            <path
-                                                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                            <path
-                                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                                        </svg>
-                                                                    </button>
-                                                                </form>
-                                                            @endcan
+                                                            {{-- @can('user_destroy') --}}
+                                                            {{-- <form action="{{ route('maquinaria.delete', $maquina->id) }}"
+                                                                method="POST" style="display: inline-block;"
+                                                                onsubmit="return confirm('Seguro?')">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="btnSinFondo" type="submit" rel="tooltip">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg"  width="28" height="28"  fill="currentColor"  class="bi bi-x-circle"  viewBox="0 0 16 16">
+                                                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                    </svg>
+                                                                </button>
+                                                            </form> --}}
+                                                            {{-- @endcan --}}
                                                         </td>
                                                     </tr>
                                                 @empty
@@ -232,6 +198,30 @@
                                             </tbody>
 
                                         </table>
+                                        {{--  <table class="table tablaCenter">
+                                            <thead class="labelTitulo">
+                                                <tr>
+                                                    <th class="labelTitulo" style="width: 130px !important;">Personal</th>
+                                                    <th class="labelTitulo">Ingreso</th>
+                                                    <th class="labelTitulo">Egreso</th>
+                                                    <th class="labelTitulo">Saldo</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @forelse ($registros as $registro)
+                                                    <tr>
+                                                        <td>{{ $registro->pnombre }} {{ $registro->papellidoP }}</td>
+                                                        <td>{{ $registro->total_ingresos }}</td>
+                                                        <td>{{ $registro->total_egresos }}</td>
+                                                        <td>{{ $registro->total_ingresos - $registro->total_egresos }}</td>
+                                                    </tr>
+                                                @empty
+                                                    <tr>
+                                                        <td colspan="2">Sin Registros.</td>
+                                                    </tr>
+                                                @endforelse
+                                            </tbody>
+                                        </table>  --}}
                                     </div>
                                 </div>
                                 <div class="card-footer mr-auto">
@@ -245,51 +235,32 @@
         </div>
     </div>
 
-    <!--MODALES-->
-    <div class="modal fade" id="modal-reporte" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-cliente"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="col-12">
-                    <div class="card ">
-                        <form action="{{ route('cajaChica.reporte') }}" method="post">
-                            @csrf
-                            <div class="card-header bacTituloPrincipal ">
-                                <div class="nav-tabs-navigation">
-                                    <div class="nav-tabs-wrapper">
-                                        <span class="nav-tabs-title">
-                                            <h2 class="titulos">Periodo del Reporte</h2>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row  card-body">
-                                <div class="row card-body" style=" text-align: center;">
-                                    <div class="col-12 col-lg-6">
-                                        <label class="labelTitulo">Inicio:
-                                            <span>*</span></label></br>
-                                        <input type="date" class="inputCaja text-right" id="ncomprobante" required
-                                            name="inicio" value="">
-                                    </div>
-                                    <div class="col-12 col-lg-6">
-                                        <label class="labelTitulo">Fin:
-                                            <span>*</span></label></br>
-                                        <input type="date" class="inputCaja text-right" id="ncomprobante" required
-                                            name="fin" value="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12  mb-3 d-flex  justify-content-center align-self-end">
-                                <button class="btn botonGral ">Ir</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 <script>
+    function advertencia() {
+
+        $('.advertencia').submit(function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Estas seguro?',
+                text: "¡Cerrado el corte, no se puedra hacer modificar de movimientos en ese periodo!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Si, Cerrarlo!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    mostrarSpinner(true);
+                    this.submit();
+                }
+            })
+
+        })
+    }
+
     function Guardado() {
         // alert('test');
         const Toast = Swal.mixin({

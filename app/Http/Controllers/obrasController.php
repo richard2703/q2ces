@@ -55,6 +55,7 @@ class obrasController extends Controller {
             'maquinaria.nombre AS auto',
             'nomina.puestoId',
             'puesto.nombre AS puesto',
+            'personal.estatusId',
             'puesto.puestoNivelId',
             'puestoNivel.nombre AS puestoNivel'
         )
@@ -64,7 +65,8 @@ class obrasController extends Controller {
         ->leftjoin( 'obraMaqPer', 'obraMaqPer.personalId', 'personal.id' )
         ->leftjoin( 'maquinaria', 'maquinaria.id', '=', 'obraMaqPer.maquinariaId' )
         ->leftjoin( 'obras', 'obras.id', '=', 'obraMaqPer.obraId' )
-        ->where( 'puesto.puestoNivelId', '=', 5 ) //*** solo operarios de maquinaria */
+        ->where( 'puesto.puestoNivelId', '=', 5 )
+        ->where( 'personal.estatusId', '=', 1 ) //*** solo operarios de maquinaria con estatus activo */
         ->orderBy( 'personal.nombres', 'asc' )->get();
 
         $Clientes = clientes::orderBy( 'clientes.nombre', 'asc' )->get();
@@ -339,6 +341,7 @@ class obrasController extends Controller {
             'nomina.puestoId',
             'puesto.nombre AS puesto',
             'puesto.puestoNivelId',
+            'personal.estatusId',
             'puestoNivel.nombre AS puestoNivel'
         )
         ->join( 'nomina', 'nomina.personalId', 'personal.id' )
@@ -347,7 +350,8 @@ class obrasController extends Controller {
         ->leftjoin( 'obraMaqPer', 'obraMaqPer.personalId', 'personal.id' )
         ->leftjoin( 'maquinaria', 'maquinaria.id', '=', 'obraMaqPer.maquinariaId' )
         ->leftjoin( 'obras', 'obras.id', '=', 'obraMaqPer.obraId' )
-        ->where( 'puesto.puestoNivelId', '=', 5 ) //*** solo operarios de maquinaria */
+        ->where( 'puesto.puestoNivelId', '=', 5 )
+        ->where( 'personal.estatusId', '=', 1 ) //*** solo operarios de maquinaria */
         ->orderBy( 'personal.nombres', 'asc' )->get();
 
         $vctMaquinariaAsignada = obraMaqPer::select( '*' )->where( 'obraId', '=', $obras->id )->get();
@@ -909,6 +913,7 @@ class obrasController extends Controller {
 
     public function destroy( obras $obras ) {
         // dd( 'test' );
+        abort_if ( Gate::denies( 'obra_destroy' ), 403 );
         return redirect()->back()->with( 'failed', 'No se puede eliminar' );
     }
 }

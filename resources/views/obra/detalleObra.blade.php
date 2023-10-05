@@ -82,7 +82,7 @@
                                             placeholder="Especifique..." value="{{ $obras->nombre }}">
                                     </div>
                                     <div class="col-12 col-sm-6  col-lg-4 my-3 ">
-                                        <label class="labelTitulo">Empresa: <span>*</span></label></br>
+                                        <label class="labelTitulo">Cliente: <span>*</span></label></br>
                                         <select class="form-select" aria-label="Default select example" id="tipo"
                                             required name="clienteId">
                                             @foreach ($Clientes as $Cliente)
@@ -127,215 +127,167 @@
                                 </div>
                             </div>
 
-                            {{--  <div class="card-body" id="elementos">
-                                    <div class="row opcion" id="opc">
-                                        <div class="col-12 my-5 ">
-                                            <div class="">
-                                                <h2 class="tituloEncabezado ">Residente Responsable</h2>
-                                            </div>
-                                            <div class="col-12 divBorder pb-3" style="text-align: right;">
-                                                <button type="button" id="removeRow" class="btnRojo"></button>
-                                                <button type="button" class="btnVerde" onclick="crearItems()"> </button>
-                                            </div>
-                                            <div class="row">
-                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Nombre: <span>*</span></label></br>
-                                                    <input type="text" class="inputCaja" id="rnombre" required
-                                                        placeholder="Especifique..." name="rnombre[]" value="">
-                                                </div>
-                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Empresa:</label></br>
-                                                    <input type="text" class="inputCaja" id="rempresa"
-                                                        placeholder="Especifique..." name="rempresa[]" value="">
-                                                </div>
 
-                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Puesto:</label></br>
-                                                    <input type="text" class="inputCaja" id="rpuesto"
-                                                        placeholder="Especifique..." name="rpuesto[]" value="">
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Teléfono:</label></br>
-                                                    <input type="tel" pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}"
-                                                        placeholder="ej. 00-0000-0000" class="inputCaja" id="rtelefono"
-                                                        name="rtelefono[]"value="">
-
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">E-mail</label></br>
-                                                    <input type="email" class="inputCaja" id="remail" required
-                                                        placeholder="ej. elcorreo@delresponsable.com" min="6"
-                                                        name="remail[]" value="{{ old('remail') }}">
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Código de Confirmación:</label></br>
-                                                    <input type="text" class="inputCaja" id="rfirma"
-                                                        placeholder="Especifique..." name="rfirma[]" value="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>  --}}
 
                             <!-- EQUIPOS -->
-                            <div class="row card-body" id="elementosB">
+                            @can('obra_assign_maquinaria')
+                                <div class="row card-body" id="elementosB">
 
-                                @forelse ($vctMaquinariaAsignada as $maquinaria)
-                                    <div class="row opcionB" id="opcB">
-                                        <div class="col-12 my-5 ">
-                                            <div class="">
-                                                <h2 class="tituloEncabezado ">Detalle de Obra</h2>
-                                            </div>
-                                            <div class="col-12 divBorder pb-3" style="text-align: right;">
-                                                @if ($obras->id > 2)
-                                                    <button type="button" id="removeRow" class="btnRojo"></button>
-                                                @endif
-                                                <button type="button" class="btnVerde" onclick="crearItemsB()">
-                                                </button>
-                                            </div>
-
-                                            <div class="row">
-
-                                                <input type="hidden" name="idObraMaqPer[]" value="{{ $maquinaria->id }}">
-
-                                                <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Equipo: <span>*</span></label></br>
-                                                    <select id="maquinariaId" name="maquinariaId[]" class="form-select"
-                                                        aria-label="Default select example">
-                                                        <option value="">Seleccione</option>
-                                                        @foreach ($vctMaquinaria as $maquina)
-                                                            <option value="{{ $maquina->id }}"
-                                                                {{ $maquina->id == $maquinaria->maquinariaId ? ' selected' : '' }}>
-                                                                {{ strtoupper($maquina->identificador) . ' - ' . $objValida->ucwords_accent($maquina->nombre) }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
+                                    @forelse ($vctMaquinariaAsignada as $maquinaria)
+                                        <div class="row opcionB" id="opcB">
+                                            <div class="col-12 my-5 ">
+                                                <div class="">
+                                                    <h2 class="tituloEncabezado ">Detalle de Obra</h2>
+                                                </div>
+                                                <div class="col-12 divBorder pb-3" style="text-align: right;">
+                                                    @if ($obras->id > 2)
+                                                        <button type="button" id="removeRow" class="btnRojo"></button>
+                                                    @endif
+                                                    <button type="button" class="btnVerde" onclick="crearItemsB()">
+                                                    </button>
                                                 </div>
 
-                                                <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Operador: <span>*</span></label></br>
-                                                    <select id="personalId" name="personalId[]" class="form-select"
-                                                        required aria-label="Default select example">
-                                                        <option value="">Seleccione</option>
-                                                        @foreach ($vctPersonal as $item)
-                                                            {{-- <option value="0">Sin Cambios</option>
+                                                <div class="row">
+
+                                                    <input type="hidden" name="idObraMaqPer[]"
+                                                        value="{{ $maquinaria->id }}">
+
+                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
+                                                        <label class="labelTitulo">Equipo: <span>*</span></label></br>
+                                                        <select id="maquinariaId" name="maquinariaId[]" class="form-select"
+                                                            aria-label="Default select example">
+                                                            <option value="">Seleccione</option>
+                                                            @foreach ($vctMaquinaria as $maquina)
+                                                                <option value="{{ $maquina->id }}"
+                                                                    {{ $maquina->id == $maquinaria->maquinariaId ? ' selected' : '' }}>
+                                                                    {{ strtoupper($maquina->identificador) . ' - ' . $objValida->ucwords_accent($maquina->nombre) }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
+                                                        <label class="labelTitulo">Operador: <span>*</span></label></br>
+                                                        <select id="personalId" name="personalId[]" class="form-select"
+                                                            required aria-label="Default select example">
+                                                            <option value="">Seleccione</option>
+                                                            @foreach ($vctPersonal as $item)
+                                                                {{-- <option value="0">Sin Cambios</option>
                                                             <option value="">Denegar Equipo</option> --}}
-                                                            <option value="{{ $item->id }}"
-                                                                {{ $item->id == $maquinaria->personalId ? ' selected' : '' }}>
-                                                                {{ $objValida->ucwords_accent($item->personal . ' [' . $item->puesto . ']') }}
+                                                                <option value="{{ $item->id }}"
+                                                                    {{ $item->id == $maquinaria->personalId ? ' selected' : '' }}>
+                                                                    {{ $objValida->ucwords_accent($item->personal . ' [' . $item->puesto . ']') }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
+                                                        <label class="labelTitulo">Combustible:</label></br>
+                                                        <select class="form-select" aria-label="Default select example"
+                                                            id="combustible" name="combustible[]">
+                                                            <option value="0"
+                                                                {{ $maquinaria->combustible == 0 ? 'selected' : '' }}>No
                                                             </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
+                                                            <option value="1"
+                                                                {{ $maquinaria->combustible == 1 ? 'selected' : '' }}>Sí
+                                                            </option>
+                                                        </select>
+                                                    </div>
 
-                                                <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Combustible:</label></br>
-                                                    <select class="form-select" aria-label="Default select example"
-                                                        id="combustible" name="combustible[]">
-                                                        <option value="0"
-                                                            {{ $maquinaria->combustible == 0 ? 'selected' : '' }}>No
-                                                        </option>
-                                                        <option value="1"
-                                                            {{ $maquinaria->combustible == 1 ? 'selected' : '' }}>Sí
-                                                        </option>
-                                                    </select>
-                                                </div>
+                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
+                                                        <label class="labelTitulo">Fecha de Inicio:</label></br>
+                                                        <input type="date" class="inputCaja" id="inicio"
+                                                            name="inicio[]"
+                                                            value="{{ \Carbon\Carbon::parse($maquinaria->inicio)->format('Y-m-d') }}">
+                                                    </div>
 
-                                                <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Fecha de Inicio:</label></br>
-                                                    <input type="date" class="inputCaja" id="inicio"
-                                                        name="inicio[]"
-                                                        value="{{ \Carbon\Carbon::parse($maquinaria->inicio)->format('Y-m-d') }}">
-                                                </div>
+                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
+                                                        <label class="labelTitulo">Fecha de Término:</label></br>
+                                                        <input type="date" class="inputCaja" id="fin"
+                                                            name="fin[]"
+                                                            value="{{ \Carbon\Carbon::parse($maquinaria->fin)->format('Y-m-d') }}">
+                                                    </div>
 
-                                                <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Fecha de Término:</label></br>
-                                                    <input type="date" class="inputCaja" id="fin"
-                                                        name="fin[]"
-                                                        value="{{ \Carbon\Carbon::parse($maquinaria->fin)->format('Y-m-d') }}">
                                                 </div>
-
                                             </div>
                                         </div>
-                                    </div>
 
-                                @empty
-                                    <div class="row opcionB" id="opcB">
-                                        <div class="col-12 my-5 ">
-                                            <div class="">
-                                                <h2 class="tituloEncabezado ">Detalle de Obra</h2>
-                                            </div>
-                                            <div class="col-12 divBorder pb-3" style="text-align: right;">
-                                                @if ($obras->id > 2)
-                                                    <button type="button" id="removeRow" class="btnRojo"></button>
-                                                @endif
-                                                <button type="button" class="btnVerde" onclick="crearItemsB()">
-                                                </button>
-                                            </div>
-
-                                            <div class="row">
-
-                                                <input type="hidden" name="idObraMaqPer[]" value="">
-
-                                                <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Equipo: <span>*</span></label></br>
-                                                    <select id="maquinariaId" name="maquinariaId[]" class="form-select"
-                                                        required aria-label="Default select example">
-                                                        <option value="">Seleccione</option>
-                                                        @foreach ($vctMaquinaria as $maquina)
-                                                            <option value="{{ $maquina->id }}">
-                                                                {{ strtoupper($maquina->identificador) . ' - ' . $objValida->ucwords_accent($maquina->nombre) }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
+                                    @empty
+                                        <div class="row opcionB" id="opcB">
+                                            <div class="col-12 my-5 ">
+                                                <div class="">
+                                                    <h2 class="tituloEncabezado ">Detalle de Obra</h2>
+                                                </div>
+                                                <div class="col-12 divBorder pb-3" style="text-align: right;">
+                                                    @if ($obras->id > 2)
+                                                        <button type="button" id="removeRow" class="btnRojo"></button>
+                                                    @endif
+                                                    <button type="button" class="btnVerde" onclick="crearItemsB()">
+                                                    </button>
                                                 </div>
 
-                                                <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Operador: <span>*</span></label></br>
-                                                    <select id="personalId" name="personalId[]" class="form-select"
-                                                        required aria-label="Default select example">
-                                                        <option value="">Seleccione</option>
-                                                        {{-- <option value="0">Sin Cambios</option>
+                                                <div class="row">
+
+                                                    <input type="hidden" name="idObraMaqPer[]" value="">
+
+                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
+                                                        <label class="labelTitulo">Equipo: <span>*</span></label></br>
+                                                        <select id="maquinariaId" name="maquinariaId[]" class="form-select"
+                                                            required aria-label="Default select example">
+                                                            <option value="">Seleccione</option>
+                                                            @foreach ($vctMaquinaria as $maquina)
+                                                                <option value="{{ $maquina->id }}">
+                                                                    {{ strtoupper($maquina->identificador) . ' - ' . $objValida->ucwords_accent($maquina->nombre) }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
+                                                        <label class="labelTitulo">Operador: <span>*</span></label></br>
+                                                        <select id="personalId" name="personalId[]" class="form-select"
+                                                            required aria-label="Default select example">
+                                                            <option value="">Seleccione</option>
+                                                            {{-- <option value="0">Sin Cambios</option>
                                                         <option value="">Denegar Equipo</option> --}}
-                                                        @foreach ($vctPersonal as $item)
-                                                            <option value="{{ $item->id }}">
-                                                                {{ $objValida->ucwords_accent($item->personal . ' [' . $item->puesto . ']') }}
+                                                            @foreach ($vctPersonal as $item)
+                                                                <option value="{{ $item->id }}">
+                                                                    {{ $objValida->ucwords_accent($item->personal . ' [' . $item->puesto . ']') }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
+                                                        <label class="labelTitulo">Combustible:</label></br>
+                                                        <select class="form-select" aria-label="Default select example"
+                                                            id="combustible" name="combustible[]">
+                                                            <option value="0">No
                                                             </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
+                                                            <option value="1">Sí
+                                                            </option>
+                                                        </select>
+                                                    </div>
 
-                                                <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Combustible:</label></br>
-                                                    <select class="form-select" aria-label="Default select example"
-                                                        id="combustible" name="combustible[]">
-                                                        <option value="0">No
-                                                        </option>
-                                                        <option value="1">Sí
-                                                        </option>
-                                                    </select>
-                                                </div>
+                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
+                                                        <label class="labelTitulo">Fecha de Inicio:</label></br>
+                                                        <input type="date" class="inputCaja" id="inicio"
+                                                            name="inicio[]" value="">
+                                                    </div>
 
-                                                <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Fecha de Inicio:</label></br>
-                                                    <input type="date" class="inputCaja" id="inicio"
-                                                        name="inicio[]" value="">
-                                                </div>
+                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
+                                                        <label class="labelTitulo">Fecha de Término:</label></br>
+                                                        <input type="date" class="inputCaja" id="fin"
+                                                            name="fin[]" value="">
+                                                    </div>
 
-                                                <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Fecha de Término:</label></br>
-                                                    <input type="date" class="inputCaja" id="fin"
-                                                        name="fin[]" value="">
                                                 </div>
-
                                             </div>
                                         </div>
-                                    </div>
-                                @endforelse
-                            </div>
+                                    @endforelse
+                                </div>
+                            @endcan
 
 
                             <div class="col-12 text-end mb-3 ">

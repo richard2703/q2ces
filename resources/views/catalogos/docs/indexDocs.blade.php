@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="col-12 col-lg-6 pb-3 divAñadir">
 
-                                    @can('docs_create')
+                                    @can('catalogos_create')
                                         <a href="{{ route('docs.create') }}">
                                             <button type="button" class="btn botonGral align-it">Añadir Tipo</button>
                                         </a>
@@ -63,7 +63,7 @@
                                                 <td class="text-center">{{ $doc->comentario }}</td>
 
                                                 <td class="td-actions text-center">
-                                                    @can('docs_edit')
+                                                    @can('catalogos_edit')
                                                         <a href="{{ route('docs.edit', $doc->id) }}" class="">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                 height="28" fill="currentColor"

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
@@ -248,6 +249,24 @@ class bitacorasController extends Controller {
     */
 
     public function destroy( $id ) {
-        //
+
+        abort_if ( Gate::denies( 'bitacora_destroy' ), 403 );
+        try {
+
+        $bitacora = bitacoras::where( 'id', '=', $id )->first();
+            $bitacora->delete();
+            // Intenta eliminar
+        } catch ( QueryException $e ) {
+            if ( $e->getCode() === 23000 ) {
+                return redirect()->back()->with( 'faild', 'No Puedes Eliminar ' );
+                // Esto es un error de restricción de clave externa ( FOREIGN KEY constraint )
+                // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
+            } else {
+                return redirect()->back()->with( 'faild', 'No Puedes Eliminar si esta en uso' );
+                // Otro tipo de error de base de datos
+                // Maneja según sea necesario
+            }
+        }
+        return redirect()->back()->with( 'success', 'Eliminado correctamente' );
     }
 }

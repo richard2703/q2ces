@@ -66,7 +66,7 @@
                                     </form>
                                 </div>  --}}
                                 <div class="col-12 pb-3 text-end">
-                                    @can('maquinaria_mtq_create')
+                                    @can('calendario_mtq_create_mantenimiento')
                                         <button data-bs-toggle="modal" data-bs-target="#modalEvento" type="button"
                                             style="height: 40px" class="btn botonGral mx-1">Agregar Mantenimiento</button>
                                     @endcan
@@ -134,7 +134,7 @@
                                                     </a>
                                                 @endcan
 
-                                                @can('maquinaria_mtq_edit')
+                                                @can('maquinaria_mtq_assign_personal')
                                                     <a href="#" data-bs-toggle="modal" data-bs-target="#asignar"
                                                         onclick="asignar('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->residenteId }}','{{ $maquina->residente }}')">
                                                         <i class="fas fa-user-check iconoTablas"></i>

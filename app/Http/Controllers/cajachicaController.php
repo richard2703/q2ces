@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use App\Helpers\Calculos;
 use App\Models\clientes;
 use App\Models\comprobante;
+use App\Models\corteCajaChica;
 use Maatwebsite\Excel\Excel as ExcelExcel;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -33,7 +34,26 @@ class cajaChicaController extends Controller
     {
         abort_if(Gate::denies('cajachica_index'), 403);
 
-        // $registros = cajaChica::get();
+        // SEMANA ACTUAL
+        if (Carbon::parse(now())->locale('es')->isoFormat('dddd') == 'lunes') {
+            $lunes = now();
+            // dd(Carbon::parse($pLunes)->locale('es')->isoFormat('dddd'));
+        } else {
+            $lunes = new Carbon('last monday');
+        }
+        if (Carbon::parse(now())->locale('es')->isoFormat('dddd') == 'domingo') {
+            $domingo = now();
+            // dd(Carbon::parse($pLunes)->locale('es')->isoFormat('dddd'));
+        } else {
+            $domingo = new Carbon('next sunday');
+        }
+
+        // SEMANA PASADA
+        $Adomingo = $domingo->clone()->subDay(7);
+        $Alunes = $lunes->clone()->subDay(7);
+
+        $ultimoCorte = corteCajaChica::where('inicio', $Alunes)->first();
+
         $registros = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
             ->leftJoin('obras', 'cajaChica.obra', 'obras.id')
             ->join('maquinaria', 'cajaChica.equipo', 'maquinaria.id')
@@ -57,60 +77,23 @@ class cajaChicaController extends Controller
                 'cajaChica.tipo',
                 'cajaChica.total'
             )->orderby('dia', 'desc')->orderby('id', 'desc')
+            ->whereBetween('dia', [$lunes, $domingo])
             ->paginate(15);
 
-        $vctTipos = [1, 2];
-
-        $last = cajaChica::whereIn('cajaChica.tipo',   $vctTipos)
-            ->orderby('dia', 'desc')
-            ->orderby('id', 'desc')->first();
-
-        $lastTotal = 0;
-        if ($last) {
-            $lastTotal = $last->total;
-        }
-
-        // SEMANA ACTUAL
-        if (Carbon::parse(now())->locale('es')->isoFormat('dddd') == 'lunes') {
-            $lunes = now();
-            // dd(Carbon::parse($pLunes)->locale('es')->isoFormat('dddd'));
-        } else {
-            $lunes = new Carbon('last monday');
-        }
-        if (Carbon::parse(now())->locale('es')->isoFormat('dddd') == 'domingo') {
-            $domingo = now();
-            // dd(Carbon::parse($pLunes)->locale('es')->isoFormat('dddd'));
-        } else {
-            $domingo = new Carbon('next sunday');
-        }
-
-        $pLunes = $lunes->clone()->subDay(1);
-        // dd($pLunes, $lunes);
-        $ingreso = cajaChica::whereBetween('dia', [$pLunes, now()])
+        $ingreso = cajaChica::whereBetween('dia', [$lunes, $domingo])
             ->where('tipo', 1)
-            ->get()
             ->sum('cantidad');
 
-        $egreso = cajaChica::whereBetween('dia', [$pLunes, now()])
+        $egreso = cajaChica::whereBetween('dia', [$lunes, $domingo])
             ->where('tipo', 2)
-            ->get()
             ->sum('cantidad');
 
-        $Adomingo = new Carbon('last sunday');
+        $saldo = $ingreso - $egreso;
 
-        $Alunes = $lunes->clone()->subDay(7);
 
-        $semana = cajaChica::whereBetween('dia', [$Alunes, $Adomingo])
-            ->orderby('dia', 'desc')
-            ->orderby('id', 'desc')->first();
-        if ($semana == null) {
-            $lastweek = 0;
-        } else {
-            $lastweek = $semana->total;
-        }
         // dd($lunes, $domingo);
 
-        return view('cajaChica.indexCajaChica', compact('registros', 'lastTotal', 'ingreso', 'egreso', 'lastweek', 'lunes', 'domingo'));
+        return view('cajaChica.indexCajaChica', compact('registros', 'saldo', 'ingreso', 'egreso', 'lunes', 'domingo', 'ultimoCorte'));
     }
 
     /**
@@ -123,13 +106,13 @@ class cajaChicaController extends Controller
     {
         abort_if(Gate::denies('cajachica_create'), 403);
 
-        $conceptos = conceptos::get();
+        $conceptos = conceptos::orderBy('codigo', 'asc')->get();
         $personal = personal::get();
         $obras = obras::get();
         $maquinaria = maquinaria::where('compania', '!=', 'mtq')->orWhere('compania', null)->get();
         $vctComprobantes = comprobante::select()->orderBy('nombre', 'asc')->get();
         $vctClientes = clientes::select()->orderBy('nombre', 'asc')->get();
-        // dd( $maquinaria );
+        // dd($conceptos);
         return view('cajaChica.nuevoMovimiento', compact('conceptos', 'personal', 'obras', 'maquinaria', 'vctComprobantes', 'vctClientes'));
     }
 
@@ -252,7 +235,10 @@ class cajaChicaController extends Controller
     {
         abort_if(Gate::denies('cajachica_destroy'), 403);
 
-        dd('destroy');
+        // dd($cajaChica);
+        Session::flash('message', 1);
+        $cajaChica->delete();
+        return redirect()->action([cajaChicaController::class, 'index']);
     }
 
     public function reporte(Request $request)
@@ -354,5 +340,90 @@ class cajaChicaController extends Controller
         // return (new ReporteCajaChicaExport)->download('invoices.csv', ExcelExcel::CSV, ['Content-Type' => 'text/csv']);
         return (new ReporteCajaChicaExport($query))->download('invoices.xlsx');
         // return (new ReporteCajaChicaExport)->forYear(2023)->download('invoices.xlsx');
+    }
+
+    public function corte(Request $request)
+    {
+        // dd('corte');
+        $lunes = $request->inicio;
+        $domingo = $request->fin;
+
+        $registros = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
+            ->leftJoin('obras', 'cajaChica.obra', 'obras.id')
+            ->join('maquinaria', 'cajaChica.equipo', 'maquinaria.id')
+            ->join('conceptos', 'cajaChica.concepto', 'conceptos.id')
+            ->join('comprobante', 'cajaChica.comprobanteId', 'comprobante.id')
+            ->select(
+                'cajaChica.id',
+                'dia',
+                'conceptos.codigo',
+                'conceptos.nombre as cnombre',
+                'comprobanteId',
+                'comprobante.nombre as comprobante',
+                'ncomprobante',
+                'personal.nombres as pnombre',
+                'personal.apellidoP as papellidoP',
+                'cliente',
+                'obras.nombre as obra',
+                'maquinaria.identificador',
+                'maquinaria.nombre as maquinaria',
+                'cantidad',
+                'cajaChica.tipo',
+                'cajaChica.total'
+            )->orderby('dia', 'desc')->orderby('id', 'desc')
+            ->whereBetween('dia', [$lunes, $domingo])
+            ->paginate(15);
+
+        $ingreso = cajaChica::whereBetween('dia', [$lunes, $domingo])
+            ->where('tipo', 1)
+            ->sum('cantidad');
+
+        $egreso = cajaChica::whereBetween('dia', [$lunes, $domingo])
+            ->where('tipo', 2)
+            ->sum('cantidad');
+
+        $saldo = $ingreso - $egreso;
+
+        // $registros = cajaChica::select(
+        //     'personal.nombres as pnombre',
+        //     'personal.apellidoP as papellidoP',
+        //     DB::raw('SUM(CASE WHEN tipo = 1 THEN cantidad ELSE 0 END) AS total_ingresos'),
+        //     DB::raw('SUM(CASE WHEN tipo = 2 THEN cantidad ELSE 0 END) AS total_egresos')
+        // )
+        //     ->join('personal', 'cajaChica.personal', 'personal.id')
+        //     ->whereBetween('dia', [$lunes, $domingo])
+        //     ->groupBy('cajaChica.personal')
+        //     ->get();
+
+        // dd($registros);
+
+        return view('cajaChica.corteCajaChica', compact('registros', 'lunes', 'domingo', 'ingreso', 'egreso', 'saldo'));
+    }
+
+    public function cerrar(Request $request)
+    {
+        // dd('cerrar');
+
+        $lunes = $request->inicio;
+        $domingo = $request->fin;
+
+        $ingreso = cajaChica::whereBetween('dia', [$lunes, $domingo])
+            ->where('tipo', 1)
+            ->sum('cantidad');
+
+        $egreso = cajaChica::whereBetween('dia', [$lunes, $domingo])
+            ->where('tipo', 2)
+            ->sum('cantidad');
+
+        $saldo = $ingreso - $egreso;
+
+        $corte = new corteCajaChica();
+        $corte->inicio = $lunes;
+        $corte->fin = $domingo;
+        $corte->saldo = $saldo;
+        // $corte->Movimientos = $lunes;
+        $corte->save();
+
+        return redirect()->action([cajaChicaController::class, 'index']);
     }
 }

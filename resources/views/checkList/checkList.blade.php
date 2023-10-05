@@ -23,26 +23,31 @@
                                     @endif
 
                                     <div class="row">
-                                        <div class="col-12 text-right">
-                                            <div>
-                                                <a href="{{ route('bitacoras.index') }}">
-                                                    <!--Agregar ruta-->
-                                                    <button type="button"
-                                                        class="btn botonGral float-end">Bitácoras</button>
-                                                </a>
-                                            </div>
-                                            <div>
-                                                <a href="{{ route('checkList.seleccionar') }}">
-                                                    <!--Agregar ruta-->
-                                                    <button type="button" class="btn botonGral float-end">Añadir Nuevo
-                                                        Checklisddt</button>
-                                                </a>
+                                        <div class="d-flex p-3 divBorder">
 
+                                            <div class="col-12 text-end">
+                                                <div>
+                                                    @can('bitacora_create')
+                                                        <a href="{{ route('bitacoras.index') }}">
+                                                            <!--Agregar ruta-->
+                                                            <button type="button"
+                                                                class="btn botonGral float-end">Bitácoras</button>
+                                                        </a>
+                                                    @endcan
+                                                </div>
+                                                <div>
+                                                    @can('bitacora_create')
+                                                        <a href="{{ route('checkList.seleccionar') }}">
+                                                            <!--Agregar ruta-->
+                                                            <button type="button" class="btn botonGral float-end">Añadir Nuevo
+                                                                Checklist</button>
+                                                        </a>
+                                                    @endcan
+                                                </div>
                                             </div>
-
                                         </div>
-
                                     </div>
+
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="labelTitulo">
