@@ -106,6 +106,8 @@ class accesoriosController extends Controller
 
         $cont = 0;
 
+
+
         for ($i = 0; $i < count($request->archivo); $i++) {
             $documento = new accesoriosDocs();
             $documento->accesorioId = $accesorio->id;
@@ -179,24 +181,8 @@ class accesoriosController extends Controller
         $marcas = marca::select('marca.*', 'marcasFilter.tipos_marcas_id')->leftJoin('marcasTipo as marcasFilter', 'marca.id', '=', 'marcasFilter.marca_id')->orderBy('nombre', 'asc')
             ->where('marcasFilter.tipos_marcas_id', '5')
             ->get();
-        $doc = docs::leftJoin('accesoriosDocs', function ($join) use ($accesorios) {
-            $join->on('docs.id', '=', 'accesoriosDocs.tipoId')
-                ->where('accesoriosDocs.accesorioId', '=', $accesorios->id);
-        })->select(
-            'docs.id',
-            'docs.nombre',
-            'accesoriosDocs.fechaVencimiento',
-            'accesoriosDocs.estatus',
-            'accesoriosDocs.comentarios',
-            'accesoriosDocs.ruta',
-            'accesoriosDocs.requerido',
-            'accesoriosDocs.id as idDoc'
-        )->where('docs.tipoId', '3')
-            ->get();
-
         $vctMaquinaria = maquinaria::all();
-        $readonly = true;
-        return view('accesorios.detalleAccesorios', compact('accesorios', 'vctMaquinaria', 'doc', 'marcas', 'readonly'));
+        return view('accesorios.detalleAccesorios', compact('accesorios', 'vctMaquinaria', 'marcas'));
     }
 
     /**
@@ -232,9 +218,8 @@ class accesoriosController extends Controller
         // dd($doc);
         // dd($accesorios);
         $vctMaquinaria = maquinaria::all();
-        $readonly = false;
         // 
-        return view('accesorios.detalleAccesorios', compact('accesorios', 'vctMaquinaria', 'doc', 'marcas', 'readonly'));
+        return view('accesorios.detalleAccesorios', compact('accesorios', 'vctMaquinaria', 'doc', 'marcas'));
     }
 
     /**
