@@ -261,7 +261,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('grupo_index')
+                        @can('checkList_index')
                             <li>
                                 {{--  <a href="{{ url('/indexGrupos') }}" class="{{ $activeItem == 'grupos' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('grupo.index') }}" class="">
@@ -269,7 +269,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('tarea_index')
+                        @can('checkList_index')
                             <li>
                                 {{--  <a href="{{ url('/tareas') }}" class="{{ $activeItem == 'tareas' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('tarea.index') }}" class="">
@@ -389,7 +389,7 @@
                     </a>
                     <ul id="mtq-nav" class="nav-content collapse {{ $activePage == 'mtq' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
-                        @can('maquinaria_mtq_index')
+                        @can('calendario_mtq_index')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('calendarioMtq.index') }}" class="">
@@ -418,7 +418,7 @@
                             </li>
                         @endcan
 
-                        @can('maquinaria_mtq_index')
+                        @can('residente_mtq_index')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('residentes.index') }}" class="">
@@ -426,7 +426,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('maquinaria_mtq_index')
+                        @can('inventario_mtq_index')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('inventarioMtq.dash') }}" class="">
