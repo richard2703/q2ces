@@ -181,7 +181,7 @@
                                                                     <a id='downloadButton{{ $item->id }}'
                                                                         class="btnViewDescargar btn btn-outline-success btnView"
                                                                         download
-                                                                        href="{{ asset('/public/maquinaria/accesorios/' . $item->nombre . '/' . $item->ruta) }}">
+                                                                        href="{{ asset('/public/accesorios/' . $accesorios->serie . $accesorios->id . '/documentos/' . $item->ruta) }}">
                                                                         <span class="btn-text">Descargar</span>
                                                                         <span class="icon">
                                                                             <i class="far fa-eye mt-2"></i>
