@@ -81,7 +81,7 @@
                                             placeholder="Especifique..." value="{{ old('nombre') }}">
                                     </div>
                                     <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                        <label class="labelTitulo">Empresa: <span>*</span></label></br>
+                                        <label class="labelTitulo">Cliente: <span>*</span></label></br>
                                         <select class="form-select" aria-label="Default select example" id="tipo"
                                             required name="clienteId">
                                             @foreach ($Clientes as $Cliente)

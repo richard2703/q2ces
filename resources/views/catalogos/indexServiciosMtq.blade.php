@@ -43,7 +43,7 @@
                                             </button>
                                         </a>
 
-                                        @can('ubicaciones_create')
+                                        @can('catalogos_create')
                                             <button class="btn botonGral float-end" data-bs-toggle="modal"
                                                 data-bs-target="#nuevoItem" onclick="cargaItem(' ',' ',' ',' ',' ','')">
                                                 Añadir Un Servicio
@@ -81,7 +81,7 @@
                                                 <td class="text-center">{{ $item->comentario }}</td>
 
                                                 <td class="td-actions text-center">
-                                                    @can('ubicaciones_show')
+                                                    @can('catalogos_show')
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
                                                             onclick="cargaItem('{{ $item->id }}','{{ $item->codigo }}','{{ $item->nombre }}','{{ $item->color }}','{{ $item->comentario }}','{{ true }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="28"
@@ -94,7 +94,7 @@
                                                             </svg>
                                                         </a>
                                                     @endcan
-                                                    @can('ubicaciones_edit')
+                                                    @can('catalogos_edit')
                                                         <a href="#" class="" data-bs-toggle="modal"
                                                             data-bs-target="#editarItem"
                                                             onclick="cargaItem('{{ $item->id }}','{{ $item->codigo }}','{{ $item->nombre }}','{{ $item->color }}','{{ $item->comentario }}','{{ false }}')">
@@ -106,7 +106,7 @@
                                                             </svg>
                                                         </a>
                                                     @endcan
-                                                    @can('ubicaciones_destroy')
+                                                    @can('catalogos_destroy')
                                                         <form action="{{ route('serviciosMtq.destroy', $item->id) }}"
                                                             method="POST" style="display: inline-block;"
                                                             onsubmit="return confirm('Seguro?')">

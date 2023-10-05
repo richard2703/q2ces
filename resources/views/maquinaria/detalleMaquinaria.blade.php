@@ -46,13 +46,13 @@
                                 <div class="col-8 text-end">
 
                                     {{--  @can('asistencia_create')  --}}
-                                    <a href="{{ route('maquinaria.update', $maquinaria->id) }}" method="get">
+                                    {{-- <a href="{{ route('maquinaria.update', $maquinaria->id) }}" method="get">
                                         <button class="btn botonGral">Asignar Equipo</button>
                                     </a>
 
                                     <a href="{{ route('maquinaria.update', $maquinaria->id) }}" method="get">
                                         <button class="btn botonGral">Asignar Uniforme</button>
-                                    </a>
+                                    </a> --}}
                                     {{--  @endcan  --}}
 
 

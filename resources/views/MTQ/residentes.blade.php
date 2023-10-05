@@ -34,7 +34,7 @@
                                                 </button>
                                             </a>  --}}
 
-                                            @can('catalogos_create')
+                                            @can('residente_mtq_create')
                                                 <button class="btn botonGral float-end" data-bs-toggle="modal"
                                                     data-bs-target="#nuevoItem">
                                                     Añadir Residente
@@ -67,7 +67,7 @@
                                                     </td>
 
                                                     <td class="td-actions text-right">
-                                                        {{-- @can('user_show') --}}
+                                                        {{-- @can('residente_mtq_show') --}}
                                                         {{-- <!--<a href="{{ route(' puestos.show', $item->id) }}"  class="">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
                                                                     <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
@@ -75,19 +75,19 @@
                                                                 </svg>
                                                             </a>--> --}}
                                                         {{-- @endcan --}}
-                                                        {{-- @can('user_edit') --}}
-                                                        <a href="#" class="" data-bs-toggle="modal"
-                                                            data-bs-target="#editarItem"
-                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->email }}','{{ $item->telefono }}','{{ $item->identificador }}','{{ $item->auto }}','{{ $item->obraId }}')">
-                                                            <svg xmlns="http://www.w3.org/2000/svg " width="28"
-                                                                height="28" fill="currentColor"
-                                                                class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                                            </svg>
-                                                        </a>
-                                                        {{-- @endcan --}}
-                                                        {{-- @can('user_destroy') --}}
+                                                        @can('residente_mtq_edit')
+                                                            <a href="#" class="" data-bs-toggle="modal"
+                                                                data-bs-target="#editarItem"
+                                                                onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->email }}','{{ $item->telefono }}','{{ $item->identificador }}','{{ $item->auto }}','{{ $item->obraId }}')">
+                                                                <svg xmlns="http://www.w3.org/2000/svg " width="28"
+                                                                    height="28" fill="currentColor"
+                                                                    class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                </svg>
+                                                            </a>
+                                                        @endcan
+                                                        {{-- @can('residente_mtq_destroy') --}}
                                                         {{-- <form action="{{ route('puestos.delete', $item->id) }}"
                                                             method="POST" style="display: inline-block;"
                                                             onsubmit="return confirm('Seguro?')">
@@ -180,17 +180,19 @@
                             </select>
                         </div>
 
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Auto: <span></span></label></br>
-                            <select name="autoId" class="form-select" aria-label="Default select example">
-                                <option value="">Seleccione</option>
-                                @foreach ($maquinaria as $item)
-                                    <option value="{{ $item->id }}">
-                                        {{ $item->identificador }} {{ $item->nombre }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                        @can('residente_mtq_assign_vehiculo')
+                            <div class=" col-12 col-sm-6 mb-3 ">
+                                <label class="labelTitulo">Auto: <span></span></label></br>
+                                <select name="autoId" class="form-select" aria-label="Default select example">
+                                    <option value="">Seleccione</option>
+                                    @foreach ($maquinaria as $item)
+                                        <option value="{{ $item->id }}">
+                                            {{ $item->identificador }} {{ $item->nombre }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endcan
 
                         {{--  <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
@@ -257,24 +259,26 @@
                             </select>
                         </div>
 
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Auto Asignado: </label></br>
-                            <input type="text" class="inputCaja" id="asignado" value="" readonly>
-                        </div>
+                        @can('residente_mtq_assign_vehiculo')
+                            <div class=" col-12 col-sm-6 mb-3 ">
+                                <label class="labelTitulo">Auto Asignado: </label></br>
+                                <input type="text" class="inputCaja" id="asignado" value="" readonly>
+                            </div>
 
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Cambio de Auto: </label></br>
-                            <select id="autoId" name="autoId" class="form-select"
-                                aria-label="Default select example">
-                                <option value="0">Sin Cambios</option>
-                                <option value="">Denegar Auto</option>
-                                @foreach ($maquinaria as $item)
-                                    <option value="{{ $item->id }}">
-                                        {{ $item->identificador }} {{ $item->nombre }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                            <div class=" col-12 col-sm-6 mb-3 ">
+                                <label class="labelTitulo">Cambio de Auto: </label></br>
+                                <select id="autoId" name="autoId" class="form-select"
+                                    aria-label="Default select example">
+                                    <option value="0">Sin Cambios</option>
+                                    <option value="">Denegar Auto</option>
+                                    @foreach ($maquinaria as $item)
+                                        <option value="{{ $item->id }}">
+                                            {{ $item->identificador }} {{ $item->nombre }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endcan
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

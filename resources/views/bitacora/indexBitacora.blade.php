@@ -23,18 +23,20 @@
                                         </div>
                                     @endif
 
-                                    @can('grupo_create')
-                                        <div class="row">
-                                            <div class="col-12 text-right">
-
-                                                <a href="{{ url('/bitacoras/bitacora/nuevo') }}">
-                                                    <!--Agregar ruta-->
-                                                    <button type="button" class="btn botonGral">Nuevo Registro</button>
-                                                </a>
-
-                                            </div>
+                                    <div class="row">
+                                        <div class="d-flex p-3 divBorder">
+                                            @can('bitacora_create')
+                                                <div class="col-12 text-end">
+                                                    <div class="row">
+                                                        <a href="{{ url('/bitacoras/bitacora/nuevo') }}">
+                                                            <!--Agregar ruta-->
+                                                            <button type="button" class="btn botonGral">Nuevo Registro</button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            @endcan
                                         </div>
-                                    @endcan
+                                    </div>
 
                                     <div class="table-responsive">
                                         <table class="table">
@@ -56,7 +58,7 @@
 
                                                         <td class="td-actions text-right">
 
-                                                            @can('grupo_edit')
+                                                            @can('bitacora_edit')
                                                                 <a href="{{ url('/bitacoras/bitacora/editar/' . $item->id) }}"
                                                                     class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
@@ -82,7 +84,7 @@
                                                                 </a>
                                                             @endif
 
-                                                            {{--  @can('grupo_destroy')
+                                                            {{--  @can('bitacora_destroy')
                                                                 <form action="" method="POST"
                                                                     style="display: inline-block;"
                                                                     onsubmit="return confirm('Seguro?')">

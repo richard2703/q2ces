@@ -49,7 +49,7 @@ class catalogosController extends Controller
 
     public function indexPuestos()
     {
-        abort_if(Gate::denies('puesto_index'), 403);
+        abort_if(Gate::denies('catalogos_index'), 403);
 
         $records = puesto::select('puesto.*', 'puestoNivel.nombre as puestoNivel')
             ->leftJoin('puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId')
@@ -70,7 +70,7 @@ class catalogosController extends Controller
 
     public function indexCatalogoCategoriasTareas()
     {
-        abort_if(Gate::denies('catalogos_index'), 403);
+        abort_if(Gate::denies('tarea_index'), 403);
 
         $records = tareaCategoria::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
@@ -97,7 +97,7 @@ class catalogosController extends Controller
 
     public function indexCatalogoTiposTareas()
     {
-        abort_if(Gate::denies('catalogos_index'), 403);
+        abort_if(Gate::denies('tarea_index'), 403);
 
         $records = tareaTipo::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
@@ -106,7 +106,7 @@ class catalogosController extends Controller
 
     public function indexCatalogoTiposValorTarea()
     {
-        abort_if(Gate::denies('catalogos_index'), 403);
+        abort_if(Gate::denies('tarea_index'), 403);
 
         $records = tipoValorTarea::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
@@ -115,7 +115,7 @@ class catalogosController extends Controller
 
     public function indexCatalogoUbicacionesTareas()
     {
-        abort_if(Gate::denies('catalogos_index'), 403);
+        abort_if(Gate::denies('tarea_index'), 403);
 
         $records = tareaUbicacion::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
@@ -199,7 +199,7 @@ class catalogosController extends Controller
         //     dd($relacion);
         //     $records = Arr::flatten($relacion);
         // }
-        // 
+        //
         // dd($records);
         $tipos = marcasTipo::all();
         // dd($tipos);

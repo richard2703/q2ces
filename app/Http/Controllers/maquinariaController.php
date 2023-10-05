@@ -76,6 +76,7 @@ class maquinariaController extends Controller
             'nomina.puestoId',
             'puesto.nombre AS puesto',
             'puesto.puestoNivelId',
+            'personal.estatusId',
             'puestoNivel.nombre AS puestoNivel'
         )
             ->join('nomina', 'nomina.personalId', 'personal.id')
@@ -84,7 +85,8 @@ class maquinariaController extends Controller
             ->leftjoin('obraMaqPer', 'obraMaqPer.personalId', 'personal.id')
             ->leftjoin('maquinaria', 'maquinaria.id', '=', 'obraMaqPer.maquinariaId')
             ->leftjoin('obras', 'obras.id', '=', 'obraMaqPer.obraId')
-            ->where('puesto.puestoNivelId', '=', 5) //*** solo operarios de maquinaria */
+            ->where('puesto.puestoNivelId', '=', 5)
+            ->where( 'personal.estatusId', '=', 1 ) //*** solo operarios de maquinaria */ //*** solo operarios de maquinaria */
             ->orderBy('personal.nombres', 'asc')->get();
 
         // dd( $vctMaquinaria );
@@ -769,6 +771,8 @@ class maquinariaController extends Controller
 
     public function download($id, $doc)
     {
+
+        abort_if(Gate::denies('maquinaria_edit'), 403);
         $book = maqdocs::where('id', $id)->firstOrFail();
 
         if (empty($book) === false) {
@@ -863,6 +867,7 @@ class maquinariaController extends Controller
 
     public function asignacion(Request $request)
     {
+        abort_if(Gate::denies('maquinaria_assign_personal'), 403);
         $data = $request->all();
         $vctDebug = array();
         $objAsigna = new obraMaqPer();

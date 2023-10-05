@@ -36,7 +36,7 @@
                                         </div>
 
                                         <div class="col-6 pb-3 text-end">
-                                            @can('inventario_create')
+                                            @can('inventario_mtq_create')
                                                 <a href="{{ route('inventarioMtq.create', $tipo) }}">
                                                     <button type="button" class="btn botonGral text-capitalize">Añadir al
                                                         Inventario</button>
@@ -56,58 +56,64 @@
                                                 <th class="labelTitulo text-center" style="width: 120px;">Acciones</th>
                                             </thead>
                                             <tbody class="text-capitalize">
-                                                @forelse ($inventarios as $inventario)
-                                                    <tr>
-                                                        <td class="text-center"><img class="" style="width: 100px;"
-                                                                src="{{ $inventario->imagen == '' ? '/img/general/default.jpg' : '/storage/inventario/' . $inventario->tipo . '/' . $inventario->imagen }}">
-                                                        </td>
-                                                        <td class="text-center align-middle">{{ $inventario->numparte }}
-                                                        </td>
-                                                        <td class="text-center align-middle">{{ $inventario->nombre }}</td>
-                                                        <td class="text-center align-middle">{{ $inventario->cantidad }}
-                                                        </td>
-                                                        <td class="text-center align-middle">{{ $inventario->reorden }}</td>
-                                                        <td class="text-center align-middle">{{ $inventario->maximo }}</td>
-                                                        <td class="td-actions text-center align-middle">
-                                                            @can('inventario_restock')
-                                                                <a href="#" data-bs-toggle="modal"
-                                                                    data-bs-target="#modal-entrada"
-                                                                    onclick="cargar('{{ $inventario->nombre }}','{{ $inventario->imagen }}','{{ $inventario->tipo }}','{{ $inventario->id }}',1)">
-                                                                    <i class="fas fa-sign-in-alt iconoTablas"
-                                                                        title="Entradas"></i>
-                                                                </a>
-                                                            @endcan
-                                                            @can('inventario_edit')
-                                                                <a href="{{ route('inventarioMtq.show', $inventario->id) }}"
-                                                                    <button type="button" title="Detalles">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28"
-                                                                        height="28" fill="currentColor"
-                                                                        class="bi bi-card-text accionesIconos"
-                                                                        viewBox="0 0 16 16">
-                                                                        <path
-                                                                            d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                                                                        <path
-                                                                            d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
-                                                                    </svg>
-                                                                    </button>
-                                                                </a>
-                                                            @endcan
-                                                            @can('inventario_restock')
-                                                                <a href="#" data-bs-toggle="modal"
-                                                                    data-bs-target="#modal-entrada"
-                                                                    onclick="cargar('{{ $inventario->nombre }}','{{ $inventario->imagen }}','{{ $inventario->tipo }}','{{ $inventario->id }}',2)">
-                                                                    <i class="fas fa-sign-out-alt iconoTablas"
-                                                                        title="Salidas"></i>
-                                                                </a>
-                                                            @endcan
+                                                @if ( $inventarios->count() > 0 )
+                                                    @forelse ($inventarios as $inventario)
+                                                        <tr>
+                                                            <td class="text-center"><img class=""
+                                                                    style="width: 100px;"
+                                                                    src="{{ $inventario->imagen == '' ? '/img/general/default.jpg' : '/storage/inventario/' . $inventario->tipo . '/' . $inventario->imagen }}">
+                                                            </td>
+                                                            <td class="text-center align-middle">{{ $inventario->numparte }}
+                                                            </td>
+                                                            <td class="text-center align-middle">{{ $inventario->nombre }}
+                                                            </td>
+                                                            <td class="text-center align-middle">{{ $inventario->cantidad }}
+                                                            </td>
+                                                            <td class="text-center align-middle">{{ $inventario->reorden }}
+                                                            </td>
+                                                            <td class="text-center align-middle">{{ $inventario->maximo }}
+                                                            </td>
+                                                            <td class="td-actions text-center align-middle">
+                                                                @can('inventario_mtq_restock')
+                                                                    <a href="#" data-bs-toggle="modal"
+                                                                        data-bs-target="#modal-entrada"
+                                                                        onclick="cargar('{{ $inventario->nombre }}','{{ $inventario->imagen }}','{{ $inventario->tipo }}','{{ $inventario->id }}',1)">
+                                                                        <i class="fas fa-sign-in-alt iconoTablas"
+                                                                            title="Entradas"></i>
+                                                                    </a>
+                                                                @endcan
+                                                                @can('inventario_mtq_edit')
+                                                                    <a href="{{ route('inventarioMtq.show', $inventario->id) }}"
+                                                                        <button type="button" title="Detalles">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="28"
+                                                                            height="28" fill="currentColor"
+                                                                            class="bi bi-card-text accionesIconos"
+                                                                            viewBox="0 0 16 16">
+                                                                            <path
+                                                                                d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                                                            <path
+                                                                                d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
+                                                                        </svg>
+                                                                        </button>
+                                                                    </a>
+                                                                @endcan
+                                                                @can('inventario_mtq_restock')
+                                                                    <a href="#" data-bs-toggle="modal"
+                                                                        data-bs-target="#modal-entrada"
+                                                                        onclick="cargar('{{ $inventario->nombre }}','{{ $inventario->imagen }}','{{ $inventario->tipo }}','{{ $inventario->id }}',2)">
+                                                                        <i class="fas fa-sign-out-alt iconoTablas"
+                                                                            title="Salidas"></i>
+                                                                    </a>
+                                                                @endcan
 
-                                                        </td>
-                                                    </tr>
-                                                @empty
-                                                    <tr>
-                                                        <td colspan="2">Sin registros.</td>
-                                                    </tr>
-                                                @endforelse
+                                                            </td>
+                                                        </tr>
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="2">Sin registros.</td>
+                                                        </tr>
+                                                    @endforelse
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>

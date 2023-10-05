@@ -33,13 +33,21 @@
                                         </div>
                                     @endif
 
-                                    @can('tarea_create')
-                                        <div class="row">
-                                            <div class="col-12 text-right" data-bs-toggle="modal" data-bs-target="#nuevaTarea">
-                                                <button type="button" class="btn botonGral">Nueva Tarea</button>
-                                            </div>
+                                    <div class="row">
+                                        <div class="d-flex p-3 divBorder">
+                                            @can('tarea_create')
+                                                <div class="col-12 text-end">
+                                                    <div class="row">
+                                                        <div class="col-12 text-right" data-bs-toggle="modal"
+                                                            data-bs-target="#nuevaTarea">
+                                                            <button type="button" class="btn botonGral">Nueva Tarea</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endcan
                                         </div>
-                                    @endcan
+                                    </div>
+
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="labelTitulo">
@@ -79,7 +87,7 @@
                                                                 </a>
                                                             @endcan
                                                             {{--
-                                                            @can('tarea_destroy')
+                                                            @can('catalogos_destroy')
                                                                 <form action="#" method="POST"
                                                                     style="display: inline-block;"
                                                                     onsubmit="return confirm('¿Estás Seguro?')">
@@ -264,7 +272,7 @@
                                 name="tipoValorId">
                                 <option selected value="">Selecciona una opción</option>
                                 @foreach ($vctTipoValor as $item)
-                                    <option value="{{ $item->id }}" >
+                                    <option value="{{ $item->id }}">
                                         {{ $item->nombre }}
                                     </option>
                                 @endforeach

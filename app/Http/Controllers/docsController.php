@@ -20,7 +20,7 @@ class docsController extends Controller
     public function index()
     {
         //$docs = docs::orderBy('created_at', 'desc')->paginate(5);
-        abort_if(Gate::denies('docs_index'), 404);
+        abort_if(Gate::denies('catalogos_index'), 404);
         $docs = docs::join('tiposDocs', 'docs.tipoId', 'tiposDocs.id')
             ->select(
                 'docs.id',
@@ -40,7 +40,7 @@ class docsController extends Controller
      */
     public function create()
     {
-        abort_if(Gate::denies('docs_create'), 404);
+        abort_if(Gate::denies('catalogos_create'), 404);
         $tiposDocs = tiposDocs::all();
 
         return view('catalogos.docs.createDocs', compact('tiposDocs'));
@@ -54,7 +54,7 @@ class docsController extends Controller
      */
     public function store(Request $request)
     {
-        abort_if(Gate::denies('docs_create'), 404);
+        abort_if(Gate::denies('catalogos_create'), 404);
         $docs = $request->all();
         $docs = docs::create($docs);
         Session::flash('message', 1);
@@ -80,7 +80,7 @@ class docsController extends Controller
      */
     public function edit(docs $doc)
     {
-        abort_if(Gate::denies('tiposDocs_edit'), 404);
+        abort_if(Gate::denies('catalogos_edit'), 404);
         $tiposDocs = tiposDocs::all();
         return view('catalogos.docs.editDocs', compact('doc', 'tiposDocs'));
     }
@@ -94,7 +94,7 @@ class docsController extends Controller
      */
     public function update(Request $request, docs $doc)
     {
-        abort_if(Gate::denies('tiposDocs_edit'), 404);
+        abort_if(Gate::denies('catalogos_edit'), 404);
         $data = $request->all();
         //dd($data);
         $doc->update($data);
@@ -110,20 +110,22 @@ class docsController extends Controller
      */
     public function destroy(docs $doc)
     {
+
+        abort_if ( Gate::denies( 'catalogos_destroy' ), 403 );
         try {
-            $doc->delete(); // Intenta eliminar 
-        } catch (QueryException $e) {
-            if ($e->getCode() === 23000) {
-                return redirect()->back()->with('faild', 'No Puedes Eliminar ');
-                // Esto es un error de restricción de clave externa (FOREIGN KEY constraint)
+            $docs->delete();
+            // Intenta eliminar
+        } catch ( QueryException $e ) {
+            if ( $e->getCode() === 23000 ) {
+                return redirect()->back()->with( 'faild', 'No Puedes Eliminar ' );
+                // Esto es un error de restricción de clave externa ( FOREIGN KEY constraint )
                 // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
             } else {
-                return redirect()->back()->with('faild', 'No Puedes Eliminar un puesto en uso');
+                return redirect()->back()->with( 'faild', 'No Puedes Eliminar si esta en uso' );
                 // Otro tipo de error de base de datos
                 // Maneja según sea necesario
             }
         }
-
-        return redirect()->back()->with('success', 'Puesto Eliminado correctamente');
+        return redirect()->back()->with( 'success', 'Eliminado correctamente' );
     }
 }

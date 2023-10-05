@@ -85,7 +85,7 @@ $anioSeleccionado = $intAnio;
                                         </div>
                                         <div class="row">
                                             <div class="col-4 text-left">
-                                                @can('asistencia_cortesemanal')
+                                                @can('asistencia_execute_corte_semanal')
                                                     <a href="{{ route('asistencia.corteSemanal') }}">
                                                         <button type="button" class="btn botonGral">Corte Semanal</button>
                                                     </a>
@@ -93,7 +93,7 @@ $anioSeleccionado = $intAnio;
                                             </div>
 
                                             <div class="col-8 text-end">
-                                                @can('asistencia_horasextra')
+                                                @can('asistencia_edit')
                                                     <a href="{{ route('asistencia.horasExtra') }}">
                                                         <button type="button" class="btn botonGral">Tiempo Extra</button>
                                                     </a>
@@ -112,8 +112,8 @@ $anioSeleccionado = $intAnio;
                                         <table class="table">
                                             <thead class="labelTitulo text-center">
                                                 <th class="labelTitulo">Código</th>
-                                                <th class="labelTitulo">Puesto</th>
                                                 <th class="labelTitulo">Nombre</th>
+                                                <th class="labelTitulo">Puesto</th>
                                                 <th class="labelTitulo" style="width:140px !important">Asistencia</th>
                                                 <th class="labelTitulo">Faltas</th>
                                                 <th class="labelTitulo">Otros Días</th>
@@ -127,9 +127,9 @@ $anioSeleccionado = $intAnio;
                                                         <td style="color: {{ $item->estatusColor }};">
                                                             <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                         </td>
-                                                        <td>{{ $item->puesto }}</td>
                                                         <td class="text-left">{{ $item->apellidoP }}
                                                             {{ $item->apellidoM }}, {{ $item->nombres }}</td>
+                                                        <td>{{ $item->puesto }}</td>
                                                         <td>{{ $item->asistencias }}</td>
                                                         <td>{{ $item->faltas }}</td>
                                                         <td>{{ $item->incapacidades + $item->vacaciones + $item->descansos }}
@@ -165,9 +165,9 @@ $anioSeleccionado = $intAnio;
                                                             <td style="color: {{ $item->estatusColor }};">
                                                                 <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                             </td>
-                                                            <td>{{ $item->puesto }}</td>
                                                             <td class="text-left">{{ $item->apellidoP }}
                                                                 {{ $item->apellidoM }}, {{ $item->nombres }}</td>
+                                                            <td>{{ $item->puesto }}</td>
                                                             <td>---</td>
                                                             <td>---</td>
                                                             <td>---</td>

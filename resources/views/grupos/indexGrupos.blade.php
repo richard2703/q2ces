@@ -19,7 +19,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Grupos</h4>
+                                    <h4 class="card-title">Grupos de Tareas</h4>
 
                                 </div>
                                 <div class="card-body">
@@ -34,18 +34,21 @@
                                         </div>
                                     @endif
 
-                                    @can('grupo_create')
-                                        <div class="row">
-                                            <div class="col-12 text-right">
-
-                                                <a href="{{ url('/bitacoras/grupos/nuevo') }}">
-                                                    <!--Agregar ruta-->
-                                                    <button type="button" class="btn botonGral">Nuevo Grupo</button>
-                                                </a>
-
-                                            </div>
+                                    <div class="row">
+                                        <div class="d-flex p-3 divBorder">
+                                            @can('grupo_create')
+                                                <div class="col-12 text-end">
+                                                    <div class="row">
+                                                        <a href="{{ url('/bitacoras/grupos/nuevo') }}">
+                                                            <!--Agregar ruta-->
+                                                            <button type="button" class="btn botonGral">Nuevo Grupo</button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            @endcan
                                         </div>
-                                    @endcan
+                                    </div>
+
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="labelTitulo">
