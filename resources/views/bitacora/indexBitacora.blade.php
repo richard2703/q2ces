@@ -23,18 +23,20 @@
                                         </div>
                                     @endif
 
-                                    @can('bitacora_create')
-                                        <div class="row">
-                                            <div class="col-12 text-right">
-
-                                                <a href="{{ url('/bitacoras/bitacora/nuevo') }}">
-                                                    <!--Agregar ruta-->
-                                                    <button type="button" class="btn botonGral">Nuevo Registro</button>
-                                                </a>
-
-                                            </div>
+                                    <div class="row">
+                                        <div class="d-flex p-3 divBorder">
+                                            @can('bitacora_create')
+                                                <div class="col-12 text-end">
+                                                    <div class="row">
+                                                        <a href="{{ url('/bitacoras/bitacora/nuevo') }}">
+                                                            <!--Agregar ruta-->
+                                                            <button type="button" class="btn botonGral">Nuevo Registro</button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            @endcan
                                         </div>
-                                    @endcan
+                                    </div>
 
                                     <div class="table-responsive">
                                         <table class="table">

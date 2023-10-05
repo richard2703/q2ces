@@ -33,13 +33,21 @@
                                         </div>
                                     @endif
 
-                                    @can('catalogos_create')
-                                        <div class="row">
-                                            <div class="col-12 text-right" data-bs-toggle="modal" data-bs-target="#nuevaTarea">
-                                                <button type="button" class="btn botonGral">Nueva Tarea</button>
-                                            </div>
+                                    <div class="row">
+                                        <div class="d-flex p-3 divBorder">
+                                            @can('tarea_create')
+                                                <div class="col-12 text-end">
+                                                    <div class="row">
+                                                        <div class="col-12 text-right" data-bs-toggle="modal"
+                                                            data-bs-target="#nuevaTarea">
+                                                            <button type="button" class="btn botonGral">Nueva Tarea</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endcan
                                         </div>
-                                    @endcan
+                                    </div>
+
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="labelTitulo">
@@ -66,7 +74,7 @@
 
                                                         <td class="td-actions text-center">
 
-                                                            @can('catalogos_edit')
+                                                            @can('tarea_edit')
                                                                 <a href="#" class="" data-bs-toggle="modal"
                                                                     data-bs-target="#editarTarea"
                                                                     onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->categoriaId }}','{{ $item->ubicacionId }}','{{ $item->tipoId }}','{{ $item->comentario }}','{{ $item->activa }}','{{ $item->tipoValorId }}')">
@@ -264,7 +272,7 @@
                                 name="tipoValorId">
                                 <option selected value="">Selecciona una opción</option>
                                 @foreach ($vctTipoValor as $item)
-                                    <option value="{{ $item->id }}" >
+                                    <option value="{{ $item->id }}">
                                         {{ $item->nombre }}
                                     </option>
                                 @endforeach

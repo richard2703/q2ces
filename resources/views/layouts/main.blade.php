@@ -261,7 +261,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('checkList_index')
+                        @can('grupo_index')
                             <li>
                                 {{--  <a href="{{ url('/indexGrupos') }}" class="{{ $activeItem == 'grupos' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('grupo.index') }}" class="">
@@ -269,7 +269,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('checkList_index')
+                        @can('tarea_index')
                             <li>
                                 {{--  <a href="{{ url('/tareas') }}" class="{{ $activeItem == 'tareas' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('tarea.index') }}" class="">

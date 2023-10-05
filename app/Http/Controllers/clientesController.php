@@ -44,6 +44,7 @@ class clientesController extends Controller
     public function store(Request $request)
     {
         // dd($request['rEmail']);
+        abort_if(Gate::denies('cliente_create'), 403);
 
         $cliente = $request->all();
         $cliente['estatus'] = 'Activa';
@@ -114,6 +115,7 @@ class clientesController extends Controller
      */
     public function update(Request $request, clientes $cliente)
     {
+        abort_if(Gate::denies('cliente_edit'), 403);
         $data = $request->all();
         /*** directorio contenedor de su información */
         $pathObra = str_pad($cliente->id, 4, '0', STR_PAD_LEFT);
@@ -157,6 +159,7 @@ class clientesController extends Controller
      */
     public function destroy(clientes $clientes)
     {
+        abort_if(Gate::denies('cliente_destroy'), 403);
         //
     }
 }
