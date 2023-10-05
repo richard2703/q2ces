@@ -16,8 +16,10 @@
                                             <p class="mt-4 texticonos">Equipos MTQ</p>
                                         </a>
                                     </div>
+                                @endcan
 
 
+                                @can('residente_mtq_index')
                                     <div class="col-12 col-md-6 text-center my-4">
                                         <a href="{{ route('residentes.index') }}">
                                             <img src="/img/inventario/herramientas.svg" alt="Residentes" title="Residentes"
@@ -25,7 +27,9 @@
                                             <p class="mt-4 texticonos">Residentes</p>
                                         </a>
                                     </div>
+                                @endcan
 
+                                @can('calendario_mtq_index')
                                     <div class="col-12 col-md-6 text-center my-4">
                                         <a href="{{ route('calendarioMtq.index') }}">
                                             <img src="/img/inventario/herramientas.svg" alt="Calendario MTQ"

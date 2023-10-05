@@ -164,8 +164,8 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             <table class="table">
                                                 <thead class="labelTitulo text-center">
                                                     <th class="labelTitulo corte">Código</th>
-                                                    <th class="labelTitulo corte">Puesto</th>
                                                     <th class="labelTitulo corte">Nombre</th>
+                                                    <th class="labelTitulo corte">Puesto</th>
                                                     <?php
                                                     for ($i=0; $i < 7 ; $i++) {
                                                        ?>
@@ -203,9 +203,9 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                             <td style="color: {{ $item->estatusColor }};">
                                                                 <strong>{{ ucwords(trans($item->numEmpleado)) }}</strong>
                                                             </td>
-                                                            <td>{{ ucwords(trans($item->puesto)) }}</td>
                                                             <td class="text-left">{{ ucwords(trans($item->empleado)) }}
                                                             </td>
+                                                            <td>{{ ucwords(trans($item->puesto)) }}</td>
                                                             <?php
                                                                 //*** recorremos el arreglo de los dias de la semana de trabajo ***************//
                                                                 $intHorasSemanales = 0;

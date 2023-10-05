@@ -21,7 +21,7 @@ class calendarioMtqController extends Controller
      */
     public function index()
     {
-        abort_if(Gate::denies('calendarioMtq_index'), 403);
+        abort_if(Gate::denies('calendario_mtq_index'), 403);
         //$eventos = calendarioMtq::all();
         $servicios = serviciosMtq::all();
         $eventos = calendarioMtq::join('maquinaria', "maquinaria.id", "mtqEventos.maquinariaId")
@@ -68,7 +68,7 @@ class calendarioMtqController extends Controller
     public function store(Request $request)
     {
         // dd('GHP', $request);
-        abort_if(Gate::denies('calendarioMtq_create'), 404);
+        abort_if(Gate::denies('calendario_mtq_create'), 404);
         $events = $request->all();
         $events['start'] = strtoupper($events['fecha'] . ' ' . $events['hora']);
         $events['title'] = strtoupper($events['placas'] . ' ' . $events['nombre'] . ' ' . $events['marca'] . ' ' . $events['numeconomico'] . ' ' . $events['descripcion']);
@@ -110,7 +110,7 @@ class calendarioMtqController extends Controller
      */
     public function update(Request $request, calendarioMtq $calendarioMtq)
     {
-        abort_if(Gate::denies('calendarioMtq_edit'), 404);
+        abort_if(Gate::denies('calendario_mtq_edit'), 404);
         $calendarioMtq = calendarioMtq::where('id', $request->id)->first();
         $data = $request->all();
         // dd($calendarioMtq, $data);
