@@ -48,7 +48,7 @@
                                             @forelse ($accesorios as $accesorio)
                                                 <tr>
                                                     <th scope="row"><img style="width: 100px;"
-                                                            src="{{ $accesorio->foto == '' ? ' /img/general/default.jpg' : asset('/storage/maquinaria/accesorios/' . str_pad($accesorio->id, 4, '0', STR_PAD_LEFT) . '/' . $accesorio->foto) }}">
+                                                            src="{{ $accesorio->foto == '' ? ' /img/general/default.jpg' : asset('/storage/accesorios/' . str_pad($accesorio->id, 4, '0', STR_PAD_LEFT) . '/' . $accesorio->foto) }}">
                                                     </th>
                                                     <td>{{ $accesorio->nombre }}</td>
                                                     <td>{{ $accesorio->maquinaria }}</td>

@@ -106,13 +106,13 @@ class cajaChicaController extends Controller
     {
         abort_if(Gate::denies('cajachica_create'), 403);
 
-        $conceptos = conceptos::get();
+        $conceptos = conceptos::orderBy('codigo', 'asc')->get();
         $personal = personal::get();
         $obras = obras::get();
         $maquinaria = maquinaria::where('compania', '!=', 'mtq')->orWhere('compania', null)->get();
         $vctComprobantes = comprobante::select()->orderBy('nombre', 'asc')->get();
         $vctClientes = clientes::select()->orderBy('nombre', 'asc')->get();
-        // dd( $maquinaria );
+        // dd($conceptos);
         return view('cajaChica.nuevoMovimiento', compact('conceptos', 'personal', 'obras', 'maquinaria', 'vctComprobantes', 'vctClientes'));
     }
 
@@ -235,7 +235,10 @@ class cajaChicaController extends Controller
     {
         abort_if(Gate::denies('cajachica_destroy'), 403);
 
-        dd('destroy');
+        // dd($cajaChica);
+        Session::flash('message', 1);
+        $cajaChica->delete();
+        return redirect()->action([cajaChicaController::class, 'index']);
     }
 
     public function reporte(Request $request)
