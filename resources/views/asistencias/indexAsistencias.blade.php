@@ -112,8 +112,8 @@ $anioSeleccionado = $intAnio;
                                         <table class="table">
                                             <thead class="labelTitulo text-center">
                                                 <th class="labelTitulo">Código</th>
-                                                <th class="labelTitulo">Puesto</th>
                                                 <th class="labelTitulo">Nombre</th>
+                                                <th class="labelTitulo">Puesto</th>
                                                 <th class="labelTitulo" style="width:140px !important">Asistencia</th>
                                                 <th class="labelTitulo">Faltas</th>
                                                 <th class="labelTitulo">Otros Días</th>
@@ -127,9 +127,9 @@ $anioSeleccionado = $intAnio;
                                                         <td style="color: {{ $item->estatusColor }};">
                                                             <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                         </td>
-                                                        <td>{{ $item->puesto }}</td>
                                                         <td class="text-left">{{ $item->apellidoP }}
                                                             {{ $item->apellidoM }}, {{ $item->nombres }}</td>
+                                                        <td>{{ $item->puesto }}</td>
                                                         <td>{{ $item->asistencias }}</td>
                                                         <td>{{ $item->faltas }}</td>
                                                         <td>{{ $item->incapacidades + $item->vacaciones + $item->descansos }}

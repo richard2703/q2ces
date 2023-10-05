@@ -147,8 +147,8 @@ $blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
                                                 <table class="table">
                                                     <thead class="labelTitulo text-center">
                                                         <th class="labelTitulo">Código</th>
-                                                        <th class="labelTitulo">Puesto</th>
                                                         <th class="labelTitulo">Nombre</th>
+                                                        <th class="labelTitulo">Puesto</th>
                                                         <th class="labelTitulo" style="width:140px !important">Asistencia
                                                         </th>
                                                         <th class="labelTitulo">Faltas</th>
@@ -182,12 +182,12 @@ $blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
                                                                         <input type="hidden" name="horarioSalida[]"
                                                                             value="{{ $item->horarioSalida }}">
                                                                     </td>
-                                                                    <td>{{ $item->puesto }}</td>
                                                                     <td class="text-left">
                                                                         <a href="#"
                                                                             title="Fecha de Ingreso {{ \Carbon\Carbon::parse($item->fechaIngreso)->format('d/m/Y') }}">
                                                                             {{ $item->getFullLastNameAttribute() }}</a>
                                                                     </td>
+                                                                    <td>{{ $item->puesto }}</td>
                                                                     <td><input type="radio"
                                                                             name="{{ $item->id }}[]"
                                                                             id="Asistencia_{{ $item->id }}"
