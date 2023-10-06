@@ -735,7 +735,7 @@
                                                                                     <td class="td-actions d-flex justify-content-center">
                                                                                         @can('ticketDescarga_edit')
                                                                                             <a href="#" data-bs-toggle="modal" data-bs-target="#printFormDescargaEdit"
-                                                                                                onclick="cargaItemEdit('{{ $descarga->id }}', '{{ $descarga->nombreSolicitante }}', '{{ $descarga->costoTrabajo }}', '{{ $descarga->horaLlegada }}','{{ $descarga->observaciones }}','{{ $descarga->tipo_solicitud }}')">
+                                                                                                onclick="cargaItemEdit('{{ $descarga->descargaIdTote }}', '{{ $descarga->nombreSolicitante }}', '{{ $descarga->costoTrabajo }}', '{{ $descarga->horaLlegada }}','{{ $descarga->observaciones }}','{{ $descarga->tipo_solicitud }}')">
                                                                                                 <svg style="color:#f7c90d; margin-top:20px;" xmlns="http://www.w3.org/2000/svg "
                                                                                                     width="28"
                                                                                                     height="28"
@@ -751,7 +751,7 @@
                                                                                         <form action="{{ route('printOnlyTicket.post', 0) }}" method="POST" style="display: inline-block;">
                                                                                             @csrf
                                                                                             @method('POST')
-                                                                                            <input type="hidden" name="id" value="{{ $descarga->id }}">
+                                                                                            <input type="hidden" name="id" value="{{ $descarga->descargaIdTote }}">
                                                                                             <button class="btnSinFondo" type="submit" rel="tooltip">
                                                                                                 <span class="material-icons mt-3" style="font-size:35px; color: #727176;">print</span>
                                                                                             </button>
@@ -782,7 +782,7 @@
                                                                                         
                                                                                         {{-- id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms, horas, imgHoras, fecha --}}
                                                                                         <form
-                                                                                            action="{{ route('inventario.deleteDescarga', 0) }}"
+                                                                                            action="{{ route('inventario.deleteDescarga', $descarga->descargaIdTote) }}"
                                                                                             method="POST"
                                                                                             style="display: inline-block;"
                                                                                             onsubmit="return confirm('¿Estás seguro?')">

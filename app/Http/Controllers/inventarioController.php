@@ -25,6 +25,7 @@ use App\Models\tipoEquipo;
 use App\Models\tipoUniforme;
 use App\Models\asignacionUniforme;
 use App\Models\cisternas;
+use App\Models\descargaDetalle;
 
 class inventarioController extends Controller
 {
@@ -136,14 +137,15 @@ class inventarioController extends Controller
                 'descarga.litros',
                 'descarga.created_at AS fecha',
                 'descarga.ticket',
-                'descarga.descargaDetalleId',
+                // 'descarga.descargaDetalleId',
                 'detalles.*',
             )
                 ->join('maquinaria', 'maquinaria.id', '=', 'descarga.maquinariaId')
                 ->join('personal', 'personal.id', '=', 'descarga.operadorId')
                 ->join('maquinaria as m2', 'm2.id', '=', 'descarga.servicioId')
                 ->join('personal as p2', 'p2.id', '=', 'descarga.receptorId')
-                ->leftJoin('descargaDetalle as detalles', 'descarga.descargaDetalleId', '=', 'detalles.id')
+                ->leftJoin('descargaDetalle as detalles', 'descarga.id', '=', 'detalles.descargaId')
+                // ->leftJoin('descargaDetalle as detalles', 'descarga.descargaDetalleId', '=', 'detalles.id')
                 ->whereNull('descarga.tipoCisternaId')
                 ->orderBy('descarga.created_at', 'desc')
                 ->paginate(10);
@@ -787,6 +789,12 @@ class inventarioController extends Controller
         $objCalculo = new Calculos();
         //*** obtenemos el registro */
         $carga = carga::select("*")->where('id', '=', $cargaId)->first();
+        if ($carga->tipoCisternaId != null) {
+            $tipoCisternaId = $carga->tipoCisternaId;
+            $cisternas = cisternas::select("*")->where('id', '=', $tipoCisternaId)->first();
+            $cisternas->contenido = $cisternas->contenido - $carga->litros;
+            $cisternas->update();
+        }
         //*** maquinaria que actualizará el nivel de la cisterna */
         $maquinariaId = $carga->maquinariaId;
 
@@ -810,28 +818,35 @@ class inventarioController extends Controller
     public function deleteDescarga($descargaId)
     {
         abort_if(Gate::denies('combustible_destroy'), 403);
-
+        // dd($descargaId);
         $objCalculo = new Calculos();
         //*** obtenemos el registro */
         $descarga = descarga::select("*")->where('id', '=', $descargaId)->first();
-        //*** maquinaria que actualizará el nivel de la cisterna */
+        if ($descarga->tipoCisternaId != null) {
+            $tipoCisternaId = $descarga->tipoCisternaId;
+            $cisternas = cisternas::select("*")->where('id', '=', $tipoCisternaId)->first();
+            $cisternas->contenido = $cisternas->contenido + $descarga->litros;
+            $cisternas->update();
+        }
+        // dd($descarga);
         $maquinariaId = $descarga->maquinariaId;
-
-        //*** eliminamos el registro */
-        $descarga->delete();
-
-        //*** actualizamos el nivel de la cisterna */
         $decNivelCisterna = $objCalculo->getNivelTotalCisterna($maquinariaId);
-
-        // dd('Borrando ' . $cargaId . " " . $maquinariaId . " y su nivel queda en " . $decNivelCisterna);
-        //buscamos el equipo para actulizar el nivel de la cisterna
         $cisterna =   maquinaria::where("id", $maquinariaId)->first();
         $cisterna->cisternaNivel = $decNivelCisterna;
         $cisterna->update();
 
-        Session::flash('message', 1);
+        $descargadetalleId = descargaDetalle::select("*")->where('descargaId', '=', $descargaId)->first();
+        // dd($descargadetalleId);
+        $descargadetalleId->delete();
+        //*** eliminamos el registro */
+        $descarga->delete();
 
-        return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
+        Session::flash('message', 1);
+        if ($descarga->tipoCisternaId != null) {
+            return redirect()->route('combustibleTote.index');
+        } else {
+            return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
+        }
     }
 
 
