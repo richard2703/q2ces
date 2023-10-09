@@ -234,10 +234,23 @@
 
                             <div class="row p-3">
                                 <div class=" col-12   mb-3 ">
-                                    <p class="textTitulo my-2">Obra Asignada: <span>Falta Agregar Bloque</span></p>
-                                    <p class="textTitulo my-2">Maquinaria Asignada: <span>Falta Agregar Bloque</span>
+                                    <p class="textTitulo my-2">Obra Asignada: @if ($obraMaqPer[0]->nombre_obra)
+                                        <a href="{{ route('obras.show', $obraMaqPer[0]->id_obra) }}" >{{$obraMaqPer[0]->nombre_obra}}</a>
+                                    @else
+                                        <span>Falta Agregar Bloque</span>
+                                    @endif</p>
+                                    <p class="textTitulo my-2">Personal Asignado: @if ($obraMaqPer[0]->nombre_personal)
+                                        
+                                        <a href="{{ route('personal.ver', $obraMaqPer[0]->id_personal) }}">{{$obraMaqPer[0]->nombre_personal}}</a>
+                                    @else
+                                        <span>Falta Agregar Bloque</span>
+                                    @endif
                                     </p>
-                                    <p class="textTitulo my-2">Fecha de Inicio: <span>Falta Agregar Bloque</span>
+                                    <p class="textTitulo my-2">Fecha de Inicio: @if ($obraMaqPer[0]->fechaInicio)
+                                        <span>{{ \Carbon\Carbon::parse($obraMaqPer[0]->fechaInicio)->toDateString() }}</span>
+                                    @else
+                                        <span>Falta Agregar Bloque</span>
+                                    @endif
                                     </p>
                                 </div>
                             </div>
