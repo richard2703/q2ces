@@ -282,17 +282,13 @@ class accesoriosController extends Controller
         // dd($request);
         $pathAccesorio = str_pad($data['serie'] . $accesorios->id, 4, '0', STR_PAD_LEFT);
         if ($request->archivo) {
-            for (
-                $i = 0;
-                $i < count($request->archivo);
-                $i++
-            ) {
+            for ($i = 0; $i < count($request->archivo); $i++) {
                 $documento = null;
                 // dd( $request->archivo[ $i ][ 'idDoc' ] );
                 if ($request->archivo[$i]['idDoc'] == null) {
                     $documento = new accesoriosDocs();
                 }
-                $documento['maquinariaId'] = $accesorios->id;
+                $documento['accesorioId'] = $accesorios->id;
                 $documento['tipoId'] = $request->archivo[$i]['tipoDocs'];
                 // Obtenemos el tipo de documento
                 $tipoDocumentoNombre = $request->archivo[$i]['tipoDocsNombre'];

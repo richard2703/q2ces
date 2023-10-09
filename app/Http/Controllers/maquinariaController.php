@@ -373,7 +373,7 @@ class maquinariaController extends Controller
             ->join('personal', 'obraMaqPer.personalId', '=', 'personal.id')
             ->where('obraMaqPer.maquinariaId', $maquinaria->id)
             ->select('obraMaqPer.inicio as fechaInicio', 'obras.nombre as nombre_obra', 'obras.id as id_obra', 'personal.id as id_personal', DB::raw('CONCAT(personal.nombres, " ", personal.apellidoP, " ", personal.apellidoM) as nombre_personal'))
-            ->get();
+            ->first();
 
         $vctEstatus = maquinariaEstatus::all();
         $marcas = marca::select('marca.*')->orderBy('marca.nombre', 'asc')->get();
@@ -439,11 +439,12 @@ class maquinariaController extends Controller
             ->join('personal', 'obraMaqPer.personalId', '=', 'personal.id')
             ->where('obraMaqPer.maquinariaId', $maquinaria->id)
             ->select('obraMaqPer.inicio as fechaInicio', 'obras.nombre as nombre_obra', 'obras.id as id_obra', 'personal.id as id_personal', DB::raw('CONCAT(personal.nombres, " ", personal.apellidoP, " ", personal.apellidoM) as nombre_personal'))
-            ->get();
+            ->first();
         $refacciones = refacciones::where('maquinariaId', $maquinaria->id)->get();
         $refaccionTipo = refaccionTipo::all();
         $categorias = maquinariaCategoria::all();
         $tipos = maquinariaTipo::all();
+        // dd($obraMaqPer);
         return view('maquinaria.verMaquinaria', compact('maquinaria', 'doc', 'fotos', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos', 'obraMaqPer'));
     }
 

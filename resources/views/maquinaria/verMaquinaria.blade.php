@@ -418,14 +418,27 @@
                                                     </div>
 
                                                     <div class="col-12 divBorder">
-                                                        <h2 class="tituloEncabezado ">Asignaciones</h2>
+                                                        <h2 class="tituloEncabezado">Asignaciones</h2>
                                                     </div>
                                                     <div class="row p-3 d-flex text-center">
-                                                        <div class=" col-12   mb-3 ">
-                                                            <p class="textTitulo my-2">Obra Asignada: <span>Falta Agregar Bloque</span></p>
-                                                            <p class="textTitulo my-2">Personal Asignada: <span>Falta Agregar Bloque</span>
+                                                        <div class="col-12 mb-3">
+                                                            <p class="textTitulo my-2">Obra Asignada: @if (isset($obraMaqPer->nombre_obra))
+                                                                <a href="{{ route('obras.show', $obraMaqPer->id_obra) }}" style="color: blue; text-decoration: underline;">{{$obraMaqPer->nombre_obra}}</a>
+                                                            @else
+                                                                <span>Falta Agregar Bloque</span>
+                                                            @endif</p>
+                                                            <p class="textTitulo my-2">Personal Asignado: @if (isset($obraMaqPer->nombre_personal))
+                                                                
+                                                                <a href="{{ route('personal.ver', $obraMaqPer->id_personal) }}" style="color: blue; text-decoration: underline;">{{$obraMaqPer->nombre_personal}}</a>
+                                                            @else
+                                                                <span>Falta Agregar Bloque</span>
+                                                            @endif
                                                             </p>
-                                                            <p class="textTitulo my-2">Fecha de Inicio: <span>Falta Agregar Bloque</span>
+                                                            <p class="textTitulo my-2">Fecha de Inicio: @if (isset($obraMaqPer->fechaInicio))
+                                                                <span>{{ \Carbon\Carbon::parse($obraMaqPer->fechaInicio)->toDateString() }}</span>
+                                                            @else
+                                                                <span>Falta Agregar Bloque</span>
+                                                            @endif
                                                             </p>
                                                         </div>
                                                     </div>
