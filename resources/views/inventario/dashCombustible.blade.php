@@ -853,7 +853,7 @@
                     @csrf
                     @method('POST')
                     <div class="modal-body">
-                        <input type="hidden" name="id" value="{{$descarga->descargaIdTote}}" id="idDescarga">
+                        <input type="hidden" name="id" value="" id="idDescarga">
                         <label class="labelTitulo">Solicito*:</label>
                         {{--  <select class="form-select inputCaja" name="nombreSolicitante" id="nombreSolicitanteDescarga" required>
                             <option value="">Seleccione</option>
@@ -935,7 +935,7 @@
                     @csrf
                     @method('POST')
                     <div class="modal-body">
-                        <input type="hidden" name="id" value="{{$descarga->descargaIdTote}}" id="idDescargaEdit">
+                        <input type="hidden" name="id" value="" id="idDescargaEdit">
                         <label class="labelTitulo">Solicito*:</label>
                         {{--  <select class="form-select inputCaja" name="nombreSolicitante" id="nombreSolicitanteDescarga" required>
                             <option value="">Seleccione</option>
