@@ -186,7 +186,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('mantenimiento_create')
+                        @can('combustible_index')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('combustibleTote.index') }}" class="">

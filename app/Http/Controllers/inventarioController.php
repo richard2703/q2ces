@@ -837,7 +837,10 @@ class inventarioController extends Controller
 
         $descargadetalleId = descargaDetalle::select("*")->where('descargaId', '=', $descargaId)->first();
         // dd($descargadetalleId);
-        $descargadetalleId->delete();
+        if ($descargadetalleId != null) {
+            $descargadetalleId->delete();
+        }
+
         //*** eliminamos el registro */
         $descarga->delete();
 
