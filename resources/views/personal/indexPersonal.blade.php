@@ -24,14 +24,33 @@
                                         </div>
                                     @endif
                                     <div class="row divBorder">
-                                        <div class="col-12 pb-3 text-end">
+                                        <div class="col-12 col-sm-6 col-lg-3 pb-3 text-center">
+                                            <form action="{{ route('personal.index') }}" method="GET" id="filterForm">
+                                                <div class="input-group">
+                                                    <label class="labelTitulo p-2" >Estatus: </label>
+                                                    <select name="estatus" id="estatus" style="background: #727176; color: white; font-weight: bold;" class="form-control" onchange="document.getElementById('filterForm').submit();">
+                                                        <option value="1" style="font-weight: bold;" {{ request('estatus') == '1' ? 'selected' : '' }}>Activos</option>
+                                                        <option value="3" style="font-weight: bold;" {{ request('estatus') == '3' ? 'selected' : '' }}>Baja</option>
+                                                        <option value="2" style="font-weight: bold;" {{ request('estatus') == '2' ? 'selected' : '' }}>Inactivos</option>
+                                                        <option value="4" style="font-weight: bold;" {{ request('estatus') == '4' ? 'selected' : '' }}>Borrado</option>
+                                                        <option value="0" style="font-weight: bold;" {{ request('estatus') == '0' ? 'selected' : '' }}>Todos</option>
+                                                    </select>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        
+                                        
+                                        <div class="col-12 col-sm-6 col-lg-9 pb-3 text-end">
                                             @can('personal_create')
                                                 <a href="{{ route('personal.create') }}">
                                                     <button type="button" class="btn botonGral">Añadir Personal</button>
                                                 </a>
                                             @endcan
                                         </div>
+                                        
                                     </div>
+                                    
+                                    
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="labelTitulo">
@@ -105,8 +124,8 @@
                                     </div>
                                 </div>
                                 <div class="card-footer mr-auto">
-                                    {{ $personal->links() }}
-                                </div>
+                                    {{ $personal->appends(['estatus' => request('estatus')])->links() }}
+                                </div>                                
                             </div>
                         </div>
                     </div>

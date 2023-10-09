@@ -83,10 +83,10 @@
 
                                 <div class="col-12 col-md-8 px-2">
                                     <div class="row alin">
-                                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Número de Empleado:</label></br>
-                                            <input type="text" class="inputCaja" id="numEmpleado" name="numEmpleado"
-                                                value="" disabled>
+                                        <div class="col-12 col-sm-6 col-lg-4 mb-3">
+                                            <label class="labelTitulo">Número de Nómina:</label></br>
+                                            <input type="number" class="inputCaja" id=""
+                                                name="nomina" value="{{ $nomina->nomina }}" disabled>
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -565,12 +565,6 @@
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                    <label class="labelTitulo">Correo Electrónico:</label></br>
-                                                    <input type="email" class="inputCaja" id="emailB"
-                                                        name="emailB" value="{{ $beneficiario->emailB }}" disabled>
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                     <label class="labelTitulo">Apellido Paterno:</label></br>
                                                     <input type="text" class="inputCaja" id="apellidoP"
                                                         name="apellidoPB" value="{{ $beneficiario->apellidoP }}"
@@ -582,6 +576,12 @@
                                                     <input type="text" class="inputCaja" id="apellidoM"
                                                         name="apellidoMB" value="{{ $beneficiario->apellidoM }}"
                                                         disabled>
+                                                </div>
+
+                                                <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                    <label class="labelTitulo">Correo Electrónico:</label></br>
+                                                    <input type="email" class="inputCaja" id="emailB"
+                                                        name="emailB" value="{{ $beneficiario->emailB }}" disabled>
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
@@ -627,11 +627,11 @@
 
                                         <div class="col-12 border-end">
                                             <div class="row alin">
-                                                <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                                                {{--  <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                     <label class="labelTitulo">Número de Nómina:</label></br>
                                                     <input type="number" class="inputCaja" id=""
                                                         name="nomina" value="{{ $nomina->nomina }}" disabled>
-                                                </div>
+                                                </div>  --}}
 
                                                 <div class=" col-12 col-sm-6 col-lg-4  mb-3 ">
                                                     <label class="labelTitulo">Número de IMSS:</label></br>
