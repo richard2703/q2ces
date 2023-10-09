@@ -73,8 +73,8 @@
                                                 <img onclick="abre(this)" title="'{{ $maquinaria->nombre }}'."
                                                     src="{{ asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/' . $foto->ruta) }}"
                                                     class="img-fluid mb-5" id="img{{ $foto->id }}"
-                                                    style="margin-right:3px;">
-                                                <div class="form-group">
+                                                    style="margin-right:3px; z-index: 2">
+                                                <div class="form-group" style="z-index: 9999 !important">
                                                     <div class="divButtonImage">
                                                         <button type="button" class="btn btn-secondary btn-sm buttonImage"
                                                             id="btnDelete{{ $foto->id }}"
@@ -85,13 +85,25 @@
                                             @endforelse
                                         </div>
 
-                                        @if (count($fotos) <= 3)
-                                            <span class="mi-archivo"> <input class="mb-4 ver " type="file" name="ruta[]"
-                                                    id="mi-archivo" accept="image/*" multiple></span>
-                                            <label for="mi-archivo">
-                                                <span class="">Sube Imagen</span>
-                                            </label>
-                                        @endif
+                                        @php
+                $numFotosCargadas = count($fotos);
+                $maxNumFotos = 5;
+                $numFotosPermitidas = $maxNumFotos - $numFotosCargadas;
+            @endphp
+
+            @if ($numFotosPermitidas > 0)
+                <span class="mi-archivo">
+                    <input class="mb-4 ver " type="file" name="ruta[]" id="mi-archivo" accept="image/*"
+                        multiple data-max="{{ $numFotosPermitidas }}">
+                </span>
+                <label for="mi-archivo">
+                    <span class="">Sube Imagen (Puedes subir hasta {{ $numFotosPermitidas }} más)</span>
+                </label>
+            @else
+                <label for="mi-archivo" style="background-color: crimson; cursor: initial;">
+                    <span class="">No puedes subir más imágenes, <br>ya has alcanzado el límite de 5.</span>
+                </label>
+            @endif
                                     </div>
 
                                     <input type="hidden" name="arrayFotosPersistente" id="arrayFotosPersistente"
@@ -205,7 +217,7 @@
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                            <label class="labelTitulo">Identificador:</label></br>
+                                            <label class="labelTitulo">Numero Económico:</label></br>
                                             <input type="text" class="inputCaja" id="identificador"
                                                 name="identificador" value="{{ $maquinaria->identificador }}"
                                                 placeholder="ej: MT-00">
@@ -1188,6 +1200,26 @@
         console.log('arrayFotosPersistente', arrayFotosPersistente);
     }
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById('mi-archivo').addEventListener('change', function () {
+            var input = this;
+            var maxAllowed = parseInt(input.getAttribute('data-max'));
+            
+            if (input.files.length > maxAllowed) {
+                input.value = "";
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error...',
+                    text: '5 imagenes es el maximo permitido ',
+                })
+                
+            }
+        });
+    });
+</script>
+
 
 {{-- <!-- Modal -->
 <div class="modal fade" id="agregaTipo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
