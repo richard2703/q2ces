@@ -217,7 +217,7 @@
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                <label class="labelTitulo">Identificador:</label></br>
+                                                                <label class="labelTitulo">Numero Económico:</label></br>
                                                                 <input type="text" class="inputCaja"
                                                                     id="identificador" name="identificador"
                                                                     value="{{ old('identificador') }}"
@@ -679,12 +679,12 @@
     <script>
         function test() {
             var $fileUpload = $("input[type='file']");
-            if (parseInt($fileUpload.get(0).files.length) > 4) {
+            if (parseInt($fileUpload.get(0).files.length) > 5) {
                 event.preventDefault();
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops...',
-                    text: 'Maximo 4 imagenes',
+                    title: 'Error...',
+                    text: '5 imagenes es el maximo permitido ',
                 })
             } else {
 

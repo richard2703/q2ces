@@ -280,7 +280,7 @@
 
                                                             <div class=" col-12 col-sm-6 mb-3 ">
                                                                 <label class="labelTitulo">Capacidad en Kg:</label></br>
-                                                                <input type="number" class="inputCaja" id="capacidad"
+                                                                <input type="text" class="inputCaja" id="capacidad"
                                                                     placeholder="Capacidad" name="capacidad"
                                                                     value="{{ $maquinaria->capacidad }}" placeholder=""
                                                                     disabled>
@@ -288,42 +288,42 @@
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Capacidad Tanque:</label></br>
-                                                                <input type="number" class="inputCaja" id="tanque"
+                                                                <input type="text" class="inputCaja" id="tanque"
                                                                     placeholder="En litros" name="tanque"
                                                                     value="{{ $maquinaria->tanque }}" disabled>
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Ejes:</label></br>
-                                                                <input type="number" class="inputCaja" id="ejes"
+                                                                <input type="text" class="inputCaja" id="ejes"
                                                                     placeholder="Cantidad" name="ejes"
                                                                     value="{{ $maquinaria->ejes }}" disabled>
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Rin Delantero:</label></br>
-                                                                <input type="number" class="inputCaja" id="rinD"
+                                                                <input type="text" class="inputCaja" id="rinD"
                                                                     placeholder="Dimensiones" name="rinD"
                                                                     value="{{ $maquinaria->rinD }}" disabled>
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Rin Trasero:</label></br>
-                                                                <input type="number" class="inputCaja" id="rinT"
+                                                                <input type="text" class="inputCaja" id="rinT"
                                                                     placeholder="Dimensiones" name="rinT"
                                                                     value="{{ $maquinaria->rinT }}" disabled>
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Llanta Delantera:</label></br>
-                                                                <input type="number" class="inputCaja" id="llantaD"
+                                                                <input type="text" class="inputCaja" id="llantaD"
                                                                     placeholder="Cantidad" name="llantaD"
                                                                     value="{{ $maquinaria->llantaD }}" disabled>
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Llanta Trasera:</label></br>
-                                                                <input type="number" class="inputCaja" id="llantaT"
+                                                                <input type="text" class="inputCaja" id="llantaT"
                                                                     placeholder="Cantidad" name="llantaT"
                                                                     value="{{ $maquinaria->llantaT }} " disabled>
                                                             </div>
@@ -394,7 +394,7 @@
                                                                         <input type="number" class="inputCaja"
                                                                             id="kilometraje" name="kilometraje"
                                                                             placeholder="Numérico"
-                                                                            value="{{ old('kilometraje') }}" disabled>
+                                                                            value="{{ $maquinaria->kilometraje }}" disabled>
 
                                                                     </div>
                                                                     <div class="col-12 col-md-6 col-lg-4 inputKilometraje">
@@ -415,7 +415,32 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    </div>
 
+                                                    <div class="col-12 divBorder">
+                                                        <h2 class="tituloEncabezado">Asignaciones</h2>
+                                                    </div>
+                                                    <div class="row p-3 d-flex text-center">
+                                                        <div class="col-12 mb-3">
+                                                            <p class="textTitulo my-2">Obra Asignada: @if (isset($obraMaqPer->nombre_obra))
+                                                                <a href="{{ route('obras.show', $obraMaqPer->id_obra) }}" style="color: blue; text-decoration: underline;">{{$obraMaqPer->nombre_obra}}</a>
+                                                            @else
+                                                                <span>Falta Agregar Bloque</span>
+                                                            @endif</p>
+                                                            <p class="textTitulo my-2">Personal Asignado: @if (isset($obraMaqPer->nombre_personal))
+                                                                
+                                                                <a href="{{ route('personal.ver', $obraMaqPer->id_personal) }}" style="color: blue; text-decoration: underline;">{{$obraMaqPer->nombre_personal}}</a>
+                                                            @else
+                                                                <span>Falta Agregar Bloque</span>
+                                                            @endif
+                                                            </p>
+                                                            <p class="textTitulo my-2">Fecha de Inicio: @if (isset($obraMaqPer->fechaInicio))
+                                                                <span>{{ \Carbon\Carbon::parse($obraMaqPer->fechaInicio)->toDateString() }}</span>
+                                                            @else
+                                                                <span>Falta Agregar Bloque</span>
+                                                            @endif
+                                                            </p>
+                                                        </div>
                                                     </div>
 
                                                     <div class="d-flex p-3">
@@ -553,11 +578,15 @@
                                                             @endforelse
                                                         </div>
                                                     </div>
-
+                                                    
                                                 </div>
                                             </div>
+                                            
                                         </div>
+                                        
                                     </div>
+
+                                    
 
                                     <div class="accordion-item" id="AccordionSecondary">
                                         <h2 class="accordion-header" id="headingThree">
