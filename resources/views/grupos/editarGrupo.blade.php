@@ -59,6 +59,8 @@
                                                                 name="search"
                                                                 placeholder="Escribe aquí el texto a buscar..."
                                                                 title="Escriba la(s) palabra(s) a buscar.">
+                                                                <input type="button" onclick="clearInput()"
+                                                                class="btn botonGral" value="Borrar">
                                                         </div>
                                                     </div>
 
@@ -214,6 +216,12 @@
     </script>
 
     <script type="text/javascript">
+        function clearInput() {
+            var getValue = document.getElementById("search");
+            if (getValue.value != "") {
+                getValue.value = "";
+            }
+        }
         function crearItems(tareaId, nombre, descripcion, value) {
             var html = '';
             html += '<li class="listaMaterialMantenimiento my-3 border-bottom" id="inputFormRow">';

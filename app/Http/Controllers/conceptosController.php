@@ -150,7 +150,7 @@ class conceptosController extends Controller
     public function destroy(conceptos $concepto)
     {
         try {
-            $concepto->delete(); // Intenta eliminar 
+            $concepto->delete(); // Intenta eliminar
         } catch (conceptos $e) {
             if ($e->getCode() === 23000) {
                 return redirect()->back()->with('faild', 'No Puedes Eliminar ');

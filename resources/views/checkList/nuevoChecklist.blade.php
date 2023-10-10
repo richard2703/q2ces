@@ -137,17 +137,22 @@
 
                                                         <input type="hidden" name="grupoId[]" id="grupoId"
                                                             value="{{ $item->grupoId }}">
+
+                                                            <input type="hidden" name="controlHtml[]" id="controlHtml"
+                                                                value="{{ $item->controlHtml }}">
                                                     </td>
                                                     <td>
+                                                        <!-- Mostramos el control de captura de datos -->
+                                                        <?php echo $objPresentacion->getControlByTarea($item->tareaId, $item->resultado, $item->valor, $intCont); ?>
 
-                                                        <?php echo $objPresentacion->getControl($item->controlHtml, $item->tarea, $item->tareaId, $intCont); ?>
-                                                        <?php
+                                                    </td>
+                                                    <?php
 
-                                                        // switch ($item->tipoValorId) {
-                                                        //     //*** CASO 1
-                                                        //     case 1:
-                                                        ?>
-                                                        {{-- <div>
+                                                    // switch ($item->tipoValorId) {
+                                                    //     //*** CASO 1
+                                                    //     case 1:
+                                                    ?>
+                                                    {{-- <div>
                                                             <input type="radio" id="control{{ $intCont }}1"
                                                                 name="resultado{{ $item->tareaId }}[]" value="2"
                                                                 checked>
@@ -168,12 +173,12 @@
                                                                 for="control{{ $intCont }}3">Requiere Atención
                                                                 Inmediata</label>
                                                         </div> --}}
-                                                        <?php
-                                                        //                                                                 break;
-                                                        // //*** CASO 2
-                                                        //                                                                 case 2:
-                                                        ?>
-                                                        {{-- <div>
+                                                    <?php
+                                                    //                                                                 break;
+                                                    // //*** CASO 2
+                                                    //                                                                 case 2:
+                                                    ?>
+                                                    {{-- <div>
                                                             <input type="radio" id="control{{ $intCont }}1"
                                                                 name="resultado{{ $item->tareaId }}[]" value="2"
                                                                 checked>
@@ -187,13 +192,13 @@
                                                                 for="control{{ $intCont }}3">Requiere Atención
                                                                 Inmediata</label>
                                                         </div> --}}
-                                                        <?php
-                                                        // break;
+                                                    <?php
+                                                    // break;
 
-                                                        // //*** CASO 3
-                                                        // case 3:
-                                                        ?>
-                                                        {{-- <div>
+                                                    // //*** CASO 3
+                                                    // case 3:
+                                                    ?>
+                                                    {{-- <div>
                                                             <input type="radio" id="control{{ $intCont }}1"
                                                                 name="resultado{{ $item->tareaId }}[]" value="2"
                                                                 checked>
@@ -217,14 +222,13 @@
                                                                 Vida</label>
                                                         </div> --}}
 
-                                                        <?php
-                                                        // break;
-                                                        //     default:
-                                                        //         # code...
-                                                        //         break;
-                                                        // }
-                                                        ?>
-                                                    </td>
+                                                    <?php
+                                                    // break;
+                                                    //     default:
+                                                    //         # code...
+                                                    //         break;
+                                                    // }
+                                                    ?>
                                                 </tr>
 
                                                 <?php

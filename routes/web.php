@@ -276,9 +276,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('maquinaria/upload', [App\Http\Controllers\maquinariaController::class, 'upload'])->name('maquinaria.upload');
     Route::get('/maquinaria/{maquinaria}/edit', [App\Http\Controllers\maquinariaController::class, 'edit'])->name('maquinaria.edit');
     Route::delete('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'destroy'])->name('maquinaria.delete');
+    Route::put('/maquinaria/asignacion/personal', [App\Http\Controllers\maquinariaController::class, 'asignacion'])->name('maquinaria.asignacion');
+    Route::get('/maquinaria/distribucion/obras', [App\Http\Controllers\maquinariaController::class, 'distribucion'])->name('maquinaria.distribucion');
     // Maquinaria Imagen Borrar
     Route::put('/maquinaria/imagen/delete', [App\Http\Controllers\maquinariaController::class, 'destroyImage'])->name('maquinaria.destroyImage');
-    Route::put('/maquinaria/asignacion/personal', [App\Http\Controllers\maquinariaController::class, 'asignacion'])->name('maquinaria.asignacion');
     // Route::get('maquinaria/uso', [App\Http\Controllers\maquinariaController::class, 'uso'])->name('maquinaria.uso');
 
     //Crud accesorios
@@ -403,6 +404,7 @@ Route::group(['middleware' => 'auth'], function () {
     //*** checklists */
     Route::get('/checkList/', [App\Http\Controllers\checkListController::class, 'index'])->name('checkList.index');
     Route::get('/checkList/seleccionar', [App\Http\Controllers\checkListController::class, 'seleccionar'])->name('checkList.seleccionar');
+    Route::get('/checkList/ejecutar', [App\Http\Controllers\checkListController::class, 'ejecutar'])->name('checkList.ejecutar');
     Route::get('/checkList/nuevo/{bitacora}/{maquinaria}', [App\Http\Controllers\checkListController::class, 'create'])->name('checkList.create');
     Route::post('/checkList/registra/', [App\Http\Controllers\checkListRegistrosController::class, 'store'])->name('checkListRegistros.store');
     Route::get('/checkList/registros/{id}', [App\Http\Controllers\checkListController::class, 'show'])->name('checkList.show');
@@ -444,7 +446,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/bitacoras/bitacora/nuevo/', [App\Http\Controllers\bitacorasController::class, 'create'])->name('bitacoras.create');
     Route::post('/bitacoras/bitacora/nuevo', [App\Http\Controllers\bitacorasController::class, 'store'])->name('bitacoras.store');
     Route::get('/bitacoras/bitacora/editar/{id}', [App\Http\Controllers\bitacorasController::class, 'edit'])->name('bitacoras.edit');
-    Route::put('/bitacoras/bitacora/editar/{bitacoras}', [App\Http\Controllers\bitacorasController::class, 'update'])->name('bitacoras.update');
+    Route::put('/bitacoras/bitacora/editar/{bitacora}', [App\Http\Controllers\bitacorasController::class, 'update'])->name('bitacoras.update');
 
     Route::get('/bitacoras/grupos', [App\Http\Controllers\grupoController::class, 'index'])->name('grupo.index');
     Route::get('/bitacoras/grupos/nuevo/', [App\Http\Controllers\grupoController::class, 'create'])->name('grupo.create');
@@ -453,8 +455,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/bitacoras/grupos/editar/{grupo}', [App\Http\Controllers\grupoController::class, 'update'])->name('grupo.update');
 
     Route::get('/bitacoras/tareas', [App\Http\Controllers\tareaController::class, 'index'])->name('tarea.index');
+    Route::get('/bitacoras/tareas/nueva/', [App\Http\Controllers\tareaController::class, 'create'])->name('tarea.create');
     Route::post('/bitacoras/tareas/nueva', [App\Http\Controllers\tareaController::class, 'store'])->name('tarea.store');
+    Route::get('/bitacoras/tareas/editar/{id}', [App\Http\Controllers\tareaController::class, 'edit'])->name('tarea.edit');
     Route::put('/bitacoras/tareas/editar/{tarea}', [App\Http\Controllers\tareaController::class, 'update'])->name('tarea.update');
+    Route::delete('bitacoras/tareas/borrar/{tarea}', [App\Http\Controllers\tareaController::class, 'destroy'])->name('tarea.destroy');
 
     //*** Mtq */
     Route::resource('residentes', App\Http\Controllers\residenteController::class);

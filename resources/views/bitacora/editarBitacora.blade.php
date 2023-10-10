@@ -47,6 +47,8 @@
                                                                 name="search"
                                                                 placeholder="Escribe aquí el texto a buscar..."
                                                                 title="Escriba la(s) palabra(s) a buscar.">
+                                                            <input type="button" onclick="clearInput()"
+                                                                class="btn botonGral" value="Borrar">
                                                         </div>
                                                     </div>
 
@@ -197,11 +199,20 @@
                 // alert(ui.item.comentario);
                 // Rellenar los campos con los datos del inventario seleccionado
                 crearItems(ui.item.id, ui.item.nombre, ui.item.comentario, ui.item.value);
+
             }
         });
     </script>
 
     <script type="text/javascript">
+        function clearInput() {
+            var getValue = document.getElementById("search");
+            if (getValue.value != "") {
+                getValue.value = "";
+            }
+        }
+
+
         function crearItems(grupoId, nombre, descripcion, value) {
             var html = '';
             html += '<li class="listaMaterialMantenimiento my-3 border-bottom" id="inputFormRow">';

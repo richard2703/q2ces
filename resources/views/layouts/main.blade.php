@@ -295,6 +295,12 @@
                     <ul id="maquinaria-nav" class="nav-content collapse {{ $activePage == 'maquinaria' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
                         @can('maquinaria_index')
+                            {{-- <li> --}}
+                                {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
+                                {{-- <a href="{{ route('maquinaria.distribucion') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Distribución General</span>
+                                </a>
+                            </li> --}}
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('maquinaria.index') }}" class="">

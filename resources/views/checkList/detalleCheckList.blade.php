@@ -97,6 +97,7 @@
                                                 $strNombreGrupo = '';
                                                 $intCont = 0;
                                                 $blnNuevaSeccion = false;
+                                                $objPresentacion = new checkListPresentacion();
                                                 ?>
                                                 @forelse ($records as $item)
                                                     <?php
@@ -123,10 +124,13 @@
                                                         </tr>
                                                     @endif
 
-
                                                     <tr>
-                                                        <td>{{ $item->tarea }}</td>
-                                                        <td> <p class="text-{{ ($item->valor==0?'danger':($item->valor==1?'warning':($item->valor==2?'success':''))) }}">{{ $item->resultado }} </p></td>
+                                                        <td>{{ $item->tarea }} </td>
+                                                        <td>
+                                                            {{-- <?php //echo $objPresentacion->getControlByTarea($item->tareaId, $item->resultado, $intCont); ?> --}}
+                                                            <p class="text">{{ $item->resultado }} </p>
+                                                        </td>
+                                                        </td>
                                                     </tr>
 
                                                     <?php

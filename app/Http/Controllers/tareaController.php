@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
@@ -15,18 +16,16 @@ use App\Models\tareaTipo;
 use App\Models\tareaUbicacion;
 use App\Models\tipoValorTarea;
 
-class tareaController extends Controller
-{
+class tareaController extends Controller {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
 
-    public function index()
-    {
+    public function index() {
 
-        abort_if(Gate::denies('catalogos_index'), 403);
+        abort_if ( Gate::denies( 'tarea_index' ), 403 );
 
         $vctCategorias = tareaCategoria::all();
         $vctTipos = tareaTipo::all();
@@ -35,145 +34,159 @@ class tareaController extends Controller
 
         $vctTareas = tarea::select(
             'tarea.*',
-            DB::raw('tareaCategoria.nombre AS categoria'),
-            DB::raw('tareaTipo.nombre AS tipo'),
-            DB::raw('tareaUbicacion.nombre AS ubicacion'),
+            DB::raw( 'tareaCategoria.nombre AS categoria' ),
+            DB::raw( 'tareaTipo.nombre AS tipo' ),
+            DB::raw( 'tareaUbicacion.nombre AS ubicacion' ),
         )
-            ->leftJoin('tareaCategoria', 'tareaCategoria.id', '=', 'tarea.categoriaId')
-            ->leftJoin('tareaTipo', 'tareaTipo.id', '=', 'tarea.tipoId')
-            ->leftJoin('tareaUbicacion', 'tareaUbicacion.id', '=', 'tarea.ubicacionId')
-            ->orderBy('created_at', 'desc')->paginate(15);;
+        ->leftJoin( 'tareaCategoria', 'tareaCategoria.id', '=', 'tarea.categoriaId' )
+        ->leftJoin( 'tareaTipo', 'tareaTipo.id', '=', 'tarea.tipoId' )
+        ->leftJoin( 'tareaUbicacion', 'tareaUbicacion.id', '=', 'tarea.ubicacionId' )
+        ->orderBy( 'created_at', 'desc' )->paginate( 15 );
 
-        return view('tareas.tareas', compact('vctTareas', 'vctCategorias', 'vctTipos', 'vctUbicaciones','vctTipoValor'));
+        return view( 'tareas.tareas', compact( 'vctTareas', 'vctCategorias', 'vctTipos', 'vctUbicaciones', 'vctTipoValor' ) );
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Show the form for creating a new resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
 
-    public function create()
-    {
-        //
+    public function create() {
+
+        abort_if ( Gate::denies( 'tarea_create' ), 403 );
+
+        $vctCategorias = tareaCategoria::all();
+        $vctTipos = tareaTipo::all();
+        $vctUbicaciones = tareaUbicacion::all();
+        $vctTipoValor = tipoValorTarea::all();
+
+        return view( 'tareas.nuevaTarea', compact( 'vctCategorias', 'vctTipos', 'vctUbicaciones', 'vctTipoValor' ) );
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
 
-    public function store(Request $request)
-    {
-        abort_if(Gate::denies('catalogos_create'), 403);
+    public function store( Request $request ) {
+    //     dd( $request );
+        abort_if ( Gate::denies( 'tarea_create' ), 403 );
 
         $request->validate( [
-            'nombre' => 'required|max:250|unique:tarea,nombre,' . $request['nombre'],
+            'nombre' => 'required|max:250|unique:tarea,nombre,' . $request[ 'nombre' ],
             'comentario' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.unique' => 'El valor del campo nombre ya esta en uso.',
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
-        ]);
+        ] );
         $tarea = $request->all();
 
-        tarea::create($tarea);
-        Session::flash('message', 1);
+        // dd( $tarea );
+        tarea::create( $tarea );
+        Session::flash( 'message', 1 );
 
-        return redirect()->route('tarea.index');
+        return redirect()->route( 'tarea.index' );
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Display the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
 
-    public function show($id)
-    {
+    public function show( $id ) {
         //
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Show the form for editing the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
 
-    public function edit($id)
-    {
+    public function edit( $id ) {
 
-        // dd( $request );
+        abort_if ( Gate::denies( 'tarea_edit' ), 403 );
+
+        $tarea =  tarea::where( 'id', '=', $id )->first();
+        $vctCategorias = tareaCategoria::all();
+        $vctTipos = tareaTipo::all();
+        $vctUbicaciones = tareaUbicacion::all();
+        $vctTipoValor = tipoValorTarea::all();
+
+        // dd( $tarea );
+        return view( 'tareas.editarTarea', compact( 'tarea',  'vctCategorias', 'vctTipos', 'vctUbicaciones', 'vctTipoValor' ) );
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
 
-    public function update(Request $request, $id)
-    {
+    public function update( Request $request, $id ) {
 
-        abort_if(Gate::denies('catalogos_edit'), 403);
+        abort_if ( Gate::denies( 'tarea_edit' ), 403 );
 
         // dd( $request );
 
         $request->validate( [
-            'nombre' => 'required|max:250|unique:tarea,nombre,' . $request['tareaId'],
+            'nombre' => 'required|max:250|unique:tarea,nombre,' . $request[ 'tareaId' ],
             'comentario' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.unique' => 'El valor del campo nombre ya esta en uso.',
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
-        ]);
+        ] );
 
         $data = $request->all();
 
-        $tarea = tarea::where('id', $data['tareaId'])->first();
+        $tarea = tarea::where( 'id', $data[ 'tareaId' ] )->first();
 
-        if (is_null($tarea) == false) {
+        if ( is_null( $tarea ) == false ) {
             // dd( $data );
-            $tarea->update($data);
-            Session::flash('message', 1);
+            $tarea->update( $data );
+            Session::flash( 'message', 1 );
         }
 
-        return redirect()->route('tarea.index');
+        return redirect()->route( 'tarea.index' );
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Remove the specified resource from storage.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
 
-    public function destroy($id)
-    {
+    public function destroy( $id ) {
 
-        // abort_if ( Gate::denies( 'catalogos_destroy' ), 403 );
-        // try {
-        //     $id->delete();
-        //     // Intenta eliminar
-        // } catch ( QueryException $e ) {
-        //     if ( $e->getCode() === 23000 ) {
-        //         return redirect()->back()->with( 'faild', 'No Puedes Eliminar ' );
-        //         // Esto es un error de restricción de clave externa ( FOREIGN KEY constraint )
-        //         // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
-        //     } else {
-        //         return redirect()->back()->with( 'faild', 'No Puedes Eliminar si esta en uso' );
-        //         // Otro tipo de error de base de datos
-        //         // Maneja según sea necesario
-        //     }
-        // }
-        // return redirect()->back()->with( 'success', 'Eliminado correctamente' );
+        abort_if ( Gate::denies( 'tarea_destroy' ), 403 );
+        try {
+            $tarea =  tarea::where( 'id', '=', $id )->first();
+            $tarea->delete();
+            // Intenta eliminar
+        } catch ( QueryException $e ) {
+            if ( $e->getCode() === 23000 ) {
+                return redirect()->back()->with( 'faild', 'No Puedes Eliminar ' );
+                // Esto es un error de restricción de clave externa ( FOREIGN KEY constraint )
+                // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
+            } else {
+                return redirect()->back()->with( 'faild', 'No Puedes Eliminar si esta en uso' );
+                // Otro tipo de error de base de datos
+                // Maneja según sea necesario
+            }
+        }
+        return redirect()->back()->with( 'success', 'Eliminado correctamente' );
     }
 }

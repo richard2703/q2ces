@@ -296,8 +296,8 @@
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Rin Trasero:</label></br>
                                                                 <input type="number" class="inputCaja"
-                                                                    id="rinT"placeholder="Dimensiones"
-                                                                    name="rinT" value="{{ old('rinT') }}">
+                                                                    id="rinT"placeholder="Dimensiones" name="rinT"
+                                                                    value="{{ old('rinT') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">

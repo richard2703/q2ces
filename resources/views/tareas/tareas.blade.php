@@ -38,10 +38,14 @@
                                             @can('tarea_create')
                                                 <div class="col-12 text-end">
                                                     <div class="row">
-                                                        <div class="col-12 text-right" data-bs-toggle="modal"
+                                                        <a href="{{ url('/bitacoras/tareas/nueva') }}">
+                                                            <!--Agregar ruta-->
+                                                            <button type="button" class="btn botonGral">Nueva Tarea</button>
+                                                        </a>
+                                                        {{-- <div class="col-12 text-right" data-bs-toggle="modal"
                                                             data-bs-target="#nuevaTarea">
                                                             <button type="button" class="btn botonGral">Nueva Tarea</button>
-                                                        </div>
+                                                        </div> --}}
                                                     </div>
                                                 </div>
                                             @endcan
@@ -75,9 +79,8 @@
                                                         <td class="td-actions text-center">
 
                                                             @can('tarea_edit')
-                                                                <a href="#" class="" data-bs-toggle="modal"
-                                                                    data-bs-target="#editarTarea"
-                                                                    onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->categoriaId }}','{{ $item->ubicacionId }}','{{ $item->tipoId }}','{{ $item->comentario }}','{{ $item->activa }}','{{ $item->tipoValorId }}')">
+                                                                <a href="{{ url('/bitacoras/tareas/editar/' . $item->id) }}"
+                                                                    class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                         height="28" fill="currentColor" title="Editar"
                                                                         class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -86,16 +89,16 @@
                                                                     </svg>
                                                                 </a>
                                                             @endcan
-                                                            {{--
-                                                            @can('catalogos_destroy')
-                                                                <form action="#" method="POST"
-                                                                    style="display: inline-block;"
-                                                                    onsubmit="return confirm('¿Estás Seguro?')">
+
+                                                            @can('tarea_destroy')
+                                                                <form action="{{ route('tarea.destroy', $item->id) }}"
+                                                                    method="POST" style="display: inline-block;"
+                                                                    onsubmit="return confirm('Seguro?')">
                                                                     @csrf
                                                                     @method('DELETE')
                                                                     <button class="btnSinFondo" type="submit" rel="tooltip">
                                                                         <svg xmlns="http://www.w3.org/2000/svg" width="28"
-                                                                            height="28" fill="currentColor" title="Eliminar"
+                                                                            height="28" fill="currentColor"
                                                                             class="bi bi-x-circle" viewBox="0 0 16 16">
                                                                             <path
                                                                                 d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
@@ -104,7 +107,7 @@
                                                                         </svg>
                                                                     </button>
                                                                 </form>
-                                                            @endcan  --}}
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                 @empty
