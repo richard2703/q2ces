@@ -77,14 +77,14 @@ class cajaChicaController extends Controller
                 'cajaChica.tipo',
                 'cajaChica.total'
             )->orderby('dia', 'desc')->orderby('id', 'desc')
-            ->whereBetween('dia', [$lunes, $domingo])
+            ->whereBetween('dia', [$lunes->clone()->subDay(1), $domingo])
             ->paginate(15);
 
-        $ingreso = cajaChica::whereBetween('dia', [$lunes, $domingo])
+        $ingreso = cajaChica::whereBetween('dia', [$lunes->clone()->subDay(1), $domingo])
             ->where('tipo', 1)
             ->sum('cantidad');
 
-        $egreso = cajaChica::whereBetween('dia', [$lunes, $domingo])
+        $egreso = cajaChica::whereBetween('dia', [$lunes->clone()->subDay(1), $domingo])
             ->where('tipo', 2)
             ->sum('cantidad');
 
