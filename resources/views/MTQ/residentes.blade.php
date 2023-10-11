@@ -322,9 +322,24 @@
                 title: 'Guardado con exito'
             })
         }
+
+        function mostrarAlertaBorrarExito() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Borrado Exitosamente',
+                showConfirmButton: false,
+                timer: 1200 // La alerta se cierra automáticamente después de 1.5 segundos
+            });
+        }
+
         var slug = '{{ Session::get('message') }}';
         if (slug == 1) {
             Guardado();
+
+        }
+
+        if (slug == 4) {
+            mostrarAlertaBorrarExito();
 
         }
     </script>

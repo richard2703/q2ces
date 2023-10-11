@@ -164,7 +164,7 @@ class residenteController extends Controller
         $residente = residente::select("*")->where('id', '=', $id)->first();
         $residente->delete();
 
-        Session::flash('message', 1);
+        Session::flash('message', 4);
 
         return redirect()->route('residentes.index');
     }
