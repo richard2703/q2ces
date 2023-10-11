@@ -9,7 +9,6 @@
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
                                     <h4 class="card-title">Residentes</h4>
-
                                 </div>
                                 <div class="card-body">
                                     @if (session('success'))
@@ -87,24 +86,19 @@
                                                                 </svg>
                                                             </a>
                                                         @endcan
-                                                        {{-- @can('residente_mtq_destroy') --}}
-                                                        {{-- <form action="{{ route('puestos.delete', $item->id) }}"
-                                                            method="POST" style="display: inline-block;"
-                                                            onsubmit="return confirm('Seguro?')">
+                                                        @can('residente_mtq_destroy')
+                                                        <form action="{{ route('residentes.destroy', $item->id) }}" method="POST" style="display: inline-block">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button class="btnSinFondo" type="submit" rel="tooltip">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="28"
-                                                                    height="28" fill="currentColor"
-                                                                    class="bi bi-x-circle" viewBox="0 0 16 16">
-                                                                    <path
-                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                    <path
-                                                                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                            <button class="btnSinFondo sweet-alert-trigger" type="button" rel="tooltip">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                                                                 </svg>
                                                             </button>
-                                                        </form> --}}
-                                                        {{-- @endcan --}}
+                                                        </form>
+                                                        
+                                                        @endcan
                                                     </td>
                                                 </tr>
                                             @empty
@@ -187,7 +181,7 @@
                                     <option value="">Seleccione</option>
                                     @foreach ($maquinaria as $item)
                                         <option value="{{ $item->id }}">
-                                            {{ $item->identificador }} {{ $item->nombre }}
+                                            {{ $item->identificador }} {{ $item->nombre }} {{ $item->modelo }} {{ $item->placas }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -273,7 +267,7 @@
                                     <option value="">Denegar Auto</option>
                                     @foreach ($maquinaria as $item)
                                         <option value="{{ $item->id }}">
-                                            {{ $item->identificador }} {{ $item->nombre }}
+                                            {{ $item->identificador }} {{ $item->nombre }} {{ $item->modelo }} {{ $item->placas }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -323,9 +317,24 @@
                 title: 'Guardado con exito'
             })
         }
+
+        function mostrarAlertaBorrarExito() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Borrado Exitosamente',
+                showConfirmButton: false,
+                timer: 1200 // La alerta se cierra automáticamente después de 1.5 segundos
+            });
+        }
+
         var slug = '{{ Session::get('message') }}';
         if (slug == 1) {
             Guardado();
+
+        }
+
+        if (slug == 4) {
+            mostrarAlertaBorrarExito();
 
         }
     </script>
@@ -339,7 +348,6 @@
             const txtNombre = document.getElementById('nombre');
             txtNombre.value = nombre;
 
-
             const txtEmail = document.getElementById('email');
             txtEmail.value = email;
 
@@ -349,10 +357,34 @@
             const txtAsignado = document.getElementById('asignado');
             txtAsignado.value = identificador + ' ' + auto;
 
-
             const lstObre = document.getElementById('obraId').value = obraId;
-
-
         }
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var buttons = document.querySelectorAll('.sweet-alert-trigger');
+    
+            buttons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    Swal.fire({
+                        title: '¿Seguro?',
+                        text: 'Desea Borrar el Registro',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Envía el formulario cuando se confirma
+                            this.closest('form').submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+    
 @endsection

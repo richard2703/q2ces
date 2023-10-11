@@ -27,7 +27,7 @@
                                         <div class="col-12 col-sm-6 col-lg-3 pb-3 text-center">
                                             <form action="{{ route('personal.index') }}" method="GET" id="filterForm">
                                                 <div class="input-group">
-                                                    <label class="labelTitulo p-2" >Estatus: </label>
+                                                    <label class="labelTitulo p-2">Estatus: </label>
                                                     <select name="estatus" id="estatus" style="background: #727176; color: white; font-weight: bold;" class="form-control" onchange="document.getElementById('filterForm').submit();">
                                                         <option value="1" style="font-weight: bold;" {{ request('estatus') == '1' ? 'selected' : '' }}>Activos</option>
                                                         <option value="3" style="font-weight: bold;" {{ request('estatus') == '3' ? 'selected' : '' }}>Baja</option>
@@ -38,7 +38,6 @@
                                                 </div>
                                             </form>
                                         </div>
-                                        
                                         
                                         <div class="col-12 col-sm-6 col-lg-9 pb-3 text-end">
                                             @can('personal_create')
