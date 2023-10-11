@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Role;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -16,7 +17,7 @@ class UserController extends Controller
     {
         abort_if(Gate::denies('user_index'), '403');
         // $users = User::all();
-        $users = User::paginate(15);
+        $users = User::where('estadoId', 1)->paginate(15);
         return view('users.index', compact('users'));
     }
     public function create()
@@ -74,7 +75,6 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-
         abort_if(Gate::denies('user_edit'), '403');
         $data = $request->only('name', 'username', 'email');
         $password = $request->input('password');
@@ -90,7 +90,6 @@ class UserController extends Controller
 
     public function updatePassword(Request $request, User $user)
     {
-        dd('Hola');
         $password = $request->input('password');
         if ($password)
             $data['password'] = bcrypt($password);
@@ -105,14 +104,18 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         abort_if(Gate::denies('user_destroy'), '403');
-        if (auth()->user()->id = $user->id) {
+        if (auth()->user()->id == $user->id) {
             return redirect()->route('users.index', $user->id)->with('faild', 'No Puedes Eliminar El Tu Mismo Usuario');
         }
-        $user->delete();
+        $user->estadoId = 2;
+        // $user->email = null;
+        $password = Str::random(50);
+        $user->password = bcrypt($password);
+        $user->update();
+        // $user->delete();
 
         return redirect()->back()->with('success', 'Usuario Eliminado correctamente');
         // return redirect()->route('users.index');
-
     }
 
     public function export()
