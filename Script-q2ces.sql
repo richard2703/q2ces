@@ -601,6 +601,14 @@ CREATE TABLE corteCajaChica(
     comentario text NULL,
     primary key (id)
 );
+
+ create table tipoAlmacen(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) not NULL,
+    comentario text NULL,
+    primary key (id)
+);
+
 /***************************************FIN Tablas de Sin FK*/
 
 /***************************************DATOS Tablas de Sin FK*/
@@ -1770,6 +1778,16 @@ create table movimientosCisterna(
     CONSTRAINT FK_movimientosCisterna_maquinaria foreign key (maquinariaId) references maquinaria(id)
 );
 
+CREATE TABLE almacenTiraderos(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	nombre varchar(200) null,
+	tipoAlmacenId bigint(20) unsigned NOT null,
+	comentario text null,
+    created_at timestamp NULL DEFAULT NULL,
+    updated_at timestamp NULL DEFAULT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_almacenTiraderos_tipoAlmacenId foreign key (tipoAlmacenId) references tipoAlmacen(id)
+);
 
 CREATE TABLE extintores(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,

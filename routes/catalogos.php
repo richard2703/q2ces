@@ -94,4 +94,6 @@ Route::prefix('catalogos')->middleware('auth')->group(function () {
 	Route::resource('conceptosServicios', App\Http\Controllers\conceptosServiciosTrasporteController::class);
 
 	Route::resource('tipoAlmacen', App\Http\Controllers\tipoAlmacenController::class);
+
+	Route::resource('almacenTiraderos', App\Http\Controllers\almacenTiraderosController::class);
 });

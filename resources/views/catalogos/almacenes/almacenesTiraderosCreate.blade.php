@@ -16,13 +16,13 @@
             <div class="justify-content-center">
                 <div class="card">
                     <div class="card-header bacTituloPrincipal">
-                        <h4 class="card-title">Alta de Tipos de Documentos</h4>
+                        <h4 class="card-title">Alta de Almacenes o Tiraderos</h4>
                         {{-- <p class="card-category">Usuarios registrados</p> --}}
                     </div>
                     <div class="card-body">
                         <div class="row divBorder">
                             <div class="col-12 mb-3">
-                                <a href="{{ route('docs.index') }}">
+                                <a href="{{ route('almacenTiraderos.index') }}">
                                     <button class="btn regresar">
                                         <span class="material-icons">
                                             reply
@@ -33,7 +33,7 @@
                             </div>
                         </div>
 
-                        <form class="alertaGuardar" action="{{ route('docs.store') }}" method="post"
+                        <form class="alertaGuardar" action="{{ route('almacenTiraderos.store') }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
 
@@ -50,7 +50,7 @@
 
                                         <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                             <label class="labelTitulo">Tipo:</label></br>
-                                            <select id="tipoId" name="tipoId" class="form-select"
+                                            <select id="tipoId" name="tipoAlmacenId" class="form-select"
                                                 aria-label="Default select example">
                                                 <option value="">Seleccione</option>
                                                 @foreach ($tiposDocs as $item)
