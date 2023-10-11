@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use App\Models\serviciosMtq;
 use App\Models\maquinaria;
+use App\Models\marca;
 use Illuminate\Support\Facades\Auth;
 
 class calendarioMtqController extends Controller
@@ -24,7 +25,9 @@ class calendarioMtqController extends Controller
         abort_if(Gate::denies('calendario_mtq_index'), 403);
         //$eventos = calendarioMtq::all();
         $servicios = serviciosMtq::all();
+        $marca = marca::all();
         $eventos = calendarioMtq::join('maquinaria', "maquinaria.id", "mtqEventos.maquinariaId")
+            ->join('marca', 'marca.id', 'maquinaria.marcaId')
             ->join('serviciosMtq', 'serviciosMtq.id', 'mtqEventos.mantenimientoId')
             ->select(
                 'mtqEventos.id',
@@ -40,14 +43,15 @@ class calendarioMtqController extends Controller
                 'maquinaria.nombre',
                 'maquinaria.identificador as numeconomico',
                 'maquinaria.placas',
-                'maquinaria.marca',
-                'serviciosMtq.nombre as nombreServicio'
+                'maquinaria.marcaId',
+                'serviciosMtq.nombre as nombreServicio',
+                'marca.nombre as nombre_marca'
                 // 'maquinaria.id as idDoc'
             )
             ->get();
         $eventosJson = $eventos->toJson();
         // dd($eventos);
-        return view('MTQ.calendario', compact('eventosJson', 'servicios'));
+        return view('MTQ.calendario', compact('eventosJson', 'servicios', 'marca'));
     }
 
     /**

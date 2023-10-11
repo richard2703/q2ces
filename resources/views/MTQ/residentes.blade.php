@@ -9,7 +9,6 @@
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
                                     <h4 class="card-title">Residentes</h4>
-
                                 </div>
                                 <div class="card-body">
                                     @if (session('success'))
@@ -87,8 +86,8 @@
                                                                 </svg>
                                                             </a>
                                                         @endcan
-                                                        {{-- @can('residente_mtq_destroy') --}}
-                                                        {{-- <form action="{{ route('puestos.delete', $item->id) }}"
+                                                        @can('residente_mtq_destroy')
+                                                        <form action="{{ route('residentes.destroy', $item->id) }}"
                                                             method="POST" style="display: inline-block;"
                                                             onsubmit="return confirm('Seguro?')">
                                                             @csrf
@@ -103,8 +102,8 @@
                                                                         d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                                                                 </svg>
                                                             </button>
-                                                        </form> --}}
-                                                        {{-- @endcan --}}
+                                                        </form>
+                                                        @endcan
                                                     </td>
                                                 </tr>
                                             @empty
@@ -187,7 +186,7 @@
                                     <option value="">Seleccione</option>
                                     @foreach ($maquinaria as $item)
                                         <option value="{{ $item->id }}">
-                                            {{ $item->identificador }} {{ $item->nombre }}
+                                            {{ $item->identificador }} {{ $item->nombre }} {{ $item->modelo }} {{ $item->placas }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -273,7 +272,7 @@
                                     <option value="">Denegar Auto</option>
                                     @foreach ($maquinaria as $item)
                                         <option value="{{ $item->id }}">
-                                            {{ $item->identificador }} {{ $item->nombre }}
+                                            {{ $item->identificador }} {{ $item->nombre }} {{ $item->modelo }} {{ $item->placas }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -339,7 +338,6 @@
             const txtNombre = document.getElementById('nombre');
             txtNombre.value = nombre;
 
-
             const txtEmail = document.getElementById('email');
             txtEmail.value = email;
 
@@ -349,10 +347,7 @@
             const txtAsignado = document.getElementById('asignado');
             txtAsignado.value = identificador + ' ' + auto;
 
-
             const lstObre = document.getElementById('obraId').value = obraId;
-
-
         }
     </script>
 @endsection

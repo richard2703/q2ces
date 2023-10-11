@@ -32,11 +32,12 @@ class residenteController extends Controller
         )
             ->leftjoin('obras', 'obras.id', '=', 'residente.obraId')
             ->leftjoin('maquinaria', 'maquinaria.id', '=', 'residente.autoId')
-            ->where('residente.clienteId','=' , 2)
+            ->where('residente.clienteId', '=', 2)
             ->orderBy('nombre', 'asc')->paginate(10);
 
-        $vctObras = obras::where('clienteId', 1)->where('estatus', 'Activa')
+        $vctObras = obras::where('estatus', 1)
             ->orderBy('nombre', 'asc')->get();
+        // $vctObras = obras::all();
 
         $maquinaria = maquinaria::where('compania', 'mtq')
             ->where('residente.autoId', null)
@@ -44,7 +45,7 @@ class residenteController extends Controller
             ->leftJoin('residente', 'residente.autoId', 'maquinaria.id')
             ->select('maquinaria.*')
             ->get();
-       // dd($records);
+        // dd($records);
         return view('MTQ.residentes', compact('records', 'vctObras', 'maquinaria'));
     }
 
@@ -81,7 +82,7 @@ class residenteController extends Controller
         ]);
         $record = $request->all();
 
-        $record['clienteId']=2; //*** el cliente 2 de MTQ */
+        $record['clienteId'] = 2; //*** el cliente 2 de MTQ */
 
         residente::create($record);
         Session::flash('message', 1);
@@ -159,6 +160,12 @@ class residenteController extends Controller
 
     public function destroy($id)
     {
-        //
+        abort_if(Gate::denies('residente_mtq_destroy'), 403);
+        $residente = residente::select("*")->where('id', '=', $id)->first();
+        $residente->delete();
+
+        Session::flash('message', 1);
+
+        return redirect()->route('residentes.index');
     }
 }

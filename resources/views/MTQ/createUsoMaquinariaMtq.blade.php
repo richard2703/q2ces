@@ -71,7 +71,7 @@
                                                 <tr>
                                                     <td class="text-center">{{ $maquina->identificador }}</td>
                                                     <td class="text-center">{{ $maquina->nombre }}</td>
-                                                    <td class="text-center">{{ $maquina->marca }}</td>
+                                                    <td class="text-center">{{ $maquina->nombre_marca }}</td>
                                                     <td class="text-center">{{ $maquina->modelo }}</td>
                                                     <td class="text-center">{{ $maquina->placas }}</td>
                                                     <td class="text-center">{{ number_format($maquina->kilometraje) }}</td>

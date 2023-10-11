@@ -6,8 +6,10 @@ use App\Models\usoMaquinarias;
 use App\Http\Controllers\Controller;
 use App\Models\maquinaria;
 use App\Helpers\Calculos;
+use App\Models\marca;
 use App\Models\serviciosMtq;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class usoMaquinariasController extends Controller
 {
@@ -19,15 +21,25 @@ class usoMaquinariasController extends Controller
 
     public function index()
     {
-        $maquinaria = usoMaquinarias::join('maquinaria', 'maquinaria.id', 'usoMaquinarias.maquinariaId')
-            ->select('usoMaquinarias.id', 'restantes', 'maquinaria.mantenimiento', 'identificador', 'nombre', 'marca', 'modelo', 'placas', 'usoMaquinarias.uso', 'usoMaquinarias.created_at')
-            ->where('compania', 'mtq')->orderBy('usoMaquinarias.created_at', 'desc')
+        $marca = marca::all();
+        $maquinaria = maquinaria::join('marca', 'marca.id', 'maquinaria.marcaId')
+            // ->join('usoMaquinarias', 'usoMaquinarias.maquinariaId', 'maquinaria.id')
+            ->select('maquinaria.*', 'maquinaria.nombre as nombre_maquinaria', 'marca.nombre as nombre_marca', 'marca.id as id_marca')
+            ->where('compania', 'mtq')
+            ->orderBy('maquinaria.created_at', 'desc')
             ->paginate(15);
+
         $servicios = serviciosMtq::all();
 
-        // dd( $maquinaria );
+        // $maquinaria = usoMaquinarias::join('maquinaria', 'maquinaria.id', 'usoMaquinarias.maquinariaId')
+        //     ->select('usoMaquinarias.id', 'restantes', 'maquinaria.mantenimiento', 'identificador', 'nombre', 'marcaId', 'modelo', 'placas', 'usoMaquinarias.uso', 'usoMaquinarias.created_at')
+        //     ->where('compania', 'mtq')->orderBy('usoMaquinarias.created_at', 'desc')
+        //     ->paginate(15);
+        // $servicios = serviciosMtq::all();
 
-        return view('MTQ.indexUsoMaquinariaMtq', compact('maquinaria', 'servicios'));
+        // dd($maquinaria);
+
+        return view('MTQ.indexUsoMaquinariaMtq', compact('maquinaria', 'servicios', 'marca'));
     }
 
     /**
@@ -39,7 +51,9 @@ class usoMaquinariasController extends Controller
     public function create()
     {
         // dd( 'create' )
-        $maquinaria = maquinaria::where('compania', 'mtq')->get();
+        $maquinaria = maquinaria::join('marca', 'marca.id', 'maquinaria.marcaId')
+            ->select('maquinaria.*', 'maquinaria.mantenimiento', 'identificador', 'maquinaria.nombre as nombre_maquinaria', 'marca.nombre as nombre_marca', 'marca.id as id_marca', 'modelo', 'placas')
+            ->where('compania', 'mtq')->get();
         // dd( $maquinaria );
         return view('MTQ.createUsoMaquinariaMtq', compact('maquinaria'));
     }
@@ -87,6 +101,7 @@ class usoMaquinariasController extends Controller
             }
         }
         // dd( $request,  $intUpdate , $intSinDatos);
+        Session::flash('message', 1);
         return redirect()->action([usoMaquinariasController::class, 'index']);
     }
 
