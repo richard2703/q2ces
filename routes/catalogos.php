@@ -84,9 +84,13 @@ Route::prefix('catalogos')->middleware('auth')->group(function () {
 
 
 	//Caja Chica
+
 	Route::get('/catalogos/conceptos', [App\Http\Controllers\catalogosController::class, 'indexCatalogoConceptos'])->name('catalogoConceptos.index');
 	Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
 
 	Route::get('/catalogos/comprobantes', [App\Http\Controllers\catalogosController::class, 'indexCatalogoComprobantes'])->name('catalogoComprobantes.index');
 	Route::resource('comprobante', App\Http\Controllers\comprobanteController::class);
+
+	//Servicios
+	Route::resource('conceptosServicios', App\Http\Controllers\conceptosServiciosTrasporteController::class);
 });

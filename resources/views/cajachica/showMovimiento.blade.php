@@ -105,7 +105,7 @@
                                                 value="{{ $cajaChica->ncomprobante }}" disabled>
                                         </div>
 
-                                        <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                        {{--  <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                             <label class="labelTitulo">Obra:</label></br>
                                             <select id="obra" name="obra" class="form-select"
                                                 aria-label="Default select example" disabled>
@@ -145,15 +145,9 @@
                                                     </option>
                                                 @empty
                                                 @endforelse
-
-                                                {{--  @foreach ($vctTiposHoras as $tipo)
-												<option value="{{ $tipo->id }}"
-													{{ $item->tipoHoraExtraId == $tipo->id ? ' selected' : '' }}>
-													{{ $tipo->nombre }}
-												</option>
-											@endforeach  --}}
                                             </select>
-                                        </div>
+                                        </div>  --}}
+
                                         <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                             <label class="labelTitulo">Movimiento:</label></br>
                                             <select id="tipo" name="tipo" class="form-select"
