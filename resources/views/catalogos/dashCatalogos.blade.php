@@ -361,6 +361,16 @@
                                                     </a>
                                                 </div>
 
+                                                <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                                    <a href="{{ route('tipoAlmacen.index') }}" class="">
+                                                        <img src="/img/catalogos/comprobantes.svg" alt="Comprobantes"
+                                                            title="Comprobantes" width="30%"
+                                                            class="botonIconoPrincipal">
+                                                        <p class="mt-4 texticonos">Tipos de Almacen/Tiraderos
+                                                        </p>
+                                                    </a>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
