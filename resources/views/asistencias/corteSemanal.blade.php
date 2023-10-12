@@ -209,14 +209,15 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                             <?php
                                                                 //*** recorremos el arreglo de los dias de la semana de trabajo ***************//
                                                                 $intHorasSemanales = 0;
+                                                                $decSueldoDiario = $item->sueldo;
+                                                                $decValorHoraExtra = number_format(($decSueldoDiario / 8),2);
+
                                                                 for ($i = 0; $i < 7; $i++) {
                                                                     //*** creamos el pivote de la fecha a buscar ***//
                                                                     $intDiaSemana = $vctDiasSemana[$i]->format('Ymd');
 
                                                                     //*** recorremos el arreglo de los dias de la semana de trabajo registrados
                                                                     $blnExiste=false;
-                                                                    $decSueldoDiario = $item->sueldo;
-                                                                    $decValorHoraExtra = number_format(($decSueldoDiario / 8),2);
 
                                                                     for ($iDay = 0; $iDay < $intDiasPagados; $iDay++) {
                                                                          //*** convertimos las fechas a numero para comparar  **/
@@ -264,16 +265,9 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
 
                                                                             //*** Hay tiempo extra por pagar
                                                                             if($intHorasCompletasDia > 0){
-                                                                                //*** obtenemos el calculo proporcional del dia
-                                                                                $decCostoHoraExtraDia = number_format( $decValorHoraExtra * $intHorasCompletasDia,2) ;
-
                                                                                 $intHorasCompletasPagarDia = $intHorasCompletasDia;
-
                                                                                 $intHorasSemanales += $intHorasCompletasPagarDia;
-                                                                                $intTotalCostoHorasExtras += $decCostoHoraExtraDia ;
-                                                                                }
-                                                                            else
-                                                                                {
+                                                                            }  else {
                                                                                 $intHorasCompletasPagarDia = 0;
                                                                             }
 
@@ -281,7 +275,6 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                                             $intTotalMinutosExtras += $intMinutosTotalesDia ;    //*** el total de minutos extras de hora
                                                                             $intTotalHorasExtras +=  $intHorasCompletasDia; //*** obtenemos el numero cerrado de horas del tiempo extra
                                                                             $intTotalMinutosRetrasoExtras += $intMinutosRetrasoDia ;    //*** el total de minutos extras de hora
-
 
                                                                             // dd(  $intMinutosTotalesDia,
                                                                             //  $intHorasDia,
@@ -296,6 +289,29 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
 
                                                                     }
 
+                                                                    //*** realizamos el calculo del total de las horas extras
+
+                                                                    if($intHorasSemanales>0){
+                                                                        if($intHorasSemanales<=9){
+                                                                            //*** se multiplican por dos del valor proporcional
+                                                                            $decCostoHoraExtraDia =  ($decValorHoraExtra * $intHorasSemanales)*2 ;
+                                                                                $intTotalCostoHorasExtras = $decCostoHoraExtraDia ;
+
+                                                                        }elseif($intHorasSemanales>=10){
+                                                                                //*** obtenemos el calculo proporcional de los dias
+                                                                                $intHorasDobles = (($decValorHoraExtra * 2)*9);
+                                                                                $intHorasTriples = (($decValorHoraExtra * 3)* ($intHorasSemanales - 9)) ;
+
+                                                                                $decCostoHoraExtraDia =  ($intHorasDobles +  $intHorasTriples)  ;
+                                                                                $intTotalCostoHorasExtras = $decCostoHoraExtraDia ;
+
+                                                                                //  dd("Valor base: " . $decValorHoraExtra,
+                                                                                //  " Horas dobles: " . (($decValorHoraExtra * 2)*9) ,
+                                                                                //  " Horas triples: " . (($decValorHoraExtra * 3)* ($intHorasSemanales - 9)) ,
+                                                                                //  " Total:". $decCostoHoraExtraDia);
+                                                                        }
+                                                                    }
+
                                                                     if($blnExiste == true){
                                                                         //*** Hay registro del día de la semana ***//
                                                                         ?>
@@ -304,7 +320,8 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                                 <!-- Estatus de asistencia-->
                                                                 <strong> {{ $item->pagos[$iDay]->esAsistencia }}</strong>
                                                             </td>
-                                                            <td title="Tiempo Extra: {{ str_pad($intHorasDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosDia, 2, '0', STR_PAD_LEFT) }}, Tiempo Retraso: {{ str_pad($intHorasRetrasoDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosRetrasoDia, 2, '0', STR_PAD_LEFT) }}, Se Paga: $ {{ $decValorHoraExtra }}">
+                                                            <td
+                                                                title="Tiempo Extra: {{ str_pad($intHorasDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosDia, 2, '0', STR_PAD_LEFT) }}, Tiempo Retraso: {{ str_pad($intHorasRetrasoDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosRetrasoDia, 2, '0', STR_PAD_LEFT) }}, Se Paga proporcional sueldo : $ {{ $decValorHoraExtra }}">
                                                                 <!-- Tiempo extra -->
                                                                 <strong>
                                                                     {{ $intHorasCompletasDia }} Hrs<br>

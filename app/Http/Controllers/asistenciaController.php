@@ -70,6 +70,7 @@ class asistenciaController extends Controller {
         ->join( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
         ->join( 'puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId' )
         ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
+        ->where( 'personal.estatusId', '=', '1' )
         ->whereBetween( 'asistencia.fecha',   [ $dteMesInicio, $dteMesFin ] )
         ->groupBy( 'asistencia.personalId' )
         ->orderBy( 'personal.apellidoP', 'asc' )->get();
@@ -92,7 +93,7 @@ class asistenciaController extends Controller {
         ->join( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
         ->join( 'puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId' )
         ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
-        ->where( 'userEstatus.id', '=', '1' )
+        ->where( 'personal.estatusId', '=', '1' )
         ->orderBy( 'personal.apellidoP', 'asc' )->get();
 
         // dd( $intAnio, $intMes, $intDia, $listaAsistencia );
@@ -181,6 +182,9 @@ class asistenciaController extends Controller {
             DB::raw( 'userEstatus.color AS estatusColor' ),
             DB::raw( 'nomina.nomina AS numNomina' ),
             DB::raw( 'nomina.hEntrada AS horarioEntrada' ),
+            DB::raw( 'nomina.hSalida AS horarioSalida' ),
+            DB::raw( 'nomina.hEntradaSabado AS horarioEntradaSabado' ),
+            DB::raw( 'nomina.hSalidaSabado AS horarioSalidaSabado' ),
             DB::raw( 'nomina.ingreso AS fechaIngreso' ),
         )
         ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
@@ -203,6 +207,9 @@ class asistenciaController extends Controller {
             DB::raw( 'userEstatus.color AS estatusColor' ),
             DB::raw( 'nomina.nomina AS numNomina' ),
             DB::raw( 'nomina.hEntrada AS horarioEntrada' ),
+            DB::raw( 'nomina.hSalida AS horarioSalida' ),
+            DB::raw( 'nomina.hEntradaSabado AS horarioEntradaSabado' ),
+            DB::raw( 'nomina.hSalidaSabado AS horarioSalidaSabado' ),
             DB::raw( 'nomina.ingreso AS fechaIngreso' ),
             DB::raw( 'asistencia.id AS recordId' ),
             DB::raw( 'asistencia.entradaAnticipada' ),
@@ -241,6 +248,8 @@ class asistenciaController extends Controller {
     public function store( Request $request ) {
         abort_if ( Gate::denies( 'asistencia_create' ), '403' );
 
+        $vctDebug = array();
+
         // dd( $request );
         $i = 0;
         if ( $request[ 'blnAsistenciaRegistrada' ] == true ) {
@@ -250,12 +259,8 @@ class asistenciaController extends Controller {
 
                 $objRecord = asistencia::where( 'id', '=', $request[ 'recordId' ][ $i ] )->first();
                 if ( $objRecord ) {
-                    // $objRecord->personalId = $request[ 'personalId' ][ $i ];
-                    // $objRecord->fecha = $request[ 'fecha' ];
-                    // $objRecord->horasExtra = $request[ 'horasExtra' ];
-                    // $objRecord->tipoHoraExtraId = 1;
 
-                    // dd( $request->$value[ 0 ][ 0 ] );
+                    $vctDebug[] = $request->$value[ 0 ][ 0 ] ;
 
                     $objRecord->asistenciaId = $request->$value[ 0 ];
                     $objRecord->entradaAnticipada =  ( $request->$value[ 0 ] == 1 ?  $request[ 'entradaAnticipada' ][ $i ]:0 );
@@ -274,9 +279,9 @@ class asistenciaController extends Controller {
                         //*** preguntamos si la entrada es menor que la hora salida */
                         if ( $dteHoraEntrada < $dteHorario ) {
                             $intMinutos = $dteHoraEntrada->diffInMinutes( $dteHorario ) ;
-                            //dd( 'Soy mayor '. $intMinutos . ' minutos' );
+                            $vctDebug[] = 'Tengo tiempo anticipado '. $intMinutos . ' minutos' ;
                         } else {
-                            //  dd( 'Soy menor' );
+                            $vctDebug[] = 'No tengo tiempo anticipado' ;
                         }
 
                         $objRecord->horasAnticipada = $intMinutos;
@@ -284,15 +289,55 @@ class asistenciaController extends Controller {
 
                     //*** calculamos tiempo de retraso de entrada */
                     $objRecord->horasRetraso = 0;
+
                     //*** preguntamos si la entrada es menor que la hora salida */
                     if ( $dteHoraEntrada > $dteHorario ) {
                         $objRecord->horasRetraso = $dteHoraEntrada->diffInMinutes( $dteHorario ) ;
-                        // dd( 'Soy mayor '. $objRecord->horasRetraso . ' minutos' );
+                        $vctDebug[] = 'Tengo un retraso de '. $objRecord->horasRetraso . ' minutos' ;
                     } else {
-                        //  dd( 'Soy menor' );
+                        $vctDebug[] = 'Sin retraso' ;
                     }
 
-                    // dd( $objRecord );
+                    $dteHorarioSalida = null;
+                    $dteHoraSalida = null;
+
+                    //*** obtenemos los minutos de diferencia */
+                    if ( is_null( $request[ 'horarioSalida' ][ $i ] ) == false &&  is_null( $request[ 'hSalida' ][ $i ] ) == false ) {
+
+                        $intMinutos = 0;
+                        $dteHorarioSalida =   Carbon::parse( $request[ 'horarioSalida' ][ $i ] );
+                        $dteHoraSalida =  Carbon::parse( $request[ 'hSalida' ][ $i ] );
+
+                        //*** preguntamos si la salida es mayor que la hora salida */
+                        if ( $dteHoraSalida > $dteHorarioSalida ) {
+                            $intMinutos = $dteHoraSalida->diffInMinutes( $dteHorarioSalida ) ;
+                            // $objAsistencia->tipoHoraExtraId = $request[ 'tipoHoraExtraId' ][ $i ];
+                            $vctDebug[] = 'Tengo tiempo extra '. $intMinutos . ' minutos' ;
+                        } else {
+                            $vctDebug[] = 'No tengo tiempo extra'  ;
+                            // $objAsistencia->tipoHoraExtraId = 1;
+                        }
+
+                        //*** validamos el descuento de tiempo de retraso */
+                        if ( $objRecord->horasRetraso > 0 ) {
+                            $vctDebug[] = 'Se aplica descuento de tiempo por retraso de entrada'  ;
+                            $objRecord->horasExtra = ($intMinutos - $objRecord->horasRetraso);
+
+                        } else {
+                            $vctDebug[] = 'Sin descuento de tiempo por retraso de entrada'  ;
+                            $objRecord->horasExtra = $intMinutos;
+
+                        }
+
+                    } else {
+                        //*** se marca en 0 y se marca que no aplica */
+                        $vctDebug[] = 'No tengo tiempo extra definido todavia'  ;
+                        $objRecord->horasExtra = 0;
+                    }
+
+                    $objRecord->hSalida = $request[ 'hSalida' ][ $i ];
+
+                    $vctDebug[] = $objRecord  ;
                     $objRecord->save();
                     // $vctIds[] = $objRecord;
                 }
@@ -314,13 +359,15 @@ class asistenciaController extends Controller {
                 $objAsistencia->horasExtra = $request[ 'horasExtra' ];
                 $objAsistencia->hEntrada = $request[ 'hEntrada' ][ $i ];
                 $objAsistencia->hSalida = $request[ 'hSalida' ][ $i ];
-                $objAsistencia->tipoHoraExtraId = 1;
+                // $objAsistencia->tipoHoraExtraId = 1;
                 $objAsistencia->save();
                 // dd( $objAsistencia );
                 $i += 1;
             }
 
         }
+
+        // dd( $vctDebug, $request );
 
         return redirect()->action( [ asistenciaController::class, 'index' ], [ 'intAnio' => $request[ 'intAnio' ], 'intMes' => $request[ 'intMes' ] ] );
     }
@@ -372,7 +419,7 @@ class asistenciaController extends Controller {
         ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
         ->join( 'asistencia', 'asistencia.personalId', '=', 'personal.id' )
         ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
-        ->where( 'userEstatus.id', '=', '1' )
+        ->where( 'personal.estatusId', '=', '1' )
         ->where( 'asistencia.asistenciaId', '=', '1' )
         ->where( 'asistencia.fecha', '=', $strDate )
         ->orderBy( 'personal.apellidoP', 'asc' )->get();
@@ -453,7 +500,7 @@ class asistenciaController extends Controller {
                     } else {
                         //*** se marca en 0 y se marca que no aplica */
                         $objAsistencia->horasExtra = 0;
-                        $objAsistencia->tipoHoraExtraId = 1;
+                        //$objAsistencia->tipoHoraExtraId = 1;
 
                     }
 
