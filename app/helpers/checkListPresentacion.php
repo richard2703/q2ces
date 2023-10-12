@@ -81,24 +81,38 @@ class checkListPresentacion {
 
         // dd( $intTareaId, $strValorControl, $intConsecutivo, $objTarea );
         if ( $objTarea ) {
+            $strLeyenda = ' title="' . $objTarea->leyenda . '"';
 
             switch ( strtolower( $objTarea->controlHtml ) ) {
                 case 'text':
-                $strCodigoControl =  '<input type="text" class="inputCaja" minlength="8" maxlength="200" id="control'. $intConsecutivo . '" name="resultado'. $intTareaId . '" required value="'. $strResultadoControl . '" placeholder="Ej. Escribe el texto aquí">';
+                $strCodigoControl =  '<input type="text" class="inputCaja" minlength="8" maxlength="200" '.
+                ' id="control'. $intConsecutivo . '"' .
+                ' name="resultado'. $intTareaId . '" ' .
+                $strLeyenda .
+                ' required value="'. $strResultadoControl . '" '.
+                ' placeholder="Ej. Escribe el texto aquí" >';
                 break;
 
                 case 'number':
                 $strStep = ( $objTarea->tipoValorId == 4 ? ' step="0.01" ':' step="1" ' );
                 $strPlaceHolder = ( $objTarea->tipoValorId == 4 ? ' placeholder="Ej. 1234.01" ':' placeholder="Ej. 1234" ' );
-                $strMinimo = ( $objTarea->tipoValorId == 4 ? ' min="1" ':' min="0.0" ' );
-                $strMaximo = ( $objTarea->tipoValorId == 4 ? ' max="1000000" ':' max="1000000" ' );
-                $strCodigoControl =  '<input type="number" ' .  $strMinimo . $strMaximo . $strStep . $strPlaceHolder. ' pattern="\d*"  class="inputCaja text-end" id="control'. $intConsecutivo . '" name="resultado'. $intTareaId . '" required value="'. $strResultadoControl . '">';
+                $strMinimo = ( $objTarea->requiereLimites == 1 ? ' min="'.  $objTarea->limiteInferior . '" ':' min="0.0" ' );
+                $strMaximo = ( $objTarea->requiereLimites == 4 ? ' max="'.  $objTarea->limiteSuperior . '" ':' max="1000000" ' );
+                $strCodigoControl =  '<input type="number" ' .
+                $strMinimo .
+                $strMaximo .
+                $strStep .
+                $strLeyenda .
+                $strPlaceHolder. ' pattern="\d*"  class="inputCaja text-end" id="control'. $intConsecutivo . '" name="resultado'. $intTareaId . '" required value="'. $strResultadoControl . '">';
                 break;
 
                 case 'date':
                 $strMinimo = ( $objTarea->tipoValorId == 4 ? ' min="2000-01-01" ':'' );
                 $strMaximo = ( $objTarea->tipoValorId == 4 ? ' max="2023-12-31" ':' ' );
-                $strCodigoControl = '<input type="date" class="inputCaja" id="control'. $intConsecutivo . '" name="resultado'. $intTareaId . '" required value="'. $strResultadoControl . '" ' .  $strMinimo . $strMaximo . ' pattern="\d{4}-\d{2}-\d{2}">';
+                $strCodigoControl = '<input type="date" class="inputCaja" id="control'. $intConsecutivo . '" name="resultado'. $intTareaId . '" required value="'. $strResultadoControl . '" ' .
+                $strLeyenda .
+                $strMinimo .
+                $strMaximo . ' pattern="\d{4}-\d{2}-\d{2}">';
                 break;
 
                 case 'radio':
@@ -115,7 +129,7 @@ class checkListPresentacion {
                         'name="resultado'. $intTareaId . '[]"'.
                         'value="'. $intOpcion .'"' .
                         ( $strValorControl == $intOpcion   ? ' checked' : '' ) . '>' .
-                        '<label for="control'. $intConsecutivo . $intOpcion .'">' .  $aValue[ 1 ] . '</label>' .
+                        '<label for="control'. $intConsecutivo . $intOpcion .'" '. $strLeyenda .'>' .  $aValue[ 1 ] . '</label>' .
                         '</div>';
                         $intOpcion += 1;
 
@@ -132,10 +146,10 @@ class checkListPresentacion {
                 foreach ( $vctItems as $item ) {
                     $aValue = explode( '=>', $item ) ;
 
-                    $strItems .= '<option value="'.$aValue[ 0 ] . '"'. ($item[0] == $strValorControl ? ' selected' : '').'>'.$aValue[ 1 ].'</option>' ;
+                    $strItems .= '<option value="'.$aValue[ 0 ] . '"'. ( $item[ 0 ] == $strValorControl ? ' selected' : '' ).'>'.$aValue[ 1 ].'</option>' ;
                 }
 
-                $strCodigoControl = '<select class="form-select"  aria-label="Default select example" id="control'. $intConsecutivo . '"' .
+                $strCodigoControl = '<select class="form-select"  aria-label="Default select example" id="control'. $intConsecutivo . '"' . $strLeyenda .
                 ' name="resultado'. $intTareaId . '">' .
                 '<option value="">Seleccione</option>' .
                 $strItems .
@@ -152,7 +166,6 @@ class checkListPresentacion {
         } else {
             $strCodigoControl = "<label class = 'labelTitulo'>Algo salio MAL!!!</label>";
         }
-
 
         // dd( $vctDebug, $objTarea );
         return $strCodigoControl;

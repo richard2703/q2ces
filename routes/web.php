@@ -447,12 +447,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/bitacoras/bitacora/nuevo', [App\Http\Controllers\bitacorasController::class, 'store'])->name('bitacoras.store');
     Route::get('/bitacoras/bitacora/editar/{id}', [App\Http\Controllers\bitacorasController::class, 'edit'])->name('bitacoras.edit');
     Route::put('/bitacoras/bitacora/editar/{bitacora}', [App\Http\Controllers\bitacorasController::class, 'update'])->name('bitacoras.update');
+    Route::delete('bitacoras/bitacora/borrar/{bitacora}', [App\Http\Controllers\bitacorasController::class, 'destroy'])->name('bitacoras.destroy');
 
     Route::get('/bitacoras/grupos', [App\Http\Controllers\grupoController::class, 'index'])->name('grupo.index');
     Route::get('/bitacoras/grupos/nuevo/', [App\Http\Controllers\grupoController::class, 'create'])->name('grupo.create');
     Route::post('/bitacoras/grupos/nuevo', [App\Http\Controllers\grupoController::class, 'store'])->name('grupo.store');
     Route::get('/bitacoras/grupos/editar/{id}', [App\Http\Controllers\grupoController::class, 'edit'])->name('grupo.edit');
     Route::put('/bitacoras/grupos/editar/{grupo}', [App\Http\Controllers\grupoController::class, 'update'])->name('grupo.update');
+    Route::delete('bitacoras/grupos/borrar/{grupo}', [App\Http\Controllers\grupoController::class, 'destroy'])->name('grupo.destroy');
 
     Route::get('/bitacoras/tareas', [App\Http\Controllers\tareaController::class, 'index'])->name('tarea.index');
     Route::get('/bitacoras/tareas/nueva/', [App\Http\Controllers\tareaController::class, 'create'])->name('tarea.create');

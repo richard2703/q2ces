@@ -32,7 +32,7 @@ class checkListController extends Controller
 
         $records = checkList::select(
             'checkList.*',
-            DB::raw('maquinaria.nombre AS maquinaria'),
+            DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ),
             DB::raw('users.username AS usuario'),
             DB::raw('bitacoras.nombre AS bitacora')
         )

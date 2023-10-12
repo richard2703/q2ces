@@ -68,7 +68,7 @@
                                             @forelse ($maquinaria as $maquina)
                                                 <tr>
                                                     <td class="text-center"><a
-                                                            href="{{ route('maquinaria.vista', $maquina->id) }}"
+                                                            href="{{ route('maquinaria.vista', $maquina->id) }}"  title="Editar la información de la maquinaría."
                                                             style="color: blue">{{ $maquina->maquinaria }}</a></td>
                                                     <td class="text-center">
                                                         {{ $maquina->obra != '' ? $maquina->obra : 'Sin Asignar' }}</td>

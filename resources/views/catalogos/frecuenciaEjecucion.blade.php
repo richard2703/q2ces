@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Tipos de Valor de Tareas')])
+@extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Lista de Frecuencias de Ejecución')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -19,7 +19,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Tipos de Valor de Tareas</h4>
+                                    <h4 class="card-title">Frecuencias de Ejecución</h4>
 
                                 </div>
                                 <div class="card-body">
@@ -49,15 +49,15 @@
                                                 @can('tarea_create')
                                                     <button class="btn botonGral float-end" data-bs-toggle="modal"
                                                         data-bs-target="#nuevoItem">
-                                                        Añadir Tipo de Tareas
+                                                        Añadir Frecuencia Ejecución
                                                     </button>
                                                 @endcan
                                             </div>
                                         </div>
                                         <div class="divBorder">
-                                            <p>Catálogo General de Tipo de Valor de Tarea, Es Utilizado para Especificar el
-                                                Tipo
-                                                de Valor y la Forma en que una Tarea se Guardará dentro de un CheckList.</p>
+                                            <p>Catálogo General de Frecuencias de Ejecución, Es Utilizado para Especificar
+                                                la Periodicidad de Ejecución de una Bitácora de CheckList en una Maquinaría.
+                                            </p>
                                         </div>
                                     </div>
 
@@ -67,6 +67,8 @@
                                             <tr>
                                                 <th class="labelTitulo">Id</th>
                                                 <th class="labelTitulo">Nombre</th>
+                                                <th class="labelTitulo">Días</th>
+                                                <th class="labelTitulo">Mínimo Ejecutar</th>
                                                 <th class="labelTitulo">Comentario</th>
                                                 <th class="labelTitulo text-right">Acciones</th>
                                             </tr>
@@ -76,6 +78,8 @@
                                                 <tr>
                                                     <td>{{ $item->id }}</td>
                                                     <td class="text-left">{{ $item->nombre }}</td>
+                                                    <td class="text-left">{{ $item->dias }}</td>
+                                                    <td class="text-left">{{ $item->minimoEjecucion }}</td>
                                                     <td class="text-left">{{ $item->comentario }}</td>
 
                                                     <td class="td-actions text-right">
@@ -90,7 +94,7 @@
                                                         @can('tarea_edit')
                                                             <a href="#" class="" data-bs-toggle="modal"
                                                                 data-bs-target="#editarItem"
-                                                                onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->controlHtml }}','{{ $item->codigo }}','{{ $item->comentario }}')">
+                                                                onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->dias }}','{{ $item->minimoEjecucion }}','{{ $item->comentario }}')">
                                                                 <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                     height="28" fill="currentColor"
                                                                     class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -100,7 +104,7 @@
                                                             </a>
                                                         @endcan
                                                         @can('tarea_destroy')
-                                                            <form action="{{ route('tipoValorTarea.destroy', $item->id) }}"
+                                                            <form action="{{ route('frecuenciaEjecucion.destroy', $item->id) }}"
                                                                 method="POST" style="display: inline-block;"
                                                                 onsubmit="return confirm('Seguro?')">
                                                                 @csrf
@@ -144,11 +148,11 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nuevo Tipo de Tareas</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nueva Frecuencia de Ejecución</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('tipoValorTarea.store') }}" method="post">
+                    <form class="row d-flex" action="{{ route('frecuenciaEjecucion.store') }}" method="post">
                         @csrf
                         {{-- <input type="hidden" name="userId" id="userId" value="{{ $usuario->id }}"> --}}
                         <div class=" col-12 col-sm-6 mb-3 ">
@@ -158,24 +162,16 @@
                         </div>
 
                         <div class=" col-12  mb-3 ">
-                            <label class="labelTitulo">Control HTML:</label></br>
-                            <select class="form-select" aria-label="Default select example" id="controlHtml"
-                                name="controlHtml">
-                                <option value="label">Label (etiqueta)</option>
-                                <option value="text">Text (caja de texto)</option>
-                                <option value="number">Number (caja númerica sin decimales)</option>
-                                <option value="number">Number (caja númerica con decimales)</option>
-                                <option value="date">Date (calendario)</option>
-                                <option value="radio">Radio (selección de opciones)</option>
-                                <option value="select">Select (caja de lista)</option>
-                            </select>
+                            <label class="labelTitulo">Días:</label></br>
+                            <input type="number" class="inputCaja" id="dias" maxlength="3" min="0"
+                                step="1" max="999" placeholder="Ej. 365" name="dias" value="">
                         </div>
+
                         <div class=" col-12  mb-3 ">
-                            <label class="labelTitulo"
-                                title="Aplica solo para controles radio y select, ejemplo: 0=>No,1=>Si,2=>Ninguna">Código (Ej.: 1=>Opcion,2=>Opcion,...):</label></br>
-                            <textarea class="form-control"
-                                placeholder="Escribe el listado de los ítems de opciones (solo radio y select), ejemplo: 0=>No,1=>Si,2=>Ninguna"
-                                id="codigo" name="codigo" spellcheck="false"></textarea>
+                            <label class="labelTitulo">Mínimo de Días antes de Volver a Ejecutar:</label></br>
+                            <input type="number" class="inputCaja" id="minimoEjecucion" maxlength="3" min="0"
+                                step="1" max="999" placeholder="Ej. 365" name="minimoEjecucion"
+                                value="">
                         </div>
 
                         <div class=" col-12  mb-3 ">
@@ -200,12 +196,12 @@
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
 
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Tipo de Tareas</label>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Frecuencia de Ejecución</label>
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('tipoValorTarea.update', 0) }}" method="post">
+                    <form class="row d-flex" action="{{ route('frecuenciaEjecucion.update', 0) }}" method="post">
                         @csrf
                         @method('put')
                         <input type="hidden" name="controlId" id="controlId" value="">
@@ -215,26 +211,19 @@
                         </div>
 
                         <div class=" col-12  mb-3 ">
-                            <label class="labelTitulo">Control HTML:</label></br>
-                            <select class="form-select" aria-label="Default select example" id="controlControlHtml"
-                                name="controlHtml">
-                                <option value="label">Label (etiqueta)</option>
-                                <option value="text">Text (caja de texto)</option>
-                                <option value="number">Number (caja númerica sin decimales)</option>
-                                <option value="number">Number (caja númerica con decimales)</option>
-                                <option value="date">Date (calendario)</option>
-                                <option value="radio">Radio (selección de opciones)</option>
-                                <option value="select">Select (caja de lista)</option>
-                            </select>
+                            <label class="labelTitulo">Días:</label></br>
+                            <input type="number" class="inputCaja" id="controlDias" maxlength="3" min="0"
+                                step="1" max="999" placeholder="Ej. 365" name="dias" value="">
                         </div>
 
+
                         <div class=" col-12  mb-3 ">
-                            <label class="labelTitulo"
-                                title="Aplica solo para controles radio y select, ejemplo: 0=>No,1=>Si,2=>Ninguna">Código (Ej.: 1=>Opcion,2=>Opcion,...):</label></br>
-                            <textarea class="form-control"
-                                placeholder="Escribe el listado de los ítems de opciones (solo radio y select), ejemplo: 0=>No,1=>Si,2=>Ninguna"
-                                id="controlCodigo" name="codigo" spellcheck="true"></textarea>
+                            <label class="labelTitulo">Mínimo de Días antes de Volver a Ejecutar:</label></br>
+                            <input type="number" class="inputCaja" id="ControlMinimoEjecucion" maxlength="3"
+                                min="0" step="1" max="999" placeholder="Ej. 365"
+                                name="minimoEjecucion" value="">
                         </div>
+
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
@@ -291,7 +280,7 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre,controlHtml, codigo, comentarios) {
+        function cargaItem(id, nombre, dias, minimoEjecucion, comentarios) {
 
             const txtId = document.getElementById('controlId');
             txtId.value = id;
@@ -302,10 +291,11 @@
             const txtComentarios = document.getElementById('controlComentarios');
             txtComentarios.value = comentarios;
 
-            const txtCodigo = document.getElementById('controlCodigo');
-            txtCodigo.value = codigo;
+            const txtDias = document.getElementById('controlDias');
+            txtDias.value = dias;
 
-            const lstCodigoHtml = document.getElementById('controlControlHtml').value = controlHtml;
+            const txtMinimo = document.getElementById('controlMinimoEjecucion');
+            txtMinimo.value = minimoEjecucion;
 
         }
     </script>

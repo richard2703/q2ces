@@ -142,13 +142,55 @@
                                                 <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
                                                     <label class="labelTitulo">Leyenda: <span></span></label></br>
 
-                                                    <input type="text" maxlength="200" id="leyenda"
-                                                        name="leyenda" value="{{ $tarea->leyenda }}"
+                                                    <input type="text" maxlength="200" id="leyenda" name="leyenda"
+                                                        value="{{ $tarea->leyenda }}"
                                                         placeholder="Especifique el texto de la leyenda."
                                                         class="inputCaja">
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class=" col-4  mb-3 ">
+                                            <label class="labelTitulo">Require Usar Limites: <span></span></label></br>
+                                            <input class="form-check-input is-invalid align-self-end mb-2"
+                                                name='requiereLimites' type="checkbox" id="requiereLimites" checked
+                                                style="font-size: 20px;">
+                                        </div>
+
+                                        <div class=" col-4  mb-3 ">
+                                            <label class="labelTitulo">Valor mínimo:</label></br>
+                                            <input type="number" class="inputCaja text-end" id="limiteInferior" maxlength="3"
+                                                min="0" step="1" max="999" placeholder="Ej. 0"
+                                                name="limiteInferior" value="">
+                                        </div>
+
+                                        <div class=" col-4  mb-3 ">
+                                            <label class="labelTitulo">Valor Máximo:</label></br>
+                                            <input type="number" class="inputCaja text-end" id="limiteSuperior" maxlength="3"
+                                                min="0" step="1" max="1000000" placeholder="Ej. 100"
+                                                name="limiteSuperior" value="">
+                                        </div>
+
+                                        <div class=" col-4  mb-3 ">
+                                            <label class="labelTitulo">Require Usar Escala: <span></span></label></br>
+                                            <input class="form-check-input is-invalid align-self-end mb-2"
+                                                name='requiereEscala' type="checkbox" id="requiereEscala" checked
+                                                style="font-size: 20px;">
+                                        </div>
+
+                                        <div class=" col-4  mb-3 ">
+                                            <label class="labelTitulo">Valor mínimo:</label></br>
+                                            <input type="number" class="inputCaja text-end" id="limiteInferiorEscala" maxlength="3"
+                                                min="0" step="1" max="999" placeholder="Ej. 0"
+                                                name="limiteInferiorEscala" value="">
+                                        </div>
+
+                                        <div class=" col-4  mb-3 ">
+                                            <label class="labelTitulo">Valor Máximo:</label></br>
+                                            <input type="number" class="inputCaja text-end" id="limiteSuperiorEscala" maxlength="3"
+                                                min="0" step="1" max="1000000" placeholder="Ej. 100"
+                                                name="limiteSuperiorEscala" value="">
+                                        </div>
+
                                         <div class="col-12 my-4  ">
                                             <div class="row">
                                                 <div class="col-12 text-center mt-5 pt-5">

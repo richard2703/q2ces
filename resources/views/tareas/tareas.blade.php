@@ -79,7 +79,7 @@
                                                         <td class="td-actions text-center">
 
                                                             @can('tarea_edit')
-                                                                <a href="{{ url('/bitacoras/tareas/editar/' . $item->id) }}"
+                                                                <a href="{{ url('/bitacoras/tareas/editar/' . $item->id) }}"  title="Editar la información de la tarea."
                                                                     class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                         height="28" fill="currentColor" title="Editar"
@@ -96,7 +96,7 @@
                                                                     onsubmit="return confirm('Seguro?')">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <button class="btnSinFondo" type="submit" rel="tooltip">
+                                                                    <button class="btnSinFondo" type="submit" rel="tooltip" title="Eliminar la información de la tarea.">
                                                                         <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                             height="28" fill="currentColor"
                                                                             class="bi bi-x-circle" viewBox="0 0 16 16">
@@ -119,6 +119,7 @@
                                             </tbody>
                                         </table>
                                     </div>
+
                                     <div class="card-footer mr-auto">
                                         {{ $vctTareas->links() }}
                                     </div>

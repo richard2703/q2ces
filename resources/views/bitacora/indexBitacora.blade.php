@@ -60,6 +60,7 @@
 
                                                             @can('bitacora_edit')
                                                                 <a href="{{ url('/bitacoras/bitacora/editar/' . $item->id) }}"
+                                                                    title="Editar la información de la Bitácora."
                                                                     class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                         height="28" fill="currentColor" title="Editar"
@@ -84,13 +85,14 @@
                                                                 </a>
                                                             @endif
 
-                                                            {{--  @can('bitacora_destroy')
-                                                                <form action="" method="POST"
-                                                                    style="display: inline-block;"
+                                                            @can('bitacora_destroy')
+                                                                <form action="{{ route('bitacoras.destroy', $item->id) }}"
+                                                                    method="POST" style="display: inline-block;"
                                                                     onsubmit="return confirm('Seguro?')">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <button class="btnSinFondo" type="submit" rel="tooltip">
+                                                                    <button class="btnSinFondo" type="submit" rel="tooltip"
+                                                                    title="Eliminar la información de la Bitácora.">
                                                                         <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                             height="28" fill="currentColor" title="Eliminar"
                                                                             class="bi bi-x-circle" viewBox="0 0 16 16">
@@ -101,7 +103,7 @@
                                                                         </svg>
                                                                     </button>
                                                                 </form>
-                                                            @endcan  --}}
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                 @empty

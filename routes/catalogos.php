@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 |
 | Aqui estan todas las Rutas de los diferentes catalogos.
 | Todas son creadas con resource para hacer mas comoda la lectura
-| 
+|
 |
 */
 
@@ -78,6 +78,9 @@ Route::prefix('catalogos')->middleware('auth')->group(function () {
 
 	Route::get('/tiposValorTarea', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposValorTarea'])->name('catalogoTiposValorTarea.index');
 	Route::resource('tipoValorTarea', App\Http\Controllers\tipoValorTareaController::class);
+
+	Route::get('/frecuencias/ejecucion', [App\Http\Controllers\catalogosController::class, 'indexCatalogoFrecuenciaEjecucion'])->name('catalogoFrecuenciaEjecucion.index');
+	Route::resource('frecuenciaEjecucion', App\Http\Controllers\frecuenciaEjecucionController::class);
 
 	Route::get('/catalogos/tiposMantenimiento', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposMantenimiento'])->name('catalogoTiposMantenimiento.index');
 	Route::resource('tipoMantenimiento', App\Http\Controllers\tipoMantenimientoController::class);

@@ -201,7 +201,7 @@
                                                         class="">
                                                         <img src="/img/catalogos/tiposUsoMaquinaria.svg"
                                                             alt="Tipos de Uso de Maquinaría"
-                                                            title="Tipos de Uso de tareas" width="30%"
+                                                            title="Tipos de Uso de Maquinaria" width="30%"
                                                             class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Tipos de Uso
                                                             de Maquinaría</p>
@@ -279,9 +279,18 @@
                                                                 Valor de Tarea</p>
                                                         </a>
                                                     </div>
+
+                                                    <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                                        <a href="{{ route('catalogoFrecuenciaEjecucion.index') }}"
+                                                            class="">
+                                                            <img src="/img/catalogos/frecuencia.svg"
+                                                                alt="Frecuencias de Ejecución"
+                                                                title="Frecuencias de Ejecucción" width="30%"
+                                                                class="botonIconoPrincipal">
+                                                            <p class="mt-4 texticonos">Frecuencia de Ejecución</p>
+                                                        </a>
+                                                    </div>
                                                 @endcan
-
-
 
                                                 <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                                     <a href="{{ route('tiposServicios.index') }}" class="">
