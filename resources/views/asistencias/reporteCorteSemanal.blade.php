@@ -17,7 +17,7 @@
             <th>IMPORTE SEMANAL</th>
             <th>TIEMPO EXTRA ACUMULADO</th>
             <th>HORAS EXTRA</th>
-            <th>COSTO POR HORAS EXTRA</th>
+            <th>COSTO POR HORAS EXTRA (BASE)</th>
             <th>TOTAL HORAS EXTRA</th>
             <th>PAGO SEMANAL</th>
         </tr>
