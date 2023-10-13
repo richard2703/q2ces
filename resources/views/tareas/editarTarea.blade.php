@@ -140,7 +140,7 @@
                                         <div class="col-12 my-4">
                                             <div class="row">
                                                 <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
-                                                    <label class="labelTitulo">Leyenda: <span></span></label></br>
+                                                    <label class="labelTitulo">Leyenda (Se muestra como ToolTip): <span></span></label></br>
 
                                                     <input type="text" maxlength="200" id="leyenda" name="leyenda"
                                                         value="{{ $tarea->leyenda }}"
@@ -170,7 +170,7 @@
                                                 name="limiteSuperior" value="">
                                         </div>
 
-                                        <div class=" col-4  mb-3 ">
+                                        {{-- <div class=" col-4  mb-3 ">
                                             <label class="labelTitulo">Require Usar Escala: <span></span></label></br>
                                             <input class="form-check-input is-invalid align-self-end mb-2"
                                                 name='requiereEscala' type="checkbox" id="requiereEscala" checked
@@ -190,6 +190,7 @@
                                                 min="0" step="1" max="1000000" placeholder="Ej. 100"
                                                 name="limiteSuperiorEscala" value="">
                                         </div>
+                                        --}}
 
                                         <div class="col-12 my-4  ">
                                             <div class="row">

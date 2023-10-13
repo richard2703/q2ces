@@ -97,7 +97,8 @@ class checkListPresentacion {
                 $strStep = ( $objTarea->tipoValorId == 4 ? ' step="0.01" ':' step="1" ' );
                 $strPlaceHolder = ( $objTarea->tipoValorId == 4 ? ' placeholder="Ej. 1234.01" ':' placeholder="Ej. 1234" ' );
                 $strMinimo = ( $objTarea->requiereLimites == 1 ? ' min="'.  $objTarea->limiteInferior . '" ':' min="0.0" ' );
-                $strMaximo = ( $objTarea->requiereLimites == 4 ? ' max="'.  $objTarea->limiteSuperior . '" ':' max="1000000" ' );
+                $strMaximo = ( $objTarea->requiereLimites == 1 ? ' max="'.  $objTarea->limiteSuperior . '" ':' max="1000000" ' );
+
                 $strCodigoControl =  '<input type="number" ' .
                 $strMinimo .
                 $strMaximo .
