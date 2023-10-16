@@ -53,6 +53,7 @@ class cajaChicaController extends Controller
         $Alunes = $lunes->clone()->subDay(7);
 
         $ultimoCorte = corteCajaChica::where('inicio', $Alunes)->first();
+        // dd($ultimoCorte);
 
         $registros = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
             ->leftJoin('obras', 'cajaChica.obra', 'obras.id')
@@ -78,7 +79,7 @@ class cajaChicaController extends Controller
                 'cajaChica.tipo',
                 'cajaChica.total'
             )->orderby('dia', 'desc')->orderby('id', 'desc')
-            ->whereBetween('dia', [$lunes, $domingo])
+            ->whereBetween('dia', [$Adomingo, $domingo])
             ->paginate(15);
 
         $ingreso = cajaChica::whereBetween('dia', [$lunes, $domingo])
@@ -423,8 +424,25 @@ class cajaChicaController extends Controller
         $corte->fin = $domingo;
         $corte->saldo = $saldo;
         // $corte->Movimientos = $lunes;
-        $corte->save();
+        // $corte->save();
+        // dd('test');
+        $carbon_date = Carbon::createFromFormat('Y-m-d', $domingo);
+        $carbon_date = $carbon_date->addDay();
+        $ultimoSaldo['dia'] =  $carbon_date;
+        $ultimoSaldo['concepto'] =  1;
+        $ultimoSaldo['comprobanteId'] =  1;
+        $ultimoSaldo['ncomprobante'] =  1;
+        $ultimoSaldo['equipo'] =  1;
+        $ultimoSaldo['personal'] =  16;
+        $ultimoSaldo['tipo'] =  1;
+        $ultimoSaldo['cantidad'] =  $saldo;
+        $ultimoSaldo['comentario'] =  'Ingreso hecho automatico por corte ';
 
+
+        // dd($carbon_date);
+
+        $cajachica = cajaChica::create($ultimoSaldo);
+        // dd($cajachica);
         return redirect()->action([cajaChicaController::class, 'index']);
     }
 }
