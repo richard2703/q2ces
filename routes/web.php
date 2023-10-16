@@ -398,6 +398,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Servicios
     Route::resource('serviciosTrasporte', App\Http\Controllers\serviciosTrasporteController::class);
+    Route::post('serviciosTrasporte/cajaChica', [App\Http\Controllers\serviciosTrasporteController::class, 'cajaChica'])->name('serviciosTrasporte.cajaChica');
 
     // Conceptos
     Route::resource('conceptos', App\Http\Controllers\conceptosController::class);

@@ -89,7 +89,7 @@
                                                 @can('catalogos_edit')
                                                     <a href="#" class="" data-bs-toggle="modal"
                                                         data-bs-target="#editarItem"
-                                                        onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->codigo }}','{{ $item->comentario }}')">
+                                                        onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->tipo }}','{{ $item->codigo }}','{{ $item->comentario }}')">
                                                         <svg xmlns="http://www.w3.org/2000/svg " width="28" height="28"
                                                             fill="currentColor" class="bi bi-pencil accionesIconos"
                                                             viewBox="0 0 16 16">
@@ -160,6 +160,14 @@
                                 value="{{ old('nombre') }}" required placeholder="Especifique...">
                         </div>
 
+                        <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                            <label class="labelTitulo">Tipo:</label></br>
+                            <select id="tipoId" name="tipo" class="form-select" aria-label="Default select example">
+                                <option value="1">Caja Chica</option>
+                                <option value="2">Servicios</option>
+                            </select>
+                        </div>
+
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
                             <textarea class="form-control-textarea border-green" placeholder="Escribe tu comentario aquí" id="floatingTextarea"
@@ -202,6 +210,15 @@
                         <div class=" col-12 col-sm-8 mb-4 ">
                             <label class="labelTitulo">Nombre:</label></br>
                             <input type="text" class="inputCaja" id="controlNombre" name="nombre" value="">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                            <label class="labelTitulo">Tipo:</label></br>
+                            <select id="controlTipo" name="tipo" class="form-select"
+                                aria-label="Default select example">
+                                <option value="1">Caja Chica</option>
+                                <option value="2">Servicios</option>
+                            </select>
                         </div>
 
                         <div class=" col-12  mb-3 ">
@@ -276,13 +293,16 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, codigo, comentarios) {
+        function cargaItem(id, nombre, tipo, codigo, comentarios) {
 
             const txtId = document.getElementById('controlId');
             txtId.value = id;
 
             const txtNombre = document.getElementById('controlNombre');
             txtNombre.value = nombre;
+
+            const txtTipo = document.getElementById('controlTipo');
+            txtTipo.value = tipo;
 
             const txtComentarios = document.getElementById('controlComentarios');
             txtComentarios.value = comentarios;

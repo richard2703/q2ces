@@ -99,10 +99,10 @@
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Número de Comprobante:
                                                     <span>*</span></label></br>
-                                                <input type="number" class="inputCaja text-right" id="ncomprobante"
+                                                <input type="text" class="inputCaja text-right" id="ncomprobante"
                                                     required name="ncomprobante" maxlength="100000" step="1"
-                                                    min="1" pattern="^\d*(\.\d{0,2})?$" max="99999"
-                                                    placeholder="ej. 100" value="{{ $cajaChica->ncomprobante }}">
+                                                    min="1" max="99999" placeholder="ej. 100"
+                                                    value="{{ $cajaChica->ncomprobante }}">
                                             </div>
 
                                             {{--  <div class=" col-12 col-sm-6 col-md-4 mb-3 ">

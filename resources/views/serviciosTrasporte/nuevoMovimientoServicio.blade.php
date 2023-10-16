@@ -26,7 +26,7 @@
 
                                 <div class="d-flex p-3 divBorder">
                                     <div class="col-6 ">
-                                        <a href="{{ route('cajaChica.index') }}">
+                                        <a href="{{ route('serviciosTrasporte.index') }}">
                                             <button class="btn regresar">
                                                 <span class="material-icons">
                                                     reply

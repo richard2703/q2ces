@@ -394,6 +394,7 @@ create table conceptos(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     codigo varchar(200) not NULL,
     nombre varchar(200) not NULL,
+    tipo int null,
     comentario text NULL,
     primary key (id)
 );
@@ -1674,7 +1675,7 @@ create table cajaChica(
     dia date not NULL,
     concepto bigint(20) unsigned NOT NULL,
     comprobante float(10,2) NULL,
-    ncomprobante int not NULL,
+    ncomprobante varchar(200) not NULL,
     cliente varchar(200),
     obra bigint(20) unsigned  NULL,
     equipo bigint(20) unsigned NOT NULL,

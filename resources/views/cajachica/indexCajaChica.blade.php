@@ -136,7 +136,7 @@
                                                             {{ $registro->comprobante }}
                                                         </td>
                                                         {{--  <td>1234</td>  --}}
-                                                        <td>{{ $registro->cliente }}</td>
+                                                        <td>{{ $registro->cliente ? $registro->obra : '---' }}</td>
                                                         <td>{{ $registro->obra ? $registro->obra : '---' }}</td>
                                                         <td>{{ $registro->identificador }} - {{ $registro->maquinaria }}
                                                         </td>

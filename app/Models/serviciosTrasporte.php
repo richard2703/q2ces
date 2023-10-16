@@ -13,6 +13,6 @@ class serviciosTrasporte extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'fecha', 'conceptoServicioTrasporteId', 'obraId', 'ncomprobante', 'equipoId', 'personalId', 'cantidad', 'estatus'
+        'fecha', 'conceptoId', 'obraId', 'ncomprobante', 'equipoId', 'personalId', 'cantidad', 'estatus', 'recibe', 'horaEntrega', 'horaLlegada', 'cajaChica'
     ];
 }

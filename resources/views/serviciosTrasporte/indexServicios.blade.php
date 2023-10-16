@@ -186,7 +186,7 @@
 
                                                         <td class="td-actions text-right">
                                                             @can('cajachica_show')
-                                                                <a href="{{ route('cajaChica.show', $registro->id) }}"
+                                                                <a href="{{ route('serviciosTrasporte.show', $registro->id) }}"
                                                                     class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                         height="28" fill="currentColor"
@@ -200,7 +200,7 @@
                                                                 </a>
                                                             @endcan
                                                             @can('cajachica_edit')
-                                                                <a href="{{ route('cajaChica.edit', $registro->id) }}"
+                                                                <a href="{{ route('serviciosTrasporte.edit', $registro->id) }}"
                                                                     class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                         height="28" fill="currentColor"
@@ -210,8 +210,9 @@
                                                                     </svg>
                                                                 </a>
                                                             @endcan
-                                                            @can('user_destroy')
-                                                                <form action="{{ route('cajaChica.destroy', $registro->id) }}"
+                                                            {{--  @can('user_destroy')
+                                                                <form
+                                                                    action="{{ route('serviciosTrasporte.destroy', $registro->id) }}"
                                                                     method="POST" style="display: inline-block;"
                                                                     onsubmit="return confirm('Seguro?')">
                                                                     @csrf
@@ -227,7 +228,7 @@
                                                                         </svg>
                                                                     </button>
                                                                 </form>
-                                                            @endcan
+                                                            @endcan  --}}
                                                         </td>
                                                     </tr>
                                                     @empty

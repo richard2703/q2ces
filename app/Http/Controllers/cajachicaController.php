@@ -56,9 +56,10 @@ class cajaChicaController extends Controller
 
         $registros = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
             ->leftJoin('obras', 'cajaChica.obra', 'obras.id')
-            ->join('maquinaria', 'cajaChica.equipo', 'maquinaria.id')
+            ->leftJoin('maquinaria', 'cajaChica.equipo', 'maquinaria.id')
             ->join('conceptos', 'cajaChica.concepto', 'conceptos.id')
             ->join('comprobante', 'cajaChica.comprobanteId', 'comprobante.id')
+            ->leftJoin('clientes', 'obras.clienteId', 'clientes.id')
             ->select(
                 'cajaChica.id',
                 'dia',
@@ -69,7 +70,7 @@ class cajaChicaController extends Controller
                 'ncomprobante',
                 'personal.nombres as pnombre',
                 'personal.apellidoP as papellidoP',
-                'cliente',
+                'clientes.nombre as cliente',
                 'obras.nombre as obra',
                 'maquinaria.identificador',
                 'maquinaria.nombre as maquinaria',
@@ -106,7 +107,7 @@ class cajaChicaController extends Controller
     {
         abort_if(Gate::denies('cajachica_create'), 403);
 
-        $conceptos = conceptos::orderBy('codigo', 'asc')->get();
+        $conceptos = conceptos::where('tipo', 1)->orderBy('codigo', 'asc')->get();
         $personal = personal::get();
         $obras = obras::get();
         $maquinaria = maquinaria::where('compania', '!=', 'mtq')->orWhere('compania', null)->get();

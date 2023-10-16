@@ -19,14 +19,14 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Nuevo Servicio</h4>
+                                    <h4 class="card-title">Actualizas Movimiento de Servicios</h4>
                                     {{-- <p class="card-category">Usuarios Registrados</p> --}}
 
                                 </div>
 
                                 <div class="d-flex p-3 divBorder">
                                     <div class="col-6 ">
-                                        <a href="{{ route('cajaChica.index') }}">
+                                        <a href="{{ route('serviciosTrasporte.index') }}">
                                             <button class="btn regresar">
                                                 <span class="material-icons">
                                                     reply
@@ -34,18 +34,32 @@
                                                 Regresar
                                             </button>
                                         </a>
-                                        {{-- @can('user_create') --}}
                                     </div>
-                                    {{-- <div class="col-6 text-end">
-                                        <button type="button" class="btn botonGral " data-bs-toggle="modal"
-                                        data-bs-target="#modalConcepto">Nuevo Concepto</button>
-                                    </div> --}}
-                                    {{-- @endcan --}}
+                                    @can('user_create')
+                                        <div class="col-6 text-end">
+                                            @if ($serviciosTrasporte->cajachica != 1)
+                                                <form action="{{ route('serviciosTrasporte.cajaChica') }}" method="POST"
+                                                    style="display: inline-block;" onsubmit="return confirm('Seguro?')">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{ $serviciosTrasporte->id }}">
+                                                    <button class="btn botonGral " type="submit" rel="tooltip">
+                                                        Enviar a Caja Chica
+                                                    </button>
+                                                </form>
+                                            @else
+                                                <span class="combustibleLitros">Movimiento Registrado en Caja
+                                                    Chica</span>
+                                            @endif
+
+                                        </div>
+                                    @endcan
                                 </div>
 
-                                <form class="alertaGuardar" action="{{ route('cajaChica.store') }}" method="post"
-                                    enctype="multipart/form-data">
+                                <form class="alertaGuardar"
+                                    action="{{ route('serviciosTrasporte.update', $serviciosTrasporte->id) }}"
+                                    method="post" enctype="multipart/form-data">
                                     @csrf
+                                    @method('put')
                                     <div class="card-body">
                                         @if (session('success'))
                                             <div class="alert alert-success" role="success">
@@ -60,18 +74,20 @@
                                         <div class="row pt-3">
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Día: <span>*</span></label></br>
-                                                <input type="date" class="inputCaja" id="dia" name="dia"
-                                                    required value="{{ old('dia') }}">
+                                                <input type="date" class="inputCaja" id="dia" name="fecha"
+                                                    required value="{{ $serviciosTrasporte->fecha }}">
 
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Concepto: <span>*</span></label></br>
-                                                <select id="concepto" name="concepto" class="form-select" required
-                                                    aria-label="Default select example">
+                                                <select id="concepto" name="conceptoServicioTrasporteId"
+                                                    class="form-select" required aria-label="Default select example">
                                                     <option selected value="">Seleccione</option>
                                                     @forelse ($conceptos as $concepto)
-                                                        <option value="{{ $concepto->id }}">{{ $concepto->codigo }} -
+                                                        <option value="{{ $concepto->id }}"
+                                                            {{ $serviciosTrasporte->conceptoServicioTrasporteId == $concepto->id ? 'selected' : '' }}>
+                                                            {{ $concepto->codigo }} -
                                                             {{ $concepto->nombre }}
                                                         </option>
                                                     @empty
@@ -81,11 +97,13 @@
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Personal: <span>*</span></label></br>
-                                                <select id="personal" name="personal" class="form-select" required
+                                                <select id="personal" name="personalId" class="form-select" required
                                                     aria-label="Default select example">
                                                     <option selected value="">Seleccione</option>
                                                     @forelse ($personal as $persona)
-                                                        <option value="{{ $persona->id }}">{{ $persona->nombres }}
+                                                        <option value="{{ $persona->id }}"
+                                                            {{ $serviciosTrasporte->personalId == $persona->id ? 'selected' : '' }}>
+                                                            {{ $persona->nombres }}
                                                             {{ $persona->apellidoP }}
                                                         </option>
                                                     @empty
@@ -94,91 +112,79 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Comprobante: <span>*</span></label></br>
-                                                <select id="comprobanteId" name="comprobanteId" class="form-select" required
-                                                    aria-label="Default select example">
-                                                    <option selected value="">Seleccione</option>
-                                                    @foreach ($vctComprobantes as $item)
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->nombre }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-
-                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Número de Comprobante:
-                                                    <span>*</span></label></br>
-                                                <input type="number" class="inputCaja text-right" id="ncomprobante"
-                                                    required name="ncomprobante" maxlength="100000" step="1"
-                                                    min="1" pattern="^\d*(\.\d{0,2})?$" max="99999"
-                                                    placeholder="ej. 100" value="{{ old('ncomprobante') }}">
-                                            </div>
-
-                                            {{--  <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Obra: </label></br>
-                                                <select id="obra" name="obra" class="form-select"
-                                                    aria-label="Default select example">
-                                                    <option selected value="" >Seleccione</option>
-                                                    @forelse ($obras as $obra)
-                                                        <option value="{{ $obra->id }}">{{ $obra->nombre }} </option>
-                                                    @empty
-                                                    @endforelse
-                                                </select>
-                                            </div>
-
-                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Cliente:</label></br>
-                                                <select id="cliente" name="cliente" class="form-select"
-                                                    aria-label="Default select example">
-                                                    <option selected value="">Seleccione</option>
-                                                    @foreach ($vctClientes as $item)
-                                                    <option value="{{ $item->id }}">
-                                                        {{ $item->nombre }}
-                                                    </option>
-                                                @endforeach
-                                                </select>
-                                            </div>
-
-                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Equipo: <span>*</span></label></br>
-                                                <select id="equipo" name="equipo" class="form-select" required
+                                                <select id="equipo" name="equipoId" class="form-select" required
                                                     aria-label="Default select example">
                                                     <option selected value="">Seleccione</option>
                                                     @forelse ($maquinaria as $maquina)
-                                                        <option value="{{ $maquina->id }}">{{ $maquina->identificador }}
+                                                        <option value="{{ $maquina->id }}"
+                                                            {{ $serviciosTrasporte->equipoId == $maquina->id ? 'selected' : '' }}>
+                                                            {{ $maquina->identificador }}
                                                             - {{ $maquina->nombre }}
                                                         </option>
                                                     @empty
                                                     @endforelse
                                                 </select>
-                                            </div>  --}}
+                                            </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Movimiento: <span>*</span></label></br>
-                                                <select id="tipo" name="tipo" class="form-select" required
+                                                <label class="labelTitulo">Obra: </label></br>
+                                                <select id="obra" name="obraId" class="form-select"
                                                     aria-label="Default select example">
                                                     <option selected value="">Seleccione</option>
-                                                    <option value="1">
-                                                        Ingreso </option>
-                                                    <option value="2">
-                                                        Egreso
-                                                    </option>
-                                                    <option value="3">
-                                                        Ingreso Servicios
-                                                    </option>
-                                                    <option value="4">
-                                                        Pendiente de Cobro Y/O Factura
-                                                    </option>
+                                                    @forelse ($obras as $obra)
+                                                        <option value="{{ $obra->id }}"
+                                                            {{ $serviciosTrasporte->obraId == $obra->id ? 'selected' : '' }}>
+                                                            {{ $obra->nombre }} </option>
+                                                    @empty
+                                                    @endforelse
                                                 </select>
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                <label class="labelTitulo">Quien Recibe: </label></br>
+                                                <input class="inputCaja" type="text" name="recibe"
+                                                    value="{{ $serviciosTrasporte->recibe }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                <label class="labelTitulo">Hora Entrega: </label></br>
+                                                <input class="inputCaja" type="time" name="horaEntrega"
+                                                    value="{{ $serviciosTrasporte->horaEntrega }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                <label class="labelTitulo">Hora Llegada: </label></br>
+                                                <input class="inputCaja" type="time" name="horaLlegada"
+                                                    value="{{ $serviciosTrasporte->horaLlegada }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Cantidad: <span>*</span></label></br>
-                                                <input type="number" class="inputCaja text-right" id="cantidad" required
+                                                <input type="number" class="inputCaja text-right" id="cantidad"
                                                     name="cantidad" maxlength="100000" step="0.01" min="0.01"
-                                                    pattern="^\d*(\.\d{0,2})?$" max="99999" placeholder="ej. 100"
-                                                    value="{{ old('calle') }}">
+                                                    max="99999" placeholder="ej. 100"
+                                                    value="{{ $serviciosTrasporte->cantidad }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                <label class="labelTitulo">estatus:</label></br>
+                                                <select id="estatus" name="estatus" class="form-select"
+                                                    aria-label="Default select example">
+                                                    <option
+                                                        value="1"{{ $serviciosTrasporte->estatus == 1 ? 'selected' : '' }}>
+                                                        Espera</option>
+                                                    <option
+                                                        value="2"{{ $serviciosTrasporte->estatus == 2 ? 'selected' : '' }}>
+                                                        Hecho</option>
+                                                    <option
+                                                        value="3"{{ $serviciosTrasporte->estatus == 3 ? 'selected' : '' }}>
+                                                        Cerrado</option>
+                                                    <option
+                                                        value="0"{{ $serviciosTrasporte->estatus == 0 ? 'selected' : '' }}>
+                                                        Cancelado</option>
+
+                                                </select>
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
@@ -201,7 +207,7 @@
         </div>
     </div>
 
-    {{--  Modales  --}}
+    {{--  Modales
     <div class="modal fade" id="modalConcepto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -212,7 +218,6 @@
                 <div class="modal-body">
                     <form class="row d-flex" action="{{ route('conceptos.store') }}" method="post">
                         @csrf
-
                         <div class=" col-12 col-sm-6  mb-3 ">
                             <label class="labelTitulo">Código:</label></br>
                             <input type="text" class="inputCaja" id="codigo" name="codigo"
@@ -237,7 +242,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>  --}}
 @endsection
 <script>
     function Guardado() {
