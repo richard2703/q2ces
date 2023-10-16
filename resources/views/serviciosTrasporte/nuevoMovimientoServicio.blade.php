@@ -1,7 +1,17 @@
 @extends('layouts.main', ['activePage' => 'cajaChica', 'titlePage' => __('Caja Chica - Nuevo Movimiento')])
 @section('content')
-    @inject('carbon', 'Carbon\Carbon')
     <div class="content">
+        @if ($errors->any())
+            <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->
+            <div class="alert alert-danger">
+                <p>Listado de errores a corregir</p>
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -9,12 +19,14 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title"> Editar Movimientos de Caja Chica</h4>
-                                    {{-- <p class="card-category">Usuarios registrados</p> --}}
+                                    <h4 class="card-title">Movimientos de Servicios</h4>
+                                    {{-- <p class="card-category">Usuarios Registrados</p> --}}
+
                                 </div>
+
                                 <div class="d-flex p-3 divBorder">
                                     <div class="col-6 ">
-                                        <a href="{{ route('cajaChica.index') }}">
+                                        <a href="{{ route('serviciosTrasporte.index') }}">
                                             <button class="btn regresar">
                                                 <span class="material-icons">
                                                     reply
@@ -24,11 +36,16 @@
                                         </a>
                                         {{-- @can('user_create') --}}
                                     </div>
+                                    {{-- <div class="col-6 text-end">
+                                        <button type="button" class="btn botonGral " data-bs-toggle="modal"
+                                        data-bs-target="#modalConcepto">Nuevo Concepto</button>
+                                    </div> --}}
+                                    {{-- @endcan --}}
                                 </div>
-                                <form class="alertaGuardar" action="{{ route('cajaChica.update', $cajaChica->id) }}"
-                                    method="post" enctype="multipart/form-data">
+
+                                <form class="alertaGuardar" action="{{ route('serviciosTrasporte.store') }}" method="post"
+                                    enctype="multipart/form-data">
                                     @csrf
-                                    @method('put')
                                     <div class="card-body">
                                         @if (session('success'))
                                             <div class="alert alert-success" role="success">
@@ -40,41 +57,35 @@
                                                 {{ session('faild') }}
                                             </div>
                                         @endif
-
                                         <div class="row pt-3">
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Día:</label></br>
-                                                <input type="date" class="inputCaja" id="dia" name="dia"
-                                                    value={{ $cajaChica->dia }}>
+                                                <label class="labelTitulo">Día: <span>*</span></label></br>
+                                                <input type="date" class="inputCaja" id="dia" name="fecha"
+                                                    required value="{{ old('dia') }}">
 
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Concepto:</label></br>
-                                                <select id="concepto" name="concepto" class="form-select" required
-                                                    aria-label="Default select example">
-                                                    <option value="" selected>Seleccione</option>
+                                                <label class="labelTitulo">Concepto: <span>*</span></label></br>
+                                                <select id="concepto" name="conceptoServicioTrasporteId"
+                                                    class="form-select" required aria-label="Default select example">
+                                                    <option selected value="">Seleccione</option>
                                                     @forelse ($conceptos as $concepto)
-                                                        <option value="{{ $concepto->id }}"
-                                                            {{ $cajaChica->concepto == $concepto->id ? 'selected' : '' }}>
-                                                            {{ $concepto->codigo }} -
+                                                        <option value="{{ $concepto->id }}">{{ $concepto->codigo }} -
                                                             {{ $concepto->nombre }}
                                                         </option>
                                                     @empty
                                                     @endforelse
-
                                                 </select>
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Personal:</label></br>
-                                                <select id="personal" name="personal" class="form-select"
+                                                <label class="labelTitulo">Personal: <span>*</span></label></br>
+                                                <select id="personal" name="personalId" class="form-select" required
                                                     aria-label="Default select example">
-                                                    <option value=""selected>Seleccione</option>
+                                                    <option selected value="">Seleccione</option>
                                                     @forelse ($personal as $persona)
-                                                        <option value="{{ $persona->id }}"
-                                                            {{ $cajaChica->personal == $persona->id ? 'selected' : '' }}>
-                                                            {{ $persona->nombres }}
+                                                        <option value="{{ $persona->id }}">{{ $persona->nombres }}
                                                             {{ $persona->apellidoP }}
                                                         </option>
                                                     @empty
@@ -82,102 +93,97 @@
                                                 </select>
                                             </div>
 
-                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Comprobante:</label></br>
-                                                <select id="comprobanteId" name="comprobanteId" class="form-select"
+                                            {{--  <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                <label class="labelTitulo">Comprobante: <span>*</span></label></br>
+                                                <select id="comprobanteId" name="comprobanteId" class="form-select" required
                                                     aria-label="Default select example">
-                                                    <option value="" selected>Seleccione</option>
+                                                    <option selected value="">Seleccione</option>
                                                     @foreach ($vctComprobantes as $item)
-                                                        <option value="{{ $item->id }}"
-                                                            {{ $cajaChica->comprobanteId == $item->id ? 'selected' : '' }}>
+                                                        <option value="{{ $item->id }}">
                                                             {{ $item->nombre }}
                                                         </option>
                                                     @endforeach
                                                 </select>
-                                            </div>
-
-                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Número de Comprobante:
-                                                    <span>*</span></label></br>
-                                                <input type="text" class="inputCaja text-right" id="ncomprobante"
-                                                    required name="ncomprobante" maxlength="100000" step="1"
-                                                    min="1" max="99999" placeholder="ej. 100"
-                                                    value="{{ $cajaChica->ncomprobante }}">
-                                            </div>
+                                            </div>  --}}
 
                                             {{--  <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Obra:</label></br>
-                                                <select id="obra" name="obra" class="form-select"
+                                                <label class="labelTitulo">Número de Comprobante:
+                                                    <span>*</span></label></br>
+                                                <input type="number" class="inputCaja text-right" id="ncomprobante"
+                                                    required name="ncomprobante" maxlength="100000" step="1"
+                                                    min="1" pattern="^\d*(\.\d{0,2})?$" max="99999"
+                                                    placeholder="ej. 100" value="{{ old('ncomprobante') }}">
+                                            </div>  --}}
+
+                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                <label class="labelTitulo">Obra: </label></br>
+                                                <select id="obra" name="obraId" class="form-select"
                                                     aria-label="Default select example">
-                                                    <option value="" selected>Seleccione</option>
+                                                    <option selected value="">Seleccione</option>
                                                     @forelse ($obras as $obra)
-                                                        <option value="{{ $obra->id }}"
-                                                            {{ $cajaChica->obra == $obra->id ? 'selected' : '' }}>
-                                                            {{ $obra->nombre }} </option>
+                                                        <option value="{{ $obra->id }}">{{ $obra->nombre }} </option>
                                                     @empty
                                                     @endforelse
                                                 </select>
                                             </div>
 
-                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                            {{--  <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Cliente:</label></br>
                                                 <select id="cliente" name="cliente" class="form-select"
                                                     aria-label="Default select example">
+                                                    <option selected value="">Seleccione</option>
                                                     @foreach ($vctClientes as $item)
-                                                        <option value="{{ $item->id }}"
-                                                            {{ $cajaChica->cliente == $item->id ? 'selected' : '' }}>
-                                                            {{ $item->nombre }}
-                                                        </option>
-                                                    @endforeach
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->nombre }}
+                                                    </option>
+                                                @endforeach
                                                 </select>
-                                            </div>
+                                            </div>  --}}
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Equipo:</label></br>
-                                                <select id="equipo" name="equipo" class="form-select"
+                                                <label class="labelTitulo">Equipo: <span>*</span></label></br>
+                                                <select id="equipo" name="equipoId" class="form-select" required
                                                     aria-label="Default select example">
-                                                    <option value="" selected>Seleccione</option>
+                                                    <option selected value="">Seleccione</option>
                                                     @forelse ($maquinaria as $maquina)
-                                                        <option value="{{ $maquina->id }}"
-                                                            {{ $cajaChica->equipo == $maquina->id ? 'selected' : '' }}>
-                                                            {{ $maquina->identificador }}
+                                                        <option value="{{ $maquina->id }}">{{ $maquina->identificador }}
                                                             - {{ $maquina->nombre }}
                                                         </option>
                                                     @empty
                                                     @endforelse
                                                 </select>
-                                            </div>  --}}
+                                            </div>
 
-                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Movimiento:</label></br>
-                                                <select id="tipo" name="tipo" class="form-select"
+                                            {{--  <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                <label class="labelTitulo">Movimiento: <span>*</span></label></br>
+                                                <select id="tipo" name="tipo" class="form-select" required
                                                     aria-label="Default select example">
-                                                    <option value="" selected>Seleccione</option>
-                                                    <option value="1" {{ $cajaChica->tipo == 1 ? 'selected' : '' }}>
+                                                    <option selected value="">Seleccione</option>
+                                                    <option value="1">
                                                         Ingreso </option>
-                                                    <option value="2" {{ $cajaChica->tipo == 2 ? 'selected' : '' }}>
+                                                    <option value="2">
                                                         Egreso
                                                     </option>
-                                                    <option value="3" {{ $cajaChica->tipo == 3 ? 'selected' : '' }}>
+                                                    <option value="3">
                                                         Ingreso Servicios
                                                     </option>
-                                                    <option value="4" {{ $cajaChica->tipo == 4 ? 'selected' : '' }}>
+                                                    <option value="4">
                                                         Pendiente de Cobro Y/O Factura
                                                     </option>
                                                 </select>
-                                            </div>
+                                            </div>  --}}
 
-                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Cantidad:</label></br>
-                                                <input type="number" class="inputCaja text-right" id="cantidad"
-                                                    name="cantidad" maxlength="100000" step="0.01" min="1"
-                                                    max="99999" placeholder="ej. 100" value={{ $cajaChica->cantidad }}>
-                                            </div>
+                                            {{--  <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                <label class="labelTitulo">Cantidad: <span>*</span></label></br>
+                                                <input type="number" class="inputCaja text-right" id="cantidad" required
+                                                    name="cantidad" maxlength="100000" step="0.01" min="0.01"
+                                                    pattern="^\d*(\.\d{0,2})?$" max="99999" placeholder="ej. 100"
+                                                    value="{{ old('calle') }}">
+                                            </div>  --}}
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Comentario:</label></br>
-                                                <textarea id="comentario" class="inputCaja" name="comentario" rows="5" cols="20">{{ $cajaChica->comentario }}</textarea>
-
+                                                <textarea id="comentario" class="inputCaja" name="comentario" rows="5" cols="20"></textarea>
                                             </div>
 
                                         </div>
@@ -206,7 +212,6 @@
                 <div class="modal-body">
                     <form class="row d-flex" action="{{ route('conceptos.store') }}" method="post">
                         @csrf
-
                         <div class=" col-12 col-sm-6  mb-3 ">
                             <label class="labelTitulo">Código:</label></br>
                             <input type="text" class="inputCaja" id="codigo" name="codigo"

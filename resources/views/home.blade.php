@@ -34,6 +34,15 @@
                                         </a>
                                     </div>
                                 @endcan
+                                @can('cajachica_index')
+                                    <div class="col-12 col-md-6 col-lg-3 text-center my-4">
+                                        <a href="{{ route('serviciosTrasporte.index') }}" class="">
+                                            <img src="/img/dash/servicios.svg" alt="inventario" title="inventario"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Servicios</p>
+                                        </a>
+                                    </div>
+                                @endcan
                                 @can('inventario_index')
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ route('inventario.index', 'combustible') }}" class="">
