@@ -252,7 +252,7 @@
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Numero Económico:<span>*</span></label></br>
+                            <label class="labelTitulo">Número Económico:<span>*</span></label></br>
                             <input type="text" class="inputCaja" name="identificador"
                                 value="{{ old('identificador') }}" placeholder="ej: MT-00" required>
                         </div>
@@ -400,7 +400,7 @@
                                     </span>
                                     <div id="contenedorBotonSubirImagenT">
                                         <label for="mi-archivo4">
-                                            <span>sube Imsssagen</span>
+                                            <span>sube Imagen</span>
                                         </label>
                                     </div>
                                 </div>
@@ -425,8 +425,8 @@
                         <input type="hidden" name="puestoId" id="puestoId" value="">
                         <div class=" col-12 col-sm-6 mb-3 ">
 
-                            <label class="labelTitulo">Numero Económico:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="identificador" name="identificador" readonly
+                            <label class="labelTitulo">Número Económico:<span>*</span></label></br>
+                            <input type="text" class="inputCaja" id="identificador" name="identificador"
                                 value="" placeholder="ej: MT-00" required>
                         </div>
 
@@ -841,7 +841,7 @@
 
             const txtIdentificador = document.getElementById('identificador');
             txtIdentificador.value = identificador;
-            txtIdentificador.readOnly = true;
+            txtIdentificador.readOnly = modalTipo;
 
             const txtNombre = document.getElementById('nombre');
             txtNombre.value = nombre;
@@ -935,10 +935,7 @@
                     campo.style.color = 'initial';
                     // campo.style.cursor:no-drop;
                 }
-                if (campo == txtIdentificador) {
-                    campo.readOnly = true;
-                    campo.style.color = 'grey';
-                }
+                
             });
         }
     </script>
@@ -965,7 +962,7 @@
 
             // Obtener todos los campos del formulario
             const campos = document.querySelectorAll('input[type="text"], textarea');
-
+ 
             // Aplicar color gris a los campos con readonly
             campos.forEach((campo) => {
                 if (modalTipo) {

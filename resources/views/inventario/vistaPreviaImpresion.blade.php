@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div id="print-content" class="content-print">
-                        <img src="{{ asset('/img/login/002-sin-slogan.png') }}" alt="" width="200px;" class="mb-2" style="margin-left: -15px;">
+                        <img src="{{ asset('/img/login/002-sin-slogan.png') }}" alt="" width="180px;" class="mb-2" style="margin-left: -15px;">
                         
                             @if ($descarga->tipoCisternaId == null)
                                 <img width="300px;" src="{{ asset('/img/login/Header11GenericoGrande.svg') }}" alt="" class="mb-2">
@@ -50,7 +50,7 @@
                                 <img width="300px;" src="{{ asset('/img/login/Header4GenericoGrande.svg') }}" alt="" class="mb-2">
                             @endif
             
-                            <h1 class="text-center" style="font-weight: 1000;">Q2S/COMB-{{ sprintf("%03d", $nuevoSolicitante['id']) }}</h1><br>
+                            <h1 class="text-center" style="font-weight: 1000;">Q2S/COMB-{{ sprintf("%03d", $descarga->id) }}</h1><br>
                             <div class="text-center" style="font-weight: 1000; ">FECHA DE IMPRESIÓN:</div>
                             <div class="text-center" id="fecha-hora"></div>
                             <p class="text-center" id="hora"></p>
@@ -92,7 +92,7 @@
                                     costo: ${{$ultimaCargaSinTote->precio}} Total: ${{($descarga->litros*$ultimaCargaSinTote->precio)}} </div>
                                     @endif
                                 @else
-                                    0 </div> <div class="text-center" style="font-size:12px;"> 
+                                    0 </div> <div class="text-center" style="font-size:14px;"> 
                                 @endif 
                                     
                             @else
@@ -102,7 +102,7 @@
                                         costo: ${{$ultimaCarga[0]->ultimoPrecio}} Total: ${{($descarga->litros*$ultimaCarga[0]->ultimoPrecio)}} </div>
                                         @endif
                                 @else
-                                    0 </div> <div class="text-center" style="font-size:12px;"> 
+                                    0 </div> <div class="text-center" style="font-size:14px;"> 
                                 @endif 
                                    
                             @endif
@@ -113,7 +113,7 @@
                                 costo: ${{ $descarga->grasaUnitario }} Total: ${{($descarga->grasa*$descarga->grasaUnitario)}} </div> <br> <br>
                                 @endif
                             @else
-                                0 </div> <div class="text-center" style="font-size:12px;"> 
+                                0 </div> <div class="text-center" style="font-size:14px;"> 
                             @endif 
                                 
                             <h6 style="font-weight: 1000;" class="text-center">ACEITE MOTOR: </h6> <div class="text-ce6ter"> @if ($descarga->motor) 
@@ -179,6 +179,7 @@
                                     <div class="text-center"><h6 style="font-weight: 1000; ">KILOMETRAJE ACTUAL: </h6></div>No Habia Un Kilometraje Anterior.
                                 @endif
                                 <div class="text-center"><h6 style="font-weight: 1000;  margin-top: 10px;">OBSERVACIONES: </h6>{{$solicitante['observaciones']}}</div>
+                                <br><br>
                                 <img width="300px;" src="{{ asset('/img/login/Header3DescargaGrande.svg') }}" alt="" class="mb-2">
                                 <div class="text-center"><h6 style="font-weight: 1000;">COSTO DE COMBUSTIBLE:</h6>${{ number_format($ultimaCarga[0]->ultimoPrecio * $descarga->litros, 2) }}</div>
                                 <h6 style="font-weight: 1000; ">COSTO DE FLUIDOS: </h6> ${{number_format($totalProductos,2)}}
@@ -200,7 +201,7 @@
                             @endif
                             <!--<div class="text-center"><h6 style="font-weight: 1000; ">HORA DESCARGA: </h6>{{ $descarga->horas }}</div>-->
                             @if ($cliente != false)
-                                <br><br>
+                                <br>
                                 <img width="300px;" src="{{ asset('/img/login/Header2GenericoGrande.svg') }}" alt="" class="mb-2">
                                 {{--  <div class="text-center"><h6 style="font-weight: 1000; ">HORA SALIDA:...</h6>11:00 pm</div>  --}}
                                 <br> <br>
@@ -213,6 +214,7 @@
                                 <div class="text-center"><h6 style="font-weight: 1000; ">ODOMETRO SALIDA: </h6></div>{{$descarga->odometro}}  {{$descarga->despachado_kom}}
                                 <div class="text-center"><h6 style="font-weight: 1000; ">ODOMETRO LLEGADA: </h6></div>{{$descarga->odometroNuevo}} {{$descarga->despachado_kom}}
                                 @endif
+                                <br>
                                 <div class="text-center"><h6 style="font-weight: 1000; ">KILOMETRAJE SALIDA: </h6>{{$descarga->kilometrajeAnterior}} {{$descarga->equipo_kom}} </div>
                                 @if ($descarga->kilometrajeAnterior != null)
                                 <div class="text-center"><h6 style="font-weight: 1000; ">KILOMETRAJE LLEGADA: </h6></div>{{$descarga->kilometrajeNuevo}}  {{$descarga->equipo_kom}}
@@ -241,7 +243,7 @@
                                     <h6 style="font-weight: 1000; ">TOTAL: ${{number_format(($ultimaCarga[0]->ultimoPrecio*$descarga->litros)+$solicitante['costoTrabajo']+$totalProductos, 2)}}</h6>
                                 @endif
                             @endif
-                            
+                            <br>
                             <div class="copyright text-center" style="font-size: 10px;">
                                 &copy; Copyright <strong><span>Q2Ces</span></strong>. All Rights Reserved
                             </div>
@@ -283,20 +285,12 @@
         
         @page {
             size: 90mm 105mm; /* Tamaño ISO C7 en milímetros */
-            margin-top: 0mm; /* Ajustar según sea necesario */
             margin-bottom: 0mm;
+            margin-top: 0mm;
         }
         body {
-            margin: 0 !important;
+            margin-top: -115mm !important;
             padding: 0 !important;
-            
-        }
-        .content-print {
-            position: absolute;
-            bottom: 0mm; /* Ajusta la posición superior según sea necesario */
-            top: -35mm;
-
-            /* Otros estilos necesarios */
         }
     }
     #print-content {
@@ -306,7 +300,6 @@
         text-align: left !important;
         font-family: Arial, sans-serif;
         padding-top: 15px;
-        {{--  font-size: 12px;  --}}
         font-weight: bold;
         align-items: center;
         margin: 0;
