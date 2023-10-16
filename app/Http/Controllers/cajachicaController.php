@@ -52,8 +52,7 @@ class cajaChicaController extends Controller
         $Adomingo = $domingo->clone()->subDay(7);
         $Alunes = $lunes->clone()->subDay(7);
 
-        $ultimoCorte = corteCajaChica::where('inicio', $Alunes)->first();
-        // dd($ultimoCorte);
+        $ultimoCorte = corteCajaChica::where('fin', $Adomingo)->first();
 
         $registros = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
             ->leftJoin('obras', 'cajaChica.obra', 'obras.id')
