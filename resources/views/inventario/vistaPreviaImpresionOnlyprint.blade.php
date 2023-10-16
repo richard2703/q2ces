@@ -51,11 +51,11 @@
                             @endif
                             
 
-                            <h1 class="text-center" style="font-weight: 1000;">Q2S/COMB-{{ sprintf("%03d", $descarga->descargaDetalleId) }}</h1><br>
+                            <h1 class="text-center" style="font-weight: 1000;">Q2S/COMB-{{ sprintf("%03d", $descarga->id) }}</h1><br>
                             <div class="text-center" style="font-weight: 1000; ">FECHA DE IMPRESIÓN:</div>
                             <div class="text-center" id="fecha-hora"></div>
                             <p class="text-center" id="hora"></p>
-                            <br>
+                            <br> <br>
                             @if ($descarga->tipoCisternaId == null)
                                 @if ($descarga->nombre_cliente)
                                 <h6 class="text-center" style="font-weight: 1000; ">CLIENTE: </h6> <div style="font-size:14px;">{{ $descarga->nombre_cliente }}</div>    
@@ -112,7 +112,7 @@
                                     0</div> <div class="text-center" style="font-size:16px;"> 
                                 @endif 
                                     @if ($cliente != false) 
-                                    costo: ${{$ultimaCargaSinTote->precio}} Total: ${{($descarga->litros*$ultimaCargaSinTote->precio)}} </div>
+                                    costo: ${{$descarga->precioCarga}} Total: ${{($descarga->litros*$descarga->precioCarga)}} </div>
                                     @endif
                             @else
                                 <h6 style="font-weight: 1000;" class="text-center">LITROS COMBUSTIBLE: </h6> <div class="text-center" style="font-size:16px;"> @if ($descarga->litros) 
@@ -121,7 +121,7 @@
                                     0 </div> <div class="text-center" style="font-size:16px;"> 
                                 @endif
                                     @if ($cliente != false) 
-                                    costo: ${{$ultimaCarga[0]->ultimoPrecio}} Total: ${{($descarga->litros*$ultimaCarga[0]->ultimoPrecio)}} </div>
+                                    costo: ${{$descarga->precioCarga}} Total: ${{($descarga->litros*$descarga->precioCarga)}} </div>
                                     @endif
                             @endif
                             
@@ -187,9 +187,9 @@
                                 @endif
                                 <div class="text-center"><h6 style="font-weight: 1000;  margin-top: 10px;">OBSERVACIONES: </h6>{{$descarga->detalles_observaciones}}</div>
                                 <img width="300px;" src="{{ asset('/img/login/Header3DescargaGrande.svg') }}" alt="" class="mb-2">
-                                <div class="text-center"><h6 style="font-weight: 1000;">COSTO DE COMBUSTIBLE:</h6>${{ number_format($ultimaCarga[0]->ultimoPrecio * $descarga->litros, 2) }}</div>
+                                <div class="text-center"><h6 style="font-weight: 1000;">COSTO DE COMBUSTIBLE:</h6>${{ number_format($descarga->precioCarga * $descarga->litros, 2) }}</div>
                                 <h6 style="font-weight: 1000; ">COSTO DE FLUIDOS: </h6> ${{number_format($totalProductos,2)}}
-                                <h6 style="font-weight: 1000; ">TOTAL: ${{number_format(($ultimaCarga[0]->ultimoPrecio*$descarga->litros)+$totalProductos, 2)}}</h6>
+                                <h6 style="font-weight: 1000; ">TOTAL: ${{number_format(($descarga->precioCarga*$descarga->litros)+$totalProductos, 2)}}</h6>
                             @endif
                             @if ($cliente != false) 
                             costo: ${{ $descarga->direccionUnitario }} Total: ${{($descarga->direccion*$descarga->direccionUnitario)}}
@@ -259,13 +259,13 @@
                                 @endif
                                 <img width="300px;" src="{{ asset('/img/login/Header3DescargaGrande.svg') }}" alt="" class="mb-2">
                                 @if ($descarga->tipoCisternaId == null)
-                                    <div class="text-center"><h6 style="font-weight: 1000;">COSTO DE COMBUSTIBLE:</h6>${{$ultimaCargaSinTote->precio}}</div>
+                                    <div class="text-center"><h6 style="font-weight: 1000;">COSTO DE COMBUSTIBLE:</h6>${{$descarga->precioCarga}}</div>
                                     <div class="text-center"><h6 style="font-weight: 1000; ">COSTO DE TRABAJO:</h6>${{$descarga->costoTrabajo}}</div>
-                                    <h6 style="font-weight: 1000; ">TOTAL: ${{($ultimaCargaSinTote->precio*$descarga->litros)+$descarga->costoTrabajo}}</h6>
+                                    <h6 style="font-weight: 1000; ">TOTAL: ${{($descarga->precioCarga*$descarga->litros)+$descarga->costoTrabajo}}</h6>
                                 @else
-                                    <div class="text-center"><h6 style="font-weight: 1000;">COSTO DE COMBUSTIBLE:</h6>${{$ultimaCarga[0]->ultimoPrecio}}</div>
+                                    <div class="text-center"><h6 style="font-weight: 1000;">COSTO DE COMBUSTIBLE:</h6>${{$descarga->precioCarga}}</div>
                                     <div class="text-center"><h6 style="font-weight: 1000; ">COSTO DE TRABAJO:</h6>${{$descarga->costoTrabajo}}</div>
-                                    <h6 style="font-weight: 1000; ">TOTAL: ${{($ultimaCarga[0]->ultimoPrecio*$descarga->litros)+$descarga->costoTrabajo}}</h6>
+                                    <h6 style="font-weight: 1000; ">TOTAL: ${{($descarga->precioCarga*$descarga->litros)+$descarga->costoTrabajo}}</h6>
                                 @endif
                                 
                             @endif
@@ -311,18 +311,12 @@
         
         @page {
             size: 90mm 105mm; /* Tamaño ISO C7 en milímetros */
-            margin-top: 0mm; /* Ajustar según sea necesario */
+            margin-bottom: 0mm;
+            margin-top: 0mm;
         }
         body {
-            margin: 0 !important;
+            margin-top: -115mm !important;
             padding: 0 !important;
-        }
-        .content-print {
-            position: absolute;
-            bottom: 0mm; /* Ajusta la posición superior según sea necesario */
-            top: -35mm;
-
-            /* Otros estilos necesarios */
         }
     }
     #print-content {

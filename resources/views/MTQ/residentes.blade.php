@@ -22,7 +22,7 @@
                                         </div>
                                     @endif
                                     <div class="row">
-                                        <div class="col-12 text-right">
+                                        <div class="col-12 d-flex justify-content-end">
 
                                             {{--  <a href="{{ url('dashMtq') }}">
                                                 <button class="btn regresar">
@@ -34,10 +34,9 @@
                                             </a>  --}}
 
                                             @can('residente_mtq_create')
-                                                <button class="btn botonGral float-end" data-bs-toggle="modal"
-                                                    data-bs-target="#nuevoItem">
-                                                    Añadir Residente
-                                                </button>
+                                                <a href="{{ route('residentes.create') }}">
+                                                    <button type="button" class="btn botonGral">Añadir Residente</button>
+                                                </a>
                                             @endcan
                                         </div>
                                         <div class="d-flex p-3 divBorder"></div>
@@ -75,9 +74,8 @@
                                                             </a>--> --}}
                                                         {{-- @endcan --}}
                                                         @can('residente_mtq_edit')
-                                                            <a href="#" class="" data-bs-toggle="modal"
-                                                                data-bs-target="#editarItem"
-                                                                onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->email }}','{{ $item->telefono }}','{{ $item->identificador }}','{{ $item->auto }}','{{ $item->obraId }}')">
+                                                            <a href="{{ route('residentes.edit', $item->id) }}"
+                                                                class="">
                                                                 <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                     height="28" fill="currentColor"
                                                                     class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -109,7 +107,7 @@
 
                                         </tbody>
                                     </table>
-                                    <div class="card-footer mr-auto">
+                                    <div class="card-footer mr-auto d-flex justify-content-center">
                                         {{ $records->links() }}
                                     </div>
                                 </div>

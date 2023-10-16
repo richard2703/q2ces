@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\docs;
 use App\Models\maquinaria;
+use App\Models\marca;
 use Illuminate\Http\Request;
 use App\Models\residente;
 use App\Models\obras;
+use App\Models\residenteAutos;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
@@ -57,7 +60,15 @@ class residenteController extends Controller
 
     public function create()
     {
-        //
+        $marcas = marca::select('marca.*', 'marcasFilter.tipos_marcas_id')->leftJoin('marcasTipo as marcasFilter', 'marca.id', '=', 'marcasFilter.marca_id')->orderBy('nombre', 'asc')
+            ->where('marcasFilter.tipos_marcas_id', '5')
+            ->get();
+        // dd($marcas);
+        $vctObras = obras::where('estatus', 1)
+            ->orderBy('nombre', 'asc')->get();
+        // $doc = docs::where('tipoId', '3')->orderBy('nombre', 'asc')->get();
+        $maquinaria = maquinaria::all();
+        return view('MTQ.altaDeResidentes', compact('maquinaria', 'marcas', 'vctObras'));
     }
 
     /**
@@ -70,8 +81,6 @@ class residenteController extends Controller
     public function store(Request $request)
     {
         // abort_if(Gate::denies('catalogos_create'), 403);
-
-        // dd( $request );
         $request->validate([
             'nombre' => 'required|max:250',
             'comentario' => 'nullable|max:500',
@@ -83,8 +92,18 @@ class residenteController extends Controller
         $record = $request->all();
 
         $record['clienteId'] = 2; //*** el cliente 2 de MTQ */
+        $newResidente = residente::create($record);
+        for ($i = 0; $i < count($request['autoIdR']); $i++) {
 
-        residente::create($record);
+            if ($request['autoIdR'][$i]) {
+                $objResidente = new residenteAutos();
+                $objResidente->autoId = $request['autoIdR'][$i];
+                $objResidente->residenteId = $newResidente->id;
+                //  $objResidente->puesto = $request[ 'rpuesto' ][ $i ];
+                $objResidente->save();
+            }
+        }
+
         Session::flash('message', 1);
 
         return redirect()->route('residentes.index');
@@ -109,9 +128,18 @@ class residenteController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function edit($id)
+    public function edit(residente $residente)
     {
-        //
+        abort_if(Gate::denies('maquinaria_edit'), '403');
+        $maquinaria = maquinaria::all();
+        $readonly = false;
+
+        $vctObras = obras::where('estatus', 1)->orderBy('nombre', 'asc')->get();
+
+        $residentesAutos = residenteAutos::join('maquinaria as equipo', 'autoId', '=', 'equipo.id')->select('equipo.nombre as equipo_nombre', 'equipo.id as equipo_id', 'residenteAutos.id')->where('residenteId', $residente->id)->get();
+        // dd($residentesAutos);
+
+        return view('MTQ.detalleResidentes', compact('maquinaria', 'residente', 'vctObras', 'readonly', 'residentesAutos'));
     }
 
     /**
@@ -138,15 +166,30 @@ class residenteController extends Controller
         $data = $request->all();
 
         $record = residente::where('id', $data['residenteId'])->first();
-        if ($data['autoId'] == 0 && $data['autoId'] != '') {
-            $data['autoId'] = $record->autoId;
+        // dd($request);
+
+        $nuevaLista = collect();
+        $record->update($data);
+
+        for ($i = 0; $i < count($request['idResidenteAuto']); $i++) {
+
+            if ($request['autoIdR'][$i]) {
+                $array = [
+                    'id' => $request['idResidenteAuto'][$i],
+                    'autoId' => $request['autoIdR'][$i],
+                    'residenteId' => $record->id
+                ];
+                // dd($array);
+                $objResidente = residenteAutos::updateOrCreate(['id' => $array['id']], $array);
+                // dd($i, $array, $objResidente);
+                // dd($objResidente, $array, $request);
+                $nuevaLista->push($objResidente->id);
+            }
         }
 
-        if (is_null($record) == false) {
-            // dd( $data );
-            $record->update($data);
-            Session::flash('message', 1);
-        }
+
+        $test = residenteAutos::where('residenteId', $record->id)->whereNotIn('id', $nuevaLista)->delete();
+        Session::flash('message', 1);
 
         return redirect()->route('residentes.index');
     }

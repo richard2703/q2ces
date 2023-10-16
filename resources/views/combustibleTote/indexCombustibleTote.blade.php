@@ -90,7 +90,7 @@
                                                                             aria-label="Default select example">
                                                                             <option value="">Seleccione</option>
                                                                             @foreach ($maquinaria as $maquina)
-                                                                                <option value="{{ $maquina->id }}" data-horometro="{{ $maquina->horometro }}">
+                                                                                <option value="{{ $maquina->id }}" data-horometro="{{ $maquina->kilometraje }}">
                                                                                     {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
                                                                                 </option>
                                                                             @endforeach
@@ -729,7 +729,7 @@
                                                                                 <tr>
                                                                                     
                                                                                     <td>@if($descarga->id != null)
-                                                                                        <div style="margin-left: 15px;">{{ $descarga->id }}</div>
+                                                                                        <div style="margin-left: 15px;">{{ $descarga->descargaIdTote }}</div>
                                                                                         <span class="material-icons"
                                                                                     style="font-size:40px; color: green">
                                                                                     receipt_long
@@ -768,7 +768,7 @@
                                                                                     <td class="td-actions d-flex justify-content-center">
                                                                                         @can('ticketDescarga_edit')
                                                                                             {{--  <a href="#" data-bs-toggle="modal" data-bs-target="#printFormDescargaEdit"
-                                                                                                onclick="cargaItemEdit('{{ $descarga->descargaIdTote }}', '{{ $descarga->nombreSolicitante }}', '{{ $descarga->costoTrabajo }}', '{{ $descarga->horaLlegada }}','{{ $descarga->observaciones }}','{{ $descarga->tipo_solicitud }}')">
+                                                                                                onclick="cargaItemEdit('{{ $descarga->id }}', '{{ $descarga->nombreSolicitante }}', '{{ $descarga->costoTrabajo }}', '{{ $descarga->horaLlegada }}','{{ $descarga->observaciones }}','{{ $descarga->tipo_solicitud }}')">
                                                                                                 <svg style="color:#f7c90d; margin-top:20px;" xmlns="http://www.w3.org/2000/svg "
                                                                                                     width="28"
                                                                                                     height="28"
@@ -781,10 +781,10 @@
                                                                                             </a>  --}}
                                                                                         @endcan
                                                                                     
-                                                                                        <form action="{{ route('printOnlyTicket.post', $descarga->descargaIdTote) }}" method="POST" style="display: inline-block;">
+                                                                                        <form action="{{ route('printOnlyTicket.post', $descarga->id) }}" method="POST" style="display: inline-block;">
                                                                                             @csrf
                                                                                             @method('POST')
-                                                                                            <input type="hidden" name="id" value="{{ $descarga->descargaIdTote }}">
+                                                                                            <input type="hidden" name="id" value="{{ $descarga->id }}">
                                                                                             <button class="btnSinFondo" type="submit" rel="tooltip">
                                                                                                 <span class="material-icons mt-3" style="font-size:35px; color: #727176;">print</span>
                                                                                             </button>
@@ -1654,7 +1654,7 @@
         }
 
         if (slug == 6) {
-            NoGuardado();
+            mostrarAlertaBorrarExito();
 
         }
     </script>
