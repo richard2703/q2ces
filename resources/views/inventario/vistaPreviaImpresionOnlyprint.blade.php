@@ -93,10 +93,10 @@
                             
                             @if ($descarga->tipoCisternaId == null)
                                 <h6 class="text-center" style="font-weight: 1000; ">EQUIPO DESPACHADOR: </h6> <div class="text-center">{{ $descarga->equipo_nombre }}</div>
+                                <h6 style="font-weight: 1000; text-center">SOLICITO:</h6> <div style="font-size:14px;">{{$descarga->detalles_nombreSolicitante}}</div>
                             @else
                                 {{--  <h6 class="text-center" style="font-weight: 1000; ">DESPACHADOR: </h6> <div class="text-center">CISTERNA TOTE</div>  --}}
                             @endif
-                            <h6 style="font-weight: 1000; text-center">SOLICITO:</h6> <div style="font-size:14px;">{{$descarga->detalles_nombreSolicitante}}</div>
                             {{--  <div class="text-center"><h6 style="font-weight: 1000; ">KILOMETRAJE SALIDA: </h6>{{$descarga->kilometrajeAnterior}} {{$descarga->equipo_kom}} </div>
                                 @if ($descarga->kilometrajeNuevo != null)
                                 <div class="text-center"><h6 style="font-weight: 1000; ">KILOMETRAJE LLEGADA: </h6></div>{{$descarga->kilometrajeNuevo}}  {{$descarga->equipo_kom}}

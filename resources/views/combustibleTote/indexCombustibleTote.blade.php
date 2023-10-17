@@ -888,14 +888,14 @@
                     @method('POST')
                     <div class="modal-body">
                         <input type="hidden" name="id" value="" id="idDescarga">
-                        <label class="labelTitulo">Solicito*:</label>
+                        <label class="labelTitulo" style="display: none">Solicito*:</label>
                         {{--  <select class="form-select inputCaja" name="nombreSolicitante" id="nombreSolicitanteDescarga" required>
                             <option value="">Seleccione</option>
                             @foreach ($usuarios as $item)
                                 <option value="{{ $item->nombres . ' ' . $item->apellidoP }}">{{ $item->nombres . ' ' . $item->apellidoP }}</option>
                             @endforeach
                         </select>  --}}
-                        <input type="text" name="nombreSolicitante" id="nombreSolicitanteDescarga" class="inputCaja" placeholder="Nombre del Solicitante..." required>
+                        <input type="text" style="display: none" name="nombreSolicitante" id="nombreSolicitanteDescarga" class="inputCaja" placeholder="Nombre del Solicitante..." required>
                         <div class="row">
                             {{--  <div class="col-12">
                                 <label for="costoTrabajoDescarga" class="labelTitulo mt-3">Costo de Trabajo:</label>
@@ -1222,8 +1222,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         function mostrarModalConfirmacion() {
+            $('#confirmationModal').modal('show');
             // Obtén el valor del campo de texto y del campo de entrada
-            let nombreSolicitante = document.getElementById("nombreSolicitanteDescarga").value;
+            /*let nombreSolicitante = document.getElementById("nombreSolicitanteDescarga").value;
             let observaciones = document.getElementById("observacionesDescarga").value;
     
             // Verifica que ambos campos estén completos
@@ -1231,8 +1232,8 @@
                 alert("Por favor, llena todos los campos requeridos.");
             } else {
                 // Muestra el modal de confirmación si los campos están completos
-                $('#confirmationModal').modal('show');
-            }
+                
+            }*/
         }
     </script>
     

@@ -80,11 +80,11 @@
                             
                             @if ($descarga->tipoCisternaId == null)
                                 <h6 class="text-center" style="font-weight: 1000; ">EQUIPO DESPACHADOR: </h6> <div class="text-center">{{ $descarga->equipo_nombre }}</div>
+                                <h6 class="text-center" style="font-weight: 1000; ">SOLICITO: </h6> <div style="font-size:16px;">{{$solicitante['nombreSolicitante']}}</div>
                             @else
                                 {{--  <h6 class="text-center" style="font-weight: 1000; ">EQUIPO DESPACHADOR: </h6> <div class="text-center">CISTERNA TOTE</div>  --}}
                             @endif
-                            
-                            <h6 class="text-center" style="font-weight: 1000; ">SOLICITO: </h6> <div style="font-size:16px;">{{$solicitante['nombreSolicitante']}}</div>
+                    
                             @if ($descarga->tipoCisternaId == null)
                                 <h6 style="font-weight: 1000;" class="text-center">LITROS COMBUSTIBLE: </h6> <div class="text-center" style="font-size:16px;"> @if ($descarga->litros) 
                                     {{ $descarga->litros }} LTS/KG </div> <div class="text-center" style="font-size:16px;"> 
