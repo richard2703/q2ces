@@ -81,7 +81,7 @@
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Personal: <span>*</span></label></br>
-                                                <select id="personal" name="personal" class="form-select" required
+                                                <select id="personal" name="personal" class="form-select"
                                                     aria-label="Default select example">
                                                     <option selected value="">Seleccione</option>
                                                     @forelse ($personal as $persona)
@@ -95,7 +95,7 @@
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Comprobante: <span>*</span></label></br>
-                                                <select id="comprobanteId" name="comprobanteId" class="form-select" required
+                                                <select id="comprobanteId" name="comprobanteId" class="form-select"
                                                     aria-label="Default select example">
                                                     <option selected value="">Seleccione</option>
                                                     @foreach ($vctComprobantes as $item)
@@ -110,9 +110,9 @@
                                                 <label class="labelTitulo">Número de Comprobante:
                                                     <span>*</span></label></br>
                                                 <input type="number" class="inputCaja text-right" id="ncomprobante"
-                                                    required name="ncomprobante" maxlength="100000" step="1"
-                                                    min="1" pattern="^\d*(\.\d{0,2})?$" max="99999"
-                                                    placeholder="ej. 100" value="{{ old('ncomprobante') }}">
+                                                    name="ncomprobante" maxlength="100000" step="1" min="1"
+                                                    pattern="^\d*(\.\d{0,2})?$" max="99999" placeholder="ej. 100"
+                                                    value="{{ old('ncomprobante') }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
@@ -142,7 +142,7 @@
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Equipo: <span>*</span></label></br>
-                                                <select id="equipo" name="equipo" class="form-select" required
+                                                <select id="equipo" name="equipo" class="form-select"
                                                     aria-label="Default select example">
                                                     <option selected value="">Seleccione</option>
                                                     @forelse ($maquinaria as $maquina)
