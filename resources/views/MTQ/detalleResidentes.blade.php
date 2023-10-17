@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Detalle de Accesorios')])
+@extends('layouts.main', ['activePage' => 'mtq', 'titlePage' => __('Detalle de Accesorios')])
 @section('content')
     <div class="content">
         <?php

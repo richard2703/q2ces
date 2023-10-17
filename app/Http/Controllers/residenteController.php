@@ -67,7 +67,7 @@ class residenteController extends Controller
         $vctObras = obras::where('estatus', 1)
             ->orderBy('nombre', 'asc')->get();
         // $doc = docs::where('tipoId', '3')->orderBy('nombre', 'asc')->get();
-        $maquinaria = maquinaria::all();
+        $maquinaria = maquinaria::where('compania', 'mtq')->get();
         return view('MTQ.altaDeResidentes', compact('maquinaria', 'marcas', 'vctObras'));
     }
 
@@ -131,7 +131,7 @@ class residenteController extends Controller
     public function edit(residente $residente)
     {
         abort_if(Gate::denies('maquinaria_edit'), '403');
-        $maquinaria = maquinaria::all();
+        $maquinaria = maquinaria::where('compania', 'mtq')->get();
         $readonly = false;
 
         $vctObras = obras::where('estatus', 1)->orderBy('nombre', 'asc')->get();
