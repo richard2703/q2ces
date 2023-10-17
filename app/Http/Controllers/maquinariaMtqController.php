@@ -13,6 +13,7 @@ use App\Models\maqimagen;
 use App\Models\usoMaquinarias;
 use App\Models\marca;
 use App\Models\residente;
+use App\Models\residenteAutos;
 use App\Models\serviciosMtq;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,8 +34,9 @@ class maquinariaMtqController extends Controller
 
         $maquinaria = maquinaria::where('compania', 'mtq')
             ->leftJoin('marca', 'marca.id', 'maquinaria.marcaId')
-            ->leftJoin('residente', 'residente.autoId', 'maquinaria.id')
-            ->select('maquinaria.*', 'marca.nombre as nombreMarca', 'residente.nombre as residente', 'residente.id as residenteId')
+            ->leftJoin('residenteAutos', 'residenteAutos.autoId', 'maquinaria.id')
+            ->leftJoin('residente', 'residente.id', 'residenteAutos.residenteId')
+            ->select('maquinaria.*', 'marca.nombre as nombreMarca',  'residenteAutos.autoId as residenteId', 'residente.nombre as residente')
             ->paginate(15);
 
         $autos = residente::select(
@@ -51,7 +53,7 @@ class maquinariaMtqController extends Controller
         $marcas = marca::all();
         $servicios = serviciosMtq::all();
 
-        // dd( 'test' );
+        // dd($maquinaria);
         return view('MTQ.indexMaquinariaMtq', compact('maquinaria', 'marcas', 'servicios', 'autos'));
     }
 
@@ -64,7 +66,6 @@ class maquinariaMtqController extends Controller
     public function create()
     {
         abort_if(Gate::denies('maquinaria_mtq_create'), 403);
-
         return view('MTQ.altaDeMaquinariaMtq');
     }
 
@@ -278,7 +279,7 @@ class maquinariaMtqController extends Controller
 
     public function destroy(maquinaria $maquinaria)
     {
-        dd($maquinaria);
+        // dd($maquinaria);
 
         abort_if(Gate::denies('maquinaria_mtq_destroy'), 403);
 
@@ -287,7 +288,7 @@ class maquinariaMtqController extends Controller
 
     public function uso()
     {
-        dd('uso');
+        // dd('uso');
         abort_if(Gate::denies('maquinaria_mtq_update_uso_bloque'), 403);
 
         $maquinaria = usoMaquinarias::join('maquinaria', 'maquinaria.id', 'usoMaquinarias.maquinariaId')
@@ -304,26 +305,39 @@ class maquinariaMtqController extends Controller
         // dd( $request );
         abort_if(Gate::denies('maquinaria_mtq_assign_personal'), 403);
         $data = $request->all();
-        // dd( $data );
+        // dd($data);
 
         if ($data['NresidenteId'] == null || $data['NresidenteId'] == '') {
             // dd( 'Borrar' );
-            $record = residente::where('id', $data['residenteId'])->first();
-            $record->autoId = null;
-            $record->save();
+            $record = residenteAutos::where('autoId', $data['autoId'])->first();
+            $record->delete();
         } else if ($data['NresidenteId'] != 0) {
 
             if ($data['residenteId'] != null) {
                 // dd( 'Residente' );
-                $record = residente::where('id', $data['residenteId'])->first();
-                $record->autoId = null;
+                $record = residenteAutos::where('autoId', $data['autoId'])->first();
+                $record->residenteId = $data['NresidenteId'];
+                $record->save();
+            } else {
+                // $maquinaria = maquinaria::where('id', $data['autoId'])->first();
+                $record = new residenteAutos();
+                // dd($request);
+                $record->autoId = $data['autoId'];
+                $record->residenteId = $data['NresidenteId'];
                 $record->save();
             }
 
-            $record = residente::where('id', $data['NresidenteId'])->first();
-            $record->autoId = $data['autoId'];
-            $record->save();
+            // $record = residenteAutos::where('residenteId', $data['NresidenteId'])->first();
+            // $record->autoId = $data['autoId'];
+            // $record->save();
         }
         return redirect()->route('mtq.index');
     }
+
+
+    // public function autoAsignado($autoId)
+    // {
+    //     $residenteAutos = residenteAutos::where('autoId', $autoId)->get();
+    //     return response()->json($residenteAutos);
+    // }
 }
