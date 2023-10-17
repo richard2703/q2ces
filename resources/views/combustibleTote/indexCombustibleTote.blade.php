@@ -90,7 +90,7 @@
                                                                             aria-label="Default select example">
                                                                             <option value="">Seleccione</option>
                                                                             @foreach ($maquinaria as $maquina)
-                                                                                <option value="{{ $maquina->id }}" data-horometro="{{ $maquina->horometro }}">
+                                                                                <option value="{{ $maquina->id }}" data-horometro="{{ $maquina->kilometraje }}">
                                                                                     {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
                                                                                 </option>
                                                                             @endforeach
@@ -729,7 +729,7 @@
                                                                                 <tr>
                                                                                     
                                                                                     <td>@if($descarga->id != null)
-                                                                                        <div style="margin-left: 15px;">{{ $descarga->id }}</div>
+                                                                                        <div style="margin-left: 15px;">{{ $descarga->descargaIdTote }}</div>
                                                                                         <span class="material-icons"
                                                                                     style="font-size:40px; color: green">
                                                                                     receipt_long
@@ -817,7 +817,7 @@
                                                                                         
                                                                                         {{-- id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms, horas, imgHoras, fecha --}}
                                                                                         <form
-                                                                                            action="{{ route('inventario.deleteDescarga', 0) }}"
+                                                                                            action="{{ route('inventario.deleteDescarga', $descarga->descargaIdTote) }}"
                                                                                             method="POST"
                                                                                             style="display: inline-block;"
                                                                                             onsubmit="return confirm('¿Estás seguro?')">
@@ -1654,7 +1654,7 @@
         }
 
         if (slug == 6) {
-            NoGuardado();
+            mostrarAlertaBorrarExito();
 
         }
     </script>

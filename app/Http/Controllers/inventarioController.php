@@ -25,6 +25,7 @@ use App\Models\tipoEquipo;
 use App\Models\tipoUniforme;
 use App\Models\asignacionUniforme;
 use App\Models\cisternas;
+use App\Models\descargaDetalle;
 
 class inventarioController extends Controller
 {
@@ -136,14 +137,15 @@ class inventarioController extends Controller
                 'descarga.litros',
                 'descarga.created_at AS fecha',
                 'descarga.ticket',
-                'descarga.descargaDetalleId',
+                // 'descarga.descargaDetalleId',
                 'detalles.*',
             )
                 ->join('maquinaria', 'maquinaria.id', '=', 'descarga.maquinariaId')
                 ->join('personal', 'personal.id', '=', 'descarga.operadorId')
                 ->join('maquinaria as m2', 'm2.id', '=', 'descarga.servicioId')
                 ->join('personal as p2', 'p2.id', '=', 'descarga.receptorId')
-                ->leftJoin('descargaDetalle as detalles', 'descarga.descargaDetalleId', '=', 'detalles.id')
+                ->leftJoin('descargaDetalle as detalles', 'descarga.id', '=', 'detalles.descargaId')
+                // ->leftJoin('descargaDetalle as detalles', 'descarga.descargaDetalleId', '=', 'detalles.id')
                 ->whereNull('descarga.tipoCisternaId')
                 ->orderBy('descarga.created_at', 'desc')
                 ->paginate(10);
@@ -619,15 +621,16 @@ class inventarioController extends Controller
         $motor = cisternas::where("nombre", 'Aceite Motor')->get('ultimoPrecio');
         $direccion = cisternas::where("nombre", 'Aceite Direccion')->get('ultimoPrecio');
 
+
         // dd($grasa);
         if ($request['km'] > $cisterna->kilometraje) {
             $descarga['kilometrajeAnterior'] = $cisterna->kilometraje;
             $descarga['kilometrajeNuevo'] = $request['km'];
             $cisterna->kilometraje = $request['km'];
-            $descarga['odometro'] = $cisternaKango->horometro;
+            // $descarga['odometro'] = $cisternaKango->horometro;
             $descarga['odometroNuevo'] = $request['horometro'];
             // $descarga['odometro'] = $cisterna->kilometraje;
-            $cisternaKango->horometro = $request['horometro'];
+            $cisternaKango->kilometraje = $request['km'];
             $descarga['grasaUnitario'] = $grasa[0]['ultimoPrecio'];
             $descarga['hidraulicoUnitario'] = $hidraulico[0]['ultimoPrecio'];
             $descarga['anticongelanteUnitario'] = $anticongelante[0]['ultimoPrecio'];
@@ -637,6 +640,11 @@ class inventarioController extends Controller
             // dd($descarga);
             $descarga['userId'] = auth()->user()->id;
             $descarga['fechaLlegada'] = Carbon::now();
+            $cargaPrevia = carga::first();
+            if ($cargaPrevia == null) {
+                Session::flash('message', 7);
+                return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
+            }
             descarga::create($descarga);
             $cisterna->cisternaNivel = ($cisterna->cisternaNivel - $request['litros']);
             $cisterna->update();
@@ -793,6 +801,27 @@ class inventarioController extends Controller
         //*** eliminamos el registro */
         $carga->delete();
 
+        if ($carga->tipoCisternaId != null) {
+            $tipoCisternaId = $carga->tipoCisternaId;
+            $cisternas = cisternas::select("*")->where('id', '=', $tipoCisternaId)->first();
+            $cisternas->contenido = $cisternas->contenido - $carga->litros;
+            $ultimaCarga = carga::where('maquinariaId', $carga['maquinariaId'])
+                ->whereNotNull('tipoCisternaId') // Agrega esta condición
+                ->latest()
+                ->first();
+            // dd($ultimaCarga);
+            $cisternas->ultimaCarga = $ultimaCarga ? $ultimaCarga->litros : 0;
+            $cisternas->update();
+        } else {
+            // $ultimaCarga = carga::where('maquinariaId', $carga['maquinariaId'])
+            //     ->whereNull('tipoCisternaId') // Agrega esta condición
+            //     ->latest()
+            //     ->first();
+            // // dd($ultimaCarga);
+            // $cisternas->ultimaCarga = $ultimaCarga ? $ultimaCarga->litros : 0;
+            // $cisternas->update();
+        }
+
         //*** actualizamos el nivel de la cisterna */
         $decNivelCisterna = $objCalculo->getNivelTotalCisterna($maquinariaId);
 
@@ -804,34 +833,48 @@ class inventarioController extends Controller
 
         Session::flash('message', 1);
 
-        return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
+        if ($carga->tipoCisternaId != null) {
+            return redirect()->route('combustibleTote.index');
+        } else {
+            return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
+        }
     }
 
     public function deleteDescarga($descargaId)
     {
         abort_if(Gate::denies('combustible_destroy'), 403);
-
+        // dd($descargaId);
         $objCalculo = new Calculos();
         //*** obtenemos el registro */
         $descarga = descarga::select("*")->where('id', '=', $descargaId)->first();
-        //*** maquinaria que actualizará el nivel de la cisterna */
+        if (isset($descarga->tipoCisternaId) && $descarga->tipoCisternaId != null) {
+            $tipoCisternaId = $descarga->tipoCisternaId;
+            $cisternas = cisternas::select("*")->where('id', '=', $tipoCisternaId)->first();
+            $cisternas->contenido = $cisternas->contenido + $descarga->litros;
+            $cisternas->update();
+        }
+        // dd($descarga, $descargaId);
         $maquinariaId = $descarga->maquinariaId;
-
-        //*** eliminamos el registro */
-        $descarga->delete();
-
-        //*** actualizamos el nivel de la cisterna */
         $decNivelCisterna = $objCalculo->getNivelTotalCisterna($maquinariaId);
-
-        // dd('Borrando ' . $cargaId . " " . $maquinariaId . " y su nivel queda en " . $decNivelCisterna);
-        //buscamos el equipo para actulizar el nivel de la cisterna
         $cisterna =   maquinaria::where("id", $maquinariaId)->first();
         $cisterna->cisternaNivel = $decNivelCisterna;
         $cisterna->update();
 
-        Session::flash('message', 1);
+        $descargadetalleId = descargaDetalle::select("*")->where('descargaId', '=', $descargaId)->first();
+        // dd($descargadetalleId);
+        if ($descargadetalleId != null) {
+            $descargadetalleId->delete();
+        }
 
-        return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
+        //*** eliminamos el registro */
+        $descarga->delete();
+
+        Session::flash('message', 1);
+        if ($descarga->tipoCisternaId != null) {
+            return redirect()->route('combustibleTote.index');
+        } else {
+            return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
+        }
     }
 
 

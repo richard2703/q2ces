@@ -165,7 +165,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="card-footer mr-auto">
+                    <div class="card-footer mr-auto d-flex justify-content-center">
                         {{ $maquinaria->links() }}
                     </div>
                 </div>
@@ -252,7 +252,7 @@
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Numero Económico:<span>*</span></label></br>
+                            <label class="labelTitulo">Número Económico:<span>*</span></label></br>
                             <input type="text" class="inputCaja" name="identificador"
                                 value="{{ old('identificador') }}" placeholder="ej: MT-00" required>
                         </div>
@@ -400,7 +400,7 @@
                                     </span>
                                     <div id="contenedorBotonSubirImagenT">
                                         <label for="mi-archivo4">
-                                            <span>sube Imsssagen</span>
+                                            <span>sube Imagen</span>
                                         </label>
                                     </div>
                                 </div>
@@ -425,8 +425,8 @@
                         <input type="hidden" name="puestoId" id="puestoId" value="">
                         <div class=" col-12 col-sm-6 mb-3 ">
 
-                            <label class="labelTitulo">Numero Económico:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="identificador" name="identificador" readonly
+                            <label class="labelTitulo">Número Económico:<span>*</span></label></br>
+                            <input type="text" class="inputCaja" id="identificador" name="identificador"
                                 value="" placeholder="ej: MT-00" required>
                         </div>
 
@@ -841,7 +841,7 @@
 
             const txtIdentificador = document.getElementById('identificador');
             txtIdentificador.value = identificador;
-            txtIdentificador.readOnly = true;
+            txtIdentificador.readOnly = modalTipo;
 
             const txtNombre = document.getElementById('nombre');
             txtNombre.value = nombre;
@@ -892,31 +892,31 @@
 
             const imagenVista = document.getElementById('fotoImg');
             if (img != "" && img != null) {
-                imagenVista.src = "{{ asset('/storage/maquinaria/') }}/" + identificador.padStart(4, "0") + "/" + img;
+                imagenVista.src = "{{ asset('/storage/maquinaria/') }}/" + id.padStart(4, "0") + "/" + img;
             } else {
                 imagenVista.src = "{{ asset('/img/general/default.jpg') }}"
             }
             const imagenVistaF = document.getElementById('fotoImgF');
             if (imgF != "" && imgF != null) {
-                imagenVistaF.src = "{{ asset('/storage/maquinaria/') }}/" + identificador.padStart(4, "0") + "/" + imgF;
+                imagenVistaF.src = "{{ asset('/storage/maquinaria/') }}/" + id.padStart(4, "0") + "/" + imgF;
             } else {
                 imagenVistaF.src = "{{ asset('/img/general/default.jpg') }}"
             }
             const imagenVistaD = document.getElementById('fotoImgD');
             if (imgD != "" && imgD != null) {
-                imagenVistaD.src = "{{ asset('/storage/maquinaria/') }}/" + identificador.padStart(4, "0") + "/" + imgD;
+                imagenVistaD.src = "{{ asset('/storage/maquinaria/') }}/" + id.padStart(4, "0") + "/" + imgD;
             } else {
                 imagenVistaD.src = "{{ asset('/img/general/default.jpg') }}"
             }
             const imagenVistaI = document.getElementById('fotoImgI');
             if (imgI != "" && imgI != null) {
-                imagenVistaI.src = "{{ asset('/storage/maquinaria/') }}/" + identificador.padStart(4, "0") + "/" + imgI;
+                imagenVistaI.src = "{{ asset('/storage/maquinaria/') }}/" + id.padStart(4, "0") + "/" + imgI;
             } else {
                 imagenVistaI.src = "{{ asset('/img/general/default.jpg') }}"
             }
             const imagenVistaT = document.getElementById('fotoImgT');
             if (imgT != "" && imgT != null) {
-                imagenVistaT.src = "{{ asset('/storage/maquinaria/') }}/" + identificador.padStart(4, "0") + "/" + imgT;
+                imagenVistaT.src = "{{ asset('/storage/maquinaria/') }}/" + id.padStart(4, "0") + "/" + imgT;
             } else {
                 imagenVistaT.src = "{{ asset('/img/general/default.jpg') }}"
             }
@@ -935,10 +935,7 @@
                     campo.style.color = 'initial';
                     // campo.style.cursor:no-drop;
                 }
-                if (campo == txtIdentificador) {
-                    campo.readOnly = true;
-                    campo.style.color = 'grey';
-                }
+                
             });
         }
     </script>
@@ -965,7 +962,7 @@
 
             // Obtener todos los campos del formulario
             const campos = document.querySelectorAll('input[type="text"], textarea');
-
+ 
             // Aplicar color gris a los campos con readonly
             campos.forEach((campo) => {
                 if (modalTipo) {

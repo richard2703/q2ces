@@ -204,7 +204,7 @@
                                                                     </svg>
                                                                 </a>
                                                             @endcan
-                                                            @can('user_destroy')
+                                                            @can('cajachica_destroy')
                                                                 <form action="{{ route('cajaChica.destroy', $registro->id) }}"
                                                                     method="POST" style="display: inline-block;"
                                                                     onsubmit="return confirm('Seguro?')">

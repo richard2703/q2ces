@@ -199,7 +199,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('mantenimiento_create')
+                        @can('combustible_index')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('combustibleTote.index') }}" class="">
@@ -568,8 +568,6 @@
     <!-- End Footer -->
 
     <!--   Core JS Files   -->
-
-
     <script src="{{ asset('js/core/jquery.min.js') }}"></script>
     <script src="{{ asset('js/core/popper.min.js') }}"></script>
     <script src="{{ asset('js/core/bootstrap-material-design.min.js') }}"></script>

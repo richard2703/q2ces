@@ -139,15 +139,16 @@
 
                                             <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                                 <label class="labelTitulo">Correo: <span>*</span></label></br>
-                                                <input type="email" class="inputCaja" id="rEmail" required
-                                                placeholder="ej. elcorreo@delresponsable.com" min="6" name="rEmail[]" value="">
+                                                <input type="email" class="inputCaja" id="rEmail"
+                                                    placeholder="ej. elcorreo@delresponsable.com" min="6"
+                                                    name="rEmail[]" value="">
                                             </div>
 
                                             <div class=" col-11 col-sm-5 col-lg-3 my-3 ">
                                                 <label class="labelTitulo">Teléfono:</label></br>
                                                 <input type="tel" class="inputCaja" id="rTelefono"
-                                                 pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}"
-                                                placeholder="ej. 00-0000-0000" name="rTelefono[]" value="">
+                                                    pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}" placeholder="ej. 00-0000-0000"
+                                                    name="rTelefono[]" value="">
                                             </div>
 
                                             <div class="col-lg-1 my-3 text-end">

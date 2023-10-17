@@ -71,7 +71,6 @@
                                 <table class="table">
                                     <thead class="labelTitulo">
                                         <th class="labelTitulo text-center">N.E.</th>
-                                        <th class="labelTitulo text-center">Fecha</th>
                                         <th class="labelTitulo text-center">Equipo</th>
                                         <th class="labelTitulo text-center">Marca</th>
                                         <th class="labelTitulo text-center">Modelo</th>
@@ -85,21 +84,26 @@
                                         @forelse ($maquinaria as $maquina)
                                             <tr>
                                                 <td class="text-center">{{ $maquina->identificador }}</td>
-                                                <td class="text-center">
-                                                    {{ \Carbon\Carbon::parse($maquina->created_at)->locale('es')->isoFormat('D/MM/YY') }}
-                                                </td>
-                                                <td class="text-center">{{ $maquina->nombre }}</td>
-                                                <td class="text-center">{{ $maquina->marca }}</td>
+                                                <td class="text-center">{{ $maquina->nombre_maquinaria }}</td>
+                                                <td class="text-center">{{ $maquina->nombre_marca }}</td>
                                                 <td class="text-center">{{ $maquina->modelo }}</td>
                                                 <td class="text-center">{{ $maquina->placas }}</td>
-                                                <td class="text-center">{{ number_format($maquina->uso) }}</td>
-                                                <td class="text-center">{{ number_format($maquina->restantes) }}</td>
+                                                <td class="text-center">{{ number_format($maquina->kilometraje) }}</td>
+                                                
+                                                <td class="text-center"> 
+                                                    @if($maquina->mantenimiento != 0)
+                                                        {{ number_format($maquina->mantenimiento - $maquina->kilometraje) }}
+                                                    @else
+                                                        0
+                                                    @endif
+                                                </td>
+
                                                 <td class="text-center">{{ number_format($maquina->mantenimiento) }}</td>
 
                                                 <td class="td-actions text-center">
                                                     @can('maquinaria_mtq_edit')
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
-                                                            onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marca }}','{{ $maquina->modelo }}','{{ $maquina->uso }}','{{ false }}')">
+                                                            onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre_maquinaria }}','{{ $maquina->id_marca }}','{{ $maquina->modelo }}','{{ $maquina->kilometraje }}','{{ false }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                 height="28" fill="currentColor"
                                                                 class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -126,8 +130,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 
     <!-- Modal Nueva Equipos MTQ-->
@@ -139,29 +141,37 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('uso.update', 0) }}" method="post"
+                    <form class="row d-flex" action="{{ route('uso.store', 0) }}" method="post"
                         enctype="multipart/form-data">
                         @csrf
-                        @method('put')
+                        @method('post')
 
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Numero Económico:<span>*</span></label></br>
+                        <div class=" col-12 col-sm-6 mb-3 " style="display: none">
+                            <label class="labelTitulo">Número Económico:<span>*</span></label></br>
                             <input type="text" class="inputCaja" name="identificador" id="identificador"
                                 value="{{ old('identificador') }}" placeholder="ej: MT-00" readonly id="identificador">
                         </div>
 
-                        <div class=" col-12 col-sm-6 mb-3 ">
+                        <div class=" col-12 col-sm-6 mb-3 " style="display: none">
                             <label class="labelTitulo">Equipo:<span>*</span></label></br>
                             <input type="text" class="inputCaja" name="nombre" id="nombre"
                                 value="{{ old('nombre') }}" readonly id="nombre">
                         </div>
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Marca:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" name="marca" id="marca"
-                                value="{{ old('marca') }}" readonly id="marca">
+                        
+                        <div class="col-12 col-sm-6 mb-3" style="display: none">
+                            <label for="title" class="labelTitulo">Marca:</label>
+                            <select name='marca'
+                                class="form-select" id="marca" placeholder="Marca Equipo..." readonly>
+                                <option value="">Seleccione</option>
+                                @foreach ($marca as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
-                        <div class=" col-12 col-sm-6 mb-3 ">
+                        <div class=" col-12 col-sm-6 mb-3 " style="display: none">
                             <label class="labelTitulo">Modelo:<span>*</span></label></br>
                             <input type="text" class="inputCaja" name="modelo" id="modelo"
                                 value="{{ old('modelo') }}" required id="modelo">
@@ -176,8 +186,8 @@
                         @can('maquinaria_mtq_update_uso')
                             <div class=" col-12 col-sm-6  mb-3 ">
                                 <label class="labelTitulo">Edicion de Uso:</label></br>
-                                <input type="hidden" name="id" id="id" value="" id="idmaq">
-                                <input type="text" class="inputCaja" placeholder="Ej. NS01234ABCD" name="valor"
+                                <input type="hidden" name="id[]" id="id" value="" id="idmaq">
+                                <input type="text" class="inputCaja" placeholder="Ej. NS01234ABCD" name="valor[]"
                                     value="{{ old('numserie') }}" id="valor">
                             </div>
                         @endcan
@@ -236,8 +246,15 @@
 
                                 <div class="mb-3 col-6">
                                     <label for="title" class="labelTitulo">Marca:</label>
-                                    <input autofocus type="text" class="inputCaja" id="Mmarca" name="marca"
-                                        placeholder="Marca Equipo..." readonly>
+                                    <select name='marca'
+                                        class="form-select" name="marca" id="Mmarca" placeholder="Marca Equipo..." readonly>
+                                        <option value="">Seleccione</option>
+                                        @foreach ($marca as $item)
+                                            <option value="{{ $item->id }}">
+                                                {{ $item->nombre }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
@@ -315,7 +332,7 @@
             autoFill: true,
             minLength: 1,
             select: function(event, ui) {
-
+                console.log('ui',ui.item);
                 // Rellenar los campos con los datos de la persona seleccionada
                 $('#MmaquinariaId').val(ui.item.id);
                 // $('#descripcion').val(ui.item.value);
@@ -350,7 +367,6 @@
             });
         });
     </script>
-
 
     <style>
         /* Estilos personalizados para alinear el botón de hacia la derecha */
@@ -387,7 +403,7 @@
             if (modalTipo) {
                 tituloModal.textContent = 'Ver';
             } else {
-                tituloModal.textContent = 'Editar';
+                tituloModal.textContent = 'Nuevo Uso Al Equipo';
             }
 
             const txtIdentificador = document.getElementById('identificador');
@@ -492,7 +508,7 @@
                 $('#descripcion').val(ui.item.value);
                 $('#titulo').val('Mantenimiento ' + ui.item.nombre);
                 // $('#nombre').val(ui.item.nombre);
-                // $('#marca').val(ui.item.marca);
+                $('#marca').val(ui.item.marca);
                 // $('#modelo').val(ui.item.modelo);
                 // $('#numserie').val(ui.item.numserie);
                 // $('#placas').val(ui.item.placas);

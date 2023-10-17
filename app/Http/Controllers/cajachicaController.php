@@ -52,8 +52,7 @@ class cajaChicaController extends Controller
         $Adomingo = $domingo->clone()->subDay(7);
         $Alunes = $lunes->clone()->subDay(7);
 
-        $ultimoCorte = corteCajaChica::where('inicio', $Alunes)->first();
-        // dd($ultimoCorte);
+        $ultimoCorte = corteCajaChica::where('fin', $Adomingo)->first();
 
         $registros = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
             ->leftJoin('obras', 'cajaChica.obra', 'obras.id')
@@ -79,14 +78,14 @@ class cajaChicaController extends Controller
                 'cajaChica.tipo',
                 'cajaChica.total'
             )->orderby('dia', 'desc')->orderby('id', 'desc')
-            ->whereBetween('dia', [$Adomingo, $domingo])
+            ->whereBetween('dia', [$lunes->clone()->subDay(1), $domingo])
             ->paginate(15);
 
-        $ingreso = cajaChica::whereBetween('dia', [$lunes, $domingo])
+        $ingreso = cajaChica::whereBetween('dia', [$lunes->clone()->subDay(1), $domingo])
             ->where('tipo', 1)
             ->sum('cantidad');
 
-        $egreso = cajaChica::whereBetween('dia', [$lunes, $domingo])
+        $egreso = cajaChica::whereBetween('dia', [$lunes->clone()->subDay(1), $domingo])
             ->where('tipo', 2)
             ->sum('cantidad');
 
