@@ -132,15 +132,18 @@
                                                         <td>{{ \Carbon\Carbon::parse($registro->dia)->locale('es')->isoFormat('dddd D MMMM') }}
                                                         </td>
                                                         <td title={{ $registro->codigo }}>{{ $registro->cnombre }}</td>
-                                                        <td title={{ $registro->ncomprobante }}>
-                                                            {{ $registro->comprobante }}
+                                                        <td>
+                                                            {{ $registro->comprobante ? $registro->comprobante : '---' }}
+                                                            <br>
+                                                            {{ $registro->ncomprobante }}
                                                         </td>
                                                         {{--  <td>1234</td>  --}}
-                                                        <td>{{ $registro->cliente ? $registro->obra : '---' }}</td>
+                                                        <td>{{ $registro->cliente ? $registro->cliente : '---' }}</td>
                                                         <td>{{ $registro->obra ? $registro->obra : '---' }}</td>
                                                         <td>{{ $registro->identificador }} - {{ $registro->maquinaria }}
                                                         </td>
-                                                        <td>{{ $registro->pnombre }} {{ $registro->papellidoP }}</td>
+                                                        <td>{{ $registro->pnombre ? $registro->pnombre : '---' }}
+                                                            {{ $registro->papellidoP }}</td>
                                                         {{--  <td>ingreso</td>  --}}
                                                         <td class=@switch($registro->tipo)
                                                             @case(1)
