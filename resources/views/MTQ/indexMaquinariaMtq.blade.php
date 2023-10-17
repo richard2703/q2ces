@@ -165,7 +165,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="card-footer mr-auto">
+                    <div class="card-footer mr-auto d-flex justify-content-center">
                         {{ $maquinaria->links() }}
                     </div>
                 </div>
@@ -892,31 +892,31 @@
 
             const imagenVista = document.getElementById('fotoImg');
             if (img != "" && img != null) {
-                imagenVista.src = "{{ asset('/storage/maquinaria/') }}/" + identificador.padStart(4, "0") + "/" + img;
+                imagenVista.src = "{{ asset('/storage/maquinaria/') }}/" + id.padStart(4, "0") + "/" + img;
             } else {
                 imagenVista.src = "{{ asset('/img/general/default.jpg') }}"
             }
             const imagenVistaF = document.getElementById('fotoImgF');
             if (imgF != "" && imgF != null) {
-                imagenVistaF.src = "{{ asset('/storage/maquinaria/') }}/" + identificador.padStart(4, "0") + "/" + imgF;
+                imagenVistaF.src = "{{ asset('/storage/maquinaria/') }}/" + id.padStart(4, "0") + "/" + imgF;
             } else {
                 imagenVistaF.src = "{{ asset('/img/general/default.jpg') }}"
             }
             const imagenVistaD = document.getElementById('fotoImgD');
             if (imgD != "" && imgD != null) {
-                imagenVistaD.src = "{{ asset('/storage/maquinaria/') }}/" + identificador.padStart(4, "0") + "/" + imgD;
+                imagenVistaD.src = "{{ asset('/storage/maquinaria/') }}/" + id.padStart(4, "0") + "/" + imgD;
             } else {
                 imagenVistaD.src = "{{ asset('/img/general/default.jpg') }}"
             }
             const imagenVistaI = document.getElementById('fotoImgI');
             if (imgI != "" && imgI != null) {
-                imagenVistaI.src = "{{ asset('/storage/maquinaria/') }}/" + identificador.padStart(4, "0") + "/" + imgI;
+                imagenVistaI.src = "{{ asset('/storage/maquinaria/') }}/" + id.padStart(4, "0") + "/" + imgI;
             } else {
                 imagenVistaI.src = "{{ asset('/img/general/default.jpg') }}"
             }
             const imagenVistaT = document.getElementById('fotoImgT');
             if (imgT != "" && imgT != null) {
-                imagenVistaT.src = "{{ asset('/storage/maquinaria/') }}/" + identificador.padStart(4, "0") + "/" + imgT;
+                imagenVistaT.src = "{{ asset('/storage/maquinaria/') }}/" + id.padStart(4, "0") + "/" + imgT;
             } else {
                 imagenVistaT.src = "{{ asset('/img/general/default.jpg') }}"
             }

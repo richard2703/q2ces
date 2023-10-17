@@ -164,6 +164,19 @@
                 </li>
             @endcan
 
+            @can('cajachica_show')
+                <li class="nav-item collapsed">
+                    <a class="nav-link {{ $activePage == 'servicios' ? '' : 'collapsed' }}"
+                        href="{{ route('serviciosTrasporte.index') }}">
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            currency_exchange
+                        </span>
+                        <span>Servicios</span>
+                    </a>
+                </li>
+            @endcan
+
             @can('combustible_index')
 
                 <li class="nav-item ">

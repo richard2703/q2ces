@@ -17,7 +17,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header bacTituloPrincipal">
-                            <h4 class="card-title">Conceptos</h4>
+                            <h4 class="card-title">Conceptos de Serviciosss</h4>
 
                         </div>
                         <div class="card-body">
@@ -53,7 +53,7 @@
                                 </div>
 
                                 <div class="divBorder">
-                                    <p>Catálogo General de Conceptos Aplicables para los Movimientos de la Caja Chica.</p>
+                                    <p>Catálogo de Conceptos de Servicios Aplicables para los Movimientos de Servicios.</p>
                                 </div>
                             </div>
 
@@ -89,7 +89,7 @@
                                                 @can('catalogos_edit')
                                                     <a href="#" class="" data-bs-toggle="modal"
                                                         data-bs-target="#editarItem"
-                                                        onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->tipo }}','{{ $item->codigo }}','{{ $item->comentario }}')">
+                                                        onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->codigo }}','{{ $item->comentario }}')">
                                                         <svg xmlns="http://www.w3.org/2000/svg " width="28" height="28"
                                                             fill="currentColor" class="bi bi-pencil accionesIconos"
                                                             viewBox="0 0 16 16">
@@ -99,8 +99,9 @@
                                                     </a>
                                                 @endcan
                                                 @can('catalogos_destroy')
-                                                    <form action="{{ route('conceptos.destroy', $item->id) }}" method="POST"
-                                                        style="display: inline-block;" onsubmit="return confirm('Seguro?')">
+                                                    <form action="{{ route('conceptosServicios.destroy', $item->id) }}"
+                                                        method="POST" style="display: inline-block;"
+                                                        onsubmit="return confirm('Seguro?')">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="btnSinFondo" type="submit" rel="tooltip">
@@ -144,7 +145,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('conceptos.store') }}" method="post">
+                    <form class="row d-flex" action="{{ route('conceptosServicios.store') }}" method="post">
                         @csrf
                         {{-- <input type="hidden" name="userId" id="userId" value="{{ $usuario->id }}"> --}}
 
@@ -158,14 +159,6 @@
                             <label class="labelTitulo">Nombre:<span>*</span></label></br>
                             <input type="text" class="inputCaja" id="nombre" name="nombre"
                                 value="{{ old('nombre') }}" required placeholder="Especifique...">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                            <label class="labelTitulo">Tipo:</label></br>
-                            <select id="tipoId" name="tipo" class="form-select" aria-label="Default select example">
-                                <option value="1">Caja Chica</option>
-                                <option value="2">Servicios</option>
-                            </select>
                         </div>
 
                         <div class=" col-12  mb-3 ">
@@ -196,7 +189,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('conceptos.update', 0) }}" method="post">
+                    <form class="row d-flex" action="{{ route('conceptosServicios.update', 0) }}" method="post">
                         @csrf
                         @method('put')
                         <input type="hidden" name="controlId" id="controlId" value="">
@@ -210,15 +203,6 @@
                         <div class=" col-12 col-sm-8 mb-4 ">
                             <label class="labelTitulo">Nombre:</label></br>
                             <input type="text" class="inputCaja" id="controlNombre" name="nombre" value="">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                            <label class="labelTitulo">Tipo:</label></br>
-                            <select id="controlTipo" name="tipo" class="form-select"
-                                aria-label="Default select example">
-                                <option value="1">Caja Chica</option>
-                                <option value="2">Servicios</option>
-                            </select>
                         </div>
 
                         <div class=" col-12  mb-3 ">
@@ -293,16 +277,13 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, tipo, codigo, comentarios) {
+        function cargaItem(id, nombre, codigo, comentarios) {
 
             const txtId = document.getElementById('controlId');
             txtId.value = id;
 
             const txtNombre = document.getElementById('controlNombre');
             txtNombre.value = nombre;
-
-            const txtTipo = document.getElementById('controlTipo');
-            txtTipo.value = tipo;
 
             const txtComentarios = document.getElementById('controlComentarios');
             txtComentarios.value = comentarios;

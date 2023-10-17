@@ -19,7 +19,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Movimientos de Caja Chica</h4>
+                                    <h4 class="card-title">Movimientos de Servicios</h4>
                                     {{-- <p class="card-category">Usuarios Registrados</p> --}}
                                 </div>
                                 <div class="card-body">
@@ -34,7 +34,7 @@
                                         </div>
                                     @endif
                                     <div class="row division">
-                                        <div class="col-12 col-md-4">
+                                        {{--  <div class="col-12 col-md-4">
                                             <p>Semana del</br> <span
                                                     class="combustibleLitros">{{ \Carbon\Carbon::parse($lunes)->locale('es')->isoFormat('dddd D MMMM') }}
                                                     al
@@ -47,12 +47,7 @@
                                             <p class="combustibleLitros fw-semibold text-black-50 ">$
                                                 {{ isset($ultimoCorte->saldo) ? number_format($ultimoCorte->saldo, 2) : '0.00' }}
                                             </p>
-                                            {{--  <p class="combustibleLitros fw-semibold text-black-50 ">$
-                                                {{ $dias = date_diff(now(), now()->addDay(1))->format('%D%') }}
-                                                {{ $dias = date_diff(now()->addDays(), $domingo->addDays(1))->format('%D%') }}
-                                                {{ date_diff(now(), $domingo)->format('%D%') <= 1 ? number_format($ultimoCorte->saldo, 2) : '0.00' }}
-
-                                            </p>  --}}
+                                            
                                         </div>
                                         <div class="col-3 col-md-2 text-center">
                                             <p class="">Ingreso</p>
@@ -94,13 +89,25 @@
                                                         </form>
                                                     @endcan
                                                 @else
-                                                    {{--  {{ date_diff(now(), $domingo)->format('%D%') }}  --}}
                                                 @endif
 
 
                                                 @can('cajachica_create')
                                                     <a href="{{ route('cajaChica.create') }}" class="ps-1">
                                                         <button type="button" class="btn botonGral">Nuevo Movimiento</button>
+                                                    </a>
+                                                @endcan
+                                            </div>
+                                        </div>  --}}
+                                        <div class="row">
+                                            <div class="col-6 text-left">
+                                            </div>
+
+                                            <div class="col-6 d-flex justify-content-end">
+
+                                                @can('cajachica_create')
+                                                    <a href="{{ route('serviciosTrasporte.create') }}" class="ps-1">
+                                                        <button type="button" class="btn botonGral">Programar Servicio</button>
                                                     </a>
                                                 @endcan
                                             </div>
@@ -113,15 +120,11 @@
                                                 <tr>
                                                     <th class="labelTitulo">Día</th>
                                                     <th class="labelTitulo" style="width: 120px !important;">Concepto</th>
-                                                    <th class="labelTitulo" style="width: 160px !important;">Comprobante
-                                                    </th>
-                                                    {{--  <th class="labelTitulo">N. Comprobante</th>  --}}
-                                                    <th class="labelTitulo">Cliente</th>
                                                     <th class="labelTitulo">Obra</th>
                                                     <th class="labelTitulo">Equipo</th>
                                                     <th class="labelTitulo" style="width: 130px !important;">Personal</th>
-                                                    {{--  <th class="labelTitulo">Tipo</th>  --}}
                                                     <th class="labelTitulo" style="width: 130px !important;">Cantidad</th>
+                                                    <th class="labelTitulo">Estatus</th>
                                                     <th class="labelTitulo text-right" style="width: 130px !important;">
                                                         Acciones</th>
                                                 </tr>
@@ -129,26 +132,29 @@
                                             <tbody>
                                                 @forelse ($registros as $registro)
                                                     <tr>
-                                                        <td>{{ \Carbon\Carbon::parse($registro->dia)->locale('es')->isoFormat('dddd D MMMM') }}
+                                                        <td>{{ \Carbon\Carbon::parse($registro->fecha)->locale('es')->isoFormat('dddd D MMMM') }}
                                                         </td>
                                                         <td title={{ $registro->codigo }}>{{ $registro->cnombre }}</td>
-                                                        <td title={{ $registro->ncomprobante }}>
+                                                        {{--  <td title={{ $registro->ncomprobante }}>
                                                             {{ $registro->comprobante }}
-                                                        </td>
+                                                        </td>  --}}
                                                         {{--  <td>1234</td>  --}}
-                                                        <td>{{ $registro->cliente ? $registro->obra : '---' }}</td>
+                                                        {{--  <td>{{ $registro->cliente }}</td>  --}}
                                                         <td>{{ $registro->obra ? $registro->obra : '---' }}</td>
                                                         <td>{{ $registro->identificador }} - {{ $registro->maquinaria }}
                                                         </td>
                                                         <td>{{ $registro->pnombre }} {{ $registro->papellidoP }}</td>
                                                         {{--  <td>ingreso</td>  --}}
-                                                        <td class=@switch($registro->tipo)
+                                                        <td>$ {{ number_format($registro->cantidad, 2) }}</td>
+                                                        <td
+                                                            class=@switch($registro->estatus)
                                                             @case(1)
-                                                                'green'
+                                                                'yellow'
                                                             @break
 
                                                             @case(2)
-                                                                'red'
+                                                                'green'
+                                                                
                                                             @break
 
                                                             @case(3)
@@ -156,31 +162,31 @@
                                                             @break
 
                                                             @default
-                                                                ''
-                                                        @endswitch
-                                                            title=@switch($registro->tipo)
-                                                            @case(1)
-                                                                'Ingreso'
-                                                            @break
-
-                                                            @case(2)
-                                                                'Egreso'
-                                                            @break
-
-                                                            @case(3)
-                                                                'Ingreso de servicios'
-                                                            @break
-
-                                                            @case(4)
-                                                                'Pendiente de Cobro Y/O factura'
-                                                            @break
-
-                                                            @default
+                                                            'red'
                                                         @endswitch>
-                                                            $ {{ number_format($registro->cantidad, 2) }}</td>
+                                                            @switch($registro->estatus)
+                                                                @case(1)
+                                                                    Espera
+                                                                @break
+
+                                                                @case(2)
+                                                                    Hecho
+                                                                @break
+
+                                                                @case(3)
+                                                                    Cerrado
+                                                                @break
+
+                                                                @default
+                                                                    Cancelado
+                                                            @endswitch
+                                                        </td>
+
+
+
                                                         <td class="td-actions text-right">
                                                             @can('cajachica_show')
-                                                                <a href="{{ route('cajaChica.show', $registro->id) }}"
+                                                                <a href="{{ route('serviciosTrasporte.show', $registro->id) }}"
                                                                     class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                         height="28" fill="currentColor"
@@ -194,7 +200,7 @@
                                                                 </a>
                                                             @endcan
                                                             @can('cajachica_edit')
-                                                                <a href="{{ route('cajaChica.edit', $registro->id) }}"
+                                                                <a href="{{ route('serviciosTrasporte.edit', $registro->id) }}"
                                                                     class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                         height="28" fill="currentColor"
@@ -204,8 +210,9 @@
                                                                     </svg>
                                                                 </a>
                                                             @endcan
-                                                            @can('cajachica_destroy')
-                                                                <form action="{{ route('cajaChica.destroy', $registro->id) }}"
+                                                            {{--  @can('user_destroy')
+                                                                <form
+                                                                    action="{{ route('serviciosTrasporte.destroy', $registro->id) }}"
                                                                     method="POST" style="display: inline-block;"
                                                                     onsubmit="return confirm('Seguro?')">
                                                                     @csrf
@@ -221,21 +228,22 @@
                                                                         </svg>
                                                                     </button>
                                                                 </form>
-                                                            @endcan
+                                                            @endcan  --}}
                                                         </td>
                                                     </tr>
-                                                @empty
-                                                    <tr>
-                                                        <td colspan="2">Sin Registros.</td>
-                                                    </tr>
-                                                @endforelse
-                                            </tbody>
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="2">Sin Registros.</td>
+                                                        </tr>
+                                                    @endforelse
+                                                </tbody>
 
-                                        </table>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="card-footer mr-auto">
-                                    {{ $registros->links() }}
+                                    <div class="card-footer mr-auto">
+                                        {{ $registros->links() }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -243,75 +251,74 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <!--MODALES-->
-    <div class="modal fade" id="modal-reporte" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-cliente"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="col-12">
-                    <div class="card ">
-                        <form action="{{ route('cajaChica.reporte') }}" method="post">
-                            @csrf
-                            <div class="card-header bacTituloPrincipal ">
-                                <div class="nav-tabs-navigation">
-                                    <div class="nav-tabs-wrapper">
-                                        <span class="nav-tabs-title">
-                                            <h2 class="titulos">Periodo del Reporte</h2>
-                                        </span>
+        <!--MODALES-->
+        <div class="modal fade" id="modal-reporte" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-cliente"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="col-12">
+                        <div class="card ">
+                            <form action="{{ route('cajaChica.reporte') }}" method="post">
+                                @csrf
+                                <div class="card-header bacTituloPrincipal ">
+                                    <div class="nav-tabs-navigation">
+                                        <div class="nav-tabs-wrapper">
+                                            <span class="nav-tabs-title">
+                                                <h2 class="titulos">Periodo del Reporte</h2>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row  card-body">
-                                <div class="row card-body" style=" text-align: center;">
-                                    <div class="col-12 col-lg-6">
-                                        <label class="labelTitulo">Inicio:
-                                            <span>*</span></label></br>
-                                        <input type="date" class="inputCaja text-right" id="ncomprobante" required
-                                            name="inicio" value="">
-                                    </div>
-                                    <div class="col-12 col-lg-6">
-                                        <label class="labelTitulo">Fin:
-                                            <span>*</span></label></br>
-                                        <input type="date" class="inputCaja text-right" id="ncomprobante" required
-                                            name="fin" value="">
+                                <div class="row  card-body">
+                                    <div class="row card-body" style=" text-align: center;">
+                                        <div class="col-12 col-lg-6">
+                                            <label class="labelTitulo">Inicio:
+                                                <span>*</span></label></br>
+                                            <input type="date" class="inputCaja text-right" id="ncomprobante" required
+                                                name="inicio" value="">
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <label class="labelTitulo">Fin:
+                                                <span>*</span></label></br>
+                                            <input type="date" class="inputCaja text-right" id="ncomprobante" required
+                                                name="fin" value="">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-12  mb-3 d-flex  justify-content-center align-self-end">
-                                <button class="btn botonGral ">Ir</button>
-                            </div>
-                        </form>
+                                <div class="col-12  mb-3 d-flex  justify-content-center align-self-end">
+                                    <button class="btn botonGral ">Ir</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-@endsection
-<script>
-    function Guardado() {
-        // alert('test');
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        })
+    @endsection
+    <script>
+        function Guardado() {
+            // alert('test');
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
 
-        Toast.fire({
-            icon: 'success',
-            title: 'Guardado con exito'
-        })
-    }
-    var slug = '1';
-    if (slug == 1) {
-        Guardado();
+            Toast.fire({
+                icon: 'success',
+                title: 'Guardado con exito'
+            })
+        }
+        var slug = '1';
+        if (slug == 1) {
+            Guardado();
 
-    }
-</script>
+        }
+    </script>
