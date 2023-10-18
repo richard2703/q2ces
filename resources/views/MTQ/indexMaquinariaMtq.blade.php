@@ -647,8 +647,6 @@
                                         @endforeach
                                     </select>
                                 </div>
-
-
                             </div>
                     </div>
                     <div class="modal-footer">
@@ -942,7 +940,7 @@
 
     <script>
         function asignar(id, identificador, nombre, residenteId, residente) {
-            console.log("Foto", id, "FotoF", identificador);
+            console.log("residente", residente, "residenteId", residenteId);
 
             const txtId = document.getElementById('asignacionMaquinaria');
             txtId.value = id;
@@ -956,6 +954,17 @@
             const txtIdentificador = document.getElementById('asignado');
             txtIdentificador.value = residente;
             txtIdentificador.readOnly = true;
+
+            /*fetch(`/autos-asignados-mtq/${id}`)
+            .then(response => response.json())
+            .then(data => {
+                // Manipula los datos obtenidos (data) como lo desees.
+                console.log(data);
+                // Actualiza tu interfaz con los datos recibidos.
+            })
+            .catch(error => {
+                console.error('Error al obtener los registros de residenteAutos: ', error);
+            });*/
 
             const lstObre = document.getElementById('obraId').value = residenteId;
 
@@ -980,6 +989,8 @@
                 }
             });
         }
+
+        
     </script>
 
     <script>

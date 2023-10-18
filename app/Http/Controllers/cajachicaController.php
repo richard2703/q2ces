@@ -114,6 +114,7 @@ class cajaChicaController extends Controller
         $personal = personal::join('puesto', 'personal.puestoId', 'puesto.id')
             ->join('puestonivel', 'puesto.puestoNivelId', 'puestonivel.id')
             ->where('puestonivel.usaCajaChica', 1)
+            ->where('personal.estatusId', 1)
             ->orderBy('personal.nombres', 'asc')->get();
         // dd($personal);
         $obras = obras::orderBy('nombre', 'asc')->get();
