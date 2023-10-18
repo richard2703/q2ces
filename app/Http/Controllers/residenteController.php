@@ -34,8 +34,8 @@ class residenteController extends Controller
             'maquinaria.nombre AS auto'
         )
             ->leftjoin('obras', 'obras.id', '=', 'residente.obraId')
-            ->leftjoin('residenteautos', 'residenteautos.residenteId', 'residente.Id')
-            ->leftjoin('maquinaria', 'maquinaria.id', '=', 'residenteautos.autoId')
+            ->leftjoin('residenteAutos', 'residenteAutos.residenteId', 'residente.Id')
+            ->leftjoin('maquinaria', 'maquinaria.id', '=', 'residenteAutos.autoId')
             ->where('residente.clienteId', '=', 2)
             ->groupBy('residente.Id')
             ->orderBy('nombre', 'asc')
