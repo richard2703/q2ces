@@ -112,22 +112,37 @@ class searchController extends Controller
         // $term = $request->input( 'term' );
         $term = $request->get('term');
 
-        $maquinaria = maquinaria::where('nombre', 'LIKE', '%' . $term . '%')
-            ->orwhere('marca', 'LIKE', '%' . $term . '%')
-            ->orwhere('categoria', 'LIKE', '%' . $term . '%')->get();
+        $maquinaria = maquinaria::select('maquinaria.*','marca.nombre as marca','maquinariaCategoria.nombre as categoria','maquinaria.compania')
+        ->where('maquinaria.nombre', 'LIKE', '%' . $term . '%')
+        ->leftjoin('marca','marca.id','maquinaria.marcaId')
+        ->leftjoin('maquinariaCategoria','maquinariaCategoria.id','maquinaria.categoriaId')
+            ->whereNull( 'compania' )
+            ->orwhere('marca.nombre', 'LIKE', '%' . $term . '%')
+            ->orwhere('maquinaria.nombre', 'LIKE', '%' . $term . '%')
+            ->orwhere('maquinaria.placas', 'LIKE', '%' . $term . '%')
+            ->orwhere('maquinaria.identificador', 'LIKE', '%' . $term . '%')
+            ->orwhere('maquinariaCategoria.nombre', 'LIKE', '%' . $term . '%')
+            ->get();
 
         $sugerencias = [];
         foreach ($maquinaria as $item) {
+            if($item->compania == null){
             $sugerencias[] = [
-                'value' =>  'Equipo ' . $item->nombre . ', Marca ' . $item->marcaId . ', Modelo ' . $item->modelo  . ', NS ' .  $item->numserie . ', Placas ' .  $item->placas,
+                'value' =>   ' Equipo ' . $item->identificador .' - ' .  $item->nombre . ', Marca ' . $item->marca . ', Modelo ' . $item->modelo  . ', NS ' .  $item->numserie . ', Placas ' .  $item->placas,
                 'id' => $item->id,
                 'nombre' => $item->nombre,
-                'marca' => $item->marcaId,
+                'identificador' => $item->identificador,
+                'marca' => $item->marca,
                 'numserie' => $item->numserie,
                 'placas' => $item->placas,
                 'modelo' => $item->modelo,
+                'categoria' => $item->categoria,
+                'compania' => $item->compania,
             ];
+
+            }
         }
+
 
         return $sugerencias;
         // return response()->json( $sugerencias );
@@ -160,6 +175,7 @@ class searchController extends Controller
                 'modelo' => $item->modelo,
                 'identificador' => $item->identificador,
                 'kilometraje' => $item->kilometraje,
+                'compania' => $item->compania,
             ];
         }
 

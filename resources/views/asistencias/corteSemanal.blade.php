@@ -179,8 +179,8 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                     <th class="labelTitulo corte ">Días</th>
                                                     <th class="labelTitulo corte ">Salario Por Día</th>
                                                     <th class="labelTitulo corte  no-wrap">Importe Semanal</th>
-                                                    <th class="labelTitulo corte  ">Tiempo Extra Total</th>
-                                                    <th class="labelTitulo corte  ">Horas Extra Total</th>
+                                                    {{-- <th class="labelTitulo corte  ">Tiempo Extra Total</th> --}}
+                                                    <th class="labelTitulo corte  ">Horas Extra</th>
                                                     <th class="labelTitulo corte ">Total Horas Extra</th>
                                                     <th class="labelTitulo corte no-wrap">Pago Semanal</th>
                                                 </thead>
@@ -327,14 +327,14 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                             <td class="text-right">$
                                                                 {{ number_format($item->sueldo * $intDiasAsistidos, 2) }}
                                                             </td>
-                                                            <td class="text-right">
+                                                            {{-- <td class="text-right">
                                                                 <!-- Total semanal de tiempo extra -->
                                                                 <?php
                                                                 $intHorasSemanal = (int) ($intTotalMinutosExtras / 60);
                                                                 $intMinutosSemanal = $intTotalMinutosExtras % 60;
                                                                 ?>
                                                                 {{ str_pad($intHorasSemanal, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosSemanal, 2, '0', STR_PAD_LEFT) }}
-                                                            </td>
+                                                            </td> --}}
                                                             <td class="text-right">
                                                                 <!-- Calculo de horas extra con los minutos sobrantes -->
                                                                 <?php
@@ -400,7 +400,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                     @endforelse
 
                                                     <tr>
-                                                        <td colspan="22"></td>
+                                                        <td colspan="21"></td>
                                                         <td class="text-right">$
                                                             {{ number_format($intTotalGeneralHorasExtras, 2) }} </td>
                                                         <td class="text-right">$

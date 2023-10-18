@@ -56,20 +56,24 @@
                                         <table class="table">
                                             <thead class="labelTitulo">
                                                 <tr>
-                                                    <th class="labelTitulo">Id</th>
+                                                    <th class="labelTitulo" style="width:30px">Id</th>
                                                     <th class="labelTitulo">Nombre</th>
                                                     <th class="labelTitulo">Categoría</th>
                                                     <th class="labelTitulo">Ubicación</th>
                                                     <th class="labelTitulo">Tipo</th>
                                                     <th class="labelTitulo">Comentario</th>
-                                                    <th class="labelTitulo text-right">Acciones</th>
+                                                    <th class="labelTitulo text-center" style="width:120px">Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
 
                                                 @forelse ($vctTareas as $item)
                                                     <tr>
-                                                        <td>{{ $item->id }}</td>
+                                                        <td class="text-left"><a
+                                                                href="{{ route('tarea.edit', $item->id) }}"
+                                                                title="Ver la información de la tarea."
+                                                                style="color: blue">{{ str_pad($item->id, 3, '0', STR_PAD_LEFT) }}</a>
+                                                        </td>
                                                         <td>{{ $item->nombre }}</td>
                                                         <td>{{ $item->categoria }} </td>
                                                         <td>{{ $item->ubicacion }}</td>

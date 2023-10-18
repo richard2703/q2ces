@@ -28,7 +28,7 @@
                             <input type="hidden" name="maquinaria" id="maquinaria" value="{{ $checkList->maquinaria }}">
                             <input type="hidden" name="checkListId" id="checkListId" value="{{ $checkList->id }}">
                             <div class="card-header bacTituloPrincipal">
-                                <h4 class="card-title">Nuevo Registro de CheckList</h4>
+                                <h4 class="card-title">Editar Registro de CheckList</h4>
                             </div>
 
                             <div class="card-body ">
@@ -167,7 +167,12 @@
                             </div>
 
                             <div class="col-12 text-center mt-5 pt-5">
-                                <button type="submit" class="btn botonGral mb-3">Guardar</button>
+                                <a href="{{ route('checkList.index') }}">
+                                    <button type="button" class="btn btn-danger">Cancelar</button>
+                                </a>
+                                <a href="#">
+                                    <button type="submit" class="btn botonGral mb-3">Guardar</button>
+                                </a>
                             </div>
 
                         </form>

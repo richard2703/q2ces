@@ -43,8 +43,6 @@
 
                                 <div class="col-12 my-4">
                                     <div class="row">
-
-
                                         <p class="subEncabezado">Busca Una Maquinaria</p>
                                         <div class="mb-4 mt-0" role="search" class="">
                                             <input value="" class="search-submit ">

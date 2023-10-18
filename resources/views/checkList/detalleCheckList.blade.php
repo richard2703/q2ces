@@ -41,7 +41,7 @@
                                         <div class="col-12 col-md-8 ">
 
                                             <div class="row alin">
-                                                <div class=" col-12  ">
+                                                <div class="col-12">
                                                     <label class="labelTitulo">Equipo:
                                                         <span>*</span></label></br>
                                                     <input type="text" class="inputCaja" id="nombre" readonly
@@ -50,12 +50,17 @@
                                                 </div>
 
 
-                                                <div class=" col-12   ">
+                                                <div class="col-12">
                                                     <label class="labelTitulo">Bitácora:</label></br>
                                                     <input type="text" class="inputCaja" id="marca" name="marca"
                                                         readonly disabled="true" value="{{ $checkList->bitacora }}">
                                                 </div>
 
+                                                <div class=" col-12">
+                                                    <label class="labelTitulo">Comentarios:</label></br>
+                                                    <textarea class="form-control" placeholder="Escribe tu comentario aquí sobre la revisión del CheckList" id="comentario" readonly disabled="true"
+                                                        name="comentario" spellcheck="true">{{ $checkList->comentario }}</textarea>
+                                                </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
                                                     <label class="labelTitulo">Usuario:</label></br>

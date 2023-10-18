@@ -138,8 +138,8 @@
                                                         <input type="hidden" name="grupoId[]" id="grupoId"
                                                             value="{{ $item->grupoId }}">
 
-                                                            <input type="hidden" name="controlHtml[]" id="controlHtml"
-                                                                value="{{ $item->controlHtml }}">
+                                                        <input type="hidden" name="controlHtml[]" id="controlHtml"
+                                                            value="{{ $item->controlHtml }}">
                                                     </td>
                                                     <td>
                                                         <!-- Mostramos el control de captura de datos -->
@@ -246,7 +246,12 @@
                             </div>
                             @if ($vctTareas->isEmpty() === false)
                                 <div class="col-12 text-center mt-5 pt-5">
-                                    <button type="submit" class="btn botonGral mb-3">Guardar</button>
+                                    <a href="{{ route('checkList.index') }}">
+                                        <button type="button" class="btn btn-danger">Cancelar</button>
+                                    </a>
+                                    <a href="#">
+                                        <button type="submit" class="btn botonGral mb-3">Guardar</button>
+                                    </a>
                                 </div>
                             @else
                                 <div class="col-12 text-center mt-5 pt-5">

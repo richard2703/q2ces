@@ -512,15 +512,6 @@ CREATE TABLE clientes(
     PRIMARY KEY (id)
 );
 
-create table bitacoras(
-    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(255) NULL,
-    comentario text NULL,
-    activa TINYINT(1) NOT NULL DEFAULT '1',
-    created_at datetime NULL,
-    updated_at datetime NULL,
-    primary key (id)
-);
 
 create table grupo(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -713,19 +704,31 @@ INSERT INTO 'tipoMantenimiento' ('id', 'nombre', 'comentario') VALUES
 
 INSERT INTO 'frecuenciaEjecucion' ('id', 'nombre', 'comentario', 'dias', 'minimoEjecucion') VALUES
 (1, 'Diaria', 'Ejecución diaria', 1, 1),
-(2, 'Semanal', 'De ejecución semanal', 7, 3),
+(2, 'Semanal', 'De ejecucion semanal', 7, 3),
 (3, 'Quincenal', 'De ejecución quincenal', 15, 7),
-(4, 'Mensual', 'De ejecución Mensual', 30, 15),
-(5, 'Bimestral', 'De ejecución Bimestral', 60, 30),
-(6, 'Trimestral', 'De ejecución Trimestral', 90, 45),
+(4, 'Mensual', 'De ejecucion Mensual', 30, 15),
+(5, 'Bimestral', 'De ejecución bimestral', 60, 30),
+(6, 'Trimestral', 'De ejecucion trimestral', 90, 45),
 (7, 'Cuatrimestral', 'De ejecución Cuatrimestral', 120, 60),
-(8, 'Semestral', 'De ejecución Semestral', 180, 90),
-(9, 'Anual', 'De ejecución Anual', 365, 180),
-(10, 'Extemporánea', 'De ejecución fuera de tiempo', 0, 0);
+(8, 'Semestral', 'De ejecución semestral', 180, 90),
+(9, 'Anual', 'De ejecución anual', 365, 180),
+(10, 'Extemporánea', 'De ejecución fuera de tiempos', 0, 0);
 
 /***************************************FIN DATOS Tablas de Sin FK*/
 
 /***************************************Tablas Relacionadas*/
+
+create table bitacoras(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(255) NULL,
+    comentario text NULL,
+    activa TINYINT(1) NOT NULL DEFAULT '1',
+    frecuenciaId bigint(20) unsigned NULL,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id),
+    CONSTRAINT FK_bitacoras_frecuencia foreign key (frecuenciaId) references frecuenciaEjecucion(id)
+);
 
 create table tarea(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -734,10 +737,8 @@ create table tarea(
     categoriaId bigint(20) unsigned NULL,
     ubicacionId bigint(20) unsigned NULL,
     tipoId bigint(20) unsigned NULL,
-    created_at datetime NULL,
-    updated_at datetime NULL,
     activa TINYINT(1) NOT NULL DEFAULT '1',
-    tipoValor INT(2) NOT NULL DEFAULT '1',
+    tipoValorId INT(2) NOT NULL DEFAULT '1',
     requiereLimites TINYINT(1) NOT NULL DEFAULT '0',
     limiteInferior INT(8) NULL ,
     limiteSuperior INT(8) NULL ,
@@ -747,6 +748,9 @@ create table tarea(
     requierePeriodo TINYINT(1) NOT NULL DEFAULT '0',
     fechaInicial DATE NULL ,
     fechaFinal DATE NULL ,
+    requiereImagen TINYINT(1) NOT NULL DEFAULT '0',
+    created_at datetime NULL,
+    updated_at datetime NULL,
     primary key (id),
     CONSTRAINT FK_tarea_categoria foreign key (categoriaId) references tareaCategoria(id),
     CONSTRAINT FK_tarea_tipo foreign key (tipoId) references tareaTipo(id),
@@ -1288,6 +1292,17 @@ CREATE TABLE marcasTipo (
     PRIMARY KEY (id),
     CONSTRAINT FK_marcasTipo_marca_id foreign key (marca_id) REFERENCES marca(id),
     CONSTRAINT FK_marcasTipo_tipos_marcas_id foreign key (tipos_marcas_id) REFERENCES tiposMarcas(id)
+);
+
+create table bitacorasEquipos(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    bitacoraId bigint(20) unsigned NOT NULL,
+    maquinariaId bigint(20) unsigned NOT NULL,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id),
+    CONSTRAINT FK_bitacoras_Equipos1 foreign key (bitacoraId) references bitacoras(id),
+    CONSTRAINT FK_bitacoras_Equipos2 foreign key (maquinariaId) references maquinaria(id)
 );
 
 INSERT INTO 'tiposMarcas' ('id', 'nombre') VALUES

@@ -105,7 +105,7 @@ class tareaTipoController extends Controller
         // dd( $request );
 
         $request->validate([
-            'nombre' => 'required|max:250|unique:tareaTipo,nombre,' . $request['tareaId'],
+            'nombre' => 'required|max:250|unique:tareaTipo,nombre,' . $request['controlId'],
             'comentario' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
@@ -136,7 +136,7 @@ class tareaTipoController extends Controller
     public function destroy(tareaTipo $tareaTipo)
     {
         try {
-            $tareaTipo->delete(); // Intenta eliminar 
+            $tareaTipo->delete(); // Intenta eliminar
         } catch (QueryException $e) {
             if ($e->getCode() === 23000) {
                 return redirect()->back()->with('faild', 'No Puedes Eliminar ');

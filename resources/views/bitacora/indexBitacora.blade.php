@@ -42,19 +42,26 @@
                                         <table class="table">
                                             <thead class="labelTitulo">
                                                 <tr>
-                                                    <th class="labelTitulo">ID</th>
+                                                    <th class="labelTitulo" style="width:30px">ID</th>
                                                     <th class="labelTitulo">Nombre</th>
+                                                    <th class="labelTitulo">Frecuencia Ejecución</th>
                                                     <th class="labelTitulo">Comentario</th>
-                                                    <th class="labelTitulo text-right">Acciones</th>
+                                                    <th class="labelTitulo">Asignaciones</th>
+                                                    <th class="labelTitulo text-center" style="width:120px">Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @forelse ($vctBitacoras as $item)
                                                     <tr>
-
-                                                        <td>{{ $item->id }}</td>
+                                                        <td class="text-left"><a
+                                                                href="{{ route('bitacoras.edit', $item->id) }}"
+                                                                title="Ver la información de la Bitácora."
+                                                                style="color: blue">{{ str_pad($item->id, 3, '0', STR_PAD_LEFT) }}</a>
+                                                        </td>
                                                         <td>{{ $item->nombre }}</td>
+                                                        <td>{{ $item->frecuencia }}</td>
                                                         <td>{{ $item->comentario }}</td>
+                                                        <td>Equipos: {{ $item->totalEquipos }}<br>Grupos de Tareas: {{ $item->totalGrupos }}</td>
 
                                                         <td class="td-actions text-right">
 

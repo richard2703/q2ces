@@ -60,7 +60,7 @@
                                         <table class="table">
                                             <thead class="labelTitulo">
                                                 <tr>
-                                                    <th class="labelTitulo" style="width:60px">Folio</th>
+                                                    <th class="labelTitulo" style="width:40px">Folio</th>
                                                     <th class="labelTitulo">Equipo</th>
                                                     <th class="labelTitulo">Bitácora</th>
                                                     <th class="labelTitulo">Registro</th>
@@ -70,10 +70,13 @@
                                             </thead>
                                             <tbody>
                                                 @forelse ($records as $item)
-                                                    <tr><td class="text-center"><a
-                                                        href="{{ route('checkList.show', $item->id) }}"  title="Ver la información del CheckList."
-                                                        style="color: blue">{{( str_pad($item->id, 5, '0', STR_PAD_LEFT)) }}</a></td>
-                                                         <td>{{ $item->maquinaria }} </td>
+                                                    <tr>
+                                                        <td class="text-left"><a
+                                                                href="{{ route('checkList.show', $item->id) }}"
+                                                                title="Ver la información del CheckList."
+                                                                style="color: blue">{{ str_pad($item->id, 5, '0', STR_PAD_LEFT) }}</a>
+                                                        </td>
+                                                        <td>{{ $item->maquinaria }} </td>
 
                                                         <td>{{ $item->bitacora }}</td>
                                                         <td>{{ $item->usuario }} </td>
@@ -160,23 +163,9 @@
                     <form class="row d-flex" action="{{ route('checkList.ejecutar') }}" method="get">
                         @csrf
                         <div class=" col-12 mb-3 ">
-                            <label class="labelTitulo">Maquinaría:
-                                <span>*</span></label></br>
-                            <select id="maquinariaId" name="maquinariaId" class="form-select" required
-                                aria-label="Default select example">
-                                <option value="">Seleccione</option>
-                                @foreach ($vctEquipos as $item)
-                                    <option value="{{ $item->id }}">
-                                        {{ strtoupper($item->identificador) . ' - ' . $objValida->ucwords_accent($item->nombre) }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class=" col-12 mb-3 ">
                             <label class="labelTitulo">Bitácora:
                                 <span>*</span></label></br>
-                            <select id="bitacoraId" name="bitacoraId" class="form-select" required
+                            <select id="bitacoraId" name="bitacoraId" class="form-select" required onchange="cargar()"
                                 aria-label="Default select example">
                                 <option value="">Seleccione</option>
                                 @foreach ($vctBitacoras as $item)
@@ -184,6 +173,20 @@
                                         {{ $objValida->ucwords_accent($item->nombre) }}
                                     </option>
                                 @endforeach
+                            </select>
+                        </div>
+
+                        <div class=" col-12 mb-3 ">
+                            <label class="labelTitulo">Maquinaría:
+                                <span>*</span></label></br>
+                            <select id="maquinariaId" name="maquinariaId" class="form-select" required
+                                aria-label="Default select example">
+                                <option value="">Seleccione</option>
+                                {{-- @foreach ($vctEquipos as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ strtoupper($item->identificador) . ' - ' . $objValida->ucwords_accent($item->nombre) }}
+                                    </option>
+                                @endforeach --}}
                             </select>
                         </div>
                         <div class="modal-footer">
@@ -196,4 +199,56 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function cargar() {
+            const listaSeleccion = document.getElementById('bitacoraId');
+            const ListaSeleccionar = document.getElementById('maquinariaId');
+            var url = '{{ route('equiposPorBitacora.get', ':bitacoraId') }}';
+            url = url.replace(':bitacoraId', listaSeleccion.value);
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Actualiza las opciones en el select "lugar"
+                    console.log(data);
+                    ListaSeleccionar.innerHTML = '';
+                    data.forEach(lugar => {
+                        console.log(lugar);
+                        var option = document.createElement('option');
+                        option.value = lugar.id;
+                        option.textContent = lugar.maquinaria;
+                        ListaSeleccionar.appendChild(option);
+                    });
+
+                });
+        };
+    </script>
+
+    <script>
+        function Guardado() {
+            // alert('test');
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Guardado con exito'
+            })
+        }
+        var slug = '{{ Session::get('message') }}';
+        if (slug == 1) {
+            Guardado();
+
+        }
+    </script>
 @endsection

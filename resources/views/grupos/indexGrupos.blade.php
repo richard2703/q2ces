@@ -53,21 +53,25 @@
                                         <table class="table">
                                             <thead class="labelTitulo">
                                                 <tr>
-                                                    <th class="labelTitulo">id</th>
+                                                    <th class="labelTitulo" style="width:30px">Id</th>
                                                     <th class="labelTitulo">Nombre</th>
                                                     <th class="labelTitulo">Comentario</th>
-                                                    <th class="labelTitulo text-right">Acciones</th>
+                                                    <th class="labelTitulo text-center" style="width:120px">Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
 
                                                 @forelse ($vctGrupos as $item)
                                                     <tr>
-                                                        <td>{{ $item->id }}</td>
+                                                        <td class="text-left"><a
+                                                                href="{{ route('grupo.edit', $item->id) }}"
+                                                                title="Ver la información del Grupo de Tareas."
+                                                                style="color: blue">{{ str_pad($item->id, 3, '0', STR_PAD_LEFT) }}</a>
+                                                        </td>
                                                         <td>{{ $item->nombre }}</td>
                                                         <td>{{ $item->comentario }}</td>
 
-                                                        <td class="td-actions text-right">
+                                                        <td class="td-actions text-center">
 
                                                             @can('grupo_edit')
                                                                 <a href="{{ url('/bitacoras/grupos/editar/' . $item->id) }}"

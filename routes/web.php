@@ -448,6 +448,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/bitacoras/bitacora/editar/{id}', [App\Http\Controllers\bitacorasController::class, 'edit'])->name('bitacoras.edit');
     Route::put('/bitacoras/bitacora/editar/{bitacora}', [App\Http\Controllers\bitacorasController::class, 'update'])->name('bitacoras.update');
     Route::delete('bitacoras/bitacora/borrar/{bitacora}', [App\Http\Controllers\bitacorasController::class, 'destroy'])->name('bitacoras.destroy');
+    Route::get('/bitacoras/equipos/{bitacoraId}', [App\Http\Controllers\bitacorasController::class, 'equiposPorBitacora'])->name('equiposPorBitacora.get');
 
     Route::get('/bitacoras/grupos', [App\Http\Controllers\grupoController::class, 'index'])->name('grupo.index');
     Route::get('/bitacoras/grupos/nuevo/', [App\Http\Controllers\grupoController::class, 'create'])->name('grupo.create');

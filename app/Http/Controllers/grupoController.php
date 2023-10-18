@@ -196,10 +196,15 @@ class grupoController extends Controller {
 
                         //** No existe en bd */
                         if ($request['grupoTareaId'][$i] == 0) {
-                            $objRecord = new grupoTareas();
-                            $objRecord->grupoId  = $request['grupoId'][$i];
-                            $objRecord->tareaId  =  $request['tareaId'][$i];
-                            $objRecord->save();
+
+                            $objRecord =  grupoTareas::where('grupoId', '=', $request['grupoId'][$i])->where('tareaId', '=', $request['tareaId'][$i])->first();
+
+                            if(is_null($objRecord)==true) {
+                                $objRecord = new grupoTareas();
+                                $objRecord->grupoId  = $request['grupoId'][$i];
+                                $objRecord->tareaId  =  $request['tareaId'][$i];
+                                $objRecord->save();
+                            }
                             // dd( 'Guardando tarea de grupo' );
                         }
                     }

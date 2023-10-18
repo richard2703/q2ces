@@ -31,6 +31,20 @@
                                                         name="comentario" placeholder="Escribe aquí tus comentarios sobre la bitácora."></textarea>
                                                 </div>
 
+                                                <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
+                                                    <label class="labelTitulo">Frecuencia de Ejecución:</label></br>
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        id="frecuenciaId" name="frecuenciaId">
+                                                        <option selected value="">Selecciona una opción</option>
+                                                        @foreach ($vctFrecuencias as $item)
+                                                            <option value="{{ $item->id }}"
+                                                                {{ $item->id == $item->frecuenciaId ? ' selected' : '' }}>
+                                                                {{ $item->nombre . " [ ". $item->dias ." días]" }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
                                                 <input type="hidden" name="activo" id="activo" value="1">
                                                 <div class="col-12 text-center mt-5 pt-5">
                                                     <button type="button" class="btn btn-secondary"
