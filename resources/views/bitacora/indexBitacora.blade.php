@@ -42,24 +42,32 @@
                                         <table class="table">
                                             <thead class="labelTitulo">
                                                 <tr>
-                                                    <th class="labelTitulo">ID</th>
+                                                    <th class="labelTitulo" style="width:30px">ID</th>
                                                     <th class="labelTitulo">Nombre</th>
+                                                    <th class="labelTitulo">Frecuencia Ejecución</th>
                                                     <th class="labelTitulo">Comentario</th>
-                                                    <th class="labelTitulo text-right">Acciones</th>
+                                                    <th class="labelTitulo">Asignaciones</th>
+                                                    <th class="labelTitulo text-center" style="width:120px">Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @forelse ($vctBitacoras as $item)
                                                     <tr>
-
-                                                        <td>{{ $item->id }}</td>
+                                                        <td class="text-left"><a
+                                                                href="{{ route('bitacoras.edit', $item->id) }}"
+                                                                title="Ver la información de la Bitácora."
+                                                                style="color: blue">{{ str_pad($item->id, 3, '0', STR_PAD_LEFT) }}</a>
+                                                        </td>
                                                         <td>{{ $item->nombre }}</td>
+                                                        <td>{{ $item->frecuencia }}</td>
                                                         <td>{{ $item->comentario }}</td>
+                                                        <td>Equipos: {{ $item->totalEquipos }}<br>Grupos de Tareas: {{ $item->totalGrupos }}</td>
 
                                                         <td class="td-actions text-right">
 
                                                             @can('bitacora_edit')
                                                                 <a href="{{ url('/bitacoras/bitacora/editar/' . $item->id) }}"
+                                                                    title="Editar la información de la Bitácora."
                                                                     class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                         height="28" fill="currentColor" title="Editar"
@@ -84,13 +92,14 @@
                                                                 </a>
                                                             @endif
 
-                                                            {{--  @can('bitacora_destroy')
-                                                                <form action="" method="POST"
-                                                                    style="display: inline-block;"
+                                                            @can('bitacora_destroy')
+                                                                <form action="{{ route('bitacoras.destroy', $item->id) }}"
+                                                                    method="POST" style="display: inline-block;"
                                                                     onsubmit="return confirm('Seguro?')">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <button class="btnSinFondo" type="submit" rel="tooltip">
+                                                                    <button class="btnSinFondo" type="submit" rel="tooltip"
+                                                                    title="Eliminar la información de la Bitácora.">
                                                                         <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                             height="28" fill="currentColor" title="Eliminar"
                                                                             class="bi bi-x-circle" viewBox="0 0 16 16">
@@ -101,7 +110,7 @@
                                                                         </svg>
                                                                     </button>
                                                                 </form>
-                                                            @endcan  --}}
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                 @empty

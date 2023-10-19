@@ -41,7 +41,7 @@
                                         <div class="col-12 col-md-8 ">
 
                                             <div class="row alin">
-                                                <div class=" col-12  ">
+                                                <div class="col-12">
                                                     <label class="labelTitulo">Equipo:
                                                         <span>*</span></label></br>
                                                     <input type="text" class="inputCaja" id="nombre" readonly
@@ -50,12 +50,17 @@
                                                 </div>
 
 
-                                                <div class=" col-12   ">
+                                                <div class="col-12">
                                                     <label class="labelTitulo">Bitácora:</label></br>
                                                     <input type="text" class="inputCaja" id="marca" name="marca"
                                                         readonly disabled="true" value="{{ $checkList->bitacora }}">
                                                 </div>
 
+                                                <div class=" col-12">
+                                                    <label class="labelTitulo">Comentarios:</label></br>
+                                                    <textarea class="form-control" placeholder="Escribe tu comentario aquí sobre la revisión del CheckList" id="comentario" readonly disabled="true"
+                                                        name="comentario" spellcheck="true">{{ $checkList->comentario }}</textarea>
+                                                </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
                                                     <label class="labelTitulo">Usuario:</label></br>
@@ -97,6 +102,7 @@
                                                 $strNombreGrupo = '';
                                                 $intCont = 0;
                                                 $blnNuevaSeccion = false;
+                                                $objPresentacion = new checkListPresentacion();
                                                 ?>
                                                 @forelse ($records as $item)
                                                     <?php
@@ -123,10 +129,13 @@
                                                         </tr>
                                                     @endif
 
-
                                                     <tr>
-                                                        <td>{{ $item->tarea }}</td>
-                                                        <td> <p class="text-{{ ($item->valor==0?'danger':($item->valor==1?'warning':($item->valor==2?'success':''))) }}">{{ $item->resultado }} </p></td>
+                                                        <td>{{ $item->tarea }} </td>
+                                                        <td>
+                                                            {{-- <?php //echo $objPresentacion->getControlByTarea($item->tareaId, $item->resultado, $intCont); ?> --}}
+                                                            <p class="text">{{ $item->resultado }} </p>
+                                                        </td>
+                                                        </td>
                                                     </tr>
 
                                                     <?php

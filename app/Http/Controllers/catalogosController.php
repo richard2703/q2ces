@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\comprobante;
 use App\Models\conceptos;
+use App\Models\frecuenciaEjecucion;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Storage;
@@ -111,6 +112,15 @@ class catalogosController extends Controller
         $records = tipoValorTarea::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
         return view('catalogos.tareaTiposValor', compact('records'));
+    }
+
+    public function indexCatalogoFrecuenciaEjecucion()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
+
+        $records = frecuenciaEjecucion::orderBy('nombre', 'asc')->paginate(10);
+        // dd( $records );
+        return view('catalogos.frecuenciaEjecucion', compact('records'));
     }
 
     public function indexCatalogoUbicacionesTareas()

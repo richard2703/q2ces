@@ -32,7 +32,7 @@ class checkListController extends Controller
 
         $records = checkList::select(
             'checkList.*',
-            DB::raw('maquinaria.nombre AS maquinaria'),
+            DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ),
             DB::raw('users.username AS usuario'),
             DB::raw('bitacoras.nombre AS bitacora')
         )
@@ -41,8 +41,11 @@ class checkListController extends Controller
             ->leftJoin('bitacoras', 'bitacoras.id', '=', 'checkList.bitacoraId')
             ->orderBy('registrada', 'desc')->paginate(15);
 
+        $vctEquipos = maquinaria::select('maquinaria.nombre','maquinaria.id','maquinaria.identificador')->where('maquinaria.compania','=',null)->where('maquinaria.estatusId','=',1)->orderBy('maquinaria.identificador','asc')->get();
+        $vctBitacoras = bitacoras::select('bitacoras.nombre','bitacoras.id')->where('bitacoras.activa','=',1)->orderBy('bitacoras.nombre','asc')->get();
+
         // dd( $records );
-        return view('checkList.checkList', compact('records'));
+        return view('checkList.checkList', compact('records','vctEquipos','vctBitacoras'));
     }
 
     /**
@@ -68,6 +71,23 @@ class checkListController extends Controller
 
         return view('checkList.seleccionarChecklist', compact('records'));
     }
+    /**
+     * Show the form for seleccionar sobre que equipo se realizará un checklist.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+     public function ejecutar(Request $request)
+     {
+        //  dd( $request );
+         abort_if(Gate::denies('checkList_create'), 403);
+
+         $bitacoraId = $request['bitacoraId'];
+         $maquinariaId = $request['maquinariaId'];
+
+          return redirect()->action( [ checkListController::class, 'create' ], [ 'bitacora' => $bitacoraId, 'maquinaria' => $maquinariaId ] );
+
+     }
 
     /**
      * Show the form for creating a new resource.
@@ -87,6 +107,7 @@ class checkListController extends Controller
             DB::raw('tarea.nombre AS tarea'),
             DB::raw('tarea.tipoValorId'),
             DB::raw('tipoValorTarea.nombre AS tipoValor'),
+            DB::raw('tipoValorTarea.controlHtml'),
             DB::raw('grupo.nombre AS grupo'),
             'grupoBitacoras.*',
             'tipoValorTarea.*'
