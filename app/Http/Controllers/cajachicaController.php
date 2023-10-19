@@ -174,7 +174,11 @@ class cajaChicaController extends Controller
     public function show(cajaChica $cajaChica)
     {
         $conceptos = conceptos::orderBy('codigo', 'asc')->get();
-        $personal = personal::orderBy('nombres', 'asc')->get();
+        $personal = personal::join('puesto', 'personal.puestoId', 'puesto.id')
+            ->join('puestonivel', 'puesto.puestoNivelId', 'puestonivel.id')
+            ->where('puestonivel.usaCajaChica', 1)
+            ->where('personal.estatusId', 1)
+            ->orderBy('personal.nombres', 'asc')->get();
         $obras = obras::orderBy('nombre', 'asc')->get();
         $maquinaria = maquinaria::where('compania', '!=', 'mtq')->orWhere('compania', null)->orderBy('identificador', 'asc')->get();
         $vctComprobantes = comprobante::select()->orderBy('nombre', 'asc')->get();
