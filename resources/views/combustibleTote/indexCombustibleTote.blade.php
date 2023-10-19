@@ -349,7 +349,7 @@
                                                                     <div style="width: 100%! important;">
                                                                         <label class="labelTitulo">Uso en
                                                                             Km/Mi/Hr:</label></br>
-                                                                        <input id="kilometrajeDescarga" type="number" step="1" min="0"
+                                                                        <input id="kilometrajeDescarga" type="number" step="1" min="0" 
                                                                             class="inputCaja" id="km" name="km"
                                                                             value="{{ old('km') }}" required>
                                                                     </div>
@@ -363,7 +363,7 @@
                                                                     <div style="width: 100%! important;">
                                                                         <label class="labelTitulo">Grasas:</label></br>
                                                                         <input type="number" min="0"
-                                                                            class="inputCaja" id="grasa" name="grasa"
+                                                                            class="inputCaja" id="grasa" name="grasa" placeholder="Cantidad"
                                                                             value="{{ old('grasa') }}" step="0.01">
                                                                     </div>
                                                                 </div>
@@ -377,7 +377,7 @@
                                                                             Hidráulico:</label></br>
                                                                         <input type="number" min="0"
                                                                             class="inputCaja" id="hidraulico"
-                                                                            name="hidraulico" value="{{ old('hidraulico') }}"
+                                                                            name="hidraulico" value="{{ old('hidraulico') }}" placeholder="Cantidad"
                                                                             step="0.01">
                                                                     </div>
                                                                 </div>
@@ -389,7 +389,7 @@
                                                                     <div style="width: 100%! important;">
                                                                         <label class="labelTitulo">Anticongelante:</label></br>
                                                                         <input type="number" min="0"
-                                                                            class="inputCaja" id="Anticongelante"
+                                                                            class="inputCaja" id="Anticongelante" placeholder="Cantidad"
                                                                             name="Anticongelante"
                                                                             value="{{ old('anticongelante') }}"
                                                                             step="0.01">
@@ -403,7 +403,7 @@
                                                                     <div style="width: 100%! important;">
                                                                         <label class="labelTitulo">Aceite Motor:</label></br>
                                                                         <input type="number" min="0"
-                                                                            class="inputCaja" id="motor" name="motor"
+                                                                            class="inputCaja" id="motor" name="motor" placeholder="Cantidad"
                                                                             value="{{ old('motor') }}" step="0.01">
                                                                     </div>
                                                                 </div>
@@ -416,7 +416,9 @@
                                                                         <label class="labelTitulo">Otro:</label></br>
                                                                         <input type="number" min="0"
                                                                             class="inputCaja" id="otro" name="otro"
-                                                                            value="{{ old('otro') }}" step="0.01">
+                                                                            value="{{ old('otro') }}" step="0.01" placeholder="Precio Total">
+                                                                        <textarea class="form-control-textarea border-green mt-2" id="otroComment" name="otroComment"
+                                                                        value="{{ old('otroComment') }}" rows="3" placeholder="Agregar el Concepto y las Cantidades..."></textarea>    
                                                                     </div>
                                                                 </div>
                                                                 <div class=" col-12 col-md-6 d-flex mb-4">
@@ -428,7 +430,7 @@
                                                                         <label class="labelTitulo">Aceite
                                                                             Dirección:</label></br>
                                                                         <input type="number" min="0"
-                                                                            class="inputCaja" id="direccion" name="direccion"
+                                                                            class="inputCaja" id="direccion" name="direccion" placeholder="Cantidad"
                                                                             value="{{ old('direccion') }}" step="0.01">
                                                                     </div>
                                                                 </div>
@@ -802,7 +804,7 @@
                                                                                                 onclick="loadDescarga('{{ $descarga->descargaIdTote }}','{{ $descarga->maquinariaId }}','{{ $descarga->operadorId }}',
                                                                                         '{{ $descarga->receptorId }}','{{ $descarga->litros }}',
                                                                                         '{{ $descarga->kilometrajeNuevo }}','{{ $descarga->imgKm ? $descarga->imgKm : '0' }}'
-                                                                                        ,'{{ \Carbon\Carbon::parse($descarga->updated_at)->format('Y-m-d') }}','{{ substr($descarga->horas, 0, 5) }}')">
+                                                                                        ,'{{ \Carbon\Carbon::parse($descarga->updated_at)->format('Y-m-d') }}','{{ substr($descarga->horas, 0, 5) }}','{{ $descarga->grasa }}', '{{ $descarga->hidraulico }}', '{{ $descarga->anticongelante }}', '{{ $descarga->motor }}', '{{ $descarga->otro }}', '{{ $descarga->direccion }}', '{{ $descarga->otroComment }}')">
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg "
                                                                                                     width="28"
                                                                                                     height="28"
@@ -1171,6 +1173,52 @@
                                 <input type="number" class="inputCaja" step="1" min="1" class="form-control" id="descargaKms"
                                     name="kilometrajeNuevo">
                             </div>
+                            <div class="col-6 my-3">
+                                <label class="labelTitulo">Grasas:</label></br>
+                                <input type="number" min="0"
+                                    class="inputCaja" id="grasaLoad" name="grasa" placeholder="Cantidad"
+                                    value="{{ old('grasa') }}" step="0.01">
+                            </div>
+
+                            <div class="col-6 my-3">
+                                <label class="labelTitulo">Aceite Hidráulico:</label></br>
+                                <input type="number" min="0"
+                                    class="inputCaja" id="hidraulicoLoad"
+                                    name="hidraulico" value="{{ old('hidraulico') }}" placeholder="Cantidad"
+                                    step="0.01">
+                            </div>
+
+                            <div class="col-6 my-3">
+                                <label class="labelTitulo">Anticongelante:</label></br>
+                                <input type="number" min="0"
+                                    class="inputCaja" id="AnticongelanteLoad" placeholder="Cantidad"
+                                    name="Anticongelante"
+                                    value="{{ old('anticongelante') }}"
+                                    step="0.01">
+                            </div>
+
+                            <div class="col-6 my-3">
+                                <label class="labelTitulo">Aceite Motor:</label></br>
+                                <input type="number" min="0"
+                                    class="inputCaja" id="motorLoad" name="motor" placeholder="Cantidad"
+                                    value="{{ old('motor') }}" step="0.01">
+                            </div>
+
+                            <div class="col-6 my-3">
+                                <label class="labelTitulo">Aceite Dirección:</label></br>
+                                <input type="number" min="0"
+                                    class="inputCaja" id="direccionLoad" name="direccion" placeholder="Cantidad"
+                                    value="{{ old('direccion') }}" step="0.01">
+                            </div>
+
+                            <div class="col-12 my-3">
+                                <label class="labelTitulo">Otro(s):</label></br>
+                                <input type="number" min="0"
+                                    class="inputCaja" id="otroLoad" name="otro"
+                                    value="{{ old('otro') }}" step="0.01" placeholder="Precio Total">
+                                <textarea class="form-control-textarea border-green mt-2" id="otroCommentLoad" name="otroComment"
+                                value="{{ old('otroComment') }}" rows="3" placeholder="Agregar el Concepto y las Cantidades..."></textarea>     
+                            </div>
                         </div>
 
                         <div class="modal-footer">
@@ -1472,7 +1520,7 @@
     </script>
 
     <script>
-        function loadDescarga(id, maquinariaId, operadorId, receptorId, litros, kms, imagenKms,fecha, horas) {
+        function loadDescarga(id, maquinariaId, operadorId, receptorId, litros, kms, imagenKms,fecha, horas, grasa, hidraulico, anticongelante, motor, otro, direccion, otroComment) {
 
             const txtId = document.getElementById('descargaId');
             txtId.value = id;
@@ -1498,6 +1546,27 @@
             if (imagenKms != 0) {
                 imagen2.src = "{{ asset('/storage/app/public/combustibles') }}/" + imagenKms;
             }
+
+            const txtgrasaLoad = document.getElementById('grasaLoad');
+            txtgrasaLoad.value = grasa;
+
+            const txthidraulicoLoad = document.getElementById('hidraulicoLoad');
+            txthidraulicoLoad.value = hidraulico;
+            
+            const txtAnticongelanteLoad = document.getElementById('AnticongelanteLoad');
+            txtAnticongelanteLoad.value = anticongelante;
+            
+            const txtmotorLoad = document.getElementById('motorLoad');
+            txtmotorLoad.value = motor;
+            
+            const txtdireccionLoad = document.getElementById('direccionLoad');
+            txtdireccionLoad.value = direccion;
+            
+            const txtotroLoad = document.getElementById('otroLoad');
+            txtotroLoad.value = otro;
+
+            const txtotroCommentLoad = document.getElementById('otroCommentLoad');
+            txtotroCommentLoad.value = otroComment;
 
         }
     </script>
