@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
@@ -195,10 +196,15 @@ class grupoController extends Controller {
 
                         //** No existe en bd */
                         if ($request['grupoTareaId'][$i] == 0) {
-                            $objRecord = new grupoTareas();
-                            $objRecord->grupoId  = $request['grupoId'][$i];
-                            $objRecord->tareaId  =  $request['tareaId'][$i];
-                            $objRecord->save();
+
+                            $objRecord =  grupoTareas::where('grupoId', '=', $request['grupoId'][$i])->where('tareaId', '=', $request['tareaId'][$i])->first();
+
+                            if(is_null($objRecord)==true) {
+                                $objRecord = new grupoTareas();
+                                $objRecord->grupoId  = $request['grupoId'][$i];
+                                $objRecord->tareaId  =  $request['tareaId'][$i];
+                                $objRecord->save();
+                            }
                             // dd( 'Guardando tarea de grupo' );
                         }
                     }
@@ -232,6 +238,23 @@ class grupoController extends Controller {
     */
 
     public function destroy( $id ) {
-        //
+
+        abort_if ( Gate::denies( 'grupo_destroy' ), 403 );
+        try {
+            $tarea =  grupo::where( 'id', '=', $id )->first();
+            $tarea->delete();
+            // Intenta eliminar
+        } catch ( QueryException $e ) {
+            if ( $e->getCode() === 23000 ) {
+                return redirect()->back()->with( 'faild', 'No Puedes Eliminar ' );
+                // Esto es un error de restricción de clave externa ( FOREIGN KEY constraint )
+                // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
+            } else {
+                return redirect()->back()->with( 'faild', 'No Puedes Eliminar si esta en uso' );
+                // Otro tipo de error de base de datos
+                // Maneja según sea necesario
+            }
+        }
+        return redirect()->back()->with( 'success', 'Eliminado correctamente' );
     }
 }

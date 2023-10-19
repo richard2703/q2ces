@@ -1,5 +1,8 @@
 @extends('layouts.main', ['activePage' => 'checkList', 'titlePage' => __('checkList')])
 @section('content')
+    <?php
+    $objValida = new Validaciones();
+    ?>
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -36,9 +39,14 @@
                                                     @endcan
                                                 </div>
                                                 <div>
-                                                    @can('bitacora_create')
-                                                        <a href="{{ route('checkList.seleccionar') }}">
+                                                    @can('checkList_create')
+                                                        {{-- <a href="{{ route('checkList.seleccionar') }}">
                                                             <!--Agregar ruta-->
+                                                            <button type="button" class="btn botonGral float-end">Añadir Nuevo
+                                                                Checklist</button>
+                                                        </a> --}}
+                                                        <a href="#" class="" data-bs-toggle="modal"
+                                                            data-bs-target="#nuevoCheckList" {{-- onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->comentario }}')" --}}>
                                                             <button type="button" class="btn botonGral float-end">Añadir Nuevo
                                                                 Checklist</button>
                                                         </a>
@@ -52,19 +60,22 @@
                                         <table class="table">
                                             <thead class="labelTitulo">
                                                 <tr>
-                                                    <th class="labelTitulo">Folio</th>
+                                                    <th class="labelTitulo" style="width:40px">Folio</th>
                                                     <th class="labelTitulo">Equipo</th>
                                                     <th class="labelTitulo">Bitácora</th>
                                                     <th class="labelTitulo">Registro</th>
                                                     <th class="labelTitulo">Fecha</th>
-
-                                                    <th class="labelTitulo text-right">Acciones</th>
+                                                    <th class="labelTitulo text-center" style="width:120px">Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @forelse ($records as $item)
                                                     <tr>
-                                                        <td>{{ $item->id }}</td>
+                                                        <td class="text-left"><a
+                                                                href="{{ route('checkList.show', $item->id) }}"
+                                                                title="Ver la información del CheckList."
+                                                                style="color: blue">{{ str_pad($item->id, 5, '0', STR_PAD_LEFT) }}</a>
+                                                        </td>
                                                         <td>{{ $item->maquinaria }} </td>
 
                                                         <td>{{ $item->bitacora }}</td>
@@ -72,7 +83,7 @@
 
                                                         <td>{{ $item->registrada }} </td>
 
-                                                        <td class="td-actions text-right">
+                                                        <td class="td-actions text-center">
 
                                                             @can('checkList_show')
                                                                 <a href="{{ route('checkList.show', $item->id) }}"
@@ -120,7 +131,7 @@
 
                                                 @empty
                                                     <tr>
-                                                        <td colspan="2">Sin registros.</td>
+                                                        <td colspan="6">Sin registros.</td>
                                                     </tr>
                                                 @endforelse
                                             </tbody>
@@ -138,4 +149,106 @@
             </div>
         </div>
     </div>
+    <!-- Modal Editar Tarea-->
+    <div class="modal fade" id="nuevoCheckList" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bacTituloPrincipal">
+
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nuevo CheckList</label>
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row d-flex" action="{{ route('checkList.ejecutar') }}" method="get">
+                        @csrf
+                        <div class=" col-12 mb-3 ">
+                            <label class="labelTitulo">Bitácora:
+                                <span>*</span></label></br>
+                            <select id="bitacoraId" name="bitacoraId" class="form-select" required onchange="cargar()"
+                                aria-label="Default select example">
+                                <option value="">Seleccione</option>
+                                @foreach ($vctBitacoras as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $objValida->ucwords_accent($item->nombre) }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class=" col-12 mb-3 ">
+                            <label class="labelTitulo">Maquinaría:
+                                <span>*</span></label></br>
+                            <select id="maquinariaId" name="maquinariaId" class="form-select" required
+                                aria-label="Default select example">
+                                <option value="">Seleccione</option>
+                                {{-- @foreach ($vctEquipos as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ strtoupper($item->identificador) . ' - ' . $objValida->ucwords_accent($item->nombre) }}
+                                    </option>
+                                @endforeach --}}
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn botonGral" id="btnTareaGuardar">Ejecutar</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function cargar() {
+            const listaSeleccion = document.getElementById('bitacoraId');
+            const ListaSeleccionar = document.getElementById('maquinariaId');
+            var url = '{{ route('equiposPorBitacora.get', ':bitacoraId') }}';
+            url = url.replace(':bitacoraId', listaSeleccion.value);
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Actualiza las opciones en el select "lugar"
+                    console.log(data);
+                    ListaSeleccionar.innerHTML = '';
+                    data.forEach(lugar => {
+                        console.log(lugar);
+                        var option = document.createElement('option');
+                        option.value = lugar.id;
+                        option.textContent = lugar.maquinaria;
+                        ListaSeleccionar.appendChild(option);
+                    });
+
+                });
+        };
+    </script>
+
+    <script>
+        function Guardado() {
+            // alert('test');
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Guardado con exito'
+            })
+        }
+        var slug = '{{ Session::get('message') }}';
+        if (slug == 1) {
+            Guardado();
+
+        }
+    </script>
 @endsection

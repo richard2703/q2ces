@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use App\Helpers\checkListPresentacion;
 
 use App\Models\checkList;
 use App\Models\checkListRegistros;
@@ -49,8 +50,10 @@ class checkListRegistrosController extends Controller {
     public function store( Request $request ) {
         $i = 0;
         $iRes = 1;
+        $vctDebug =  array();
+        $objTarea = new checkListPresentacion();
 
-        dd( $request );
+        // dd( $request );
 
         //*** registramos primero el checlist */
         $objCheckList =  new checkList();
@@ -64,26 +67,62 @@ class checkListRegistrosController extends Controller {
         for ( $i = 0; $i < count( $request[ 'tareaId' ] ) ;
         $i++ ) {
 
-            $objRegistro = new checkListRegistros();
-            $objRegistro->checkListId = $objCheckList->id ;
-            $objRegistro->usuarioId = $request[ 'usuarioId' ];
-            $objRegistro->tareaId = $request[ 'tareaId' ][ $i ];
-            $objRegistro->grupoId = $request[ 'grupoId' ][ $i ];
-            $objRegistro->tarea = $request[ 'tarea' ][ $i ];
-            $objRegistro->grupo = $request[ 'grupo' ][ $i ];
-            $objRegistro->bitacoraId = $request[ 'bitacoraId' ];
-            $objRegistro->bitacora = $request[ 'bitacora' ];
-            $objRegistro->maquinariaId = $request[ 'maquinariaId' ];
-            $objRegistro->maquinaria = $request[ 'maquinaria' ];
+            $vctDebug[] = 'Validamos si la tareaId->' .   $request[ 'tareaId' ][ $i ] . ' tiene un resultado asociado' ;
+            $vctDebug[] = 'Validamos si existe el valor para resultado'.$request[ 'tareaId' ][ $i ].'->resultado' . $request[ 'tareaId' ][ $i ]  ;
 
-            $objRegistro->valor = $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ][ 0 ] ;
-            $objRegistro->resultado = $this->etiquetaValor( $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ][ 0 ] );
+            if ( is_array( $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ] ) == true ) {
+                $vctDebug[] = 'Los valores->'. $request[ 'tareaId' ][ $i ];
+            } else {
 
-            $objRegistro->save();
-            // dd( $request, $objCheckList, $objRegistro, $request[ 'resultado' . $iRes ][ 0 ] );
+                $vctDebug[] = 'El valor->'. $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ];
+            }
+
+            //*** existe el resultado */
+            if ( $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ] != null ) {
+
+                $vctDebug[] =  'Entre';
+
+                $objRegistro = new checkListRegistros();
+                $objRegistro->checkListId =  $objCheckList->id ;
+                $objRegistro->usuarioId = $request[ 'usuarioId' ];
+                $objRegistro->tareaId = $request[ 'tareaId' ][ $i ];
+                $objRegistro->grupoId = $request[ 'grupoId' ][ $i ];
+                $objRegistro->tarea = $request[ 'tarea' ][ $i ];
+                $objRegistro->grupo = $request[ 'grupo' ][ $i ];
+                $objRegistro->bitacoraId = $request[ 'bitacoraId' ];
+                $objRegistro->bitacora = $request[ 'bitacora' ];
+                $objRegistro->maquinariaId = $request[ 'maquinariaId' ];
+                $objRegistro->maquinaria = $request[ 'maquinaria' ];
+
+                //*** el valor seleccionado */
+                $objRegistro->valor =  ( int )$request[ 'resultado' . $request[ 'tareaId' ][ $i ] ][ 0 ]  ;
+
+                if ( is_array( $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ] ) == true ) {
+                    //*** para el manejo de items de radio, select */
+                    $objRegistro->resultado = $objTarea->etiquetaValor( $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ][ 0 ], $request[ 'tareaId' ][ $i ] );
+                } else {
+
+                    $vctDebug[] =  'Control a trabajar: '. $request[ 'controlHtml' ][ $i ];
+
+                    if ( $request[ 'controlHtml' ][ $i ] == 'select' ) {
+                        $objRegistro->resultado = $objTarea->etiquetaValor( $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ][ 0 ], $request[ 'tareaId' ][ $i ] );
+                    } else {
+                        $objRegistro->resultado = $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ] ;
+                    }
+                }
+
+                $objRegistro->save();
+                $vctDebug[] =  'Lo Guarde';
+
+                // dd( $request, $objCheckList, $objRegistro, $request[ 'resultado' . $iRes ][ 0 ] );
+            } else {
+                $vctDebug[] = 'NO existe el valor para resultado'.$request[ 'tareaId' ][ $i ].'->' . $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ];
+            }
 
             $iRes += 1;
         }
+
+        // dd( $vctDebug, $request );
 
         return redirect()->route( 'checkList.index' );
 
@@ -116,15 +155,18 @@ class checkListRegistrosController extends Controller {
             'checkListRegistros.*',
             DB::raw( 'maquinaria.nombre AS maquinaria' ),
             DB::raw( 'users.username AS usuario' ),
-            DB::raw( 'bitacoras.nombre AS bitacora' )
+            DB::raw( 'bitacoras.nombre AS bitacora' ),
+            DB::raw( 'tipoValorTarea.controlHtml' )
         )
         ->join( 'maquinaria', 'maquinaria.id', '=', 'checkListRegistros.maquinariaId' )
         ->join( 'users', 'users.id', '=', 'checkListRegistros.usuarioId' )
+        ->join( 'tarea', 'tarea.id', '=', 'checkListRegistros.tareaId' )
+        ->join( 'tipoValorTarea', 'tipoValorTarea.id', '=', 'tarea.tipoValorId' )
         ->leftJoin( 'bitacoras', 'bitacoras.id', '=', 'checkListRegistros.bitacoraId' )
         ->orderBy( 'grupo', 'asc' )
         ->where( 'checkListRegistros.checkListId', '=', $id )->get();
 
-        // dd( $records );
+        // dd( $vctRecords );
         return view( 'checkList.editarCheckList', compact( 'checkList', 'vctRecords' ) );
     }
 
@@ -150,9 +192,11 @@ class checkListRegistrosController extends Controller {
     public function update( Request $request ) {
 
         $blnExito = false;
+        $objTarea = new checkListPresentacion();
+        $vctDebug = array();
 
         //*** actualizamos primero el checklist */
-        $objCheckList =    checkList::where( 'id', '=', $request[ 'checkListId' ] )->first();
+        $objCheckList = checkList::where( 'id', '=', $request[ 'checkListId' ] )->first();
 
         if ( $objCheckList ) {
 
@@ -176,7 +220,13 @@ class checkListRegistrosController extends Controller {
                 if ( $objRegistro ) {
                     //*** actualizamos solo el valor de la tarea y su etiqueta */
                     $objRegistro->valor = $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ][ 0 ] ;
-                    $objRegistro->resultado = $this->etiquetaValor( $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ][ 0 ] );
+                    //*** checamos el tipo de control */
+                    if ( $request[ 'controlHtml' ][ $i ] == 'select' || $request[ 'controlHtml' ][ $i ] == 'radio' ) {
+                        $vctDebug[] = $objRegistro->resultado = $objTarea->etiquetaValor( $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ][ 0 ], $request[ 'tareaId' ][ $i ] );
+                    } else {
+                        $vctDebug[] = $objRegistro->resultado = $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ] ;
+                    }
+
                     $objRegistro->save();
 
                 }
@@ -189,6 +239,7 @@ class checkListRegistrosController extends Controller {
         } else {
             $blnExito = false;
         }
+        // dd( $vctDebug );
         return redirect()->route( 'checkList.index' )->with( ( $blnExito == true?'success':'error' ), ( $blnExito == true?'Registro actualizado de forma correctamenta.':'No se pudo actualizar el registro' ) );
     }
 
@@ -203,27 +254,4 @@ class checkListRegistrosController extends Controller {
         //
     }
 
-    public function etiquetaValor( $intValor ) {
-
-        $strResultado = '';
-
-        switch ( $intValor ) {
-            case 0:
-            $strResultado = 'Requiere Atención Inmediata';
-            break;
-
-            case 1:
-            $strResultado = 'Requiere Atención Futura';
-            break;
-
-            case 2:
-            $strResultado = 'Revisión Ok';
-            break;
-
-            default:
-            $strResultado = 'No Definido';
-            break;
-        }
-        return  $strResultado;
-    }
 }

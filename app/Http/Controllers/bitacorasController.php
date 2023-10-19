@@ -15,6 +15,9 @@ use App\Models\grupo;
 use App\Models\maquinaria;
 use App\Models\grupoBitacoras;
 use App\Helpers\Validaciones;
+use App\Models\frecuenciaEjecucion;
+use App\Models\bitacorasEquipos;
+
 
 class bitacorasController extends Controller {
     /**
@@ -27,10 +30,15 @@ class bitacorasController extends Controller {
 
         abort_if ( Gate::denies( 'bitacora_index' ), 403 );
 
-        $vctBitacoras = bitacoras::select( 'bitacoras.*', )
-        ->leftJoin('maquinaria', 'maquinaria.bitacoraId', '=', 'bitacoras.id')
-        ->groupBy('maquinaria.bitacoraId')
-        ->selectRaw('count(*) as total, maquinaria.bitacoraId')
+        $vctBitacoras = bitacoras::select( 'bitacoras.*', 'frecuenciaEjecucion.nombre as frecuencia' )
+        ->leftJoin('frecuenciaEjecucion', 'bitacoras.frecuenciaId', '=', 'frecuenciaEjecucion.id')
+       // ->leftJoin('maquinaria', 'maquinaria.bitacoraId', '=', 'bitacoras.id')
+        ->leftJoin('grupoBitacoras','grupoBitacoras.bitacoraId','bitacoras.id')
+        ->leftJoin('bitacorasEquipos','bitacorasEquipos.bitacoraId','bitacoras.id')
+        ->groupBy('bitacorasEquipos.bitacoraId')
+        ->groupBy('grupoBitacoras.bitacoraId')
+        ->selectRaw('count(distinct(bitacorasEquipos.maquinariaId)) as totalEquipos')
+        ->selectRaw('count(distinct(grupoBitacoras.grupoId)) as totalGrupos')
         ->orderBy( 'created_at', 'desc' )->paginate( 15 );
 
         return view( 'bitacora.indexBitacora', compact( 'vctBitacoras' ) );
@@ -64,7 +72,10 @@ class bitacorasController extends Controller {
         $vctGrupos = grupo::select( 'grupo.*', )
         ->orderBy( 'created_at', 'desc' )->get();
 
-        return view( 'bitacora.nuevoBitacora', compact( 'vctGrupos' ) );
+        $vctFrecuencias = frecuenciaEjecucion::select( 'frecuenciaEjecucion.*', )
+        ->orderBy( 'frecuenciaEjecucion.dias', 'asc' )->get();
+
+        return view( 'bitacora.nuevoBitacora', compact( 'vctGrupos', 'vctFrecuencias' ) );
     }
 
     /**
@@ -127,8 +138,24 @@ class bitacorasController extends Controller {
         ->join( 'bitacoras', 'bitacoras.id', '=', 'grupoBitacoras.bitacoraId' )
         ->where( 'bitacoraId', '=', $id )->get();
 
-        // dd($tareas);
-        return view( 'bitacora.editarBitacora', compact( 'bitacora','grupos' ) );
+        $equipos = bitacorasEquipos::select(
+            'bitacorasEquipos.id',
+            'bitacorasEquipos.maquinariaId',
+            'bitacorasEquipos.bitacoraId',
+            DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ),
+            DB::raw( "CONCAT('Equipo: ',maquinaria.identificador,' - ', maquinaria.nombre,', Marca: ', marca.nombre,', Categoría: ', maquinariaCategoria.nombre, ', Modelo: ', maquinaria.modelo, ', NS: ', maquinaria.numserie ,', Placas: ', maquinaria.placas)as descripcion" ),
+        )
+        ->join( 'maquinaria', 'maquinaria.id', '=', 'bitacorasEquipos.maquinariaId' )
+        ->leftjoin('marca','marca.id','maquinaria.marcaId')
+        ->leftjoin('maquinariaCategoria','maquinariaCategoria.id','maquinaria.categoriaId')
+        ->whereNull( 'compania' )
+        ->where('bitacorasEquipos.bitacoraId','=',$id)->get();
+
+        $vctFrecuencias = frecuenciaEjecucion::select( 'frecuenciaEjecucion.*', )
+        ->orderBy( 'frecuenciaEjecucion.dias', 'asc' )->get();
+
+        // dd($equipos);
+        return view( 'bitacora.editarBitacora', compact( 'bitacora','grupos','equipos', 'vctFrecuencias' ) );
     }
 
     /**
@@ -155,16 +182,17 @@ class bitacorasController extends Controller {
         ] );
 
         $data = $request->all();
-
+        $vctDebug=array();
         $bitacora = bitacoras::where( 'id', '=', $id )->first();
 
         if ( is_null( $bitacora ) == false ) {
             $bitacora->nombre = $request['nombre'];
             $bitacora->comentario = $request['comentario'];
+            $bitacora->frecuenciaId = $request['frecuenciaId'];
             $bitacora->update();
             // dd( $data );
 
-            //*** trabajamos con los items de piezas registradas y no registradas */
+            //*** trabajamos con los items de grupos registrados y no registrados */
             $vctRegistrados = $objValida->preparaArreglo(grupoBitacoras::where('bitacoraId', '=', $bitacora->id)->pluck('id')->toArray());
             $vctArreglo = $objValida->preparaArreglo($request['grupoBitacoraId']);
 
@@ -172,6 +200,7 @@ class bitacorasController extends Controller {
 
             //*** Preguntamos si existen registros en el arreglo */
             if (is_array($vctArreglo) && count($vctArreglo) > 0) {
+                $vctDebug[]="Hay registros en el arreglo de bitacoras y grupos";
 
                 //** buscamos si el registrado esta en el arreglo, de no ser asi se elimina */
                 if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
@@ -200,40 +229,134 @@ class bitacorasController extends Controller {
                     $i++
                 ) {
                     if ($request['grupoBitacoraId'][$i] != '') {
-                        //** Actualizacion de registro */
+                        $vctDebug[]='Actualizacion de registro';
                         $objRecord =  grupoBitacoras::where('id', '=', $request['grupoBitacoraId'][$i])->first();
 
                         if ($objRecord && $objRecord->id > 0) {
                             $objRecord->bitacoraId  = $request['bitacoraId'][$i];
                             $objRecord->grupoId  =  $request['grupoId'][$i];
                             $objRecord->save();
-                            // dd( 'Actualizando gasto de grupo' );
+                            $vctDebug[]= 'Actualizando el grupo->'.  $objRecord->id;
                         }
                     } else {
 
                         //** No existe en bd */
                         if ($request['grupoBitacoraId'][$i] == 0) {
-                            $objRecord = new grupoBitacoras();
-                            $objRecord->bitacoraId  = $request['bitacoraId'][$i];
-                            $objRecord->grupoId  =  $request['grupoId'][$i];
-                            $objRecord->save();
-                            // dd( 'Guardando tarea de grupo' );
+
+                            $vctDebug[]='Validamos si ya existe el grupo de tareas en la bitacora, id->'.  $request['maquinariaId'][$i];
+                            $objRecord =  grupoBitacoras::where('bitacoraId', '=', $request['bitacoraId'][$i])->where('grupoId', '=', $request['grupoId'][$i])->first();
+
+                            if( $objRecord){
+                                $vctDebug[]='Ya existe este grupo en la bitacora, id->'. $objRecord->id;
+                            }else{
+                                $objRecord = new grupoBitacoras();
+                                $objRecord->bitacoraId  = $request['bitacoraId'][$i];
+                                $objRecord->grupoId  =  $request['grupoId'][$i];
+                                $objRecord->save();
+                                $vctDebug[]='Guardando el grupo de tareas';
+                            }
                         }
                     }
                 }
             } else {
                 //*** se deben de eliminar todos los registrados */
                 if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
+                    $vctDebug[]= 'Borrando todos los items de grupos de tareas';
                     for (
                         $i = 0;
                         $i < count($vctRegistrados);
                         $i++
                     ) {
                         grupoBitacoras::destroy($vctRegistrados[$i]);
-                        // dd( 'Borrando toda tarea de grupo' );
+                        $vctDebug[]= 'Borrando el item->'. $vctRegistrados[$i];
                     }
                 }
             }
+
+
+            //*** trabajamos con los items de grupos registrados y no registrados */
+            $vctRegistrados = $objValida->preparaArreglo(bitacorasEquipos::where('bitacoraId', '=', $bitacora->id)->pluck('id')->toArray());
+            $vctArreglo = $objValida->preparaArreglo($request['bitacorasEquiposId']);
+
+            //*** Preguntamos si existen registros en el arreglo */
+            if (is_array($vctArreglo) && count($vctArreglo) > 0) {
+                $vctDebug[]="Hay registros en el arreglo de bitacoras y equipos";
+                //** buscamos si el registrado esta en el arreglo, de no ser asi se elimina */
+                if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
+                    for (
+                        $i = 0;
+                        $i < count($vctRegistrados);
+                        $i++
+                    ) {
+                        $intValor = (int) $vctRegistrados[$i];
+
+                        if (in_array($intValor, $vctArreglo) == false) {
+                            $vctDebug[]='No existe y se debe de eliminar el id->'. $vctRegistrados[$i];
+                            bitacorasEquipos::destroy($vctRegistrados[$i]);
+                            $vctDebug[]='Borrando, se quito el equipo de la bitacora, id->'. $vctRegistrados[$i];
+                        } else {
+                            /*** existe el registro */
+                            $vctDebug[]='Sigue vivo el equipo en el arreglo, id->'. $vctRegistrados[$i];
+                        }
+                    }
+                }
+
+                //*** trabajamos el resto */
+                for (
+                    $i = 0;
+                    $i < count($request['bitacorasEquiposId']);
+                    $i++
+                ) {
+                    if ($request['bitacorasEquiposId'][$i] != '') {
+                        //** Actualizacion de registro */
+                        $objRecord =  bitacorasEquipos::where('id', '=', $request['bitacorasEquiposId'][$i])->first();
+
+                        if ($objRecord && $objRecord->id > 0) {
+                            $objRecord->bitacoraId  = $request['bitacoraId'][$i];
+                            $objRecord->maquinariaId  =  $request['maquinariaId'][$i];
+                            $objRecord->save();
+                            $vctDebug[]='Actualizando el equipo en la bitacora, id->'. $objRecord->id;
+                        }
+                    } else {
+
+                        //** No existe en bd */
+                        if ($request['bitacorasEquiposId'][$i] == 0) {
+
+                            $vctDebug[]='Validamos si ya existe el equipo en la bitacora, id->'.  $request['maquinariaId'][$i];
+                            $objRecord =  bitacorasEquipos::where('bitacoraId', '=', $request['bitacoraId'][$i])->where('maquinariaId', '=', $request['maquinariaId'][$i])->first();
+
+                            if( $objRecord){
+                                $vctDebug[]='Ya existe este equipo en la bitacora, id->'. $objRecord->id;
+                            }else{
+
+                            $objRecord = new bitacorasEquipos();
+                            $objRecord->bitacoraId  = $request['bitacoraId'][$i];
+                            $objRecord->maquinariaId  =  $request['maquinariaId'][$i];
+                            $objRecord->save();
+                            $vctDebug[]='Se crea el equipo en la bitacora, id->'. $objRecord->id;
+                            }
+
+
+                        }
+                    }
+                }
+            } else {
+                //*** se deben de eliminar todos los registrados */
+                if (is_array($vctRegistrados) && count($vctRegistrados) > 0) {
+                        $vctDebug[]= 'Borrando todos los items de equipos';
+                    for (
+                        $i = 0;
+                        $i < count($vctRegistrados);
+                        $i++
+                    ) {
+                        bitacorasEquipos::destroy($vctRegistrados[$i]);
+                        $vctDebug[]= 'Borrando el item->'. $vctRegistrados[$i];
+                    }
+                }
+            }
+
+            //   dd($vctDebug, $vctArreglo, $vctRegistrados);
+
 
             Session::flash( 'message', 1 );
         }
@@ -268,5 +391,32 @@ class bitacorasController extends Controller {
             }
         }
         return redirect()->back()->with( 'success', 'Eliminado correctamente' );
+    }
+
+    /**
+     * Obtiene los equipos ligados con una bitacora
+     *
+     * @param integer $bitacoraId Identificador de la bitacora
+     * @return void
+     */
+    public function equiposPorBitacora($bitacoraId)
+    {
+        // if ($bitacoraId == 1) {
+        //     $data =  maquinaria::select('id', 'nombre')
+        //         ->get();
+        // } else {
+            $data =  bitacorasEquipos::select(
+                'bitacorasEquipos.*',
+                'maquinaria.nombre',
+                'maquinaria.identificador',
+                DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" )
+                )
+                ->join('maquinaria','maquinaria.id','bitacorasEquipos.maquinariaId')
+                ->where('bitacorasEquipos.bitacoraId','=', $bitacoraId)
+                ->orderby("maquinaria.identificador", "asc")
+                ->get();
+        // }
+        // dd($data);
+        return response()->json($data);
     }
 }

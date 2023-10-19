@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class bitacoras extends Model
+class frecuenciaEjecucion extends Model
 {
     use HasFactory;
-    protected $table = 'bitacoras';
-
-    public $timestamps = true;
+    protected $table = "frecuenciaEjecucion";
+    public $timestamps = false;
 
     protected $fillable = [
-        'nombre', 'comentario', 'activa', 'frecuenciaId'
+        'nombre', 'comentario','dias','minimoEjecucion'
     ];
 }
