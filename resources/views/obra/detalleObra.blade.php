@@ -169,7 +169,7 @@
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
                                                         <label class="labelTitulo">Operador: <span>*</span></label></br>
                                                         <select id="personalId" name="personalId[]" class="form-select"
-                                                            required aria-label="Default select example">
+                                                            aria-label="Default select example">
                                                             <option value="">Seleccione</option>
                                                             @foreach ($vctPersonal as $item)
                                                                 {{-- <option value="0">Sin Cambios</option>
@@ -234,7 +234,7 @@
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
                                                         <label class="labelTitulo">Equipo: <span>*</span></label></br>
                                                         <select id="maquinariaId" name="maquinariaId[]" class="form-select"
-                                                            required aria-label="Default select example">
+                                                            aria-label="Default select example">
                                                             <option value="">Seleccione</option>
                                                             @foreach ($vctMaquinaria as $maquina)
                                                                 <option value="{{ $maquina->id }}">
@@ -247,7 +247,7 @@
                                                     <div class="col-12 col-sm-6 col-lg-4 my-3 ">
                                                         <label class="labelTitulo">Operador: <span>*</span></label></br>
                                                         <select id="personalId" name="personalId[]" class="form-select"
-                                                            required aria-label="Default select example">
+                                                            aria-label="Default select example">
                                                             <option value="">Seleccione</option>
                                                             {{-- <option value="0">Sin Cambios</option>
                                                         <option value="">Denegar Equipo</option> --}}

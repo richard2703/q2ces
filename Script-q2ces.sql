@@ -394,6 +394,7 @@ create table conceptos(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     codigo varchar(200) not NULL,
     nombre varchar(200) not NULL,
+    tipo int null,
     comentario text NULL,
     primary key (id)
 );
@@ -577,6 +578,28 @@ CREATE TABLE corteCajaChica(
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id));
+   
+   create table conceptosServiciosTrasporte(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    codigo varchar(200) not NULL,
+    nombre varchar(200) not NULL,
+    comentario text NULL,
+    primary key (id)
+);
+
+ create table tipoAlmacen(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) not NULL,
+    comentario text NULL,
+    primary key (id)
+);
+
+ create table tipoAlmacen(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(200) not NULL,
+    comentario text NULL,
+    primary key (id)
+);
 
 
 CREATE TABLE IF NOT EXISTS 'frecuenciaEjecucion' (
@@ -1676,12 +1699,30 @@ create table asistencia(
     constraint FK_asistencia_tipoHoraExtraId foreign key (tipoHoraExtraId) references tipoHoraExtra(id)
 );
 
+CREATE TABLE serviciosTrasporte(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    fecha date not NULL,
+    conceptoServicioTrasporteId bigint(20) unsigned NOT NULL,
+    obraId bigint(20) unsigned  NULL,
+    equipoId bigint(20) unsigned NOT NULL,
+    personalId bigint(20) unsigned NOT NULL,
+    cantidad float(10, 2) null,
+    estatus int null,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_ServiciosTrasporte_conceptoServicioTrasporteId foreign key (conceptoServicioTrasporteId) references conceptosServiciosTrasporte(id),
+    CONSTRAINT FK_ServiciosTrasporte_obraId foreign key (obraId) references obras(id),
+    CONSTRAINT FK_ServiciosTrasporte_equipoId foreign key (equipoId) references maquinaria(id),
+    CONSTRAINT FK_ServiciosTrasporte_personalId foreign key (personalId) references personal(id)
+   );
+
 create table cajaChica(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     dia date not NULL,
     concepto bigint(20) unsigned NOT NULL,
     comprobante float(10,2) NULL,
-    ncomprobante int not NULL,
+    ncomprobante varchar(200) not NULL,
     cliente varchar(200),
     obra bigint(20) unsigned  NULL,
     equipo bigint(20) unsigned NOT NULL,
@@ -1785,6 +1826,16 @@ create table movimientosCisterna(
     CONSTRAINT FK_movimientosCisterna_maquinaria foreign key (maquinariaId) references maquinaria(id)
 );
 
+CREATE TABLE almacenTiraderos(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	nombre varchar(200) null,
+	tipoAlmacenId bigint(20) unsigned NOT null,
+	comentario text null,
+    created_at timestamp NULL DEFAULT NULL,
+    updated_at timestamp NULL DEFAULT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_almacenTiraderos_tipoAlmacenId foreign key (tipoAlmacenId) references tipoAlmacen(id)
+);
 
 CREATE TABLE extintores(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -1822,6 +1873,8 @@ ADD CONSTRAINT FK_descarga_obraId FOREIGN KEY (obraId) REFERENCES obras(id);
 ALTER TABLE descarga
 ADD COLUMN clienteId bigint(20) unsigned NULL,
 ADD CONSTRAINT FK_descarga_clienteId FOREIGN KEY (clienteId) REFERENCES clientes(id);
+
+
 
 /***************************************FIN Tablas Relacionadas*/
 

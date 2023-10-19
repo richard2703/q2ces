@@ -13,6 +13,6 @@ class conceptos extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'codigo', 'nombre', 'comentario'
+        'codigo', 'nombre', 'tipo', 'comentario'
     ];
 }

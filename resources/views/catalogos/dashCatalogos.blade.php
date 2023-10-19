@@ -342,6 +342,14 @@
                                         <div class="accordion-body">
                                             <div class="row mt-3 d-flex">
 
+                                                {{--  <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                                    <a href="{{ route('conceptosServicios.index') }}" class="">
+                                                        <img src="/img/catalogos/conceptos.svg" alt="Conceptos"
+                                                            title="Conceptos" width="30%" class="botonIconoPrincipal">
+                                                        <p class="mt-4 texticonos">Servicios
+                                                        </p>
+                                                    </a>
+                                                </div>  --}}
 
                                                 <div class="col-12 col-sm-6 col-md-3 text-center my-4">
                                                     <a href="{{ route('catalogoConceptos.index') }}" class="">
@@ -358,6 +366,26 @@
                                                             title="Comprobantes" width="30%"
                                                             class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Comprobantes
+                                                        </p>
+                                                    </a>
+                                                </div>
+
+                                                <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                                    <a href="{{ route('tipoAlmacen.index') }}" class="">
+                                                        <img src="/img/catalogos/tiposAlmacenes.svg" alt="Comprobantes"
+                                                            title="Comprobantes" width="30%"
+                                                            class="botonIconoPrincipal">
+                                                        <p class="mt-4 texticonos">Tipos de Almacen/Tiraderos
+                                                        </p>
+                                                    </a>
+                                                </div>
+
+                                                <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                                    <a href="{{ route('almacenTiraderos.index') }}" class="">
+                                                        <img src="/img/catalogos/almacenes.svg" alt="Comprobantes"
+                                                            title="Comprobantes" width="30%"
+                                                            class="botonIconoPrincipal">
+                                                        <p class="mt-4 texticonos">Almacenes y Tiraderos
                                                         </p>
                                                     </a>
                                                 </div>

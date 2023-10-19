@@ -118,7 +118,7 @@ class CombustibleToteController extends Controller
             'descarga.litros',
             'descarga.created_at AS fecha',
             'descarga.ticket',
-            'descarga.descargaDetalleId',
+            // 'descarga.descargaDetalleId',
             'descarga.tipoCisternaId',
             'cisternas.nombre',
             'detalles.*',
@@ -128,11 +128,13 @@ class CombustibleToteController extends Controller
             ->leftJoin('maquinaria as m2', 'm2.id', '=', 'descarga.servicioId')
             ->join('personal as p2', 'p2.id', '=', 'descarga.receptorId')
             ->join('cisternas', 'cisternas.id', '=', 'descarga.tipoCisternaId')
-            ->leftJoin('descargaDetalle as detalles', 'descarga.descargaDetalleId', '=', 'detalles.id')
+            ->leftJoin('descargaDetalle as detalles', 'descarga.id', '=', 'detalles.descargaId')
+            // ->leftJoin('descargaDetalle as detalles', 'descarga.descargaDetalleId', '=', 'detalles.id')
             ->whereNotNull('descarga.tipoCisternaId')
             ->orderBy('descarga.created_at', 'desc')
             ->paginate(10);
 
+        // dd($descargas);
         // dd($cisternas);
 
         // en este caso solo recuerda que cisternas son las maquinarias pero tuvimos que ponerle ese nombre porque estaba causando conflicto si lo cambiamos a maquinaria y cisterna en singular son las cisternas todas las cisternas del TOTE

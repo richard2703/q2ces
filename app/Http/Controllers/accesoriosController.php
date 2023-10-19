@@ -106,8 +106,6 @@ class accesoriosController extends Controller
 
         $cont = 0;
 
-
-
         for ($i = 0; $i < count($request->archivo); $i++) {
             $documento = new accesoriosDocs();
             $documento->accesorioId = $accesorio->id;
@@ -181,8 +179,24 @@ class accesoriosController extends Controller
         $marcas = marca::select('marca.*', 'marcasFilter.tipos_marcas_id')->leftJoin('marcasTipo as marcasFilter', 'marca.id', '=', 'marcasFilter.marca_id')->orderBy('nombre', 'asc')
             ->where('marcasFilter.tipos_marcas_id', '5')
             ->get();
+        $doc = docs::leftJoin('accesoriosDocs', function ($join) use ($accesorios) {
+            $join->on('docs.id', '=', 'accesoriosDocs.tipoId')
+                ->where('accesoriosDocs.accesorioId', '=', $accesorios->id);
+        })->select(
+            'docs.id',
+            'docs.nombre',
+            'accesoriosDocs.fechaVencimiento',
+            'accesoriosDocs.estatus',
+            'accesoriosDocs.comentarios',
+            'accesoriosDocs.ruta',
+            'accesoriosDocs.requerido',
+            'accesoriosDocs.id as idDoc'
+        )->where('docs.tipoId', '3')
+            ->get();
+
         $vctMaquinaria = maquinaria::all();
-        return view('accesorios.detalleAccesorios', compact('accesorios', 'vctMaquinaria', 'marcas'));
+        $readonly = true;
+        return view('accesorios.detalleAccesorios', compact('accesorios', 'vctMaquinaria', 'doc', 'marcas', 'readonly'));
     }
 
     /**
@@ -218,8 +232,9 @@ class accesoriosController extends Controller
         // dd($doc);
         // dd($accesorios);
         $vctMaquinaria = maquinaria::all();
+        $readonly = false;
         // 
-        return view('accesorios.detalleAccesorios', compact('accesorios', 'vctMaquinaria', 'doc', 'marcas'));
+        return view('accesorios.detalleAccesorios', compact('accesorios', 'vctMaquinaria', 'doc', 'marcas', 'readonly'));
     }
 
     /**
@@ -267,17 +282,13 @@ class accesoriosController extends Controller
         // dd($request);
         $pathAccesorio = str_pad($data['serie'] . $accesorios->id, 4, '0', STR_PAD_LEFT);
         if ($request->archivo) {
-            for (
-                $i = 0;
-                $i < count($request->archivo);
-                $i++
-            ) {
+            for ($i = 0; $i < count($request->archivo); $i++) {
                 $documento = null;
                 // dd( $request->archivo[ $i ][ 'idDoc' ] );
                 if ($request->archivo[$i]['idDoc'] == null) {
                     $documento = new accesoriosDocs();
                 }
-                $documento['maquinariaId'] = $accesorios->id;
+                $documento['accesorioId'] = $accesorios->id;
                 $documento['tipoId'] = $request->archivo[$i]['tipoDocs'];
                 // Obtenemos el tipo de documento
                 $tipoDocumentoNombre = $request->archivo[$i]['tipoDocsNombre'];

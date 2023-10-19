@@ -18,6 +18,8 @@ $mesSeleccionado = $objCalendar->getNameMonth(date_format($fechaSeleccionada, 'm
 
 $dtToday = date('Ymd');
 $dtTrabajar = date('Ymd', strtotime("$intAnio-$intMes-$intDia"));
+//*** averiguamos si el dia seleccionado es Sabado
+$blnFechaSeleccionadaEsSabado = $fechaSeleccionada->format('N') == 6 ? true : false;
 
 //*** estoy dentro del periodo de la semana de trabajo en curso
 $blnEnSemanaEnCurso = $objCalendar->getEnSemanaDeTrabajo($fechaSeleccionada, 3);
@@ -115,7 +117,7 @@ $blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
                                                 <a href="{{ route('asistencia.create') }}"
                                                     class="combustibleLitros fw-semibold text-end"
                                                     title="Ir al dia en curso"><b>Asistencia del Día
-                                                        {{ /*ucwords*/(trans($objCalendar->getFechaFormateada($fechaSeleccionada, true))) }}
+                                                        {{ /*ucwords*/ trans($objCalendar->getFechaFormateada($fechaSeleccionada, true)) }}
                                                     </b>
                                                 </a>
                                             </div>
@@ -164,6 +166,7 @@ $blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
                                                         </th>
                                                         <th class="labelTitulo" style="width:140px !important">Entrada
                                                         </th>
+                                                        <th class="labelTitulo">Horario Salida</th>
                                                         <th class="labelTitulo" style="width:140px !important">Salida
                                                         </th>
                                                     </thead>
@@ -179,8 +182,8 @@ $blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
                                                                             value="{{ $item->asistenciaId }}">
                                                                         <input type="hidden" name="personalId[]"
                                                                             value="{{ $item->id }}">
-                                                                        <input type="hidden" name="horarioSalida[]"
-                                                                            value="{{ $item->horarioSalida }}">
+                                                                        {{-- <input type="hidden" name="horarioSalida[]"
+                                                                            value="{{ $item->horarioSalida }}"> --}}
                                                                     </td>
                                                                     <td class="text-left">
                                                                         <a href="#"
@@ -224,16 +227,33 @@ $blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
                                                                             value="{{ $dtHorario }}">
                                                                     </td>
                                                                     <td>
-                                                                        <select class="form-select"  id="entradaAnticipada"
-                                                                        name="entradaAnticipada[]">
-                                                                        <option value="0" {{ $item->entradaAnticipada == 0 ? ' selected' : '' }}>No</option>
-                                                                        <option value="1" {{ $item->entradaAnticipada == 1 ? ' selected' : '' }}>Sí</option>
-                                                                    </select>
+                                                                        <select class="form-select" id="entradaAnticipada"
+                                                                            name="entradaAnticipada[]">
+                                                                            <option value="0"
+                                                                                {{ $item->entradaAnticipada == 0 ? ' selected' : '' }}>
+                                                                                No</option>
+                                                                            <option value="1"
+                                                                                {{ $item->entradaAnticipada == 1 ? ' selected' : '' }}>
+                                                                                Sí</option>
+                                                                        </select>
                                                                     </td>
                                                                     <td>
                                                                         <input type="time" class="inputCaja "
                                                                             placeholder="Entrada" id=""
                                                                             name="hEntrada[]"
+                                                                            value="{{ $dtHorario }}">
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php
+                                                                        $dtHorario = null;
+                                                                        if ($blnFechaSeleccionadaEsSabado == true) {
+                                                                            $dtHorario = $item->horarioSalidaSabado ? \Carbon\Carbon::parse($item->horarioSalidaSabado)->format('H:i') : '';
+                                                                        } else {
+                                                                            $dtHorario = $item->horarioSalida ? \Carbon\Carbon::parse($item->horarioSalida)->format('H:i') : '';
+                                                                        }
+                                                                        ?>
+                                                                        {{ $dtHorario }}
+                                                                        <input type="hidden" name="horarioSalida[]"
                                                                             value="{{ $dtHorario }}">
                                                                     </td>
                                                                     <td>
@@ -260,8 +280,8 @@ $blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
                                                                             value="{{ $item->id }}">
                                                                         <input type="hidden" name="recordId[]"
                                                                             value="{{ $item->recordId }}">
-                                                                        <input type="hidden" name="horarioSalida[]"
-                                                                            value="{{ $item->horarioSalida }}">
+                                                                        {{-- <input type="hidden" name="horarioSalida[]"
+                                                                            value="{{ $item->horarioSalida }}"> --}}
                                                                         <input type="hidden" name="horarioEntrada[]"
                                                                             value="{{ $item->horarioEntrada }}">
                                                                     </td>
@@ -328,6 +348,19 @@ $blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
                                                                             placeholder="Entrada" id=""
                                                                             name="hEntrada[]"
                                                                             value="{{ $item->hEntrada ? \Carbon\Carbon::parse($item->hEntrada)->format('H:i') : '' }}">
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php
+                                                                        $dtHorario = null;
+                                                                        if ($blnFechaSeleccionadaEsSabado == true) {
+                                                                            $dtHorario = $item->horarioSalidaSabado ? \Carbon\Carbon::parse($item->horarioSalidaSabado)->format('H:i') : '';
+                                                                        } else {
+                                                                            $dtHorario = $item->horarioSalida ? \Carbon\Carbon::parse($item->horarioSalida)->format('H:i') : '';
+                                                                        }
+                                                                        ?>
+                                                                        {{ $dtHorario }}
+                                                                        <input type="hidden" name="horarioSalida[]"
+                                                                            value="{{ $dtHorario }}">
                                                                     </td>
                                                                     <td>
                                                                         <input type="time" class="inputCaja "

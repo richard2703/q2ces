@@ -93,8 +93,15 @@
 
                                         <div class="mb-3 col-6">
                                             <label for="title" class="labelTitulo">Marca:</label>
-                                            <input autofocus type="text" class="inputCaja" id="marca"
-                                                name="marca" placeholder="Marca Equipo..." readonly>
+                                            <select name='marca'
+                                                class="form-select" id="marca" placeholder="Marca Equipo..." readonly>
+                                                <option value="">Seleccione</option>
+                                                @foreach ($marca as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->nombre }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
 
@@ -212,10 +219,17 @@
                                                 name="placas" placeholder="Placas Equipo..." readonly>
                                         </div>
 
-                                        <div class="mb-3 col-6">
+                                        <div class="col-12 col-sm-6 mb-3">
                                             <label for="title" class="labelTitulo">Marca:</label>
-                                            <input autofocus type="text" class="inputCaja" id="marcaEdit"
-                                                name="marca" placeholder="Marca Equipo..." readonly>
+                                            <select name='marca'
+                                                class="form-select" id="marcaEdit" placeholder="Marca Equipo..." readonly>
+                                                <option value="">Seleccione</option>
+                                                @foreach ($marca as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->nombre }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
 
@@ -379,7 +393,7 @@
             autoFill: true,
             minLength: 1,
             select: function(event, ui) {
-
+                console.log('UI', ui.item);
                 // Rellenar los campos con los datos de la persona seleccionada
                 $('#maquinariaIdEdit').val(ui.item.id);
                 // $('#descripcion').val(ui.item.value);
@@ -605,7 +619,7 @@
             document.getElementById("colorBoxEdit").style.backgroundColor = evento._def.ui.backgroundColor;
             document.getElementById('descripcionEdit').value = evento._def.extendedProps.descripcion;
 
-            let marca = evento._def.extendedProps.marca;
+            let marca = evento._def.extendedProps.marcaId;
             let nombre = evento._def.extendedProps.nombre;
             let numeconomico = evento._def.extendedProps.numeconomico;
             let placas = evento._def.extendedProps.placas;

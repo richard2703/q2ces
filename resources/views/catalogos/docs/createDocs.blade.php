@@ -50,15 +50,15 @@
 
                                         <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                             <label class="labelTitulo">Tipo:</label></br>
-                                                <select id="tipoId" name="tipoId" class="form-select"
-                                                    aria-label="Default select example">
-                                                    <option value="">Seleccione</option>
-                                                    @foreach ($tiposDocs as $item)
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->nombre }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                            <select id="tipoId" name="tipoId" class="form-select"
+                                                aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($tiposDocs as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->nombre }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
@@ -67,13 +67,14 @@
                                                 name="comentario" placeholder="Escribe aquí tus comentarios."></textarea>
                                         </div>
 
-                                </div>
+                                    </div>
 
-                                <div class="col-12 text-end mb-3 ">
-                                    <div class="mb-5" id="spinner-container"></div>
-                                    <button type="submit" class="btn botonGral" onclick="alertaGuardar()">Guardar</button>
+                                    <div class="col-12 text-end mb-3 ">
+                                        <div class="mb-5" id="spinner-container"></div>
+                                        <button type="submit" class="btn botonGral"
+                                            onclick="alertaGuardar()">Guardar</button>
+                                    </div>
                                 </div>
-                            </div>
                         </form>
                     </div>
                 </div>

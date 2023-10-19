@@ -166,10 +166,10 @@ class searchController extends Controller
         foreach ($maquinaria as $item) {
 
             $sugerencias[] = [
-                'value' =>  'Equipo ' . $item->nombre . ', Marca ' . $item->marca . ', Modelo ' . $item->modelo  . ', N.E. ' .  $item->identificador . ', Placas ' .  $item->placas,
+                'value' =>  'Equipo ' . $item->nombre . ', Marca ' . $item->marcaId . ', Modelo ' . $item->modelo  . ', N.E. ' .  $item->identificador . ', Placas ' .  $item->placas,
                 'id' => $item->id,
                 'nombre' => $item->nombre,
-                'marca' => $item->marca,
+                'marca' => $item->marcaId,
                 'numserie' => $item->numserie,
                 'placas' => $item->placas,
                 'modelo' => $item->modelo,

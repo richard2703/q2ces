@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="card" style="margin-top: 100px;">
+                <div class="card">
                     <div class="card-header bacTituloPrincipal">
                         {{-- <p class="card-category">Usuarios registrados</p> --}}
                         Detalles de la Carga de Combustible
@@ -45,8 +45,8 @@
                             </div>
                         </div>
                     </div>
-                    <div id="print-content" class="content-print">
-                        <img src="{{ asset('/img/login/002-sin-slogan.png') }}" alt="" width="200px;" class="mb-2" style="margin-left: -15px;">
+                    <div id="print-content" class="content-print" style="">
+                        <img src="{{ asset('/img/login/002-sin-slogan.png') }}" alt="" width="180px;" class="mb-2" style="margin-left: -15px;">
                         
                         <div class="text-start">
                             @if ($carga->tipoCisternaId == null)
@@ -60,19 +60,21 @@
                             <h5 class="text-center" style="font-weight: 1000; ">FECHA DE IMPRESIÓN:</h5>
                             <div class="text-center" id="fecha-hora"></div>
                             <p class="text-center" id="hora"></p>
-                            
+                            <br><br>
                             {{--  <div class="text-center"><h5 style="font-weight: 1000; ">SOLICITO: ...</h5> {{$solicitante['nombreSolicitante']}}</div>  --}}
                             <div class="text-center"><h5 style="font-weight: 1000;   ">LITROS:  </h5>{{ number_format($carga->litros, 2) }}                                LTS</div>
                             <div class="text-center"><h5 style="font-weight: 1000;   ">COSTO COMBUSTIBLE:</h5>${{ number_format($carga->precio, 2) }}                            </div>
                             <!--<div class="text-center"><h5 style="font-weight: 1000;   ">HORA DE DESPACHO:  ...</h5>{{ $carga->horas }}</div>-->
                             <h5 class="text-center" style="font-weight: 1000; ">TOTAL:  ${{ number_format($carga->precio * $carga->litros, 2) }}</h5>
-                            <br>
+                            
                             <img width="300px;" src="{{ asset('/img/login/Header2GenericoGrande.svg') }}" alt="" class="mb-2">
                             <div class="text-center"><h5 style="font-weight: 1000;   ">OPERADOR:</h5>{{ $carga->operador_nombre }}</div>
                             @if ($carga->tipoCisternaId != null)
                             <div class="text-center"><h5 style="font-weight: 1000;   ">EQUIPO DESPACHADO:</h5> Cisterna Tote</div>
                             @endif
-                            <div class="text-center"><h5 style="font-weight: 1000;   ">EQUIPO Y/O MAQUINARIA:</h5> {{ $carga->maquinaria_nombre }}</div><br><br>
+                            <br><br>
+                            <div class="text-center"><h5 style="font-weight: 1000;   ">EQUIPO Y/O MAQUINARIA:</h5> {{ $carga->maquinaria_nombre }}</div>
+                            <br><br>
                             <div class="text-center"><h5 style="font-weight: 1000;   ">FECHA DE CARGA:</h5>{{ \Carbon\Carbon::parse($carga->updated_at)->format( 'Y-m-d' ) }}</div>
                             <div class="text-center"><h5 style="font-weight: 1000;   ">HORA DE CARGA:</h5>{{ substr($carga->horaLlegadaCarga, 0, 5) }}</div>
                             {{--  <div class="text-center"><h5 style="font-weight: 1000; ">HORA SALIDA:</h5>11:00 pm</div>  --}}
@@ -132,19 +134,14 @@
         
         @page {
             size: 90mm 105mm; /* Tamaño ISO C7 en milímetros */
-            margin-top: 0mm; /* Ajustar según sea necesario */
+            margin-bottom: 0mm;
+            margin-top: 0mm;
         }
         body {
-            margin: 0 !important;
+            margin-top: -80mm !important;
             padding: 0 !important;
         }
-        .content-print {
-            position: absolute;
-            bottom: 0mm; /* Ajusta la posición superior según sea necesario */
-            top: -35mm;
-
-            /* Otros estilos necesarios */
-        }
+        
     }
     #print-content {
         display: flex;
@@ -152,19 +149,11 @@
         align-items: flex-start;
         text-align: left !important;
         font-family: Arial, sans-serif;
-        padding-top: 15px;
-        {{--  font-size: 12px;  --}}
         font-weight: bold;
         align-items: center;
-        margin: 0;
     }
     #main {
     margin-top: 0px !important; */
-    }
-    .headerTicket {
-        background-color: black !important;
-        color: white !important;
-        align-items: center !important;
     }
 
 </style>

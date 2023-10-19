@@ -50,21 +50,21 @@ class maquinariaController extends Controller
             'obraMaqPer.fin as fechaFinal',
             'obraMaqPer.id as recordId',
             'marca.nombre as marca',
-            DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as operador" )
+            DB::raw("CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as operador")
         )
-        ->leftjoin( 'obraMaqPer', 'obraMaqPer.maquinariaId', 'maquinaria.id' )
-        ->leftjoin( 'personal', 'personal.id', 'obraMaqPer.personalId' )
-        ->leftjoin( 'obras', 'obras.id', 'obraMaqPer.obraId' )
-        ->leftjoin('marca','marca.id','maquinaria.marcaId')
-        ->leftjoin('maquinariaCategoria','maquinariaCategoria.id','maquinaria.categoriaId')
-        ->whereNull( 'compania' )
-        ->orderBy('maquinaria.identificador','asc')
-        ->paginate( 15 );
+            ->leftjoin('obraMaqPer', 'obraMaqPer.maquinariaId', 'maquinaria.id')
+            ->leftjoin('personal', 'personal.id', 'obraMaqPer.personalId')
+            ->leftjoin('obras', 'obras.id', 'obraMaqPer.obraId')
+            ->leftjoin('marca', 'marca.id', 'maquinaria.marcaId')
+            ->leftjoin('maquinariaCategoria', 'maquinariaCategoria.id', 'maquinaria.categoriaId')
+            ->whereNull('compania')
+            ->orderBy('maquinaria.identificador', 'asc')
+            ->paginate(15);
 
         $vctObras = obras::select('obras.*', 'clientes.nombre as cliente')
             ->join('clientes', 'clientes.id', 'obras.clienteId')
             ->where('obras.id', '<>', 2)
-            ->orderBy('obras.nombre','asc')->get();
+            ->orderBy('obras.nombre', 'asc')->get();
         //*** Todas excepto la de MTQ control */
 
         $vctOperarios = personal::select(
@@ -86,7 +86,7 @@ class maquinariaController extends Controller
             ->leftjoin('maquinaria', 'maquinaria.id', '=', 'obraMaqPer.maquinariaId')
             ->leftjoin('obras', 'obras.id', '=', 'obraMaqPer.obraId')
             ->where('puesto.puestoNivelId', '=', 5)
-            ->where( 'personal.estatusId', '=', 1 ) //*** solo operarios de maquinaria */ //*** solo operarios de maquinaria */
+            ->where('personal.estatusId', '=', 1) //*** solo operarios de maquinaria */ //*** solo operarios de maquinaria */
             ->orderBy('personal.nombres', 'asc')->get();
 
         // dd( $vctMaquinaria );
@@ -173,7 +173,7 @@ class maquinariaController extends Controller
 
         $marcas = marca::select('marca.*')->orderBy('marca.nombre', 'asc')->get();
         $categorias = maquinariaCategoria::select('maquinariaCategoria.*')->orderBy('maquinariaCategoria.nombre', 'asc')->get();
-        $tipos = maquinariaTipo::select('maquinariaTipo.*')->orderBy('maquinariaTipo.nombre', 'asc')->get();;
+        $tipos = maquinariaTipo::select('maquinariaTipo.*')->orderBy('maquinariaTipo.nombre', 'asc')->get();
         $refaccionTipo = refaccionTipo::select('refaccionTipo.*')->orderBy('refaccionTipo.nombre', 'asc')->get();
 
         return view('maquinaria.altaDeMaquinaria', compact('obras', 'doc', 'marcas', 'categorias', 'tipos', 'refaccionTipo'));
@@ -392,7 +392,7 @@ class maquinariaController extends Controller
     public function show(maquinaria $maquinaria)
     {
         abort_if(Gate::denies('maquinaria_show'), 403);
-        // dd($maquinaria);
+        // dd('Aqui ES');
         // $bitacora = bitacoras::all();
         // $doc = maqdocs::leftJoin('docs', "maqdocs.tipoId", "docs.id")
         //     ->select(
@@ -429,16 +429,22 @@ class maquinariaController extends Controller
             )->where('docs.tipoId', '2')
             ->get();
 
-
         $fotos = maqimagen::where('maquinariaId', $maquinaria->id)->get();
+        // $obraMaqPer = obraMaqPer::where('maquinariaId', $maquinaria->id)->get();
+        $obraMaqPer = obraMaqPer::join('obras', 'obraMaqPer.obraId', '=', 'obras.id')
+            ->join('personal', 'obraMaqPer.personalId', '=', 'personal.id')
+            ->where('obraMaqPer.maquinariaId', $maquinaria->id)
+            ->select('obraMaqPer.inicio as fechaInicio', 'obras.nombre as nombre_obra', 'obras.id as id_obra', 'personal.id as id_personal', DB::raw('CONCAT(personal.nombres, " ", personal.apellidoP, " ", personal.apellidoM) as nombre_personal'))
+            ->first();
+
         $vctEstatus = maquinariaEstatus::all();
-        $marcas = marca::select('marca.*')->orderBy('marca.nombre','asc')->get();
-        $refacciones = refacciones::select('refacciones.*')->where('maquinariaId', $maquinaria->id)->orderBy('refacciones.nombre','asc')->get();
-        $refaccionTipo = refaccionTipo::select('refaccionTipo.*')->orderBy('refaccionTipo.nombre','asc')->get();
-        $categorias = maquinariaCategoria::select('maquinariaCategoria.*')->orderBy('maquinariaCategoria.nombre','asc')->get();
-        $tipos = maquinariaTipo::select('maquinariaTipo.*')->orderBy('maquinariaTipo.nombre','asc')->get();
-        // dd($maqDoc);
-        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'doc', 'fotos',  'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos'));
+        $marcas = marca::select('marca.*')->orderBy('marca.nombre', 'asc')->get();
+        $refacciones = refacciones::select('refacciones.*')->where('maquinariaId', $maquinaria->id)->orderBy('refacciones.nombre', 'asc')->get();
+        $refaccionTipo = refaccionTipo::select('refaccionTipo.*')->orderBy('refaccionTipo.nombre', 'asc')->get();
+        $categorias = maquinariaCategoria::select('maquinariaCategoria.*')->orderBy('maquinariaCategoria.nombre', 'asc')->get();
+        $tipos = maquinariaTipo::select('maquinariaTipo.*')->orderBy('maquinariaTipo.nombre', 'asc')->get();
+        // dd($obraMaqPer);
+        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'doc', 'fotos',  'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos', 'obraMaqPer'));
     }
 
     /**
@@ -491,12 +497,17 @@ class maquinariaController extends Controller
         $fotos = maqimagen::where('maquinariaId', $maquinaria->id)->get();
         $vctEstatus = maquinariaEstatus::all();
         $marcas = marca::all();
+        $obraMaqPer = obraMaqPer::join('obras', 'obraMaqPer.obraId', '=', 'obras.id')
+            ->join('personal', 'obraMaqPer.personalId', '=', 'personal.id')
+            ->where('obraMaqPer.maquinariaId', $maquinaria->id)
+            ->select('obraMaqPer.inicio as fechaInicio', 'obras.nombre as nombre_obra', 'obras.id as id_obra', 'personal.id as id_personal', DB::raw('CONCAT(personal.nombres, " ", personal.apellidoP, " ", personal.apellidoM) as nombre_personal'))
+            ->first();
         $refacciones = refacciones::where('maquinariaId', $maquinaria->id)->get();
         $refaccionTipo = refaccionTipo::all();
         $categorias = maquinariaCategoria::all();
         $tipos = maquinariaTipo::all();
-        // dd($maqDoc);
-        return view('maquinaria.verMaquinaria', compact('maquinaria', 'doc', 'fotos', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos'));
+        // dd($obraMaqPer);
+        return view('maquinaria.verMaquinaria', compact('maquinaria', 'doc', 'fotos', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos', 'obraMaqPer'));
     }
 
     /**
@@ -508,7 +519,9 @@ class maquinariaController extends Controller
 
     public function edit(maquinaria $maquinaria)
     {
+        // dd($maquinaria);
         // $bitacora = bitacoras::all();
+        dd('NO');
         $doc = docs::where('tipoId', '2')->get();
         //$docs = maqdocs::where( 'maquinariaId', $maquinaria->id )->first();
         return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'doc'));
@@ -803,7 +816,6 @@ class maquinariaController extends Controller
     {
         abort_if(Gate::denies('maquinaria_edit'), 403);
 
-        // dd( $request );
         $objMaquinaria = maquinaria::where('id', '=', $request['maquinariaId'])->firstOrFail();
 
         if ($objMaquinaria) {
@@ -937,15 +949,14 @@ class maquinariaController extends Controller
 
         // dd( $request, $data );
         //*** validamos si estan aplicados los dos filtros sin cambios y solo se actualizan los datos */
-        if($data[ 'NobraId' ]== 0 && $data[ 'NpersonalId' ] == 0){
-            $objResult = $objAsigna->actualizarDatosRegistro( $data[ 'recordId' ], $data[ 'combustible' ] , $data[ 'inicio' ], $data[ 'fin' ] );
-        }elseif($data[ 'NobraId' ]== 0 && $data[ 'NpersonalId' ] == -1){
-             //*** eliminamos la referencia del operador */
-            $objResult = $objAsigna->eliminarReferenciaDeOperador( $data[ 'recordId' ] ) ;
-        }  else{
-        //*** realizamos el registro de movimiento */
-        $objResult = $objAsigna->registraMovimiento( $data[ 'maquinariaId' ], $data[ 'NpersonalId' ], $data['NobraId'], $data[ 'recordId' ], $data[ 'combustible' ] , $data[ 'inicio' ], $data[ 'fin' ]) ;
-
+        if ($data['NobraId'] == 0 && $data['NpersonalId'] == 0) {
+            $objResult = $objAsigna->actualizarDatosRegistro($data['recordId'], $data['combustible'], $data['inicio'], $data['fin']);
+        } elseif ($data['NobraId'] == 0 && $data['NpersonalId'] == -1) {
+            //*** eliminamos la referencia del operador */
+            $objResult = $objAsigna->eliminarReferenciaDeOperador($data['recordId']);
+        } else {
+            //*** realizamos el registro de movimiento */
+            $objResult = $objAsigna->registraMovimiento($data['maquinariaId'], $data['NpersonalId'], $data['NobraId'], $data['recordId'], $data['combustible'], $data['inicio'], $data['fin']);
         }
 
         // //*** preguntamos si es un registro existente */

@@ -164,6 +164,19 @@
                 </li>
             @endcan
 
+            @can('cajachica_show')
+                <li class="nav-item collapsed">
+                    <a class="nav-link {{ $activePage == 'servicios' ? '' : 'collapsed' }}"
+                        href="{{ route('serviciosTrasporte.index') }}">
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            currency_exchange
+                        </span>
+                        <span>Servicios</span>
+                    </a>
+                </li>
+            @endcan
+
             @can('combustible_index')
 
                 <li class="nav-item ">
@@ -186,7 +199,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('mantenimiento_create')
+                        @can('combustible_index')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('combustibleTote.index') }}" class="">
@@ -561,8 +574,6 @@
     <!-- End Footer -->
 
     <!--   Core JS Files   -->
-
-
     <script src="{{ asset('js/core/jquery.min.js') }}"></script>
     <script src="{{ asset('js/core/popper.min.js') }}"></script>
     <script src="{{ asset('js/core/bootstrap-material-design.min.js') }}"></script>

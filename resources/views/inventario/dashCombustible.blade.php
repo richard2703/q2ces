@@ -71,7 +71,7 @@
                                                                             aria-label="Default select example" required>
                                                                             <option value="">Seleccione</option>
                                                                             @foreach ($cisternas as $maquina)
-                                                                                <option value="{{ $maquina->id }}" data-km="{{ $maquina->horometro }}">
+                                                                                <option value="{{ $maquina->id }}" data-km="{{ $maquina->kilometraje }}">
                                                                                     {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
                                                                                 </option>
                                                                             @endforeach
@@ -220,7 +220,7 @@
                                                                         <select id="maquinariaIdD" name="maquinariaId" class="form-select" aria-label="Default select example" required>
                                                                             <option value="">Seleccione</option>
                                                                             @foreach ($cisternas as $maquina)
-                                                                                <option value="{{ $maquina->id }}" data-odometro="{{ $maquina->horometro }}">
+                                                                                <option value="{{ $maquina->id }}" data-odometro="{{ $maquina->kilometraje }}">
                                                                                     {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
                                                                                 </option>
                                                                             @endforeach
@@ -694,7 +694,7 @@
                                                                             @forelse ($descargas as $descarga)
                                                                                 <tr>
                                                                                     <td>@if($descarga->id != null)
-                                                                                        <div style="margin-left: 15px;">{{ $descarga->id }}</div>
+                                                                                        <div style="margin-left: 15px;">{{ $descarga->descargaIdTote }}</div>
                                                                                         <span class="material-icons"
                                                                                     style="font-size:40px; color: green">
                                                                                     receipt_long
@@ -735,7 +735,7 @@
                                                                                     <td class="td-actions d-flex justify-content-center">
                                                                                         @can('ticketDescarga_edit')
                                                                                             <a href="#" data-bs-toggle="modal" data-bs-target="#printFormDescargaEdit"
-                                                                                                onclick="cargaItemEdit('{{ $descarga->id }}', '{{ $descarga->nombreSolicitante }}', '{{ $descarga->costoTrabajo }}', '{{ $descarga->horaLlegada }}','{{ $descarga->observaciones }}','{{ $descarga->tipo_solicitud }}')">
+                                                                                                onclick="cargaItemEdit('{{ $descarga->descargaIdTote }}', '{{ $descarga->nombreSolicitante }}', '{{ $descarga->costoTrabajo }}', '{{ $descarga->horaLlegada }}','{{ $descarga->observaciones }}','{{ $descarga->tipo_solicitud }}')">
                                                                                                 <svg style="color:#f7c90d; margin-top:20px;" xmlns="http://www.w3.org/2000/svg "
                                                                                                     width="28"
                                                                                                     height="28"
@@ -748,7 +748,7 @@
                                                                                             </a>
                                                                                         @endcan
                                                                                     
-                                                                                        <form action="{{ route('printOnlyTicket.post', 0) }}" method="POST" style="display: inline-block;">
+                                                                                        <form action="{{ route('printOnlyTicket.post', $descarga->id) }}" method="POST" style="display: inline-block;">
                                                                                             @csrf
                                                                                             @method('POST')
                                                                                             <input type="hidden" name="id" value="{{ $descarga->id }}">
@@ -782,7 +782,7 @@
                                                                                         
                                                                                         {{-- id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms, horas, imgHoras, fecha --}}
                                                                                         <form
-                                                                                            action="{{ route('inventario.deleteDescarga', 0) }}"
+                                                                                            action="{{ route('inventario.deleteDescarga', $descarga->descargaIdTote) }}"
                                                                                             method="POST"
                                                                                             style="display: inline-block;"
                                                                                             onsubmit="return confirm('¿Estás seguro?')">
@@ -853,7 +853,7 @@
                     @csrf
                     @method('POST')
                     <div class="modal-body">
-                        <input type="hidden" name="id" value="{{$descarga->descargaIdTote}}" id="idDescarga">
+                        <input type="hidden" name="id" value="" id="idDescarga">
                         <label class="labelTitulo">Solicito*:</label>
                         {{--  <select class="form-select inputCaja" name="nombreSolicitante" id="nombreSolicitanteDescarga" required>
                             <option value="">Seleccione</option>
@@ -935,7 +935,7 @@
                     @csrf
                     @method('POST')
                     <div class="modal-body">
-                        <input type="hidden" name="id" value="{{$descarga->descargaIdTote}}" id="idDescargaEdit">
+                        <input type="hidden" name="id" value="" id="idDescargaEdit">
                         <label class="labelTitulo">Solicito*:</label>
                         {{--  <select class="form-select inputCaja" name="nombreSolicitante" id="nombreSolicitanteDescarga" required>
                             <option value="">Seleccione</option>
@@ -1626,6 +1626,13 @@
                 text: 'El kilometraje no puede ser inferior al registrado'
             });
         }
+        function NoGuardadoPorCarga() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se puede generar una descarga de combustible, si nunca se ha echo una carga'
+            });
+        }
         var slug = '{{ Session::get('message') }}';
         if (slug == 1) {
             Guardado();
@@ -1634,7 +1641,14 @@
 
         if (slug == 6) {
             NoGuardado();
+        }
 
+        if (slug == 6) {
+            NoGuardado();
+        }
+        
+        if (slug == 7) {
+            NoGuardadoPorCarga();
         }
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -1690,7 +1704,6 @@
                 printFormDescarga.submit();
             });
         });
-        </script>
-        
+    </script> 
         
 @endsection

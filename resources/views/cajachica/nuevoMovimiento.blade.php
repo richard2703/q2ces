@@ -34,7 +34,7 @@
                                                 Regresar
                                             </button>
                                         </a>
-                                    {{-- @can('user_create') --}}
+                                        {{-- @can('user_create') --}}
                                     </div>
                                     {{-- <div class="col-6 text-end">
                                         <button type="button" class="btn botonGral " data-bs-toggle="modal"
@@ -81,7 +81,7 @@
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Personal: <span>*</span></label></br>
-                                                <select id="personal" name="personal" class="form-select" required
+                                                <select id="personal" name="personal" class="form-select"
                                                     aria-label="Default select example">
                                                     <option selected value="">Seleccione</option>
                                                     @forelse ($personal as $persona)
@@ -95,20 +95,21 @@
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Comprobante: <span>*</span></label></br>
-                                                <select id="comprobanteId" name="comprobanteId" class="form-select" required
+                                                <select id="comprobanteId" name="comprobanteId" class="form-select"
                                                     aria-label="Default select example">
                                                     <option selected value="">Seleccione</option>
                                                     @foreach ($vctComprobantes as $item)
-                                                    <option value="{{ $item->id }}">
-                                                        {{ $item->nombre }}
-                                                    </option>
-                                                @endforeach
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->nombre }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Número de Comprobante: <span>*</span></label></br>
-                                                    <input type="number" class="inputCaja text-right" id="ncomprobante" required
+                                                <label class="labelTitulo">Número de Comprobante:
+                                                    <span>*</span></label></br>
+                                                <input type="number" class="inputCaja text-right" id="ncomprobante"
                                                     name="ncomprobante" maxlength="100000" step="1" min="1"
                                                     pattern="^\d*(\.\d{0,2})?$" max="99999" placeholder="ej. 100"
                                                     value="{{ old('ncomprobante') }}">
@@ -118,7 +119,7 @@
                                                 <label class="labelTitulo">Obra: </label></br>
                                                 <select id="obra" name="obra" class="form-select"
                                                     aria-label="Default select example">
-                                                    <option selected value="" >Seleccione</option>
+                                                    <option selected value="">Seleccione</option>
                                                     @forelse ($obras as $obra)
                                                         <option value="{{ $obra->id }}">{{ $obra->nombre }} </option>
                                                     @empty
@@ -132,16 +133,16 @@
                                                     aria-label="Default select example">
                                                     <option selected value="">Seleccione</option>
                                                     @foreach ($vctClientes as $item)
-                                                    <option value="{{ $item->id }}">
-                                                        {{ $item->nombre }}
-                                                    </option>
-                                                @endforeach
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item->nombre }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Equipo: <span>*</span></label></br>
-                                                <select id="equipo" name="equipo" class="form-select" required
+                                                <select id="equipo" name="equipo" class="form-select"
                                                     aria-label="Default select example">
                                                     <option selected value="">Seleccione</option>
                                                     @forelse ($maquinaria as $maquina)
@@ -187,10 +188,10 @@
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Cantidad: <span>*</span></label></br>
-                                                <input type="number" class="inputCaja text-right" id="cantidad" required
-                                                    name="cantidad" maxlength="100000" step="0.01" min="0.01"
-                                                    pattern="^\d*(\.\d{0,2})?$" max="99999" placeholder="ej. 100"
-                                                    value="{{ old('calle') }}">
+                                                <input type="number" class="inputCaja text-right" id="cantidad"
+                                                    required name="cantidad" maxlength="100000" step="0.01"
+                                                    min="0.01" pattern="^\d*(\.\d{0,2})?$" max="99999"
+                                                    placeholder="ej. 100" value="{{ old('calle') }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
@@ -252,28 +253,28 @@
     </div>
 @endsection
 <script>
-        function Guardado() {
-            // alert('test');
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
+    function Guardado() {
+        // alert('test');
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
 
-            Toast.fire({
-                icon: 'success',
-                title: 'Guardado con exito'
-            })
-        }
-        var slug = '1';
-        if (slug == 1) {
-            Guardado();
+        Toast.fire({
+            icon: 'success',
+            title: 'Guardado con exito'
+        })
+    }
+    var slug = '1';
+    if (slug == 1) {
+        Guardado();
 
-        }
-    </script>
+    }
+</script>

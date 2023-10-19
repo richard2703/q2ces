@@ -397,6 +397,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('cajaChica/corte', [App\Http\Controllers\cajaChicaController::class, 'corte'])->name('cajaChica.corte');
     Route::post('cajaChica/corte/cerrar', [App\Http\Controllers\cajaChicaController::class, 'cerrar'])->name('cajaChica.cerrar');
 
+    // Servicios
+    Route::resource('serviciosTrasporte', App\Http\Controllers\serviciosTrasporteController::class);
+    Route::post('serviciosTrasporte/cajaChica', [App\Http\Controllers\serviciosTrasporteController::class, 'cajaChica'])->name('serviciosTrasporte.cajaChica');
 
     // Conceptos
     Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
@@ -476,10 +479,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('extintores', App\Http\Controllers\extintoresController::class);
     Route::get('/ubicaciones/lugares/{ubicacionId}', [App\Http\Controllers\extintoresController::class, 'lugares'])->name('lugares.get');
 
-    // Permisos Desde Javascript
+    // Permisos Desde Javascript Y fetchs
     Route::get('/check-permission/{permission}', 'App\Http\Controllers\calendarioMtqController@checkPermission');
     Route::get('/check-permission-calendarioPrincipal/{permission}', 'App\Http\Controllers\calendarioPrincipalController@checkPermission');
     Route::get('/solicitud-detalle/{solicitudId}', 'App\Http\Controllers\calendarioPrincipalController@solicitudDetalle');
+    // Route::get('/autos-asignados-mtq/{autoId}', 'App\Http\Controllers\maquinariaMtqController@autoAsignado');
 
     // Import Excel
     Route::get('/import-excel', 'App\Http\Controllers\ImportExcelController@index')->name('importExcel.get');
