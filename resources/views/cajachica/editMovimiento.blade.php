@@ -73,7 +73,7 @@
                                                     <option value=""selected>Seleccione</option>
                                                     @forelse ($personal as $persona)
                                                         <option value="{{ $persona->userId }}"
-                                                            {{ $cajaChica->personal == $persona->userId ? 'selected' : '' }}>
+                                                            {{ $cajaChica->personal == $persona->id ? 'selected' : '' }}>
                                                             {{ $persona->nombres }}
                                                             {{ $persona->apellidoP }}
                                                         </option>
