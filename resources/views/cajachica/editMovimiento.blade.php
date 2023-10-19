@@ -72,7 +72,7 @@
                                                     aria-label="Default select example">
                                                     <option value=""selected>Seleccione</option>
                                                     @forelse ($personal as $persona)
-                                                        <option value="{{ $persona->userId }}"
+                                                        <option value="{{ $persona->id }}"
                                                             {{ $cajaChica->personal == $persona->id ? 'selected' : '' }}>
                                                             {{ $persona->nombres }}
                                                             {{ $persona->apellidoP }}
