@@ -309,8 +309,8 @@
                         data-bs-parent="#sidebar-nav">
                         @can('maquinaria_index')
                             {{-- <li> --}}
-                                {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
-                                {{-- <a href="{{ route('maquinaria.distribucion') }}" class="">
+                            {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
+                            {{-- <a href="{{ route('maquinaria.distribucion') }}" class="">
                                     <i class="bi bi-circle"></i><span>Distribución General</span>
                                 </a>
                             </li> --}}
@@ -482,15 +482,6 @@
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('obras.create') }}" class="">
                                     <i class="bi bi-circle"></i><span>Nuevo Obra</span>
-                                </a>
-                            </li>
-                        @endcan
-
-                        @can('cliente_create')
-                            <li>
-                                {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
-                                <a href="{{ route('clientes.index') }}" class="">
-                                    <i class="bi bi-circle"></i><span>Clientes</span>
                                 </a>
                             </li>
                         @endcan
