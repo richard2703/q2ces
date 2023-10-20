@@ -430,7 +430,7 @@
 
                                                 <div class="col-12 col-sm-6 col-md-3 text-center my-4">
                                                     <a href="{{ route('tipoAlmacen.index') }}" class="">
-                                                        <img src="/img/catalogos/tiposAlmacenes.svg" alt="Comprobantes"
+                                                        <img src="/img/catalogos/TiposAlmacenes.svg" alt="Comprobantes"
                                                             title="Comprobantes" width="30%"
                                                             class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Tipos de Almacen/Tiraderos
@@ -440,7 +440,7 @@
 
                                                 <div class="col-12 col-sm-6 col-md-3 text-center my-4">
                                                     <a href="{{ route('almacenTiraderos.index') }}" class="">
-                                                        <img src="/img/catalogos/almacenes.svg" alt="Comprobantes"
+                                                        <img src="/img/catalogos/Almacenes.svg" alt="Comprobantes"
                                                             title="Comprobantes" width="30%"
                                                             class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Almacenes y Tiraderos
