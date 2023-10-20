@@ -26,6 +26,7 @@ use App\Models\tipoUniforme;
 use App\Models\asignacionUniforme;
 use App\Models\cisternas;
 use App\Models\descargaDetalle;
+use App\Models\obras;
 
 class inventarioController extends Controller
 {
@@ -95,6 +96,9 @@ class inventarioController extends Controller
                 array_push($dia, $key->dia);
             }
 
+            $vctObras = obras::where('estatus', 1)
+                ->orderBy('nombre', 'asc')->get();
+
             $cargas = carga::select(
                 'carga.id',
                 db::raw("CONCAT(maquinaria.identificador,' ',maquinaria.nombre) AS equipo"),
@@ -137,12 +141,20 @@ class inventarioController extends Controller
                 'descarga.litros',
                 'descarga.created_at AS fecha',
                 'descarga.ticket',
+                'descarga.obraId',
+                'descarga.grasa',
+                'descarga.hidraulico',
+                'descarga.anticongelante',
+                'descarga.motor',
+                'descarga.otro',
+                'descarga.direccion',
+                'descarga.otroComment',
                 // 'descarga.descargaDetalleId',
                 'detalles.*',
             )
                 ->join('maquinaria', 'maquinaria.id', '=', 'descarga.maquinariaId')
                 ->join('personal', 'personal.id', '=', 'descarga.operadorId')
-                ->join('maquinaria as m2', 'm2.id', '=', 'descarga.servicioId')
+                ->leftJoin('maquinaria as m2', 'm2.id', '=', 'descarga.servicioId')
                 ->join('personal as p2', 'p2.id', '=', 'descarga.receptorId')
                 ->leftJoin('descargaDetalle as detalles', 'descarga.id', '=', 'detalles.descargaId')
                 // ->leftJoin('descargaDetalle as detalles', 'descarga.descargaDetalleId', '=', 'detalles.id')
@@ -152,16 +164,13 @@ class inventarioController extends Controller
 
             // dd($descargas);
 
-            return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas', 'gasolinas', 'suma', 'dia', 'despachadores', 'cargas', 'descargas', 'usuarios'));
+            return view('inventario.dashCombustible', compact('despachador', 'vctObras', 'personal', 'maquinaria', 'cisternas', 'gasolinas', 'suma', 'dia', 'despachadores', 'cargas', 'descargas', 'usuarios'));
         } else {
             $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(15);
 
             if ($inventarios == null) {
                 $inventarios = null;
             }
-
-            // dd($usuarios);
-
 
             return view('inventario.indexInventario', compact('inventarios', 'tipo'));
         }
@@ -622,20 +631,28 @@ class inventarioController extends Controller
         $direccion = cisternas::where("nombre", 'Aceite Direccion')->get('ultimoPrecio');
 
 
-        // dd($grasa);
-        if ($request['km'] > $cisterna->kilometraje) {
-            $descarga['kilometrajeAnterior'] = $cisterna->kilometraje;
-            $descarga['kilometrajeNuevo'] = $request['km'];
-            $cisterna->kilometraje = $request['km'];
-            // $descarga['odometro'] = $cisternaKango->horometro;
+        // dd($request);
+        if ($request['servicioId'] == "null") {
             $descarga['odometroNuevo'] = $request['horometro'];
+            $descarga['servicioId'] = null;
             // $descarga['odometro'] = $cisterna->kilometraje;
-            $cisternaKango->kilometraje = $request['km'];
+            // dd($request['kilometraje']);
+            $cisternaKango->kilometraje = $request['horometro'];
+            $descarga['odometro'] = $cisternaKango->horometro;
+            $descarga['otroComment'] = $request['otroComment'];
+            if ($request['otro'] != null) {
+                $descarga['otro'] = $request['otro'];
+            } else {
+                $descarga['otro'] = 0;
+            }
+            $descarga['odometroNuevo'] = $request['horometro'];
+            // dd($cisternaKango);
             $descarga['grasaUnitario'] = $grasa[0]['ultimoPrecio'];
             $descarga['hidraulicoUnitario'] = $hidraulico[0]['ultimoPrecio'];
             $descarga['anticongelanteUnitario'] = $anticongelante[0]['ultimoPrecio'];
             $descarga['mototUnitario'] = $motor[0]['ultimoPrecio'];
             $descarga['direccionUnitario'] = $direccion[0]['ultimoPrecio'];
+            $cisternaKango->cisternaNivel = ($cisternaKango->cisternaNivel - $request['litros']);
             $cisternaKango->update();
             // dd($descarga);
             $descarga['userId'] = auth()->user()->id;
@@ -645,8 +662,43 @@ class inventarioController extends Controller
                 Session::flash('message', 7);
                 return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
             }
+            // dd('NO Cierto', $descarga);
             descarga::create($descarga);
-            $cisterna->cisternaNivel = ($cisterna->cisternaNivel - $request['litros']);
+            // $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $request['litros']);
+            // $cisterna->update();
+            Session::flash('message', 1);
+        } else if ($request['km'] > $cisterna->kilometraje) {
+            $descarga['kilometrajeAnterior'] = $cisterna->kilometraje;
+            $descarga['kilometrajeNuevo'] = $request['km'];
+            $cisterna->kilometraje = $request['km'];
+            $descarga['odometro'] = $cisternaKango->horometro;
+            $descarga['odometroNuevo'] = $request['horometro'];
+            $descarga['otroComment'] = $request['otroComment'];
+            if ($request['otro'] != null) {
+                $descarga['otro'] = $request['otro'];
+            } else {
+                $descarga['otro'] = 0;
+            }
+            // $descarga['odometro'] = $cisterna->kilometraje;
+            $cisternaKango->kilometraje = $request['horometro'];
+            $descarga['grasaUnitario'] = $grasa[0]['ultimoPrecio'];
+            $descarga['hidraulicoUnitario'] = $hidraulico[0]['ultimoPrecio'];
+            $descarga['anticongelanteUnitario'] = $anticongelante[0]['ultimoPrecio'];
+            $descarga['mototUnitario'] = $motor[0]['ultimoPrecio'];
+            $descarga['direccionUnitario'] = $direccion[0]['ultimoPrecio'];
+            $cisternaKango->cisternaNivel = ($cisternaKango->cisternaNivel - $request['litros']);
+            $cisternaKango->update();
+            // dd($descarga);
+            $descarga['userId'] = auth()->user()->id;
+            $descarga['fechaLlegada'] = Carbon::now();
+            $cargaPrevia = carga::first();
+            if ($cargaPrevia == null) {
+                Session::flash('message', 7);
+                return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
+            }
+            // dd($descarga);
+            descarga::create($descarga);
+            $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $request['litros']);
             $cisterna->update();
             Session::flash('message', 1);
         } else {
@@ -752,6 +804,14 @@ class inventarioController extends Controller
         $descarga->receptorId = $request['descargaDespachador'];
         $descarga->fechaLlegada = $request['fechaLlegada'];
 
+        $descarga->grasa = $request['grasa'];
+        $descarga->hidraulico = $request['hidraulico'];
+        $descarga->anticongelante = $request['Anticongelante'];
+        $descarga->motor = $request['motor'];
+        $descarga->direccion = $request['direccion'];
+        $descarga->otro = $request['otro'];
+        $descarga->otroComment = $request['otroComment'];
+
         // $descarga->created_at = ($request['descargaFecha'] . " " . $request['descargaHora'] . ":" . $strSegundos);
 
         if ($request->hasFile("descargaFileImgKms")) {
@@ -785,7 +845,11 @@ class inventarioController extends Controller
 
         Session::flash('message', 1);
 
-        return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
+        if ($descarga->tipoCisternaId != null) {
+            return redirect()->route('combustibleTote.index');
+        } else {
+            return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
+        }
     }
 
     public function deleteCarga($cargaId)

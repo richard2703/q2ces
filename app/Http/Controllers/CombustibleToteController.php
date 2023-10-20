@@ -121,6 +121,13 @@ class CombustibleToteController extends Controller
             // 'descarga.descargaDetalleId',
             'descarga.tipoCisternaId',
             'cisternas.nombre',
+            'descarga.grasa',
+            'descarga.hidraulico',
+            'descarga.anticongelante',
+            'descarga.motor',
+            'descarga.otro',
+            'descarga.direccion',
+            'descarga.otroComment',
             'detalles.*',
         )
             ->join('maquinaria', 'maquinaria.id', '=', 'descarga.maquinariaId')
@@ -302,6 +309,12 @@ class CombustibleToteController extends Controller
         $direccion = cisternas::where("nombre", 'Aceite Direccion')->get('ultimoPrecio');
 
         if ($request['km'] > $cisterna->kilometraje) {
+            $descarga['otroComment'] = $request['otroComment'];
+            if ($request['otro'] != null) {
+                $descarga['otro'] = $request['otro'];
+            } else {
+                $descarga['otro'] = 0;
+            }
             $descarga['grasaUnitario'] = $grasa[0]['ultimoPrecio'];
             $descarga['hidraulicoUnitario'] = $hidraulico[0]['ultimoPrecio'];
             $descarga['anticongelanteUnitario'] = $anticongelante[0]['ultimoPrecio'];
