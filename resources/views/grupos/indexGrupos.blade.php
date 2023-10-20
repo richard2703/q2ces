@@ -20,8 +20,8 @@
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
                                     <h4 class="card-title">Grupos de Tareas</h4>
-
                                 </div>
+
                                 <div class="card-body">
                                     @if (session('success'))
                                         <div class="alert alert-success" role="success">
@@ -53,24 +53,29 @@
                                         <table class="table">
                                             <thead class="labelTitulo">
                                                 <tr>
-                                                    <th class="labelTitulo">id</th>
+                                                    <th class="labelTitulo" style="width:30px">Id</th>
                                                     <th class="labelTitulo">Nombre</th>
                                                     <th class="labelTitulo">Comentario</th>
-                                                    <th class="labelTitulo text-right">Acciones</th>
+                                                    <th class="labelTitulo text-center" style="width:120px">Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
 
                                                 @forelse ($vctGrupos as $item)
                                                     <tr>
-                                                        <td>{{ $item->id }}</td>
+                                                        <td class="text-left"><a
+                                                                href="{{ route('grupo.edit', $item->id) }}"
+                                                                title="Ver la información del Grupo de Tareas."
+                                                                style="color: blue">{{ str_pad($item->id, 3, '0', STR_PAD_LEFT) }}</a>
+                                                        </td>
                                                         <td>{{ $item->nombre }}</td>
                                                         <td>{{ $item->comentario }}</td>
 
-                                                        <td class="td-actions text-right">
+                                                        <td class="td-actions text-center">
 
                                                             @can('grupo_edit')
                                                                 <a href="{{ url('/bitacoras/grupos/editar/' . $item->id) }}"
+                                                                    title="Editar la información del Grupo de Tareas."
                                                                     class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                         height="28" fill="currentColor" title="Editar"
@@ -81,13 +86,14 @@
                                                                 </a>
                                                             @endcan
 
-                                                            {{--  @can('grupo_destroy')
-                                                                <form action="" method="POST"
+                                                            @can('grupo_destroy')
+                                                            <form action="{{ route('grupo.destroy', $item->id) }}"  method="POST"
                                                                     style="display: inline-block;"
                                                                     onsubmit="return confirm('Seguro?')">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <button class="btnSinFondo" type="submit" rel="tooltip">
+                                                                    <button class="btnSinFondo" type="submit" rel="tooltip"
+                                                                        title="Eliminar la información del Grupo de Tareas.">
                                                                         <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                             height="28" fill="currentColor" title="Eliminar"
                                                                             class="bi bi-x-circle" viewBox="0 0 16 16">
@@ -98,7 +104,7 @@
                                                                         </svg>
                                                                     </button>
                                                                 </form>
-                                                            @endcan  --}}
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                 @empty
@@ -109,6 +115,7 @@
                                             </tbody>
                                         </table>
                                     </div>
+
                                     <div class="card-footer mr-auto">
                                         {{ $vctGrupos->links() }}
                                     </div>

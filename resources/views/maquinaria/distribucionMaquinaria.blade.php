@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Lista de Maquinaria')])
+@extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Lista de Distribución de Maquinaria')])
 @section('content')
     <div class="content">
         <?php
@@ -20,7 +20,7 @@
                 <div class="col-12 align-self-center">
                     <div class="card">
                         <div class="card-header bacTituloPrincipal">
-                            <h4 class="card-title">Maquinaria</h4>
+                            <h4 class="card-title">Distribución General de Maquinaría</h4>
                             {{-- <p class="card-category">Usuarios Registrados</p> --}}
                         </div>
                         <div class="card-body">
@@ -37,14 +37,17 @@
                             <div class="row">
                                 <div class="d-flex p-3 divBorder">
                                     <div class="col-12 text-end">
+                                        <a href="{{ route('maquinaria.index') }}">
+                                            <button class="btn regresar">
+                                                <span class="material-icons">
+                                                    reply
+                                                </span>
+                                                Regresar
+                                            </button>
+                                        </a>
                                         @can('maquinaria_create')
                                             <a href="{{ route('maquinaria.create') }}">
                                                 <button type="button" class="btn botonGral">Añadir Máquina</button>
-                                            </a>
-                                        @endcan
-                                        @can('maquinaria_index')
-                                            <a href="{{ route('maquinaria.distribucion') }}">
-                                                <button type="button" class="btn botonGral">Distribución General</button>
                                             </a>
                                         @endcan
                                     </div>
@@ -52,34 +55,40 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead class="labelTitulo">
-                                            <th class="labelTitulo text-center">ID</th>
-                                            <th class="labelTitulo text-center">Marca</th>
-                                            <th class="labelTitulo text-center">Modelo</th>
-                                            <th class="labelTitulo text-center" style="width:120px">Categoría</th>
-                                            <th class="labelTitulo text-center">Uso</th>
-                                            <th class="labelTitulo text-center">Placas</th>
+                                            <th class="labelTitulo text-center">Maquinaría</th>
+                                            <th class="labelTitulo text-center">Obra</th>
+                                            <th class="labelTitulo text-center">Operador</th>
+                                            <th class="labelTitulo text-center">Carga Combustible</th>
+                                            <th class="labelTitulo text-center">Fecha Inicio</th>
+                                            <th class="labelTitulo text-center">Fecha Fin</th>
                                             {{--  <th class="labelTitulo text-center">Sub Marca</th>  --}}
-                                            <th class="labelTitulo text-center">Año</th>
-                                            <th class="labelTitulo text-center" style="width:120px">Acciones</th>
+                                            {{-- <th class="labelTitulo text-center" style="width:120px">Acciones</th> --}}
                                         </thead>
                                         <tbody>
                                             @forelse ($maquinaria as $maquina)
                                                 <tr>
                                                     <td class="text-center"><a
                                                             href="{{ route('maquinaria.vista', $maquina->id) }}"  title="Editar la información de la maquinaría."
-                                                            style="color: blue">{{ $maquina->identificador }}</a></td>
-                                                    <td class="text-center">{{ $maquina->marca }}</td>
-                                                    <td class="text-center">{{ $maquina->modelo }}</td>
-                                                    <td class="text-center">{{ $maquina->categoria }}</td>
-                                                    <td class="text-center">{{ $maquina->uso }}</td>
-                                                    <td class="text-center">{{ $maquina->placas }}</td>
-                                                    {{--  <td class="text-center">{{ $maquina->submarca }}</td>  --}}
-                                                    <td class="text-center">{{ $maquina->ano }}</td>
+                                                            style="color: blue">{{ $maquina->maquinaria }}</a></td>
+                                                    <td class="text-center">
+                                                        {{ $maquina->obra != '' ? $maquina->obra : 'Sin Asignar' }}</td>
+                                                    <td class="text-center">
+                                                        {{ $maquina->operador != '' ? $maquina->operador : 'Sin Asignar' }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ $maquina->cargaCombustible != '' ? ($maquina->cargaCombustible == 1 ? 'Sí' : 'No') : '---' }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ $maquina->fechaInicial != '' ? \Carbon\Carbon::parse($maquina->fechaInicial)->format('Y-m-d') : '---' }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ $maquina->fechaFinal != '' ? \Carbon\Carbon::parse($maquina->fechaFinal)->format('Y-m-d') : '---' }}
+                                                    </td>
 
-                                                    <td class="td-actions text-center">
-                                                        @can('maquinaria_show')
+                                                    {{-- <td class="td-actions text-center"> --}}
+                                                    {{-- @can('maquinaria_show')
                                                             <a href="{{ route('maquinaria.vista', $maquina->id) }}"
-                                                                class="" title="Ver el detalle de la maquinaría.">
+                                                                class="">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                     height="28" fill="currentColor"
                                                                     class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
@@ -89,10 +98,10 @@
                                                                         d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
                                                                 </svg>
                                                             </a>
-                                                        @endcan
-                                                        @can('maquinaria_edit')
+                                                        @endcan --}}
+                                                    {{-- @can('maquinaria_edit')
                                                             <a href="{{ route('maquinaria.show', $maquina->id) }}"
-                                                                class="" title="Editar la información de la maquinaría.">
+                                                                class="">
                                                                 <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                     height="28" fill="currentColor"
                                                                     class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -100,9 +109,9 @@
                                                                         d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                                                 </svg>
                                                             </a>
-                                                        @endcan
-                                                        @can('maquinaria_assign_personal')
-                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#asignar" title="Asignar Obra y/o Operador a la maquinaría."
+                                                        @endcan --}}
+                                                    {{-- @can('maquinaria_assign_personal')
+                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#asignar"
                                                                 onclick="asignar(
                                                                     '{{ $maquina->id }}',
                                                                     '{{ $maquina->identificador }}',
@@ -118,17 +127,17 @@
 
                                                                     )">
                                                                 <i class="fas fa-user-check iconoTablas"></i>
-                                                            </a>
-                                                            {{-- Id:{{ $maquina->id }} --}}
-                                                            {{-- Identificador:{{ $maquina->identificador }} --}}
-                                                            {{-- Maquina:{{ $maquina->maquina }} --}}
-                                                            {{-- Operador:{{ (is_null($maquina->operador) == false ? $maquina->operador:0) }} --}}
-                                                            {{-- OperadorId:{{ (is_null($maquina->operadorId) == false ? $maquina->operadorId : 0) }} --}}
-                                                            {{-- Obra:{{ (is_null($maquina->obra ) == false ? $maquina->obra : 0 )}} --}}
-                                                            {{-- ObraId:{{ (is_null($maquina->obraId ) == false ? $maquina->obraId : 0 )}} --}}
-                                                        @endcan
-                                                        {{-- @can('maquinaria_destroy') --}}
-                                                        {{-- <form action="{{ route('maquinaria.delete', $maquina->id) }}"
+                                                            </a> --}}
+                                                    {{-- Id:{{ $maquina->id }} --}}
+                                                    {{-- Identificador:{{ $maquina->identificador }} --}}
+                                                    {{-- Máquina:{{ $maquina->maquina }} --}}
+                                                    {{-- Operador:{{ (is_null($maquina->operador) == false ? $maquina->operador:0) }} --}}
+                                                    {{-- OperadorId:{{ (is_null($maquina->operadorId) == false ? $maquina->operadorId : 0) }} --}}
+                                                    {{-- Obra:{{ (is_null($maquina->obra ) == false ? $maquina->obra : 0 )}} --}}
+                                                    {{-- ObraId:{{ (is_null($maquina->obraId ) == false ? $maquina->obraId : 0 )}} --}}
+                                                    {{-- @endcan --}}
+                                                    {{-- @can('maquinaria_destroy') --}}
+                                                    {{-- <form action="{{ route('maquinaria.delete', $maquina->id) }}"
                                                         method="POST" style="display: inline-block;"
                                                         onsubmit="return confirm('Seguro?')">
                                                         @csrf
@@ -140,8 +149,8 @@
                                                             </svg>
                                                         </button>
                                                     </form> --}}
-                                                        {{-- @endcan --}}
-                                                    </td>
+                                                    {{-- @endcan --}}
+                                                    {{-- </td> --}}
                                                 </tr>
                                             @empty
                                                 <tr>

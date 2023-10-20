@@ -72,7 +72,7 @@
                                                 aria-label="Default select example" disabled>
                                                 <option value=""selected>Seleccione</option>
                                                 @forelse ($personal as $persona)
-                                                    <option value="{{ $persona->id }}"
+                                                    <option value="{{ $persona->userId }}"
                                                         {{ $cajaChica->personal == $persona->id ? 'selected' : '' }}>
                                                         {{ $persona->nombres }}
                                                         {{ $persona->apellidoP }}
@@ -99,13 +99,13 @@
                                         <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                             <label class="labelTitulo">Número de Comprobante:
                                                 <span>*</span></label></br>
-                                            <input type="text" class="inputCaja text-right" id="ncomprobante" required
+                                            <input type="number" class="inputCaja text-right" id="ncomprobante" required
                                                 name="ncomprobante" maxlength="100000" step="1" min="1"
-                                                max="99999" placeholder="ej. 100" value="{{ $cajaChica->ncomprobante }}"
-                                                disabled>
+                                                pattern="^\d*(\.\d{0,2})?$" max="99999" placeholder="ej. 100"
+                                                value="{{ $cajaChica->ncomprobante }}" disabled>
                                         </div>
 
-                                        {{--  <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                        <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                             <label class="labelTitulo">Obra:</label></br>
                                             <select id="obra" name="obra" class="form-select"
                                                 aria-label="Default select example" disabled>
@@ -145,9 +145,15 @@
                                                     </option>
                                                 @empty
                                                 @endforelse
-                                            </select>
-                                        </div>  --}}
 
+                                                {{--  @foreach ($vctTiposHoras as $tipo)
+												<option value="{{ $tipo->id }}"
+													{{ $item->tipoHoraExtraId == $tipo->id ? ' selected' : '' }}>
+													{{ $tipo->nombre }}
+												</option>
+											@endforeach  --}}
+                                            </select>
+                                        </div>
                                         <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                             <label class="labelTitulo">Movimiento:</label></br>
                                             <select id="tipo" name="tipo" class="form-select"

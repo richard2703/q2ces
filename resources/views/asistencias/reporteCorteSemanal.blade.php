@@ -15,9 +15,9 @@
             <th>DÍAS</th>
             <th>SALARIO POR DÍA</th>
             <th>IMPORTE SEMANAL</th>
-            <th>TIEMPO EXTRA ACUMULADO</th>
+            {{-- <th>TIEMPO EXTRA ACUMULADO</th> --}}
             <th>HORAS EXTRA</th>
-            <th>COSTO POR HORAS EXTRA (BASE)</th>
+            {{-- <th>COSTO POR HORAS EXTRA</th> --}}
             <th>TOTAL HORAS EXTRA</th>
             <th>PAGO SEMANAL</th>
         </tr>
@@ -35,9 +35,9 @@
                 <td>{{ $item->nominaDias }}</td>
                 <td>$ {{ number_format($item->sueldo, 2) }}</td>
                 <td>$ {{ number_format($item->nominaImporte, 2) }}</td>
-                <td>{{ $item->nominaTiempoExtra }}</td>
+                {{-- <td>{{ $item->nominaTiempoExtra }}</td> --}}
                 <td>{{ $item->nominaHorasExtras }}</td>
-                <td>{{ $item->costoHoraExtra }}</td>
+                {{-- <td>{{ $item->costoHoraExtra }}</td> --}}
                 <td>$ {{ number_format($item->nominaImporteHorasExtras, 2) }}</td>
                 <td>$ {{ number_format($item->nominaPagoSemanal, 2) }}</td>
                 <?php
@@ -48,7 +48,7 @@
         @endforeach
 
         <tr>
-            <td colspan="9">TOTALES GENERALES</td>
+            <td colspan="7">TOTALES GENERALES</td>
             <td>$ {{ number_format($decTotalExtras, 2) }}</td>
             <td>$ {{ number_format($decTotalGeneral, 2) }}</td>
         </tr>

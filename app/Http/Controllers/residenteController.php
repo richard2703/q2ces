@@ -34,10 +34,13 @@ class residenteController extends Controller
             'maquinaria.nombre AS auto'
         )
             ->leftjoin('obras', 'obras.id', '=', 'residente.obraId')
-            ->leftjoin('maquinaria', 'maquinaria.id', '=', 'residente.autoId')
+            ->leftjoin('residenteAutos', 'residenteAutos.residenteId', 'residente.Id')
+            ->leftjoin('maquinaria', 'maquinaria.id', '=', 'residenteAutos.autoId')
             ->where('residente.clienteId', '=', 2)
-            ->orderBy('nombre', 'asc')->paginate(10);
-
+            ->groupBy('residente.Id')
+            ->orderBy('nombre', 'asc')
+            ->paginate(15);
+        // dd($records);
         $vctObras = obras::where('estatus', 1)
             ->orderBy('nombre', 'asc')->get();
         // $vctObras = obras::all();

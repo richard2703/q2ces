@@ -37,6 +37,7 @@ class maquinariaMtqController extends Controller
             ->leftJoin('residenteAutos', 'residenteAutos.autoId', 'maquinaria.id')
             ->leftJoin('residente', 'residente.id', 'residenteAutos.residenteId')
             ->select('maquinaria.*', 'marca.nombre as nombreMarca',  'residenteAutos.autoId as residenteId', 'residente.nombre as residente')
+            ->orderBy('identificador', 'asc')
             ->paginate(15);
 
         $autos = residente::select(
@@ -98,6 +99,7 @@ class maquinariaMtqController extends Controller
         $maquinaria['placas'] = strtoupper($maquinaria['placas']);
         $maquinaria['nummotor'] = strtoupper($maquinaria['nummotor']);
         $maquinaria['numserie'] = strtoupper($maquinaria['numserie']);
+        $maquinaria['identificador'] = str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT);
 
         //*** se guarda la maquinaria */
         $maquinariaNew = maquinaria::create($maquinaria);
@@ -196,11 +198,12 @@ class maquinariaMtqController extends Controller
         // dd($request, $maquinaria, $maquinariaMtq);
         $data = $request->all();
         // dd( $data );
-        $data['identificador'] = strtoupper($data['identificador']);
         $data['placas'] = strtoupper($data['placas']);
         $data['nummotor'] = strtoupper($data['nummotor']);
         $data['numserie'] = strtoupper($data['numserie']);
         $data['marcaId'] = $request->marca[0];
+        $data['identificador'] = str_pad($data['identificador'], 4, '0', STR_PAD_LEFT);
+
 
         /*** directorio contenedor de su información */
         $pathMaquinaria = str_pad($maquinariaMtq->id, 4, '0', STR_PAD_LEFT);

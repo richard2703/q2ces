@@ -28,7 +28,7 @@
                             <input type="hidden" name="maquinaria" id="maquinaria" value="{{ $checkList->maquinaria }}">
                             <input type="hidden" name="checkListId" id="checkListId" value="{{ $checkList->id }}">
                             <div class="card-header bacTituloPrincipal">
-                                <h4 class="card-title">Nuevo Registro de CheckList</h4>
+                                <h4 class="card-title">Editar Registro de CheckList</h4>
                             </div>
 
                             <div class="card-body ">
@@ -96,6 +96,7 @@
                                             $strNombreGrupo = '';
                                             $intCont = 0;
                                             $blnNuevaSeccion = false;
+                                            $objPresentacion = new checkListPresentacion();
                                             ?>
                                             @forelse ($vctRecords as $item)
                                                 <?php
@@ -125,11 +126,11 @@
                                                 <tr>
                                                     <td>
                                                         {{-- {{ $item->tareaId }} .- --}}
-                                                         {{ $item->tarea }}
+                                                        {{ $item->tarea }}
                                                         <input type="hidden" name="tarea[]" id="tarea"
                                                             value="{{ $item->tarea }}">
-                                                            <input type="hidden" name="recordId[]" id="recordId"
-                                                                value="{{ $item->id }}">
+                                                        <input type="hidden" name="recordId[]" id="recordId"
+                                                            value="{{ $item->id }}">
 
                                                         <input type="hidden" name="tareaId[]" id="tareaId"
                                                             value="{{ $item->tareaId }}">
@@ -139,49 +140,14 @@
 
                                                         <input type="hidden" name="grupoId[]" id="grupoId"
                                                             value="{{ $item->grupoId }}">
+
+                                                        <input type="hidden" name="controlHtml[]" id="controlHtml"
+                                                            value="{{ $item->controlHtml }}">
                                                     </td>
                                                     <td>
-                                                        <?php
-                                                        if ($item->tareaTipoValor == 1) {
-                                                            ?>
-                                                        <div>
-                                                            <input type="radio" id="control{{ $intCont }}1"
-                                                                name="resultado{{ $item->tareaId }}[]" value="2"
-                                                                {{ ($item->valor == 2? 'checked':'') }}>
-                                                            <label for="control{{ $intCont }}1">Revisión Ok</label>
-                                                        </div>
-                                                        <div>
-                                                            <input type="radio" id="control{{ $intCont }}2"
-                                                                name="resultado{{ $item->tareaId }}[]" value="1" {{ ($item->valor == 1? 'checked':'') }}>
-                                                            <label for="control{{ $intCont }}2">Requiere Atención
-                                                                Futura</label>
-                                                        </div>
-                                                        <div>
-                                                            <input type="radio" id="control{{ $intCont }}3"
-                                                                name="resultado{{ $item->tareaId }}[]" value="0" {{ ($item->valor == 0? 'checked':'') }}>
-                                                            <label for="control{{ $intCont }}3">Requiere Atención
-                                                                Inmediata</label>
-                                                        </div>
+                                                        {{-- {{ $item }} --}}
+                                                        <?php echo $objPresentacion->getControlByTarea($item->tareaId, $item->resultado, $item->valor, $intCont); ?>
 
-                                                        <?php
-                                                        } else {
-                                                            ?>
-                                                        <div>
-                                                            <input type="radio" id="control{{ $intCont }}1"
-                                                                name="resultado{{ $item->tareaId }}[]" value="2"
-                                                                {{ ($item->valor == 2? 'checked':'') }}>
-                                                            <label for="control{{ $intCont }}1">Revisión Ok</label>
-                                                        </div>
-                                                        <div>
-                                                            <input type="radio" id="control{{ $intCont }}3"
-                                                                name="resultado{{ $item->tareaId }}[]" value="0" {{ ($item->valor == 0? 'checked':'') }}>
-                                                            <label for="control{{ $intCont }}3">Requiere Atención
-                                                                Inmediata</label>
-                                                        </div>
-                                                        <?php
-                                                        }
-
-                                                        ?>
                                                     </td>
                                                 </tr>
 
@@ -201,7 +167,12 @@
                             </div>
 
                             <div class="col-12 text-center mt-5 pt-5">
-                                <button type="submit" class="btn botonGral mb-3">Guardar</button>
+                                <a href="{{ route('checkList.index') }}">
+                                    <button type="button" class="btn btn-danger">Cancelar</button>
+                                </a>
+                                <a href="#">
+                                    <button type="submit" class="btn botonGral mb-3">Guardar</button>
+                                </a>
                             </div>
 
                         </form>

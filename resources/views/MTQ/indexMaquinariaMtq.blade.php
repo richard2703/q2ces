@@ -253,7 +253,7 @@
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Número Económico:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" name="identificador"
+                            <input type="number" class="inputCaja" name="identificador"
                                 value="{{ old('identificador') }}" placeholder="ej: MT-00" required>
                         </div>
 
@@ -426,7 +426,7 @@
                         <div class=" col-12 col-sm-6 mb-3 ">
 
                             <label class="labelTitulo">Número Económico:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="identificador" name="identificador"
+                            <input type="number" class="inputCaja" id="identificador" name="identificador"
                                 value="" placeholder="ej: MT-00" required>
                         </div>
 
@@ -933,7 +933,7 @@
                     campo.style.color = 'initial';
                     // campo.style.cursor:no-drop;
                 }
-                
+
             });
         }
     </script>
@@ -971,7 +971,7 @@
 
             // Obtener todos los campos del formulario
             const campos = document.querySelectorAll('input[type="text"], textarea');
- 
+
             // Aplicar color gris a los campos con readonly
             campos.forEach((campo) => {
                 if (modalTipo) {
@@ -989,8 +989,6 @@
                 }
             });
         }
-
-        
     </script>
 
     <script>
