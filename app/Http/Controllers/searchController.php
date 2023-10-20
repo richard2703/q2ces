@@ -126,7 +126,7 @@ class searchController extends Controller
 
         $sugerencias = [];
         foreach ($maquinaria as $item) {
-            if($item->compania == null){
+            if($item->compania == null && $item->estatusId == 1 ){
             $sugerencias[] = [
                 'value' =>   ' Equipo ' . $item->identificador .' - ' .  $item->nombre . ', Marca ' . $item->marca . ', Modelo ' . $item->modelo  . ', NS ' .  $item->numserie . ', Placas ' .  $item->placas,
                 'id' => $item->id,
@@ -242,12 +242,14 @@ class searchController extends Controller
 
         $sugerencias = [];
         foreach ($tareas as $item) {
-            $sugerencias[] = [
-                'value' => 'Tarea: ' . $item->nombre . ', ' . $item->comentario,
-                'id' => $item->id,
+            if( $item->activa ==1){
+                $sugerencias[] = [
+                    'value' => 'Tarea: ' . $item->nombre . ', ' . $item->comentario,
+                    'id' => $item->id,
                 'nombre' => $item->nombre,
-                'comentario' => $item->comentario,
-            ];
+                    'comentario' => $item->comentario,
+                ];
+            }
         }
 
         return $sugerencias;
@@ -272,12 +274,14 @@ class searchController extends Controller
 
         $sugerencias = [];
         foreach ($grupos as $item) {
-            $sugerencias[] = [
-                'value' => 'Grupo de Tareas: ' . $item->nombre . ', ' . $item->comentario,
-                'id' => $item->id,
-                'nombre' => $item->nombre,
-                'comentario' => $item->comentario,
-            ];
+            if($item->activo == 1) {
+                $sugerencias[] = [
+                    'value' => 'Grupo de Tareas: ' . $item->nombre . ', ' . $item->comentario,
+                    'id' => $item->id,
+                    'nombre' => $item->nombre,
+                    'comentario' => $item->comentario,
+                ];
+            }
         }
 
         return $sugerencias;

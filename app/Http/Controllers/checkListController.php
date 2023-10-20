@@ -12,6 +12,7 @@ use App\Models\grupoTareas;
 use App\Models\grupo;
 use App\Models\tarea;
 use App\Models\maquinaria;
+use App\Models\programacionCheckLists;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
@@ -46,6 +47,19 @@ class checkListController extends Controller
 
         // dd( $records );
         return view('checkList.checkList', compact('records','vctEquipos','vctBitacoras'));
+    }
+
+    public function programacion()
+    {
+        abort_if(Gate::denies('checkList_index'), 403);
+
+        $vctRecords = programacionCheckLists::select('programacionCheckLists.*')->paginate(15);
+
+        // $vctEquipos = maquinaria::select('maquinaria.nombre','maquinaria.id','maquinaria.identificador')->where('maquinaria.compania','=',null)->where('maquinaria.estatusId','=',1)->orderBy('maquinaria.identificador','asc')->get();
+        // $vctBitacoras = bitacoras::select('bitacoras.nombre','bitacoras.id')->where('bitacoras.activa','=',1)->orderBy('bitacoras.nombre','asc')->get();
+
+        // dd( $records );
+        return view('checkList.programacion', compact('vctRecords'));
     }
 
     /**
