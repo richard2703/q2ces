@@ -79,6 +79,15 @@
                                         </a>
                                     </div>
                                 @endcan
+                                @can('checkList_execute')
+                                    <div class="col-12 col-md-6  col-lg-3 text-center my-4">
+                                        <a href="{{ route('checkList.pendientes') }}" class="">
+                                            <img src="/img/equipos/formatos.svg" alt="formatos" title="formatos" width="30%"
+                                                class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">Mis Pendientes</p>
+                                        </a>
+                                    </div>
+                                @endcan
                                 @can('bitacora_grupo_index')
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ route('grupo.index') }}" class="">

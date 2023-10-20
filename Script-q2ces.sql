@@ -239,7 +239,9 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('checkList_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('checkList_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('checkList_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('checkList_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	 ('checkList_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+     ('checkList_assign_bitacoras','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('checkList_execute','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('mantenimiento_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('mantenimiento_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -578,7 +580,7 @@ CREATE TABLE corteCajaChica(
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id));
-   
+
    create table conceptosServiciosTrasporte(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     codigo varchar(200) not NULL,

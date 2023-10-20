@@ -246,7 +246,7 @@ class searchController extends Controller
                 $sugerencias[] = [
                     'value' => 'Tarea: ' . $item->nombre . ', ' . $item->comentario,
                     'id' => $item->id,
-                'nombre' => $item->nombre,
+                    'nombre' => $item->nombre,
                     'comentario' => $item->comentario,
                 ];
             }

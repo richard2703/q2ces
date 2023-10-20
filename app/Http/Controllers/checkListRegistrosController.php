@@ -18,6 +18,8 @@ use App\Models\grupoTareas;
 use App\Models\grupo;
 use App\Models\tarea;
 use App\Models\maquinaria;
+use App\Models\personal;
+use App\Models\programacionCheckLists;
 
 class checkListRegistrosController extends Controller {
     /**
@@ -52,8 +54,6 @@ class checkListRegistrosController extends Controller {
         $iRes = 1;
         $vctDebug =  array();
         $objTarea = new checkListPresentacion();
-
-        // dd( $request );
 
         //*** registramos primero el checlist */
         $objCheckList =  new checkList();
@@ -122,6 +122,33 @@ class checkListRegistrosController extends Controller {
             $iRes += 1;
         }
 
+        //*** trabajamos la actualización del registro de programacion si existe */
+        if ( ( ( int ) $request[ 'programacionId' ] > 0 ) ) {
+
+            $objProg = programacionCheckLists::where( 'id', '=', $request[ 'programacionId' ] )->first();
+            if ( $objProg ) {
+                $objProg->estatus = 2;
+                $objProg->checkListId = $objCheckList->id;
+                $objProg->save();
+            }
+            return redirect()->route( 'checkList.pendientes' );
+
+        } else {
+            $objProg = new programacionCheckLists();
+
+            $objPersonal = personal::where( 'userId', auth()->user()->id )->first();
+            if ( $objPersonal ) {
+                $objProg->personalId = $objPersonal->id;
+                $objProg->maquinariaId = $request[ 'maquinariaId' ];
+                $objProg->bitacoraId = $request[ 'bitacoraId' ];
+                $objProg->estatus = 2;
+                $objProg->checkListId = $objCheckList->id;
+                $objProg->comentario = 'Ejecutado en directo';
+                $objProg->fecha = date('Y-m-d');
+                $objProg->save();
+            }
+
+        }
         // dd( $vctDebug, $request );
 
         return redirect()->route( 'checkList.index' );
@@ -141,7 +168,7 @@ class checkListRegistrosController extends Controller {
 
         $checkList = checkList::select(
             'checkList.*',
-            DB::raw( 'maquinaria.nombre AS maquinaria' ),
+            DB::raw( "CONCAT(maquinaria.identificador,' - ',maquinaria.nombre) AS maquinaria" ),
             DB::raw( 'users.username AS usuario' ),
             DB::raw( 'bitacoras.nombre AS bitacora' ),
         )
