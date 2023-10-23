@@ -57,7 +57,8 @@
                                         <div class="col-3 col-md-2 text-center">
                                             <p class="">Ingreso</p>
                                             <p class="combustibleLitros fw-semibold text-success">$
-                                                {{ number_format($ingreso, 2) }}</p>
+                                                {{ number_format($ingreso, 2) > 0 ? number_format($ingreso, 2) : '0.00' }}
+                                            </p>
                                         </div>
                                         <div class="col-3 col-md-2  text-center">
                                             <p class="">Egreso</p>
@@ -81,7 +82,8 @@
 
                                             <div class="col-6 d-flex justify-content-end">
 
-                                                @if (date_diff(now(), $domingo->addDays(1))->format('%D%') <= 1 || !isset($ultimoCorte->saldo))
+                                                {{--  @if (date_diff(now(), $ultimocortefecha->addDays(1))->format('%D%') <= 1 || !isset($ultimoCorte->saldo))  --}}
+                                                @if (1 >= 1)
                                                     @can('cajachica_create')
                                                         <form action="{{ route('cajaChica.corte') }}" method="post">
                                                             @csrf
@@ -100,7 +102,8 @@
 
                                                 @can('cajachica_create')
                                                     <a href="{{ route('cajaChica.create') }}" class="ps-1">
-                                                        <button type="button" class="btn botonGral">Nuevo Movimiento</button>
+                                                        <button type="button" class="btn botonGral">Nuevo
+                                                            Movimiento</button>
                                                     </a>
                                                 @endcan
                                             </div>

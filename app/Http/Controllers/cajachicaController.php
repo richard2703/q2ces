@@ -52,7 +52,7 @@ class cajaChicaController extends Controller
         $Adomingo = $domingo->clone()->subDay(7);
         $Alunes = $lunes->clone()->subDay(7);
 
-        $ultimoCorte = corteCajaChica::where('fin', $Adomingo)->first();
+        $ultimoCorte = corteCajaChica::latest()->first();
 
         $registros = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
             ->leftJoin('obras', 'cajaChica.obra', 'obras.id')
@@ -92,6 +92,22 @@ class cajaChicaController extends Controller
         $saldo = $ingreso - $egreso;
 
         $ingreso = $ingreso - $ultimoCorte->saldo;
+
+
+        // $ultimocortefecha = $ultimoCorte->fin;
+        // $time = strtotime($ultimocortefecha);
+
+        // $newformat = date('Y-m-d', $time);
+        // // dd($newformat);
+        // if (date_diff(now(), $newformat->addDays(1))->format('%D%') <= 1 || !isset($ultimoCorte->saldo)) {
+        //     dd("entro");
+        // } else {
+        //     dd("no");
+        // }
+
+
+
+        // $date = Carbon::createFromFormat('m/d/Y', $ultimocortefecha)->format('Y-m-d');
 
 
 
