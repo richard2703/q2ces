@@ -83,7 +83,7 @@
                                             <div class="col-6 d-flex justify-content-end">
 
                                                 {{--  @if (date_diff(now(), $ultimocortefecha->addDays(1))->format('%D%') <= 1 || !isset($ultimoCorte->saldo))  --}}
-                                                @if (1 >= 1)
+                                                @if ($corte == 1)
                                                     @can('cajachica_create')
                                                         <form action="{{ route('cajaChica.corte') }}" method="post">
                                                             @csrf
