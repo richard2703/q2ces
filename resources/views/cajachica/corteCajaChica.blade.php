@@ -225,7 +225,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer mr-auto">
-                                    {{ $registros->links() }}
+                                    {{--  {{ $registros->links() }}  --}}
                                 </div>
                             </div>
                         </div>
