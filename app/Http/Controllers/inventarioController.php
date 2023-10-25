@@ -209,7 +209,6 @@ class inventarioController extends Controller
         // dd($data);
 
         if (isset($data['restock'])) {
-
             for ($i = 0; $i < count($request['restock']['id']); $i++) {
                 $record = inventario::where('id', $data['restock']['id'][$i])->first();
                 $nuevaLista = collect();
@@ -224,8 +223,18 @@ class inventarioController extends Controller
                     // dd($array);
                     $objResidente = inventario::updateOrCreate(['id' => $array['id']], $array);
                     // dd($i, $array, $objResidente);
-                    // dd($objResidente, $array, $request);
+
                     $nuevaLista->push($objResidente->id);
+                    if ($objResidente->id > 0) {
+                        $objMovimiento = new inventarioMovimientos();
+                        $objMovimiento->movimiento = 1;
+                        $objMovimiento->inventarioId = $objResidente->id;
+                        $objMovimiento->cantidad = $request['restock']['cantidad'][$i];
+                        $objMovimiento->precioUnitario = ($request['restock']['costo'][$i] / $request['restock']['cantidad'][$i]);
+                        $objMovimiento->total = $request['restock']['costo'][$i];
+                        $objMovimiento->usuarioId = $request['restock']['usuarioId'][0];
+                        $objMovimiento->Save();
+                    }
                 }
             }
         }
@@ -265,7 +274,7 @@ class inventarioController extends Controller
                     $objResidente->proveedorId = $request['nuevo']['proveedorId'][$i];
                     $objResidente->numparte = $request['nuevo']['numparte'][$i];
                     $objResidente->cantidad = $request['nuevo']['cantidad'][$i];
-                    $objResidente->valor = $request['nuevo']['valor'][$i];
+                    $objResidente->valor = $request['nuevo']['valor'][$i] / $request['nuevo']['cantidad'][$i];
                     $objResidente->reorden = $request['nuevo']['reorden'][$i];
                     $objResidente->maximo = $request['nuevo']['maximo'][$i];
                     $objResidente->tipo = $request['nuevo']['tipo'][$i];
@@ -275,6 +284,17 @@ class inventarioController extends Controller
                     // $objResidente->usuarioId = $request['usuarioId'][$i];
                     //  $objResidente->puesto = $request[ 'rpuesto' ][ $i ];
                     $objResidente->save();
+
+                    if ($objResidente->id > 0) {
+                        $objMovimiento = new inventarioMovimientos();
+                        $objMovimiento->movimiento = 1;
+                        $objMovimiento->inventarioId = $objResidente->id;
+                        $objMovimiento->cantidad = $objResidente->cantidad;
+                        $objMovimiento->precioUnitario = $objResidente->valor;
+                        $objMovimiento->total = ($objResidente->valor * $objResidente->cantidad);
+                        $objMovimiento->usuarioId = $request['nuevo']['usuarioId'][0];
+                        $objMovimiento->Save();
+                    }
                 }
 
 
@@ -289,16 +309,7 @@ class inventarioController extends Controller
         }
 
 
-        // if ($objProducto->id > 0) {
-        //     $objMovimiento = new inventarioMovimientos();
-        //     $objMovimiento->movimiento = 1;
-        //     $objMovimiento->inventarioId = $objProducto->id;
-        //     $objMovimiento->cantidad = $objProducto->cantidad;
-        //     $objMovimiento->precioUnitario = $objProducto->valor;
-        //     $objMovimiento->total = ($objProducto->valor * $objProducto->cantidad);
-        //     $objMovimiento->usuarioId = $request['usuarioId'];
-        //     $objMovimiento->Save();
-        // }
+
 
         Session::flash('message', 1);
         if (isset($request['nuevo'])) {
@@ -1149,22 +1160,25 @@ class inventarioController extends Controller
     {
         abort_if(Gate::denies('inventario_edit'), 403);
         $movimiento = $request->all();
-        // dd($producto, $movimiento);
 
         $objMovimiento = new inventarioMovimientos();
         $objMovimiento->movimiento = 1; //*** agrega al inventario */
         $objMovimiento->inventarioId = $producto->id;
         $objMovimiento->usuarioId = $movimiento['usuarioId'];
         $objMovimiento->cantidad = $movimiento['cantidad'];
-        $objMovimiento->precioUnitario = $movimiento['costo'];
-        $objMovimiento->total = ($movimiento['costo'] * $movimiento['cantidad']);
+        $objMovimiento->comentario = $movimiento['comentario'];
+        if ($movimiento['costo'] === null) {
+            $objMovimiento->precioUnitario = 0;
+            $objMovimiento->total = 0;
+        } else {
+            $objMovimiento->precioUnitario = ($movimiento['costo'] / $movimiento['cantidad']);
+            $objMovimiento->total = $movimiento['costo'];
+        }
         $objMovimiento->Save();
 
         if ($movimiento['movimiento'] == 1) {
-            //*** creamos el registro del stock */
-
             $producto->cantidad = ($producto->cantidad + $movimiento['cantidad']);
-            $producto->valor =  $movimiento['costo'];
+            $producto->valor =  ($movimiento['costo'] / $movimiento['cantidad']);
             $producto->save();
         } else if ($movimiento['movimiento'] == 2) {
             $producto->cantidad = ($producto->cantidad - $movimiento['cantidad']);

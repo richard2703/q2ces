@@ -59,7 +59,7 @@
                                                 @forelse ($inventarios as $inventario)
                                                     <tr>
                                                         <td class="text-center"><img class="" style="width: 100px;"
-                                                                src="{{ $inventario->imagen == '' ? '/img/general/default.jpg' : '/storage/inventario/' . $inventario->tipo . '/' . $inventario->imagen }}">
+                                                                src="{{ $inventario->imagen == '' ? '/img/general/defaultinventario.jpg' : '/storage/inventario/' . $inventario->tipo . '/' . $inventario->imagen }}">
                                                         </td>
                                                         <td class="text-center align-middle">{{ $inventario->numparte }}
                                                         </td>
@@ -132,18 +132,12 @@
                         <form action="{{ route('inventario.movimiento', $inventario->id) }}" method="post">
                             @csrf
                             {{--  @method('put')  --}}
-                            <div class="card-header bacTituloPrincipal ">
-                                <div class="nav-tabs-navigation">
-                                    <div class="nav-tabs-wrapper">
-                                        <span class="nav-tabs-title">
-                                            <h2 class="titulos text-capitalize"><span id="tituloModal">Editar</span> </h2>
-                                        </span>
-                                    </div>
-                                </div>
+                            <div class="modal-header bacTituloPrincipal">
+                                <h2 class="titulos text-capitalize"><span id="tituloModal">Editar</span> </h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="row  card-body">
-                                <div class="row card-body" style="
-                         text-align: center;">
+                                <div class="row card-body" style="text-align: center;">
                                     {{--  <input type="hidden" name="productoid" id="productoid" value="">  --}}
                                     <input type="hidden" name="usuarioId" id="usuarioId" value="{{ auth()->user()->id }}">
                                     <input type="hidden" name="movimiento" id="movimientoTipo">
@@ -154,15 +148,21 @@
                                     <div class="col-12 border-bottom mb-3 labelTitulo">
                                         <h3 class="titulos hSub h3 " id="nombreM"> </h3>
                                     </div>
-                                    <div class="col-12 col-lg-6">
+                                    <div class="col-12" id="cantidad">
                                         <label class="labelTitulo" for="">Cantidad:</label></br>
                                         <input class="inputCaja" type="number" step="0.01" min="0.01"
-                                            id="cantidad" name="cantidad" value="" required></br>
+                                            name="cantidad" value="" required></br>
                                     </div>
-                                    <div class="col-12 col-lg-6">
-                                        <label class="labelTitulo" for="">Costo unitario:</label></br>
+                                    <div class="col-12 col-lg-6" id="costo">
+                                        <label class="labelTitulo" for="">Costo Total:</label></br>
                                         <input class="inputCaja" type="number" step="0.01" min="0.01"
-                                            id="costo" name="costo" value="" required></br>
+                                            name="costo" value="" id="costoInput"></br>
+                                    </div>
+
+                                    <div class="col-12" id="comentario">
+                                        <label for="comentario" class="labelTitulo mt-3">Comentario:</label></br>
+                                        <textarea class="form-control-textarea border-green" name="comentario" rows="3" placeholder="Agregar Comentario..."></textarea>
+                                        <label class="labelTitulo" for=""></label> </br>
                                     </div>
 
                                 </div>
@@ -193,20 +193,42 @@
     </script>
     <script>
         function cargar(nombre, img, tipo, id, mov) {
-
             const imagen = document.getElementById('imagenM');
-            imagen.src = '/storage/inventario/' + tipo + '/' + img;
+            if (img !== '') {
+                imagen.src = '/storage/inventario/' + tipo + '/' + img;
+            } else {
+                imagen.src = '/img/general/defaultinventario.jpg';
+            }
+
             const p = document.getElementById('nombreM');
             p.innerText = nombre;
 
             const movimiento = document.getElementById('movimientoTipo');
             movimiento.value = mov;
 
+            const costoTotalDiv = document.getElementById('costo');
+            const costoTotalInput = document.getElementById('costoInput');
+            const comentarioTextarea = document.getElementById('comentario');
+            const cantidadDiv = document.getElementById('cantidad');
+
             const tituloModal = document.getElementById('tituloModal');
+
             if (mov == 1) {
+                costoTotalInput.setAttribute('required', 'required');
                 tituloModal.textContent = 'Entrada';
+                costoTotalDiv.style.display = 'block';
+                comentarioTextarea.style.display = 'none';
+                cantidadDiv.classList.remove('col-12');
+                cantidadDiv.classList.add('col-6');
+                
             } else {
+                costoTotalInput.removeAttribute('required');
                 tituloModal.textContent = 'Salida';
+                costoTotalDiv.style.display = 'none';
+                comentarioTextarea.style.display = 'block';
+                cantidadDiv.classList.remove('col-6');
+                cantidadDiv.classList.add('col-12');
+                
             }
         }
     </script>
