@@ -82,6 +82,21 @@ class checkListPresentacion {
         // dd( $intTareaId, $strValorControl, $intConsecutivo, $objTarea );
         if ( $objTarea ) {
             $strLeyenda = ' title="' . $objTarea->leyenda . '"';
+            $strUnidadMedida =  ( $objTarea->requiereUnidadMedida == 1 ?   "<label class='labelUnidadMedida'>". $objTarea->unidadMedida .'</label><br>'  : '' ) ;
+            $strImagen =  ( $objTarea->requiereImagen == 1 ?   '<span class="mi-archivo">'.
+                                                                '<input class="mb-4 ver" type="file" name="foto'. $intTareaId . '" id="control'. $intConsecutivo . 'Img" accept="image/*">'.
+                                                                '</span>'.
+                                                                '<label for="control'. $intConsecutivo . 'Img" style="font-size: 14px;
+                                                                font-weight: 600;
+                                                                color: #fff;
+                                                                background-color: #A6CE34;
+                                                                display: inline-block;
+                                                                transition: all .5s;
+                                                                cursor: pointer;
+                                                                padding: 15px 40px !important;
+                                                                text-transform: uppercase;
+                                                                width: 50%;
+                                                                text-align: center;"><span>Sube Imagen</span></label>' : '' ) ;
 
             switch ( strtolower( $objTarea->controlHtml ) ) {
                 case 'text':
@@ -104,7 +119,7 @@ class checkListPresentacion {
                 $strMaximo .
                 $strStep .
                 $strLeyenda .
-                $strPlaceHolder. ' pattern="\d*"  class="inputCaja text-end" id="control'. $intConsecutivo . '" name="resultado'. $intTareaId . '" required value="'. $strResultadoControl . '">';
+                $strPlaceHolder. ' pattern="\d*"  class="inputCaja text-end" id="control'. $intConsecutivo . '" name="resultado'. $intTareaId . '" required value="'. $strResultadoControl . '">' . $strUnidadMedida . $strImagen;
                 break;
 
                 case 'date':
@@ -151,7 +166,7 @@ class checkListPresentacion {
                 }
 
                 $strCodigoControl = '<select class="form-select"  aria-label="Default select example" id="control'. $intConsecutivo . '"' . $strLeyenda .
-                ' name="resultado'. $intTareaId . '">' .
+                ' name="resultado'. $intTareaId . '" required>' .
                 '<option value="">Seleccione</option>' .
                 $strItems .
                 '</select>';

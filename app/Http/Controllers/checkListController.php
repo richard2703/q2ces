@@ -285,7 +285,7 @@ class checkListController extends Controller {
         abort_if ( Gate::denies( 'checkList_show' ), 403 );
 
         $checkList = checkList::select(
-            'checkList.*',
+            'checkList.*', 'maquinaria.identificador',
             DB::raw( "CONCAT(maquinaria.identificador,' - ',maquinaria.nombre) AS maquinaria" ),
             DB::raw( 'users.username AS usuario' ),
             DB::raw( 'bitacoras.nombre AS bitacora' )

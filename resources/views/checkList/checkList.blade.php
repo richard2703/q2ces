@@ -60,7 +60,7 @@
                                         <table class="table">
                                             <thead class="labelTitulo">
                                                 <tr>
-                                                    <th class="labelTitulo" style="width:40px">Folio</th>
+                                                    <th class="labelTitulo" style="width:50px">Folio</th>
                                                     <th class="labelTitulo">Equipo</th>
                                                     <th class="labelTitulo">Bitácora</th>
                                                     <th class="labelTitulo">Registro</th>

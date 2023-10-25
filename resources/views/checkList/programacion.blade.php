@@ -72,7 +72,7 @@
                                                         {{--  --}}
                                                         {{ str_pad($item->id, 5, '0', STR_PAD_LEFT) }}
                                                     </td>
-                                                    <td class="text-center"> {{ $item->maquinaria }}</td>
+                                                    <td class="text-center"><a href="#"  title="{{ (is_null($item->comentario)==true? 'Sin comentarios':$item->comentario) }}">{{ $item->maquinaria }}</a> </td>
                                                     <td class="text-center">
                                                         {{ $item->personal }}</td>
 

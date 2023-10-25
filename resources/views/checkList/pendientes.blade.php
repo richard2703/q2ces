@@ -37,7 +37,7 @@
                             <div class="row">
                                 <div class="d-flex p-3 divBorder">
                                     <div class="col-12 text-end">
-                                        <a href="{{ route('maquinaria.index') }}">
+                                        <a href="{{ route('home') }}">
                                             <button class="btn regresar">
                                                 <span class="material-icons">
                                                     reply
@@ -45,11 +45,11 @@
                                                 Regresar
                                             </button>
                                         </a>
-                                        @can('maquinaria_create')
+                                        {{-- @can('maquinaria_create')
                                             <a href="{{ route('maquinaria.create') }}">
                                                 <button type="button" class="btn botonGral">Añadir Máquina</button>
                                             </a>
-                                        @endcan
+                                        @endcan --}}
                                     </div>
                                 </div>
                                 <div class="table-responsive">

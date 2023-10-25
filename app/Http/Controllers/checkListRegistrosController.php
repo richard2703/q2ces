@@ -55,6 +55,8 @@ class checkListRegistrosController extends Controller {
         $vctDebug =  array();
         $objTarea = new checkListPresentacion();
 
+        // dd( $request );
+
         //*** registramos primero el checlist */
         $objCheckList =  new checkList();
         $objCheckList->usuarioId = $request[ 'usuarioId' ];
@@ -62,6 +64,8 @@ class checkListRegistrosController extends Controller {
         $objCheckList->bitacoraId = $request[ 'bitacoraId' ];
         $objCheckList->comentario = $request[ 'comentario' ];
         $objCheckList->registrada = date( 'Y-m-d H:i:s' );
+        $objCheckList->codigo = $request[ 'codigo' ];
+        $objCheckList->version = $request[ 'version' ];
         $objCheckList->save();
 
         for ( $i = 0; $i < count( $request[ 'tareaId' ] ) ;
@@ -111,6 +115,25 @@ class checkListRegistrosController extends Controller {
                     }
                 }
 
+                $vctDebug[] =  'Imagen: ' . $request[ 'foto' . $request[ 'tareaId' ][ $i ] ]   ;
+
+                //*** para el manejo de imagenes */
+                if ( $request->hasFile( 'foto' . $request[ 'tareaId' ][ $i ] ) ) {
+                    /*** directorio contenedor de su información */
+                    $pathMaquinaria = str_pad( $request[ 'identificador' ], 4, '0', STR_PAD_LEFT );
+                    //*** folio consecutivo del checklist */
+                    $intFolioCheckList = str_pad( $objCheckList->id, 4, '0', STR_PAD_LEFT );
+                    //*** codigo y version de bitacora */
+                    $strBitacora = str_replace( ' ', '_', trim( $request[ 'codigo' ] ) . '_v' . trim( $request[ 'version' ] ) );
+
+                    $objRegistro->ruta = $intFolioCheckList .'_'. $request[ 'tareaId' ][ $i ] .'_'. time() . '_' . 'Imagen.' . $request->file( 'foto' . $request[ 'tareaId' ][ $i ] )->getClientOriginalExtension();
+                    $vctDebug[] =  'Se guarda en: ' . '/public/maquinaria/' . $pathMaquinaria. '/checkList/' . $strBitacora .    '/' .  $objRegistro->ruta ;
+                    $request->file( 'foto' . $request[ 'tareaId' ][ $i ] )->storeAs( '/public/maquinaria/' . $pathMaquinaria. '/checkList/' . $strBitacora,  $objRegistro->ruta );
+
+                } else {
+                    $vctDebug[] =  'No tengo una imagen';
+                }
+
                 $objRegistro->save();
                 $vctDebug[] =  'Lo Guarde';
 
@@ -124,6 +147,7 @@ class checkListRegistrosController extends Controller {
 
         //*** trabajamos la actualización del registro de programacion si existe */
         if ( ( ( int ) $request[ 'programacionId' ] > 0 ) ) {
+            $vctDebug[] = 'Se actualiza el registro de programación';
 
             $objProg = programacionCheckLists::where( 'id', '=', $request[ 'programacionId' ] )->first();
             if ( $objProg ) {
@@ -135,6 +159,7 @@ class checkListRegistrosController extends Controller {
 
         } else {
             $objProg = new programacionCheckLists();
+            $vctDebug[] = 'Se genera el registro en programación';
 
             $objPersonal = personal::where( 'userId', auth()->user()->id )->first();
             if ( $objPersonal ) {
@@ -144,12 +169,12 @@ class checkListRegistrosController extends Controller {
                 $objProg->estatus = 2;
                 $objProg->checkListId = $objCheckList->id;
                 $objProg->comentario = 'Ejecutado en directo';
-                $objProg->fecha = date('Y-m-d');
+                $objProg->fecha = date( 'Y-m-d' );
                 $objProg->save();
             }
 
         }
-        // dd( $vctDebug, $request );
+        dd( $vctDebug, $request );
 
         return redirect()->route( 'checkList.index' );
 
