@@ -99,7 +99,7 @@
                                                                     </svg> </a>
                                                             @endcan
 
-                                                            @can('checkList_show')
+                                                            @can('checkList_create')
                                                                 <a href="{{ route('checkListRegistros.show', $item->id) }}"
                                                                     class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
