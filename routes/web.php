@@ -410,11 +410,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/checkList/', [App\Http\Controllers\checkListController::class, 'index'])->name('checkList.index');
     Route::get('/checkList/seleccionar', [App\Http\Controllers\checkListController::class, 'seleccionar'])->name('checkList.seleccionar');
     Route::get('/checkList/ejecutar', [App\Http\Controllers\checkListController::class, 'ejecutar'])->name('checkList.ejecutar');
-    Route::get('/checkList/nuevo/{bitacora}/{maquinaria}', [App\Http\Controllers\checkListController::class, 'create'])->name('checkList.create');
+    Route::get('/checkList/nuevo/{bitacora}/{maquinaria}/{programacion?}', [App\Http\Controllers\checkListController::class, 'create'])->name('checkList.create');
     Route::post('/checkList/registra/', [App\Http\Controllers\checkListRegistrosController::class, 'store'])->name('checkListRegistros.store');
     Route::get('/checkList/registros/{id}', [App\Http\Controllers\checkListController::class, 'show'])->name('checkList.show');
     Route::get('/checkList/registros/editar/{id}', [App\Http\Controllers\checkListRegistrosController::class, 'show'])->name('checkListRegistros.show');
     Route::put('/checkList/registros/editar/', [App\Http\Controllers\checkListRegistrosController::class, 'update'])->name('checkListRegistros.update');
+    Route::get('/checkList/programacion', [App\Http\Controllers\checkListController::class, 'programacion'])->name('checkList.programacion');
+    Route::get('/checkList/pendientes', [App\Http\Controllers\checkListController::class, 'pendientes'])->name('checkList.pendientes');
+    Route::post('/checkList/asignacion/trabajo', [App\Http\Controllers\checkListController::class, 'asignacion'])->name('checkList.asignacion');
+    Route::put('/checkList/asignacion/actualizar/', [App\Http\Controllers\checkListController::class, 'updateAsignacion'])->name('checkList.updateAsignacion');
 
     // Equipos MTQ
     // Route::get('mtq/inventario/dash', [App\Http\Controllers\inventarioMtqController::class, 'dash'])->name('inventarioMtq.dash');
@@ -441,6 +445,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');
     Route::get('search/equiposMTQ', [App\Http\Controllers\searchController::class, 'equiposMTQ'])->name('search.equiposMTQ');
     Route::get('search/materialMantenimiento', [App\Http\Controllers\searchController::class, 'materialMantenimiento'])->name('search.materialMantenimiento');
+    Route::get('search/inventario', [App\Http\Controllers\searchController::class, 'inventario'])->name('search.inventario');
     Route::get('search/tareasParaGrupos', [App\Http\Controllers\searchController::class, 'tareasParaGrupos'])->name('search.tareasParaGrupos');
     Route::get('search/gruposParaBitacoras', [App\Http\Controllers\searchController::class, 'gruposParaBitacoras'])->name('search.gruposParaBitacoras');
 

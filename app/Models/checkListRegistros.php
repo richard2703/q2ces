@@ -25,5 +25,6 @@ class checkListRegistros extends Model {
         'resultado' ,
         'valor' ,
         'usuarioId',
+        'ruta',
     ];
 }

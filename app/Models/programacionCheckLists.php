@@ -5,20 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class inventarioMovimientos extends Model
-{
+class programacionCheckLists extends Model {
     use HasFactory;
-    protected $table = 'inventarioMovimientos';
-
+    protected $table = 'programacionCheckLists';
     public $timestamps = true;
 
     protected $fillable = [
-        'inventarioId',
-        'usarioId',
-        'movimiento',
-        'cantidad',
-        'precioUnitario',
-        'total',
+        'checkListId',
+        'maquinariaId',
+        'bitacoraId',
+        'personalId',
+        'fecha',
+        'estatus',
         'comentario'
     ];
+
 }

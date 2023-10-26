@@ -86,25 +86,32 @@
                                         </div>
 
                                         @php
-                $numFotosCargadas = count($fotos);
-                $maxNumFotos = 5;
-                $numFotosPermitidas = $maxNumFotos - $numFotosCargadas;
-            @endphp
+                                            $numFotosCargadas = count($fotos);
+                                            $maxNumFotos = 5;
+                                            $numFotosPermitidas = $maxNumFotos - $numFotosCargadas;
+                                        @endphp
 
-            @if ($numFotosPermitidas > 0)
-                <span class="mi-archivo">
-                    <input class="mb-4 ver " type="file" name="ruta[]" id="mi-archivo" accept="image/*"
-                        multiple data-max="{{ $numFotosPermitidas }}">
-                </span>
-                <label for="mi-archivo">
-                    <span class="">Sube Imagen (Puedes subir hasta {{ $numFotosPermitidas }} más)</span>
-                </label>
-            @else
-                <label for="mi-archivo" style="background-color: crimson; cursor: initial;">
-                    <span class="">No puedes subir más imágenes, <br>ya has alcanzado el límite de 5.</span>
-                </label>
-            @endif
+                                        @if ($numFotosPermitidas > 0)
+                                            <span class="mi-archivo">
+                                                <input class="mb-4 ver " type="file" name="ruta[]" id="mi-archivo"
+                                                    accept="image/*" multiple data-max="{{ $numFotosPermitidas }}">
+                                            </span>
+                                            <label for="mi-archivo">
+                                                <span class="">Sube Imagen (Puedes subir hasta
+                                                    {{ $numFotosPermitidas }} más)</span>
+                                            </label>
+                                        @else
+                                            <label for="mi-archivo" style="background-color: crimson; cursor: initial;">
+                                                <span class="">No puedes subir más imágenes, <br>ya has alcanzado el
+                                                    límite de 5.</span>
+                                            </label>
+                                        @endif
                                     </div>
+
+                                    <div class="text-center mx-auto border  mb-4">
+
+                                    </div>
+
 
                                     <input type="hidden" name="arrayFotosPersistente" id="arrayFotosPersistente"
                                         value="">
@@ -237,9 +244,9 @@
                                             </select>
                                         </div> --}}
                                     </div>
-                                    
+
                                 </div>
-                                
+
                             </div>
                             <div class="col-12 divBorder">
                                 <h2 class="tituloEncabezado" style="margin-left: 10px">Asignaciones</h2>
@@ -247,28 +254,30 @@
                             <div class="row p-3 d-flex text-center">
                                 <div class="col-12 mb-3">
                                     <p class="textTitulo my-2">Obra Asignada: @if (isset($obraMaqPer->nombre_obra))
-                                        <a href="{{ route('obras.show', $obraMaqPer->id_obra) }}" style="color: blue; text-decoration: underline;">{{$obraMaqPer->nombre_obra}}</a>
-                                    @else
-                                        <span>Falta Agregar Bloque</span>
-                                    @endif</p>
+                                            <a href="{{ route('obras.show', $obraMaqPer->id_obra) }}"
+                                                style="color: blue; text-decoration: underline;">{{ $obraMaqPer->nombre_obra }}</a>
+                                        @else
+                                            <span>Falta Agregar Bloque</span>
+                                        @endif
+                                    </p>
                                     <p class="textTitulo my-2">Personal Asignado: @if (isset($obraMaqPer->nombre_personal))
-                                        
-                                        <a href="{{ route('personal.ver', $obraMaqPer->id_personal) }}" style="color: blue; text-decoration: underline;">{{$obraMaqPer->nombre_personal}}</a>
-                                    @else
-                                        <span>Falta Agregar Bloque</span>
-                                    @endif
+                                            <a href="{{ route('personal.ver', $obraMaqPer->id_personal) }}"
+                                                style="color: blue; text-decoration: underline;">{{ $obraMaqPer->nombre_personal }}</a>
+                                        @else
+                                            <span>Falta Agregar Bloque</span>
+                                        @endif
                                     </p>
                                     <p class="textTitulo my-2">Fecha de Inicio: @if (isset($obraMaqPer->fechaInicio))
-                                        <span>{{ \Carbon\Carbon::parse($obraMaqPer->fechaInicio)->toDateString() }}</span>
-                                    @else
-                                        <span>Falta Agregar Bloque</span>
-                                    @endif
+                                            <span>{{ \Carbon\Carbon::parse($obraMaqPer->fechaInicio)->toDateString() }}</span>
+                                        @else
+                                            <span>Falta Agregar Bloque</span>
+                                        @endif
                                     </p>
                                 </div>
                             </div>
-                            
+
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -383,12 +392,12 @@
                                                             </div>
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                                                                                                                <label class="labelTitulo">Combustible:</label></br>
-                                                                                                                                                                <input type="text" class="inputCaja" id="combustible"
-                                                                                                                                                                    name="combustible"
-                                                                                                                                                                    placeholder="Diesel / Gasolina / Especificar"
-                                                                                                                                                                    value="{{ $maquinaria->combustible }}">
-                                                                                                                                                            </div>-->
+                                                                                                                                                                    <label class="labelTitulo">Combustible:</label></br>
+                                                                                                                                                                    <input type="text" class="inputCaja" id="combustible"
+                                                                                                                                                                        name="combustible"
+                                                                                                                                                                        placeholder="Diesel / Gasolina / Especificar"
+                                                                                                                                                                        value="{{ $maquinaria->combustible }}">
+                                                                                                                                                                </div>-->
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Motor:</label></br>
@@ -436,8 +445,7 @@
                                                             <div class="col-12 col-sm-6  mb-3">
                                                                 <div class="row align-items-end">
                                                                     <label class="labelTitulo">Medición de Uso</label></br>
-                                                                    <div
-                                                                        class="col-6 col-md-6 col-lg-4 col-xl-7 inputNumberKilometraje">
+                                                                    <div class="col-6 col-md-6 col-lg-4 col-xl-7 inputNumberKilometraje">
 
                                                                         <input type="number" class="inputCaja"
                                                                             id="kilometraje" name="kilometraje"
@@ -525,8 +533,8 @@
                                                                         class="col-12 col-sm-4 col-lg-2 my-3 text-center pt-3">
                                                                         <!--<i class="fas fa-clipboard-check"></i>-->
                                                                         <!--<span class="material-icons" style="font-size:40px; color: gray">
-                                                                                                                                                        content_paste_search
-                                                                                                                                                    </span>-->
+                                                                                                                                                            content_paste_search
+                                                                                                                                                        </span>-->
                                                                         @if ($refaccion->relacionInventarioId != null)
                                                                             <span class="material-icons"
                                                                                 style="font-size:40px; color: green">
@@ -1202,11 +1210,11 @@
 </script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById('mi-archivo').addEventListener('change', function () {
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('mi-archivo').addEventListener('change', function() {
             var input = this;
             var maxAllowed = parseInt(input.getAttribute('data-max'));
-            
+
             if (input.files.length > maxAllowed) {
                 input.value = "";
                 Swal.fire({
@@ -1214,7 +1222,7 @@
                     title: 'Error...',
                     text: '5 imagenes es el maximo permitido ',
                 })
-                
+
             }
         });
     });

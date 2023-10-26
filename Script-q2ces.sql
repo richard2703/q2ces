@@ -239,7 +239,9 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('checkList_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('checkList_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('checkList_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('checkList_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	 ('checkList_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+     ('checkList_assign_bitacoras','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('checkList_execute','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('mantenimiento_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('mantenimiento_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -587,7 +589,7 @@ CREATE TABLE corteCajaChica(
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id));
-   
+
    create table conceptosServiciosTrasporte(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     codigo varchar(200) not NULL,
@@ -734,6 +736,20 @@ create table tarea(
     categoriaId bigint(20) unsigned NULL,
     ubicacionId bigint(20) unsigned NULL,
     tipoId bigint(20) unsigned NULL,
+    activa TINYINT(1) NOT NULL DEFAULT '1',
+    tipoValorId INT(2) NOT NULL DEFAULT '1',
+    requiereLimites TINYINT(1) NOT NULL DEFAULT '0',
+    limiteInferior INT(8) NULL ,
+    limiteSuperior INT(8) NULL ,
+    requiereEscala TINYINT(1) NOT NULL DEFAULT '0' ,
+    limiteInferiorEscala INT(8) NULL ,
+    limiteSuperiorEscala INT(8) NULL ,
+    requierePeriodo TINYINT(1) NOT NULL DEFAULT '0',
+    fechaInicial DATE NULL ,
+    fechaFinal DATE NULL ,
+    requiereImagen TINYINT(1) NOT NULL DEFAULT '0',
+    requiereUnidadMedida TINYINT(1) NOT NULL DEFAULT '0',
+    unidadMedida varchar(128) NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     activa TINYINT(1) NOT NULL DEFAULT '1',
@@ -1637,6 +1653,7 @@ create table asistencia(
     asistenciaId bigint(20) unsigned NOT NULL,
     fecha date not NULL,
     horasExtra int NULL,
+    totalHorasExtra int NULL,
     horasAnticipada int NULL,
     horasRetraso int NULL,
     tipoHoraExtraId bigint(20) unsigned null,
@@ -1723,6 +1740,7 @@ create table checkListRegistros(
     resultado varchar(255) NULL,
     valor int(8) NULL,
     usuarioId bigint(20) unsigned NOT NULL,
+	ruta varchar(255) NULL,
     created_at timestamp NULL DEFAULT NULL,
     updated_at timestamp NULL DEFAULT NULL,
     primary key (id),

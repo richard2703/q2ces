@@ -47,6 +47,7 @@
                                                         name="comentario" placeholder="Escribe aquí tus comentarios sobre la bitácora.">{{ $tarea->comentario }}</textarea>
                                                 </div>
                                             </div>
+
                                             <div class="row">
                                                 <div class="col-4 col-sm-3  col-lg-4 my-3">
                                                     <label for="recipient-name" class="labelTitulo">Categoría:
@@ -99,7 +100,7 @@
                                                 <div class="col-8 col-sm-4  col-lg-4 my-3">
                                                     <label class="labelTitulo">Tipo de Valor a Capturar:</label></br>
                                                     <select class="form-select" aria-label="Default select example"
-                                                        id="tipoValor" name="tipoValorId">
+                                                        onchange="configurar()" id="tipoValorId" name="tipoValorId">
                                                         <option selected value="">Selecciona una opción</option>
                                                         @foreach ($vctTipoValor as $item)
                                                             <option value="{{ $item->id }}"
@@ -110,26 +111,30 @@
                                                     </select>
                                                 </div>
 
-                                                {{-- <div class="mb-3">
-                                                    <label for="exampleFormControlTextarea1" class="form-label">Comentarios</label>
-                                                    <textarea class="form-select" placeholder="Escribe aquí tus comentarios sobre la tarea." rows="3"
-                                                        id="comentario" name="comentario"></textarea>
-                                                </div> --}}
+                                                <div class="col-4 col-sm-3  col-lg-4 my-3">
+                                                    <label class="labelTitulo">Requiere Imagen:</label></br>
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        id="requiereImagen" name="requiereImagen">
+                                                        <option value="0"
+                                                            {{ $tarea->requiereImagen == 0 ? ' selected' : '' }}>
+                                                            No</option>
+                                                        <option value="1"
+                                                            {{ $tarea->requiereImagen == 1 ? ' selected' : '' }}>Sí
+                                                        </option>
+                                                    </select>
+                                                </div>
 
                                                 <div class="col-4 col-sm-3  col-lg-4 my-3">
                                                     <label class="labelTitulo">Activa:</label></br>
                                                     <select class="form-select" aria-label="Default select example"
                                                         id="activa" name="activa">
                                                         <option value="0"
-                                                            {{ $tarea->activa == 0 ? ' selected' : '' }}>
-                                                            No</option>
+                                                            {{ $tarea->activa == 0 ? ' selected' : '' }}>No</option>
                                                         <option value="1"
-                                                            {{ $tarea->activa == 1 ? ' selected' : '' }}>Sí
-                                                        </option>
+                                                            {{ $tarea->activa == 1 ? ' selected' : '' }}>Sí</option>
                                                     </select>
                                                 </div>
                                             </div>
-
                                         </div>
 
                                         <div class="col-12 my-4 divBorder ">
@@ -140,7 +145,8 @@
                                         <div class="col-12 my-4">
                                             <div class="row">
                                                 <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
-                                                    <label class="labelTitulo">Leyenda (Se muestra como ToolTip): <span></span></label></br>
+                                                    <label class="labelTitulo">Leyenda (Se muestra como ToolTip):
+                                                        <span></span></label></br>
 
                                                     <input type="text" maxlength="200" id="leyenda" name="leyenda"
                                                         value="{{ $tarea->leyenda }}"
@@ -149,48 +155,118 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class=" col-4  mb-3 ">
+                                            <label class="labelTitulo">Require Usar Unidad de Medida:
+                                                <span></span></label></br>
+                                            <input class="form-check-input is-invalid align-self-end mb-2"
+                                                name='requiereUnidadMedida' type="checkbox" id="requiereUnidadMedida"
+                                                <?php echo $tarea->requiereUnidadMedida == 1 ? 'checked' : ''; ?> style="font-size: 20px;">
+                                        </div>
+
+                                        <fieldset class=" col-8  mb-6 " id="requiereUnidad">
+                                            <div class="row">
+
+                                                <div class=" col-8  mb-6 ">
+                                                    <label class="labelTitulo">Unidad:</label></br>
+                                                    <input type="text" maxlength="128" id="unidadMedida"
+                                                        name="unidadMedida" value="{{ $tarea->unidadMedida }}"
+                                                        placeholder="Especifique el nombre de unidad de medida o simbolo, Ej. Kilogramos o kg ."
+                                                        class="inputCaja">
+                                                </div>
+                                            </div>
+                                        </fieldset>
+
                                         <div class=" col-4  mb-3 ">
                                             <label class="labelTitulo">Require Usar Limites: <span></span></label></br>
                                             <input class="form-check-input is-invalid align-self-end mb-2"
-                                                name='requiereLimites' type="checkbox" id="requiereLimites" checked
-                                                style="font-size: 20px;">
+                                                name='requiereLimites' type="checkbox" id="requiereLimites"
+                                                <?php echo $tarea->requiereLimites == 1 ? 'checked' : ''; ?> style="font-size: 20px;">
                                         </div>
+
+                                        <fieldset class=" col-8  mb-6 " id="requiereLimites">
+                                            <div class="row">
+                                                <div class=" col-4  mb-3 ">
+                                                    <label class="labelTitulo">Valor mínimo:</label></br>
+                                                    <input type="number" class="inputCaja text-end" id="limiteInferior"
+                                                        maxlength="3" min="0" step="1" max="999"
+                                                        placeholder="Ej. 0" name="limiteInferior"
+                                                        value="{{ $tarea->limiteInferior }}">
+                                                </div>
+
+                                                <div class=" col-4  mb-3 ">
+                                                    <label class="labelTitulo">Valor Máximo:</label></br>
+                                                    <input type="number" class="inputCaja text-end" id="limiteSuperior"
+                                                        maxlength="3" min="0" step="1" max="1000000"
+                                                        placeholder="Ej. 100" name="limiteSuperior"
+                                                        value="{{ $tarea->limiteSuperior }}">
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
 
                                         <div class=" col-4  mb-3 ">
-                                            <label class="labelTitulo">Valor mínimo:</label></br>
-                                            <input type="number" class="inputCaja text-end" id="limiteInferior" maxlength="3"
-                                                min="0" step="1" max="999" placeholder="Ej. 0"
-                                                name="limiteInferior" value="">
-                                        </div>
-
-                                        <div class=" col-4  mb-3 ">
-                                            <label class="labelTitulo">Valor Máximo:</label></br>
-                                            <input type="number" class="inputCaja text-end" id="limiteSuperior" maxlength="3"
-                                                min="0" step="1" max="1000000" placeholder="Ej. 100"
-                                                name="limiteSuperior" value="">
-                                        </div>
-
-                                        {{-- <div class=" col-4  mb-3 ">
                                             <label class="labelTitulo">Require Usar Escala: <span></span></label></br>
                                             <input class="form-check-input is-invalid align-self-end mb-2"
-                                                name='requiereEscala' type="checkbox" id="requiereEscala" checked
-                                                style="font-size: 20px;">
+                                                <?php echo $tarea->requiereEscala == 1 ? 'checked' : ''; ?> name='requiereEscala' type="checkbox"
+                                                id="requiereEscala" style="font-size: 20px;">
                                         </div>
 
-                                        <div class=" col-4  mb-3 ">
-                                            <label class="labelTitulo">Valor mínimo:</label></br>
-                                            <input type="number" class="inputCaja text-end" id="limiteInferiorEscala" maxlength="3"
-                                                min="0" step="1" max="999" placeholder="Ej. 0"
-                                                name="limiteInferiorEscala" value="">
-                                        </div>
+                                        <fieldset class=" col-8  mb-6 " id="requiereEscala">
+                                            <div class="row">
+
+                                                <div class=" col-4  mb-3 ">
+                                                    <label class="labelTitulo">Valor mínimo:</label></br>
+                                                    <input type="number" class="inputCaja text-end"
+                                                        id="limiteInferiorEscala" maxlength="3" min="0"
+                                                        step="1" max="999" placeholder="Ej. 0"
+                                                        name="limiteInferiorEscala"
+                                                        value="{{ $tarea->limiteInferiorEscala }}">
+                                                </div>
+
+                                                <div class=" col-4  mb-3 ">
+                                                    <label class="labelTitulo">Valor Máximo:</label></br>
+                                                    <input type="number" class="inputCaja text-end"
+                                                        id="limiteSuperiorEscala" maxlength="3" min="0"
+                                                        step="1" max="1000000" placeholder="Ej. 100"
+                                                        name="limiteSuperiorEscala"
+                                                        value="{{ $tarea->limiteSuperiorEscala }}">
+                                                </div>
+                                            </div>
+                                        </fieldset>
 
                                         <div class=" col-4  mb-3 ">
-                                            <label class="labelTitulo">Valor Máximo:</label></br>
-                                            <input type="number" class="inputCaja text-end" id="limiteSuperiorEscala" maxlength="3"
-                                                min="0" step="1" max="1000000" placeholder="Ej. 100"
-                                                name="limiteSuperiorEscala" value="">
+                                            <label class="labelTitulo">Require Usar Periodo de Tiempo:
+                                                <span></span></label></br>
+                                            <input class="form-check-input is-invalid align-self-end mb-2"
+                                                <?php echo $tarea->requierePeriodo == 1 ? 'checked' : ''; ?> name='requierePeriodo' type="checkbox"
+                                                id="requierePeriodo" style="font-size: 20px;">
                                         </div>
-                                        --}}
+
+                                        <fieldset class=" col-8  mb-6 " id="requiereEscala">
+                                            <div class="row">
+
+                                                <div class=" col-4  mb-3 ">
+                                                    <label class="labelTitulo">Días Anteriores:</label></br>
+                                                    <input type="number" class="inputCaja text-end" id="fechaInicial"
+                                                        maxlength="3" min="0" step="1" max="999"
+                                                        placeholder="Ej. 0" name="fechaInicial"
+                                                        value="{{ $tarea->fechaInicial }}">
+                                                </div>
+
+                                                <div class=" col-4  mb-3 ">
+                                                    <label class="labelTitulo">Días Posteriores:</label></br>
+                                                    <input type="number" class="inputCaja text-end" id="fechaFinal"
+                                                        maxlength="3" min="0" step="1" max="1000000"
+                                                        placeholder="Ej. 100" name="fechaFinal"
+                                                        value="{{ $tarea->fechaFinal }}">
+                                                </div>
+                                            </div>
+                                        </fieldset>
+
+
+
+
 
                                         <div class="col-12 my-4  ">
                                             <div class="row">
@@ -202,6 +278,8 @@
                                                 </div>
                                             </div>
                                         </div>
+
+
                                     </form>
                                 </div>
                             </div>
@@ -223,6 +301,19 @@
     });
     </script>
 
+    <script>
+        function configurar() {
+
+            const listaSeleccion = document.getElementById('tipoValorId');
+
+            alert(listaSeleccion.value);
+
+        };
+
+        function toggleLayer(val, ) {
+
+        }
+    </script>
     <script>
         function Guardado() {
             // alert('test');

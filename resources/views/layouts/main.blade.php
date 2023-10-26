@@ -256,7 +256,7 @@
                 </li>
             @endcan
 
-            @can('bitacora_index')
+            @can('checkList_index')
                 <li class="nav-item ">
                     <a class="nav-link {{ $activePage == 'bitacoras' ? '' : 'collapsed' }}"
                         data-bs-target="#bitacora-nav" data-bs-toggle="collapse" href="#">
@@ -269,6 +269,22 @@
                     </a>
                     <ul id="bitacora-nav" class="nav-content collapse {{ $activePage == 'bitacoras' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
+
+                        @can('checkList_assign_bitacoras')
+                            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                                <a href="{{ route('checkList.programacion') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Asignación de Trabajo</span>
+                                </a>
+                            </li>
+                        @endcan
+
+                        @can('checkList_execute')
+                            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                                <a href="{{ route('checkList.pendientes') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Mis Pendientes</span>
+                                </a>
+                            </li>
+                        @endcan
 
                         @can('checkList_show')
                             <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">

@@ -31,67 +31,97 @@
                                                         name="comentario" placeholder="Escribe aquí que es lo que hace la tarea."></textarea>
                                                 </div>
 
-                                                <div class="mb-3">
-                                                    <label for="recipient-name" class="labelTitulo">Categoría: <span>*</span></label>
-                                                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" title="Seleccione la categoría en que se asociará a la tarea."
-                                                        required id="categoriaId" name="categoriaId">
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-4 col-sm-3  col-lg-4 my-3">
+                                                    <label for="recipient-name" class="labelTitulo">Categoría:
+                                                        <span>*</span></label>
+                                                    <select class="form-select" id="floatingSelect"
+                                                        aria-label="Floating label select example" required id="categoriaId"
+                                                        name="categoriaId">
                                                         <option selected value="">Selecciona una opción</option>
                                                         @foreach ($vctCategorias as $item)
-                                                            <option value="{{ $item->id }}">
+                                                            <option value="{{ $item->id }}" >
                                                                 {{ $item->nombre }}
                                                             </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="mb-3">
-                                                    <label for="recipient-name" class="labelTitulo">Ubicación: <span>*</span></label>
-                                                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example"  title="Seleccione la ubicación de donde será realizada la tarea."
-                                                        required id="ubicacionId" name="ubicacionId">
+                                                <div class="col-4 col-sm-3  col-lg-4 my-3">
+                                                    <label for="recipient-name" class="labelTitulo">Ubicación:
+                                                        <span>*</span></label>
+                                                    <select class="form-select" id="floatingSelect"
+                                                        aria-label="Floating label select example" required id="ubicacionId"
+                                                        name="ubicacionId">
                                                         <option selected value="">Selecciona una opción</option>
                                                         @foreach ($vctUbicaciones as $item)
-                                                            <option value="{{ $item->id }}">
+                                                            <option value="{{ $item->id }}" >
                                                                 {{ $item->nombre }}
                                                             </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="mb-3">
-                                                    <label for="recipient-name" class="labelTitulo">Tipo: <span>*</span></label>
-                                                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example"  title="Seleccione el tipo de revisión que se hará en la tarea."
-                                                        required id="tipoId" name="tipoId">
+                                                <div class="col-4 col-sm-3  col-lg-4 my-3">
+                                                    <label for="recipient-name" class="labelTitulo">Tipo:
+                                                        <span>*</span></label>
+                                                    <select class="form-select" id="floatingSelect"
+                                                        aria-label="Floating label select example" required id="tipoId"
+                                                        name="tipoId">
                                                         <option selected value="">Selecciona una opción</option>
                                                         @foreach ($vctTipos as $item)
-                                                            <option value="{{ $item->id }}">
+                                                            <option value="{{ $item->id }}" >
                                                                 {{ $item->nombre }}
                                                             </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
 
-                                                <div class="mb-3">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-8 col-sm-4  col-lg-4 my-3">
                                                     <label class="labelTitulo">Tipo de Valor a Capturar:</label></br>
-                                                    <select class="form-select" aria-label="Default select example" id="tipoValor" title="Seleccione el tipo de valor con que se guardará la tarea."
-                                                        name="tipoValorId">
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        id="tipoValorId" name="tipoValorId">
                                                         <option selected value="">Selecciona una opción</option>
                                                         @foreach ($vctTipoValor as $item)
-                                                            <option value="{{ $item->id }}">
+                                                            <option value="{{ $item->id }}" >
                                                                 {{ $item->nombre }}
                                                             </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
 
-                                                {{-- <div class="mb-3">
-                                                    <label for="exampleFormControlTextarea1" class="form-label">Comentarios</label>
-                                                    <textarea class="form-select" placeholder="Escribe aquí tus comentarios sobre la tarea." rows="3"
-                                                        id="comentario" name="comentario"></textarea>
-                                                </div> --}}
+                                                <div class="col-4 col-sm-3  col-lg-4 my-3">
+                                                    <label class="labelTitulo">Requiere Imagen:</label></br>
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        id="requiereImagen" name="requiereImagen">
+                                                        <option value="0" >
+                                                            No</option>
+                                                        <option value="1" >Sí
+                                                        </option>
+                                                    </select>
+                                                </div>
 
-                                                <input type="hidden" name="activo" id="activo" value="1">
+                                                <div class="col-4 col-sm-3  col-lg-4 my-3">
+                                                    <label class="labelTitulo">Activa:</label></br>
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        id="activa" name="activa">
+                                                        <option value="0" >
+                                                            No</option>
+                                                        <option value="1" >Sí
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 my-4  ">
+                                            <div class="row">
                                                 <div class="col-12 text-center mt-5 pt-5">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal"><a
-                                                            href="{{ url('/bitacoras/tareas') }}">Regresar</a></button>
+                                                            href="{{ url('/bitacoras/tareas/') }}">Regresar</a></button>
                                                     <button type="submit" class="btn botonGral">Guardar</button>
                                                 </div>
                                             </div>

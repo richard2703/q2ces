@@ -56,17 +56,17 @@
                                         <table class="table">
                                             <thead class="labelTitulo">
                                                 <tr>
-                                                    <th class="labelTitulo" style="width:30px">Id</th>
+                                                    <th class="labelTitulo" style="width:40px">Id</th>
                                                     <th class="labelTitulo">Nombre</th>
                                                     <th class="labelTitulo">Categoría</th>
                                                     <th class="labelTitulo">Ubicación</th>
                                                     <th class="labelTitulo">Tipo</th>
-                                                    <th class="labelTitulo">Comentario</th>
+                                                    <th class="labelTitulo">Requiere Imagen</th>
+                                                    <th class="labelTitulo" style="width:80px">Control</th>
                                                     <th class="labelTitulo text-center" style="width:120px">Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-
                                                 @forelse ($vctTareas as $item)
                                                     <tr>
                                                         <td class="text-left"><a
@@ -74,11 +74,12 @@
                                                                 title="Ver la información de la tarea."
                                                                 style="color: blue">{{ str_pad($item->id, 3, '0', STR_PAD_LEFT) }}</a>
                                                         </td>
-                                                        <td>{{ $item->nombre }}</td>
+                                                        <td><a href="#" title="{{ $item->comentario }}">{{ $item->nombre }}</a></td>
                                                         <td>{{ $item->categoria }} </td>
                                                         <td>{{ $item->ubicacion }}</td>
                                                         <td>{{ $item->tipo }}</td>
-                                                        <td>{{ $item->comentario }}</td>
+                                                        <td>{{ ($item->requiereImagen==1?"Sí":"No") }}</td>
+                                                        <td>{{ strtoupper($item->controlHtml) }}</td>
 
                                                         <td class="td-actions text-center">
 

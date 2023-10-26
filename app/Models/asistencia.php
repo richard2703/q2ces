@@ -16,6 +16,7 @@ class asistencia extends Model {
         'asistenciaId',
         'fecha',
         'horasExtra',
+        'totalHorasExtra',
         'horasAnticipada',
         'horasRetraso',
         'tipoHoraExtraId',

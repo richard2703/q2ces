@@ -6,6 +6,8 @@ use App\Models\maquinaria;
 use App\Models\maqdocs;
 use App\Models\maqimagen;
 use App\Models\bitacoras;
+use App\Models\checkList;
+use App\Models\checkListRegistros;
 use App\Models\obras;
 use App\Models\personal;
 use App\Models\marca;
@@ -20,6 +22,7 @@ use LengthException;
 use App\Models\refacciones;
 use App\Models\refaccionTipo;
 use App\Models\inventario;
+use App\Models\mantenimientos;
 use App\Models\maquinariaCategoria;
 use App\Models\maquinariaTipo;
 use App\Models\obraMaqPer;
@@ -443,8 +446,13 @@ class maquinariaController extends Controller
         $refaccionTipo = refaccionTipo::select('refaccionTipo.*')->orderBy('refaccionTipo.nombre', 'asc')->get();
         $categorias = maquinariaCategoria::select('maquinariaCategoria.*')->orderBy('maquinariaCategoria.nombre', 'asc')->get();
         $tipos = maquinariaTipo::select('maquinariaTipo.*')->orderBy('maquinariaTipo.nombre', 'asc')->get();
+        $lastCheckList = checkList::select('checkList.id','bitacoras.nombre as bitacora')
+        ->join('bitacoras','bitacoras.id','checkList.bitacoraId')
+        ->where('maquinariaId','=', $maquinaria->id)
+        ->orderBy('checkList.id', 'desc')->first();
+        $lastMantenimiento = mantenimientos::select('*')->where('maquinariaId','=', $maquinaria->id)->orderBy('mantenimientos.id', 'desc')->first();
         // dd($obraMaqPer);
-        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'doc', 'fotos',  'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos', 'obraMaqPer'));
+        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'doc', 'fotos',  'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos', 'obraMaqPer','lastCheckList','lastMantenimiento'));
     }
 
     /**
@@ -506,8 +514,14 @@ class maquinariaController extends Controller
         $refaccionTipo = refaccionTipo::all();
         $categorias = maquinariaCategoria::all();
         $tipos = maquinariaTipo::all();
-        // dd($obraMaqPer);
-        return view('maquinaria.verMaquinaria', compact('maquinaria', 'doc', 'fotos', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos', 'obraMaqPer'));
+
+        $lastCheckList = checkList::select('checkList.id','bitacoras.nombre as bitacora')
+        ->join('bitacoras','bitacoras.id','checkList.bitacoraId')
+        ->where('maquinariaId','=', $maquinaria->id)
+        ->orderBy('checkList.id', 'desc')->first();
+        $lastMantenimiento = mantenimientos::select('*')->where('maquinariaId','=', $maquinaria->id)->orderBy('mantenimientos.id', 'desc')->first();
+        // dd($lastMantenimiento);
+        return view('maquinaria.verMaquinaria', compact('maquinaria', 'doc', 'fotos', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos', 'obraMaqPer','lastCheckList','lastMantenimiento'));
     }
 
     /**

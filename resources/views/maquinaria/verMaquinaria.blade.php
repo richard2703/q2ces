@@ -394,7 +394,8 @@
                                                                         <input type="number" class="inputCaja"
                                                                             id="kilometraje" name="kilometraje"
                                                                             placeholder="Numérico"
-                                                                            value="{{ $maquinaria->kilometraje }}" disabled>
+                                                                            value="{{ $maquinaria->kilometraje }}"
+                                                                            disabled>
 
                                                                     </div>
                                                                     <div class="col-12 col-md-6 col-lg-4 inputKilometraje">
@@ -423,22 +424,47 @@
                                                     <div class="row p-3 d-flex text-center">
                                                         <div class="col-12 mb-3">
                                                             <p class="textTitulo my-2">Obra Asignada: @if (isset($obraMaqPer->nombre_obra))
-                                                                <a href="{{ route('obras.show', $obraMaqPer->id_obra) }}" style="color: blue; text-decoration: underline;">{{$obraMaqPer->nombre_obra}}</a>
-                                                            @else
-                                                                <span>Falta Agregar Bloque</span>
-                                                            @endif</p>
+                                                                    <a href="{{ route('obras.show', $obraMaqPer->id_obra) }}"
+                                                                        style="color: blue; text-decoration: underline;">{{ $obraMaqPer->nombre_obra }}</a>
+                                                                @else
+                                                                    <span>Falta Agregar Bloque</span>
+                                                                @endif
+                                                            </p>
                                                             <p class="textTitulo my-2">Personal Asignado: @if (isset($obraMaqPer->nombre_personal))
-                                                                
-                                                                <a href="{{ route('personal.ver', $obraMaqPer->id_personal) }}" style="color: blue; text-decoration: underline;">{{$obraMaqPer->nombre_personal}}</a>
-                                                            @else
-                                                                <span>Falta Agregar Bloque</span>
-                                                            @endif
+                                                                    <a href="{{ route('personal.ver', $obraMaqPer->id_personal) }}"
+                                                                        style="color: blue; text-decoration: underline;">{{ $obraMaqPer->nombre_personal }}</a>
+                                                                @else
+                                                                    <span>Falta Agregar Bloque</span>
+                                                                @endif
                                                             </p>
                                                             <p class="textTitulo my-2">Fecha de Inicio: @if (isset($obraMaqPer->fechaInicio))
-                                                                <span>{{ \Carbon\Carbon::parse($obraMaqPer->fechaInicio)->toDateString() }}</span>
-                                                            @else
-                                                                <span>Falta Agregar Bloque</span>
-                                                            @endif
+                                                                    <span>{{ \Carbon\Carbon::parse($obraMaqPer->fechaInicio)->toDateString() }}</span>
+                                                                @else
+                                                                    <span>Falta Agregar Bloque</span>
+                                                                @endif
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 divBorder">
+                                                        <h2 class="tituloEncabezado" style="margin-left: 10px">CheckList y
+                                                            Mantenimientos</h2>
+                                                    </div>
+                                                    <div class="row p-3 d-flex text-center">
+                                                        <div class="col-12 mb-3">
+                                                            <p class="textTitulo my-2">Último CheckList: @if (isset($lastCheckList->id))
+                                                                    <a href="{{ route('checkList.show', $lastCheckList->id) }}"
+                                                                        style="color: blue; text-decoration: underline;">{{ $lastCheckList->bitacora }}</a> {{  \Carbon\Carbon::parse( $lastCheckList->created_at )->format( 'Y/m/d' )}}
+                                                                @else
+                                                                    <span>Ninguno Registrado</span>
+                                                                @endif
+                                                            </p>
+                                                            <p class="textTitulo my-2">Último Mantenimiento: @if (isset($lastMantenimiento->id))
+                                                                    <a href="{{ route('mantenimientos.edit', $lastMantenimiento->id) }}"
+                                                                        style="color: blue; text-decoration: underline;">{{ $lastMantenimiento->titulo }}</a> {{ \Carbon\Carbon::parse($lastMantenimiento->created_at)->format('Y/m/d') }}
+                                                                @else
+                                                                    <span>Ninguno registrado</span>
+                                                                @endif
                                                             </p>
                                                         </div>
                                                     </div>
@@ -578,15 +604,15 @@
                                                             @endforelse
                                                         </div>
                                                     </div>
-                                                    
+
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
-                                        
+
                                     </div>
 
-                                    
+
 
                                     <div class="accordion-item" id="AccordionSecondary">
                                         <h2 class="accordion-header" id="headingThree">
@@ -876,7 +902,8 @@
                                                             @foreach ($vctEstatus as $item)
                                                                 <option value="{{ $item->id }}"
                                                                     {{ $item->id == $maquinaria->estatusId ? ' selected' : '' }}>
-                                                                    {{ $objValida->ucwords_accent($item->nombre) }} </option>
+                                                                    {{ $objValida->ucwords_accent($item->nombre) }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>

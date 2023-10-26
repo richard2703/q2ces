@@ -20,45 +20,71 @@
                                             <div class="col-12 my-4">
                                                 <div class="row">
                                                     <div class="card">
-                                                        <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
-                                                            <label class="labelTitulo">Nombre: <span>*</span></label></br>
+                                                        <div class="row">
+                                                            <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
+                                                                <label class="labelTitulo">Nombre:
+                                                                    <span>*</span></label></br>
 
-                                                            <input type="text" required maxlength="250" id="nombre"
-                                                                name="nombre" value="{{ $bitacora->nombre }}"
-                                                                placeholder="Especifique el nombre de la bitácora."
-                                                                class="inputCaja">
-                                                        </div>
+                                                                <input type="text" required maxlength="250"
+                                                                    id="nombre" name="nombre"
+                                                                    value="{{ $bitacora->nombre }}"
+                                                                    placeholder="Especifique el nombre de la bitácora."
+                                                                    class="inputCaja">
+                                                            </div>
 
-                                                        <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
-                                                            <label class="labelTitulo">Frecuencia de Ejecución:</label></br>
-                                                            <select class="form-select" aria-label="Default select example"
-                                                                id="frecuenciaId" name="frecuenciaId">
-                                                                <option selected value="">Selecciona una opción
-                                                                </option>
-                                                                @foreach ($vctFrecuencias as $item)
-                                                                    <option value="{{ $item->id }}"
-                                                                        {{ $item->id == $bitacora->frecuenciaId ? ' selected' : '' }}>
-                                                                        {{ $item->nombre . ' [ ' . $item->dias . ' días]' }}
+                                                            <div class=" col-5 col-sm-6  col-lg-5 my-6 ">
+                                                                <label class="labelTitulo">Frecuencia de Ejecución:
+                                                                    <span>*</span></label></br>
+                                                                <select class="form-select"
+                                                                    aria-label="Default select example" required
+                                                                    id="frecuenciaId" name="frecuenciaId">
+                                                                    <option selected value="">Selecciona una opción
                                                                     </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
+                                                                    @foreach ($vctFrecuencias as $item)
+                                                                        <option value="{{ $item->id }}"
+                                                                            {{ $item->id == $bitacora->frecuenciaId ? ' selected' : '' }}>
+                                                                            {{ $item->nombre . ' [ ' . $item->dias . ' días]' }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
 
-                                                        <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
-                                                            <label for="exampleFormControlTextarea1"
-                                                                class="labelTitulo">Descripción
-                                                                de la Bitácora: <span>*</span></label>
-                                                            <textarea class="form-select" id="exampleFormControlTextarea1" rows="3" maxlength="1000" required id="comentario"
-                                                                name="comentario" placeholder="Escribe aquí tus comentarios sobre la bitácora.">  {{ $bitacora->comentario }} </textarea>
-                                                        </div>
+                                                            <div class=" col-5 col-sm-6  col-lg-5 my-6 ">
+                                                                <label class="labelTitulo">Código:
+                                                                    <span>*</span></label></br>
+                                                                <input type="text" required maxlength="10" id="codigo"
+                                                                    value="{{ $bitacora->codigo }}" name="codigo"
+                                                                    placeholder="Especifique el código de la bitácora, Ej. QCEM-V01"
+                                                                    class="inputCaja">
+                                                            </div>
 
-                                                        <div class="col-12 text-center mt-5 pt-5">
-                                                            <input type="hidden" name="activa" id="activa"
-                                                                value="{{ $bitacora->activo }}">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal"><a
-                                                                    href="{{ url('/bitacoras') }}">Regresar</a></button>
-                                                            <button type="submit" class="btn botonGral">Guardar</button>
+                                                            <div class=" col-2 col-sm-6  col-lg-2 my-6 ">
+                                                                <label class="labelTitulo">Versión:
+                                                                    <span>*</span></label></br>
+                                                                <input type="number" class="inputCaja text-end"
+                                                                    id="version" maxlength="4" min="0"
+                                                                    max="9999"
+                                                                    placeholder="Especifique la versión de la bitácora, Ej. 1"
+                                                                    name="version" value="{{ $bitacora->version }}">
+                                                            </div>
+
+                                                            <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
+                                                                <label for="exampleFormControlTextarea1"
+                                                                    class="labelTitulo">Descripción
+                                                                    de la Bitácora: <span>*</span></label>
+                                                                <textarea class="form-select" id="exampleFormControlTextarea1" rows="3" maxlength="1000" required id="comentario"
+                                                                    name="comentario" placeholder="Escribe aquí tus comentarios sobre la bitácora.">  {{ $bitacora->comentario }} </textarea>
+                                                            </div>
+
+                                                            <div class="col-12 text-center mt-5 pt-5">
+                                                                <input type="hidden" name="activa" id="activa"
+                                                                    value="{{ $bitacora->activo }}">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal"><a
+                                                                        href="{{ url('/bitacoras') }}">Regresar</a></button>
+                                                                <button type="submit"
+                                                                    class="btn botonGral">Guardar</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -69,7 +95,7 @@
                                                 <div class="row">
                                                     <div class="card">
                                                         <!-- <div class="card-header bacTituloPrincipal">
-                                                                                                                                                                                                                                                                                                                                                                                </div>-->
+                                                                                                                                                                                                                                                                                                                                                                                        </div>-->
                                                         <div class="card-body mb-3">
                                                             <div class="nav nav-tabs justify-content-evenly" id="myTab"
                                                                 role="tablist">
@@ -97,7 +123,8 @@
                                                                             <div class="card">
                                                                                 <div class="card-body">
                                                                                     <div class="row d-flex">
-                                                                                        <div class="col-12 col-md-6  mt-3 ">
+                                                                                        <div
+                                                                                            class="col-12 col-md-6  mt-3 ">
                                                                                             <p class="subEncabezado">
                                                                                                 Busca un Grupo de Tareas
                                                                                             </p>
