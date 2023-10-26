@@ -8,7 +8,13 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title text-capitalize">Inventario de {{ $tipo }}</h4>
+                                    <h4 class="card-title text-capitalize">Inventario de
+                                        @if ($tipo === 'consumibles')
+                                            Materiales
+                                        @else
+                                            {{ $tipo }}
+                                        @endif
+                                    </h4>
                                     {{-- <p class="card-category">Usuarios registrados</p> --}}
                                 </div>
 

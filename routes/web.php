@@ -443,6 +443,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');
     Route::get('search/equiposMTQ', [App\Http\Controllers\searchController::class, 'equiposMTQ'])->name('search.equiposMTQ');
     Route::get('search/materialMantenimiento', [App\Http\Controllers\searchController::class, 'materialMantenimiento'])->name('search.materialMantenimiento');
+    Route::get('search/inventario', [App\Http\Controllers\searchController::class, 'inventario'])->name('search.inventario');
     Route::get('search/tareasParaGrupos', [App\Http\Controllers\searchController::class, 'tareasParaGrupos'])->name('search.tareasParaGrupos');
     Route::get('search/gruposParaBitacoras', [App\Http\Controllers\searchController::class, 'gruposParaBitacoras'])->name('search.gruposParaBitacoras');
 

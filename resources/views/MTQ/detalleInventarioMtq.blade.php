@@ -7,7 +7,13 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header bacTituloPrincipal">
-                            <h4 class="card-title text-capitalize">Inventario de {{ $inventario->tipo }} </h4>
+                            <h4 class="card-title text-capitalize">Inventario de
+                                @if ($inventario->tipo === 'consumibles')
+                                    Materiales
+                                @else
+                                    {{ $inventario->tipo }}
+                                @endif
+                            </h4>                          
                             {{-- <p class="card-category">Usuarios registrados</p> --}}
                         </div>
 
@@ -139,9 +145,9 @@
 
                                             <input type="hidden" name="tipo" value="{{ $inventario->tipo }}">
 
-                                            <label class="labelTitulo">Tipo:</label></br>
+                                            <label class="labelTitulo" style="display: none">Tipo:</label></br>
                                             <select class="form-select" aria-label="Default select example"
-                                                id="tipo" name="tipo" disabled="false">
+                                                id="tipo" name="tipo" disabled="false" style="display: none">
                                                 <option value="herramientas"
                                                     {{ $inventario->tipo == 'herramientas' ? ' selected' : '' }}>
                                                     Herramientas</option>
