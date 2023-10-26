@@ -50,6 +50,8 @@ class checkListRegistrosController extends Controller {
     */
 
     public function store( Request $request ) {
+
+        abort_if ( Gate::denies( 'checkList_execute' ), 403 );
         $i = 0;
         $iRes = 1;
         $vctDebug =  array();
@@ -174,7 +176,7 @@ class checkListRegistrosController extends Controller {
             }
 
         }
-        dd( $vctDebug, $request );
+        // dd( $vctDebug, $request );
 
         return redirect()->route( 'checkList.index' );
 
@@ -243,6 +245,7 @@ class checkListRegistrosController extends Controller {
 
     public function update( Request $request ) {
 
+        abort_if ( Gate::denies( 'checkList_execute' ), 403 );
         $blnExito = false;
         $objTarea = new checkListPresentacion();
         $vctDebug = array();
