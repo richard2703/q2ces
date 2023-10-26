@@ -204,7 +204,7 @@ class checkListController extends Controller {
     */
 
     public function create( $bitacoraId, $maquinariaId, $programacionId = null ) {
-        abort_if ( Gate::denies( 'checkList_create' ), 403 );
+        abort_if ( Gate::denies( 'checkList_execute' ), 403 );
 
         $maquinaria = maquinaria::select( 'maquinaria.*' )->where( 'id', '=', $maquinariaId )->first();
         $bitacora = bitacoras::select( 'bitacoras.*' )->where( 'id', '=', $bitacoraId )->first();
@@ -251,7 +251,7 @@ class checkListController extends Controller {
     public function asignacion( Request $request ) {
         //
         // dd( $request );
-        abort_if ( Gate::denies( 'checkList_create' ), 403 );
+        abort_if ( Gate::denies( 'checkList_assign_bitacoras' ), 403 );
 
         $request->validate( [
             'personalId' => 'required',
