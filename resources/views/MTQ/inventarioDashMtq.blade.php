@@ -27,7 +27,7 @@
                                         <a href="{{ route('inventarioMtq.index', 'consumibles') }}" class="">
                                             <img src="/img/inventario/consumible.svg" alt="inventario" title="Consumibles"
                                                 width="30%" class="botonIconoPrincipal">
-                                            <p class="mt-4 texticonos">Consumibles</p>
+                                            <p class="mt-4 texticonos">Materiales</p>
                                         </a>
                                     </div>
                                 @endcan

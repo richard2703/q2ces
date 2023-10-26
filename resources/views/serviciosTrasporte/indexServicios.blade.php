@@ -105,7 +105,7 @@
 
                                             <div class="col-6 d-flex justify-content-end">
 
-                                                @can('cajachica_create')
+                                                @can('serviciosTrasporte_create')
                                                     <a href="{{ route('serviciosTrasporte.create') }}" class="ps-1">
                                                         <button type="button" class="btn botonGral">Programar Servicio</button>
                                                     </a>
@@ -119,11 +119,11 @@
                                             <thead class="labelTitulo">
                                                 <tr>
                                                     <th class="labelTitulo">Día</th>
-                                                    <th class="labelTitulo" style="width: 120px !important;">Concepto</th>
+                                                    <th class="labelTitulo">Concepto</th>
                                                     <th class="labelTitulo">Obra</th>
                                                     <th class="labelTitulo">Equipo</th>
-                                                    <th class="labelTitulo" style="width: 130px !important;">Personal</th>
-                                                    <th class="labelTitulo" style="width: 130px !important;">Cantidad</th>
+                                                    <th class="labelTitulo">Personal</th>
+                                                    <th class="labelTitulo">Cantidad</th>
                                                     <th class="labelTitulo">Estatus</th>
                                                     <th class="labelTitulo text-right" style="width: 130px !important;">
                                                         Acciones</th>
@@ -185,7 +185,7 @@
 
 
                                                         <td class="td-actions text-right">
-                                                            @can('cajachica_show')
+                                                            @can('serviciosTrasporte_show')
                                                                 <a href="{{ route('serviciosTrasporte.show', $registro->id) }}"
                                                                     class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="28"
@@ -199,7 +199,7 @@
                                                                     </svg>
                                                                 </a>
                                                             @endcan
-                                                            @can('cajachica_edit')
+                                                            @can('serviciosTrasporte_edit')
                                                                 <a href="{{ route('serviciosTrasporte.edit', $registro->id) }}"
                                                                     class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
@@ -229,6 +229,19 @@
                                                                     </button>
                                                                 </form>
                                                             @endcan  --}}
+
+                                                            @can('servicio_Chofer')
+                                                                <a href="#" data-bs-toggle="modal"
+                                                                    data-bs-target="#editarItem"
+                                                                    onclick="cargaItem('{{ $registro->id }}','{{ $registro->nombre }}','{{ $registro->comentario }}')">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg " width="28"
+                                                                        height="28" fill="currentColor"
+                                                                        class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                    </svg>
+                                                                </a>
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                     @empty
@@ -253,49 +266,76 @@
         </div>
 
         <!--MODALES-->
-        <div class="modal fade" id="modal-reporte" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-cliente"
-            aria-hidden="true">
-            <div class="modal-dialog">
+        <div class="modal fade" id="editarItem" tabindex="-1" aria-labelledby="exampleModalLabelEdit" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div class="col-12">
-                        <div class="card ">
-                            <form action="{{ route('cajaChica.reporte') }}" method="post">
-                                @csrf
-                                <div class="card-header bacTituloPrincipal ">
-                                    <div class="nav-tabs-navigation">
-                                        <div class="nav-tabs-wrapper">
-                                            <span class="nav-tabs-title">
-                                                <h2 class="titulos">Periodo del Reporte</h2>
-                                            </span>
-                                        </div>
-                                    </div>
+                    <div class="modal-header bacTituloPrincipal">
+                        <h1 class="modal-title fs-5" id="exampleModalLabelEdit">&nbsp Viaje de Servicio </label>
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="row d-flex" action="{{ route('serviciosTrasporte.misServiciosChofer') }}" method="post"
+                            enctype="multipart/form-data">
+                            @csrf
+                            @method('put')
+                            <input type="hidden" name="id" value="" id="id">
+
+                            <div class="col-12  mb-3 ">
+                                <label class="labelTitulo">Quien Recibe:</label></br>
+                                <input type="text" class="inputCaja" id="recibe" name="recibe" value="">
+                            </div>
+
+                            <div class=" col-12  mb-3 ">
+                                <label class="labelTitulo">Comentario:</label></br>
+                                <textarea id="comentario" class="inputCaja" name="comentario" rows="5" cols="30"></textarea>
+                            </div>
+
+                            {{--  <div class=" col-12 col-sm-6  mb-3 ">
+                                <label class="labelTitulo">Número Motor:</label></br>
+                                <input type="text" class="inputCaja" id="nummotor" placeholder="Ej. NUM0123ABCD"
+                                    name="nummotor" value="">
+                            </div>
+
+                            <div class=" col-12 col-sm-6  mb-3 ">
+                                <label class="labelTitulo">Proximo Mantenimiento:</label></br>
+                                <input type="text" class="inputCaja" id="mantenimiento"
+                                    placeholder="Kilometraje para proximo mantenimiento" name="mantenimiento" value="">
+                            </div>  --}}
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <div id="contenedorBotonGuardar">
+                                    <button type="submit" class="btn botonGral" id="btnTareaGuardar"
+                                        onclick="alertaGuardar()">Terminar viaje</button>
                                 </div>
-                                <div class="row  card-body">
-                                    <div class="row card-body" style=" text-align: center;">
-                                        <div class="col-12 col-lg-6">
-                                            <label class="labelTitulo">Inicio:
-                                                <span>*</span></label></br>
-                                            <input type="date" class="inputCaja text-right" id="ncomprobante" required
-                                                name="inicio" value="">
-                                        </div>
-                                        <div class="col-12 col-lg-6">
-                                            <label class="labelTitulo">Fin:
-                                                <span>*</span></label></br>
-                                            <input type="date" class="inputCaja text-right" id="ncomprobante" required
-                                                name="fin" value="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12  mb-3 d-flex  justify-content-center align-self-end">
-                                    <button class="btn botonGral ">Ir</button>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     @endsection
+
+    <script>
+        function cargaItem(id, nombre, comentario) {
+
+            const txtId = document.getElementById('id');
+            txtId.value = id;
+
+            const txtRecibe = document.getElementById('recibe');
+            txtRecibe.value = nombre;
+
+            //const txtNummotor = document.getElementById('nummotor');
+            //txtNummotor.value = nummotor;
+
+            //const txtMantenimiento = document.getElementById('mantenimiento');
+            //txtMantenimiento.value = mantenimiento;
+
+            const txtComentarios = document.getElementById('comentario');
+            txtComentarios.value = comentario;
+        }
+    </script>
     <script>
         function Guardado() {
             // alert('test');

@@ -86,7 +86,7 @@
                                                     <option selected value="">Seleccione</option>
                                                     @forelse ($conceptos as $concepto)
                                                         <option value="{{ $concepto->id }}"
-                                                            {{ $serviciosTrasporte->conceptoServicioTrasporteId == $concepto->id ? 'selected' : '' }}>
+                                                            {{ $serviciosTrasporte->conceptoId == $concepto->id ? 'selected' : '' }}>
                                                             {{ $concepto->codigo }} -
                                                             {{ $concepto->nombre }}
                                                         </option>
@@ -142,6 +142,21 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                <label class="labelTitulo">Almacen/Tiradero: <span>*</span></label></br>
+                                                <select id="almacenId" name="almacenId" class="form-select" required
+                                                    aria-label="Default select example">
+                                                    <option selected value="">Seleccione</option>
+                                                    @forelse ($almacenes as $almacen)
+                                                        <option value="{{ $almacen->id }}"
+                                                            {{ $serviciosTrasporte->almacenId == $almacen->id ? 'selected' : '' }}>
+                                                            {{ $almacen->nombre }}
+                                                        </option>
+                                                    @empty
+                                                    @endforelse
+                                                </select>
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Quien Recibe: </label></br>
                                                 <input class="inputCaja" type="text" name="recibe"
                                                     value="{{ $serviciosTrasporte->recibe }}">
@@ -168,7 +183,7 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">estatus:</label></br>
+                                                <label class="labelTitulo">Estatus:</label></br>
                                                 <select id="estatus" name="estatus" class="form-select"
                                                     aria-label="Default select example">
                                                     <option

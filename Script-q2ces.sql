@@ -79,10 +79,10 @@ create table failed_jobs(
 CREATE TABLE role_has_permissions (
     permission_id bigint(20) unsigned NOT NULL,
     role_id bigint(20) unsigned NOT NULL,
-    PRIMARY KEY ('permission_id', 'role_id'),
-    KEY 'role_has_permissions_role_id_foreign' ('role_id'),
-    CONSTRAINT 'role_has_permissions_permission_id_foreign' FOREIGN KEY ('permission_id') REFERENCES 'permissions' ('id') ON DELETE CASCADE,
-    CONSTRAINT 'role_has_permissions_role_id_foreign' FOREIGN KEY ('role_id') REFERENCES 'roles' ('id') ON DELETE CASCADE
+    PRIMARY KEY (`permission_id`, `role_id`),
+    KEY `role_has_permissions_role_id_foreign` (`role_id`),
+    CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
 );
 
 /***************************************FIN Tablas de sistema de permisos*/
@@ -96,7 +96,7 @@ VALUES
     (2,'User','web','2022-07-25 20:54:16','2022-07-25 20:54:16');
 
 INSERT INTO
-    'users'
+    `users`
 VALUES
     (1,'admin','a@a.com',NULL,'$2y$10$xchASRodwuYH58CYgTt3r.RWshZp3BzYMd6T7pg3ZNZxd4d3fXzUy',NULL,NULL,NULL,'2022-09-26 19:48:41','2022-09-26 19:48:41',NULL);
 
@@ -287,7 +287,7 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('ticketDescarga_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 
 INSERT INTO
-    'model_has_roles'
+    `model_has_roles`
 VALUES
     (1, 'App\\Models\\User', 1);
 
@@ -515,6 +515,15 @@ CREATE TABLE clientes(
     PRIMARY KEY (id)
 );
 
+create table bitacoras(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(255) NULL,
+    comentario text NULL,
+    activa TINYINT(1) NOT NULL DEFAULT '1',
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    primary key (id)
+);
 
 create table grupo(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -603,23 +612,12 @@ CREATE TABLE corteCajaChica(
     primary key (id)
 );
 
-
-CREATE TABLE IF NOT EXISTS 'frecuenciaEjecucion' (
-  id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  nombre VARCHAR(200) NOT NULL,
-  dias int(8) NULL ,
-  minimoEjecucion int(8) NULL ,
-  comentario TEXT DEFAULT NULL,
-  PRIMARY KEY ('id')
-);
-
-
 /***************************************FIN Tablas de Sin FK*/
 
 /***************************************DATOS Tablas de Sin FK*/
 
 INSERT INTO
-    'puestoNivel' ('id','nombre','comentario','requiereAsistencia')
+    `puestoNivel` (`id`,`nombre`,`comentario`,`requiereAsistencia`)
 VALUES
     (NULL,'Administrativo','Descripción del puesto',0),
     (NULL, 'Gerente', 'Descripción del puesto', 0),
@@ -638,22 +636,22 @@ VALUES
     (5,'Descanso','Con permiso de descanso o feriado','purple','0');
 
 INSERT INTO
-    'tareaCategoria' ('id','nombre','comentario')
+    `tareaCategoria` (`id`,`nombre`,`comentario`)
 VALUES
     (NULL,'No definida','Sin categoría definida');
 
 INSERT INTO
-    'tareaTipo' ('id','nombre','comentario')
+    `tareaTipo` (`id`,`nombre`,`comentario`)
 VALUES
     (NULL,'No definido','Sin tipo definido');
 
 INSERT INTO
-    'tareaUbicacion' ('id','nombre','comentario')
+    `tareaUbicacion` (`id`,`nombre`,`comentario`)
 VALUES
     (NULL,'No definida','Sin ubicación definida');
 
 INSERT INTO
-    'ubicaciones'
+    `ubicaciones`
 values
 	(1,'Maquinaria','Maquinaria','Apartado para seleccionar maquinaria',1,'2022-09-26 19:48:41','2022-09-26 19:48:41');
 
@@ -680,7 +678,7 @@ VALUES
     (2, 'Afinacion', 'MT-02', '#f7c90d', 'Para equipos que necesiten ser afinados', 1, '2023-08-15 09:07:31', '2023-08-17 13:36:41'),
     (3, 'Reparacion', 'MT-03', '#be2727', 'Para equipos que necesiten ser reparados', 1, '2023-08-15 11:03:57', '2023-08-15 11:03:57');
 
-INSERT into 'maquinariaCategoria' ('id', 'nombre', 'comentario') values
+INSERT into `maquinariaCategoria` (`id`, `nombre`, `comentario`) values
 (1, 'Accesorios', 'Accesorios de Maquinaría'),
 (2, 'Camperes', 'Campers'),
 (3, 'Cisterna', 'Cisterna'),
@@ -691,69 +689,45 @@ INSERT into 'maquinariaCategoria' ('id', 'nombre', 'comentario') values
 (8, 'Otros', 'Otros'),
 (9, 'Utilitarios','Utilitarios');
 
-INSERT INTO 'maquinariaTipo' ('id', 'nombre', 'comentario') VALUES
+INSERT INTO `maquinariaTipo` (`id`, `nombre`, `comentario`) VALUES
 (1, 'Pesada', 'Maquinaría Pesada'),
 (2, 'Ligera', 'Maquinaría Ligera'),
 (3, 'Grua', 'Gruas y montacargas'),
 (4, 'No Aplica', 'No aplica para�ningun�tipo');
 
-INSERT INTO tiposDocs  ('id', 'nombre', 'comentario') VALUES
+INSERT INTO tiposDocs  (`id`, `nombre`, `comentario`) VALUES
 (1, 'Personal', 'Documentos de Personal'),
 (2, 'Maquinaria', 'Documentos de Personal');
 
 
-INSERT INTO 'tipoHoraExtra' ('id', 'nombre', 'valor', 'comentario', 'color') VALUES
+INSERT INTO `tipoHoraExtra` (`id`, `nombre`, `valor`, `comentario`, `color`) VALUES
 (1, 'No aplica', 0.00, 'No aplica hora extra', 'gray'),
 (2, 'De Ley', 82.14, 'De Ley', 'blue'),
 (3, 'Q2S', 100.00, 'Q2C', 'green'),
 (4, 'Otros', 120.00, 'Bonos o compensaciones', 'purple');
 
 
-INSERT INTO 'estados' ('id', 'nombre', 'color', 'comentario') VALUES
+INSERT INTO `estados` (`id`, `nombre`, `color`, `comentario`) VALUES
 (1, 'Espera', 'blue', 'En espera de antención'),
 (2, 'Realizando', 'gray', 'Ya se está trabajando'),
 (3, 'Terminado', 'navy', 'Ya se termino de ejecutar');
 
 
-INSERT INTO 'comprobante' ('id', 'nombre', 'comentario') VALUES
+INSERT INTO `comprobante` (`id`, `nombre`, `comentario`) VALUES
 (1, 'Factura', 'Facturas'),
 (2, 'Nota', 'Nota de remisión.'),
 (3, 'Remisión', 'Remisión'),
 (4, 'Vale Q2Ces', 'Vale de la empresa');
 
-INSERT INTO 'tipoMantenimiento' ('id', 'nombre', 'comentario') VALUES
+INSERT INTO `tipoMantenimiento` (`id`, `nombre`, `comentario`) VALUES
 (1, 'Correctivo', 'Mantenimiento correctivo de equipo'),
 (2, '250', 'Mantenimiento preventivo de 250 horas de trabajo'),
 (3, '500', 'Mantenimiento preventivo de 500 horas de trabajo.'),
 (4, '1000', 'Mantenimiento preventivo de 1000 horas de trabajo');
 
-INSERT INTO 'frecuenciaEjecucion' ('id', 'nombre', 'comentario', 'dias', 'minimoEjecucion') VALUES
-(1, 'Diaria', 'Ejecución diaria', 1, 1),
-(2, 'Semanal', 'De ejecucion semanal', 7, 3),
-(3, 'Quincenal', 'De ejecución quincenal', 15, 7),
-(4, 'Mensual', 'De ejecucion Mensual', 30, 15),
-(5, 'Bimestral', 'De ejecución bimestral', 60, 30),
-(6, 'Trimestral', 'De ejecucion trimestral', 90, 45),
-(7, 'Cuatrimestral', 'De ejecución Cuatrimestral', 120, 60),
-(8, 'Semestral', 'De ejecución semestral', 180, 90),
-(9, 'Anual', 'De ejecución anual', 365, 180),
-(10, 'Extemporánea', 'De ejecución fuera de tiempos', 0, 0);
-
 /***************************************FIN DATOS Tablas de Sin FK*/
 
 /***************************************Tablas Relacionadas*/
-
-create table bitacoras(
-    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    nombre varchar(255) NULL,
-    comentario text NULL,
-    activa TINYINT(1) NOT NULL DEFAULT '1',
-    frecuenciaId bigint(20) unsigned NULL,
-    created_at datetime NULL,
-    updated_at datetime NULL,
-    primary key (id),
-    CONSTRAINT FK_bitacoras_frecuencia foreign key (frecuenciaId) references frecuenciaEjecucion(id)
-);
 
 create table tarea(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -778,6 +752,8 @@ create table tarea(
     unidadMedida varchar(128) NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
+    activa TINYINT(1) NOT NULL DEFAULT '1',
+    tipoValor INT(2) NOT NULL DEFAULT '1',
     primary key (id),
     CONSTRAINT FK_tarea_categoria foreign key (categoriaId) references tareaCategoria(id),
     CONSTRAINT FK_tarea_tipo foreign key (tipoId) references tareaTipo(id),
@@ -1321,28 +1297,17 @@ CREATE TABLE marcasTipo (
     CONSTRAINT FK_marcasTipo_tipos_marcas_id foreign key (tipos_marcas_id) REFERENCES tiposMarcas(id)
 );
 
-create table bitacorasEquipos(
-    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    bitacoraId bigint(20) unsigned NOT NULL,
-    maquinariaId bigint(20) unsigned NOT NULL,
-    created_at datetime NULL,
-    updated_at datetime NULL,
-    primary key (id),
-    CONSTRAINT FK_bitacoras_Equipos1 foreign key (bitacoraId) references bitacoras(id),
-    CONSTRAINT FK_bitacoras_Equipos2 foreign key (maquinariaId) references maquinaria(id)
-);
-
-INSERT INTO 'tiposMarcas' ('id', 'nombre') VALUES
+INSERT INTO `tiposMarcas` (`id`, `nombre`) VALUES
 (1, 'herramientas'),
 (2, 'refacciones'),
 (3, 'consumibles'),
 (4, 'uniformes'),
 (5, 'maquinaria');
 
-INSERT INTO 'tiposDocs' ('id', 'nombre', 'comentario') VALUES
+INSERT INTO `tiposDocs` (`id`, `nombre`, `comentario`) VALUES
 (3, 'Accesorios', 'Documentos de accesorios para la maquinaria');
 
-INSERT INTO 'docs' ('nombre', 'tipoId', 'comentario') VALUES
+INSERT INTO `docs` (`nombre`, `tipoId`, `comentario`) VALUES
 ('Factura', 3, 'Factura de compra de un articulo o accesorio');
 
 CREATE TABLE accesoriosDocs (
@@ -1886,7 +1851,7 @@ ADD CONSTRAINT FK_descarga_clienteId FOREIGN KEY (clienteId) REFERENCES clientes
 /***************************************DATOS Tablas Relacionadas*/
 
 INSERT INTO
-    'puesto' ('id', 'nombre', 'comentario')
+    `puesto` (`id`, `nombre`, `comentario`)
 VALUES
     (NULL, 'Almacenista', 'Descripción del puesto'),
     (NULL,'Auxiliar General','Descripción del puesto'),

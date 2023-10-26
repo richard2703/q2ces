@@ -85,18 +85,26 @@
                             <h6 style="font-weight: 1000; text-center">DESPACHADOR:</h6> <div style="font-size:14px;">{{ $descarga->receptor_nombre }}</div>
                             <h6 style="font-weight: 1000; text-center">OPERADOR:</h6> <div style="font-size:14px;">{{ $descarga->operador_nombre }}</div>
                             @if ($descarga->tipoCisternaId == null)
-                                <h6 style="font-weight: 1000; text-center">EQUIPO DESPACHADO:</h6><div class="text-center" style="font-size:14px;"> {{ $descarga->despachado_nombre }}</div>
+                                <h6 style="font-weight: 1000; text-center">EQUIPO DESPACHADO:</h6><div class="text-center" style="font-size:14px;"> 
+                                    @if ($descarga->tipoCisternaId != null)
+                                    {{ $descarga->despachado_nombre }}
+                                    @else
+                                        BIDÓN
+                                    @endif
+                                </div>
                             @else
-                            <h6 style="font-weight: 1000; text-center">EQUIPO DESPACHADO:</h6><div class="text-center" style="font-size:14px;"> {{ $descarga->equipo_nombre }}</div>
+                                <h6 style="font-weight: 1000; text-center">EQUIPO DESPACHADO:</h6><div class="text-center" style="font-size:14px;"> {{ $descarga->equipo_nombre }}</div>
                             @endif
                             
                             
                             @if ($descarga->tipoCisternaId == null)
                                 <h6 class="text-center" style="font-weight: 1000; ">EQUIPO DESPACHADOR: </h6> <div class="text-center">{{ $descarga->equipo_nombre }}</div>
+                                <h6 style="font-weight: 1000; text-center">SOLICITO:</h6> <div style="font-size:14px;">
+                                    {{$descarga->detalles_nombreSolicitante}}
+                                </div>
                             @else
                                 {{--  <h6 class="text-center" style="font-weight: 1000; ">DESPACHADOR: </h6> <div class="text-center">CISTERNA TOTE</div>  --}}
                             @endif
-                            <h6 style="font-weight: 1000; text-center">SOLICITO:</h6> <div style="font-size:14px;">{{$descarga->detalles_nombreSolicitante}}</div>
                             {{--  <div class="text-center"><h6 style="font-weight: 1000; ">KILOMETRAJE SALIDA: </h6>{{$descarga->kilometrajeAnterior}} {{$descarga->equipo_kom}} </div>
                                 @if ($descarga->kilometrajeNuevo != null)
                                 <div class="text-center"><h6 style="font-weight: 1000; ">KILOMETRAJE LLEGADA: </h6></div>{{$descarga->kilometrajeNuevo}}  {{$descarga->equipo_kom}}
@@ -120,9 +128,8 @@
                                 @else
                                     0 </div> <div class="text-center" style="font-size:16px;"> 
                                 @endif
-                                    @if ($cliente != false) 
                                     costo: ${{$descarga->precioCarga}} Total: ${{($descarga->litros*$descarga->precioCarga)}} </div>
-                                    @endif
+                                    
                             @endif
                             
                             <h6 style="font-weight: 1000;" class="text-center">GRASA PARA AUTO: </h6> <div class="text-center" style="font-size:16px;"> @if ($descarga->grasa) 
@@ -130,41 +137,50 @@
                             @else
                                 0 </div> <div class="text-center" style="font-size:16px;"> 
                             @endif 
-                                @if ($cliente != false) 
+                                
                                 costo: ${{ $descarga->grasaUnitario }} Total: ${{($descarga->grasa*$descarga->grasaUnitario)}} </div> <br> <br>
-                                @endif
+                                
                             <h6 style="font-weight: 1000;" class="text-center">ACEITE MOTOR: </h6> <div class="text-center"> @if ($descarga->motor) 
                                 {{ $descarga->motor }} LTS/KG</div>  
                             @else
                                 0 </div>  
                             @endif 
-                            @if ($cliente != false) 
+                            
                             costo: ${{ $descarga->mototUnitario }} Total: ${{($descarga->motor*$descarga->mototUnitario)}}
-                            @endif
+                            
                             <h6 style="font-weight: 1000;" class="text-center">ANTICONGELANTE: </h6> <div class="text-center"> @if ($descarga->anticongelante) 
                                 {{ $descarga->anticongelante }} LTS/KG</div>
                             @else
                                 0 </div>
                             @endif
-                            @if ($cliente != false) 
+                            
                             costo: ${{ $descarga->anticongelanteUnitario }} Total: ${{($descarga->anticongelante*$descarga->anticongelanteUnitario)}}
-                            @endif
+                            
                             <h6 style="font-weight: 1000;" class="text-center">ACEITE HIDRÁULICO: </h6> <div class="text-center"> @if ($descarga->hidraulico) 
                                 {{ $descarga->hidraulico }} LTS/KG</div>
                             @else
                                 0 </div>
                             @endif 
-                            @if ($cliente != false) 
+                            
                             costo: ${{ $descarga->hidraulicoUnitario }} Total: ${{($descarga->hidraulico*$descarga->hidraulicoUnitario)}}
-                            @endif
+                            
                             <h6 style="font-weight: 1000;" class="text-center">ACEITE DIRECCIÓN: </h6> <div class="text-center"> @if ($descarga->direccion) 
                                 {{$descarga->direccion}}  LTS/KG</div>  
                             @else
                                 0  </div>  
                             @endif 
+
+                            costo: ${{ $descarga->direccionUnitario }} Total: ${{($descarga->direccion*$descarga->direccionUnitario)}}
+
+                            {{--  @if ($cliente != false) 
+                                
+                            @endif   --}}
+                            <h6 style="font-weight: 1000;">OTRO(S) COSTO: </h6> Total: ${{number_format($descarga->otro,2)}}
+                            <h6 style="font-weight: 1000;">OTRO(S) CONCEPTOS: </h6> {{ $descarga->otroComment }}
+                            
                             @php
                             $totalProductosSinTote =
-                            (isset($descarga->grasa) ? $descarga->grasa * (isset($descarga->grasaUnitario) ? $descarga->grasaUnitario : 0) : 0) +
+                            (isset($descarga->grasa) ? $descarga->grasa * (isset($descarga->grasaUnitario) ? $descarga->grasaUnitario : 0) : 0) + (isset($descarga->otro) ? $descarga->otro : 0) +
                             (isset($descarga->motor) ? $descarga->motor * (isset($descarga->mototUnitario) ? $descarga->mototUnitario : 0) : 0) +
                             (isset($descarga->anticongelante) ? $descarga->anticongelante * (isset($descarga->anticongelanteUnitario) ? $descarga->anticongelanteUnitario : 0) : 0) +
                             (isset($descarga->hidraulico) ? $descarga->hidraulico * (isset($descarga->hidraulicoUnitario) ? $descarga->hidraulicoUnitario : 0) : 0) +
@@ -172,11 +188,11 @@
     
                             
                             $totalProductos =
-                                            ($descarga->grasa*$descarga->grasaUnitario) +
-                                            ($descarga->motor*$descarga->mototUnitario) +
-                                            ($descarga->anticongelante*$descarga->anticongelanteUnitario) +
-                                            ($descarga->hidraulico*$descarga->hidraulicoUnitario) +
-                                            ($descarga->direccion*$descarga->direccionUnitario);    
+                            (isset($descarga->grasa) ? $descarga->grasa * (isset($descarga->grasaUnitario) ? $descarga->grasaUnitario : 0) : 0) + (isset($descarga->otro) ? $descarga->otro : 0) +
+                            (isset($descarga->motor) ? $descarga->motor * (isset($descarga->mototUnitario) ? $descarga->mototUnitario : 0) : 0) +
+                            (isset($descarga->anticongelante) ? $descarga->anticongelante * (isset($descarga->anticongelanteUnitario) ? $descarga->anticongelanteUnitario : 0) : 0) +
+                            (isset($descarga->hidraulico) ? $descarga->hidraulico * (isset($descarga->hidraulicoUnitario) ? $descarga->hidraulicoUnitario : 0) : 0) +
+                            (isset($descarga->direccion) ? $descarga->direccion * (isset($descarga->direccionUnitario) ? $descarga->direccionUnitario : 0) : 0);    
                             @endphp
                             @if ($descarga->tipoCisternaId != null)
                                 <img width="300px;" src="{{ asset('/img/login/Header2GenericoGrande.svg') }}" alt="" class="mb-2">
@@ -230,6 +246,8 @@
                             @if (!empty($descarga->otro))
                                 <h6 style="font-weight: 1000; text-center">OTRO: {{ $descarga->otro }} L</h6>
                             @endif  --}}
+                            {{--  <h6 style="font-weight: 1000;" class="text-center">OTRO(S) COSTO: $ {{ $descarga->otro }} </h6>  --}}
+                           
                             
                             <!--<div class="text-center"><h6 style="font-weight: 1000; ">HORA DESCARGA: </h6>{{ $descarga->horas }}</div>-->
                             @if ($descarga->tipo_solicitud != false)

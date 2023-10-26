@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\serviciosTrasporte;
 use App\Http\Controllers\Controller;
+use App\Models\almacenTiraderos;
 use App\Models\cajaChica;
 use App\Models\clientes;
 use App\Models\comprobante;
@@ -66,7 +67,8 @@ class serviciosTrasporteController extends Controller
         $maquinaria = maquinaria::where('compania', '!=', 'mtq')->orWhere('compania', null)->get();
         $vctComprobantes = comprobante::select()->orderBy('nombre', 'asc')->get();
         $vctClientes = clientes::select()->orderBy('nombre', 'asc')->get();
-        return view('serviciosTrasporte.nuevoMovimientoServicio', compact('conceptos', 'personal', 'obras', 'maquinaria', 'vctComprobantes', 'vctClientes'));
+        $almacenes =  almacenTiraderos::select()->orderBy('nombre', 'asc')->get();
+        return view('serviciosTrasporte.nuevoMovimientoServicio', compact('conceptos', 'personal', 'obras', 'maquinaria', 'vctComprobantes', 'vctClientes', 'almacenes'));
     }
 
     /**
@@ -81,7 +83,7 @@ class serviciosTrasporteController extends Controller
 
         $data = $request->all();
         $data['estatus'] = 1;
-
+        // dd($data);
         serviciosTrasporte::create($data);
 
         return redirect()->action([serviciosTrasporteController::class, 'index']);
@@ -113,8 +115,9 @@ class serviciosTrasporteController extends Controller
         $obras = obras::orderBy('nombre', 'asc')->where('estatus', 1)->get();
         $maquinaria = maquinaria::where('compania', '!=', 'mtq')->orWhere('compania', null)->get();
         $vctClientes = clientes::select()->orderBy('nombre', 'asc')->get();
+        $almacenes =  almacenTiraderos::select()->orderBy('nombre', 'asc')->get();
         // dd($serviciosTrasporte);
-        return view('serviciosTrasporte.updateMovimientoServicio', compact('serviciosTrasporte', 'conceptos', 'personal', 'obras', 'maquinaria', 'vctClientes'));
+        return view('serviciosTrasporte.updateMovimientoServicio', compact('serviciosTrasporte', 'conceptos', 'personal', 'obras', 'maquinaria', 'vctClientes', 'almacenes'));
     }
 
     /**
@@ -171,5 +174,52 @@ class serviciosTrasporteController extends Controller
 
         return redirect()->action([serviciosTrasporteController::class, 'index']);
         dd('cajaChica');
+    }
+
+    public function misServicios()
+    {
+        abort_if(Gate::denies('servicio_Chofer'), 403);
+
+        $personal = personal::where('userId', auth()->user()->id)->first();
+        // dd($personal);
+        $registros = serviciosTrasporte::join('conceptos', 'serviciosTrasporte.conceptoId', 'conceptos.id')
+            ->leftJoin('obras', 'serviciosTrasporte.obraId', 'obras.id')
+            ->leftJoin('residente', 'obras.id', 'residente.obraId')
+            ->join('maquinaria', 'serviciosTrasporte.equipoId', 'maquinaria.id')
+            ->join('personal', 'serviciosTrasporte.personalId', 'personal.id')
+            ->select(
+                'serviciosTrasporte.id',
+                'serviciosTrasporte.fecha',
+                'conceptos.nombre as cnombre',
+                'obras.nombre as obra',
+                'maquinaria.identificador',
+                'maquinaria.nombre as maquinaria',
+                'personal.nombres as pnombre',
+                'personal.apellidoP as papellidoP',
+                'cantidad',
+                'serviciosTrasporte.estatus',
+                'residente.nombre',
+                'serviciosTrasporte.comentario',
+            )
+            ->orderBy('fecha', 'desc')
+            ->groupBy('serviciosTrasporte.id')
+            ->where('serviciosTrasporte.personalId', $personal->id)
+            ->paginate(15);
+        // dd($registros);
+        return view('serviciosTrasporte.indexServicios', compact('registros'));
+    }
+
+    public function misServiciosChofer(Request $request)
+    {
+        abort_if(Gate::denies('servicio_Chofer'), 403);
+
+        $serviciosTrasporte = serviciosTrasporte::find($request->id);
+        $serviciosTrasporte->recibe = $request->recibe;
+        $serviciosTrasporte->comentario = $request->comentario;
+        $serviciosTrasporte->estatus = 2;
+        // dd($serviciosTrasporte);
+
+        $serviciosTrasporte->save();
+        return redirect()->action([serviciosTrasporteController::class, 'misServicios']);
     }
 }

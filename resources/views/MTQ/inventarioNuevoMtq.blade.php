@@ -7,7 +7,13 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header bacTituloPrincipal">
-                            <h4 class="card-title text-capitalize">Inventario de {{ $tipo }}</h4>
+                            <h4 class="card-title text-capitalize">Inventario de
+                                @if ($tipo === 'consumibles')
+                                    Materiales
+                                @else
+                                    {{ $tipo }}
+                                @endif
+                            </h4>
                             {{-- <p class="card-category">Usuarios registrados</p> --}}
                         </div>
 
@@ -61,7 +67,7 @@
                                         <input type="hidden" name="usuarioId" id="usuarioId"
                                             value="{{ auth()->user()->id }}">
 
-                                        <div class=" col-12 col-sm-6 col-lg-8 mb-3 ">
+                                        <div class=" col-12 col-sm-6 col-lg-8 mb-3 " style="display: none">
                                             <label class="labelTitulo">Tipo:</label></br>
                                             <input type="text" class="inputCaja" id="tipoInventario"
                                                 name="tipoInventario" readonly disabled="true" value="{{ $tipo }}">

@@ -180,18 +180,35 @@ class obrasController extends Controller
     {
         abort_if(Gate::denies('obra_show'), 403);
 
-        $vctResidenteAsignado = residente::select('*')->where('obraId', '=', $obras->id)->get();
+        $vctMaquinaria =  maquinaria::select('*')->where('compania', '=', null)->orderBy('maquinaria.identificador', 'asc')->get();
 
-        $vctMaquinariaAsignada = obraMaqPer::select(
-            'obraMaqPer.*',
-            db::raw("CONCAT(maquinaria.identificador,' ',maquinaria.nombre) AS maquinaria"),
+        $vctPersonal = personal::select(
+            'personal.id',
+            DB::raw("CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal"),
+            'obras.nombre AS obra',
+            'maquinaria.identificador',
+            'maquinaria.nombre AS auto',
+            'nomina.puestoId',
+            'puesto.nombre AS puesto',
+            'puesto.puestoNivelId',
+            'personal.estatusId',
+            'puestoNivel.nombre AS puestoNivel'
         )
-            ->join('maquinaria', 'maquinaria.id', '=', 'obraMaqPer.maquinariaId')
-            ->where('obraMaqPer.obraId', '=', $obras->id)->get();
+            ->join('nomina', 'nomina.personalId', 'personal.id')
+            ->join('puesto', 'puesto.id', 'nomina.puestoId')
+            ->join('puestoNivel', 'puestoNivel.id', 'puesto.puestoNivelId')
+            ->leftjoin('obraMaqPer', 'obraMaqPer.personalId', 'personal.id')
+            ->leftjoin('maquinaria', 'maquinaria.id', '=', 'obraMaqPer.maquinariaId')
+            ->leftjoin('obras', 'obras.id', '=', 'obraMaqPer.obraId')
+            ->where('puesto.puestoNivelId', '=', 5)
+            ->where('personal.estatusId', '=', 1) //*** solo operarios de maquinaria */
+            ->orderBy('personal.nombres', 'asc')->get();
 
-        // dd( $vctMaquinariaAsignada );
+        $vctMaquinariaAsignada = obraMaqPer::select('*')->where('obraId', '=', $obras->id)->get();
+        $vctResidenteAsignado = residente::select('*')->where('obraId', '=', $obras->id)->get();
+        $Clientes = clientes::orderBy('clientes.nombre', 'asc')->get();
 
-        return view('obra.vistaObra', compact('obras'), compact('vctResidenteAsignado', 'vctMaquinariaAsignada'));
+        return view('obra.vistaObra', compact('obras', 'vctPersonal', 'vctMaquinaria', 'vctResidenteAsignado', 'vctMaquinariaAsignada', 'Clientes'));
     }
 
     /**

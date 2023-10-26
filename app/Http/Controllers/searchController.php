@@ -112,11 +112,11 @@ class searchController extends Controller
         // $term = $request->input( 'term' );
         $term = $request->get('term');
 
-        $maquinaria = maquinaria::select('maquinaria.*','marca.nombre as marca','maquinariaCategoria.nombre as categoria','maquinaria.compania')
-        ->where('maquinaria.nombre', 'LIKE', '%' . $term . '%')
-        ->leftjoin('marca','marca.id','maquinaria.marcaId')
-        ->leftjoin('maquinariaCategoria','maquinariaCategoria.id','maquinaria.categoriaId')
-            ->whereNull( 'compania' )
+        $maquinaria = maquinaria::select('maquinaria.*', 'marca.nombre as marca', 'maquinariaCategoria.nombre as categoria', 'maquinaria.compania')
+            ->where('maquinaria.nombre', 'LIKE', '%' . $term . '%')
+            ->leftjoin('marca', 'marca.id', 'maquinaria.marcaId')
+            ->leftjoin('maquinariaCategoria', 'maquinariaCategoria.id', 'maquinaria.categoriaId')
+            ->whereNull('compania')
             ->orwhere('marca.nombre', 'LIKE', '%' . $term . '%')
             ->orwhere('maquinaria.nombre', 'LIKE', '%' . $term . '%')
             ->orwhere('maquinaria.placas', 'LIKE', '%' . $term . '%')
@@ -140,6 +140,51 @@ class searchController extends Controller
                 'compania' => $item->compania,
             ];
 
+
+        return $sugerencias;
+        // return response()->json( $sugerencias );
+    }
+
+    public function inventario(Request $request)
+    {
+        // dd($request);
+        // $term = $request->input( 'term' );
+        $term = $request->get('term');
+        $tipo = $request->input('tipo');
+
+        $inventario = inventario::select('inventario.*', 'marca.nombre as marca')
+            ->where(function ($query) use ($tipo) {
+                if ($tipo) {
+                    $query->where('inventario.tipo', '=', $tipo);
+                }
+            })
+            ->where(function ($query) use ($term) {
+                $query->where('inventario.nombre', 'LIKE', '%' . $term . '%')
+                    ->orWhere('inventario.numparte', 'LIKE', '%' . $term . '%')
+                    ->orWhere('inventario.modelo', 'LIKE', '%' . $term . '%')
+                    ->orWhere('marca.nombre', 'LIKE', '%' . $term . '%');
+            })
+            ->leftjoin('marca', 'marca.id', 'inventario.marcaId')
+            ->get();
+
+
+        $sugerencias = [];
+        foreach ($inventario as $item) {
+            if ($item->compania == null) {
+                $sugerencias[] = [
+                    'value' =>   ' N.PARTE: ' . $item->numparte . ' - ' .  $item->nombre . ', Marca: ' . $item->marca . ', Modelo: ' . $item->modelo  . ', Cantidad: ' .  $item->cantidad,
+                    'id' => $item->id,
+                    'nombre' => $item->nombre,
+                    'numparte' => $item->numparte,
+                    'marca' => $item->marca,
+                    'tipo' => $item->tipo,
+                    // 'numserie' => $item->numserie,
+                    // 'placas' => $item->placas,
+                    'modelo' => $item->modelo,
+                    'cantidad' => $item->cantidad,
+                    // 'categoria' => $item->categoria,
+                    // 'compania' => $item->compania,
+                ];
             }
         }
 
@@ -192,7 +237,7 @@ class searchController extends Controller
 
     public function materialMantenimiento(Request $request)
     {
-        // dd( $request );
+        // dd($request);
         // $term = $request->input( 'term' );
         $term = $request->get('term');
 

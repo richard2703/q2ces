@@ -57,34 +57,51 @@
 
                             <br>
                             @if ($descarga->tipoCisternaId == null)
-                                @if ($descarga->nombre_cliente)
-                                <h6 class="text-center" style="font-weight: 1000; ">CLIENTE: </h6> <div style="font-size:14px;">{{ $descarga->nombre_cliente }}</div>    
-                                @else
-                                    <h6 class="text-center" style="font-weight: 1000; ">CLIENTE: </h6> <div style="font-size:14px;">SIN CLIENTE</div>    
-                                @endif
+                                
+                                <h6 class="text-center" style="font-weight: 1000; ">CLIENTE: </h6> <div style="font-size:14px;">
+                                    @if ($obraEdit == false && $descarga->nombre_cliente)
+                                        {{ $descarga->nombre_cliente }}
+                                    @elseif ($clientess->nombre)
+                                        {{ $clientess->nombre }}  
+                                    @else
+                                        SIN CLIENTE  
+                                    @endif
+                                </div>
+                                
                                 <br>
-                                @if ($descarga->obras_nombre)
-                                    <h6 class="text-center" style="font-weight: 1000; ">OBRA: </h6> <div style="font-size:14px;">{{ $descarga->obras_nombre }}</div>
+                                <h6 class="text-center" style="font-weight: 1000; ">OBRA: </h6> <div style="font-size:14px;">
+                                @if ($obraEdit == false && $descarga->obras_nombre)
+                                    {{ $descarga->obras_nombre }}
+                                @elseif ($obrasas->nombre)
+                                    {{ $obrasas->nombre }}  
                                 @else
-                                    <h6 class="text-center" style="font-weight: 1000; ">OBRA: </h6> <div style="font-size:14px;">SIN OBRA</div>    
+                                    SIN OBRAS  
                                 @endif
+                                </div>
+                                    
                             @endif
                             
                             <h6 class="text-center" style="font-weight: 1000; ">DESPACHADOR: </h6> <div style="font-size:14px;">{{ $descarga->receptor_nombre }}</div>
                             <h6 class="text-center" style="font-weight: 1000; ">OPERADOR: </h6> <div style="font-size:14px;">{{ $descarga->operador_nombre }}</div>
                             @if ($descarga->tipoCisternaId == null)
-                                <h6 style="font-weight: 1000; text-center">EQUIPO DESPACHADO:</h6><div class="text-center" style="font-size:14px;"> {{ $descarga->despachado_nombre }}</div>
+                                <h6 style="font-weight: 1000; text-center">EQUIPO DESPACHADO:</h6><div class="text-center" style="font-size:14px;"> 
+                                    @if ($descarga->tipoCisternaId != null)
+                                    {{ $descarga->despachado_nombre }}
+                                    @else
+                                        BIDÓN
+                                    @endif
+                                </div>
                             @else
                             <h6 style="font-weight: 1000; text-center">EQUIPO DESPACHADO:</h6><div class="text-center" style="font-size:14px;"> {{ $descarga->equipo_nombre }}</div>
                             @endif
                             
                             @if ($descarga->tipoCisternaId == null)
                                 <h6 class="text-center" style="font-weight: 1000; ">EQUIPO DESPACHADOR: </h6> <div class="text-center">{{ $descarga->equipo_nombre }}</div>
+                                <h6 class="text-center" style="font-weight: 1000; ">SOLICITO: </h6> <div style="font-size:16px;">{{$solicitante['nombreSolicitante']}}</div>
                             @else
                                 {{--  <h6 class="text-center" style="font-weight: 1000; ">EQUIPO DESPACHADOR: </h6> <div class="text-center">CISTERNA TOTE</div>  --}}
                             @endif
-                            
-                            <h6 class="text-center" style="font-weight: 1000; ">SOLICITO: </h6> <div style="font-size:16px;">{{$solicitante['nombreSolicitante']}}</div>
+                    
                             @if ($descarga->tipoCisternaId == null)
                                 <h6 style="font-weight: 1000;" class="text-center">LITROS COMBUSTIBLE: </h6> <div class="text-center" style="font-size:16px;"> @if ($descarga->litros) 
                                     {{ $descarga->litros }} LTS/KG </div> <div class="text-center" style="font-size:16px;"> 
@@ -152,23 +169,24 @@
                                 0  </div>  
                             @endif
                             
+                            <h6 style="font-weight: 1000;">OTRO(S) COSTO: </h6> Total: ${{number_format($descarga->otro,2)}}
+                            <h6 style="font-weight: 1000;">OTRO(S) CONCEPTOS: </h6> {{ $descarga->otroComment }}
 
                             @php
                             $totalProductosSinTote =
-                            (isset($descarga->grasa) ? $descarga->grasa * (isset($descarga->grasaUnitario) ? $descarga->grasaUnitario : 0) : 0) +
+                            (isset($descarga->grasa) ? $descarga->grasa * (isset($descarga->grasaUnitario) ? $descarga->grasaUnitario : 0) : 0) + (isset($descarga->otro) ? $descarga->otro : 0) +
                             (isset($descarga->motor) ? $descarga->motor * (isset($descarga->mototUnitario) ? $descarga->mototUnitario : 0) : 0) +
                             (isset($descarga->anticongelante) ? $descarga->anticongelante * (isset($descarga->anticongelanteUnitario) ? $descarga->anticongelanteUnitario : 0) : 0) +
                             (isset($descarga->hidraulico) ? $descarga->hidraulico * (isset($descarga->hidraulicoUnitario) ? $descarga->hidraulicoUnitario : 0) : 0) +
                             (isset($descarga->direccion) ? $descarga->direccion * (isset($descarga->direccionUnitario) ? $descarga->direccionUnitario : 0) : 0);
-
     
                             
                             $totalProductos =
-                                            ($descarga->grasa*$descarga->grasaUnitario) +
-                                            ($descarga->motor*$descarga->mototUnitario) +
-                                            ($descarga->anticongelante*$descarga->anticongelanteUnitario) +
-                                            ($descarga->hidraulico*$descarga->hidraulicoUnitario) +
-                                            ($descarga->direccion*$descarga->direccionUnitario);    
+                            (isset($descarga->grasa) ? $descarga->grasa * (isset($descarga->grasaUnitario) ? $descarga->grasaUnitario : 0) : 0) + (isset($descarga->otro) ? $descarga->otro : 0) +
+                            (isset($descarga->motor) ? $descarga->motor * (isset($descarga->mototUnitario) ? $descarga->mototUnitario : 0) : 0) +
+                            (isset($descarga->anticongelante) ? $descarga->anticongelante * (isset($descarga->anticongelanteUnitario) ? $descarga->anticongelanteUnitario : 0) : 0) +
+                            (isset($descarga->hidraulico) ? $descarga->hidraulico * (isset($descarga->hidraulicoUnitario) ? $descarga->hidraulicoUnitario : 0) : 0) +
+                            (isset($descarga->direccion) ? $descarga->direccion * (isset($descarga->direccionUnitario) ? $descarga->direccionUnitario : 0) : 0);    
                             @endphp
 
                             @if ($descarga->tipoCisternaId != null)
@@ -186,9 +204,10 @@
                                 <h6 style="font-weight: 1000; ">TOTAL: ${{number_format(($ultimaCarga[0]->ultimoPrecio*$descarga->litros)+$totalProductos, 2)}}</h6>
                             @endif
 
-                            @if (!empty($descarga->otro))
-                                <h6 style="font-weight: 1000;" class="text-center">OTRO: {{ $descarga->otro }} L</h6>
-                            @endif
+                            {{--  @if (!empty($descarga->otro))  --}}
+                                {{--  <h6 style="font-weight: 1000;" class="text-center">OTRO(S) COSTO: $ {{ $descarga->otro }} </h6>  --}}
+                                {{--  <h6 style="font-weight: 1000;" class="text-center"> {{ $descarga->otro }} L</h6>  --}}
+                            {{--  @endif  --}}
                             
                             @if ($cliente == false)
                                 @if ($descarga->tipoCisternaId == null)

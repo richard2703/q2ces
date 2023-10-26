@@ -124,6 +124,18 @@
                                         <input type="text" class="inputCaja" id="estado" name="estado" required
                                             placeholder="Especifique..." value="{{ $obras->estado }}">
                                     </div>
+                                    <div class="col-12 col-sm-6  col-lg-4 my-3 ">
+                                        <label class="labelTitulo">Estatus:</label></br>
+                                        <select class="form-select" aria-label="Default select example" id="estatus"
+                                            name="estatus">
+                                            <option value="0" {{ $obras->estatus == 0 ? ' selected' : '' }}>Inactiva
+                                            </option>
+                                            <option value="1" {{ $obras->estatus == 1 ? ' selected' : '' }}>Activa
+                                            </option>
+                                        </select>
+                                    </div>
+
+
                                 </div>
                             </div>
 

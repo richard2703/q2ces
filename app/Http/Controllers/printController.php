@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\carga;
 use App\Models\cisternas;
+use App\Models\clientes;
 use App\Models\descarga;
 use App\Models\descargaDetalle;
 use App\Models\obraMaqPer;
+use App\Models\obras;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -42,7 +44,6 @@ class printController extends Controller
             $cliente = true;
         }
 
-        // dd($descarga);
         // dd($descarga['maquinariaId']);
         $ultimaCargaSinTote = carga::where('maquinariaId', $descarga['maquinariaId'])
             ->whereNull('tipoCisternaId')
@@ -54,25 +55,44 @@ class printController extends Controller
         // $solicitante['kilometrajeAnterior'] = $descarga->equipo_kilometraje;
         $nuevoSolicitante = descargaDetalle::create($solicitante);
         if ($descarga['tipoCisternaId'] != null) {
-            // dd('hpña');
             $ticket = descarga::where('id', $request['id'])->first();
             $ticket->obraId = $descarga['obrasTote_id'];
             $ticket->clienteId = $descarga['clienteTote_id'];
             $ticket->ticket = 1;
             $ticket->precioCarga = $ultimaCarga[0]->ultimoPrecio;
-
             // $ticket->descargaDetalleId = $nuevoSolicitante['id'];
             $ticket->save();
         } else {
             $ticket = descarga::where('id', $request['id'])->first();
-            $ticket->obraId = $descarga['obras_Id'];
-            $ticket->clienteId = $descarga['obras_clienteId'];
-            $ticket->precioCarga = $ultimaCargaSinTote->precio;
-            $ticket->ticket = 1;
-            // $ticket->descargaDetalleId = $nuevoSolicitante['id'];
-            $ticket->save();
+            if ($descarga['servicioId']) {
+
+                // dd('sfdfd', $ticket);
+                $ticket->obraId = $descarga['obras_Id'];
+                $ticket->clienteId = $descarga['obras_clienteId'];
+                $ticket->precioCarga = $ultimaCargaSinTote->precio;
+                $ticket->ticket = 1;
+                // $ticket->descargaDetalleId = $nuevoSolicitante['id'];
+                $ticket->save();
+            } else {
+                $ticket->obraId = $request['obraId'];
+                $obra = obras::where('id', '=', $request['obraId'])->first();
+                $ticket->obraId = $obra->id;
+                $ticket->clienteId = $obra->clienteId;
+                $ticket->ticket = 1;
+                $ticket->precioCarga = $ultimaCarga[0]->ultimoPrecio;
+                // dd($ticket);
+                $ticket->save();
+            }
         }
-        return view('inventario.vistaPreviaImpresion', compact('descarga', 'solicitante', 'cliente', 'nuevoSolicitante', 'ultimaCarga', 'ultimaCargaSinTote'));
+        $obrasas = obras::where('id', '=', $request['obraId'])->first();
+        $clientess = null;
+        if ($obrasas) {
+            $clientess = clientes::where('id', '=', $obrasas->clienteId)->first();
+        }
+        $obraEdit = false;
+        // dd($clientess, $obrasas);
+        // $obra = obras::where('id', '=', $request['obraId'])->get();
+        return view('inventario.vistaPreviaImpresion', compact('descarga', 'solicitante', 'cliente', 'nuevoSolicitante', 'ultimaCarga', 'ultimaCargaSinTote', 'obrasas', 'clientess', 'obraEdit'));
     }
 
     public function printEdit(Request $request)
@@ -90,26 +110,36 @@ class printController extends Controller
             ->select('descarga.*', 'obras.nombre as obras_nombre', 'clientes.nombre as nombre_cliente', DB::raw("CONCAT(equipo.nombre, ' ',equipo.placas ) as equipo_nombre"), 'equipo.kom as equipo_kom', 'users.name as user_nombre', 'operador.nombres as operador_nombre', 'receptor.nombres as receptor_nombre', DB::raw("CONCAT(despachado.nombre, ' ', despachado.placas) as despachado_nombre"), 'despachado.kom as despachado_kom')
             ->first();
 
-        // dd($descarga);
         $cliente = false;
 
         if (isset($request['tipo_solicitud'])) {
             $cliente = true;
         }
+        $obraEdit = false;
 
-        // dd($descarga['maquinariaId']);
+        if (isset($request['obraId'])) {
+            $obraEdit = true;
+            $ticket = descarga::where('id', $descarga['id'])->first();
+            // dd($descarga['id'], $ticket);
+            // $ticket->obraId = $request['obraId'];
+            $obra = obras::where('id', '=', $request['obraId'])->first();
+            $ticket->obraId = $obra->id;
+            $ticket->clienteId = $obra->clienteId;
+            $ticket->save();
+        }
+
+
         $ultimaCargaSinTote = carga::where('maquinariaId', $descarga['maquinariaId'])
             ->whereNull('tipoCisternaId')
             ->latest()
             ->first();
 
-
-        // dd($ultimaCargaSinTote);
         $ultimaCarga = cisternas::where('id', '=', '1')->get('ultimoPrecio');
         $detalleEnDescarga = descargaDetalle::where('descargaId', $request['id'])->first();
         $nuevoSolicitante = $detalleEnDescarga;
         $data = $request->all();
         $detalleEnDescarga->update($data);
+
         // $obramaqper = obraMaqPer::where('maquinariaId', '=', $descarga['servicioId'])->get('obraId');
         // $obra = obraMaqPer::join('obras', 'descarga.servicioId', '=', 'obras.id')
         //     ->where('obras.id', $obramaqper[0]['obraId'])
@@ -122,7 +152,10 @@ class printController extends Controller
 
         // dd($obramaqper);
         // dd($ultimaCargaSinTote);
-        return view('inventario.vistaPreviaImpresion', compact('descarga', 'solicitante', 'cliente', 'nuevoSolicitante', 'ultimaCarga', 'ultimaCargaSinTote'));
+
+        $obrasas = obras::where('id', '=', $request['obraId'])->first();
+        $clientess = clientes::where('id', '=', $obrasas->clienteId)->first();
+        return view('inventario.vistaPreviaImpresion', compact('descarga', 'solicitante', 'cliente', 'nuevoSolicitante', 'ultimaCarga', 'ultimaCargaSinTote', 'obrasas', 'clientess', 'obraEdit'));
     }
 
     public function printCarga(Request $request)

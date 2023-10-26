@@ -52,7 +52,7 @@ class cajaChicaController extends Controller
         $Adomingo = $domingo->clone()->subDay(7);
         $Alunes = $lunes->clone()->subDay(7);
 
-        $ultimoCorte = corteCajaChica::where('fin', $Adomingo)->first();
+        $ultimoCorte = corteCajaChica::latest()->first();
 
         $registros = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
             ->leftJoin('obras', 'cajaChica.obra', 'obras.id')
@@ -94,10 +94,22 @@ class cajaChicaController extends Controller
         $ingreso = $ingreso - $ultimoCorte->saldo;
 
 
+        $ultimocortefecha = $ultimoCorte->fin;
+        $test = Carbon::createFromFormat('Y-m-d H:i:s', $ultimocortefecha);
+
+        if (date_diff(now(), $test->addDays(1))->format('%D%') <= 1 || !isset($ultimoCorte->saldo)) {
+            $corte = 0;
+        } else {
+            $corte = 1;
+        }
+
+        // $date = Carbon::createFromFormat('m/d/Y', $ultimocortefecha)->format('Y-m-d');
+
+
 
         // dd($lunes, $domingo);
 
-        return view('cajaChica.indexCajaChica', compact('registros', 'saldo', 'ingreso', 'egreso', 'lunes', 'domingo', 'ultimoCorte'));
+        return view('cajaChica.indexCajaChica', compact('registros', 'saldo', 'ingreso', 'egreso', 'lunes', 'domingo', 'ultimoCorte', 'corte'));
     }
 
     /**
@@ -112,8 +124,9 @@ class cajaChicaController extends Controller
 
         $conceptos = conceptos::orderBy('codigo', 'asc')->get();
         $personal = personal::join('puesto', 'personal.puestoId', 'puesto.id')
-            ->join('puestonivel', 'puesto.puestoNivelId', 'puestonivel.id')
-            ->where('puestonivel.usaCajaChica', 1)
+            ->join('puestoNivel', 'puesto.puestoNivelId', 'puestoNivel.id')
+            ->select('personal.id', 'personal.nombres', 'personal.apellidoP')
+            ->where('puestoNivel.usaCajaChica', 1)
             ->where('personal.estatusId', 1)
             ->orderBy('personal.nombres', 'asc')->get();
         // dd($personal);
@@ -174,7 +187,12 @@ class cajaChicaController extends Controller
     public function show(cajaChica $cajaChica)
     {
         $conceptos = conceptos::orderBy('codigo', 'asc')->get();
-        $personal = personal::orderBy('nombres', 'asc')->get();
+        $personal = personal::join('puesto', 'personal.puestoId', 'puesto.id')
+            ->join('puestoNivel', 'puesto.puestoNivelId', 'puestoNivel.id')
+            ->select('personal.id', 'personal.nombres', 'personal.apellidoP')
+            ->where('puestoNivel.usaCajaChica', 1)
+            ->where('personal.estatusId', 1)
+            ->orderBy('personal.nombres', 'asc')->get();
         $obras = obras::orderBy('nombre', 'asc')->get();
         $maquinaria = maquinaria::where('compania', '!=', 'mtq')->orWhere('compania', null)->orderBy('identificador', 'asc')->get();
         $vctComprobantes = comprobante::select()->orderBy('nombre', 'asc')->get();
@@ -197,7 +215,12 @@ class cajaChicaController extends Controller
         // dd( $cajaChica );
 
         $conceptos = conceptos::orderBy('codigo', 'asc')->get();
-        $personal = personal::orderBy('nombres', 'asc')->get();
+        $personal = personal::join('puesto', 'personal.puestoId', 'puesto.id')
+            ->join('puestoNivel', 'puesto.puestoNivelId', 'puestoNivel.id')
+            ->select('personal.id', 'personal.nombres', 'personal.apellidoP')
+            ->where('puestoNivel.usaCajaChica', 1)
+            ->where('personal.estatusId', 1)
+            ->orderBy('personal.nombres', 'asc')->get();
         $obras = obras::orderBy('nombre', 'asc')->get();
         $maquinaria = maquinaria::where('compania', '!=', 'mtq')->orWhere('compania', null)->orderBy('identificador', 'asc')->get();
         $vctComprobantes = comprobante::select()->orderBy('nombre', 'asc')->get();
@@ -258,9 +281,10 @@ class cajaChicaController extends Controller
 
         $registros = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
             ->leftJoin('obras', 'cajaChica.obra', 'obras.id')
-            ->join('maquinaria', 'cajaChica.equipo', 'maquinaria.id')
+            ->leftJoin('maquinaria', 'cajaChica.equipo', 'maquinaria.id')
             ->join('conceptos', 'cajaChica.concepto', 'conceptos.id')
             ->join('comprobante', 'cajaChica.comprobanteId', 'comprobante.id')
+            ->leftJoin('clientes', 'obras.clienteId', 'clientes.id')
             ->select(
                 'cajaChica.id',
                 'dia',
@@ -271,7 +295,7 @@ class cajaChicaController extends Controller
                 'ncomprobante',
                 'personal.nombres as pnombre',
                 'personal.apellidoP as papellidoP',
-                'cliente',
+                'clientes.nombre as cliente',
                 'obras.nombre as obra',
                 'maquinaria.identificador',
                 'maquinaria.nombre as maquinaria',
@@ -299,24 +323,27 @@ class cajaChicaController extends Controller
         // dd('test');
         $query = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
             ->leftJoin('obras', 'cajaChica.obra', 'obras.id')
-            ->join('maquinaria', 'cajaChica.equipo', 'maquinaria.id')
+            ->leftJoin('maquinaria', 'cajaChica.equipo', 'maquinaria.id')
             ->join('conceptos', 'cajaChica.concepto', 'conceptos.id')
             ->join('comprobante', 'cajaChica.comprobanteId', 'comprobante.id')
+            ->leftJoin('clientes', 'obras.clienteId', 'clientes.id')
             ->select(
                 'cajaChica.id',
                 'dia',
                 'conceptos.codigo',
                 'conceptos.nombre as cnombre',
-                'ncomprobante',
+                'comprobanteId',
                 'comprobante.nombre as comprobante',
+                'ncomprobante',
                 'personal.nombres as pnombre',
                 'personal.apellidoP as papellidoP',
-                'cliente',
+                'clientes.nombre as cliente',
                 'obras.nombre as obra',
                 'maquinaria.identificador',
                 'maquinaria.nombre as maquinaria',
                 'cantidad',
                 'cajaChica.tipo',
+                'cajaChica.total'
             )->whereBetween('dia', [$request->inicio, $request->fin])
             ->orderby('dia', 'desc')->orderby('id', 'desc')
             ->get();
@@ -360,7 +387,7 @@ class cajaChicaController extends Controller
 
         $registros = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
             ->leftJoin('obras', 'cajaChica.obra', 'obras.id')
-            ->join('maquinaria', 'cajaChica.equipo', 'maquinaria.id')
+            ->leftJoin('maquinaria', 'cajaChica.equipo', 'maquinaria.id')
             ->join('conceptos', 'cajaChica.concepto', 'conceptos.id')
             ->join('comprobante', 'cajaChica.comprobanteId', 'comprobante.id')
             ->select(
@@ -382,7 +409,7 @@ class cajaChicaController extends Controller
                 'cajaChica.total'
             )->orderby('dia', 'desc')->orderby('id', 'desc')
             ->whereBetween('dia', [$lunes, $domingo])
-            ->paginate(15);
+            ->get();
 
         $ingreso = cajaChica::whereBetween('dia', [$lunes, $domingo])
             ->where('tipo', 1)
@@ -440,7 +467,7 @@ class cajaChicaController extends Controller
         $ultimoSaldo['concepto'] =  1;
         $ultimoSaldo['comprobanteId'] =  1;
         $ultimoSaldo['ncomprobante'] =  1;
-        $ultimoSaldo['equipo'] =  1;
+        // $ultimoSaldo['equipo'] =  1;
         $ultimoSaldo['personal'] =  16;
         $ultimoSaldo['tipo'] =  1;
         $ultimoSaldo['cantidad'] =  $saldo;

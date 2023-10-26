@@ -26,6 +26,7 @@ use App\Models\tipoUniforme;
 use App\Models\asignacionUniforme;
 use App\Models\cisternas;
 use App\Models\descargaDetalle;
+use App\Models\obras;
 
 class inventarioController extends Controller
 {
@@ -95,6 +96,9 @@ class inventarioController extends Controller
                 array_push($dia, $key->dia);
             }
 
+            $vctObras = obras::where('estatus', 1)
+                ->orderBy('nombre', 'asc')->get();
+
             $cargas = carga::select(
                 'carga.id',
                 db::raw("CONCAT(maquinaria.identificador,' ',maquinaria.nombre) AS equipo"),
@@ -137,12 +141,20 @@ class inventarioController extends Controller
                 'descarga.litros',
                 'descarga.created_at AS fecha',
                 'descarga.ticket',
+                'descarga.obraId',
+                'descarga.grasa',
+                'descarga.hidraulico',
+                'descarga.anticongelante',
+                'descarga.motor',
+                'descarga.otro',
+                'descarga.direccion',
+                'descarga.otroComment',
                 // 'descarga.descargaDetalleId',
                 'detalles.*',
             )
                 ->join('maquinaria', 'maquinaria.id', '=', 'descarga.maquinariaId')
                 ->join('personal', 'personal.id', '=', 'descarga.operadorId')
-                ->join('maquinaria as m2', 'm2.id', '=', 'descarga.servicioId')
+                ->leftJoin('maquinaria as m2', 'm2.id', '=', 'descarga.servicioId')
                 ->join('personal as p2', 'p2.id', '=', 'descarga.receptorId')
                 ->leftJoin('descargaDetalle as detalles', 'descarga.id', '=', 'detalles.descargaId')
                 // ->leftJoin('descargaDetalle as detalles', 'descarga.descargaDetalleId', '=', 'detalles.id')
@@ -152,16 +164,13 @@ class inventarioController extends Controller
 
             // dd($descargas);
 
-            return view('inventario.dashCombustible', compact('despachador', 'personal', 'maquinaria', 'cisternas', 'gasolinas', 'suma', 'dia', 'despachadores', 'cargas', 'descargas', 'usuarios'));
+            return view('inventario.dashCombustible', compact('despachador', 'vctObras', 'personal', 'maquinaria', 'cisternas', 'gasolinas', 'suma', 'dia', 'despachadores', 'cargas', 'descargas', 'usuarios'));
         } else {
             $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(15);
 
             if ($inventarios == null) {
                 $inventarios = null;
             }
-
-            // dd($usuarios);
-
 
             return view('inventario.indexInventario', compact('inventarios', 'tipo'));
         }
@@ -196,51 +205,118 @@ class inventarioController extends Controller
 
         abort_if(Gate::denies('inventario_create'), 403);
 
-        $request->validate([
-            'nombre' => 'required|max:250',
-            // 'marca' => 'nullable|max:250',
-            'modelo' => 'nullable|max:250',
-            // 'proveedor' => 'nullable|max:200',
-            'numparte' => 'nullable|max:250',
-            'cantidad' => 'required|numeric',
-            'valor' => 'required|numeric',
-            'reorden' => 'nullable|numeric',
-            'maximo' => 'nullable|numeric',
-        ], [
-            'nombre.required' => 'El campo nombre es obligatorio.',
-            'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
-            // 'marca.max' => 'El campo marca excede el límite de caracteres permitidos.',
-            'modelo.max' => 'El campo modelo excede el límite de caracteres permitidos.',
-            // 'proveedor.max' => 'El campo proveedor excede el límite de caracteres permitidos.',
-            'numparte.max' => 'El campo número de parte excede el límite de caracteres permitidos.',
-            'cantidad.numeric' => 'El campo cantidad debe de ser numérico.',
-            'valor.numeric' => 'El campo valor debe de ser numérico.',
-            'reorden.numeric' => 'El campo valor debe de ser numérico.',
-            'maximo.numeric' => 'El campo valor debe de ser numérico.',
-        ]);
+        $data = $request->all();
+        // dd($data);
+
+        if (isset($data['restock'])) {
+            for ($i = 0; $i < count($request['restock']['id']); $i++) {
+                $record = inventario::where('id', $data['restock']['id'][$i])->first();
+                $nuevaLista = collect();
+                $record->update($data);
+
+                if ($request['restock']['id'][$i]) {
+                    $array = [
+                        'id' => $request['restock']['id'][$i],
+                        'cantidad' => ($record['cantidad'] + $request['restock']['cantidad'][$i]),
+                        'valor' => ($request['restock']['costo'][$i] / $request['restock']['cantidad'][$i])
+                    ];
+                    // dd($array);
+                    $objResidente = inventario::updateOrCreate(['id' => $array['id']], $array);
+                    // dd($i, $array, $objResidente);
+
+                    $nuevaLista->push($objResidente->id);
+                    if ($objResidente->id > 0) {
+                        $objMovimiento = new inventarioMovimientos();
+                        $objMovimiento->movimiento = 1;
+                        $objMovimiento->inventarioId = $objResidente->id;
+                        $objMovimiento->cantidad = $request['restock']['cantidad'][$i];
+                        $objMovimiento->precioUnitario = ($request['restock']['costo'][$i] / $request['restock']['cantidad'][$i]);
+                        $objMovimiento->total = $request['restock']['costo'][$i];
+                        $objMovimiento->usuarioId = $request['restock']['usuarioId'][0];
+                        $objMovimiento->Save();
+                    }
+                }
+            }
+        }
+
+        // $request->validate([
+        //     'nombre' => 'required|max:250',
+        //     // 'marca' => 'nullable|max:250',
+        //     'modelo' => 'nullable|max:250',
+        //     // 'proveedor' => 'nullable|max:200',
+        //     'numparte' => 'nullable|max:250',
+        //     'cantidad' => 'required|numeric',
+        //     'valor' => 'required|numeric',
+        //     'reorden' => 'nullable|numeric',
+        //     'maximo' => 'nullable|numeric',
+        // ], [
+        //     'nombre.required' => 'El campo nombre es obligatorio.',
+        //     'nombre.max' => 'El campo nombre excede el límite de caracteres permitidos.',
+        //     // 'marca.max' => 'El campo marca excede el límite de caracteres permitidos.',
+        //     'modelo.max' => 'El campo modelo excede el límite de caracteres permitidos.',
+        //     // 'proveedor.max' => 'El campo proveedor excede el límite de caracteres permitidos.',
+        //     'numparte.max' => 'El campo número de parte excede el límite de caracteres permitidos.',
+        //     'cantidad.numeric' => 'El campo cantidad debe de ser numérico.',
+        //     'valor.numeric' => 'El campo valor debe de ser numérico.',
+        //     'reorden.numeric' => 'El campo valor debe de ser numérico.',
+        //     'maximo.numeric' => 'El campo valor debe de ser numérico.',
+        // ]);
         $producto = $request->all();
+        // $objProducto = inventario::create($producto);
+        if (isset($request['nuevo'])) {
+            for ($i = 0; $i < count($request['nuevo']['tipo']); $i++) {
 
-        if ($request->hasFile("imagen")) {
-            $producto['imagen'] = time() . '_' . 'imagen.' . $request->file('imagen')->getClientOriginalExtension();
-            $request->file('imagen')->storeAs('/public/inventario/' . $producto['tipo'], $producto['imagen']);
+                if ($request['nuevo']['tipo'][$i]) {
+                    $objResidente = new inventario();
+                    $objResidente->nombre = $request['nuevo']['nombre'][$i];
+                    $objResidente->marcaId = $request['nuevo']['marcaId'][$i];
+                    $objResidente->modelo = $request['nuevo']['modelo'][$i];
+                    $objResidente->proveedorId = $request['nuevo']['proveedorId'][$i];
+                    $objResidente->numparte = $request['nuevo']['numparte'][$i];
+                    $objResidente->cantidad = $request['nuevo']['cantidad'][$i];
+                    $objResidente->valor = $request['nuevo']['valor'][$i] / $request['nuevo']['cantidad'][$i];
+                    $objResidente->reorden = $request['nuevo']['reorden'][$i];
+                    $objResidente->maximo = $request['nuevo']['maximo'][$i];
+                    $objResidente->tipo = $request['nuevo']['tipo'][$i];
+                    $objResidente->imagen = isset($request['nuevo']['imagen'][$i]) && $request['nuevo']['imagen'][$i] !== null
+                        ? time() . '_' . 'imagen.' . $request['nuevo']['imagen'][$i]->getClientOriginalExtension()
+                        : null;
+                    // $objResidente->usuarioId = $request['usuarioId'][$i];
+                    //  $objResidente->puesto = $request[ 'rpuesto' ][ $i ];
+                    $objResidente->save();
+
+                    if ($objResidente->id > 0) {
+                        $objMovimiento = new inventarioMovimientos();
+                        $objMovimiento->movimiento = 1;
+                        $objMovimiento->inventarioId = $objResidente->id;
+                        $objMovimiento->cantidad = $objResidente->cantidad;
+                        $objMovimiento->precioUnitario = $objResidente->valor;
+                        $objMovimiento->total = ($objResidente->valor * $objResidente->cantidad);
+                        $objMovimiento->usuarioId = $request['nuevo']['usuarioId'][0];
+                        $objMovimiento->Save();
+                    }
+                }
+
+
+                if (isset($request['nuevo']['imagen'][$i])) {
+                    // Se ha subido un archivo en la posición $i del array 'imagen'
+                    $producto['nuevo']['imagen'][$i] = time() . '_' . 'imagen.' . $request['nuevo']['imagen'][$i]->getClientOriginalExtension();
+                    $request['nuevo']['imagen'][$i]->storeAs('/public/inventario/' . $producto['nuevo']['tipo'][$i], $producto['nuevo']['imagen'][$i]);
+                } else {
+                    // No se subió ningún archivo en la posición $i del array 'imagen'
+                }
+            }
         }
 
-        $objProducto = inventario::create($producto);
 
-        if ($objProducto->id > 0) {
-            $objMovimiento = new inventarioMovimientos();
-            $objMovimiento->movimiento = 1; //*** agrega al inventario */
-            $objMovimiento->inventarioId = $objProducto->id;
-            $objMovimiento->cantidad = $objProducto->cantidad;
-            $objMovimiento->precioUnitario = $objProducto->valor;
-            $objMovimiento->total = ($objProducto->valor * $objProducto->cantidad);
-            $objMovimiento->usuarioId = $request['usuarioId'];
-            $objMovimiento->Save();
-        }
+
 
         Session::flash('message', 1);
-
-        return redirect()->route('inventario.index', $producto['tipo']);
+        if (isset($request['nuevo'])) {
+            return redirect()->route('inventario.index', $producto['nuevo']['tipo']);
+        } else {
+            return redirect()->route('inventario.index', $data['restock']['tipo']);
+        }
     }
 
     /**
@@ -622,20 +698,28 @@ class inventarioController extends Controller
         $direccion = cisternas::where("nombre", 'Aceite Direccion')->get('ultimoPrecio');
 
 
-        // dd($grasa);
-        if ($request['km'] > $cisterna->kilometraje) {
-            $descarga['kilometrajeAnterior'] = $cisterna->kilometraje;
-            $descarga['kilometrajeNuevo'] = $request['km'];
-            $cisterna->kilometraje = $request['km'];
-            // $descarga['odometro'] = $cisternaKango->horometro;
+        // dd($request);
+        if ($request['servicioId'] == "null") {
             $descarga['odometroNuevo'] = $request['horometro'];
+            $descarga['servicioId'] = null;
             // $descarga['odometro'] = $cisterna->kilometraje;
-            $cisternaKango->kilometraje = $request['km'];
+            // dd($request['kilometraje']);
+            $cisternaKango->kilometraje = $request['horometro'];
+            $descarga['odometro'] = $cisternaKango->horometro;
+            $descarga['otroComment'] = $request['otroComment'];
+            if ($request['otro'] != null) {
+                $descarga['otro'] = $request['otro'];
+            } else {
+                $descarga['otro'] = 0;
+            }
+            $descarga['odometroNuevo'] = $request['horometro'];
+            // dd($cisternaKango);
             $descarga['grasaUnitario'] = $grasa[0]['ultimoPrecio'];
             $descarga['hidraulicoUnitario'] = $hidraulico[0]['ultimoPrecio'];
             $descarga['anticongelanteUnitario'] = $anticongelante[0]['ultimoPrecio'];
             $descarga['mototUnitario'] = $motor[0]['ultimoPrecio'];
             $descarga['direccionUnitario'] = $direccion[0]['ultimoPrecio'];
+            $cisternaKango->cisternaNivel = ($cisternaKango->cisternaNivel - $request['litros']);
             $cisternaKango->update();
             // dd($descarga);
             $descarga['userId'] = auth()->user()->id;
@@ -645,8 +729,43 @@ class inventarioController extends Controller
                 Session::flash('message', 7);
                 return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
             }
+            // dd('NO Cierto', $descarga);
             descarga::create($descarga);
-            $cisterna->cisternaNivel = ($cisterna->cisternaNivel - $request['litros']);
+            // $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $request['litros']);
+            // $cisterna->update();
+            Session::flash('message', 1);
+        } else if ($request['km'] > $cisterna->kilometraje) {
+            $descarga['kilometrajeAnterior'] = $cisterna->kilometraje;
+            $descarga['kilometrajeNuevo'] = $request['km'];
+            $cisterna->kilometraje = $request['km'];
+            $descarga['odometro'] = $cisternaKango->horometro;
+            $descarga['odometroNuevo'] = $request['horometro'];
+            $descarga['otroComment'] = $request['otroComment'];
+            if ($request['otro'] != null) {
+                $descarga['otro'] = $request['otro'];
+            } else {
+                $descarga['otro'] = 0;
+            }
+            // $descarga['odometro'] = $cisterna->kilometraje;
+            $cisternaKango->kilometraje = $request['horometro'];
+            $descarga['grasaUnitario'] = $grasa[0]['ultimoPrecio'];
+            $descarga['hidraulicoUnitario'] = $hidraulico[0]['ultimoPrecio'];
+            $descarga['anticongelanteUnitario'] = $anticongelante[0]['ultimoPrecio'];
+            $descarga['mototUnitario'] = $motor[0]['ultimoPrecio'];
+            $descarga['direccionUnitario'] = $direccion[0]['ultimoPrecio'];
+            $cisternaKango->cisternaNivel = ($cisternaKango->cisternaNivel - $request['litros']);
+            $cisternaKango->update();
+            // dd($descarga);
+            $descarga['userId'] = auth()->user()->id;
+            $descarga['fechaLlegada'] = Carbon::now();
+            $cargaPrevia = carga::first();
+            if ($cargaPrevia == null) {
+                Session::flash('message', 7);
+                return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
+            }
+            // dd($descarga);
+            descarga::create($descarga);
+            $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $request['litros']);
             $cisterna->update();
             Session::flash('message', 1);
         } else {
@@ -752,6 +871,14 @@ class inventarioController extends Controller
         $descarga->receptorId = $request['descargaDespachador'];
         $descarga->fechaLlegada = $request['fechaLlegada'];
 
+        $descarga->grasa = $request['grasa'];
+        $descarga->hidraulico = $request['hidraulico'];
+        $descarga->anticongelante = $request['Anticongelante'];
+        $descarga->motor = $request['motor'];
+        $descarga->direccion = $request['direccion'];
+        $descarga->otro = $request['otro'];
+        $descarga->otroComment = $request['otroComment'];
+
         // $descarga->created_at = ($request['descargaFecha'] . " " . $request['descargaHora'] . ":" . $strSegundos);
 
         if ($request->hasFile("descargaFileImgKms")) {
@@ -785,7 +912,11 @@ class inventarioController extends Controller
 
         Session::flash('message', 1);
 
-        return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
+        if ($descarga->tipoCisternaId != null) {
+            return redirect()->route('combustibleTote.index');
+        } else {
+            return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
+        }
     }
 
     public function deleteCarga($cargaId)
@@ -1029,22 +1160,25 @@ class inventarioController extends Controller
     {
         abort_if(Gate::denies('inventario_edit'), 403);
         $movimiento = $request->all();
-        // dd($producto, $movimiento);
 
         $objMovimiento = new inventarioMovimientos();
         $objMovimiento->movimiento = 1; //*** agrega al inventario */
         $objMovimiento->inventarioId = $producto->id;
         $objMovimiento->usuarioId = $movimiento['usuarioId'];
         $objMovimiento->cantidad = $movimiento['cantidad'];
-        $objMovimiento->precioUnitario = $movimiento['costo'];
-        $objMovimiento->total = ($movimiento['costo'] * $movimiento['cantidad']);
+        $objMovimiento->comentario = $movimiento['comentario'];
+        if ($movimiento['costo'] === null) {
+            $objMovimiento->precioUnitario = 0;
+            $objMovimiento->total = 0;
+        } else {
+            $objMovimiento->precioUnitario = ($movimiento['costo'] / $movimiento['cantidad']);
+            $objMovimiento->total = $movimiento['costo'];
+        }
         $objMovimiento->Save();
 
         if ($movimiento['movimiento'] == 1) {
-            //*** creamos el registro del stock */
-
             $producto->cantidad = ($producto->cantidad + $movimiento['cantidad']);
-            $producto->valor =  $movimiento['costo'];
+            $producto->valor =  ($movimiento['costo'] / $movimiento['cantidad']);
             $producto->save();
         } else if ($movimiento['movimiento'] == 2) {
             $producto->cantidad = ($producto->cantidad - $movimiento['cantidad']);

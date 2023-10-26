@@ -236,6 +236,7 @@
                                                                         <label class="labelTitulo">Maquinaria:</label></br>
                                                                         <select id="servicioId" name="servicioId" class="form-select" aria-label="Default select example" required>
                                                                             <option value="">Seleccione</option>
+                                                                            <option value="null">Bidon</option>
                                                                             @foreach ($maquinaria as $maquina)
                                                                                 <option value="{{ $maquina->id }}" data-km="{{ $maquina->kilometraje }}">
                                                                                     {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
@@ -296,7 +297,7 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-12 col-md-6 d-flex mb-4">
+                                                                <div class="col-12 col-md-6 d-flex mb-4" >
                                                                     <div class="me-2">
                                                                         <img src="{{ asset('/img/inventario/uso.svg') }}" alt="" style="width:40px;">
                                                                     </div>
@@ -319,7 +320,6 @@
                                                                             name="litros" value="{{ old('litros') }}">
                                                                     </div>
                                                                 </div>
-                                                                
 
                                                                 <div class=" col-12 col-md-6 d-flex mb-4">
                                                                     <div class="me-2">
@@ -329,7 +329,7 @@
                                                                     <div style="width: 100%! important;">
                                                                         <label class="labelTitulo">Grasas:</label></br>
                                                                         <input type="number" min="0"
-                                                                            class="inputCaja" id="grasa" name="grasa"
+                                                                            class="inputCaja" id="grasa" name="grasa" placeholder="Cantidad"
                                                                             value="{{ old('grasa') }}" step="0.01">
                                                                     </div>
                                                                 </div>
@@ -343,7 +343,7 @@
                                                                             Hidráulico:</label></br>
                                                                         <input type="number" min="0"
                                                                             class="inputCaja" id="hidraulico"
-                                                                            name="hidraulico" value="{{ old('hidraulico') }}"
+                                                                            name="hidraulico" value="{{ old('hidraulico') }}" placeholder="Cantidad"
                                                                             step="0.01">
                                                                     </div>
                                                                 </div>
@@ -355,7 +355,7 @@
                                                                     <div style="width: 100%! important;">
                                                                         <label class="labelTitulo">Anticongelante:</label></br>
                                                                         <input type="number" min="0"
-                                                                            class="inputCaja" id="Anticongelante"
+                                                                            class="inputCaja" id="Anticongelante" placeholder="Cantidad"
                                                                             name="Anticongelante"
                                                                             value="{{ old('anticongelante') }}"
                                                                             step="0.01">
@@ -369,22 +369,11 @@
                                                                     <div style="width: 100%! important;">
                                                                         <label class="labelTitulo">Aceite Motor:</label></br>
                                                                         <input type="number" min="0"
-                                                                            class="inputCaja" id="motor" name="motor"
+                                                                            class="inputCaja" id="motor" name="motor" placeholder="Cantidad"
                                                                             value="{{ old('motor') }}" step="0.01">
                                                                     </div>
                                                                 </div>
-                                                                <div class=" col-12 col-md-6 d-flex mb-4">
-                                                                    <div class="me-2">
-                                                                        <img src="{{ asset('/img/inventario/otro.svg') }}"
-                                                                            alt="" style="width:40px;">
-                                                                    </div>
-                                                                    <div style="width: 100%! important;">
-                                                                        <label class="labelTitulo">Otro:</label></br>
-                                                                        <input type="number" min="0"
-                                                                            class="inputCaja" id="otro" name="otro"
-                                                                            value="{{ old('otro') }}" step="0.01">
-                                                                    </div>
-                                                                </div>
+                                                                
                                                                 <div class=" col-12 col-md-6 d-flex mb-4">
                                                                     <div class="me-2">
                                                                         <img src="{{ asset('/img/inventario/direccion.svg') }}"
@@ -394,9 +383,25 @@
                                                                         <label class="labelTitulo">Aceite
                                                                             Dirección:</label></br>
                                                                         <input type="number" min="0"
-                                                                            class="inputCaja" id="direccion" name="direccion"
+                                                                            class="inputCaja" id="direccion" name="direccion" placeholder="Cantidad"
                                                                             value="{{ old('direccion') }}" step="0.01">
                                                                     </div>
+                                                                </div>
+
+                                                                <div class=" col-12 col-md-6 d-flex mb-4">
+                                                                    <div class="me-2">
+                                                                        <img src="{{ asset('/img/inventario/otro.svg') }}"
+                                                                            alt="" style="width:40px;">
+                                                                    </div>
+                                                                    <div style="width: 100%! important;">
+                                                                        <label class="labelTitulo">Otro(s):</label></br>
+                                                                        <input type="number" min="0"
+                                                                            class="inputCaja" id="otro" name="otro"
+                                                                            value="{{ old('otro') }}" step="0.01" placeholder="Precio Total">
+                                                                        <textarea class="form-control-textarea border-green mt-2" id="otroComment" name="otroComment"
+                                                                        value="{{ old('otroComment') }}" rows="3" placeholder="Agregar el Concepto y las Cantidades..."></textarea>    
+                                                                    </div>
+                                                                    
                                                                 </div>
 
                                                                 {{--  <div class=" col-12 col-md-6 d-flex mb-4">
@@ -726,7 +731,7 @@
                                                                                     @if ($descarga->ticket == 0)
                                                                                     <td class="td-actions d-flex justify-content-center">
                                                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#printFormDescargaD"
-                                                                                            onclick="cargaItem('{{ $descarga->descargaIdTote }}')">
+                                                                                            onclick="cargaItem('{{ $descarga->descargaIdTote }}', '{{ $descarga->servicioId }}')">
                                                                                             <span class="material-icons mt-3" style="font-size:35px; color: #727176;">print</span>
                                                                                         </a>
                                                                                     </td>
@@ -735,7 +740,7 @@
                                                                                     <td class="td-actions d-flex justify-content-center">
                                                                                         @can('ticketDescarga_edit')
                                                                                             <a href="#" data-bs-toggle="modal" data-bs-target="#printFormDescargaEdit"
-                                                                                                onclick="cargaItemEdit('{{ $descarga->descargaIdTote }}', '{{ $descarga->nombreSolicitante }}', '{{ $descarga->costoTrabajo }}', '{{ $descarga->horaLlegada }}','{{ $descarga->observaciones }}','{{ $descarga->tipo_solicitud }}')">
+                                                                                                onclick="cargaItemEdit('{{ $descarga->descargaIdTote }}', '{{ $descarga->nombreSolicitante }}', '{{ $descarga->costoTrabajo }}', '{{ $descarga->horaLlegada }}','{{ $descarga->observaciones }}','{{ $descarga->tipo_solicitud }}', '{{ $descarga->servicioId }}', '{{$descarga->obraId}}')">
                                                                                                 <svg style="color:#f7c90d; margin-top:20px;" xmlns="http://www.w3.org/2000/svg "
                                                                                                     width="28"
                                                                                                     height="28"
@@ -767,7 +772,7 @@
                                                                                                 onclick="loadDescarga('{{ $descarga->descargaIdTote }}','{{ $descarga->maquinariaId }}','{{ $descarga->operadorId }}',
                                                                                         '{{ $descarga->servicioId }}','{{ $descarga->receptorId }}','{{ $descarga->litros }}',
                                                                                         '{{ $descarga->kilometrajeNuevo }}','{{ $descarga->imgKm ? $descarga->imgKm : '0' }}'
-                                                                                        ,'{{ $descarga->fechaLlegada }}','{{ substr($descarga->horas, 0, 5) }}')">
+                                                                                        ,'{{ $descarga->fechaLlegada }}','{{ substr($descarga->horas, 0, 5) }}', '{{ $descarga->grasa }}', '{{ $descarga->hidraulico }}', '{{ $descarga->anticongelante }}', '{{ $descarga->motor }}', '{{ $descarga->otro }}', '{{ $descarga->direccion }}', '{{ $descarga->direccion }}', '{{ $descarga->otroComment }}')">
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg "
                                                                                                     width="28"
                                                                                                     height="28"
@@ -862,6 +867,18 @@
                             @endforeach
                         </select>  --}}
                         <input type="text" name="nombreSolicitante" id="nombreSolicitanteDescarga" class="inputCaja" placeholder="Nombre del Solicitante..." required>
+                        
+                        <div class="col-12 mt-3" id="obrasBidon" style="display: none">
+                            <label class="labelTitulo">Obra: <span>*</span></label></br>
+                            <select name="obraId" class="form-select" aria-label="Default select example">
+                                @foreach ($vctObras as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>    
+                        
                         <div class="row">
                             {{--  <div class="col-12">
                                 <label for="costoTrabajoDescarga" class="labelTitulo mt-3">Costo de Trabajo:</label>
@@ -936,7 +953,7 @@
                     @method('POST')
                     <div class="modal-body">
                         <input type="hidden" name="id" value="" id="idDescargaEdit">
-                        <label class="labelTitulo">Solicito*:</label>
+                        <label class="labelTitulo">Solicito: *</label>
                         {{--  <select class="form-select inputCaja" name="nombreSolicitante" id="nombreSolicitanteDescarga" required>
                             <option value="">Seleccione</option>
                             @foreach ($usuarios as $item)
@@ -944,6 +961,18 @@
                             @endforeach
                         </select>  --}}
                         <input type="text" name="nombreSolicitante" id="nombreSolicitanteDescargaEdit" class="inputCaja" placeholder="Nombre del Solicitante..." required>
+                        
+                        <div class="col-12 mt-3" id="obrasBidonEdit" style="display: none">
+                            <label class="labelTitulo">Obra: <span>*</span></label></br>
+                            <select name="obraId" class="form-select" aria-label="Default select example">
+                                @foreach ($vctObras as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div class="row">
                             <div class="col-6">
                                 <label for="costoTrabajoDescarga" class="labelTitulo mt-3">Costo de Trabajo*:</label>
@@ -1136,20 +1165,67 @@
     
                             <div class="col-6 my-3">
                                 <label for="inputEmail4" class="labelTitulo">Hora Descarga:</label>
-                                <input type="time" class="inputCaja" class="form-control" id="descargaHoras" name="horas"
+                                <input type="time" class="inputCaja" class="form-control" id="descargaHoras" name="horas" 
                                     value="">
                             </div>
 
                             <div class="col-6 my-3">
                                 <label for="inputEmail4" class="labelTitulo">Litros:</label>
-                                <input type="number" class="inputCaja" step="0.01" min="0.01" class="form-control"
+                                <input type="number" class="inputCaja" step="0.01" min="0.01" class="form-control" placeholder="Cantidad"
                                     id="descargaLitros" name="descargaLitros">
                             </div>
     
                             <div class="col-6 my-3">
                                 <label for="inputEmail4" class="labelTitulo">Km:</label>
-                                <input type="number" class="inputCaja" step="1" min="1" class="form-control" id="descargaKms"
+                                <input type="number" class="inputCaja" step="1" min="1" class="form-control" id="descargaKms" placeholder="Cantidad"
                                     name="kilometrajeNuevo">
+                            </div>
+
+                            <div class="col-6 my-3">
+                                <label class="labelTitulo">Grasas:</label></br>
+                                <input type="number" min="0"
+                                    class="inputCaja" id="grasaLoad" name="grasa" placeholder="Cantidad"
+                                    value="{{ old('grasa') }}" step="0.01">
+                            </div>
+
+                            <div class="col-6 my-3">
+                                <label class="labelTitulo">Aceite Hidráulico:</label></br>
+                                <input type="number" min="0"
+                                    class="inputCaja" id="hidraulicoLoad"
+                                    name="hidraulico" value="{{ old('hidraulico') }}" placeholder="Cantidad"
+                                    step="0.01">
+                            </div>
+
+                            <div class="col-6 my-3">
+                                <label class="labelTitulo">Anticongelante:</label></br>
+                                <input type="number" min="0"
+                                    class="inputCaja" id="AnticongelanteLoad" placeholder="Cantidad"
+                                    name="Anticongelante"
+                                    value="{{ old('anticongelante') }}"
+                                    step="0.01">
+                            </div>
+
+                            <div class="col-6 my-3">
+                                <label class="labelTitulo">Aceite Motor:</label></br>
+                                <input type="number" min="0"
+                                    class="inputCaja" id="motorLoad" name="motor" placeholder="Cantidad"
+                                    value="{{ old('motor') }}" step="0.01">
+                            </div>
+
+                            <div class="col-6 my-3">
+                                <label class="labelTitulo">Aceite Dirección:</label></br>
+                                <input type="number" min="0"
+                                    class="inputCaja" id="direccionLoad" name="direccion" placeholder="Cantidad"
+                                    value="{{ old('direccion') }}" step="0.01">
+                            </div>
+
+                            <div class="col-12 my-3">
+                                <label class="labelTitulo">Otro(s):</label></br>
+                                <input type="number" min="0"
+                                    class="inputCaja" id="otroLoad" name="otro"
+                                    value="{{ old('otro') }}" step="0.01" placeholder="Precio Total">
+                                <textarea class="form-control-textarea border-green mt-2" id="otroCommentLoad" name="otroComment"
+                                value="{{ old('otroComment') }}" rows="3" placeholder="Agregar el Concepto y las Cantidades..."></textarea>     
                             </div>
                         </div>
 
@@ -1457,7 +1533,7 @@
     </script>
 
     <script>
-        function loadDescarga(id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms,fecha, horas) {
+        function loadDescarga(id, maquinariaId, operadorId, servicioId, receptorId, litros, kms, imagenKms,fecha, horas, grasa, hidraulico, anticongelante, motor, otro, direccion, otroComment) {
 
             const txtId = document.getElementById('descargaId');
             txtId.value = id;
@@ -1479,12 +1555,34 @@
             const txtHoras = document.getElementById('descargaHoras');
             txtHoras.value = horas;
 
+            
             const dteFecha = document.getElementById('descargaFecha').value = fecha;
 
             const imagen2 = document.getElementById('descargaImgKms');
             if (imagenKms != 0) {
                 imagen2.src = "{{ asset('/storage/app/public/combustibles') }}/" + imagenKms;
             }
+            
+            const txtgrasaLoad = document.getElementById('grasaLoad');
+            txtgrasaLoad.value = grasa;
+
+            const txthidraulicoLoad = document.getElementById('hidraulicoLoad');
+            txthidraulicoLoad.value = hidraulico;
+            
+            const txtAnticongelanteLoad = document.getElementById('AnticongelanteLoad');
+            txtAnticongelanteLoad.value = anticongelante;
+            
+            const txtmotorLoad = document.getElementById('motorLoad');
+            txtmotorLoad.value = motor;
+            
+            const txtdireccionLoad = document.getElementById('direccionLoad');
+            txtdireccionLoad.value = direccion;
+            
+            const txtotroLoad = document.getElementById('otroLoad');
+            txtotroLoad.value = otro;
+
+            const txtotroCommentLoad = document.getElementById('otroCommentLoad');
+            txtotroCommentLoad.value = otroComment;
 
         }
     </script>
@@ -1565,14 +1663,22 @@
     </script>
 
     <script>
-        function cargaItem(id) {
+        function cargaItem(id, servicioId) {
             const txtId = document.getElementById('idDescarga');
             txtId.value = id;
+
+            const obrasBidonId = document.getElementById('obrasBidon');
+            if(servicioId){
+                obrasBidonId.style.display = 'none';
+            }else{
+                obrasBidonId.style.display = 'block';
+            }
+            
         }
     </script>
 
     <script>
-        function cargaItemEdit(id, nombreSolicitante, costoTrabajo, horaLlegada, observaciones, tipo_solicitud) {
+        function cargaItemEdit(id, nombreSolicitante, costoTrabajo, horaLlegada, observaciones, tipo_solicitud, servicioId, obraId) {
             const txtId = document.getElementById('idDescargaEdit');
             txtId.value = id;
             
@@ -1590,6 +1696,19 @@
 
             const tipo_solicitudId = document.getElementById('checkbox_tipo_solicitudEdit');
             tipo_solicitudId.value = tipo_solicitud;
+
+            const obrasBidonId = document.getElementById('obrasBidonEdit');
+            if(servicioId){
+                obrasBidonId.style.display = 'none';
+            }else{
+                obrasBidonId.style.display = 'block';
+            }
+            console.log('obraId',obraId);
+            for (let i = 0; i < obrasBidonId.options.length; i++) {
+                if (obrasBidonId.options[i].value == obraId) {
+                    obrasBidonId.selectedIndex = i;
+                }
+            }
         }
     </script>
 
@@ -1659,7 +1778,13 @@
                 // Obtiene el valor del atributo 'data-km' de la opción seleccionada
                 var selectedOption = $(this).find(':selected');
                 var kmValue = selectedOption.data('km');
-                
+                if (selectedOption.index() === 1) {
+                    $('#km').prop('disabled', true);
+                    $('#km').css('background-color', 'lightgray');
+                } else {
+                    $('#km').prop('disabled', false);
+                    $('#km').css('background-color', '');
+                }
                 // Actualiza el valor del input 'km'
                 $('#km').val(kmValue);
             });
