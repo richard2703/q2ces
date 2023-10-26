@@ -42,7 +42,7 @@
                                         <table class="table">
                                             <thead class="labelTitulo">
                                                 <tr>
-                                                    <th class="labelTitulo" style="width:30px">ID</th>
+                                                    <th class="labelTitulo" style="width:40px">ID</th>
                                                     <th class="labelTitulo">Nombre</th>
                                                     <th class="labelTitulo">Frecuencia Ejecución</th>
                                                     <th class="labelTitulo">Comentario</th>
@@ -58,7 +58,7 @@
                                                                 title="Ver la información de la Bitácora."
                                                                 style="color: blue">{{ str_pad($item->id, 3, '0', STR_PAD_LEFT) }}</a>
                                                         </td>
-                                                        <td>{{ $item->nombre }}</td>
+                                                        <td>{{ $item->nombre }} <br>{{ $item->codigo }} V{{ $item->version }}  </td>
                                                         <td>{{ $item->frecuencia }}</td>
                                                         <td>{{ $item->comentario }}</td>
                                                         <td>Equipos: {{ $item->totalEquipos }}<br>Grupos de Tareas: {{ $item->totalGrupos }}</td>

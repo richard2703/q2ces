@@ -118,28 +118,6 @@
                                                 </div>
 
                                                 <div class="col-12 col-md-6 col-lg-3 text-center my-4">
-                                                    <a href="{{ route('catalogoProveedor.index') }}" class="">
-                                                        <img src="/img/catalogos/proveedores.svg" alt="Proveedores"
-                                                            title="Proveedores" width="30%"
-                                                            class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">Proveedores
-                                                        </p>
-                                                    </a>
-                                                </div>
-
-                                                <div class="col-12 col-md-6 col-lg-3 text-center my-4">
-                                                    <a href="{{ route('catalogoProveedorCategoria.index') }}"
-                                                        class="">
-                                                        <img src="/img/catalogos/categoriasProveedores.svg"
-                                                            alt="Categorías de Proveedores"
-                                                            title="Categorías de Proveedores" width="30%"
-                                                            class="botonIconoPrincipal">
-                                                        <p class="mt-4 texticonos">Categorías
-                                                            de Proveedores</p>
-                                                    </a>
-                                                </div>
-
-                                                <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                                     <a href="{{ route('catalogoTipoRefaccion.index') }}" class="">
                                                         <img src="/img/catalogos/tiposDeRefaccion.svg"
                                                             alt="Tipos de Refacción" title="Tipos de Refacción"
@@ -370,7 +348,7 @@
                                                     </a>
                                                 </div>
 
-                                                <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                                {{--  <div class="col-12 col-sm-6 col-md-3 text-center my-4">
                                                     <a href="{{ route('tipoAlmacen.index') }}" class="">
                                                         <img src="/img/catalogos/tiposAlmacenes.svg" alt="Comprobantes"
                                                             title="Comprobantes" width="30%"
@@ -383,6 +361,86 @@
                                                 <div class="col-12 col-sm-6 col-md-3 text-center my-4">
                                                     <a href="{{ route('almacenTiraderos.index') }}" class="">
                                                         <img src="/img/catalogos/almacenes.svg" alt="Comprobantes"
+                                                            title="Comprobantes" width="30%"
+                                                            class="botonIconoPrincipal">
+                                                        <p class="mt-4 texticonos">Almacenes y Tiraderos
+                                                        </p>
+                                                    </a>
+                                                </div>  --}}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item" id="AccordionSecondary">
+                                    <h2 class="accordion-header" id="headingThree">
+                                        <button class="accordion-button bacTituloPrincipal" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#clientes" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            Clientes y Proveedores
+                                        </button>
+                                    </h2>
+                                    <div id="clientes" class="accordion-collapse collapse"
+                                        aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <div class="row mt-3 d-flex">
+                                                @can('cliente_create')
+                                                    <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                                        <a href="{{ route('clientes.index') }}" class="">
+                                                            <img src="/img/catalogos/clientes.svg" alt="Conceptos"
+                                                                title="Conceptos" width="30%" class="botonIconoPrincipal">
+                                                            <p class="mt-4 texticonos">Clientes
+                                                            </p>
+                                                        </a>
+                                                    </div>
+                                                @endcan
+
+                                                {{--  <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                                    <a href="{{ route('catalogoComprobantes.index') }}" class="">
+                                                        <img src="/img/catalogos/comprobantes.svg" alt="Comprobantes"
+                                                            title="Comprobantes" width="30%"
+                                                            class="botonIconoPrincipal">
+                                                        <p class="mt-4 texticonos">Comprobantes
+                                                        </p>
+                                                    </a>
+                                                </div>  --}}
+
+                                                <div class="col-12 col-md-6 col-lg-3 text-center my-4">
+                                                    <a href="{{ route('catalogoProveedor.index') }}" class="">
+                                                        <img src="/img/catalogos/proveedores.svg" alt="Proveedores"
+                                                            title="Proveedores" width="30%"
+                                                            class="botonIconoPrincipal">
+                                                        <p class="mt-4 texticonos">Proveedores
+                                                        </p>
+                                                    </a>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 col-lg-3 text-center my-4">
+                                                    <a href="{{ route('catalogoProveedorCategoria.index') }}"
+                                                        class="">
+                                                        <img src="/img/catalogos/categoriasProveedores.svg"
+                                                            alt="Categorías de Proveedores"
+                                                            title="Categorías de Proveedores" width="30%"
+                                                            class="botonIconoPrincipal">
+                                                        <p class="mt-4 texticonos">Categorías
+                                                            de Proveedores</p>
+                                                    </a>
+                                                </div>
+
+                                                <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                                    <a href="{{ route('tipoAlmacen.index') }}" class="">
+                                                        <img src="/img/catalogos/TiposAlmacenes.svg" alt="Comprobantes"
+                                                            title="Comprobantes" width="30%"
+                                                            class="botonIconoPrincipal">
+                                                        <p class="mt-4 texticonos">Tipos de Almacen/Tiraderos
+                                                        </p>
+                                                    </a>
+                                                </div>
+
+                                                <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                                    <a href="{{ route('almacenTiraderos.index') }}" class="">
+                                                        <img src="/img/catalogos/Almacenes.svg" alt="Comprobantes"
                                                             title="Comprobantes" width="30%"
                                                             class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Almacenes y Tiraderos

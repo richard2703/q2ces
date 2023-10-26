@@ -37,10 +37,13 @@ class tareaController extends Controller {
             DB::raw( 'tareaCategoria.nombre AS categoria' ),
             DB::raw( 'tareaTipo.nombre AS tipo' ),
             DB::raw( 'tareaUbicacion.nombre AS ubicacion' ),
+            DB::raw( 'tipoValorTarea.nombre AS tipoValor' ),
+            DB::raw( 'tipoValorTarea.controlHtml AS controlHtml' ),
         )
         ->leftJoin( 'tareaCategoria', 'tareaCategoria.id', '=', 'tarea.categoriaId' )
         ->leftJoin( 'tareaTipo', 'tareaTipo.id', '=', 'tarea.tipoId' )
         ->leftJoin( 'tareaUbicacion', 'tareaUbicacion.id', '=', 'tarea.ubicacionId' )
+        ->leftJoin( 'tipoValorTarea', 'tipoValorTarea.id', '=', 'tarea.tipoValorId' )
         ->orderBy( 'created_at', 'desc' )->paginate( 15 );
 
         return view( 'tareas.tareas', compact( 'vctTareas', 'vctCategorias', 'vctTipos', 'vctUbicaciones', 'vctTipoValor' ) );
@@ -72,7 +75,7 @@ class tareaController extends Controller {
     */
 
     public function store( Request $request ) {
-    //     dd( $request );
+        //     dd( $request );
         abort_if ( Gate::denies( 'tarea_create' ), 403 );
 
         $request->validate( [
@@ -150,6 +153,11 @@ class tareaController extends Controller {
         ] );
 
         $data = $request->all();
+
+        $data[ 'requiereUnidadMedida' ] = ( $request[ 'requiereUnidadMedida' ] == 'on'?1:0 );
+        $data[ 'requiereLimites' ] = ( $request[ 'requiereLimites' ] == 'on'?1:0 );
+        $data[ 'requiereEscala' ] = ( $request[ 'requiereEscala' ] == 'on'?1:0 );
+        $data[ 'requierePeriodo' ] = ( $request[ 'requierePeriodo' ] == 'on'?1:0 );
 
         $tarea = tarea::where( 'id', $data[ 'tareaId' ] )->first();
 

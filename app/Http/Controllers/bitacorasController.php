@@ -93,12 +93,16 @@ class bitacorasController extends Controller {
         $request->validate( [
             'nombre' => 'required|max:250',
             'comentario' => 'nullable|max:500',
+            'codigo' => 'required|max:10',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+            'codigo.max' => 'El campo código excede el límite de caracteres permitidos.',
+            'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
         ] );
         $bitacoras = $request->all();
+        $bitacoras['codigo']= strtoupper(trim($request['codigo']));
 
         $bitacoras = bitacoras::create( $bitacoras );
         Session::flash( 'message', 1 );
@@ -175,9 +179,12 @@ class bitacorasController extends Controller {
         $request->validate( [
             'nombre' => 'required|max:250',
             'comentario' => 'nullable|max:500',
+            'codigo' => 'required|max:10',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
+            'codigo.required' => 'El campo código es obligatorio.',
+            'codigo.max' => 'El campo código excede el límite de caracteres permitidos.',
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
         ] );
 
@@ -189,6 +196,8 @@ class bitacorasController extends Controller {
             $bitacora->nombre = $request['nombre'];
             $bitacora->comentario = $request['comentario'];
             $bitacora->frecuenciaId = $request['frecuenciaId'];
+            $bitacora->codigo = strtoupper(trim($request['codigo']));
+            $bitacora->version = $request['version'];
             $bitacora->update();
             // dd( $data );
 

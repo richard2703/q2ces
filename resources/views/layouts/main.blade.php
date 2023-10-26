@@ -124,7 +124,7 @@
 
         <ul class="sidebar-nav" id="sidebar-nav">
 
-            @can('calendario_show')
+            @can('calendario_index')
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'calendario' ? '' : 'collapsed' }}"
                         href="{{ route('calendarioPrincipal.index') }}">
@@ -137,7 +137,7 @@
                 </li>
             @endcan
 
-            @can('asistencia_show')
+            @can('asistencia_index')
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'asistencia' ? '' : 'collapsed' }}"
                         href="{{ route('asistencia.index') }}">
@@ -151,7 +151,7 @@
                 </li>
             @endcan
 
-            @can('cajachica_show')
+            @can('cajachica_index')
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'cajaChica' ? '' : 'collapsed' }}"
                         href="{{ route('cajaChica.index') }}">
@@ -164,7 +164,7 @@
                 </li>
             @endcan
 
-            @can('cajachica_show')
+            @can('serviciosTrasporte_index')
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'servicios' ? '' : 'collapsed' }}"
                         href="{{ route('serviciosTrasporte.index') }}">
@@ -173,6 +173,18 @@
                             currency_exchange
                         </span>
                         <span>Servicios</span>
+                    </a>
+                </li>
+            @endcan
+            @can('servicio_Chofer')
+                <li class="nav-item collapsed">
+                    <a class="nav-link {{ $activePage == 'servicios' ? '' : 'collapsed' }}"
+                        href="{{ route('serviciosTrasporte.misServicios') }}">
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            currency_exchange
+                        </span>
+                        <span>Mis Servicios</span>
                     </a>
                 </li>
             @endcan
@@ -244,7 +256,7 @@
                 </li>
             @endcan
 
-            @can('bitacora_index')
+            @can('checkList_index')
                 <li class="nav-item ">
                     <a class="nav-link {{ $activePage == 'bitacoras' ? '' : 'collapsed' }}"
                         data-bs-target="#bitacora-nav" data-bs-toggle="collapse" href="#">
@@ -257,6 +269,22 @@
                     </a>
                     <ul id="bitacora-nav" class="nav-content collapse {{ $activePage == 'bitacoras' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
+
+                        @can('checkList_assign_bitacoras')
+                            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                                <a href="{{ route('checkList.programacion') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Asignación de Trabajo</span>
+                                </a>
+                            </li>
+                        @endcan
+
+                        @can('checkList_execute')
+                            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                                <a href="{{ route('checkList.pendientes') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Mis Pendientes</span>
+                                </a>
+                            </li>
+                        @endcan
 
                         @can('checkList_show')
                             <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
@@ -309,8 +337,8 @@
                         data-bs-parent="#sidebar-nav">
                         @can('maquinaria_index')
                             {{-- <li> --}}
-                                {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
-                                {{-- <a href="{{ route('maquinaria.distribucion') }}" class="">
+                            {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
+                            {{-- <a href="{{ route('maquinaria.distribucion') }}" class="">
                                     <i class="bi bi-circle"></i><span>Distribución General</span>
                                 </a>
                             </li> --}}
@@ -482,15 +510,6 @@
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('obras.create') }}" class="">
                                     <i class="bi bi-circle"></i><span>Nuevo Obra</span>
-                                </a>
-                            </li>
-                        @endcan
-
-                        @can('cliente_create')
-                            <li>
-                                {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
-                                <a href="{{ route('clientes.index') }}" class="">
-                                    <i class="bi bi-circle"></i><span>Clientes</span>
                                 </a>
                             </li>
                         @endcan

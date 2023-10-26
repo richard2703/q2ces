@@ -508,51 +508,53 @@ class personalController extends Controller
             ->orderBy('nombres', 'asc')->get();
         // $documentos = docs::where( 'tipoId', '1' )->orderBy( 'nombre', 'asc' )->get();
 
-        $nomina->decSalarioDiario = ($nomina->diario);
-        $nomina->decSalarioDiarioIntegrado = round($nomina->decSalarioDiario * 1.05137, 2);
-        $nomina->decSalarioMensual = round($nomina->decSalarioDiario * 30, 2);
-        $nomina->decSalarioMensualIntegrado = round($nomina->decSalarioDiarioIntegrado * 30, 2);
-        $nomina->decEstado = round($nomina->decSalarioMensual * 0.025, 2);
-        $nomina->decImss = round($nomina->decSalarioMensualIntegrado  * 0.0938, 2);
-        $nomina->decImssRiesgo = round($nomina->decSalarioMensualIntegrado * 0.0658875, 2);
-        $nomina->decAfore = round($nomina->decSalarioMensualIntegrado * 0.0628, 2);
-        $nomina->decInfonavit = round($nomina->decSalarioMensualIntegrado * 0.05, 2);
-        $nomina->decVacaciones = round($nomina->decSalarioDiario * 6, 2);
-        $nomina->decPrimaVacacional = round($nomina->decVacaciones * 0.25, 2);
-        $nomina->decAguinaldo = round($nomina->decSalarioDiario * 15, 2);
-        $nomina->decTotal = round($nomina->decSalarioMensual + $nomina->decEstado + $nomina->decImss + $nomina->decImssRiesgo +
-            $nomina->decAfore + $nomina->decInfonavit + $nomina->decVacaciones + $nomina->decPrimaVacacional + $nomina->decAguinaldo + $nomina->isr, 2);
-        //*** listado de maquinaria que puede asignarse */
-        $vctMaquinaria = maquinaria::select(
-            'maquinaria.*',
-            'maquinaria.nombre as maquina',
-            'obras.nombre as obra',
-            'obras.id as obraId',
-            'personal.id as operadorId',
-            'obraMaqPer.combustible as cargaCombustible',
-            'obraMaqPer.inicio as fechaInicial',
-            'obraMaqPer.fin as fechaFinal',
-            'obraMaqPer.id as recordId',
-            DB::raw("CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as operador")
-        )
-            ->leftjoin('obraMaqPer', 'obraMaqPer.maquinariaId', 'maquinaria.id')
-            ->leftjoin('personal', 'personal.id', 'obraMaqPer.personalId')
-            ->leftjoin('obras', 'obras.id', 'obraMaqPer.obraId')
-            ->whereNull('compania')->paginate(15);
-        //*** listado de obras */
-        $vctObras = obras::select('obras.*', 'clientes.nombre as cliente')
-            ->join('clientes', 'clientes.id', 'obras.clienteId')
-            ->where('obras.id', '<>', 2)->get();
-        //*** asignaciones */
-        $vctAsignacion = obraMaqPer::select(
-            'obraMaqPer.*',
-            'obraMaqPer.id as recordId',
-            'obras.nombre as obra',
-            'maquinaria.nombre as maquina'
-        )
-            ->leftjoin('obras', 'obras.id', 'obraMaqPer.obraId')
-            ->leftjoin('maquinaria', 'maquinaria.id', 'obraMaqPer.maquinariaId')
-            ->where('personalId', $personal->id)->first();
+    $nomina->decSalarioDiario = ( $nomina->diario );
+    $nomina->decSalarioDiarioIntegrado = round( $nomina->decSalarioDiario * 1.05137, 2 );
+    $nomina->decSalarioMensual = round( $nomina->decSalarioDiario * 30, 2 );
+    $nomina->decSalarioMensualIntegrado = round( $nomina->decSalarioDiarioIntegrado * 30, 2 );
+    $nomina->decEstado = round( $nomina->decSalarioMensual * 0.025, 2 );
+    $nomina->decImss = round( $nomina->decSalarioMensualIntegrado  * 0.0938, 2 );
+    $nomina->decImssRiesgo = round( $nomina->decSalarioMensualIntegrado * 0.0658875, 2 );
+    $nomina->decAfore = round( $nomina->decSalarioMensualIntegrado * 0.0628, 2 );
+    $nomina->decInfonavit = round( $nomina->decSalarioMensualIntegrado * 0.05, 2 );
+    $nomina->decVacaciones = round( $nomina->decSalarioDiario * 6, 2 );
+    $nomina->decPrimaVacacional = round( $nomina->decVacaciones * 0.25, 2 );
+    $nomina->decAguinaldo = round( $nomina->decSalarioDiario * 15, 2 );
+    $nomina->decTotal = round( $nomina->decSalarioMensual + $nomina->decEstado + $nomina->decImss + $nomina->decImssRiesgo +
+    $nomina->decAfore + $nomina->decInfonavit + $nomina->decVacaciones + $nomina->decPrimaVacacional + $nomina->decAguinaldo + $nomina->isr, 2 );
+    //*** listado de maquinaria que puede asignarse */
+    $vctMaquinaria = maquinaria::select(
+        'maquinaria.*',
+        'maquinaria.nombre as maquina',
+        'obras.nombre as obra',
+        'obras.id as obraId',
+        'personal.id as operadorId',
+        'obraMaqPer.combustible as cargaCombustible',
+        'obraMaqPer.inicio as fechaInicial',
+        'obraMaqPer.fin as fechaFinal',
+        'obraMaqPer.id as recordId',
+        DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as operador" )
+    )
+    ->leftjoin( 'obraMaqPer', 'obraMaqPer.maquinariaId', 'maquinaria.id' )
+    ->leftjoin( 'personal', 'personal.id', 'obraMaqPer.personalId' )
+    ->leftjoin( 'obras', 'obras.id', 'obraMaqPer.obraId' )
+    ->whereNull( 'compania' )
+    ->where( 'maquinaria.estatusId', '=', 1 )
+    ->paginate( 15 );
+
+    //*** listado de obras */
+    $vctObras = obras::select( 'obras.*', 'clientes.nombre as cliente' )
+    ->join( 'clientes', 'clientes.id', 'obras.clienteId' )
+    ->where( 'obras.id', '<>', 2 )->get();
+    //*** asignaciones */
+    $vctAsignacion = obraMaqPer::select(
+        'obraMaqPer.*',
+        'obraMaqPer.id as recordId',
+        'obras.nombre as obra',
+        'maquinaria.nombre as maquina' )
+        ->leftjoin( 'obras', 'obras.id', 'obraMaqPer.obraId' )
+        ->leftjoin( 'maquinaria', 'maquinaria.id', 'obraMaqPer.maquinariaId' )
+        ->where( 'personalId', $personal->id )->first();
 
         if (!$vctAsignacion) {
             //*** si no existe asignacion */
