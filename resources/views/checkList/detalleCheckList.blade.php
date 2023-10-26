@@ -58,8 +58,8 @@
 
                                                 <div class=" col-12">
                                                     <label class="labelTitulo">Comentarios:</label></br>
-                                                    <textarea class="form-control" placeholder="Escribe tu comentario aquí sobre la revisión del CheckList" id="comentario" readonly disabled="true"
-                                                        name="comentario" spellcheck="true">{{ $checkList->comentario }}</textarea>
+                                                    <textarea class="form-control" placeholder="Escribe tu comentario aquí sobre la revisión del CheckList" id="comentario"
+                                                        readonly disabled="true" name="comentario" spellcheck="true">{{ $checkList->comentario }}</textarea>
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
@@ -103,6 +103,14 @@
                                                 $intCont = 0;
                                                 $blnNuevaSeccion = false;
                                                 $objPresentacion = new checkListPresentacion();
+                                                /*** directorio contenedor de su información */
+                                                $strMaquinaria = str_pad($checkList->identificador, 4, '0', STR_PAD_LEFT);
+                                                //*** folio consecutivo del checklist */
+                                                $intFolioCheckList = str_pad($checkList->id, 4, '0', STR_PAD_LEFT);
+                                                //*** codigo y version de bitacora */
+                                                $strBitacora = str_replace(' ', '_', trim($checkList->codigo) . '_v' . trim($checkList->version));
+
+                                                $pathImagen = '/storage/maquinaria/' . $strMaquinaria . '/checkList/' . $strBitacora;
                                                 ?>
                                                 @forelse ($records as $item)
                                                     <?php
@@ -132,9 +140,12 @@
                                                     <tr>
                                                         <td>{{ $item->tarea }} </td>
                                                         <td>
-                                                            {{-- <?php //echo $objPresentacion->getControlByTarea($item->tareaId, $item->resultado, $intCont); ?> --}}
+                                                            @php
+                                                                if (is_null($item->ruta) == false) {
+                                                                    echo '<input type="image" width="100" id="image'.$item->tareaId.'" alt="Imagen" src="'. asset( $pathImagen . '/' . $item->ruta) . '" />';
+                                                                }
+                                                            @endphp
                                                             <p class="text">{{ $item->resultado }} </p>
-                                                        </td>
                                                         </td>
                                                     </tr>
 
@@ -149,6 +160,12 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                </div>
+
+                                <div class="col-12 text-center m-3 pt-2">
+                                    <a href="{{ route('checkList.index') }}">
+                                        <button type="button" class="btn btn-danger">Regresar</button>
+                                    </a>
                                 </div>
 
                             </div>

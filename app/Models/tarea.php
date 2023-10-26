@@ -29,6 +29,9 @@ class tarea extends Model {
         'requierePeriodo',
         'fechaInicial',
         'fechaFinal',
+        'requiereUnidadMedida',
+        'unidadMedida',
+        'requiereImagen',
     ];
 
 }

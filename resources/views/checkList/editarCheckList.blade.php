@@ -163,15 +163,14 @@
                                     </table>
                                 </div>
 
-
                             </div>
 
-                            <div class="col-12 text-center mt-5 pt-5">
+                            <div class="col-12 text-center m-3 pt-2">
                                 <a href="{{ route('checkList.index') }}">
                                     <button type="button" class="btn btn-danger">Cancelar</button>
                                 </a>
                                 <a href="#">
-                                    <button type="submit" class="btn botonGral mb-3">Guardar</button>
+                                    <button type="submit" class="btn botonGral">Guardar</button>
                                 </a>
                             </div>
 
