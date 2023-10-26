@@ -124,7 +124,7 @@
 
         <ul class="sidebar-nav" id="sidebar-nav">
 
-            @can('calendario_show')
+            @can('calendario_index')
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'calendario' ? '' : 'collapsed' }}"
                         href="{{ route('calendarioPrincipal.index') }}">
@@ -137,7 +137,7 @@
                 </li>
             @endcan
 
-            @can('asistencia_show')
+            @can('asistencia_index')
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'asistencia' ? '' : 'collapsed' }}"
                         href="{{ route('asistencia.index') }}">
@@ -151,7 +151,7 @@
                 </li>
             @endcan
 
-            @can('cajachica_show')
+            @can('cajachica_index')
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'cajaChica' ? '' : 'collapsed' }}"
                         href="{{ route('cajaChica.index') }}">
@@ -164,7 +164,7 @@
                 </li>
             @endcan
 
-            @can('cajachica_show')
+            @can('serviciosTrasporte_index')
                 <li class="nav-item collapsed">
                     <a class="nav-link {{ $activePage == 'servicios' ? '' : 'collapsed' }}"
                         href="{{ route('serviciosTrasporte.index') }}">
@@ -173,6 +173,18 @@
                             currency_exchange
                         </span>
                         <span>Servicios</span>
+                    </a>
+                </li>
+            @endcan
+            @can('servicio_Chofer')
+                <li class="nav-item collapsed">
+                    <a class="nav-link {{ $activePage == 'servicios' ? '' : 'collapsed' }}"
+                        href="{{ route('serviciosTrasporte.misServicios') }}">
+                        {{--  <i class="bi bi-shop"></i>  --}}
+                        <span class="material-icons">
+                            currency_exchange
+                        </span>
+                        <span>Mis Servicios</span>
                     </a>
                 </li>
             @endcan
