@@ -1653,6 +1653,7 @@ create table asistencia(
     asistenciaId bigint(20) unsigned NOT NULL,
     fecha date not NULL,
     horasExtra int NULL,
+    totalHorasExtra int NULL,
     horasAnticipada int NULL,
     horasRetraso int NULL,
     tipoHoraExtraId bigint(20) unsigned null,

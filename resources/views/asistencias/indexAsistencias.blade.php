@@ -117,7 +117,7 @@ $anioSeleccionado = $intAnio;
                                                 <th class="labelTitulo" style="width:140px !important">Asistencia</th>
                                                 <th class="labelTitulo">Faltas</th>
                                                 <th class="labelTitulo">Otros Días</th>
-                                                <th class="labelTitulo">Tiempo Extra</th>
+                                                <th class="labelTitulo">Horas Extra</th>
                                                 <th class="labelTitulo " style="width:140px !important">Acciones</th>
                                             </thead>
                                             <tbody class="text-center">
@@ -136,12 +136,11 @@ $anioSeleccionado = $intAnio;
                                                         </td>
                                                         <td>
                                                             <?php
-
-                                                            $intHoras = (int) ($item->extras / 60);
-                                                            $intMinutos = $item->extras % 60;
+                                                            // $intHoras = (int) ($item->extras / 60);
+                                                            // $intMinutos = $item->extras % 60;
                                                             ?>
-                                                            {{ str_pad($intHoras, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutos, 2, '0', STR_PAD_LEFT) }}
-                                                            {{-- {{ $item->extras }} --}}
+                                                            {{-- {{ str_pad($intHoras, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutos, 2, '0', STR_PAD_LEFT) }} --}}
+                                                            {{ $item->horasExtras }}
                                                         </td>
                                                         <td class="td-actions">
                                                             @can('asistencia_show')

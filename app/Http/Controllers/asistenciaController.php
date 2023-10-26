@@ -62,6 +62,7 @@ class asistenciaController extends Controller {
             DB::raw( 'COUNT( if ( asistencia.asistenciaId = 4, 1, null ) ) as vacaciones' ),
             DB::raw( 'COUNT( if ( asistencia.asistenciaId = 5, 1, null ) ) as descansos' ),
             DB::raw( 'SUM( asistencia.horasExtra )as extras' ),
+            DB::raw( 'SUM( asistencia.totalHorasExtra )as horasExtras' ),
             DB::raw( 'COUNT( asistencia.id )as dias' )
         )
         ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
@@ -326,14 +327,19 @@ class asistenciaController extends Controller {
                         } else {
                             $vctDebug[] = 'Sin descuento de tiempo por retraso de entrada'  ;
                             $objRecord->horasExtra = $intMinutos;
-
                         }
 
                     } else {
                         //*** se marca en 0 y se marca que no aplica */
                         $vctDebug[] = 'No tengo tiempo extra definido todavia'  ;
                         $objRecord->horasExtra = 0;
+                        $objRecord->totalHorasExtra = 0;
                     }
+
+                    //*** obtenemos las horas extras a pagar */
+                    $intHoras = ( int ) (( $objRecord->horasExtra + $objRecord->horasAnticipada ) / 60 );
+                    $intHorasFraccionadas = ( ( $objRecord->horasExtra + $objRecord->horasAnticipada ) >= 35 ? 1 : 0 );
+                    $objRecord->totalHorasExtra = $intHoras + $intHorasFraccionadas;
 
                     $objRecord->hSalida = $request[ 'hSalida' ][ $i ];
 
@@ -503,6 +509,11 @@ class asistenciaController extends Controller {
                         //$objAsistencia->tipoHoraExtraId = 1;
 
                     }
+
+                    //*** obtenemos las horas extras a pagar */
+                    $intHoras = ( int ) (( $objAsistencia->horasExtra + $objAsistencia->horasAnticipada ) / 60 );
+                    $intHorasFraccionadas = ( ( $objAsistencia->horasExtra + $objAsistencia->horasAnticipada ) >= 35 ? 1 : 0 );
+                    $objAsistencia->totalHorasExtra = $intHoras + $intHorasFraccionadas;
 
                     $objAsistencia->hSalida = $request[ 'hSalida' ][ $i ];
 
@@ -1428,8 +1439,12 @@ class asistenciaController extends Controller {
                         //*** se marca en 0 y se marca que no aplica */
                         $objAsistencia->horasExtra = 0;
                         // $objAsistencia->tipoHoraExtraId = 1;
-
                     }
+
+                    //*** obtenemos las horas extras a pagar */
+                    $intHoras = ( int ) (( $objAsistencia->horasExtra + $objAsistencia->horasAnticipada ) / 60 );
+                    $intHorasFraccionadas = ( ( $objAsistencia->horasExtra + $objAsistencia->horasAnticipada ) >= 35 ? 1 : 0 );
+                    $objAsistencia->totalHorasExtra = $intHoras + $intHorasFraccionadas;
 
                 } else {
                     //*** se marca en 0 y se marca que no aplica */
