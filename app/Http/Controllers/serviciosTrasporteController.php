@@ -222,4 +222,31 @@ class serviciosTrasporteController extends Controller
         $serviciosTrasporte->save();
         return redirect()->action([serviciosTrasporteController::class, 'misServicios']);
     }
+
+    public function printTicketChofer($id)
+    {
+        $servicio = serviciosTrasporte::join('personal', 'personal.id', '=', 'serviciosTrasporte.personalId')
+            ->join('maquinaria', 'maquinaria.id', 'serviciosTrasporte.equipoId')
+            ->join('obras', 'obras.id', 'serviciosTrasporte.obraId')
+            ->join('clientes', 'clientes.id', 'obras.clienteId')
+            ->join('almacenTiraderos', 'almacenTiraderos.id', 'serviciosTrasporte.almacenId')
+            ->select(
+                'serviciosTrasporte.id',
+                'personal.nombres',
+                'personal.apellidoP',
+                'maquinaria.nombre as equipo',
+                'clientes.nombre as cliente',
+                'obras.nombre as obra',
+                'serviciosTrasporte.recibe',
+                'almacenTiraderos.nombre as almacen',
+                'serviciosTrasporte.horaEntrega',
+                'serviciosTrasporte.comentario',
+            )
+            ->where('serviciosTrasporte.id', $id)
+            ->first();
+
+        // dd('printTicketChofer', $servicio);
+
+        return view('serviciosTrasporte.ticketChofer', compact('servicio'));
+    }
 }
