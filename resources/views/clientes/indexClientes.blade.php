@@ -56,6 +56,17 @@
                                                         <td class="text-center">{{ $cliente->estatus }}</td>
 
                                                         <td class="td-actions text-center">
+                                                            @can('catalogos_destroy')
+                                                                <form action="{{ route('facturaCliente.index') }}"
+                                                                    method="GET" style="display: inline-block;">
+                                                                    @csrf
+                                                                    <button class="btnSinFondo" type="submit" rel="tooltip">
+                                                                        <div class="" style="font-size: 25px">
+                                                                            <i class="fas fa-file-invoice-dollar"></i>
+                                                                        </div>
+                                                                    </button>
+                                                                </form>
+                                                            @endcan
                                                             @can('cliente_edit')
                                                                 <a href="{{ route('clientes.edit', $cliente->id) }}"
                                                                     class="">

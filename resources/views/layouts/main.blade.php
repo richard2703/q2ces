@@ -169,9 +169,7 @@
                     <a class="nav-link {{ $activePage == 'servicios' ? '' : 'collapsed' }}"
                         href="{{ route('serviciosTrasporte.index') }}">
                         {{--  <i class="bi bi-shop"></i>  --}}
-                        <span class="material-icons">
-                            currency_exchange
-                        </span>
+                        <i class="fas fa-truck"></i>
                         <span>Servicios</span>
                     </a>
                 </li>
@@ -181,9 +179,8 @@
                     <a class="nav-link {{ $activePage == 'servicios' ? '' : 'collapsed' }}"
                         href="{{ route('serviciosTrasporte.misServicios') }}">
                         {{--  <i class="bi bi-shop"></i>  --}}
-                        <span class="material-icons">
-                            currency_exchange
-                        </span>
+                        <i class="fas fa-truck"></i>
+
                         <span>Mis Servicios</span>
                     </a>
                 </li>

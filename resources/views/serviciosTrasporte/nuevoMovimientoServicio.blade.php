@@ -80,8 +80,22 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Personal: <span>*</span></label></br>
+                                                <label class="labelTitulo">Operador: <span>*</span></label></br>
                                                 <select id="personal" name="personalId" class="form-select" required
+                                                    aria-label="Default select example">
+                                                    <option selected value="">Seleccione</option>
+                                                    @forelse ($personal as $persona)
+                                                        <option value="{{ $persona->id }}">{{ $persona->nombres }}
+                                                            {{ $persona->apellidoP }}
+                                                        </option>
+                                                    @empty
+                                                    @endforelse
+                                                </select>
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                <label class="labelTitulo">Maniobrista: <span>*</span></label></br>
+                                                <select id="maniobristaId" name="maniobristaId" class="form-select" required
                                                     aria-label="Default select example">
                                                     <option selected value="">Seleccione</option>
                                                     @forelse ($personal as $persona)
@@ -130,6 +144,11 @@
                                                     @empty
                                                     @endforelse
                                                 </select>
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                <label class="labelTitulo">Trabajo y/o Servicio:</label></br>
+                                                <textarea id="servicio" class="inputCaja" name="servicio" rows="5" cols="20"></textarea>
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">

@@ -96,13 +96,29 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Personal: <span>*</span></label></br>
+                                                <label class="labelTitulo">Operador: <span>*</span></label></br>
                                                 <select id="personal" name="personalId" class="form-select" required
                                                     aria-label="Default select example">
                                                     <option selected value="">Seleccione</option>
                                                     @forelse ($personal as $persona)
                                                         <option value="{{ $persona->id }}"
                                                             {{ $serviciosTrasporte->personalId == $persona->id ? 'selected' : '' }}>
+                                                            {{ $persona->nombres }}
+                                                            {{ $persona->apellidoP }}
+                                                        </option>
+                                                    @empty
+                                                    @endforelse
+                                                </select>
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                <label class="labelTitulo">Maniobrista: <span>*</span></label></br>
+                                                <select id="maniobristaId" name="maniobristaId" class="form-select" required
+                                                    aria-label="Default select example">
+                                                    <option selected value="">Seleccione</option>
+                                                    @forelse ($personal as $persona)
+                                                        <option value="{{ $persona->id }}"
+                                                            {{ $serviciosTrasporte->maniobristaId == $persona->id ? 'selected' : '' }}>
                                                             {{ $persona->nombres }}
                                                             {{ $persona->apellidoP }}
                                                         </option>
@@ -125,6 +141,14 @@
                                                     @empty
                                                     @endforelse
                                                 </select>
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                <label class="labelTitulo">Odometro: <span>*</span></label></br>
+                                                <input type="number" class="inputCaja text-right" id="odometro"
+                                                    name="odometro" maxlength="100000" step="0.01" min="0.01"
+                                                    max="99999" placeholder="ej. 100"
+                                                    value="{{ $serviciosTrasporte->odometro }}">
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
@@ -183,6 +207,29 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                <label class="labelTitulo">Costo Material: <span>*</span></label></br>
+                                                <input type="number" class="inputCaja text-right" id="costoMaterial"
+                                                    name="costoMaterial" maxlength="100000" step="0.01"
+                                                    min="0.01" max="99999" placeholder="ej. 100"
+                                                    value="{{ $serviciosTrasporte->costoMaterial }}">
+                                            </div>
+                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                <label class="labelTitulo">Costo Servicio: <span>*</span></label></br>
+                                                <input type="number" class="inputCaja text-right" id="costoServicio"
+                                                    name="costoServicio" maxlength="100000" step="0.01"
+                                                    min="0.01" max="99999" placeholder="ej. 100"
+                                                    value="{{ $serviciosTrasporte->costoServicio }}">
+                                            </div>
+                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                <label class="labelTitulo">Costo Mano de Obra: <span>*</span></label></br>
+                                                <input type="number" class="inputCaja text-right" id="costoMano"
+                                                    name="costoMano" maxlength="100000" step="0.01" min="0.01"
+                                                    max="99999" placeholder="ej. 100"
+                                                    value="{{ $serviciosTrasporte->costoMano }}">
+                                            </div>
+
+
+                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Estatus:</label></br>
                                                 <select id="estatus" name="estatus" class="form-select"
                                                     aria-label="Default select example">
@@ -203,8 +250,13 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                                <label class="labelTitulo">Trabajo y/o Servicio:</label></br>
+                                                <textarea id="servicio" class="inputCaja" name="servicio" rows="5" cols="20">{{ $serviciosTrasporte->servicio }}</textarea>
+                                            </div>
+
+                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Comentario:</label></br>
-                                                <textarea id="comentario" class="inputCaja" name="comentario" rows="5" cols="20"></textarea>
+                                                <textarea id="comentario" class="inputCaja" name="comentario" rows="5" cols="20">{{ $serviciosTrasporte->comentario }}</textarea>
                                             </div>
 
                                         </div>
