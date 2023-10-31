@@ -220,8 +220,11 @@ class checkListRegistrosController extends Controller {
         ->orderBy( 'grupo', 'asc' )
         ->where( 'checkListRegistros.checkListId', '=', $id )->get();
 
+        $maquinaria = maquinaria::select( 'maquinaria.*' )->where( 'id', '=', $checkList->maquinariaId )->first();
+        $bitacora = bitacoras::select( 'bitacoras.*' )->where( 'id', '=', $checkList->bitacoraId )->first();
+
         // dd( $vctRecords );
-        return view( 'checkList.editarCheckList', compact( 'checkList', 'vctRecords' ) );
+        return view( 'checkList.editarCheckList', compact( 'maquinaria','bitacora', 'checkList', 'vctRecords' ) );
     }
 
     /**
@@ -280,6 +283,25 @@ class checkListRegistrosController extends Controller {
                         $vctDebug[] = $objRegistro->resultado = $objTarea->etiquetaValor( $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ][ 0 ], $request[ 'tareaId' ][ $i ] );
                     } else {
                         $vctDebug[] = $objRegistro->resultado = $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ] ;
+                    }
+
+                    $vctDebug[] =  'Imagen: ' . $request[ 'foto' . $request[ 'tareaId' ][ $i ] ]   ;
+
+                    //*** para el manejo de imagenes */
+                    if ( $request->hasFile( 'foto' . $request[ 'tareaId' ][ $i ] ) ) {
+                        /*** directorio contenedor de su información */
+                        $pathMaquinaria = str_pad( $request[ 'identificador' ], 4, '0', STR_PAD_LEFT );
+                        //*** folio consecutivo del checklist */
+                        $intFolioCheckList = str_pad( $objCheckList->id, 4, '0', STR_PAD_LEFT );
+                        //*** codigo y version de bitacora */
+                        $strBitacora = str_replace( ' ', '_', trim( $request[ 'codigo' ] ) . '_v' . trim( $request[ 'version' ] ) );
+
+                        $objRegistro->ruta = $intFolioCheckList .'_'. $request[ 'tareaId' ][ $i ] .'_'. time() . '_' . 'Imagen.' . $request->file( 'foto' . $request[ 'tareaId' ][ $i ] )->getClientOriginalExtension();
+                        $vctDebug[] =  'Se guarda en: ' . '/public/maquinaria/' . $pathMaquinaria. '/checkList/' . $strBitacora .    '/' .  $objRegistro->ruta ;
+                        $request->file( 'foto' . $request[ 'tareaId' ][ $i ] )->storeAs( '/public/maquinaria/' . $pathMaquinaria. '/checkList/' . $strBitacora,  $objRegistro->ruta );
+
+                    } else {
+                        $vctDebug[] =  'No tengo una imagen';
                     }
 
                     $objRegistro->save();

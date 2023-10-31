@@ -302,6 +302,16 @@
                                                     </a>
                                                 </div>
 
+                                                <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                                    <a href="{{ route('catalogoManoDeObra.index') }}"
+                                                        class="">
+                                                        <img src="/img/catalogos/tiposmantenimientos.svg"
+                                                            alt="Conceptos de Mano de Obra" title="Conceptos de Mano de Obra"
+                                                            width="30%" class="botonIconoPrincipal">
+                                                        <p class="mt-4 texticonos">Conceptos de Mano de Obra</p>
+                                                    </a>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>

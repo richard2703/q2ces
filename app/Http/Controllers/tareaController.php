@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\grupo;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -23,9 +24,10 @@ class tareaController extends Controller {
     * @return \Illuminate\Http\Response
     */
 
-    public function index() {
+    public function index(Request $request) {
 
         abort_if ( Gate::denies( 'tarea_index' ), 403 );
+        $estatus = $request->input('estatus', '0');
 
         $vctCategorias = tareaCategoria::all();
         $vctTipos = tareaTipo::all();
@@ -39,14 +41,26 @@ class tareaController extends Controller {
             DB::raw( 'tareaUbicacion.nombre AS ubicacion' ),
             DB::raw( 'tipoValorTarea.nombre AS tipoValor' ),
             DB::raw( 'tipoValorTarea.controlHtml AS controlHtml' ),
+            DB::raw( 'grupo.nombre AS grupo' ),
         )
+        ->join( 'grupoTareas', 'grupoTareas.tareaId', '=', 'tarea.id' )
+        ->join( 'grupo', 'grupo.id', '=', 'grupoTareas.grupoId' )
         ->leftJoin( 'tareaCategoria', 'tareaCategoria.id', '=', 'tarea.categoriaId' )
         ->leftJoin( 'tareaTipo', 'tareaTipo.id', '=', 'tarea.tipoId' )
         ->leftJoin( 'tareaUbicacion', 'tareaUbicacion.id', '=', 'tarea.ubicacionId' )
-        ->leftJoin( 'tipoValorTarea', 'tipoValorTarea.id', '=', 'tarea.tipoValorId' )
-        ->orderBy( 'created_at', 'desc' )->paginate( 15 );
+        ->leftJoin( 'tipoValorTarea', 'tipoValorTarea.id', '=', 'tarea.tipoValorId' );
 
-        return view( 'tareas.tareas', compact( 'vctTareas', 'vctCategorias', 'vctTipos', 'vctUbicaciones', 'vctTipoValor' ) );
+        if ($estatus !== '0') {
+            $vctTareas = $vctTareas->where('grupo.id', $estatus);
+        }
+
+        $vctTareas = $vctTareas->orderBy( 'created_at', 'desc' )->paginate( 15 );
+
+
+        $vctFilterGrupos = grupo::select('grupo.*')->orderBy('grupo.nombre','asc')->get();
+        // dd($vctTareas);
+
+        return view( 'tareas.tareas', compact( 'vctTareas', 'vctCategorias', 'vctTipos', 'vctUbicaciones', 'vctTipoValor','vctFilterGrupos' ) );
     }
 
     /**

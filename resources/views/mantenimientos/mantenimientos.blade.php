@@ -31,7 +31,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                     @forelse ($vctMantenimientos as $item)
                                         <tr>
                                             <td class="text-center">
@@ -40,7 +39,7 @@
                                                     class="">{{ $item->id }}
                                                 </a>
                                             </td>
-                                            <td class="text-center">{{ $item->titulo }} </td>
+                                            <td class="text-center"><a href="#" title="{{ $item->titulo }}"> {{ $item->maquinaria }}</a> </td>
                                             <td class="text-center">{{ $item->fechaInicio }}</td>
                                             <td class="text-center">$ {{ number_format($item->costo, 2) }} </td>
 
