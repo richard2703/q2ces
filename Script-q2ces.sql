@@ -105,8 +105,7 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('permission_create','web','2022-07-25 19:54:15','2022-07-25 19:54:15'),
 	 ('permission_show','web','2022-07-25 19:54:15','2022-07-25 19:54:15'),
 	 ('permission_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('permission_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
-INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('permission_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('role_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('role_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('role_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -117,22 +116,18 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('user_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('user_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('user_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('user_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
-INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('user_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('asistencia_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('asistencia_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('asistencia_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('asistencia_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('asistencia_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-     ('asistencia_execute_corte_semanal','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	 ('asistencia_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('personal_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('personal_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('personal_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('personal_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('personal_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-     ('personal_assign_maquinaria','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
-INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('cajachica_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('cajachica_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('cajachica_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -143,8 +138,7 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('maquinaria_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('maquinaria_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('maquinaria_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('maquinaria_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
-INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('maquinaria_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('calendario_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('calendario_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('calendario_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -155,28 +149,28 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('combustible_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('combustible_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('combustible_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('combustible_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
-INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('combustible_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('inventario_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('inventario_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('inventario_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('inventario_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('inventario_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('inventario_restock','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('inventario_mover','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	 ('inventario_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('obra_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('obra_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('obra_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('obra_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('obra_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-     ('obra_assign_maquinaria','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
-	--  ('puesto_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	--  ('puesto_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	--  ('puesto_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	--  ('puesto_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	--  ('puesto_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	 ('puesto_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('puesto_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('puesto_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('puesto_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('puesto_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('inventario_restock','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('inventario_mover','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('asistencia_cortesemanal','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('asistencia_horasextra','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('catalogos_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('catalogos_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('catalogos_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -188,60 +182,49 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('maquinaria_mtq_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('maquinaria_mtq_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('maquinaria_mtq_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('maquinaria_mtq_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-     ('maquinaria_assign_personal','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	 ('maquinaria_mtq_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
-	 ('inventario_mtq_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('inventario_mtq_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('inventario_mtq_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('inventario_mtq_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('inventario_mtq_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('inventario_mtq_restock','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('inventario_mtq_mover','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
--- INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
--- 	 ('docs_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('docs_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('docs_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('docs_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('docs_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
--- INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
--- 	 ('tiposDocs_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('tiposDocs_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('tiposDocs_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('tiposDocs_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('tiposDocs_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
--- INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
--- 	 ('ubicaciones_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('ubicaciones_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('ubicaciones_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('ubicaciones_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('ubicaciones_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
--- INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
--- 	 ('lugares_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('lugares_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('lugares_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('lugares_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('lugares_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
--- INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
--- 	 ('tipoServicios_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('tipoServicios_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('tipoServicios_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('tipoServicios_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
--- 	 ('tipoServicios_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	 ('docs_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('docs_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('docs_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('docs_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('docs_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
-	 ('calendario_mtq_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('calendario_mtq_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('calendario_mtq_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('calendario_mtq_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('calendario_mtq_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	 ('tiposDocs_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tiposDocs_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tiposDocs_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tiposDocs_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tiposDocs_destroy','web','2022-07-25 19:54:16','2022-07-25�19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('ubicaciones_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ubicaciones_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ubicaciones_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ubicaciones_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('ubicaciones_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('lugares_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('lugares_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('lugares_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('lugares_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('lugares_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('tipoServicios_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tipoServicios_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tipoServicios_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tipoServicios_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tipoServicios_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
+	 ('calendarioMtq_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('calendarioMtq_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('calendarioMtq_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('calendarioMtq_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('calendarioMtq_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('checkList_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('checkList_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('checkList_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('checkList_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('checkList_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-     ('checkList_assign_bitacoras','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('checkList_execute','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	 ('checkList_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('mantenimiento_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('mantenimiento_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -253,17 +236,17 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('bitacora_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('bitacora_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('bitacora_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('bitacora_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
-	--  ('grupo_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	--  ('grupo_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	--  ('grupo_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	--  ('grupo_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	--  ('grupo_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	--  ('tarea_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	--  ('tarea_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	--  ('tarea_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	--  ('tarea_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	--  ('tarea_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	 ('bitacora_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('grupo_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('grupo_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('grupo_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('grupo_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('grupo_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tarea_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tarea_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tarea_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tarea_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
+	 ('tarea_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('cliente_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -396,7 +379,6 @@ create table conceptos(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     codigo varchar(200) not NULL,
     nombre varchar(200) not NULL,
-    tipo int null,
     comentario text NULL,
     primary key (id)
 );
@@ -612,6 +594,15 @@ CREATE TABLE corteCajaChica(
     primary key (id)
 );
 
+create table manoDeObra(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    codigo varchar(200) not NULL,
+    nombre varchar(200) not NULL,
+    costo float (10, 2) not NULL,
+    comentario text NULL,
+    primary key (id)
+);
+
 /***************************************FIN Tablas de Sin FK*/
 
 /***************************************DATOS Tablas de Sin FK*/
@@ -708,7 +699,7 @@ INSERT INTO `tipoHoraExtra` (`id`, `nombre`, `valor`, `comentario`, `color`) VAL
 
 
 INSERT INTO `estados` (`id`, `nombre`, `color`, `comentario`) VALUES
-(1, 'Espera', 'blue', 'En espera de antención'),
+(1, 'Espera', 'blue', 'En espera de atención'),
 (2, 'Realizando', 'gray', 'Ya se está trabajando'),
 (3, 'Terminado', 'navy', 'Ya se termino de ejecutar');
 
@@ -725,6 +716,11 @@ INSERT INTO `tipoMantenimiento` (`id`, `nombre`, `comentario`) VALUES
 (3, '500', 'Mantenimiento preventivo de 500 horas de trabajo.'),
 (4, '1000', 'Mantenimiento preventivo de 1000 horas de trabajo');
 
+INSERT INTO
+    `manoDeObra` (`id`,`codigo`,`nombre`,`costo`,`comentario`)
+VALUES
+    (NULL,'NDF','No definido', 0,'El servicio de mano de obra no esta definido o no se ha especificado');
+
 /***************************************FIN DATOS Tablas de Sin FK*/
 
 /***************************************Tablas Relacionadas*/
@@ -736,20 +732,6 @@ create table tarea(
     categoriaId bigint(20) unsigned NULL,
     ubicacionId bigint(20) unsigned NULL,
     tipoId bigint(20) unsigned NULL,
-    activa TINYINT(1) NOT NULL DEFAULT '1',
-    tipoValorId INT(2) NOT NULL DEFAULT '1',
-    requiereLimites TINYINT(1) NOT NULL DEFAULT '0',
-    limiteInferior INT(8) NULL ,
-    limiteSuperior INT(8) NULL ,
-    requiereEscala TINYINT(1) NOT NULL DEFAULT '0' ,
-    limiteInferiorEscala INT(8) NULL ,
-    limiteSuperiorEscala INT(8) NULL ,
-    requierePeriodo TINYINT(1) NOT NULL DEFAULT '0',
-    fechaInicial DATE NULL ,
-    fechaFinal DATE NULL ,
-    requiereImagen TINYINT(1) NOT NULL DEFAULT '0',
-    requiereUnidadMedida TINYINT(1) NOT NULL DEFAULT '0',
-    unidadMedida varchar(128) NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     activa TINYINT(1) NOT NULL DEFAULT '1',
@@ -1342,6 +1324,7 @@ CREATE TABLE accesorios(
     CONSTRAINT FK_accesorios_maquinariaId foreign key (maquinariaId) references maquinaria(id)
 );
 
+
 CREATE TABLE maqacce(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     maquinariaId bigint(20) unsigned NOT NULL,
@@ -1653,7 +1636,6 @@ create table asistencia(
     asistenciaId bigint(20) unsigned NOT NULL,
     fecha date not NULL,
     horasExtra int NULL,
-    totalHorasExtra int NULL,
     horasAnticipada int NULL,
     horasRetraso int NULL,
     tipoHoraExtraId bigint(20) unsigned null,
@@ -1706,7 +1688,7 @@ create table cajaChica(
     dia date not NULL,
     concepto bigint(20) unsigned NOT NULL,
     comprobante float(10,2) NULL,
-    ncomprobante varchar(200) not NULL,
+    ncomprobante int not NULL,
     cliente varchar(200),
     obra bigint(20) unsigned  NULL,
     equipo bigint(20) unsigned NOT NULL,
@@ -1754,7 +1736,6 @@ create table checkListRegistros(
     resultado varchar(255) NULL,
     valor int(8) NULL,
     usuarioId bigint(20) unsigned NOT NULL,
-	ruta varchar(255) NULL,
     created_at timestamp NULL DEFAULT NULL,
     updated_at timestamp NULL DEFAULT NULL,
     primary key (id),
@@ -1765,6 +1746,24 @@ create table checkListRegistros(
     CONSTRAINT FK_checkListRegistrosTarea foreign key (tareaId) references tarea(id),
     CONSTRAINT FK_checkListHistorico foreign key (checkListId) references checkList(id)
 );
+
+CREATE TABLE programacionCheckLists(
+    id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    fecha DATE NOT NULL,
+    checkListId BIGINT(20) UNSIGNED NULL,
+    bitacoraId BIGINT(20) UNSIGNED NOT NULL,
+    maquinariaId BIGINT(20) UNSIGNED NOT NULL,
+    personalId BIGINT(20) UNSIGNED NOT NULL,
+    comentario TEXT DEFAULT NULL,
+    estatus INT NULL,
+    created_at DATETIME NULL,
+    updated_at DATETIME NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_programacionCheckLists_checkListId FOREIGN KEY (checkListId) REFERENCES checkList(id),
+    CONSTRAINT FK_programacionCheckLists_maquinariaId FOREIGN KEY (maquinariaId) REFERENCES maquinaria(id),
+    CONSTRAINT FK_programacionCheckLists_personalId FOREIGN KEY (personalId) REFERENCES personal(id),
+    CONSTRAINT FK_programacionCheckLists_bitacoraId FOREIGN KEY (bitacoraId) REFERENCES bitacoras(id)
+   );
 
 create table refacciones (
     id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -1811,15 +1810,34 @@ create table movimientosCisterna(
     CONSTRAINT FK_movimientosCisterna_maquinaria foreign key (maquinariaId) references maquinaria(id)
 );
 
-CREATE TABLE almacenTiraderos(
+CREATE TABLE facturaCliente(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-	nombre varchar(200) null,
-	tipoAlmacenId bigint(20) unsigned NOT null,
-	comentario text null,
-    created_at timestamp NULL DEFAULT NULL,
-    updated_at timestamp NULL DEFAULT NULL,
+    userId bigint(20) unsigned NULL,
+    clienteId bigint(20) unsigned null,
+    folio varchar(255) NOT NULL,
+    fecha DATE NOT NULL,
+    pdf varchar(255) NULL,
+    xml varchar(255) NULL,
+    created_at timestamp NULL,
+    updated_at timestamp NULL,
     PRIMARY KEY (id),
-    CONSTRAINT FK_almacenTiraderos_tipoAlmacenId foreign key (tipoAlmacenId) references tipoAlmacen(id)
+    CONSTRAINT FK_facturaCliente_userId foreign key (userId) references users(id),
+    CONSTRAINT FK_facturaCliente_clienteId foreign key (clienteId) references clientes(id)
+);
+
+CREATE TABLE facturaProvedor(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    userId bigint(20) unsigned NULL,
+    provedorId bigint(20) unsigned null,
+    folio varchar(255) NOT NULL,
+    fecha DATE NOT NULL,
+    pdf varchar(255) NULL,
+    xml varchar(255) NULL,
+    created_at timestamp NULL,
+    updated_at timestamp NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_facturaProvedor_userId foreign key (userId) references users(id),
+    CONSTRAINT FK_facturaProvedor_provedorId foreign key (provedorId) references proveedor(id)
 );
 
 CREATE TABLE extintores(
@@ -1858,8 +1876,6 @@ ADD CONSTRAINT FK_descarga_obraId FOREIGN KEY (obraId) REFERENCES obras(id);
 ALTER TABLE descarga
 ADD COLUMN clienteId bigint(20) unsigned NULL,
 ADD CONSTRAINT FK_descarga_clienteId FOREIGN KEY (clienteId) REFERENCES clientes(id);
-
-
 
 /***************************************FIN Tablas Relacionadas*/
 

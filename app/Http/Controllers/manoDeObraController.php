@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use App\Models\conceptos;
+use App\Models\manoDeObra;
 
-class conceptosController extends Controller {
+class manoDeObraController extends Controller {
     /**
     * Display a listing of the resource.
     *
@@ -18,7 +18,6 @@ class conceptosController extends Controller {
     */
 
     public function index() {
-
         //
     }
 
@@ -40,11 +39,6 @@ class conceptosController extends Controller {
     */
 
     public function store( Request $request ) {
-        // abort_if ( Gate::denies( 'cajachica_create' ), 403 );
-
-        // conceptos::create( $request->only( 'codigo', 'nombre', 'comentario' ) );
-        // Session::flash( 'message', 1 );
-        // return redirect()->action( [ cajaChicaController::class, 'create' ] );
 
         abort_if ( Gate::denies( 'catalogos_create' ), 403 );
 
@@ -66,31 +60,31 @@ class conceptosController extends Controller {
 
         $record[ 'codigo' ] = trim( strtoupper( $request[ 'codigo' ] ) );
 
-        conceptos::create( $record );
+        manoDeObra::create( $record );
         Session::flash( 'message', 1 );
 
-        return redirect()->route( 'catalogoConceptos.index' );
+        return redirect()->route( 'catalogoManoDeObra.index' );
     }
 
     /**
     * Display the specified resource.
     *
-    * @param  \App\Models\conceptos  $conceptos
+    * @param  int  $id
     * @return \Illuminate\Http\Response
     */
 
-    public function show( conceptos $conceptos ) {
+    public function show( $id ) {
         //
     }
 
     /**
     * Show the form for editing the specified resource.
     *
-    * @param  \App\Models\conceptos  $conceptos
+    * @param  int  $id
     * @return \Illuminate\Http\Response
     */
 
-    public function edit( conceptos $conceptos ) {
+    public function edit( $id ) {
         //
     }
 
@@ -98,12 +92,11 @@ class conceptosController extends Controller {
     * Update the specified resource in storage.
     *
     * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\conceptos  $conceptos
+    * @param  int  $id
     * @return \Illuminate\Http\Response
     */
 
-    public function update( Request $request, conceptos $conceptos ) {
-
+    public function update( Request $request, $id ) {
         abort_if ( Gate::denies( 'catalogos_edit' ), 403 );
 
         // dd( $request );
@@ -121,10 +114,11 @@ class conceptosController extends Controller {
             'codigo.max' => 'El campo código excede el límite de caracteres permitidos.',
             'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
         ] );
+
         $data = $request->all();
         $data[ 'codigo' ] = trim( strtoupper( $request[ 'codigo' ] ) );
 
-        $record = conceptos::where( 'id', $data[ 'controlId' ] )->first();
+        $record = manoDeObra::where( 'id', $data[ 'controlId' ] )->first();
 
         if ( is_null( $record ) == false ) {
             // dd( $data );
@@ -132,31 +126,17 @@ class conceptosController extends Controller {
             Session::flash( 'message', 1 );
         }
 
-        return redirect()->route( 'catalogoConceptos.index' );
+        return redirect()->route( 'catalogoManoDeObra.index' );
     }
 
     /**
     * Remove the specified resource from storage.
     *
-    * @param  \App\Models\conceptos  $conceptos
+    * @param  int  $id
     * @return \Illuminate\Http\Response
     */
 
-    public function destroy( conceptos $concepto ) {
-        try {
-            $concepto->delete();
-            // Intenta eliminar
-        } catch ( conceptos $e ) {
-            if ( $e->getCode() === 23000 ) {
-                return redirect()->back()->with( 'faild', 'No Puedes Eliminar ' );
-                // Esto es un error de restricción de clave externa ( FOREIGN KEY constraint )
-                // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
-            } else {
-                return redirect()->back()->with( 'faild', 'No Puedes Eliminar si esta en uso' );
-                // Otro tipo de error de base de datos
-                // Maneja según sea necesario
-            }
-        }
-        return redirect()->back()->with( 'success', 'Eliminado correctamente' );
+    public function destroy( $id ) {
+        //
     }
 }

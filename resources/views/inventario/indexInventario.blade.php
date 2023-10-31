@@ -56,63 +56,76 @@
                                                 <th class="labelTitulo text-center" style="width: 120px;">Acciones</th>
                                             </thead>
                                             <tbody class="text-capitalize">
-                                                @forelse ($inventarios as $inventario)
-                                                    <tr>
-                                                        <td class="text-center"><img class="" style="width: 100px;"
-                                                                src="{{ $inventario->imagen == '' ? '/img/general/defaultinventario.jpg' : '/storage/inventario/' . $inventario->tipo . '/' . $inventario->imagen }}">
-                                                        </td>
-                                                        <td class="text-center align-middle">{{ $inventario->numparte }}
-                                                        </td>
-                                                        <td class="text-center align-middle">{{ $inventario->nombre }}</td>
-                                                        <td class="text-center align-middle">{{ $inventario->cantidad }}
-                                                        </td>
-                                                        <td class="text-center align-middle">{{ $inventario->reorden }}</td>
-                                                        <td class="text-center align-middle">{{ $inventario->maximo }}</td>
-                                                        <td class="td-actions text-center align-middle">
-                                                            @can('inventario_restock')
-                                                                <a href="#" data-bs-toggle="modal"
-                                                                    data-bs-target="#modal-entrada"
-                                                                    onclick="cargar('{{ $inventario->nombre }}','{{ $inventario->imagen }}','{{ $inventario->tipo }}','{{ $inventario->id }}',1)">
-                                                                    <i class="fas fa-sign-in-alt iconoTablas"
-                                                                        title="Entradas"></i>
-                                                                </a>
-                                                            @endcan
-                                                            @can('inventario_edit')
-                                                                <a href="{{ route('inventario.show', $inventario->id) }}"
-                                                                    <button type="button" title="Detalles">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28"
-                                                                        height="28" fill="currentColor"
-                                                                        class="bi bi-card-text accionesIconos"
-                                                                        viewBox="0 0 16 16">
-                                                                        <path
-                                                                            d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                                                                        <path
-                                                                            d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
-                                                                    </svg>
-                                                                    </button>
-                                                                </a>
-                                                            @endcan
-                                                            @can('inventario_restock')
-                                                                <a href="#" data-bs-toggle="modal"
-                                                                    data-bs-target="#modal-entrada"
-                                                                    onclick="cargar('{{ $inventario->nombre }}','{{ $inventario->imagen }}','{{ $inventario->tipo }}','{{ $inventario->id }}',2)">
-                                                                    <i class="fas fa-sign-out-alt iconoTablas"
-                                                                        title="Salidas"></i>
-                                                                </a>
-                                                            @endcan
-                                                        </td>
-                                                    </tr>
-                                                @empty
+                                                @if (is_null($inventarios) == false)
+                                                    @forelse ($inventarios as $inventario)
+                                                        <tr>
+                                                            <td class="text-center"><img class=""
+                                                                    style="width: 100px;"
+                                                                    src="{{ $inventario->imagen == '' ? '/img/general/defaultinventario.jpg' : '/storage/inventario/' . $inventario->tipo . '/' . $inventario->imagen }}">
+                                                            </td>
+                                                            <td class="text-center align-middle">{{ $inventario->numparte }}
+                                                            </td>
+                                                            <td class="text-center align-middle">{{ $inventario->nombre }}
+                                                            </td>
+                                                            <td class="text-center align-middle">{{ $inventario->cantidad }}
+                                                            </td>
+                                                            <td class="text-center align-middle">{{ $inventario->reorden }}
+                                                            </td>
+                                                            <td class="text-center align-middle">{{ $inventario->maximo }}
+                                                            </td>
+                                                            <td class="td-actions text-center align-middle">
+                                                                @can('inventario_restock')
+                                                                    <a href="#" data-bs-toggle="modal"
+                                                                        data-bs-target="#modal-entrada"
+                                                                        onclick="cargar('{{ $inventario->nombre }}','{{ $inventario->imagen }}','{{ $inventario->tipo }}','{{ $inventario->id }}',1)">
+                                                                        <i class="fas fa-sign-in-alt iconoTablas"
+                                                                            title="Entradas"></i>
+                                                                    </a>
+                                                                @endcan
+                                                                @can('inventario_edit')
+                                                                    <a href="{{ route('inventario.show', $inventario->id) }}"
+                                                                        <button type="button" title="Detalles">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="28"
+                                                                            height="28" fill="currentColor"
+                                                                            class="bi bi-card-text accionesIconos"
+                                                                            viewBox="0 0 16 16">
+                                                                            <path
+                                                                                d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                                                            <path
+                                                                                d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
+                                                                        </svg>
+                                                                        </button>
+                                                                    </a>
+                                                                @endcan
+                                                                @can('inventario_restock')
+                                                                    <a href="#" data-bs-toggle="modal"
+                                                                        data-bs-target="#modal-entrada"
+                                                                        onclick="cargar('{{ $inventario->nombre }}','{{ $inventario->imagen }}','{{ $inventario->tipo }}','{{ $inventario->id }}',2)">
+                                                                        <i class="fas fa-sign-out-alt iconoTablas"
+                                                                            title="Salidas"></i>
+                                                                    </a>
+                                                                @endcan
+                                                            </td>
+                                                        </tr>
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="2">Sin registros.</td>
+                                                        </tr>
+                                                    @endforelse
+                                                @else
                                                     <tr>
                                                         <td colspan="2">Sin registros.</td>
                                                     </tr>
-                                                @endforelse
+                                                @endif
+
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                                 <div class="card-footer mr-auto">
+                                    @if (is_null($inventarios) == false)
                                     {{ $inventarios->links() }}
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -129,12 +142,13 @@
             <div class="modal-content">
                 <div class="col-12">
                     <div class="card ">
-                        <form action="{{ route('inventario.movimiento', $inventario->id) }}" method="post">
+                        <form action="{{ route('inventario.movimiento', 1) }}" method="post">
                             @csrf
                             {{--  @method('put')  --}}
                             <div class="modal-header bacTituloPrincipal">
                                 <h2 class="titulos text-capitalize"><span id="tituloModal">Editar</span> </h2>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <div class="row  card-body">
                                 <div class="row card-body" style="text-align: center;">
@@ -161,7 +175,8 @@
 
                                     <div class="col-12" id="comentario">
                                         <label for="comentario" class="labelTitulo mt-3">Comentario:</label></br>
-                                        <textarea class="form-control-textarea border-green" name="comentario" rows="3" placeholder="Agregar Comentario..."></textarea>
+                                        <textarea class="form-control-textarea border-green" name="comentario" rows="3"
+                                            placeholder="Agregar Comentario..."></textarea>
                                         <label class="labelTitulo" for=""></label> </br>
                                     </div>
 
@@ -220,7 +235,7 @@
                 comentarioTextarea.style.display = 'none';
                 cantidadDiv.classList.remove('col-12');
                 cantidadDiv.classList.add('col-6');
-                
+
             } else {
                 costoTotalInput.removeAttribute('required');
                 tituloModal.textContent = 'Salida';
@@ -228,7 +243,7 @@
                 comentarioTextarea.style.display = 'block';
                 cantidadDiv.classList.remove('col-6');
                 cantidadDiv.classList.add('col-12');
-                
+
             }
         }
     </script>

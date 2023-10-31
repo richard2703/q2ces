@@ -408,6 +408,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Conceptos
     Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
 
+    // Mano de Obra
+    Route::resource('manoDeObra', App\Http\Controllers\manoDeObraController::class);
+
     //*** checklists */
     Route::get('/checkList/', [App\Http\Controllers\checkListController::class, 'index'])->name('checkList.index');
     Route::get('/checkList/seleccionar', [App\Http\Controllers\checkListController::class, 'seleccionar'])->name('checkList.seleccionar');
@@ -450,6 +453,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('search/inventario', [App\Http\Controllers\searchController::class, 'inventario'])->name('search.inventario');
     Route::get('search/tareasParaGrupos', [App\Http\Controllers\searchController::class, 'tareasParaGrupos'])->name('search.tareasParaGrupos');
     Route::get('search/gruposParaBitacoras', [App\Http\Controllers\searchController::class, 'gruposParaBitacoras'])->name('search.gruposParaBitacoras');
+    Route::get('search/manoDeObra', [App\Http\Controllers\searchController::class, 'manoDeObra'])->name('search.manoDeObra');
 
 
     // Tareas de bitacoras
@@ -512,4 +516,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('combustibleTote', App\Http\Controllers\CombustibleToteController::class);
     Route::post('/combustibleToteDescarga/', [App\Http\Controllers\CombustibleToteController::class, 'storeDescarga'])->name('descarga.post');
+
+    // Crud facturaCliente
+    Route::resource('facturaCliente', App\Http\Controllers\facturaClienteController::class);
+
+    // Crud facturaProvedor
+    Route::resource('facturaProvedor', App\Http\Controllers\facturaProvedorController::class);
 });

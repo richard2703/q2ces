@@ -73,7 +73,7 @@
                                 @can('checkList_index')
                                     <div class="col-12 col-md-6  col-lg-3 text-center my-4">
                                         <a href="{{ route('checkList.index') }}" class="">
-                                            <img src="/img/equipos/formatos.svg" alt="formatos" title="formatos" width="30%"
+                                            <img src="/img/equipos/formatos.svg" alt="Cheklist" title="Cheklist" width="30%"
                                                 class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">CheckList</p>
                                         </a>
@@ -82,7 +82,7 @@
                                 @can('checkList_execute')
                                     <div class="col-12 col-md-6  col-lg-3 text-center my-4">
                                         <a href="{{ route('checkList.pendientes') }}" class="">
-                                            <img src="/img/equipos/formatos.svg" alt="formatos" title="formatos" width="30%"
+                                            <img src="/img/equipos/mis-pendientes.svg" alt="Mis Pendientes" title="Mis Pendientes" width="30%"
                                                 class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Mis Pendientes</p>
                                         </a>

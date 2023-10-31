@@ -66,30 +66,31 @@
                                             <th class="labelTitulo text-center" style="width:120px">Acciones</th>
                                         </thead>
                                         <tbody>
-                                            @forelse ($vctRecords as $item)
-                                                <tr>
-                                                    <td class="text-left">
-                                                        {{--  --}}
-                                                        {{ str_pad($item->id, 5, '0', STR_PAD_LEFT) }}
-                                                    </td>
-                                                    <td class="text-center"> {{ $item->maquinaria }}</td>
-                                                    <td class="text-center">
-                                                        {{ $item->personal }}</td>
+                                            @if (is_null($vctRecords) == false)
+                                                @forelse ($vctRecords as $item)
+                                                    <tr>
+                                                        <td class="text-left">
+                                                            {{--  --}}
+                                                            {{ str_pad($item->id, 5, '0', STR_PAD_LEFT) }}
+                                                        </td>
+                                                        <td class="text-center"> {{ $item->maquinaria }}</td>
+                                                        <td class="text-center">
+                                                            {{ $item->personal }}</td>
 
-                                                    <td class="text-center">
-                                                        @if ($item->checkListId != '')
-                                                            <a href="{{ route('checkList.show', $item->checkListId) }}"
-                                                                title="Ver la información del CheckList."
-                                                                style="color: blue">{{ $item->bitacora . ', Folio: ' . str_pad($item->checkListId, 5, '0', STR_PAD_LEFT) }}</a>
-                                                        @else
-                                                            {{ $item->bitacora }}
-                                                        @endif
-                                                    </td>
-                                                    <td class="text-center">
-                                                        {{ $item->fecha != '' ? \Carbon\Carbon::parse($item->fecha)->format('Y-m-d') : '---' }}
-                                                    </td>
-                                                    <td
-                                                        class=@switch($item->estatus)
+                                                        <td class="text-center">
+                                                            @if ($item->checkListId != '')
+                                                                <a href="{{ route('checkList.show', $item->checkListId) }}"
+                                                                    title="Ver la información del CheckList."
+                                                                    style="color: blue">{{ $item->bitacora . ', Folio: ' . str_pad($item->checkListId, 5, '0', STR_PAD_LEFT) }}</a>
+                                                            @else
+                                                                {{ $item->bitacora }}
+                                                            @endif
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{ $item->fecha != '' ? \Carbon\Carbon::parse($item->fecha)->format('Y-m-d') : '---' }}
+                                                        </td>
+                                                        <td
+                                                            class=@switch($item->estatus)
                                                             @case(1)
                                                                 'yellow'
                                                             @break
@@ -106,67 +107,68 @@
                                                             @default
                                                             'red'
                                                         @endswitch>
-                                                        @switch($item->estatus)
-                                                            @case(1)
-                                                                Espera
-                                                            @break
+                                                            @switch($item->estatus)
+                                                                @case(1)
+                                                                    Espera
+                                                                @break
 
-                                                            @case(2)
-                                                                Hecho
-                                                            @break
+                                                                @case(2)
+                                                                    Hecho
+                                                                @break
 
-                                                            @case(3)
-                                                                Cerrado
-                                                            @break
+                                                                @case(3)
+                                                                    Cerrado
+                                                                @break
 
-                                                            @default
-                                                                Cancelado
-                                                        @endswitch
-                                                    </td>
+                                                                @default
+                                                                    Cancelado
+                                                            @endswitch
+                                                        </td>
 
-                                                    <td class="td-actions text-center">
+                                                        <td class="td-actions text-center">
 
-                                                        @if ($item->estatus == 1)
-                                                            @can('checkList_execute')
-                                                                <form action="{{ route('checkList.ejecutar') }}" method="get"
-                                                                    style="display: inline-block;"
-                                                                    onsubmit="return confirm('¿Seguro que desea ejecutar el CheckList programado?')">
-                                                                    @csrf
-                                                                    <input type="hidden" name="bitacoraId" id="bitacoraId"
-                                                                        value="{{ $item->bitacoraId }}">
-                                                                    <input type="hidden" name="maquinariaId" id="maquinariaId"
-                                                                        value="{{ $item->maquinariaId }}">
-                                                                    <input type="hidden" name="programacionId"
-                                                                        id="programacionId" value="{{ $item->id }}">
-                                                                    <button class="btnSinFondo" type="submit" rel="tooltip"
-                                                                        title="Ejecutar el CheckList">
-                                                                        <i class="far fa-check-square fa-lg"
-                                                                            style="color: #a6ce34;"></i>
+                                                            @if ($item->estatus == 1)
+                                                                @can('checkList_execute')
+                                                                    <form action="{{ route('checkList.ejecutar') }}"
+                                                                        method="get" style="display: inline-block;"
+                                                                        onsubmit="return confirm('¿Seguro que desea ejecutar el CheckList programado?')">
+                                                                        @csrf
+                                                                        <input type="hidden" name="bitacoraId" id="bitacoraId"
+                                                                            value="{{ $item->bitacoraId }}">
+                                                                        <input type="hidden" name="maquinariaId"
+                                                                            id="maquinariaId"
+                                                                            value="{{ $item->maquinariaId }}">
+                                                                        <input type="hidden" name="programacionId"
+                                                                            id="programacionId" value="{{ $item->id }}">
+                                                                        <button class="btnSinFondo" type="submit"
+                                                                            rel="tooltip" title="Ejecutar el CheckList">
+                                                                            <i class="far fa-check-square fa-lg"
+                                                                                style="color: #a6ce34;"></i>
 
-                                                                    </button>
-                                                                </form>
-                                                            @endcan
-                                                        @endif
+                                                                        </button>
+                                                                    </form>
+                                                                @endcan
+                                                            @endif
 
-                                                        @if ($item->estatus == 2)
-                                                            @can('checkList_show')
-                                                                <a href="{{ route('checkList.show', $item->checkListId) }}"
-                                                                    title="Ver el detalle del CheckList" class="">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28"
-                                                                        height="28" fill="currentColor"
-                                                                        class="bi bi-card-text accionesIconos"
-                                                                        viewBox="0 0 16 16">
-                                                                        <path
-                                                                            d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                                                                        <path
-                                                                            d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
-                                                                    </svg>
-                                                                </a>
-                                                            @endcan
-                                                        @endif
+                                                            @if ($item->estatus == 2)
+                                                                @can('checkList_show')
+                                                                    <a href="{{ route('checkList.show', $item->checkListId) }}"
+                                                                        title="Ver el detalle del CheckList" class="">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="28"
+                                                                            height="28" fill="currentColor"
+                                                                            class="bi bi-card-text accionesIconos"
+                                                                            viewBox="0 0 16 16">
+                                                                            <path
+                                                                                d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                                                            <path
+                                                                                d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
+                                                                        </svg>
+                                                                    </a>
+                                                                @endcan
+                                                            @endif
 
 
-                                                        {{-- @can('checkList_edit')
+                                                            {{-- @can('checkList_edit')
                                                             <a href="#" data-bs-toggle="modal"
                                                                 data-bs-target="#editarTrabajo"
                                                                 title="Editar la Información de la Programación del CheckList"
@@ -184,15 +186,15 @@
                                                                         d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                                                 </svg>
                                                             </a> --}}
-                                                        {{-- Id:{{ $item->id }} --}}
-                                                        {{-- Identificador:{{ $item->identificador }} --}}
-                                                        {{-- Máquina:{{ $item->maquina }} --}}
-                                                        {{-- Operador:{{ (is_null($item->operador) == false ? $item->operador:0) }} --}}
-                                                        {{-- OperadorId:{{ (is_null($item->operadorId) == false ? $item->operadorId : 0) }} --}}
-                                                        {{-- Obra:{{ (is_null($item->obra ) == false ? $item->obra : 0 )}} --}}
-                                                        {{-- ObraId:{{ (is_null($item->comentario ) == false ? $item->comentario : '---' )}} --}}
-                                                        {{-- @endcan --}}
-                                                        {{-- @can('maquinaria_destroy')
+                                                            {{-- Id:{{ $item->id }} --}}
+                                                            {{-- Identificador:{{ $item->identificador }} --}}
+                                                            {{-- Máquina:{{ $item->maquina }} --}}
+                                                            {{-- Operador:{{ (is_null($item->operador) == false ? $item->operador:0) }} --}}
+                                                            {{-- OperadorId:{{ (is_null($item->operadorId) == false ? $item->operadorId : 0) }} --}}
+                                                            {{-- Obra:{{ (is_null($item->obra ) == false ? $item->obra : 0 )}} --}}
+                                                            {{-- ObraId:{{ (is_null($item->comentario ) == false ? $item->comentario : '---' )}} --}}
+                                                            {{-- @endcan --}}
+                                                            {{-- @can('maquinaria_destroy')
                                                         <form action="{{ route('maquinaria.delete', $item->id) }}"
                                                         method="POST" style="display: inline-block;"
                                                         onsubmit="return confirm('Seguro?')">
@@ -206,13 +208,19 @@
                                                         </button>
                                                     </form>
                                                           @endcan --}}
-                                                    </td>
-                                                </tr>
-                                                @empty
+                                                        </td>
+                                                    </tr>
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="8">Sin Registros.</td>
+                                                        </tr>
+                                                    @endforelse
+                                                @else
                                                     <tr>
                                                         <td colspan="8">Sin Registros.</td>
                                                     </tr>
-                                                @endforelse
+                                                @endif
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -220,7 +228,9 @@
                                 </div>
                             </div>
                             <div class="card-footer d-flex justify-content-center">
-                                {{ $vctRecords->links() }}
+                                @if (is_null($vctRecords) == false)
+                                     {{ $vctRecords->links() }}
+                                @endif
                             </div>
                         </div>
                     </div>

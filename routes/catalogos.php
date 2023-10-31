@@ -99,4 +99,7 @@ Route::prefix('catalogos')->middleware('auth')->group(function () {
 	Route::resource('tipoAlmacen', App\Http\Controllers\tipoAlmacenController::class);
 
 	Route::resource('almacenTiraderos', App\Http\Controllers\almacenTiraderosController::class);
+
+	Route::get('catalogo/manoDeObra', [App\Http\Controllers\catalogosController::class, 'indexCatalogoManoDeObra'])->name('catalogoManoDeObra.index');
+	Route::resource('manoDeObra', App\Http\Controllers\manoDeObraController::class);
 });

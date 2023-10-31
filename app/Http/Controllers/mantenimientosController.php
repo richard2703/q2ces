@@ -33,7 +33,7 @@ class mantenimientosController extends Controller
         $vctMantenimientos = mantenimientos::select(
             'mantenimientos.*',
             DB::raw('estados.nombre AS estado'),
-            DB::raw('maquinaria.nombre AS maquinaria'),
+            DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ),
             DB::raw('maquinaria.identificador AS maquinariaCodigo')
         )
             ->join('estados', 'estados.id', '=', 'mantenimientos.estadoId')
@@ -127,7 +127,10 @@ class mantenimientosController extends Controller
     {
         abort_if(Gate::denies('mantenimiento_edit'), '404');
 
-        $mantenimiento = mantenimientos::where('id', '=', $id)->first();
+        $mantenimiento = mantenimientos::select('mantenimientos.*',
+        DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ),)
+        ->join( 'maquinaria', 'maquinaria.id', '=', 'mantenimientos.maquinariaId' )
+        ->where('mantenimientos.id', '=', $id)->first();
 
         $gastos = gastosMantenimiento::select(
             'gastosMantenimiento.*',

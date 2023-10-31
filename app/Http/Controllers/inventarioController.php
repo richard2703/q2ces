@@ -168,9 +168,11 @@ class inventarioController extends Controller
         } else {
             $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(15);
 
-            if ($inventarios == null) {
+            if (count($inventarios) <=0) {
                 $inventarios = null;
             }
+
+            // dd($inventarios);
 
             return view('inventario.indexInventario', compact('inventarios', 'tipo'));
         }
