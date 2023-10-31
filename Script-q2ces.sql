@@ -813,6 +813,8 @@ CREATE TABLE obras(
     logo varchar(255) NULL,
     foto varchar(255) NULL,
     estatus varchar(255) NULL,
+    centroCostos varchar(16) NULL,
+    proyecto varchar(255) NULL,
     clienteId bigint(20) unsigned NOT NULL,
     created_at timestamp NULL DEFAULT NULL,
     updated_at timestamp NULL DEFAULT NULL,
