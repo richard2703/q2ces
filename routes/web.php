@@ -401,10 +401,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('serviciosTrasporte/cajaChica', [App\Http\Controllers\serviciosTrasporteController::class, 'cajaChica'])->name('serviciosTrasporte.cajaChica');
     Route::get('serviciosTrasporte/misServicios', [App\Http\Controllers\serviciosTrasporteController::class, 'misServicios'])->name('serviciosTrasporte.misServicios');
     Route::put('serviciosTrasporte/misServicios', [App\Http\Controllers\serviciosTrasporteController::class, 'misServiciosChofer'])->name('serviciosTrasporte.misServiciosChofer');
+    Route::get('serviciosTrasporte/ticket/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'printTicketChofer'])->name('serviciosTrasporte.printTicketChofer');
+    Route::get('serviciosTrasporte/ticketCerrado/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'printTicketCerrado'])->name('serviciosTrasporte.printTicketCerrado');
     Route::resource('serviciosTrasporte', App\Http\Controllers\serviciosTrasporteController::class);
 
     // Conceptos
     Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
+
+    // Mano de Obra
+    Route::resource('manoDeObra', App\Http\Controllers\manoDeObraController::class);
 
     //*** checklists */
     Route::get('/checkList/', [App\Http\Controllers\checkListController::class, 'index'])->name('checkList.index');
@@ -448,6 +453,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('search/inventario', [App\Http\Controllers\searchController::class, 'inventario'])->name('search.inventario');
     Route::get('search/tareasParaGrupos', [App\Http\Controllers\searchController::class, 'tareasParaGrupos'])->name('search.tareasParaGrupos');
     Route::get('search/gruposParaBitacoras', [App\Http\Controllers\searchController::class, 'gruposParaBitacoras'])->name('search.gruposParaBitacoras');
+    Route::get('search/manoDeObra', [App\Http\Controllers\searchController::class, 'manoDeObra'])->name('search.manoDeObra');
 
 
     // Tareas de bitacoras

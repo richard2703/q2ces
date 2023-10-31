@@ -13,6 +13,7 @@ use App\Models\maquinaria;
 use App\Models\inventario;
 use App\Models\tarea;
 use App\Models\grupo;
+use App\Models\manoDeObra;
 
 class searchController extends Controller
 {
@@ -247,7 +248,7 @@ class searchController extends Controller
         $inventario = inventario::select('inventario.*', DB::raw('marca.nombre AS marca'))
             ->join('marca', 'marca.id', '=', 'inventario.marcaId')
             ->where('inventario.nombre', 'LIKE', '%' . $term . '%')
-            ->whereIn('tipo', ['refacciones', 'consumibles', 'servicios'])
+            ->whereIn('inventario.tipo', ['refacciones', 'consumibles', 'servicios'])
             ->orwhere('inventario.numparte', 'LIKE', '%' . $term . '%')
             ->orwhere('inventario.modelo', 'LIKE', '%' . $term . '%')
             ->orwhere('inventario.tipo', 'LIKE', '%' . $term . '%')
@@ -271,6 +272,43 @@ class searchController extends Controller
         return $sugerencias;
         // return response()->json( $sugerencias );
     }
+
+    /**
+     * Busca material para el mantenimiento de equipos
+     *
+     * @param Request $request
+     * @return void
+     */
+
+     public function manoDeObra(Request $request)
+     {
+         // dd($request);
+         // $term = $request->input( 'term' );
+         $term = $request->get('term');
+
+         $inventario = manoDeObra::select('manoDeObra.*')
+             ->where('manoDeObra.nombre', 'LIKE', '%' . $term . '%')
+             ->orwhere('manoDeObra.codigo', 'LIKE', '%' . $term . '%')
+             ->orwhere('manoDeObra.comentario', 'LIKE', '%' . $term . '%')->get();
+
+         $sugerencias = [];
+         foreach ($inventario as $item) {
+             $sugerencias[] = [
+                 'value' => 'Artículo: ' . $item->nombre . ', Número de parte: ' . $item->codigo . ', Modelo: N/A, PU: $ ' . $item->costo,
+                 'id' => $item->id,
+                 'nombre' => $item->nombre,
+                 'valor' => $item->costo,
+                 'cantidad' => 1,
+                 'marca' => 'N/A',
+                 'numparte' => $item->codigo,
+                 'tipo' => 'Mano de Obra',
+                 'modelo' => 'N/A',
+             ];
+         }
+
+         return $sugerencias;
+         // return response()->json( $sugerencias );
+     }
 
     /**
      * Busca material para el mantenimiento de equipos

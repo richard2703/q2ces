@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'cajaChica', 'titlePage' => __('Caja Chica')])
+@extends('layouts.main', ['activePage' => 'servicios', 'titlePage' => __('Caja Chica')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -242,6 +242,19 @@
                                                                     </svg>
                                                                 </a>
                                                             @endcan
+
+                                                            @if ($registro->estatus != 1)
+                                                                <a href="{{ route('serviciosTrasporte.printTicketChofer', $registro->id) }}"
+                                                                    <i class="fas fa-print "
+                                                                    style="color: #8caf48;font-size: x-large;"></i>
+                                                                </a>
+                                                                @can('serviciosTrasporte_show')
+                                                                    <a href="{{ route('serviciosTrasporte.printTicketCerrado', $registro->id) }}"
+                                                                        <i class="fas fa-print "
+                                                                        style="font-size: x-large;"></i>
+                                                                    </a>
+                                                                @endcan
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                     @empty
