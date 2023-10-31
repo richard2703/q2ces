@@ -20,8 +20,10 @@
                             enctype="multipart/form-data">
                             @csrf
                             @method('put')
-                            <input type="hidden" name="maquinariaId" id="maquinariaId"
-                                value="{{ $checkList->maquinariaId }}">
+                            <input type="hidden" name="maquinariaId" id="maquinariaId" value="{{ $checkList->maquinariaId }}">
+                            <input type="hidden" name="identificador" id="identificador" value="{{ $maquinaria->identificador }}">
+                            <input type="hidden" name="codigo" id="codigo" value="{{ $bitacora->codigo }}">
+                            <input type="hidden" name="version" id="identificador" value="{{ $bitacora->version }}">
                             <input type="hidden" name="usuarioId" id="usuarioId" value="{{ auth()->user()->id }}">
                             <input type="hidden" name="bitacoraId" id="bitacoraId" value="{{ $checkList->bitacoraId }}">
                             <input type="hidden" name="bitacora" id="bitacora" value="{{ $checkList->bitacora }}">

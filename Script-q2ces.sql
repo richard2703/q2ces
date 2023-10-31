@@ -612,6 +612,15 @@ CREATE TABLE corteCajaChica(
     primary key (id)
 );
 
+create table manoDeObra(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    codigo varchar(200) not NULL,
+    nombre varchar(200) not NULL,
+    costo float (10, 2) not NULL,
+    comentario text NULL,
+    primary key (id)
+);
+
 /***************************************FIN Tablas de Sin FK*/
 
 /***************************************DATOS Tablas de Sin FK*/
@@ -708,7 +717,7 @@ INSERT INTO `tipoHoraExtra` (`id`, `nombre`, `valor`, `comentario`, `color`) VAL
 
 
 INSERT INTO `estados` (`id`, `nombre`, `color`, `comentario`) VALUES
-(1, 'Espera', 'blue', 'En espera de antención'),
+(1, 'Espera', 'blue', 'En espera de atención'),
 (2, 'Realizando', 'gray', 'Ya se está trabajando'),
 (3, 'Terminado', 'navy', 'Ya se termino de ejecutar');
 
@@ -724,6 +733,11 @@ INSERT INTO `tipoMantenimiento` (`id`, `nombre`, `comentario`) VALUES
 (2, '250', 'Mantenimiento preventivo de 250 horas de trabajo'),
 (3, '500', 'Mantenimiento preventivo de 500 horas de trabajo.'),
 (4, '1000', 'Mantenimiento preventivo de 1000 horas de trabajo');
+
+INSERT INTO
+    `manoDeObra` (`id`,`codigo`,`nombre`,`costo`,`comentario`)
+VALUES
+    (NULL,'NDF','No definido', 0,'El servicio de mano de obra no esta definido o no se ha especificado');
 
 /***************************************FIN DATOS Tablas de Sin FK*/
 
@@ -1751,6 +1765,24 @@ create table checkListRegistros(
     CONSTRAINT FK_checkListRegistrosTarea foreign key (tareaId) references tarea(id),
     CONSTRAINT FK_checkListHistorico foreign key (checkListId) references checkList(id)
 );
+
+CREATE TABLE programacionCheckLists(
+    id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    fecha DATE NOT NULL,
+    checkListId BIGINT(20) UNSIGNED NULL,
+    bitacoraId BIGINT(20) UNSIGNED NOT NULL,
+    maquinariaId BIGINT(20) UNSIGNED NOT NULL,
+    personalId BIGINT(20) UNSIGNED NOT NULL,
+    comentario TEXT DEFAULT NULL,
+    estatus INT NULL,
+    created_at DATETIME NULL,
+    updated_at DATETIME NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_programacionCheckLists_checkListId FOREIGN KEY (checkListId) REFERENCES checkList(id),
+    CONSTRAINT FK_programacionCheckLists_maquinariaId FOREIGN KEY (maquinariaId) REFERENCES maquinaria(id),
+    CONSTRAINT FK_programacionCheckLists_personalId FOREIGN KEY (personalId) REFERENCES personal(id),
+    CONSTRAINT FK_programacionCheckLists_bitacoraId FOREIGN KEY (bitacoraId) REFERENCES bitacoras(id)
+   );
 
 create table refacciones (
     id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,

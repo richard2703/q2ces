@@ -156,8 +156,7 @@
                                                                                     </div>
 
                                                                                     <div class=" col-12  my-3 ">
-                                                                                        <ul class=""
-                                                                                            id="newRowGrupos">
+                                                                                        <ul class="" id="newRowGrupos">
 
                                                                                             @forelse ($grupos as $item)
                                                                                                 <li class="listaMaterialMantenimiento my-3 border-bottom"

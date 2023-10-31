@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\comprobante;
 use App\Models\conceptos;
 use App\Models\frecuenciaEjecucion;
+use App\Models\manoDeObra;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Storage;
@@ -223,6 +224,15 @@ class catalogosController extends Controller
         $records = conceptos::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
         return view('catalogos.conceptos', compact('records'));
+    }
+
+    public function indexCatalogoManoDeObra()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
+
+        $records = manoDeObra::orderBy('nombre', 'asc')->paginate(10);
+        // dd( $records );
+        return view('catalogos.manoDeObra', compact('records'));
     }
 
     public function indexCatalogoComprobantes()

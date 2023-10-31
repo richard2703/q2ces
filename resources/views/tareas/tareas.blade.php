@@ -35,20 +35,42 @@
 
                                     <div class="row">
                                         <div class="d-flex p-3 divBorder">
-                                            @can('tarea_create')
-                                                <div class="col-12 text-end">
-                                                    <div class="row">
-                                                        <a href="{{ url('/bitacoras/tareas/nueva') }}">
-                                                            <!--Agregar ruta-->
-                                                            <button type="button" class="btn botonGral">Nueva Tarea</button>
-                                                        </a>
-                                                        {{-- <div class="col-12 text-right" data-bs-toggle="modal"
+                                            <div class="col-6 col-sm-6 col-lg-6 pb-6 text-center">
+                                                <form action="{{ route('tarea.index') }}" method="GET" id="filterForm">
+                                                    <div class="input-group">
+                                                        <label class="labelTitulo p-2">Grupo de Tareas: </label>
+                                                        <select name="estatus" id="estatus"
+                                                            style="background: #727176; color: white; font-weight: bold;"
+                                                            class="form-control"
+                                                            onchange="document.getElementById('filterForm').submit();">
+                                                            <option selected value="0">Todos</option>
+                                                            @foreach ($vctFilterGrupos as $item)
+                                                                <option value="{{ $item->id }}"
+                                                                    style="font-weight: bold;"
+                                                                    {{ request('estatus') == $item->id ? 'selected' : '' }}>
+                                                                    {{ $item->nombre }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </form>
+
+                                                @can('tarea_create')
+                                                    <div class="col-12 text-end">
+                                                        <div class="row">
+                                                            <a href="{{ url('/bitacoras/tareas/nueva') }}">
+                                                                <!--Agregar ruta-->
+                                                                <button type="button" class="btn botonGral">Nueva
+                                                                    Tarea</button>
+                                                            </a>
+                                                            {{-- <div class="col-12 text-right" data-bs-toggle="modal"
                                                             data-bs-target="#nuevaTarea">
                                                             <button type="button" class="btn botonGral">Nueva Tarea</button>
                                                         </div> --}}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            @endcan
+                                                @endcan
+                                            </div>
                                         </div>
                                     </div>
 
@@ -58,6 +80,7 @@
                                                 <tr>
                                                     <th class="labelTitulo" style="width:40px">Id</th>
                                                     <th class="labelTitulo">Nombre</th>
+                                                    <th class="labelTitulo">Grupo de Tareas</th>
                                                     <th class="labelTitulo">Categoría</th>
                                                     <th class="labelTitulo">Ubicación</th>
                                                     <th class="labelTitulo">Tipo</th>
@@ -69,23 +92,25 @@
                                             <tbody>
                                                 @forelse ($vctTareas as $item)
                                                     <tr>
-                                                        <td class="text-left"><a
-                                                                href="{{ route('tarea.edit', $item->id) }}"
+                                                        <td class="text-left"><a href="{{ route('tarea.edit', $item->id) }}"
                                                                 title="Ver la información de la tarea."
                                                                 style="color: blue">{{ str_pad($item->id, 3, '0', STR_PAD_LEFT) }}</a>
                                                         </td>
-                                                        <td><a href="#" title="{{ $item->comentario }}">{{ $item->nombre }}</a></td>
+                                                        <td><a href="#"
+                                                                title="{{ $item->comentario }}">{{ $item->nombre }}</a>
+                                                        </td>
+                                                        <td>{{ $item->grupo }} </td>
                                                         <td>{{ $item->categoria }} </td>
                                                         <td>{{ $item->ubicacion }}</td>
                                                         <td>{{ $item->tipo }}</td>
-                                                        <td>{{ ($item->requiereImagen==1?"Sí":"No") }}</td>
+                                                        <td>{{ $item->requiereImagen == 1 ? 'Sí' : 'No' }}</td>
                                                         <td>{{ strtoupper($item->controlHtml) }}</td>
 
                                                         <td class="td-actions text-center">
 
                                                             @can('tarea_edit')
-                                                                <a href="{{ url('/bitacoras/tareas/editar/' . $item->id) }}"  title="Editar la información de la tarea."
-                                                                    class="">
+                                                                <a href="{{ url('/bitacoras/tareas/editar/' . $item->id) }}"
+                                                                    title="Editar la información de la tarea." class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                         height="28" fill="currentColor" title="Editar"
                                                                         class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -101,7 +126,8 @@
                                                                     onsubmit="return confirm('Seguro?')">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <button class="btnSinFondo" type="submit" rel="tooltip" title="Eliminar la información de la tarea.">
+                                                                    <button class="btnSinFondo" type="submit" rel="tooltip"
+                                                                        title="Eliminar la información de la tarea.">
                                                                         <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                             height="28" fill="currentColor"
                                                                             class="bi bi-x-circle" viewBox="0 0 16 16">
@@ -152,8 +178,8 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="message-text" class="labelTitulo">Nombre: <span>*</span></label>
-                            <input type="text" class="inputCaja" id="nombre" name="nombre" required maxlength="250"
-                                value="" placeholder="Asigna un nombre a la tarea.">
+                            <input type="text" class="inputCaja" id="nombre" name="nombre" required
+                                maxlength="250" value="" placeholder="Asigna un nombre a la tarea.">
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="labelTitulo">Categoría: <span>*</span></label>

@@ -13,6 +13,7 @@ use App\Models\grupo;
 use App\Models\tarea;
 use App\Models\maquinaria;
 use App\Models\personal;
+use App\Models\User;
 use App\Models\programacionCheckLists;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
@@ -139,17 +140,25 @@ class checkListController extends Controller {
             ->orderBy( 'programacionCheckLists.id', 'desc' )
             ->paginate( 15 );
         } else {
-            $vctRecords = programacionCheckLists::select(
-                'programacionCheckLists.*',
-                'bitacoras.nombre as bitacora',
-                DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
-                DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ),
-            )
-            ->join( 'personal', 'personal.id', '=', 'programacionCheckLists.personalId' )
-            ->join( 'maquinaria', 'maquinaria.id', '=', 'programacionCheckLists.maquinariaId' )
-            ->join( 'bitacoras', 'bitacoras.id', '=', 'programacionCheckLists.bitacoraId' )
-            ->orderBy( 'programacionCheckLists.id', 'desc' )
-            ->paginate( 15 );
+
+            $objUsuario = User::select( 'model_has_roles.role_id' )->join( 'model_has_roles', 'model_has_roles.model_id', 'users.id' )->where( 'id', auth()->user()->id )->first();
+
+            if ( $objUsuario->role_id == 1 ) {
+                //*** es administrador */
+                $vctRecords = programacionCheckLists::select(
+                    'programacionCheckLists.*',
+                    'bitacoras.nombre as bitacora',
+                    DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
+                    DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ),
+                )
+                ->join( 'personal', 'personal.id', '=', 'programacionCheckLists.personalId' )
+                ->join( 'maquinaria', 'maquinaria.id', '=', 'programacionCheckLists.maquinariaId' )
+                ->join( 'bitacoras', 'bitacoras.id', '=', 'programacionCheckLists.bitacoraId' )
+                ->orderBy( 'programacionCheckLists.id', 'desc' )
+                ->paginate( 15 );
+            } else {
+                $vctRecords = null;
+            }
         }
 
         // dd( $records );
@@ -308,8 +317,10 @@ class checkListController extends Controller {
         ->orderBy( 'grupo', 'asc' )
         ->where( 'checkListRegistros.checkListId', '=', $id )->get();
 
+        $maquinaria = maquinaria::select( 'maquinaria.*' )->where( 'id', '=', $checkList->maquinariaId )->first();
+
         // dd( $records );
-        return view( 'checkList.detalleCheckList', compact( 'checkList', 'records' ) );
+        return view( 'checkList.detalleCheckList', compact('maquinaria', 'checkList', 'records' ) );
     }
 
     /**
