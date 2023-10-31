@@ -402,6 +402,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('serviciosTrasporte/misServicios', [App\Http\Controllers\serviciosTrasporteController::class, 'misServicios'])->name('serviciosTrasporte.misServicios');
     Route::put('serviciosTrasporte/misServicios', [App\Http\Controllers\serviciosTrasporteController::class, 'misServiciosChofer'])->name('serviciosTrasporte.misServiciosChofer');
     Route::get('serviciosTrasporte/ticket/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'printTicketChofer'])->name('serviciosTrasporte.printTicketChofer');
+    Route::get('serviciosTrasporte/ticketCerrado/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'printTicketCerrado'])->name('serviciosTrasporte.printTicketCerrado');
     Route::resource('serviciosTrasporte', App\Http\Controllers\serviciosTrasporteController::class);
 
     // Conceptos

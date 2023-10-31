@@ -73,6 +73,10 @@
                                     {{ $servicio->apellidoP }}
                                 </div>
                                 <div class="text-center">
+                                    <h5 style="font-weight: 1000; ">MANIOBRISTA: </h5> {{ $servicio->maninombre }}
+                                    {{ $servicio->maniapellido }}
+                                </div>
+                                <div class="text-center">
                                     <h5 style="font-weight: 1000;   ">EQUIPO:</h5>
                                     {{ $servicio->equipo }}
                                 </div>
@@ -89,6 +93,10 @@
                                     {{ $servicio->recibe }}
                                 </div>
                                 <div class="text-center">
+                                    <h5 style="font-weight: 1000; ">TRABAJO/SERVICIO: </h5> {{ $servicio->nombres }}
+                                    {{ $servicio->apellidoP }}
+                                </div>
+                                <div class="text-center">
                                     <h5 style="font-weight: 1000;   ">TIRADERO:</h5>
                                     {{ $servicio->almacen }}
                                 </div>
@@ -96,6 +104,48 @@
                                     <h5 style="font-weight: 1000;   ">COMENTARIO:</h5>
                                     {{ $servicio->comentario }}
                                 </div>
+
+                                <br>
+                                <img width="300px;" src="{{ asset('/img/login/Header1Servicios.svg') }}" alt=""
+                                    class="mb-2">
+                                <br>
+
+                                <div class="text-center">
+                                    <h5 style="font-weight: 1000;   ">HORA DE ENTREGA:</h5>
+                                    {{ $servicio->horaEntrega }}
+                                </div>
+
+                                <div class="text-center">
+                                    <h5 style="font-weight: 1000;   ">LLEGADA A TALLER:</h5>
+                                    {{ $servicio->horaLlegada }}
+                                </div>
+
+                                <div class="text-center">
+                                    <h5 style="font-weight: 1000;   ">ODOMETRO ENTREGA:</h5>
+                                    {{ $servicio->odometro }}
+                                </div>
+
+                                <div class="text-center">
+                                    <h5 style="font-weight: 1000;   ">COSTO DE MATERIAL:</h5>
+                                    {{ $servicio->costoMaterial }}
+                                </div>
+
+                                <div class="text-center">
+                                    <h5 style="font-weight: 1000;   ">COSTO DE MANO DE OBRA:</h5>
+                                    {{ $servicio->costoMano }}
+                                </div>
+
+                                <div class="text-center">
+                                    <h5 style="font-weight: 1000;   ">COSTO DE SERVICIO:</h5>
+                                    {{ $servicio->costoServicio }}
+                                </div>
+
+                                <div class="text-center">
+                                    <h5 style="font-weight: 1000;   ">COSTO TOTAL:</h5>
+                                    {{ $servicio->comentario }}
+                                </div>
+                                <BR>
+
                                 <p class="pt-5" style="margin-top: 20px; text-align: center;">
                                     ______________________________________<br>
                                     Nombre y Firma de Recibido<br>
@@ -200,11 +250,11 @@
                 }
 
                 /*   @page {
-                            size: 70mm 260mm;
-                             Tamaño ISO C7 en milímetros
-                            margin: 0;
+                                                    size: 70mm 260mm;
+                                                     Tamaño ISO C7 en milímetros
+                                                    margin: 0;
 
-                        }*/
+                                                }*/
 
                 body {
                     margin-top: -80mm !important;
