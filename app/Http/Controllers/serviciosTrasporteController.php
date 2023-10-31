@@ -181,6 +181,9 @@ class serviciosTrasporteController extends Controller
         abort_if(Gate::denies('servicio_Chofer'), 403);
 
         $personal = personal::where('userId', auth()->user()->id)->first();
+        if (!isset($personal->id)) {
+            return redirect()->action([serviciosTrasporteController::class, 'index']);
+        }
         // dd($personal);
         $registros = serviciosTrasporte::join('conceptos', 'serviciosTrasporte.conceptoId', 'conceptos.id')
             ->leftJoin('obras', 'serviciosTrasporte.obraId', 'obras.id')
@@ -204,6 +207,8 @@ class serviciosTrasporteController extends Controller
             ->orderBy('fecha', 'desc')
             ->groupBy('serviciosTrasporte.id')
             ->where('serviciosTrasporte.personalId', $personal->id)
+            ->orWhere('serviciosTrasporte.estatus', 1)
+            ->orWhere('serviciosTrasporte.estatus', 2)
             ->paginate(15);
         // dd($registros);
         return view('serviciosTrasporte.indexServicios', compact('registros'));
@@ -212,14 +217,79 @@ class serviciosTrasporteController extends Controller
     public function misServiciosChofer(Request $request)
     {
         abort_if(Gate::denies('servicio_Chofer'), 403);
-
+        $now = new \DateTime();
         $serviciosTrasporte = serviciosTrasporte::find($request->id);
         $serviciosTrasporte->recibe = $request->recibe;
         $serviciosTrasporte->comentario = $request->comentario;
         $serviciosTrasporte->estatus = 2;
+        $serviciosTrasporte->horaEntrega = $now->format('H:i:s');
         // dd($serviciosTrasporte);
 
         $serviciosTrasporte->save();
         return redirect()->action([serviciosTrasporteController::class, 'misServicios']);
+    }
+
+    public function printTicketChofer($id)
+    {
+        $servicio = serviciosTrasporte::join('personal', 'personal.id', '=', 'serviciosTrasporte.personalId')
+            ->join('maquinaria', 'maquinaria.id', 'serviciosTrasporte.equipoId')
+            ->join('obras', 'obras.id', 'serviciosTrasporte.obraId')
+            ->join('clientes', 'clientes.id', 'obras.clienteId')
+            ->join('almacenTiraderos', 'almacenTiraderos.id', 'serviciosTrasporte.almacenId')
+            ->select(
+                'serviciosTrasporte.id',
+                'personal.nombres',
+                'personal.apellidoP',
+                'maquinaria.nombre as equipo',
+                'clientes.nombre as cliente',
+                'obras.nombre as obra',
+                'serviciosTrasporte.recibe',
+                'almacenTiraderos.nombre as almacen',
+                'serviciosTrasporte.horaEntrega',
+                'serviciosTrasporte.comentario',
+            )
+            ->where('serviciosTrasporte.id', $id)
+            ->first();
+
+        // dd('printTicketChofer', $servicio);
+
+        return view('serviciosTrasporte.ticketChofer', compact('servicio'));
+    }
+
+    public function printTicketCerrado($id)
+    {
+        $servicio = serviciosTrasporte::join('personal', 'personal.id', '=', 'serviciosTrasporte.personalId')
+            ->leftjoin('personal as manio', 'personal.id', '=', 'serviciosTrasporte.maniobristaId')
+            ->join('maquinaria', 'maquinaria.id', 'serviciosTrasporte.equipoId')
+            ->join('obras', 'obras.id', 'serviciosTrasporte.obraId')
+            ->join('clientes', 'clientes.id', 'obras.clienteId')
+            ->join('almacenTiraderos', 'almacenTiraderos.id', 'serviciosTrasporte.almacenId')
+            ->select(
+                'serviciosTrasporte.id',
+                'personal.nombres',
+                'personal.apellidoP',
+                'manio.nombres as maninombre',
+                'manio.apellidoP as maniapellido',
+                'maquinaria.nombre as equipo',
+                'clientes.nombre as cliente',
+                'obras.nombre as obra',
+                'serviciosTrasporte.recibe',
+                'almacenTiraderos.nombre as almacen',
+                'serviciosTrasporte.horaEntrega',
+                'serviciosTrasporte.comentario',
+                'serviciosTrasporte.horaEntrega',
+                'serviciosTrasporte.horaLlegada',
+                'serviciosTrasporte.odometro',
+                'serviciosTrasporte.costoMaterial',
+                'serviciosTrasporte.costoServicio',
+                'serviciosTrasporte.costoMano',
+                'serviciosTrasporte.servicio'
+            )
+            ->where('serviciosTrasporte.id', $id)
+            ->first();
+
+        dd('printTicketChofer', $servicio);
+
+        return view('serviciosTrasporte.ticketCerrado', compact('servicio'));
     }
 }

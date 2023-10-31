@@ -1651,6 +1651,38 @@ create table asistencia(
     constraint FK_asistencia_tipoHoraExtraId foreign key (tipoHoraExtraId) references tipoHoraExtra(id)
 );
 
+CREATE TABLE serviciosTrasporte(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    fecha date not NULL,
+    conceptoId bigint(20) unsigned NOT NULL,
+    obraId bigint(20) unsigned  NULL,
+    equipoId bigint(20) unsigned NOT NULL,
+    personalId bigint(20) unsigned NOT NULL,
+    maniobristaId bigint(20) unsigned NOT NULL,
+    almacenId bigint(20) unsigned NOT NULL,
+    cantidad float(10, 2) null,
+    costoMaterial float(10, 2) null,
+    costoServicio float(10, 2) null,
+    costoMano float(10, 2) null,
+    recibe varchar (200) null,
+    horaEntrega time null,
+    horaLlegada time null,
+    estatus int null,
+    cajaChica int null,
+    odometro int null,
+    servicio text null,
+    comentario text null,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_ServiciosTrasporte_conceptoId foreign key (conceptoId) references conceptos(id),
+    CONSTRAINT FK_ServiciosTrasporte_obraId foreign key (obraId) references obras(id),
+    CONSTRAINT FK_ServiciosTrasporte_equipoId foreign key (equipoId) references maquinaria(id),
+    CONSTRAINT FK_ServiciosTrasporte_personalId foreign key (personalId) references personal(id),
+    CONSTRAINT FK_ServiciosTrasporte_maniobristaId foreign key (maniobristaId) references personal(id),
+	CONSTRAINT FK_ServiciosTrasporte_almacenId foreign key (almacenId) references almacenTiraderos(id)
+   );
+
 create table cajaChica(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     dia date not NULL,
