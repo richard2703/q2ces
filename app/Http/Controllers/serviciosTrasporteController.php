@@ -288,7 +288,7 @@ class serviciosTrasporteController extends Controller
             ->where('serviciosTrasporte.id', $id)
             ->first();
 
-        dd('printTicketChofer', $servicio);
+        // dd('printTicketChofer', $servicio);
 
         return view('serviciosTrasporte.ticketCerrado', compact('servicio'));
     }
