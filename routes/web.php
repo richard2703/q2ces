@@ -510,4 +510,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('combustibleTote', App\Http\Controllers\CombustibleToteController::class);
     Route::post('/combustibleToteDescarga/', [App\Http\Controllers\CombustibleToteController::class, 'storeDescarga'])->name('descarga.post');
+
+    // Crud facturaCliente
+    Route::resource('facturaCliente', App\Http\Controllers\facturaClienteController::class);
+
+    // Crud facturaProvedor
+    Route::resource('facturaProvedor', App\Http\Controllers\facturaProvedorController::class);
 });

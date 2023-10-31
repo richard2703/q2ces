@@ -19,8 +19,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Proveedores</h4>
-
+                                    <h4 class="card-title">Facturas De "Cliente X"</h4>
                                 </div>
                                 <div class="card-body">
                                     @if (session('success'))
@@ -55,8 +54,8 @@
                                             </div>
                                         </div>
                                         <div class="divBorder">
-                                            <p>Catálogo General de Proveedores, Es Utilizado para Gestionar los Proveedores
-                                                en el Sistema.</p>
+                                            {{--  <p>Catálogo General de Proveedores, Es Utilizado para Gestionar los Proveedores
+                                                en el Sistema.</p>  --}}
                                         </div>
                                     </div>
 
@@ -64,20 +63,22 @@
                                     <table class="table table-responsive">
                                         <thead class="labelTitulo">
                                             <tr>
-                                                <th class="labelTitulo">Id</th>
-                                                <th class="labelTitulo">Nombre</th>
-                                                <th class="labelTitulo">Comentario</th>
-                                                <th class="labelTitulo">Categoría</th>
+                                                <th class="labelTitulo">Folio</th>
+                                                <th class="labelTitulo">Provedor</th>
+                                                <th class="labelTitulo">Fecha</th>
+                                                <th class="labelTitulo">Pdf</th>
+                                                <th class="labelTitulo">Xml</th>
                                                 <th class="labelTitulo text-right">Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @forelse ($records as $item)
                                                 <tr>
-                                                    <td>{{ $item->id }}</td>
-                                                    <td class="text-left">{{ $item->nombre }}</td>
-                                                    <td class="text-left">{{ $item->comentario }}</td>
-                                                    <td class="text-left">{{ $item->categoria }}</td>
+                                                    <td>{{ $item->folio }}</td>
+                                                    <td class="text-left">{{ $item->provedorNombre }}</td>
+                                                    <td class="text-left">{{ $item->fecha }}</td>
+                                                    <td class="text-left">{{ $item->pdf }}</td>
+                                                    <td class="text-left">{{ $item->xml }}</td>
 
                                                     <td class="td-actions text-right">
                                                         {{-- @can('catalogos_show') --}}
@@ -88,18 +89,6 @@
                                                                 </svg>
                                                             </a>--> --}}
                                                         {{-- @endcan --}}
-                                                        @can('catalogos_destroy')
-                                                        <form action="{{ route('facturaProvedor.index') }}" method="GET" style="display: inline-block;">
-                                                            @csrf
-                                                            <input type="hidden" name="id" value="{{ $item->id }}">
-                                                            <button class="btnSinFondo" type="submit" rel="tooltip">
-                                                                <div class="" style="font-size: 25px">
-                                                                    <i class="fas fa-file-invoice-dollar"></i>
-                                                                </div>
-                                                            </button>
-                                                        </form>
-                                                        
-                                                        @endcan
                                                         @can('catalogos_edit')
                                                             <a href="#" class="" data-bs-toggle="modal"
                                                                 data-bs-target="#editarItem"
@@ -130,7 +119,6 @@
                                                                 </button>
                                                             </form>
                                                         @endcan
-                                                        
                                                     </td>
                                                 </tr>
                                             @empty
@@ -182,11 +170,11 @@
                             <select id="categoriaId" name="categoriaId" class="form-select" required
                                 aria-label="Default select example">
                                 <option value="">Seleccione</option>
-                                @foreach ($vctCategorias as $item)
+                                {{--  @foreach ($vctCategorias as $item)
                                     <option value="{{ $item->id }}">
                                         {{ $item->nombre }}
                                     </option>
-                                @endforeach
+                                @endforeach  --}}
                             </select>
                         </div>
 
@@ -237,11 +225,11 @@
                             <select id="editPuestoNivelId" name="categoriaId" class="form-select" required
                                 aria-label="Default select example">
                                 <option value="">Seleccione</option>
-                                @foreach ($vctCategorias as $item)
+                                {{--  @foreach ($vctCategorias as $item)
                                     <option value="{{ $item->id }}">
                                         {{ $item->nombre }}
                                     </option>
-                                @endforeach
+                                @endforeach  --}}
                             </select>
                         </div>
 

@@ -19,8 +19,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Proveedores</h4>
-
+                                    <h4 class="card-title">Facturas De "Proveedor X"</h4>
                                 </div>
                                 <div class="card-body">
                                     @if (session('success'))
@@ -37,7 +36,7 @@
                                         <div class="d-flex p-3">
                                             <div class="col-12 text-right">
 
-                                                <a href="{{ route('catalogos.index') }}">
+                                                <a href="{{ route('proveedor.index') }}">
                                                     <button class="btn regresar">
                                                         <span class="material-icons">
                                                             reply
@@ -46,17 +45,26 @@
                                                     </button>
                                                 </a>
 
-                                                @can('catalogos_create')
-                                                    <button class="btn botonGral float-end" data-bs-toggle="modal"
-                                                        data-bs-target="#nuevoItem">
-                                                        Añadir Proveedor
+                                                {{--  <form action="{{ route('facturaProvedor.index') }}" method="GET" style="display: inline-block;">
+                                                    <input type="hidden" name="id" value="{{ $id }}">
+                                                    <button class="btn regresar" type="submit">
+                                                        <span class="material-icons">
+                                                            reply
+                                                        </span>
+                                                        Regresar
                                                     </button>
+                                                </form>  --}}
+
+                                                @can('residente_mtq_create')
+                                                <a href="{{ route('facturaProvedor.create', ['id' => $id]) }}" class="d-flex justify-content-end">
+                                                    <button type="button" class="btn botonGral">Añadir Facturas</button>
+                                                </a>                                                
                                                 @endcan
                                             </div>
                                         </div>
                                         <div class="divBorder">
-                                            <p>Catálogo General de Proveedores, Es Utilizado para Gestionar los Proveedores
-                                                en el Sistema.</p>
+                                            {{--  <p>Catálogo General de Proveedores, Es Utilizado para Gestionar los Proveedores
+                                                en el Sistema.</p>  --}}
                                         </div>
                                     </div>
 
@@ -64,20 +72,22 @@
                                     <table class="table table-responsive">
                                         <thead class="labelTitulo">
                                             <tr>
-                                                <th class="labelTitulo">Id</th>
-                                                <th class="labelTitulo">Nombre</th>
-                                                <th class="labelTitulo">Comentario</th>
-                                                <th class="labelTitulo">Categoría</th>
+                                                <th class="labelTitulo">Folio</th>
+                                                <th class="labelTitulo">Provedor</th>
+                                                <th class="labelTitulo">Fecha</th>
+                                                <th class="labelTitulo">Pdf</th>
+                                                <th class="labelTitulo">Xml</th>
                                                 <th class="labelTitulo text-right">Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @forelse ($records as $item)
                                                 <tr>
-                                                    <td>{{ $item->id }}</td>
-                                                    <td class="text-left">{{ $item->nombre }}</td>
-                                                    <td class="text-left">{{ $item->comentario }}</td>
-                                                    <td class="text-left">{{ $item->categoria }}</td>
+                                                    <td>{{ $item->folio }}</td>
+                                                    <td class="text-left">{{ $item->provedorNombre }}</td>
+                                                    <td class="text-left">{{ $item->fecha }}</td>
+                                                    <td class="text-left">{{ $item->pdf }}</td>
+                                                    <td class="text-left">{{ $item->xml }}</td>
 
                                                     <td class="td-actions text-right">
                                                         {{-- @can('catalogos_show') --}}
@@ -88,18 +98,6 @@
                                                                 </svg>
                                                             </a>--> --}}
                                                         {{-- @endcan --}}
-                                                        @can('catalogos_destroy')
-                                                        <form action="{{ route('facturaProvedor.index') }}" method="GET" style="display: inline-block;">
-                                                            @csrf
-                                                            <input type="hidden" name="id" value="{{ $item->id }}">
-                                                            <button class="btnSinFondo" type="submit" rel="tooltip">
-                                                                <div class="" style="font-size: 25px">
-                                                                    <i class="fas fa-file-invoice-dollar"></i>
-                                                                </div>
-                                                            </button>
-                                                        </form>
-                                                        
-                                                        @endcan
                                                         @can('catalogos_edit')
                                                             <a href="#" class="" data-bs-toggle="modal"
                                                                 data-bs-target="#editarItem"
@@ -130,7 +128,6 @@
                                                                 </button>
                                                             </form>
                                                         @endcan
-                                                        
                                                     </td>
                                                 </tr>
                                             @empty
@@ -147,114 +144,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Nueva Tarea-->
-    <div class="modal fade" id="nuevoItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bacTituloPrincipal">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nuevo Proveedor</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('proveedor.store') }}" method="post">
-                        @csrf
-                        {{-- <input type="hidden" name="userId" id="userId" value="{{ $usuario->id }}"> --}}
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Nombre Comercial:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="nombre" name="nombre"
-                                value="{{ old('nombre') }}" required placeholder="Especifique...">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Razon Social:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="razonSocial" name="razonSocial"
-                                value="{{ old('razonSocial') }}" required placeholder="Especifique...">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Categoría:
-                                <span>*</span></label></br>
-                            <select id="categoriaId" name="categoriaId" class="form-select" required
-                                aria-label="Default select example">
-                                <option value="">Seleccione</option>
-                                @foreach ($vctCategorias as $item)
-                                    <option value="{{ $item->id }}">
-                                        {{ $item->nombre }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class=" col-12  mb-3 ">
-                            <label class="labelTitulo">Comentarios:</label></br>
-                            <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario"
-                                spellcheck="true"></textarea>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn botonGral">Guardar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Editar  Tarea-->
-    <div class="modal fade" id="editarItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bacTituloPrincipal">
-
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar puesto</label>
-                    </h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('proveedor.update', 0) }}" method="post">
-                        @csrf
-                        @method('put')
-                        <input type="hidden" name="controlId" id="controlId" value="">
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Nombre:</label></br>
-                            <input type="text" class="inputCaja" id="puestoNombre" name="nombre" value="">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Razon Social:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="UrazonSocial" name="UrazonSocial"
-                                value="{{ old('razonSocial') }}" required placeholder="Especifique...">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
-                            <label class="labelTitulo">Categoría: <span>*</span></label></br>
-                            <select id="editPuestoNivelId" name="categoriaId" class="form-select" required
-                                aria-label="Default select example">
-                                <option value="">Seleccione</option>
-                                @foreach ($vctCategorias as $item)
-                                    <option value="{{ $item->id }}">
-                                        {{ $item->nombre }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class=" col-12  mb-3 ">
-                            <label class="labelTitulo">Comentarios:</label></br>
-                            <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="puestoComentarios" name="comentario"></textarea>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn botonGral" id="btnTareaGuardar">Guardar cambios</button>
-                        </div>
-
-                    </form>
                 </div>
             </div>
         </div>
@@ -295,26 +184,6 @@
         var slug = '{{ Session::get('message') }}';
         if (slug == 1) {
             Guardado();
-
-        }
-    </script>
-
-    <script>
-        function cargaItem(id, nombre, razonSocial, nivel, comentarios) {
-
-            const txtId = document.getElementById('controlId');
-            txtId.value = id;
-
-            const txtNombre = document.getElementById('puestoNombre');
-            txtNombre.value = nombre;
-
-            const txtRazonSocial = document.getElementById('UrazonSocial');
-            txtRazonSocial.value = razonSocial;
-
-            const lstNivel = document.getElementById('editPuestoNivelId').value = nivel;
-
-            const txtComentarios = document.getElementById('puestoComentarios');
-            txtComentarios.value = comentarios;
 
         }
     </script>
