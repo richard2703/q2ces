@@ -17,7 +17,7 @@ class facturaClienteController extends Controller
     public function index(facturaCliente $facturaCliente)
     {
         abort_if(Gate::denies('catalogos_index'), 403);
-        dd($facturaCliente);
+        // dd($facturaCliente);
 
         $records = facturaCliente::orderBy('nombre', 'asc')->paginate(15);
 
