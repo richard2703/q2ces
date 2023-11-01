@@ -27,7 +27,6 @@ class serviciosTrasporteController extends Controller
      */
     public function index()
     {
-        // dd("serviciosTrasporte");
         abort_if(Gate::denies('cajachica_index'), 403);
 
         $registros = serviciosTrasporte::join('conceptos', 'serviciosTrasporte.conceptoId', 'conceptos.id')
@@ -48,6 +47,7 @@ class serviciosTrasporteController extends Controller
             )
             ->orderBy('fecha', 'desc')
             ->paginate(15);
+        // dd($registros);
 
         return view('serviciosTrasporte.indexServicios', compact('registros'));
     }
@@ -155,10 +155,10 @@ class serviciosTrasporteController extends Controller
         $serviciosTrasporte->save();
 
         $obra = obras::find($serviciosTrasporte->obraId);
-
+        // serviciosTrasporte.conceptoId
         $data['dia'] = $serviciosTrasporte->fecha;
-        $data['concepto'] = 1;
-        $data['comprobanteId'] = 4;
+        $data['concepto'] = $serviciosTrasporte->conceptoId;
+        $data['comprobanteId'] = $serviciosTrasporte->obraId;
         $data['ncomprobante'] = $serviciosTrasporte->id;
         $data['cliente'] = $obra->clienteId;
         $data['obra'] = $serviciosTrasporte->obraId;
@@ -236,6 +236,7 @@ class serviciosTrasporteController extends Controller
             ->join('obras', 'obras.id', 'serviciosTrasporte.obraId')
             ->join('clientes', 'clientes.id', 'obras.clienteId')
             ->join('almacenTiraderos', 'almacenTiraderos.id', 'serviciosTrasporte.almacenId')
+            ->join('conceptos', 'conceptos.id', 'serviciosTrasporte.conceptoId')
             ->select(
                 'serviciosTrasporte.id',
                 'personal.nombres',
@@ -247,6 +248,7 @@ class serviciosTrasporteController extends Controller
                 'almacenTiraderos.nombre as almacen',
                 'serviciosTrasporte.horaEntrega',
                 'serviciosTrasporte.comentario',
+                'conceptos.nombre as concepto'
             )
             ->where('serviciosTrasporte.id', $id)
             ->first();
@@ -264,6 +266,7 @@ class serviciosTrasporteController extends Controller
             ->join('obras', 'obras.id', 'serviciosTrasporte.obraId')
             ->join('clientes', 'clientes.id', 'obras.clienteId')
             ->join('almacenTiraderos', 'almacenTiraderos.id', 'serviciosTrasporte.almacenId')
+            ->join('conceptos', 'conceptos.id', 'serviciosTrasporte.conceptoId')
             ->select(
                 'serviciosTrasporte.id',
                 'personal.nombres',
@@ -283,7 +286,8 @@ class serviciosTrasporteController extends Controller
                 'serviciosTrasporte.costoMaterial',
                 'serviciosTrasporte.costoServicio',
                 'serviciosTrasporte.costoMano',
-                'serviciosTrasporte.servicio'
+                'serviciosTrasporte.servicio',
+                'conceptos.nombre as concepto'
             )
             ->where('serviciosTrasporte.id', $id)
             ->first();
