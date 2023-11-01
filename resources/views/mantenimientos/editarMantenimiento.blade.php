@@ -124,13 +124,13 @@
                                                 </div>
                                                 <br>
                                                 <hr>
-                                                <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
+                                                {{-- <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
                                                     <label class="labelTitulo">Resguardatario:</label></br><input
                                                         id="personalId2" name="personalId2" type="text"
                                                         {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
                                                         value="{{ $mantenimiento->personaId }}"
                                                         placeholder="Especifique..." class="inputCaja">
-                                                </div>
+                                                </div> --}}
                                                 {{-- <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
                                                     <label class="labelTitulo">Adscripción:</label></br><input
                                                         id="adscripcion" name="adscripcion" type="text"  {{ ($mantenimiento->estadoId < 3? '': 'disabled="false"')}}
@@ -214,12 +214,41 @@
                                                                                 <div class="row d-flex">
 
                                                                                     @if ($mantenimiento->estadoId < 3)
-                                                                                        <div class="row d-flex">
-                                                                                            <div
-                                                                                                class="col-12 col-md-6  mt-3 ">
+                                                                                        <div class="row">
+                                                                                            <div class="col-12">
                                                                                                 <p class="subEncabezado">
-                                                                                                    Busca un Material</p>
-                                                                                                <div class="mb-4 mt-0"
+                                                                                                    Busca un Material
+                                                                                                </p>
+                                                                                            </div>
+                                                                                            <div class="col-12 mt-3">
+                                                                                                <div class=" col-12 col-sm-6"
+                                                                                                    role="search"
+                                                                                                    class="">
+                                                                                                    <select
+                                                                                                        class="form-select form-select-lg mb-3 inputCaja"
+                                                                                                        name="filter"
+                                                                                                        id="filter"
+                                                                                                        aria-label=".form-select-lg example">
+
+                                                                                                        <option
+                                                                                                            value="">
+                                                                                                            Seleccione
+                                                                                                        </option>
+                                                                                                        <option
+                                                                                                            value="consumibles">
+                                                                                                            Consumibles
+                                                                                                        </option>
+                                                                                                        <option
+                                                                                                            value="refacciones">
+                                                                                                            Refacciones
+                                                                                                        </option>
+                                                                                                        <option
+                                                                                                            value="herramientas">
+                                                                                                            Herramientas
+                                                                                                        </option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                                <div class=" col-12 col-sm-6"
                                                                                                     role="search"
                                                                                                     class="">
                                                                                                     <input value=""
@@ -390,7 +419,8 @@
 
 
                                                                                     <div class=" col-12  my-3 ">
-                                                                                        <ul class="" id="newRowMano">
+                                                                                        <ul class=""
+                                                                                            id="newRowMano">
 
                                                                                             @forelse ($gastos as $item)
                                                                                                 <li class="listaMaterialMantenimiento my-3 border-bottom"
@@ -433,7 +463,7 @@
                                                                                                                     class="inputCaja text-end"
                                                                                                                     id="cantidad"
                                                                                                                     placeholder="Ej. 1"
-                                                                                                                    name="cantidad[]"  readonly disabled="true"
+                                                                                                                    name="cantidad[]"
                                                                                                                     value="{{ $item->cantidad }}">
                                                                                                             @else
                                                                                                                 <input
@@ -560,15 +590,20 @@
 
         });
 
+        const ListaSeleccionar = document.getElementById('filter');
+
         $('#search2').autocomplete({
 
             source: function(request, response) {
+
+
                 $.ajax({
                     url: "{{ route('search.materialMantenimiento') }}",
 
                     dataType: 'json',
                     data: {
                         term: request.term,
+                        filter: ListaSeleccionar.value,
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(data) {
@@ -583,7 +618,7 @@
             minLength: 1,
             select: function(event, ui) {
                 // Rellenar los campos con los datos del inventario seleccionado
-                crearItems(ui.item.id, ui.item.value, ui.item.valor);
+                crearItems(ui.item.id, ui.item.value, ui.item.nombre, ui.item.numparte, ui.item.valor, ui.item.tipo);
 
                 // $('#inventarioId').val(ui.item.id);
                 // $('#descripcion').val(ui.item.value);
@@ -624,13 +659,16 @@
     </script>
 
     <script type="text/javascript">
-        function crearItems(inventarioId, descripcion, costo) {
+        function crearItems(inventarioId, descripcion, concepto, numparte, costo, tipo) {
             var html = '';
             html += '<li class="listaMaterialMantenimiento my-3 border-bottom" id="inputFormRow">';
             html += '   <div class="row d-flex pb-4">';
             html += '      <input type="hidden" name="gastoId[]" id="gastoId" value="">';
             html += '      <input type="hidden" name="inventarioId[]" id="inventarioId" value="' + inventarioId + '">';
             html += '      <input type="hidden" name="costo[]" id="costo" value="' + costo + '">';
+            html += '      <input type="hidden" name="seccion[]" id="seccion" value="' + tipo + '">';
+            html += '      <input type="hidden" name="concepto[]" id="concepto" value="' + concepto + '">';
+            html += '      <input type="hidden" name="numeroParte[]" id="numeroParte" value="' + numparte + '">';
             html += '      <div class="col-2 ">';
             html += '           <label for="cantidad" class="">Cantidad</label></br></br>';
             html +=
@@ -658,19 +696,18 @@
         });
     </script>
 
-
     <script type="text/javascript">
         function crearItemMano(inventarioId, descripcion, costo) {
             var html = '';
             html += '<li class="listaMaterialMantenimiento my-3 border-bottom" id="inputFormRowMano">';
             html += '   <div class="row d-flex pb-4">';
             html += '      <input type="hidden" name="gastoId[]" id="gastoId" value="">';
-            html += '      <input type="hidden" name="inventarioId[]" id="inventarioId" value="' + inventarioId + '">';
+            html += '      <input type="hidden" name="manoObraId[]" id="manoObraId" value="' + inventarioId + '">';
             html += '      <input type="hidden" name="costo[]" id="costo" value="' + costo + '">';
             html += '      <div class="col-2 ">';
             html += '           <label for="cantidad" class="">Cantidad</label></br></br>';
             html +=
-                '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="1" readonly disabled="true">';
+                '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="1" >';
             html += '      </div>';
             html += '      <div class="col-8">';
             html += '          <label for="descripcion" class="">Descripción</label></br></br>';

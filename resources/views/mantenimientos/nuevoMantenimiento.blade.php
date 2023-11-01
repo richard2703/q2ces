@@ -46,9 +46,12 @@
                                         <p class="subEncabezado">Busca Una Maquinaria</p>
                                         <div class="mb-4 mt-0" role="search" class="">
                                             <input value="" class="search-submit ">
-                                            <input autofocus type="text" class="search-text" id="search"
+                                            <input autofocus type="text" class="text" id="search"
                                                 name="search" placeholder="Buscar..."
-                                                title="Escriba la(s) palabra(s) a buscar.">
+                                                title="Escriba la(s) palabra(s) a buscar."><input type="button"
+                                                onclick="clearInput('search')"
+                                                class="btn botonGral"
+                                                value="Borrar">
                                         </div>
                                     </div>
                                     <div class="d-flex p-3 divBorder w-100" style="margin-top:-10px"></div>
@@ -58,70 +61,16 @@
                                         <textarea rows="2" cols="80" class="form-control form-select" id="descripcion" readonly name="descripcion"
                                             value=""></textarea>
                                     </div>
-                                    {{--  <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Equipo: <span>*</span></label></br>
-                                            <input type="text" class="inputCaja" id="nombre" name="nombre"
-                                                required readonly>
-                                        </div>
-                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Número de Serie: </label></br>
-                                            <input type="text" class="inputCaja" id="numserie" name="numserie"
-                                                readonly>
-                                        </div>
-                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Marca: </label></br>
-                                            <input type="text" class="inputCaja" id="marca" name="marca"
-                                                readonly>
-                                        </div>
-                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Modelo: </label></br>
-                                            <input type="text" class="inputCaja" id="modelo" name="modelo"
-                                                readonly>
-                                        </div>
-                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Placas: </label></br>
-                                            <input type="text" class="inputCaja" id="placas" name="placas"
-                                                readonly>
-                                        </div> --}}
-                                    {{-- <hr> --}}
-                                    {{-- <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Resguardatario:</label></br><input
-                                                id="personalId" name="personalId" type="text"
-                                                placeholder="Especifique..." class="inputCaja">
-                                        </div>
-                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Adscripción:</label></br><input
-                                                id="adscripcion" name="adscripcion" type="text"
-                                                placeholder="Especifique..." class="inputCaja">
-                                        </div>
-                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Horómetro: </label></br>
-                                            <input type="text" class="inputCaja" placeholder="Ej. 1000"
-                                                id="horometro" name="horometro">
-                                        </div>
-                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Km/m: </label></br>
-                                            <input type="text" class="inputCaja" placeholder="Especifique..."
-                                                id="km" name="km">
-                                        </div> --}}
-                                    <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+
+                                    <div class=" col-6 col-sm-6  col-lg-6 my-3 ">
                                         <label class="labelTitulo">Fecha de Inicio: <span>*</span> </label></br>
                                         <input type="date" class="inputCaja" placeholder="Especifique..." required
+                                        min="{{ date('Y-m-d') }}" pattern="\d{2}/\d{2}/\d{4}" placeholder="dd/mm/yyyy"
                                             id="fechaInicio" name="fechaInicio">
                                     </div>
 
-                                    <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                    <div class=" col-6 col-sm-6  col-lg-6 my-3 ">
                                         <label class="labelTitulo">Tipo de Mantenimiento: <span>*</span></label></br>
-                                        {{-- <select class="form-select form-select-lg mb-3 inputCaja" name="tipo" required
-                                            id="tipo" aria-label=".form-select-lg example">
-
-                                            <option value="">Seleccione</option>
-                                            <option value="Correctivo">Correctivo</option>
-                                            <option value="250">250</option>
-                                            <option value="500">500</option>
-                                            <option value="1000">1000</option>
-                                        </select> --}}
-
                                         <select id="tipoMantenimientoId" name="tipoMantenimientoId" class="form-select form-select-lg mb-3 inputCaja" required
                                             required aria-label="Default select example">
                                             <option value="">Seleccione</option>
@@ -132,9 +81,10 @@
                                             @endforeach
                                         </select>
                                     </div>
+
                                     <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
                                         <label class="labelTitulo">Comentarios:</label></br>
-                                        <textarea rows="4" cols="80" class="form-control"
+                                        <textarea rows="3" cols="80" class="form-control"
                                             placeholder="Escribe tus comentarios o información relevante sobre el mantenimiento aquí." name="comentario"
                                             id="comentario"></textarea>
                                     </div>
@@ -176,6 +126,15 @@
     {{-- <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js') }}"></script> --}}
 
     <script>
+
+        function clearInput(controlId) {
+            var getValue = document.getElementById(controlId);
+            if (getValue.value != "") {
+                getValue.value = "";
+                getValue.focus();
+            }
+        }
+
         var curso = ['html', 'hola', 'hi'];
 
         $('#search').autocomplete({

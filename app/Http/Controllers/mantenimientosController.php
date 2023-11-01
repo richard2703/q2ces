@@ -92,12 +92,11 @@ class mantenimientosController extends Controller
         ]);
         $mantenimiento = $request->all();
 
-        dd('evento', $mantenimiento);
-        $mantenimiento['start'] = strtoupper($mantenimiento['fechaTarea'] . ' ' . $mantenimiento['horaTarea']);
-        // dd($events);
+        $mantenimiento['start'] = strtoupper($mantenimiento['fechaInicio'] );
+        // dd('evento', $mantenimiento);
 
         $mantenimiento = mantenimientos::create($mantenimiento);
-        $events = calendarioPrincipal::create($mantenimiento);
+        // $events = calendarioPrincipal::create($mantenimiento);
         Session::flash('message', 1);
 
         return redirect()->route('mantenimientos.edit', $mantenimiento->id)->with('success', 'Mantenimiento creado correctamente, continue con el proceso.');
@@ -247,7 +246,11 @@ class mantenimientosController extends Controller
                         if ($objGasto && $objGasto->id > 0) {
                             $objGasto->mantenimientoId  = $mantto->id;
                             $objGasto->inventarioId  = $request['inventarioId'][$i];
+                            $objGasto->manoObraId  = null;
                             $objGasto->cantidad  =  $request['cantidad'][$i];
+                            $objGasto->concepto  =  $request['concepto'][$i];
+                            $objGasto->numeroParte  =  $request['numeroParte'][$i];
+                            $objGasto->seccion  =  $request['seccion'][$i];
                             $objGasto->costo  = $request['costo'][$i];
                             $objGasto->total =  $request['cantidad'][$i] * $request['costo'][$i];
                             $objGasto->save();
@@ -260,7 +263,11 @@ class mantenimientosController extends Controller
                             $objGasto = new gastosMantenimiento();
                             $objGasto->mantenimientoId  = $mantto->id;
                             $objGasto->inventarioId  = $request['inventarioId'][$i];
+                            $objGasto->manoObraId  = null;
                             $objGasto->cantidad  =  $request['cantidad'][$i];
+                            $objGasto->concepto  =  $request['concepto'][$i];
+                            $objGasto->numeroParte  =  $request['numeroParte'][$i];
+                            $objGasto->seccion  =  $request['seccion'][$i];
                             $objGasto->costo  = $request['costo'][$i];
                             $objGasto->total =  $request['cantidad'][$i] * $request['costo'][$i];
                             $objGasto->save();

@@ -1499,7 +1499,11 @@ CREATE TABLE mantenimientos(
 create table gastosMantenimiento(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     mantenimientoId bigint(20) unsigned NOT NULL,
-    inventarioId bigint(20) unsigned NOT NULL,
+    inventarioId bigint(20) unsigned NULL,
+    manoObraId bigint(20) unsigned NULL,
+    concepto VARCHAR(200) NOT NULL,
+    numeroParte VARCHAR(255) NOT NULL,
+    seccion VARCHAR(255) NULL,
     cantidad int not NULL,
     costo float(16,2) NULL,
     total float(16,2) NULL,
@@ -1507,6 +1511,7 @@ create table gastosMantenimiento(
     updated_at datetime NULL,
     primary key (id),
     constraint FK_gastosmantenimiento_mantenimientoId foreign key (mantenimientoId) references mantenimientos(id),
+    constraint FK_gastosmantenimiento_manoObraId foreign key (manoObraId) references manoDeObra(id),
     constraint FK_gastosmantenimiento_productoId foreign key (inventarioId) references inventario(id)
 );
 

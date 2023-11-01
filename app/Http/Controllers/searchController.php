@@ -15,6 +15,8 @@ use App\Models\tarea;
 use App\Models\grupo;
 use App\Models\manoDeObra;
 
+use function PHPUnit\Framework\isNull;
+
 class searchController extends Controller
 {
     /**
@@ -243,21 +245,34 @@ class searchController extends Controller
     {
         // dd($request);
         // $term = $request->input( 'term' );
+        $filter = $request->input( 'filter' );
         $term = $request->get('term');
+
+        if(is_null($filter)==true){
 
         $inventario = inventario::select('inventario.*', DB::raw('marca.nombre AS marca'))
             ->join('marca', 'marca.id', '=', 'inventario.marcaId')
             ->where('inventario.nombre', 'LIKE', '%' . $term . '%')
-            ->whereIn('inventario.tipo', ['refacciones', 'consumibles', 'servicios'])
+            ->whereIn('inventario.tipo', ['refacciones', 'consumibles', 'servicios','herramientas'])
             ->orwhere('inventario.numparte', 'LIKE', '%' . $term . '%')
             ->orwhere('inventario.modelo', 'LIKE', '%' . $term . '%')
             ->orwhere('inventario.tipo', 'LIKE', '%' . $term . '%')
             ->orwhere('marca.nombre', 'LIKE', '%' . $term . '%')->get();
+        }else{
+            $inventario = inventario::select('inventario.*',
+            DB::raw('marca.nombre AS marca'),
+            DB::raw( "CONCAT(inventario.nombre,' ', inventario.numparte,' ',inventario.modelo,' ',marca.nombre)as buscando" ),)
+                ->join('marca', 'marca.id', '=', 'inventario.marcaId')
+                ->where('inventario.tipo','=',$filter)
+                ->where(DB::raw( "CONCAT(inventario.nombre,' ', inventario.numparte,' ',inventario.modelo,' ',marca.nombre)" ), 'LIKE', '%' . $term . '%')
+                ->get();
+        }
+
 
         $sugerencias = [];
         foreach ($inventario as $item) {
             $sugerencias[] = [
-                'value' => 'Artículo: ' . $item->nombre . ', Número de parte: ' . $item->numparte . ', Modelo: ' . $item->modelo . ', PU: $ ' . $item->valor,
+                'value' => 'Artículo: ' . $item->nombre . ', Número de parte: ' . $item->numparte . ', Modelo: ' . $item->modelo . ', Marca: ' . $item->marca . ', PU: $ ' . $item->valor,
                 'id' => $item->id,
                 'nombre' => $item->nombre,
                 'valor' => $item->valor,
