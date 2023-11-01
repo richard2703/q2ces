@@ -262,9 +262,13 @@
                                         </div>
 
                                     </div>
-                                    <div class="col-12 text-center mb-3 ">
-                                        <button type="submit" class="btn botonGral" onclick="test()">Guardar</button>
-                                    </div>
+                                    @if ($serviciosTrasporte->cajachica != 1)
+                                        <div class="col-12 text-center mb-3 ">
+                                            <button type="submit" class="btn botonGral"
+                                                onclick="test()">Guardar</button>
+                                        </div>
+                                    @endif
+
                                 </form>
                             </div>
                         </div>
