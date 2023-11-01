@@ -39,7 +39,7 @@
                                     <div class="row">
                                         <div class="d-flex p-3">
                                             <div class="col-4 text-right">
-                                                <a href="{{ route('proveedor.index') }}">
+                                                <a href="{{ route('clientes.index') }}">
                                                     <button class="btn regresar">
                                                         <span class="material-icons">
                                                             reply

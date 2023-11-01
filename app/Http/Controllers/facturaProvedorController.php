@@ -23,7 +23,7 @@ class facturaProvedorController extends Controller
         $id = $request->input('id');
         // dd($id);
         $records = facturaProvedor::join('proveedor', 'facturaProvedor.provedorId', 'proveedor.id')
-            ->select('facturaProvedor.*', 'proveedor.nombre as provedor_nombre')->orderBy('facturaProvedor.created_at', 'desc')->where('facturaProvedor.provedorId', $id)->paginate(15);
+            ->select('facturaProvedor.*', 'proveedor.nombre as provedor_nombre')->orderBy('facturaProvedor.fecha', 'desc')->where('facturaProvedor.provedorId', $id)->paginate(15);
 
         // dd($records);
         return view('facturasProvedores.indexFacturaProvedor', compact('records', 'id'));
@@ -170,6 +170,16 @@ class facturaProvedorController extends Controller
             $request['xml']->storeAs('/public/provedor/' . $request['provedorId'] . '/facturas/',  $data['xml']);
         } else {
             // No se subió ningún archivo en la posición $i del array
+        }
+
+        if ($request['eliminarArchivoXML'] != null) {
+            $data['xml'] = null;
+            // $request['xml']->storeAs('/public/cliente/' . $request['clienteId'] . '/facturas/',  $data['xml']);
+        }
+
+        if ($request['eliminarArchivo'] != null) {
+            $data['pdf'] = null;
+            // $request['xml']->storeAs('/public/cliente/' . $request['clienteId'] . '/facturas/',  $data['xml']);
         }
 
         $record->update($data);

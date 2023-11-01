@@ -26,9 +26,9 @@
                             </div>
                             <div>
                                 <div class="col-4 text-left mt-3" style="margin-left:20px">
-                                    <form action="{{ route('facturaClientes.index') }}" method="GET" style="display: inline-block;">
+                                    <form action="{{ route('facturaCliente.index') }}" method="GET" style="display: inline-block;">
                                         @csrf
-                                        <input type="hidden" name="id" value="{{ $facturaClientes[0]->provedorId }}">
+                                        <input type="hidden" name="id" value="{{ $facturaCliente[0]->clienteId }}">
                                         <button class="btnSinFondo btn regresar" type="submit" rel="tooltip">
                                             <span class="material-icons">
                                                 reply
@@ -40,7 +40,7 @@
                                 <div class="d-flex p-3 divBorder" style="margin-top:-15px"></div>
                             </div>
 
-                            <form action="{{ route('facturaClientes.update', $id) }}"
+                            <form action="{{ route('facturaCliente.update', $id) }}"
                                 method="post" class="row alertaGuardar" enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
@@ -48,12 +48,12 @@
                                 
                                 <div class="row mt-3" style="padding-left: 40px">
                                     <div class=" col-12 col-sm-6 mb-3 pr-3">
-                                        <label class="labelTitulo">Provedor:<span>*</span></label></br>
-                                        <select name="provedorId" class="form-select" aria-label="Default select example" readonly>
+                                        <label class="labelTitulo">Cliente:<span>*</span></label></br>
+                                        <select name="clienteId" class="form-select" aria-label="Default select example" readonly>
                                             <option value="">Seleccione</option>
-                                            @foreach ($provedor as $item)
+                                            @foreach ($cliente as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $item->id == $facturaClientes[0]->provedorId ? ' selected' : '' }}>
+                                                    {{ $item->id == $facturaCliente[0]->clienteId ? ' selected' : '' }}>
                                                     {{ $item->nombre }}
                                                 </option>
                                             @endforeach
@@ -114,8 +114,9 @@
                                                     </button>  --}}
                                                 </div>
                                             </div>
-
-                                            @forelse($facturaClientes as $factura)
+                                            <input type="hidden" name="eliminarArchivoXML" id="eliminarArchivoXML" value="">
+                                            <input type="hidden" name="eliminarArchivo" id="eliminarArchivo" value="">
+                                            @forelse($facturaCliente as $factura)
                                             <div class="row opcion divBorderItems" id="opc">
 
                                                 <div class="col-5 mb-3 ">
@@ -154,7 +155,7 @@
                                                             </div>
                                                         </label>
             
-                                                        <a id="downloadButton" class="btnViewDescargar btn btn-outline-success btnView" style="width: 2.8em; height: 2.8em; display: block;" download="" href="{{ asset('/storage/provedor/' . $factura->provedorId . '/facturas/' . $factura->pdf ) }}">
+                                                        <a id="downloadButton" class="btnViewDescargar btn btn-outline-success btnView" style="width: 2.8em; height: 2.8em; display: block;" download="" href="{{ asset('/storage/cliente/' . $factura->clienteId . '/facturas/' . $factura->pdf ) }}">
                                                             <span class="icon">
                                                                 <i class="far fa-eye mt-2" style="font-size: 18px !important;"></i>
                                                             </span>
@@ -162,7 +163,7 @@
             
                                                         <button id='removeButton' type="button"
                                                             class="btnViewDelete btn btn-outline-danger btnView"
-                                                            style="width: 2.4em; height: 2.4em;">
+                                                            style="width: 2.4em; height: 2.4em;" onclick="removeFactura()">
                                                             <i class="fa fa-times"></i>
                                                         </button>
                                                     </div>
@@ -216,7 +217,7 @@
                                                                 <i class="far fa-eye mt-2" style="font-size: 18px !important;"></i>
                                                             </span>
                                                         </a>  --}}
-                                                        <a id="downloadButtonXML" class="btnViewDescargar btn btn-outline-success btnView" style="width: 2.8em; height: 2.8em; display: block;" download="" href="{{ asset('/storage/provedor/' . $factura->provedorId . '/facturas/' . $factura->xml ) }}">
+                                                        <a id="downloadButtonXML" class="btnViewDescargar btn btn-outline-success btnView" style="width: 2.8em; height: 2.8em; display: block;" download="" href="{{ asset('/storage/cliente/' . $factura->clienteId . '/facturas/' . $factura->xml ) }}">
                                                             <span class="icon">
                                                                 <i class="far fa-eye mt-2" style="font-size: 18px !important;"></i>
                                                             </span>
@@ -224,7 +225,7 @@
             
                                                         <button id='removeButtonXML' type="button"
                                                             class="btnViewDelete btn btn-outline-danger btnView"
-                                                            style="width: 2.4em; height: 2.4em">
+                                                            style="width: 2.4em; height: 2.4em" onclick="removeFacturaXML()">
                                                             <i class="fa fa-times"></i>
                                                         </button>
                                                     </div>
@@ -394,7 +395,7 @@
         function handleDocumento(id) {
             // Resto del código que utilizas para manejar los eventos, pero ahora con el ID proporcionado
             var facturaInput = document.getElementById(id);
-
+            var EliminarArchivo = document.getElementById("eliminarArchivo");
             var downloadFacturaButton = document.getElementById("downloadButton");
             var removeFacturaButton = document.getElementById("removeButton");
             var iconContainer = document.getElementById("iconContainer");
@@ -415,6 +416,7 @@
                     alertShown = false;
                     iconContainer.innerHTML =
                         '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
+                        EliminarArchivo.value = null;
                 } else {
                     downloadFacturaButton.style.display = "none";
                     removeFacturaButton.style.display = "none";
@@ -430,7 +432,47 @@
                 removeFacturaButton.style.display = "none";
 
                 iconContainer.innerHTML ='<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+                EliminarArchivo.value = '0';
             });
+        }
+    </script>
+
+    <script>
+        function removeFacturaXML() {
+            var facturaInput = document.getElementById("xml-file-input");
+            var downloadFacturaButton = document.getElementById("downloadButtonXML");
+            var removeFacturaButton = document.getElementById("removeButtonXML");
+            var iconContainer = document.getElementById("iconContainerXML");
+    
+            facturaInput.value = null;
+            downloadFacturaButton.removeAttribute("href");
+            downloadFacturaButton.style.display = "none";
+            removeFacturaButton.style.display = "none";
+    
+            iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+        
+            var EliminarArchivo = document.getElementById("eliminarArchivoXML");
+            EliminarArchivo.value = '0';
+
+        }
+    </script>
+    
+    <script>
+        function removeFactura() {
+            var facturaInput = document.getElementById("excel-file-input");
+            var downloadFacturaButton = document.getElementById("downloadButton");
+            var removeFacturaButton = document.getElementById("removeButton");
+            var iconContainer = document.getElementById("iconContainer");
+    
+            facturaInput.value = null;
+            downloadFacturaButton.removeAttribute("href");
+            downloadFacturaButton.style.display = "none";
+            removeFacturaButton.style.display = "none";
+    
+            iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+
+            var EliminarArchivo = document.getElementById("eliminarArchivo");
+            EliminarArchivo.value ='0';
         }
     </script>
 
@@ -473,7 +515,7 @@
         function handleDocumentoXML(id) {
             // Resto del código que utilizas para manejar los eventos, pero ahora con el ID proporcionado
             var facturaInput = document.getElementById(id);
-            
+            var EliminarArchivo = document.getElementById("eliminarArchivoXML");
             var downloadFacturaButton = document.getElementById("downloadButtonXML");
             var removeFacturaButton = document.getElementById("removeButtonXML");
             var iconContainer = document.getElementById("iconContainerXML");
@@ -494,6 +536,7 @@
                     alertShown = false;
                     iconContainer.innerHTML =
                         '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
+                        EliminarArchivo.value = null;
                 } else {
                     downloadFacturaButton.style.display = "none";
                     removeFacturaButton.style.display = "none";
@@ -508,8 +551,8 @@
                 downloadFacturaButton.style.display = "none";
                 removeFacturaButton.style.display = "none";
 
-                iconContainer.innerHTML =
-                    '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+                iconContainer.innerHTML ='<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+                EliminarArchivo.value = '0';
             });
         }
     </script>

@@ -115,6 +115,8 @@
                                                 </div>
                                             </div>
 
+                                            <input type="hidden" name="eliminarArchivoXML" id="eliminarArchivoXML" value="">
+                                            <input type="hidden" name="eliminarArchivo" id="eliminarArchivo" value="">
                                             @forelse($facturaProvedor as $factura)
                                             <div class="row opcion divBorderItems" id="opc">
 
@@ -162,7 +164,7 @@
             
                                                         <button id='removeButton' type="button"
                                                             class="btnViewDelete btn btn-outline-danger btnView"
-                                                            style="width: 2.4em; height: 2.4em;">
+                                                            style="width: 2.4em; height: 2.4em;" onclick="removeFactura()">
                                                             <i class="fa fa-times"></i>
                                                         </button>
                                                     </div>
@@ -189,7 +191,7 @@
             
                                                         <button id='removeButton' type="button"
                                                             class="btnViewDelete btn btn-outline-danger btnView"
-                                                            style="width: 2.4em; height: 2.4em; display: none;">
+                                                            style="width: 2.4em; height: 2.4em; display: none;" >
                                                             <i class="fa fa-times"></i>
                                                         </button>
                                                     </div>
@@ -224,7 +226,7 @@
             
                                                         <button id='removeButtonXML' type="button"
                                                             class="btnViewDelete btn btn-outline-danger btnView"
-                                                            style="width: 2.4em; height: 2.4em">
+                                                            style="width: 2.4em; height: 2.4em" onclick="removeFacturaXML()">
                                                             <i class="fa fa-times"></i>
                                                         </button>
                                                     </div>
@@ -389,12 +391,46 @@
         });
     </script>
     
+    <script>
+        function removeFacturaXML() {
+            var facturaInput = document.getElementById("xml-file-input");
+            var downloadFacturaButton = document.getElementById("downloadButtonXML");
+            var removeFacturaButton = document.getElementById("removeButtonXML");
+            var iconContainer = document.getElementById("iconContainerXML");
+    
+            facturaInput.value = null;
+            downloadFacturaButton.removeAttribute("href");
+            downloadFacturaButton.style.display = "none";
+            removeFacturaButton.style.display = "none";
+            var EliminarArchivo = document.getElementById("eliminarArchivoXML");
+            EliminarArchivo.value = '0';
+            iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+        }
+    </script>
+    
+    <script>
+        function removeFactura() {
+            var facturaInput = document.getElementById("excel-file-input");
+            var downloadFacturaButton = document.getElementById("downloadButton");
+            var removeFacturaButton = document.getElementById("removeButton");
+            var iconContainer = document.getElementById("iconContainer");
+    
+            facturaInput.value = null;
+            downloadFacturaButton.removeAttribute("href");
+            downloadFacturaButton.style.display = "none";
+            removeFacturaButton.style.display = "none";
+
+            var EliminarArchivo = document.getElementById("eliminarArchivo");
+            EliminarArchivo.value = '0';
+            iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+        }
+    </script>
     
     <script>
         function handleDocumento(id) {
             // Resto del código que utilizas para manejar los eventos, pero ahora con el ID proporcionado
             var facturaInput = document.getElementById(id);
-
+            var EliminarArchivo = document.getElementById("eliminarArchivo");
             var downloadFacturaButton = document.getElementById("downloadButton");
             var removeFacturaButton = document.getElementById("removeButton");
             var iconContainer = document.getElementById("iconContainer");
@@ -415,6 +451,7 @@
                     alertShown = false;
                     iconContainer.innerHTML =
                         '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
+                        EliminarArchivo.value = null;
                 } else {
                     downloadFacturaButton.style.display = "none";
                     removeFacturaButton.style.display = "none";
@@ -428,7 +465,7 @@
                 downloadFacturaButton.removeAttribute("href");
                 downloadFacturaButton.style.display = "none";
                 removeFacturaButton.style.display = "none";
-
+                EliminarArchivo.value = '0';
                 iconContainer.innerHTML ='<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
             });
         }
@@ -473,7 +510,7 @@
         function handleDocumentoXML(id) {
             // Resto del código que utilizas para manejar los eventos, pero ahora con el ID proporcionado
             var facturaInput = document.getElementById(id);
-            
+            var EliminarArchivo = document.getElementById("eliminarArchivoXML");
             var downloadFacturaButton = document.getElementById("downloadButtonXML");
             var removeFacturaButton = document.getElementById("removeButtonXML");
             var iconContainer = document.getElementById("iconContainerXML");
@@ -494,6 +531,7 @@
                     alertShown = false;
                     iconContainer.innerHTML =
                         '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
+                        EliminarArchivo.value = null;
                 } else {
                     downloadFacturaButton.style.display = "none";
                     removeFacturaButton.style.display = "none";
@@ -510,6 +548,7 @@
 
                 iconContainer.innerHTML =
                     '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+                EliminarArchivo.value = '0';
             });
         }
     </script>

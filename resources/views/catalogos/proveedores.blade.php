@@ -93,8 +93,8 @@
                                                             @csrf
                                                             <input type="hidden" name="id" value="{{ $item->id }}">
                                                             <button class="btnSinFondo" type="submit" rel="tooltip">
-                                                                <div class="" style="font-size: 25px">
-                                                                    <i class="fas fa-file-invoice-dollar"></i>
+                                                                <div class="" style="font-size: 28px; color:gray">
+                                                                    <i class="fas fa-solid fa-receipt"></i>
                                                                 </div>
                                                             </button>
                                                         </form>
