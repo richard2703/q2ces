@@ -287,6 +287,7 @@ class serviciosTrasporteController extends Controller
                 'serviciosTrasporte.costoServicio',
                 'serviciosTrasporte.costoMano',
                 'serviciosTrasporte.servicio',
+                'serviciosTrasporte.cantidad',
                 'conceptos.nombre as concepto'
             )
             ->where('serviciosTrasporte.id', $id)

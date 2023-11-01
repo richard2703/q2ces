@@ -113,7 +113,7 @@
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Maniobrista: <span>*</span></label></br>
-                                                <select id="maniobristaId" name="maniobristaId" class="form-select" required
+                                                <select id="maniobristaId" name="maniobristaId" class="form-select"
                                                     aria-label="Default select example">
                                                     <option selected value="">Seleccione</option>
                                                     @forelse ($personal as $persona)

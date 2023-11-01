@@ -112,7 +112,7 @@
                                 </div>
 
                                 <br>
-                                <img width="300px;" src="{{ asset('/img/login/Header1Servicios.svg') }}" alt=""
+                                <img width="300px;" src="{{ asset('/img/login/HeaderTicketsChofer.svg') }}" alt=""
                                     class="mb-2">
                                 <br>
 
@@ -256,11 +256,11 @@
                 }
 
                 /*   @page {
-                                                                                size: 70mm 260mm;
-                                                                                 Tamaño ISO C7 en milímetros
-                                                                                margin: 0;
+                                                                                    size: 70mm 260mm;
+                                                                                     Tamaño ISO C7 en milímetros
+                                                                                    margin: 0;
 
-                                                                            }*/
+                                                                                }*/
 
                 body {
                     margin-top: -80mm !important;
