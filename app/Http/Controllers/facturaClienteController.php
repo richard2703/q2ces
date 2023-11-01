@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\clientes;
 use App\Models\facturaCliente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -14,14 +15,17 @@ class facturaClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(facturaCliente $facturaCliente)
+    public function index(Request $request)
     {
+        // dd($request);
         abort_if(Gate::denies('catalogos_index'), 403);
-        // dd($facturaCliente);
+        $id = $request->input('id');
+        // dd($id);
+        $records = facturaCliente::join('clientes', 'facturaCliente.clienteId', 'clientes.id')
+            ->select('facturaCliente.*', 'clientes.nombre as cliente_nombre')->orderBy('facturaCliente.created_at', 'desc')->where('facturaCliente.clienteId', $id)->paginate(15);
 
-        $records = facturaCliente::orderBy('nombre', 'asc')->paginate(15);
-
-        return view('facturasClientes.indexFacturaCliente', compact('records'));
+        // dd($records);
+        return view('facturasClientes.indexFacturaCliente', compact('records', 'id'));
     }
 
     /**
@@ -29,9 +33,17 @@ class facturaClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $id = $request->query('id');
+        // dd($id);
+        $clienteSelected = clientes::select('nombre', 'colonia', 'ciudad', 'estado', 'id')
+            ->where('id', '=', $id)
+            ->first();
+
+        $cliente = clientes::all();
+        dd($clienteSelected);
+        return view('facturasClientes.altaDeFacturaCliente', compact('cliente', 'id', 'clienteSelected'));
     }
 
     /**
