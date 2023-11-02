@@ -23,8 +23,26 @@
                                             {{ session('faild') }}
                                         </div>
                                     @endif
+                                    {{--  <a href="{{ route('catalogos.index') }}">
+                                        <button class="btn regresar">
+                                            <span class="material-icons">
+                                                reply
+                                            </span>
+                                            Regresar
+                                        </button>
+                                    </a>  --}}
                                     <div class="row divBorder">
-                                        <div class="col-12 pb-3 text-end">
+                                        <div class="col-12 col-md-6 pb-3">
+                                            <a href="{{ route('catalogos.index') }}">
+                                                <button class="btn regresar">
+                                                    <span class="material-icons">
+                                                        reply
+                                                    </span>
+                                                    Regresar
+                                                </button>
+                                            </a>
+                                        </div>
+                                        <div class="col-12 col-md-6 pb-3 text-end">
                                             @can('cliente_create')
                                                 <a href="{{ route('clientes.create') }}">
                                                     <button type="button" class="btn botonGral">Añadir Cliente</button>
@@ -32,6 +50,7 @@
                                             @endcan
                                         </div>
                                     </div>
+
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="labelTitulo">
