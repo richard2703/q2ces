@@ -19,7 +19,11 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Facturas De "Proveedor X"</h4>
+                                    @if (!empty($records) && isset($records[0]) && !is_null($records[0]->provedor_nombre))
+                                        <h4 class="card-title">Facturas De {{ $records[0]->provedor_nombre }}</h4>
+                                    @else
+                                        <h4 class="card-title">Sin Facturas Agregadas</h4>
+                                    @endif
                                 </div>
                                 <div class="card-body">
                                     @if (session('success'))
@@ -34,8 +38,7 @@
                                     @endif
                                     <div class="row">
                                         <div class="d-flex p-3">
-                                            <div class="col-12 text-right">
-
+                                            <div class="col-4 text-right">
                                                 <a href="{{ route('proveedor.index') }}">
                                                     <button class="btn regresar">
                                                         <span class="material-icons">
@@ -44,6 +47,7 @@
                                                         Regresar
                                                     </button>
                                                 </a>
+                                            </div>
 
                                                 {{--  <form action="{{ route('facturaProvedor.index') }}" method="GET" style="display: inline-block;">
                                                     <input type="hidden" name="id" value="{{ $id }}">
@@ -54,11 +58,11 @@
                                                         Regresar
                                                     </button>
                                                 </form>  --}}
-
+                                            <div class="col-8 text-end">
                                                 @can('residente_mtq_create')
                                                 <a href="{{ route('facturaProvedor.create', ['id' => $id]) }}" class="d-flex justify-content-end">
                                                     <button type="button" class="btn botonGral">Añadir Facturas</button>
-                                                </a>                                                
+                                                </a>
                                                 @endcan
                                             </div>
                                         </div>
@@ -84,10 +88,44 @@
                                             @forelse ($records as $item)
                                                 <tr>
                                                     <td>{{ $item->folio }}</td>
-                                                    <td class="text-left">{{ $item->provedorNombre }}</td>
+                                                    <td class="text-left">{{ $item->provedor_nombre }}</td>
                                                     <td class="text-left">{{ $item->fecha }}</td>
-                                                    <td class="text-left">{{ $item->pdf }}</td>
-                                                    <td class="text-left">{{ $item->xml }}</td>
+                                                    <td>
+                                                        @if ($item->pdf != null)
+                                                            <div class="d-flex justify-content-center">
+                                                                <a id="downloadButton" class="btnViewDescargar btn btn-outline-success btnView" style="width: 2.8em; height: 2.8em; display: block;" download="" href="{{ asset('/storage/provedor/' . $item->provedorId . '/facturas/' . $item->pdf ) }}">
+                                                                    <span class="icon">
+                                                                        <i class="far fa-eye mt-2" style="font-size: 18px !important;"></i>
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                        @else
+                                                        <div class="d-flex justify-content-center">
+                                                            <span class="icon">
+                                                                <i class="far fa-file-excel mt-2" style="font-size: 35px !important; color: red; margin-left:8px;"></i>
+                                                            </span>
+                                                        </div>
+                                                        @endif
+                                                        
+                                                    </td>
+                                                    <td>
+                                                        @if ($item->xml != null)
+                                                            <div class="d-flex justify-content-center">
+                                                                <a id="downloadButton" class="btnViewDescargar btn btn-outline-success btnView" style="width: 2.8em; height: 2.8em; display: block;" download="" href="{{ asset('/storage/provedor/' . $item->provedorId . '/facturas/' . $item->xml ) }}">
+                                                                    <span class="icon">
+                                                                        <i class="far fa-eye mt-2" style="font-size: 18px !important;"></i>
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                        @else
+                                                        <div class="d-flex justify-content-center">
+                                                            <span class="icon">
+                                                                <i class="far fa-file-excel mt-2" style="font-size: 35px !important; color: red; margin-left:8px;"></i>
+                                                            </span>
+                                                        </div>
+                                                        @endif
+                                                        
+                                                    </td>
 
                                                     <td class="td-actions text-right">
                                                         {{-- @can('catalogos_show') --}}
@@ -99,9 +137,7 @@
                                                             </a>--> --}}
                                                         {{-- @endcan --}}
                                                         @can('catalogos_edit')
-                                                            <a href="#" class="" data-bs-toggle="modal"
-                                                                data-bs-target="#editarItem"
-                                                                onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->categoriaId }}','{{ $item->comentario }}')">
+                                                            <a href="{{ route('facturaProvedor.edit', $item->id) }}" class="">
                                                                 <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                     height="28" fill="currentColor"
                                                                     class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -111,7 +147,7 @@
                                                             </a>
                                                         @endcan
                                                         @can('catalogos_destroy')
-                                                            <form action="{{ route('proveedor.destroy', $item->id) }}"
+                                                            <form action="{{ route('facturaProvedor.destroy', $item->id) }}"
                                                                 method="POST" style="display: inline-block;"
                                                                 onsubmit="return confirm('Seguro?')">
                                                                 @csrf
@@ -137,7 +173,7 @@
                                             @endforelse
                                         </tbody>
                                     </table>
-                                    <div class="card-footer mr-auto">
+                                    <div class="card-footer d-flex justify-content-center">
                                         {{ $records->links() }}
                                     </div>
                                 </div>

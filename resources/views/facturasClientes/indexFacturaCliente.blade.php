@@ -19,7 +19,11 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Facturas De "Cliente X"</h4>
+                                    @if (!empty($records) && isset($records[0]) && !is_null($records[0]->cliente_nombre))
+                                        <h4 class="card-title">Facturas De {{ $records[0]->cliente_nombre }}</h4>
+                                    @else
+                                        <h4 class="card-title">Sin Facturas Agregadas</h4>
+                                    @endif
                                 </div>
                                 <div class="card-body">
                                     @if (session('success'))
@@ -34,9 +38,8 @@
                                     @endif
                                     <div class="row">
                                         <div class="d-flex p-3">
-                                            <div class="col-12 text-right">
-
-                                                <a href="{{ route('catalogos.index') }}">
+                                            <div class="col-4 text-right">
+                                                <a href="{{ route('clientes.index') }}">
                                                     <button class="btn regresar">
                                                         <span class="material-icons">
                                                             reply
@@ -44,12 +47,22 @@
                                                         Regresar
                                                     </button>
                                                 </a>
+                                            </div>
 
-                                                @can('catalogos_create')
-                                                    <button class="btn botonGral float-end" data-bs-toggle="modal"
-                                                        data-bs-target="#nuevoItem">
-                                                        Añadir Proveedor
+                                                {{--  <form action="{{ route('facturaProvedor.index') }}" method="GET" style="display: inline-block;">
+                                                    <input type="hidden" name="id" value="{{ $id }}">
+                                                    <button class="btn regresar" type="submit">
+                                                        <span class="material-icons">
+                                                            reply
+                                                        </span>
+                                                        Regresar
                                                     </button>
+                                                </form>  --}}
+                                            <div class="col-8 text-end">
+                                                @can('residente_mtq_create')
+                                                <a href="{{ route('facturaCliente.create', ['id' => $id]) }}" class="d-flex justify-content-end">
+                                                    <button type="button" class="btn botonGral">Añadir Facturas</button>
+                                                </a>
                                                 @endcan
                                             </div>
                                         </div>
@@ -64,7 +77,7 @@
                                         <thead class="labelTitulo">
                                             <tr>
                                                 <th class="labelTitulo">Folio</th>
-                                                <th class="labelTitulo">Provedor</th>
+                                                <th class="labelTitulo">Cliente</th>
                                                 <th class="labelTitulo">Fecha</th>
                                                 <th class="labelTitulo">Pdf</th>
                                                 <th class="labelTitulo">Xml</th>
@@ -75,10 +88,44 @@
                                             @forelse ($records as $item)
                                                 <tr>
                                                     <td>{{ $item->folio }}</td>
-                                                    <td class="text-left">{{ $item->provedorNombre }}</td>
+                                                    <td class="text-left">{{ $item->cliente_nombre }}</td>
                                                     <td class="text-left">{{ $item->fecha }}</td>
-                                                    <td class="text-left">{{ $item->pdf }}</td>
-                                                    <td class="text-left">{{ $item->xml }}</td>
+                                                    <td>
+                                                        @if ($item->pdf != null)
+                                                            <div class="d-flex justify-content-center">
+                                                                <a id="downloadButton" class="btnViewDescargar btn btn-outline-success btnView" style="width: 2.8em; height: 2.8em; display: block;" download="" href="{{ asset('/storage/cliente/' . $item->clienteId . '/facturas/' . $item->pdf ) }}">
+                                                                    <span class="icon">
+                                                                        <i class="far fa-eye mt-2" style="font-size: 18px !important;"></i>
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                        @else
+                                                        <div class="d-flex justify-content-center">
+                                                            <span class="icon">
+                                                                <i class="far fa-file-excel mt-2" style="font-size: 35px !important; color: red; margin-left:8px;"></i>
+                                                            </span>
+                                                        </div>
+                                                        @endif
+                                                        
+                                                    </td>
+                                                    <td>
+                                                        @if ($item->xml != null)
+                                                            <div class="d-flex justify-content-center">
+                                                                <a id="downloadButton" class="btnViewDescargar btn btn-outline-success btnView" style="width: 2.8em; height: 2.8em; display: block;" download="" href="{{ asset('/storage/cliente/' . $item->clienteId . '/facturas/' . $item->xml ) }}">
+                                                                    <span class="icon">
+                                                                        <i class="far fa-eye mt-2" style="font-size: 18px !important;"></i>
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                        @else
+                                                        <div class="d-flex justify-content-center">
+                                                            <span class="icon">
+                                                                <i class="far fa-file-excel mt-2" style="font-size: 35px !important; color: red; margin-left:8px;"></i>
+                                                            </span>
+                                                        </div>
+                                                        @endif
+                                                        
+                                                    </td>
 
                                                     <td class="td-actions text-right">
                                                         {{-- @can('catalogos_show') --}}
@@ -90,9 +137,7 @@
                                                             </a>--> --}}
                                                         {{-- @endcan --}}
                                                         @can('catalogos_edit')
-                                                            <a href="#" class="" data-bs-toggle="modal"
-                                                                data-bs-target="#editarItem"
-                                                                onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->categoriaId }}','{{ $item->comentario }}')">
+                                                            <a href="{{ route('facturaCliente.edit', $item->id) }}" class="">
                                                                 <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                     height="28" fill="currentColor"
                                                                     class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -102,7 +147,7 @@
                                                             </a>
                                                         @endcan
                                                         @can('catalogos_destroy')
-                                                            <form action="{{ route('proveedor.destroy', $item->id) }}"
+                                                            <form action="{{ route('facturaCliente.destroy', $item->id) }}"
                                                                 method="POST" style="display: inline-block;"
                                                                 onsubmit="return confirm('Seguro?')">
                                                                 @csrf
@@ -128,121 +173,13 @@
                                             @endforelse
                                         </tbody>
                                     </table>
-                                    <div class="card-footer mr-auto">
+                                    <div class="card-footer d-flex justify-content-center">
                                         {{ $records->links() }}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Nueva Tarea-->
-    <div class="modal fade" id="nuevoItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bacTituloPrincipal">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nuevo Proveedor</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('proveedor.store') }}" method="post">
-                        @csrf
-                        {{-- <input type="hidden" name="userId" id="userId" value="{{ $usuario->id }}"> --}}
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Nombre Comercial:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="nombre" name="nombre"
-                                value="{{ old('nombre') }}" required placeholder="Especifique...">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Razon Social:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="razonSocial" name="razonSocial"
-                                value="{{ old('razonSocial') }}" required placeholder="Especifique...">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Categoría:
-                                <span>*</span></label></br>
-                            <select id="categoriaId" name="categoriaId" class="form-select" required
-                                aria-label="Default select example">
-                                <option value="">Seleccione</option>
-                                {{--  @foreach ($vctCategorias as $item)
-                                    <option value="{{ $item->id }}">
-                                        {{ $item->nombre }}
-                                    </option>
-                                @endforeach  --}}
-                            </select>
-                        </div>
-
-                        <div class=" col-12  mb-3 ">
-                            <label class="labelTitulo">Comentarios:</label></br>
-                            <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario"
-                                spellcheck="true"></textarea>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn botonGral">Guardar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Editar  Tarea-->
-    <div class="modal fade" id="editarItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bacTituloPrincipal">
-
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar puesto</label>
-                    </h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('proveedor.update', 0) }}" method="post">
-                        @csrf
-                        @method('put')
-                        <input type="hidden" name="controlId" id="controlId" value="">
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Nombre:</label></br>
-                            <input type="text" class="inputCaja" id="puestoNombre" name="nombre" value="">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Razon Social:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="UrazonSocial" name="UrazonSocial"
-                                value="{{ old('razonSocial') }}" required placeholder="Especifique...">
-                        </div>
-
-                        <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
-                            <label class="labelTitulo">Categoría: <span>*</span></label></br>
-                            <select id="editPuestoNivelId" name="categoriaId" class="form-select" required
-                                aria-label="Default select example">
-                                <option value="">Seleccione</option>
-                                {{--  @foreach ($vctCategorias as $item)
-                                    <option value="{{ $item->id }}">
-                                        {{ $item->nombre }}
-                                    </option>
-                                @endforeach  --}}
-                            </select>
-                        </div>
-
-                        <div class=" col-12  mb-3 ">
-                            <label class="labelTitulo">Comentarios:</label></br>
-                            <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="puestoComentarios" name="comentario"></textarea>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn botonGral" id="btnTareaGuardar">Guardar cambios</button>
-                        </div>
-
-                    </form>
                 </div>
             </div>
         </div>
@@ -283,26 +220,6 @@
         var slug = '{{ Session::get('message') }}';
         if (slug == 1) {
             Guardado();
-
-        }
-    </script>
-
-    <script>
-        function cargaItem(id, nombre, razonSocial, nivel, comentarios) {
-
-            const txtId = document.getElementById('controlId');
-            txtId.value = id;
-
-            const txtNombre = document.getElementById('puestoNombre');
-            txtNombre.value = nombre;
-
-            const txtRazonSocial = document.getElementById('UrazonSocial');
-            txtRazonSocial.value = razonSocial;
-
-            const lstNivel = document.getElementById('editPuestoNivelId').value = nivel;
-
-            const txtComentarios = document.getElementById('puestoComentarios');
-            txtComentarios.value = comentarios;
 
         }
     </script>
