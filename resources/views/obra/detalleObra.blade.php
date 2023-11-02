@@ -124,6 +124,16 @@
                                         <input type="text" class="inputCaja" id="estado" name="estado" required
                                             placeholder="Especifique..." value="{{ $obras->estado }}">
                                     </div>
+                                    <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                        <label class="labelTitulo">Proyecto: </label></br>
+                                        <input type="text" class="inputCaja" id="proyecto" name="proyecto"
+                                            placeholder="Especifique..." value="{{$obras->proyecto }}">
+                                    </div>
+                                    <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                        <label class="labelTitulo">Centro de Costos: </label></br>
+                                        <input type="text" class="inputCaja" id="centroCostos" name="centroCostos"
+                                            placeholder="Especifique..." value="{{ $obras->centroCostos }}">
+                                    </div>
                                     <div class="col-12 col-sm-6  col-lg-4 my-3 ">
                                         <label class="labelTitulo">Estatus:</label></br>
                                         <select class="form-select" aria-label="Default select example" id="estatus"
@@ -134,7 +144,6 @@
                                             </option>
                                         </select>
                                     </div>
-
 
                                 </div>
                             </div>
