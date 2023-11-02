@@ -20,7 +20,7 @@
                             <div class="card">
 
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Editar Registro de Mantenimiento</h4>
+                                    <h4 class="card-title">Editar {{ $mantenimiento->titulo }}</h4>
                                 </div>
 
                                 <div class="col-12 col-md-2 mt-4" style="margin-left:20px">
@@ -42,6 +42,8 @@
                                         @csrf
                                         @method('put')
                                         <input type="hidden" name="maquinariaId" id="maquinariaId" value="">
+                                        <input type="hidden" name="identificador" id="identificador"
+                                            value="{{ $maquinaria->identificador }}">
                                         <input type="hidden" name="titulo" id="titulo" value="">
                                         <div class="col-12 my-4">
                                             <div class="row">
@@ -54,18 +56,21 @@
                                                 <input type="hidden" name="personalId" id="personalId"
                                                     value="{{ $mantenimiento->personalId }}">
 
-                                                <div class=" col-12 col-sm-6 col-lg-12 my-1 ">
+                                                <input type="hidden" name="comentario" id="comentario"
+                                                    value="{{ $mantenimiento->comentario }}">
+
+                                                {{-- <div class=" col-12 col-sm-6 col-lg-12 my-1 ">
                                                     <label class="labelTitulo">Equipo:
                                                         <span>*</span></label></br>
                                                     <input type="text" class="inputCaja" id="maquinaria1" readonly
                                                         disabled="true" required name="maquinaria1"
                                                         value="{{ $mantenimiento->maquinaria }}">
-                                                </div>
+                                                </div> --}}
 
                                                 <div class=" col-12 col-sm-6 col-lg-12 my-3 ">
-                                                    <label class="labelTitulo">Descripción del Mantenimiento:
-                                                        <span>*</span></label></br>
-                                                    <textarea rows="2" cols="80" class="form-control" id="titulo" name="titulo" required readonly>{{ $mantenimiento->titulo }}</textarea>
+                                                    <label class="labelTitulo">Indicaciones para el Mantenimiento:
+                                                    </label></br>
+                                                    <textarea rows="2" cols="80" class="form-control" id="titulo" name="titulo" readonly>{{ $mantenimiento->comentario }}</textarea>
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
@@ -77,25 +82,7 @@
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Tipo de Mantenimiento:</label></br>
-
-                                                    <select id="tipoMantenimientoId" name="tipoMantenimientoId" required
-                                                        {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
-                                                        class="form-select form-select-lg mb-3 inputCaja"
-                                                        aria-label="Default select example">
-                                                        <option value="">Seleccione</option>
-                                                        @foreach ($vctTipos as $item)
-                                                            <option value="{{ $item->id }}"
-                                                                {{ $mantenimiento->tipoMantenimientoId == $item->id ? ' selected' : '' }}>
-                                                                {{ $item->nombre }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-
-                                                </div>
-
-                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Estado del Mantenimiento:</label></br>
+                                                    <label class="labelTitulo">Estatus:</label></br>
                                                     <select class="form-select form-select-lg mb-3 inputCaja"
                                                         {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
                                                         name="estadoId" id="estadoId" aria-label=".form-select-lg example">
@@ -115,36 +102,33 @@
                                                         </option>
                                                     </select>
                                                 </div>
-                                                <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
-                                                    <label class="labelTitulo">Comentarios:</label></br>
-                                                    <textarea rows="2" cols="80" class="form-control"
+
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Tipo:</label></br>
+
+                                                    <select id="tipoMantenimientoId" name="tipoMantenimientoId" required
                                                         {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
-                                                        placeholder="Escribe tus comentarios o información relevante sobre el mantenimiento aquí." name="comentario"
-                                                        id="comentario">{{ $mantenimiento->comentario }}</textarea>
+                                                        class="form-select form-select-lg mb-3 inputCaja"
+                                                        aria-label="Default select example">
+                                                        <option value="">Seleccione</option>
+                                                        @foreach ($vctTipos as $item)
+                                                            <option value="{{ $item->id }}"
+                                                                {{ $mantenimiento->tipoMantenimientoId == $item->id ? ' selected' : '' }}>
+                                                                {{ $item->nombre }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+
                                                 </div>
-                                                <br>
-                                                <hr>
-                                                {{-- <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
-                                                    <label class="labelTitulo">Resguardatario:</label></br><input
-                                                        id="personalId2" name="personalId2" type="text"
-                                                        {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
-                                                        value="{{ $mantenimiento->personaId }}"
-                                                        placeholder="Especifique..." class="inputCaja">
-                                                </div> --}}
-                                                {{-- <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
-                                                    <label class="labelTitulo">Adscripción:</label></br><input
-                                                        id="adscripcion" name="adscripcion" type="text"  {{ ($mantenimiento->estadoId < 3? '': 'disabled="false"')}}
-                                                        value="{{ $mantenimiento->adcripcion }}"
-                                                        placeholder="Especifique..." class="inputCaja">
-                                                </div> --}}
-                                                <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
+
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Horómetro: </label></br>
                                                     <input type="number" class="inputCaja text-end"
                                                         {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
                                                         value="{{ $mantenimiento->horometro }}" placeholder="Ej. 1000"
                                                         step="1" min="0" id="horometro" name="horometro">
                                                 </div>
-                                                <div class=" col-12 col-sm-6  col-lg-3 my-3 ">
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Km/m: </label></br>
                                                     <input type="number" class="inputCaja text-end"
                                                         {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
@@ -152,32 +136,40 @@
                                                         step="1" min="0" id="kilometraje"
                                                         name="kilometraje">
                                                 </div>
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Código: </label></br>
+                                                    <input type="text" class="inputCaja text-end" readonly
+                                                        disabled="true" value="{{ $mantenimiento->codigo }}"
+                                                        placeholder="Ej. 1" id="codigo" name="codigo">
+                                                </div>
 
-                                                <hr>
-                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Subtotal: </label></br>
-                                                    <input type="text" class="inputCaja text-end" readonly
-                                                        value="{{ $mantenimiento->subtotal }}" placeholder="Ej. 1"
-                                                        id="subtotal" name="subtotal">
-                                                </div>
-                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Iva: </label></br>
-                                                    <input type="text" class="inputCaja text-end" readonly
-                                                        value="{{ $mantenimiento->iva }}" placeholder="Ej. 1"
-                                                        id="iva" name="iva">
-                                                </div>
-                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Total: </label></br>
-                                                    <input type="text" class="inputCaja text-end" readonly
-                                                        value="{{ $mantenimiento->costo }}" placeholder="Ej. 1"
-                                                        id="total" name="total">
-                                                </div>
+
                                             </div>
                                         </div>
 
 
                                         <div class="col-12 divBorder">
                                             <h2 class="tituloEncabezado">Detalle del Mantenimiento</h2></br></br>
+                                        </div>
+
+                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                            <label class="labelTitulo">Subtotal: </label></br>
+                                            <input type="text" class="inputCaja text-end" readonly
+                                                value="{{ $mantenimiento->subtotal }}" placeholder="Ej. 1"
+                                                id="subtotal" name="subtotal">
+                                        </div>
+
+                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                            <label class="labelTitulo">Iva: </label></br>
+                                            <input type="text" class="inputCaja text-end" readonly
+                                                value="{{ $mantenimiento->iva }}" placeholder="Ej. 1" id="iva"
+                                                name="iva">
+                                        </div>
+                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                            <label class="labelTitulo">Total: </label></br>
+                                            <input type="text" class="inputCaja text-end" readonly
+                                                value="{{ $mantenimiento->costo }}" placeholder="Ej. 1" id="total"
+                                                name="total">
                                         </div>
 
                                         <!--Espacio para asignacion de grupos de tareas y maquinaria-->
@@ -190,16 +182,21 @@
                                                         <div class="nav nav-tabs justify-content-evenly" id="myTab"
                                                             role="tablist">
                                                             <button
-                                                                class=" nav-item col-12 col-md-6 BTNbCargaDescarga py-3 border-0 active "
+                                                                class=" nav-item col-12 col-md-4 BTNbCargaDescarga py-3 border-0 active "
                                                                 role="presentation" id="home-tab" data-bs-toggle="tab"
                                                                 data-bs-target="#home-tab-pane" type="button"
                                                                 role="tab" aria-controls="home-tab-pane"
                                                                 aria-selected="true">Material</button>
-                                                            <button class="nav-item col-12 col-md-6 BTNbCargaDescarga "
+                                                            <button class="nav-item col-12 col-md-4 BTNbCargaDescarga "
                                                                 role="presentation" id="profile-tab" data-bs-toggle="tab"
                                                                 data-bs-target="#profile-tab-pane" type="button"
                                                                 role="tab" aria-controls="profile-tab-pane"
                                                                 aria-selected="false">Mano de Obra</button>
+                                                            <button class="nav-item col-12 col-md-4 BTNbCargaDescarga "
+                                                                role="presentation" id="image-tab" data-bs-toggle="tab"
+                                                                data-bs-target="#image-tab-pane" type="button"
+                                                                role="tab" aria-controls="image-tab-pane"
+                                                                aria-selected="false">Fotografías</button>
                                                         </div>
 
                                                         <div class="tab-content contentCargas" id="myTabContent">
@@ -211,7 +208,7 @@
                                                                     <div class="col-md-12">
                                                                         <div class="card">
                                                                             <div class="card-body">
-                                                                                <div class="row d-flex">
+                                                                                <div class="row d-flexpb-4">
 
                                                                                     @if ($mantenimiento->estadoId < 3)
                                                                                         <div class="row">
@@ -282,78 +279,115 @@
                                                                                 <div class=" col-12  my-3 ">
                                                                                     <ul class="" id="newRow">
 
+                                                                                        <li class="listaMaterialMantenimiento my-3 border-bottom"
+                                                                                            id="encabezado">
+                                                                                            <div class="row d-flex pb-4">
+                                                                                                <div class="col-2 ">
+                                                                                                    <label
+                                                                                                        class="">Cantidad</label>
+                                                                                                </div>
+                                                                                                <div class="col-10">
+                                                                                                    <label
+                                                                                                        class="">Descripción</label>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </li>
+
                                                                                         @forelse ($gastos as $item)
-                                                                                            <li class="listaMaterialMantenimiento my-3 border-bottom"
-                                                                                                id="inputFormRow">
-                                                                                                <div
-                                                                                                    class="row d-flex pb-4">
+                                                                                            @if (strtoupper(str_replace(' ', '', trim($item->seccion))) != 'MANODEOBRA')
+                                                                                                <li class="listaMaterialMantenimiento my-3 border-bottom"
+                                                                                                    id="inputFormRow">
+                                                                                                    <div
+                                                                                                        class="row d-flex pb-4">
 
+                                                                                                        <input
+                                                                                                            type="hidden"
+                                                                                                            name="seccion[]"
+                                                                                                            id="seccion"
+                                                                                                            value="{{ $item->seccion }}">
+                                                                                                        <input
+                                                                                                            type="hidden"
+                                                                                                            name="concepto[]"
+                                                                                                            id="concepto"
+                                                                                                            value="{{ $item->concepto }}">
+                                                                                                        <input
+                                                                                                            type="hidden"
+                                                                                                            name="numeroParte[]"
+                                                                                                            id="numeroParte"
+                                                                                                            value="{{ $item->numeroParte }}">
 
-                                                                                                    <input type="hidden"
-                                                                                                        name="gastoId[]"
-                                                                                                        id="gastoId"
-                                                                                                        value="{{ $item->id != null ? $item->id : 0 }}">
+                                                                                                        <input
+                                                                                                            type="hidden"
+                                                                                                            name="manoObraId[]"
+                                                                                                            id="manoObraId"
+                                                                                                            value="">
 
-                                                                                                    <input type="hidden"
-                                                                                                        name="inventarioId[]"
-                                                                                                        id="inventarioId"
-                                                                                                        value="{{ $item->inventarioId }}">
+                                                                                                        <input
+                                                                                                            type="hidden"
+                                                                                                            name="gastoId[]"
+                                                                                                            id="gastoId"
+                                                                                                            value="{{ $item->id != null ? $item->id : 0 }}">
 
-                                                                                                    <input type="hidden"
-                                                                                                        name="costo[]"
-                                                                                                        id="costo"
-                                                                                                        value="{{ $item->costo }}">
+                                                                                                        <input
+                                                                                                            type="hidden"
+                                                                                                            name="inventarioId[]"
+                                                                                                            id="inventarioId"
+                                                                                                            value="{{ $item->inventarioId }}">
 
-                                                                                                    <div class="col-2 ">
-                                                                                                        <label
-                                                                                                            for="cantidad"
-                                                                                                            class="">Cantidad</label></br></br>
+                                                                                                        <input
+                                                                                                            type="hidden"
+                                                                                                            name="costo[]"
+                                                                                                            id="costo"
+                                                                                                            value="{{ $item->costo }}">
+
+                                                                                                        <div
+                                                                                                            class="col-2 ">
+
+                                                                                                            @if ($mantenimiento->estadoId < 3)
+                                                                                                                <input
+                                                                                                                    type="number"
+                                                                                                                    maxlength="2"
+                                                                                                                    min="1"
+                                                                                                                    required
+                                                                                                                    max="99"
+                                                                                                                    step="1"
+                                                                                                                    class="inputCaja text-end text-end"
+                                                                                                                    id="cantidad"
+                                                                                                                    placeholder="Ej. 1"
+                                                                                                                    name="cantidad[]"
+                                                                                                                    value="{{ $item->cantidad }}">
+                                                                                                            @else
+                                                                                                                <input
+                                                                                                                    type="text"
+                                                                                                                    readonly
+                                                                                                                    required
+                                                                                                                    class="inputCaja text-end"
+                                                                                                                    id="cantidad"
+                                                                                                                    placeholder="Ej. 1"
+                                                                                                                    name="cantidad[]"
+                                                                                                                    value="{{ $item->cantidad }}">
+                                                                                                            @endif
+                                                                                                        </div>
+
+                                                                                                        <div
+                                                                                                            class="col-8">
+
+                                                                                                            <textarea rows="2" cols="80" class="form-control form-select" id="descripcion" readonly
+                                                                                                                name="descripcion[]" value="">{{ 'Artículo: ' . $item->articulo . ', Número de parte: ' . $item->numeroParte . ', Modelo: ' . $item->modelo . ', PU: $ ' . $item->valor }} </textarea>
+                                                                                                        </div>
+
                                                                                                         @if ($mantenimiento->estadoId < 3)
-                                                                                                            <input
-                                                                                                                type="number"
-                                                                                                                maxlength="2"
-                                                                                                                min="1"
-                                                                                                                required
-                                                                                                                max="99"
-                                                                                                                step="1"
-                                                                                                                class="inputCaja text-end text-end"
-                                                                                                                id="cantidad"
-                                                                                                                placeholder="Ej. 1"
-                                                                                                                name="cantidad[]"
-                                                                                                                value="{{ $item->cantidad }}">
-                                                                                                        @else
-                                                                                                            <input
-                                                                                                                type="text"
-                                                                                                                readonly
-                                                                                                                required
-                                                                                                                class="inputCaja text-end"
-                                                                                                                id="cantidad"
-                                                                                                                placeholder="Ej. 1"
-                                                                                                                name="cantidad[]"
-                                                                                                                value="{{ $item->cantidad }}">
+                                                                                                            <div
+                                                                                                                class="col-2">
+                                                                                                                <button
+                                                                                                                    id="removeRow"
+                                                                                                                    type="button"
+                                                                                                                    class="btn btn-danger">Borrar</button>
+                                                                                                            </div>
                                                                                                         @endif
                                                                                                     </div>
-
-                                                                                                    <div class="col-8">
-                                                                                                        <label
-                                                                                                            for="descripcion"
-                                                                                                            class="">Descripción</label></br></br>
-                                                                                                        <textarea rows="2" cols="80" class="form-control form-select" id="descripcion" readonly
-                                                                                                            name="descripcion[]" value="">{{ 'Artículo: ' . $item->articulo . ', Número de parte: ' . $item->numeroParte . ', Modelo: ' . $item->modelo . ', PU: $ ' . $item->valor }} </textarea>
-                                                                                                    </div>
-
-                                                                                                    @if ($mantenimiento->estadoId < 3)
-                                                                                                        <div
-                                                                                                            class="col-2">
-                                                                                                            </br></br>
-                                                                                                            <button
-                                                                                                                id="removeRow"
-                                                                                                                type="button"
-                                                                                                                class="btn btn-danger">Borrar</button>
-                                                                                                        </div>
-                                                                                                    @endif
-                                                                                                </div>
-                                                                                            </li>
+                                                                                                </li>
+                                                                                            @endif
 
 
                                                                                         @empty
@@ -362,7 +396,6 @@
 
                                                                                     </ul>
                                                                                 </div>
-
 
                                                                             </div>
                                                                         </div>
@@ -422,84 +455,114 @@
                                                                                         <ul class=""
                                                                                             id="newRowMano">
 
+                                                                                            <li class="listaMaterialMantenimiento my-3 border-bottom"
+                                                                                                id="encabezado">
+                                                                                                <div
+                                                                                                    class="row d-flex pb-4">
+                                                                                                    <div class="col-2 ">
+                                                                                                        <label
+                                                                                                            class="">Cantidad</label>
+                                                                                                    </div>
+                                                                                                    <div class="col-10">
+                                                                                                        <label
+                                                                                                            class="">Descripción</label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </li>
+
                                                                                             @forelse ($gastos as $item)
-                                                                                                <li class="listaMaterialMantenimiento my-3 border-bottom"
-                                                                                                    id="inputFormRowMano">
-                                                                                                    <div
-                                                                                                        class="row d-flex pb-4">
-
-
-                                                                                                        <input
-                                                                                                            type="hidden"
-                                                                                                            name="gastoId[]"
-                                                                                                            id="gastoId"
-                                                                                                            value="{{ $item->id != null ? $item->id : 0 }}">
-
-                                                                                                        <input
-                                                                                                            type="hidden"
-                                                                                                            name="inventarioId[]"
-                                                                                                            id="inventarioId"
-                                                                                                            value="{{ $item->inventarioId }}">
-
-                                                                                                        <input
-                                                                                                            type="hidden"
-                                                                                                            name="costo[]"
-                                                                                                            id="costo"
-                                                                                                            value="{{ $item->costo }}">
-
+                                                                                                @if (strtoupper(str_replace(' ', '', trim($item->seccion))) == 'MANODEOBRA')
+                                                                                                    <li class="listaMaterialMantenimiento my-3 border-bottom"
+                                                                                                        id="inputFormRowMano">
                                                                                                         <div
-                                                                                                            class="col-2 ">
-                                                                                                            <label
-                                                                                                                for="cantidad"
-                                                                                                                class="">Cantidad</label></br></br>
+                                                                                                            class="row d-flex pb-4">
+
+                                                                                                            <input
+                                                                                                                type="hidden"
+                                                                                                                name="seccion[]"
+                                                                                                                id="seccion"
+                                                                                                                value="{{ $item->seccion }}">
+
+                                                                                                            <input
+                                                                                                                type="hidden"
+                                                                                                                name="manoObraId[]"
+                                                                                                                id="manoObraId"
+                                                                                                                value="{{ $item->manoObraId }}">
+                                                                                                            <input
+                                                                                                                type="hidden"
+                                                                                                                name="concepto[]"
+                                                                                                                id="concepto"
+                                                                                                                value="{{ $item->concepto }}">
+                                                                                                            <input
+                                                                                                                type="hidden"
+                                                                                                                name="numeroParte[]"
+                                                                                                                id="numeroParte"
+                                                                                                                value="{{ $item->numeroParte }}">
+
+                                                                                                            <input
+                                                                                                                type="hidden"
+                                                                                                                name="gastoId[]"
+                                                                                                                id="gastoId"
+                                                                                                                value="{{ $item->id != null ? $item->id : 0 }}">
+
+                                                                                                            <input
+                                                                                                                type="hidden"
+                                                                                                                name="inventarioId[]"
+                                                                                                                id="inventarioId"
+                                                                                                                value="{{ $item->inventarioId }}">
+
+                                                                                                            <input
+                                                                                                                type="hidden"
+                                                                                                                name="costo[]"
+                                                                                                                id="costo"
+                                                                                                                value="{{ $item->costo }}">
+
+                                                                                                            <div
+                                                                                                                class="col-2 ">
+                                                                                                                @if ($mantenimiento->estadoId < 3)
+                                                                                                                    <input
+                                                                                                                        type="number"
+                                                                                                                        maxlength="2"
+                                                                                                                        min="1"
+                                                                                                                        required
+                                                                                                                        max="99"
+                                                                                                                        step="1"
+                                                                                                                        class="inputCaja text-end"
+                                                                                                                        id="cantidad"
+                                                                                                                        placeholder="Ej. 1"
+                                                                                                                        name="cantidad[]"
+                                                                                                                        value="{{ $item->cantidad }}">
+                                                                                                                @else
+                                                                                                                    <input
+                                                                                                                        type="text"
+                                                                                                                        readonly
+                                                                                                                        required
+                                                                                                                        class="inputCaja text-end"
+                                                                                                                        id="cantidad"
+                                                                                                                        placeholder="Ej. 1"
+                                                                                                                        name="cantidad[]"
+                                                                                                                        value="{{ $item->cantidad }}">
+                                                                                                                @endif
+                                                                                                            </div>
+
+                                                                                                            <div
+                                                                                                                class="col-8">
+                                                                                                                <textarea rows="2" cols="80" class="form-control form-select" id="descripcion" readonly
+                                                                                                                    name="descripcion[]" value="">{{ 'Artículo: ' . $item->articulo . ', Número de parte: ' . $item->numeroParte . ', Modelo: ' . $item->modelo . ', PU: $ ' . $item->valor }} </textarea>
+                                                                                                            </div>
+
                                                                                                             @if ($mantenimiento->estadoId < 3)
-                                                                                                                <input
-                                                                                                                    type="number"
-                                                                                                                    maxlength="2"
-                                                                                                                    min="1"
-                                                                                                                    required
-                                                                                                                    max="99"
-                                                                                                                    step="1"
-                                                                                                                    class="inputCaja text-end"
-                                                                                                                    id="cantidad"
-                                                                                                                    placeholder="Ej. 1"
-                                                                                                                    name="cantidad[]"
-                                                                                                                    value="{{ $item->cantidad }}">
-                                                                                                            @else
-                                                                                                                <input
-                                                                                                                    type="text"
-                                                                                                                    readonly
-                                                                                                                    required
-                                                                                                                    class="inputCaja text-end"
-                                                                                                                    id="cantidad"
-                                                                                                                    placeholder="Ej. 1"
-                                                                                                                    name="cantidad[]"
-                                                                                                                    value="{{ $item->cantidad }}">
+                                                                                                                <div
+                                                                                                                    class="col-2">
+                                                                                                                    <button
+                                                                                                                        id="removeRowMano"
+                                                                                                                        type="button"
+                                                                                                                        class="btn btn-danger">Borrar</button>
+                                                                                                                </div>
                                                                                                             @endif
                                                                                                         </div>
-
-                                                                                                        <div
-                                                                                                            class="col-8">
-                                                                                                            <label
-                                                                                                                for="descripcion"
-                                                                                                                class="">Descripción</label></br></br>
-                                                                                                            <textarea rows="2" cols="80" class="form-control form-select" id="descripcion" readonly
-                                                                                                                name="descripcion[]" value="">{{ 'Artículo: ' . $item->articulo . ', Número de parte: ' . $item->numeroParte . ', Modelo: ' . $item->modelo . ', PU: $ ' . $item->valor }} </textarea>
-                                                                                                        </div>
-
-                                                                                                        @if ($mantenimiento->estadoId < 3)
-                                                                                                            <div
-                                                                                                                class="col-2">
-                                                                                                                </br></br>
-                                                                                                                <button
-                                                                                                                    id="removeRowMano"
-                                                                                                                    type="button"
-                                                                                                                    class="btn btn-danger">Borrar</button>
-                                                                                                            </div>
-                                                                                                        @endif
-                                                                                                    </div>
-                                                                                                </li>
-
+                                                                                                    </li>
+                                                                                                @endif
                                                                                             @empty
                                                                                                 <li>Sin registros.</li>
                                                                                             @endforelse
@@ -514,6 +577,91 @@
                                                                 </div>
 
                                                             </div>
+                                                            <div class="tab-pane fade" id="image-tab-pane"
+                                                                role="tabpanel" aria-labelledby="image-tab"
+                                                                tabindex="0">
+
+                                                                <div class="row">
+                                                                    <div class="d-md-flex p-3">
+                                                                        <div class="col-12 col-md-12 px-2 ">
+                                                                            <div class="text-center mx-auto border  mb-4">
+
+                                                                                <div class="col-12 contFotoMaquinaria"
+                                                                                    id="visor">
+                                                                                    <img src="{{ empty($fotos[0]) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria->identificador, 4, '0', STR_PAD_LEFT) . '/mantenimientos/' . $mantenimiento->codigo . '/' . $fotos[0]->ruta) }}"
+                                                                                        class="mx-auto d-block img-fluid imgMaquinaria">
+                                                                                </div>
+                                                                                {{-- '/public/maquinaria/' . $pathMaquinaria. '/mantenimientos/'. $mantto->codigo --}}
+                                                                                <div class="col-12 my-3 d-flex justify-content-start"
+                                                                                    id="selectores">
+                                                                                    @if (is_null($fotos) == false)
+                                                                                        @forelse ($fotos as $foto)
+                                                                                            <img onclick="abre(this)"
+                                                                                                title="'{{ $maquinaria->nombre }}'."
+                                                                                                src="{{ asset('/storage/maquinaria/' . str_pad($maquinaria->identificador, 4, '0', STR_PAD_LEFT) . '/mantenimientos/' . $mantenimiento->codigo . '/' . $foto->ruta) }}"
+                                                                                                class="img-fluid mb-5"
+                                                                                                id="img{{ $foto->id }}"
+                                                                                                style="margin-right:3px; z-index: 2">
+                                                                                            <div class="form-group"
+                                                                                                style="z-index: 9999 !important">
+                                                                                                <div
+                                                                                                    class="divButtonImage">
+                                                                                                    <button type="button"
+                                                                                                        class="btn btn-secondary btn-sm buttonImage"
+                                                                                                        id="btnDelete{{ $foto->id }}"
+                                                                                                        onclick="esconde_div('{{ $foto->id }}','{{ $fotos }}', (this));">X</button>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        @empty
+                                                                                        @endforelse
+                                                                                    @endif
+                                                                                </div>
+
+                                                                                @php
+                                                                                    $numFotosPermitidas = 0;
+                                                                                    $numFotosCargadas = count($fotos);
+                                                                                    $maxNumFotos = 6;
+                                                                                    $numFotosPermitidas = $maxNumFotos - $numFotosCargadas;
+                                                                                @endphp
+
+                                                                                @if ($numFotosPermitidas > 0)
+                                                                                    <span class="mi-archivo">
+                                                                                        <input class="mb-4 ver "
+                                                                                            type="file" name="ruta[]"
+                                                                                            id="mi-archivo"
+                                                                                            accept="image/*" multiple
+                                                                                            data-max="{{ $numFotosPermitidas }}">
+                                                                                    </span>
+                                                                                    <label for="mi-archivo">
+                                                                                        <span class="">Sube Imagen
+                                                                                            (Puedes subir hasta
+                                                                                            {{ $numFotosPermitidas }}
+                                                                                            más)</span>
+                                                                                    </label>
+                                                                                @else
+                                                                                    <label for="mi-archivo"
+                                                                                        style="background-color: crimson; cursor: initial;">
+                                                                                        <span class="">No puedes
+                                                                                            subir más imágenes, <br>ya has
+                                                                                            alcanzado el
+                                                                                            límite de 6.</span>
+                                                                                    </label>
+                                                                                @endif
+                                                                            </div>
+
+                                                                            <div class="text-center mx-auto border  mb-4">
+
+                                                                            </div>
+
+
+                                                                            <input type="hidden"
+                                                                                name="arrayFotosPersistente"
+                                                                                id="arrayFotosPersistente" value="">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
 
                                                         </div>
 
@@ -522,14 +670,30 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-12 text-center">
+                                            <label class="labelTitulo">Observaciones:</label></br>
+                                            <textarea rows="2" cols="80" class="form-control"
+                                                {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
+                                                placeholder="Escribe tus observaciones y comentarios sobre la ejecución del mantenimiento aquí."
+                                                name="observaciones" id="observaciones">{{ $mantenimiento->observaciones }}</textarea>
+                                        </div>
                                 </div>
 
 
-                                @if ($mantenimiento->estadoId < 3)
-                                    <div class="col-12 text-center mt-1 pt-1">
+                                <div class="col-12 text-center mt-1 pt-1">
+                                    <a href="{{ route('mantenimientos.index') }}">
+                                        <button class="btn regresar">
+                                            <span class="material-icons">
+                                                reply
+                                            </span>
+                                            Regresar
+                                        </button>
+                                    </a>
+                                    @if ($mantenimiento->estadoId < 3)
                                         <button type="submit" class="btn botonGral">Guardar</button>
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
+
                                 </form>
                             </div>
                         </div>
@@ -618,7 +782,8 @@
             minLength: 1,
             select: function(event, ui) {
                 // Rellenar los campos con los datos del inventario seleccionado
-                crearItems(ui.item.id, ui.item.value, ui.item.nombre, ui.item.numparte, ui.item.valor, ui.item.tipo);
+                crearItems(ui.item.id, ui.item.value, ui.item.nombre, ui.item.numparte, ui.item.valor, ui.item
+                    .tipo);
 
                 // $('#inventarioId').val(ui.item.id);
                 // $('#descripcion').val(ui.item.value);
@@ -649,7 +814,9 @@
             minLength: 1,
             select: function(event, ui) {
                 // Rellenar los campos con los datos del inventario seleccionado
-                crearItemMano(ui.item.id, ui.item.value, ui.item.valor);
+                crearItemMano(ui.item.id, ui.item.value, ui.item.nombre, ui.item.numparte, ui.item.valor, ui
+                    .item
+                    .tipo);
 
                 // $('#inventarioId').val(ui.item.id);
                 // $('#descripcion').val(ui.item.value);
@@ -665,22 +832,21 @@
             html += '   <div class="row d-flex pb-4">';
             html += '      <input type="hidden" name="gastoId[]" id="gastoId" value="">';
             html += '      <input type="hidden" name="inventarioId[]" id="inventarioId" value="' + inventarioId + '">';
+            html += '      <input type="hidden" name="manoObraId[]" id="manoObraId" value="">';
             html += '      <input type="hidden" name="costo[]" id="costo" value="' + costo + '">';
             html += '      <input type="hidden" name="seccion[]" id="seccion" value="' + tipo + '">';
             html += '      <input type="hidden" name="concepto[]" id="concepto" value="' + concepto + '">';
             html += '      <input type="hidden" name="numeroParte[]" id="numeroParte" value="' + numparte + '">';
             html += '      <div class="col-2 ">';
-            html += '           <label for="cantidad" class="">Cantidad</label></br></br>';
             html +=
                 '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="">';
             html += '      </div>';
-            html += '      <div class="col-10">';
-            html += '          <label for="descripcion" class="">Descripción</label></br></br>';
+            html += '      <div class="col-8">';
             html +=
                 '          <textarea rows="2" cols="80" class="form-control form-select" id="descripcion" readonly name="descripcion[]" value="">' +
                 descripcion + '</textarea>';
             html += '      </div>';
-            html += '      <div class="col-2"></br></br>';
+            html += '      <div class="col-2">';
             html += '         <button id="removeRow" type="button" class="btn btn-danger">Borrar</button>';
             html += '      </div>';
             html += '    </div>';
@@ -697,25 +863,27 @@
     </script>
 
     <script type="text/javascript">
-        function crearItemMano(inventarioId, descripcion, costo) {
+        function crearItemMano(inventarioId, descripcion, concepto, numparte, costo, tipo) {
             var html = '';
             html += '<li class="listaMaterialMantenimiento my-3 border-bottom" id="inputFormRowMano">';
             html += '   <div class="row d-flex pb-4">';
             html += '      <input type="hidden" name="gastoId[]" id="gastoId" value="">';
+            html += '      <input type="hidden" name="inventarioId[]" id="inventarioId" value="">';
             html += '      <input type="hidden" name="manoObraId[]" id="manoObraId" value="' + inventarioId + '">';
             html += '      <input type="hidden" name="costo[]" id="costo" value="' + costo + '">';
+            html += '      <input type="hidden" name="seccion[]" id="seccion" value="' + tipo + '">';
+            html += '      <input type="hidden" name="concepto[]" id="concepto" value="' + concepto + '">';
+            html += '      <input type="hidden" name="numeroParte[]" id="numeroParte" value="' + numparte + '">';
             html += '      <div class="col-2 ">';
-            html += '           <label for="cantidad" class="">Cantidad</label></br></br>';
             html +=
                 '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="1" >';
             html += '      </div>';
             html += '      <div class="col-8">';
-            html += '          <label for="descripcion" class="">Descripción</label></br></br>';
             html +=
                 '          <textarea rows="2" cols="80" class="form-control form-select" id="descripcion" readonly name="descripcion[]" value="">' +
                 descripcion + '</textarea>';
             html += '      </div>';
-            html += '      <div class="col-2"></br></br>';
+            html += '      <div class="col-2">';
             html += '         <button id="removeRowMano" type="button" class="btn btn-danger">Borrar</button>';
             html += '      </div>';
             html += '    </div>';
@@ -729,6 +897,107 @@
         $(document).on('click', '#removeRowMano', function() {
             $(this).closest('#inputFormRowMano').remove();
         });
+    </script>
+
+    <script>
+        function abre(T) {
+            var ruta = T.src.replace("/s90-Ic42/", "/s590-Ic42/");
+            document.querySelector("#visor img").src = ruta;
+        }
+    </script>
+
+    <style>
+        /* Macbook Pro / laptop */
+        @media only screen and (min-width: 992px) and (max-width: 1440px) {
+
+            /*ALta maquinaria*/
+            .inputNumberKilometrajeEdit {
+                width: 35%;
+            }
+
+            .inputKilometrajeEdit {
+                width: 65%;
+                font-size: 11px;
+            }
+        }
+    </style>
+
+    <script src="{{ asset('js/cardArchivos.js') }}"></script>
+
+    <script>
+        function deleteImage(id, fotos, button) {
+            console.log('ID de imagen', id);
+            let jsonFotos = JSON.parse(fotos);
+            console.log('Fotos', jsonFotos);
+            var childDiv = document.getElementById('selectores').firstChild;
+
+            //var parentDiv = button.parentNode.parentNode.parentNode;
+
+            var childDiv = button.parentNode.parentNode.parentNode;
+
+            // Modificar el selector para que coincida con la clase de la imagen
+            var imageElement = childDiv.querySelector("img.img-fluid");
+            var parentDivButton = button.parentNode.parentNode;
+            var imageId = imageElement.id;
+            console.log('imageElement', imageElement);
+
+            // Cambiar la imagen que se muestra
+            if (imageElement) {
+
+            }
+        }
+
+        // Inicializar arrayFotosPersistente
+        let arrayFotosPersistente = [];
+
+        // Función para inicializar el arreglo persistente con el arreglo original
+        // function inicializarArrayFotos(fotos) {
+        //     arrayFotosPersistente = JSON.parse(fotos);
+        //     console.log('HOLA',arrayFotosPersistente);
+        // }
+
+        function esconde_div(id, fotos, button) {
+
+            console.log('fotos', fotos);
+            let arrayFotos = JSON.parse(fotos);
+            const index = arrayFotos.findIndex((foto) => foto.id == id);
+
+            // Si se encontró el objeto con el id coincidente, eliminarlo del array
+            if (index !== -1) {
+                arrayFotosPersistente.push(arrayFotos[index]);
+
+            } else {
+                console.log('El id no se encontró en arrayFotosPersistente.');
+            }
+            console.log('arrayFotosPersistente', arrayFotosPersistente);
+            var parentDiv = button.parentNode.parentNode.parentNode;
+            // Modificar el selector para que coincida con la clase de la imagen
+            var imageElement = parentDiv.querySelector("img.img-fluid");
+            var deleteButton = document.getElementById('btnDelete' + id);
+            var imageElement = document.getElementById("img" + id);
+
+
+            // Ocultar el elemento padre
+            imageElement.style.visibility = "hidden";
+            deleteButton.style.visibility = "hidden";
+
+            const arrayFotosPersistenteHidden = document.getElementById('arrayFotosPersistente');
+            arrayFotosPersistenteHidden.value = JSON.stringify(arrayFotosPersistente);
+        }
+        // $.ajax({
+        //     type: 'put',
+        //     url: '/maquinaria/imagen/delete',
+        //     data: {
+        //         "_token": "{{ csrf_token() }}",
+        //         "id": id
+        //     },
+        //     success: function(data) {
+        //         console.log('Funciona');
+        //     },
+        //     error: function() {
+        //         console.log('Error');
+        //     }
+        // });
     </script>
 
 @endsection

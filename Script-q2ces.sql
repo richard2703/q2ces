@@ -1476,6 +1476,7 @@ CREATE TABLE mantenimientos(
     maquinariaId bigint(20) unsigned NOT NULL,
     personalId bigint(20) unsigned NOT NULL,
     titulo varchar(255) not NULL,
+    codigo varchar(8) NULL,
     tipoMantenimientoId bigint(20) unsigned NOT NULL,
     fechaInicio date not NULL,
     fechaReal date NULL,
@@ -1866,6 +1867,15 @@ CREATE TABLE extintores(
     CONSTRAINT FK_extintores_ubicacionId foreign key (ubicacionId) references ubicaciones(id),
     CONSTRAINT FK_extintores_lugarId foreign key (lugarId) references lugares(id),
     CONSTRAINT FK_extintores_maquinariaId foreign key (maquinariaId) references maquinaria(id)
+);
+
+
+CREATE TABLE mantenimientoImagen(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    maquinariaId bigint(20) unsigned NOT NULL,
+    ruta varchar(255) NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_mantenimientoImagen_maquinariaId foreign key (maquinariaId) references maquinaria(id)
 );
 
 ALTER TABLE carga ADD kilometraje BIGINT(100) NOT NULL;
