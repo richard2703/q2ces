@@ -22,13 +22,13 @@
                         <div class="card-body contCart">
                         <div class="ml-3">
                             <div class="p-1 align-self-start bacTituloPrincipal">
-                                <h2 class="my-3 ms-3 texticonos">Alta de Facturas</h2>
+                                <h2 class="my-3 ms-3 texticonos">Editar Facturas</h2>
                             </div>
                             <div>
                                 <div class="col-4 text-left mt-3" style="margin-left:20px">
-                                    <form action="{{ route('facturaProvedor.index') }}" method="GET" style="display: inline-block;">
+                                    <form action="{{ route('facturaCliente.index') }}" method="GET" style="display: inline-block;">
                                         @csrf
-                                        <input type="hidden" name="id" value="{{ $id }}">
+                                        <input type="hidden" name="id" value="{{ $facturaCliente[0]->clienteId }}">
                                         <button class="btnSinFondo btn regresar" type="submit" rel="tooltip">
                                             <span class="material-icons">
                                                 reply
@@ -40,26 +40,27 @@
                                 <div class="d-flex p-3 divBorder" style="margin-top:-15px"></div>
                             </div>
 
-                            <form action="{{ route('facturaProvedor.store') }}"
-                                method="post"class="row alertaGuardar" enctype="multipart/form-data">
+                            <form action="{{ route('facturaCliente.update', $id) }}"
+                                method="post" class="row alertaGuardar" enctype="multipart/form-data">
                                 @csrf
+                                @method('put')
                                 <input type="hidden" name="userId" id="userId" value="{{ auth()->user()->id }}">
                                 
                                 <div class="row mt-3" style="padding-left: 40px">
                                     <div class=" col-12 col-sm-6 mb-3 pr-3">
-                                        <label class="labelTitulo">Provedor:<span>*</span></label></br>
-                                        <select name="provedorId" class="form-select" aria-label="Default select example" readonly>
+                                        <label class="labelTitulo">Cliente:<span>*</span></label></br>
+                                        <select name="clienteId" class="form-select" aria-label="Default select example" readonly>
                                             <option value="">Seleccione</option>
-                                            @foreach ($provedor as $item)
+                                            @foreach ($cliente as $item)
                                                 <option value="{{ $item->id }}"
-                                                    {{ $item->id == $id ? ' selected' : '' }}>
+                                                    {{ $item->id == $facturaCliente[0]->clienteId ? ' selected' : '' }}>
                                                     {{ $item->nombre }}
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
                                     
-                                    <div class=" col-12 col-sm-6 mb-3 ">
+                                    {{--  <div class=" col-12 col-sm-6 mb-3 ">
                                         <label class="labelTitulo">Estado:</label></br>
                                         <input type="email" class="inputCaja" required placeholder="Estado del Provedor..."
                                             min="6" name="email" value="{{ $provedorSelected->estado }}" readonly>
@@ -80,7 +81,7 @@
                                         <label class="labelTitulo">Comentarios:</label></br>
                                         <textarea readonly class="form-control border-green" placeholder="Comentarios del Respecto al Provedor..." id="floatingTextarea" name="comentario"
                                             spellcheck="true">{{ $provedorSelected->comentario }}</textarea>
-                                    </div>
+                                    </div>  --}}
                                     {{--  <div class=" col-12 col-sm-6 mb-3 ">
                                         <label class="labelTitulo">Puesto:<span>*</span></label></br>
                                         <input type="text" class="inputCaja" id="puesto" name="puesto" required
@@ -108,26 +109,30 @@
                                                     <h2 class="tituloEncabezado ">Facturas</h2>
                                                 </div>
                                                 <div class="col-6 divBorder pb-3 text-end">
-                                                    <button type="button" class="btnVerde"
+                                                    {{--  <button type="button" class="btnVerde"
                                                         onclick="crearItems()">
-                                                    </button>
+                                                    </button>  --}}
                                                 </div>
                                             </div>
-
+                                            <input type="hidden" name="eliminarArchivoXML" id="eliminarArchivoXML" value="">
+                                            <input type="hidden" name="eliminarArchivo" id="eliminarArchivo" value="">
+                                            @forelse($facturaCliente as $factura)
                                             <div class="row opcion divBorderItems" id="opc">
 
-                                                    <div class="col-5 mb-3 ">
-                                                        <label class="labelTitulo mt-2">Folio:* <span></span></label></br>
+                                                <div class="col-5 mb-3 ">
+                                                    <label class="labelTitulo mt-2">Folio:* <span></span></label></br>
 
-                                                        <input type="text" class="inputCaja" id="" name="factura[folio][]" required placeholder="Folio de la Factura..."
-                                                            value="">
-                                                    </div>
-                                                    <div class="col-5 mb-3 ">
-                                                        <label class="labelTitulo mt-2">Fecha:* <span></span></label></br>
+                                                    <input type="text" class="inputCaja" id="" name="folio" required placeholder="Folio de la Factura..."
+                                                        value="{{ $factura->folio }}">
+                                                </div>
 
-                                                        <input type="date" class="inputCaja" id="fecha" name="factura[fecha][]" required placeholder="Fecha de la Factura..."
-                                                            value="">
-                                                    </div>
+                                                <div class="col-5 mb-3 ">
+                                                    <label class="labelTitulo mt-2">Fecha:* <span></span></label></br>
+
+                                                    <input type="date" class="inputCaja" id="fecha" name="fecha" required placeholder="Fecha de la Factura..."
+                                                    value="{{ $factura->fecha }}">
+                                                </div>
+
                                                 <div class="col-lg-1 my-3 text-center pt-2">
                                                     <span class="material-icons"
                                                         style="font-size:40px; color: green">
@@ -140,10 +145,32 @@
                                                 </div>
                                                 <div class="col-6 mb-3 ">
                                                     <label class="labelTitulo mt-2">Subir PDF:* <span></span></label></br>
-                                                    
+                                                    @if ($factura->pdf)
                                                     <div style="display: flex; align-items: center;">
-                                                        <label class="custom-file-upload" id="" onclick='handleDocumento("excel-file-input", this)'>
-                                                            <input class="mb-4" type="file" name="factura[pdf][]" id="excel-file-input"
+                                                        <label class="custom-file-upload" id="" onclick='handleDocumento("excel-file-input")'>
+                                                            <input class="mb-4" type="file" name="pdf" id="excel-file-input"
+                                                                accept=".pdf" value="{{$factura->pdf}}">
+                                                            <div id='iconContainer'>
+                                                                <lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>
+                                                            </div>
+                                                        </label>
+            
+                                                        <a id="downloadButton" class="btnViewDescargar btn btn-outline-success btnView" style="width: 2.8em; height: 2.8em; display: block;" download="" href="{{ asset('/storage/cliente/' . $factura->clienteId . '/facturas/' . $factura->pdf ) }}">
+                                                            <span class="icon">
+                                                                <i class="far fa-eye mt-2" style="font-size: 18px !important;"></i>
+                                                            </span>
+                                                        </a>
+            
+                                                        <button id='removeButton' type="button"
+                                                            class="btnViewDelete btn btn-outline-danger btnView"
+                                                            style="width: 2.4em; height: 2.4em;" onclick="removeFactura()">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                    @else
+                                                    <div style="display: flex; align-items: center;">
+                                                        <label class="custom-file-upload" id="" onclick='handleDocumento("excel-file-input")'>
+                                                            <input class="mb-4" type="file" id="excel-file-input"
                                                                 accept=".pdf">
                                                             <div id='iconContainer'>
                                                                 <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"
@@ -167,13 +194,46 @@
                                                             <i class="fa fa-times"></i>
                                                         </button>
                                                     </div>
+                                                    @endif
+                                                    
                                                 </div>
                                                 <div class="col-6 mb-3 ">
                                                     <label class="labelTitulo mt-2">Subir XML:* <span></span></label></br>
 
+                                                    @if ($factura->xml)
                                                     <div style="display: flex; align-items: center;">
-                                                        <label class="custom-file-upload" id='' onclick='handleDocumentoXML("xml-file-input", this)'>
-                                                            <input class="mb-4" type="file" name="factura[xml][]" id="xml-file-input"
+                                                        <label class="custom-file-upload" onclick='handleDocumentoXML("xml-file-input")'>
+                                                            <input class="mb-4" type="file" name="xml" id="xml-file-input"
+                                                                accept=".xml" value="{{$factura->xml}}">
+                                                            <div id='iconContainerXML'>
+                                                                <lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>
+                                                            </div>
+                                                        </label>
+            
+                                                        {{--  <a id='downloadButtonXML' class="btnViewDescargar btn btn-outline-success btnView"
+                                                            style="width: 2.8em; height: 2.8em; display: none;" download>
+                                                            <span class="btn-text">Descargar</span>
+                                                            <span class="iconXML">
+                                                                <i class="far fa-eye mt-2" style="font-size: 18px !important;"></i>
+                                                            </span>
+                                                        </a>  --}}
+                                                        <a id="downloadButtonXML" class="btnViewDescargar btn btn-outline-success btnView" style="width: 2.8em; height: 2.8em; display: block;" download="" href="{{ asset('/storage/cliente/' . $factura->clienteId . '/facturas/' . $factura->xml ) }}">
+                                                            <span class="icon">
+                                                                <i class="far fa-eye mt-2" style="font-size: 18px !important;"></i>
+                                                            </span>
+                                                        </a>
+            
+                                                        <button id='removeButtonXML' type="button"
+                                                            class="btnViewDelete btn btn-outline-danger btnView"
+                                                            style="width: 2.4em; height: 2.4em" onclick="removeFacturaXML()">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+                                                    </div>
+
+                                                    @else
+                                                    <div style="display: flex; align-items: center;">
+                                                        <label class="custom-file-upload" onclick='handleDocumentoXML("xml-file-input")'>
+                                                            <input class="mb-4" type="file" name="xml" id="xml-file-input"
                                                                 accept=".xml">
                                                             <div id='iconContainerXML'>
                                                                 <lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover"
@@ -197,9 +257,16 @@
                                                             <i class="fa fa-times"></i>
                                                         </button>
                                                     </div>
+                                                    @endif
+                                                    
                                                 </div>
+                                                
                                             </div>
+                                            @empty
+                                                <h1>JHOSK</h1>
+                                            @endforelse
                                         </div>
+                                        
                                     </div>
                                 </div>
                        
@@ -325,15 +392,13 @@
     
     
     <script>
-        function handleDocumento(id, button) {
-            console.log('BUTTON',button.id);
-            let idDinamico = button.id;
+        function handleDocumento(id) {
             // Resto del código que utilizas para manejar los eventos, pero ahora con el ID proporcionado
-            var facturaInput = document.getElementById(id + idDinamico);
-
-            var downloadFacturaButton = document.getElementById("downloadButton" + idDinamico);
-            var removeFacturaButton = document.getElementById("removeButton" + idDinamico);
-            var iconContainer = document.getElementById("iconContainer" + idDinamico);
+            var facturaInput = document.getElementById(id);
+            var EliminarArchivo = document.getElementById("eliminarArchivo");
+            var downloadFacturaButton = document.getElementById("downloadButton");
+            var removeFacturaButton = document.getElementById("removeButton");
+            var iconContainer = document.getElementById("iconContainer");
 
             facturaInput.addEventListener("change", function(event) {
                 let alertShownEdit = false;
@@ -341,7 +406,7 @@
 
                 if (event.target.files.length > 0) {
 
-                    facturaInput.addEventListener("click", createClickHandler(id, idDinamico));
+                    facturaInput.addEventListener("click", createClickHandler(id));
                     var file = event.target.files[0];
                     var fileURL = URL.createObjectURL(file);
                     downloadFacturaButton.setAttribute("href", fileURL);
@@ -351,6 +416,7 @@
                     alertShown = false;
                     iconContainer.innerHTML =
                         '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
+                        EliminarArchivo.value = null;
                 } else {
                     downloadFacturaButton.style.display = "none";
                     removeFacturaButton.style.display = "none";
@@ -365,19 +431,57 @@
                 downloadFacturaButton.style.display = "none";
                 removeFacturaButton.style.display = "none";
 
-
-                iconContainer.innerHTML =
-                    '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+                iconContainer.innerHTML ='<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+                EliminarArchivo.value = '0';
             });
         }
     </script>
 
     <script>
+        function removeFacturaXML() {
+            var facturaInput = document.getElementById("xml-file-input");
+            var downloadFacturaButton = document.getElementById("downloadButtonXML");
+            var removeFacturaButton = document.getElementById("removeButtonXML");
+            var iconContainer = document.getElementById("iconContainerXML");
+    
+            facturaInput.value = null;
+            downloadFacturaButton.removeAttribute("href");
+            downloadFacturaButton.style.display = "none";
+            removeFacturaButton.style.display = "none";
+    
+            iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+        
+            var EliminarArchivo = document.getElementById("eliminarArchivoXML");
+            EliminarArchivo.value = '0';
+
+        }
+    </script>
+    
+    <script>
+        function removeFactura() {
+            var facturaInput = document.getElementById("excel-file-input");
+            var downloadFacturaButton = document.getElementById("downloadButton");
+            var removeFacturaButton = document.getElementById("removeButton");
+            var iconContainer = document.getElementById("iconContainer");
+    
+            facturaInput.value = null;
+            downloadFacturaButton.removeAttribute("href");
+            downloadFacturaButton.style.display = "none";
+            removeFacturaButton.style.display = "none";
+    
+            iconContainer.innerHTML = '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+
+            var EliminarArchivo = document.getElementById("eliminarArchivo");
+            EliminarArchivo.value ='0';
+        }
+    </script>
+
+    <script>
         // Función para crear el manejador de eventos "click" usando el ID específico
-        function createClickHandler(id, buttonId) {
+        function createClickHandler(id) {
             return function(event) {
-                var facturaInput = document.getElementById(id + buttonId);
-                var iconContainer = document.getElementById("iconContainer" + buttonId);
+                var facturaInput = document.getElementById(id);
+                var iconContainer = document.getElementById("iconContainer");
                 var icon = document.getElementById("icon");
                 var expectedIconHTML =
                     '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
@@ -408,15 +512,13 @@
     </script>
 
     <script>
-        function handleDocumentoXML(id, button) {
-            let idDinamico = button.id;
+        function handleDocumentoXML(id) {
             // Resto del código que utilizas para manejar los eventos, pero ahora con el ID proporcionado
-            var facturaInput = document.getElementById(id + idDinamico);
-            
-            console.log(idDinamico);
-            var downloadFacturaButton = document.getElementById("downloadButtonXML"+ idDinamico);
-            var removeFacturaButton = document.getElementById("removeButtonXML"+ idDinamico);
-            var iconContainer = document.getElementById("iconContainerXML" + idDinamico);
+            var facturaInput = document.getElementById(id);
+            var EliminarArchivo = document.getElementById("eliminarArchivoXML");
+            var downloadFacturaButton = document.getElementById("downloadButtonXML");
+            var removeFacturaButton = document.getElementById("removeButtonXML");
+            var iconContainer = document.getElementById("iconContainerXML");
 
             facturaInput.addEventListener("change", function(event) {
                 let alertShownEdit = false;
@@ -424,7 +526,7 @@
 
                 if (event.target.files.length > 0) {
 
-                    facturaInput.addEventListener("click", createClickHandlerXML(id, idDinamico));
+                    facturaInput.addEventListener("click", createClickHandlerXML(id));
                     var file = event.target.files[0];
                     var fileURL = URL.createObjectURL(file);
                     downloadFacturaButton.setAttribute("href", fileURL);
@@ -434,6 +536,7 @@
                     alertShown = false;
                     iconContainer.innerHTML =
                         '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
+                        EliminarArchivo.value = null;
                 } else {
                     downloadFacturaButton.style.display = "none";
                     removeFacturaButton.style.display = "none";
@@ -448,19 +551,18 @@
                 downloadFacturaButton.style.display = "none";
                 removeFacturaButton.style.display = "none";
 
-
-                iconContainer.innerHTML =
-                    '<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+                iconContainer.innerHTML ='<lord-icon src="https://cdn.lordicon.com/koyivthb.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" stroke="65" style="width:50px;height:70px"></lord-icon>';
+                EliminarArchivo.value = '0';
             });
         }
     </script>
 
     <script>
         // Función para crear el manejador de eventos "click" usando el ID específico
-        function createClickHandlerXML(id, buttonId) {
+        function createClickHandlerXML(id) {
             return function(event) {
-                var facturaInput = document.getElementById(id + buttonId);
-                var iconContainer = document.getElementById("iconContainerXML" + buttonId);
+                var facturaInput = document.getElementById(id);
+                var iconContainer = document.getElementById("iconContainerXML");
                 var icon = document.getElementById("iconXML");
                 var expectedIconHTML =
                     '<lord-icon src="https://cdn.lordicon.com/nxaaasqe.json" trigger="hover" colors="primary:#86c716,secondary:#e8e230" style="width:50px;height:70px"></lord-icon>';
