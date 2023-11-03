@@ -113,7 +113,7 @@
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Maniobrista: <span>*</span></label></br>
-                                                <select id="maniobristaId" name="maniobristaId" class="form-select" required
+                                                <select id="maniobristaId" name="maniobristaId" class="form-select"
                                                     aria-label="Default select example">
                                                     <option selected value="">Seleccione</option>
                                                     @forelse ($personal as $persona)
@@ -199,20 +199,20 @@
                                             </div>
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Cantidad: <span>*</span></label></br>
+                                                <label class="labelTitulo">Costo Material: <span>*</span></label></br>
                                                 <input type="number" class="inputCaja text-right" id="cantidad"
                                                     name="cantidad" maxlength="100000" step="0.01" min="0.01"
                                                     max="99999" placeholder="ej. 100"
                                                     value="{{ $serviciosTrasporte->cantidad }}">
                                             </div>
 
-                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                            {{--  <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Costo Material: <span>*</span></label></br>
                                                 <input type="number" class="inputCaja text-right" id="costoMaterial"
                                                     name="costoMaterial" maxlength="100000" step="0.01"
                                                     min="0.01" max="99999" placeholder="ej. 100"
                                                     value="{{ $serviciosTrasporte->costoMaterial }}">
-                                            </div>
+                                            </div>  --}}
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Costo Servicio: <span>*</span></label></br>
                                                 <input type="number" class="inputCaja text-right" id="costoServicio"
@@ -262,9 +262,13 @@
                                         </div>
 
                                     </div>
-                                    <div class="col-12 text-center mb-3 ">
-                                        <button type="submit" class="btn botonGral" onclick="test()">Guardar</button>
-                                    </div>
+                                    @if ($serviciosTrasporte->cajachica != 1)
+                                        <div class="col-12 text-center mb-3 ">
+                                            <button type="submit" class="btn botonGral"
+                                                onclick="test()">Guardar</button>
+                                        </div>
+                                    @endif
+
                                 </form>
                             </div>
                         </div>

@@ -69,13 +69,19 @@
                                 <p class="text-center" id="hora"></p>
                                 <br><br>
                                 <div class="text-center">
+                                    <h5 style="font-weight: 1000; ">CONCEPTO: </h5> {{ $servicio->concepto }}
+                                </div>
+                                <div class="text-center">
                                     <h5 style="font-weight: 1000; ">OPERADOR: </h5> {{ $servicio->nombres }}
                                     {{ $servicio->apellidoP }}
                                 </div>
-                                <div class="text-center">
-                                    <h5 style="font-weight: 1000; ">MANIOBRISTA: </h5> {{ $servicio->maninombre }}
-                                    {{ $servicio->maniapellido }}
-                                </div>
+                                @if ($servicio->maninombre != null)
+                                    <div class="text-center">
+                                        <h5 style="font-weight: 1000; ">MANIOBRISTA: </h5> {{ $servicio->maninombre }}
+                                        {{ $servicio->maniapellido }}
+                                    </div>
+                                @endif
+
                                 <div class="text-center">
                                     <h5 style="font-weight: 1000;   ">EQUIPO:</h5>
                                     {{ $servicio->equipo }}
@@ -106,7 +112,7 @@
                                 </div>
 
                                 <br>
-                                <img width="300px;" src="{{ asset('/img/login/Header1Servicios.svg') }}" alt=""
+                                <img width="300px;" src="{{ asset('/img/login/HeaderTicketsChofer.svg') }}" alt=""
                                     class="mb-2">
                                 <br>
 
@@ -127,7 +133,7 @@
 
                                 <div class="text-center">
                                     <h5 style="font-weight: 1000;   ">COSTO DE MATERIAL:</h5>
-                                    {{ $servicio->costoMaterial }}
+                                    {{ $servicio->cantidad }}
                                 </div>
 
                                 <div class="text-center">
@@ -142,7 +148,7 @@
 
                                 <div class="text-center">
                                     <h5 style="font-weight: 1000;   ">COSTO TOTAL:</h5>
-                                    {{ $servicio->comentario }}
+                                    {{ $servicio->costoServicio + $servicio->costoMano + $servicio->cantidad }}
                                 </div>
                                 <BR>
 
@@ -250,11 +256,11 @@
                 }
 
                 /*   @page {
-                                                    size: 70mm 260mm;
-                                                     Tamaño ISO C7 en milímetros
-                                                    margin: 0;
+                                                                                    size: 70mm 260mm;
+                                                                                     Tamaño ISO C7 en milímetros
+                                                                                    margin: 0;
 
-                                                }*/
+                                                                                }*/
 
                 body {
                     margin-top: -80mm !important;

@@ -1894,6 +1894,36 @@ ALTER TABLE descarga
 ADD COLUMN clienteId bigint(20) unsigned NULL,
 ADD CONSTRAINT FK_descarga_clienteId FOREIGN KEY (clienteId) REFERENCES clientes(id);
 
+CREATE TABLE facturaCliente(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    userId bigint(20) unsigned NULL,
+    clienteId bigint(20) unsigned null,
+    folio varchar(255) NOT NULL,
+    fecha DATE NOT NULL,
+    pdf varchar(255) NULL,
+    xml varchar(255) NULL,
+    created_at timestamp NULL,
+    updated_at timestamp NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_facturaCliente_userId foreign key (userId) references users(id),
+    CONSTRAINT FK_facturaCliente_clienteId foreign key (clienteId) references clientes(id)
+);
+
+CREATE TABLE facturaProvedor(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    userId bigint(20) unsigned NULL,
+    provedorId bigint(20) unsigned null,
+    folio varchar(255) NOT NULL,
+    fecha DATE NOT NULL,
+    pdf varchar(255) NULL,
+    xml varchar(255) NULL,
+    created_at timestamp NULL,
+    updated_at timestamp NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_facturaProvedor_userId foreign key (userId) references users(id),
+    CONSTRAINT FK_facturaProvedor_provedorId foreign key (provedorId) references proveedor(id)
+);
+
 /***************************************FIN Tablas Relacionadas*/
 
 /***************************************DATOS Tablas Relacionadas*/
