@@ -297,6 +297,7 @@ class maquinariaMtqController extends Controller
         $maquinaria = usoMaquinarias::join('maquinaria', 'maquinaria.id', 'usoMaquinarias.maquinariaId')
             ->select('usoMaquinarias.id', 'identificador', 'nombre', 'marca', 'modelo', 'placas', 'usoMaquinarias.uso')
             ->where('compania', 'mtq')->orderBy('usoMaquinarias.created_at', 'desc')
+            ->orderBy('identificador', 'asc')
             ->paginate(15);
         // dd( $maquinaria );
 
