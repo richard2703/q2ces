@@ -46,69 +46,56 @@
                                         <p class="subEncabezado">Busca Una Maquinaria</p>
                                         <div class="mb-4 mt-0" role="search" class="">
                                             <input value="" class="search-submit ">
-                                            <input autofocus type="text" class="text" id="search"
-                                                name="search" placeholder="Buscar..."
-                                                title="Escriba la(s) palabra(s) a buscar."><input type="button"
-                                                onclick="clearInput('search')"
-                                                class="btn botonGral"
+                                            <input autofocus type="text" class="text" id="search" name="search"
+                                                placeholder="Buscar..." title="Escriba la(s) palabra(s) a buscar."><input
+                                                type="button" onclick="clearInput('search')" class="btn botonGral"
                                                 value="Borrar">
                                         </div>
                                     </div>
-                                    <div class="d-flex p-3 divBorder w-100" style="margin-top:-10px"></div>
+
+                                    <div class="col-12 divBorder"></div>
+
                                     <div class=" col-12 col-sm-6 col-lg-12 my-3 ">
                                         <label class="labelTitulo">Descripción Equipo/Maquinaria:
                                             <span>*</span></label></br>
-                                        <textarea rows="2" cols="80" class="form-control form-select" id="descripcion" readonly name="descripcion"
+                                        <textarea rows="2" cols="80" class="form-control form-select" id="descripcion"
+                                            placeholder="Especifique puntos o indicaciones a realizar en el mantenimiento..." readonly name="descripcion"
                                             value=""></textarea>
                                     </div>
 
-                                    <div class=" col-6 col-sm-6  col-lg-6 my-3 ">
-                                        <label class="labelTitulo">Fecha de Inicio: <span>*</span> </label></br>
-                                        <input type="date" class="inputCaja" placeholder="Especifique..." required
-                                        min="{{ date('Y-m-d') }}" pattern="\d{2}/\d{2}/\d{4}" placeholder="dd/mm/yyyy"
-                                            id="fechaInicio" name="fechaInicio">
-                                    </div>
+                                    <div class="row">
+                                        <div class=" col-12 col-sm-6  col-lg-6 my-3 ">
+                                            <label class="labelTitulo">Fecha de Inicio: <span>*</span> </label></br>
+                                            <input type="date" class="inputCaja" placeholder="Especifique..." required
+                                                min="{{ date('Y-m-d') }}" pattern="\d{2}/\d{2}/\d{4}"
+                                                placeholder="dd/mm/yyyy" id="fechaInicio" name="fechaInicio">
+                                        </div>
 
-                                    <div class=" col-6 col-sm-6  col-lg-6 my-3 ">
-                                        <label class="labelTitulo">Tipo de Mantenimiento: <span>*</span></label></br>
-                                        <select id="tipoMantenimientoId" name="tipoMantenimientoId" class="form-select form-select-lg mb-3 inputCaja" required
-                                            required aria-label="Default select example">
-                                            <option value="">Seleccione</option>
-                                            @foreach ($vctTipos as $item)
-                                                <option value="{{ $item->id }}">
-                                                    {{ $item->nombre }}
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                        <div class=" col-12 col-sm-6  col-lg-6 my-3 ">
+                                            <label class="labelTitulo">Tipo de Mantenimiento: <span>*</span></label></br>
+                                            <select id="tipoMantenimientoId" name="tipoMantenimientoId"
+                                                class="form-select form-select-lg mb-3 inputCaja" required required
+                                                aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($vctTipos as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->nombre }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
 
                                     <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
                                         <label class="labelTitulo">Comentarios:</label></br>
                                         <textarea rows="3" cols="80" class="form-control"
-                                            placeholder="Escribe tus comentarios o información relevante sobre el mantenimiento aquí." name="comentario"
+                                            placeholder="Escribe tus comentarios o información relevante para la ejecución del mantenimiento aquí." name="comentario"
                                             id="comentario"></textarea>
                                     </div>
-
-                                    {{-- <hr>
-                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Subtotal: </label></br>
-                                            <input type="text" class="inputCaja" placeholder="Especifique..."
-                                                id="subtotal" name="subtotal">
-                                        </div>
-                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Iva: </label></br>
-                                            <input type="text" class="inputCaja" placeholder="Especifique..."
-                                                id="iva" name="iva">
-                                        </div>
-                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Total: </label></br>
-                                            <input type="text" class="inputCaja" placeholder="Especifique..."
-                                                id="total" name="total">
-                                        </div> --}}
                                 </div>
                             </div>
 
-                            <div class="col-12 text-center mt-5 pt-5">
+                            <div class="col-12 text-center">
                                 <button type="submit" class="btn botonGral mb-3">Guardar</button>
                             </div>
 
@@ -126,7 +113,6 @@
     {{-- <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js') }}"></script> --}}
 
     <script>
-
         function clearInput(controlId) {
             var getValue = document.getElementById(controlId);
             if (getValue.value != "") {

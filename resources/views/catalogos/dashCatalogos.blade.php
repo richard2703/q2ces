@@ -218,7 +218,7 @@
                                                 <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                                     <a href="{{ route('bitacoras.index') }}"
                                                         class="">
-                                                        <img src="/img/catalogos/categoriasDeTareas.svg"
+                                                        <img src="/img/catalogos/bitacoras.svg"
                                                             alt="Categoría de tareas" title="Bitácoras"
                                                             width="30%" class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Bitácoras</p>
@@ -230,7 +230,7 @@
                                                 <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                                     <a href="{{ route('grupo.index') }}"
                                                         class="">
-                                                        <img src="/img/catalogos/categoriasDeTareas.svg"
+                                                        <img src="/img/catalogos/gruposTareas.svg"
                                                             alt="Categoría de tareas" title="Grupos de Tareas"
                                                             width="30%" class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Grupos de Tareas</p>
@@ -242,7 +242,7 @@
                                                 <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                                     <a href="{{ route('tarea.index') }}"
                                                         class="">
-                                                        <img src="/img/catalogos/categoriasDeTareas.svg"
+                                                        <img src="/img/catalogos/tareas.svg"
                                                             alt="Categoría de tareas" title="Tareas"
                                                             width="30%" class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Tareas</p>
@@ -341,7 +341,7 @@
                                                 <div class="col-12 col-sm-6 col-md-3 text-center my-4">
                                                     <a href="{{ route('catalogoManoDeObra.index') }}"
                                                         class="">
-                                                        <img src="/img/catalogos/tiposmantenimientos.svg"
+                                                        <img src="/img/catalogos/manoDeObra.svg"
                                                             alt="Conceptos de Mano de Obra" title="Conceptos de Mano de Obra"
                                                             width="30%" class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Conceptos de Mano de Obra</p>
