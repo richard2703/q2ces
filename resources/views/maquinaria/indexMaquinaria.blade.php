@@ -47,6 +47,11 @@
                                                 <button type="button" class="btn botonGral">Distribución General</button>
                                             </a>
                                         @endcan
+                                        @can('maquinaria_index')
+                                            <a href="{{ route('printMaquinaria.post') }}">
+                                                <button type="button" class="btn regresar">Imprimir</button>
+                                            </a>
+                                        @endcan
                                     </div>
                                 </div>
                                 <div class="table-responsive">
@@ -224,7 +229,6 @@
                                                 @endforeach
                                             </select>
                                         </div>
-
 
                                         <div class="mb-3 col-4">
                                             <label for="combustible" class="labelTitulo">Combustible:</label></br>
