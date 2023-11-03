@@ -26,7 +26,7 @@
                             </div>
                             <div>
                                 <div class="col-4 text-left mt-3" style="margin-left:20px">
-                                    <form action="{{ route('facturaProvedor.index') }}" method="GET" style="display: inline-block;">
+                                    <form action="{{ route('facturaCliente.index') }}" method="GET" style="display: inline-block;">
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $id }}">
                                         <button class="btnSinFondo btn regresar" type="submit" rel="tooltip">
@@ -40,17 +40,17 @@
                                 <div class="d-flex p-3 divBorder" style="margin-top:-15px"></div>
                             </div>
 
-                            <form action="{{ route('facturaProvedor.store') }}"
+                            <form action="{{ route('facturaCliente.store') }}"
                                 method="post"class="row alertaGuardar" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="userId" id="userId" value="{{ auth()->user()->id }}">
                                 
                                 <div class="row mt-3" style="padding-left: 40px">
                                     <div class=" col-12 col-sm-6 mb-3 pr-3">
-                                        <label class="labelTitulo">Provedor:<span>*</span></label></br>
-                                        <select name="provedorId" class="form-select" aria-label="Default select example" readonly>
+                                        <label class="labelTitulo">Cliente:<span>*</span></label></br>
+                                        <select name="clienteId" class="form-select" aria-label="Default select example" readonly>
                                             <option value="">Seleccione</option>
-                                            @foreach ($provedor as $item)
+                                            @foreach ($cliente as $item)
                                                 <option value="{{ $item->id }}"
                                                     {{ $item->id == $id ? ' selected' : '' }}>
                                                     {{ $item->nombre }}
@@ -61,26 +61,26 @@
                                     
                                     <div class=" col-12 col-sm-6 mb-3 ">
                                         <label class="labelTitulo">Estado:</label></br>
-                                        <input type="email" class="inputCaja" required placeholder="Estado del Provedor..."
-                                            min="6" name="email" value="{{ $provedorSelected->estado }}" readonly>
+                                        <input type="email" class="inputCaja" required placeholder="Estado del Cliente..."
+                                            min="6" name="email" value="{{ $clienteSelected->estado }}" readonly>
                                     </div>
 
                                     <div class=" col-12 col-sm-6 mb-3 ">
                                         <label class="labelTitulo">Colonia:</label></br>
-                                        <input type="email" class="inputCaja" required placeholder="Colonia del Provedor..."
-                                            min="6" name="email" value="{{ $provedorSelected->colonia }}" readonly>
+                                        <input type="email" class="inputCaja" required placeholder="Colonia del Cliente..."
+                                            min="6" name="email" value="{{ $clienteSelected->colonia }}" readonly>
                                     </div>
 
                                     <div class=" col-12 col-sm-6 mb-3 ">
                                         <label class="labelTitulo">Ciudad:</label></br>
-                                        <input type="text" class="inputCaja" id="ciudad" name="ciudad" required placeholder="Ciudad del Provedor..."
-                                            value="{{ $provedorSelected->ciudad }}" placeholder="Estado..." readonly>
+                                        <input type="text" class="inputCaja" id="ciudad" name="ciudad" required placeholder="Ciudad del Cliente..."
+                                            value="{{ $clienteSelected->ciudad }}" placeholder="Estado..." readonly>
                                     </div>
-                                    <div class=" col-12  mb-3 ">
+                                    {{--  <div class=" col-12  mb-3 ">
                                         <label class="labelTitulo">Comentarios:</label></br>
-                                        <textarea readonly class="form-control border-green" placeholder="Comentarios del Respecto al Provedor..." id="floatingTextarea" name="comentario"
-                                            spellcheck="true">{{ $provedorSelected->comentario }}</textarea>
-                                    </div>
+                                        <textarea readonly class="form-control border-green" placeholder="Comentarios del Respecto al Cliente..." id="floatingTextarea" name="comentario"
+                                            spellcheck="true">{{ $clienteSelected->comentario }}</textarea>
+                                    </div>  --}}
                                     {{--  <div class=" col-12 col-sm-6 mb-3 ">
                                         <label class="labelTitulo">Puesto:<span>*</span></label></br>
                                         <input type="text" class="inputCaja" id="puesto" name="puesto" required

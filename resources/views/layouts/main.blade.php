@@ -262,7 +262,7 @@
                             fact_check
                         </span>
 
-                        <span>Bitácoras y Check List</span><i class="bi bi-chevron-down ms-auto"></i>
+                        <span>Check Lists</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="bitacora-nav" class="nav-content collapse {{ $activePage == 'bitacoras' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
@@ -290,10 +290,8 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('bitacora_index')
+                        {{-- @can('bitacora_index')
                             <li>
-                                {{--  <a href="{{ url('/indexBitacora') }}"
-                                    class="{{ $activeItem == 'bitacoras' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('bitacoras.index') }}" class="">
                                     <i class="bi bi-circle"></i><span>Ver Bitácoras</span>
                                 </a>
@@ -301,7 +299,6 @@
                         @endcan
                         @can('grupo_index')
                             <li>
-                                {{--  <a href="{{ url('/indexGrupos') }}" class="{{ $activeItem == 'grupos' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('grupo.index') }}" class="">
                                     <i class="bi bi-circle"></i><span>Ver Grupos</span>
                                 </a>
@@ -309,12 +306,11 @@
                         @endcan
                         @can('tarea_index')
                             <li>
-                                {{--  <a href="{{ url('/tareas') }}" class="{{ $activeItem == 'tareas' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('tarea.index') }}" class="">
                                     <i class="bi bi-circle"></i><span>Ver Tareas</span>
                                 </a>
                             </li>
-                        @endcan
+                        @endcan --}}
                     </ul>
                 </li>
             @endcan

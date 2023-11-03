@@ -252,7 +252,7 @@ class bitacorasController extends Controller {
                         //** No existe en bd */
                         if ($request['grupoBitacoraId'][$i] == 0) {
 
-                            $vctDebug[]='Validamos si ya existe el grupo de tareas en la bitacora, id->'.  $request['maquinariaId'][$i];
+                            $vctDebug[]='Validamos si ya existe el grupo de tareas en la bitacora, id->'.   $request['grupoId'][$i];
                             $objRecord =  grupoBitacoras::where('bitacoraId', '=', $request['bitacoraId'][$i])->where('grupoId', '=', $request['grupoId'][$i])->first();
 
                             if( $objRecord){

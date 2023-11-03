@@ -27,7 +27,7 @@ class serviciosTrasporteController extends Controller
      */
     public function index()
     {
-        abort_if(Gate::denies('cajachica_index'), 403);
+        abort_if(Gate::denies('serviciosTrasporte_index'), 403);
 
         $registros = serviciosTrasporte::join('conceptos', 'serviciosTrasporte.conceptoId', 'conceptos.id')
             ->leftJoin('obras', 'serviciosTrasporte.obraId', 'obras.id')
@@ -59,9 +59,9 @@ class serviciosTrasporteController extends Controller
      */
     public function create()
     {
-        abort_if(Gate::denies('cajachica_create'), 403);
+        abort_if(Gate::denies('serviciosTrasporte_create'), 403);
 
-        $conceptos = conceptos::where('tipo', 2)->orderBy('codigo', 'asc')->get();
+        $conceptos = conceptos::orderBy('codigo', 'asc')->get();
         $personal = personal::orderBy('nombres', 'asc')->where('estatusId', 1)->get();
         $obras = obras::orderBy('nombre', 'asc')->where('estatus', 1)->get();
         $maquinaria = maquinaria::where('compania', '!=', 'mtq')->orWhere('compania', null)->get();
@@ -79,7 +79,7 @@ class serviciosTrasporteController extends Controller
      */
     public function store(Request $request)
     {
-        abort_if(Gate::denies('cajachica_create'), 403);
+        abort_if(Gate::denies('serviciosTrasporte_create'), 403);
 
         $data = $request->all();
         $data['estatus'] = 1;
@@ -108,7 +108,7 @@ class serviciosTrasporteController extends Controller
      */
     public function edit(serviciosTrasporte $serviciosTrasporte)
     {
-        abort_if(Gate::denies('cajachica_create'), 403);
+        abort_if(Gate::denies('serviciosTrasporte_create'), 403);
 
         $conceptos = conceptos::orderBy('codigo', 'asc')->get();
         $personal = personal::orderBy('nombres', 'asc')->where('estatusId', 1)->get();
@@ -129,7 +129,7 @@ class serviciosTrasporteController extends Controller
      */
     public function update(Request $request, serviciosTrasporte $serviciosTrasporte)
     {
-        abort_if(Gate::denies('cajachica_create'), 403);
+        abort_if(Gate::denies('serviciosTrasporte_create'), 403);
 
         $data = $request->all();
         $serviciosTrasporte->update($data);
@@ -149,7 +149,7 @@ class serviciosTrasporteController extends Controller
 
     public function cajaChica(Request $request)
     {
-        abort_if(Gate::denies('cajachica_create'), 403);
+        abort_if(Gate::denies('serviciosTrasporte_create'), 403);
         $serviciosTrasporte = serviciosTrasporte::find($request->id);
         $serviciosTrasporte->cajaChica = 1;
         $serviciosTrasporte->save();
@@ -178,7 +178,7 @@ class serviciosTrasporteController extends Controller
 
     public function misServicios()
     {
-        abort_if(Gate::denies('servicio_Chofer'), 403);
+        abort_if(Gate::denies('serviciosTrasporte_Chofer'), 403);
 
         $personal = personal::where('userId', auth()->user()->id)->first();
         if (!isset($personal->id)) {

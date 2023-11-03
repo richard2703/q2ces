@@ -7,14 +7,40 @@
                     <div class="card-header bacTituloPrincipal">
                         <h4 class="card-title">Mantenimientos</h4>
                     </div>
-                    <div class="col-12 text-end mt-4" style="margin-left:-20px">
-                        @can('mantenimiento_create')
-                            <a href="{{ url('/mantenimientos/nuevo') }}">
-                                <!--Agregar ruta-->
-                                <button type="button" class="btn botonGral">Añadir Mantenimiento</button>
-                            </a>
-                        @endcan
+                    <div class="row">
+                        <div class="d-flex p-3">
+                            <div class="col-8 text-end mt-4">
+                                <form action="{{ route('mantenimientos.index') }}" method="GET" id="filterForm">
+                                    <div class="input-group">
+                                        <label class="labelTitulo p-2">Estado: </label>
+                                        <select name="estatus" id="estatus"
+                                            style="background: #727176; color: white; font-weight: bold;"
+                                            class="form-control" onchange="document.getElementById('filterForm').submit();">
+                                            <option selected value="0">Todos</option>
+                                            <option value="1">En
+                                                Espera
+                                            </option>
+                                            <option value="2">
+                                                Realizando
+                                            </option>
+                                            <option value="3">
+                                                Terminado
+                                            </option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-4 text-end mt-4" style="margin-left:-20px">
+                                @can('mantenimiento_create')
+                                    <a href="{{ url('/mantenimientos/nuevo') }}">
+                                        <!--Agregar ruta-->
+                                        <button type="button" class="btn botonGral">Añadir Mantenimiento</button>
+                                    </a>
+                                @endcan
+                            </div>
+
                         </div>
+                    </div>
                     <div class="d-flex p-3 divBorder w-100" style="margin-top:-10px"></div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -23,6 +49,7 @@
                                     <tr>
                                         <th class="labelTitulo text-center">Folio</th>
                                         <th class="labelTitulo text-center">Equipo</th>
+                                        <th class="labelTitulo text-center">Tipo</th>
                                         <th class="labelTitulo text-center">Fecha</th>
                                         <th class="labelTitulo text-center">Costo</th>
                                         <th class="labelTitulo text-center">Estatus</th>
@@ -35,11 +62,12 @@
                                         <tr>
                                             <td class="text-center">
                                                 <a href="{{ url('/mantenimientos/editar/' . $item->id) }}"
-                                                    title="Editar el mantenimiento"
-                                                    class="">{{ $item->id }}
+                                                    title="Editar el mantenimiento" class="">{{ $item->id }}
                                                 </a>
                                             </td>
-                                            <td class="text-center"><a href="#" title="{{ $item->titulo }}"> {{ $item->maquinaria }}</a> </td>
+                                            <td class="text-center"><a href="#" title="{{ $item->titulo }}">
+                                                    {{ $item->maquinaria }}</a> </td>
+                                            <td class="text-center">{{ $item->tipoMantenimiento }} </td>
                                             <td class="text-center">{{ $item->fechaInicio }}</td>
                                             <td class="text-center">$ {{ number_format($item->costo, 2) }} </td>
 
@@ -50,8 +78,8 @@
                                                 @can('mantenimiento_edit')
                                                     <a href="{{ url('/mantenimientos/editar/' . $item->id) }}"
                                                         title="Editar el mantenimiento" class="">
-                                                        <svg xmlns="http://www.w3.org/2000/svg " width="28"
-                                                            height="28" fill="currentColor" title="Editar"
+                                                        <svg xmlns="http://www.w3.org/2000/svg " width="28" height="28"
+                                                            fill="currentColor" title="Editar"
                                                             class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
                                                             <path
                                                                 d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
@@ -60,8 +88,7 @@
                                                 @endcan
 
                                                 @can('mantenimiento_destroy')
-                                                    <form action="" method="POST"
-                                                        style="display: inline-block;"
+                                                    <form action="" method="POST" style="display: inline-block;"
                                                         onsubmit="return confirm('Seguro?')">
                                                         @csrf
                                                         @method('DELETE')
@@ -96,5 +123,5 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 @endsection

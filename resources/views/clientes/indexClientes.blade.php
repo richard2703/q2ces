@@ -32,7 +32,7 @@
                                         </button>
                                     </a>  --}}
                                     <div class="row divBorder">
-                                        <div class="col-12 col-md-6 pb-3">
+                                        <div class="col-4 pb-3 text-start">
                                             <a href="{{ route('catalogos.index') }}">
                                                 <button class="btn regresar">
                                                     <span class="material-icons">
@@ -42,7 +42,8 @@
                                                 </button>
                                             </a>
                                         </div>
-                                        <div class="col-12 col-md-6 pb-3 text-end">
+                                        
+                                        <div class="col-8 pb-3 text-end">
                                             @can('cliente_create')
                                                 <a href="{{ route('clientes.create') }}">
                                                     <button type="button" class="btn botonGral">Añadir Cliente</button>
@@ -75,20 +76,18 @@
                                                         <td class="text-center">{{ $cliente->estatus }}</td>
 
                                                         <td class="td-actions text-center">
-                                                            @can('catalogos_destroy')
-                                                                <form action="{{ route('facturaCliente.index') }}"
-                                                                    method="GET" style="display: inline-block;">
-                                                                    @csrf
-                                                                    <button class="btnSinFondo" type="submit" rel="tooltip">
-                                                                        <div class="" style="font-size: 25px">
-                                                                            <i class="fas fa-file-invoice-dollar"></i>
-                                                                        </div>
-                                                                    </button>
-                                                                </form>
-                                                            @endcan
+                                                            <form action="{{ route('facturaCliente.index') }}" method="GET" style="display: inline-block;">
+                                                                @csrf
+                                                                <input type="hidden" name="id" value="{{ $cliente->id }}">
+                                                                <button class="btnSinFondo" type="submit" rel="tooltip">
+                                                                    <div class="" style="font-size: 28px; color:gray">
+                                                                        <i class="fas fa-solid fa-receipt"></i>
+                                                                    </div>
+                                                                </button>
+                                                            </form>
                                                             @can('cliente_edit')
                                                                 <a href="{{ route('clientes.edit', $cliente->id) }}"
-                                                                    class="">
+                                                                    class="mb-3">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                         height="28" fill="currentColor"
                                                                         class="bi bi-card-text accionesIconos"

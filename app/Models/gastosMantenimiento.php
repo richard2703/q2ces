@@ -14,6 +14,10 @@ class gastosMantenimiento extends Model
     protected $fillable = [
         'mantenimientoId',
         'inventarioId',
+        'manoDeObraId',
+        'concepto',
+        'numeroParte',
+        'seccion',
         'cantidad',
         'costo',
         'total',

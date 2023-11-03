@@ -76,7 +76,7 @@
                                                                     name="comentario" placeholder="Escribe aquí tus comentarios sobre la bitácora.">  {{ $bitacora->comentario }} </textarea>
                                                             </div>
 
-                                                            <div class="col-12 text-center mt-5 pt-5">
+                                                            <div class="col-12 text-center mt-2 pt-2">
                                                                 <input type="hidden" name="activa" id="activa"
                                                                     value="{{ $bitacora->activo }}">
                                                                 <button type="button" class="btn btn-secondary"

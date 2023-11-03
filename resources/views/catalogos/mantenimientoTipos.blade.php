@@ -68,6 +68,7 @@
                                         <tr>
                                             <th class="labelTitulo">Id</th>
                                             <th class="labelTitulo">Nombre</th>
+                                            <th class="labelTitulo">Código</th>
                                             <th class="labelTitulo">Color</th>
                                             <th class="labelTitulo" style="width:150px">Comentario</th>
                                             <th class="labelTitulo text-right" style="width:140px">Acciones</th>
@@ -78,6 +79,7 @@
                                             <tr>
                                                 <td>{{ $item->id }}</td>
                                                 <td class="text-left">{{ $item->nombre }}</td>
+                                                <td class="text-left">{{ $item->codigo }}</td>
                                                 <td class="text-center"
                                                     style="
                                                 font-weight: bold;
@@ -98,7 +100,7 @@
                                                     @can('catalogos_edit')
                                                         <a href="#" class="" data-bs-toggle="modal"
                                                             data-bs-target="#editarItem"
-                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}', '{{ $item->color }}','{{ $item->comentario }}')">
+                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->codigo }}', '{{ $item->color }}','{{ $item->comentario }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                 height="28" fill="currentColor"
                                                                 class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -160,13 +162,18 @@
                         @csrf
                         {{-- <input type="hidden" name="userId" id="userId" value="{{ $usuario->id }}"> --}}
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Nombre:<span>*</span></label></br>
+                            <label class="labelTitulo">Nombre: <span>*</span></label></br>
                             <input type="text" class="inputCaja" id="nombre" name="nombre"
                                 value="{{ old('nombre') }}" required placeholder="Especifique...">
                         </div>
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Código: <span>*</span></label></br>
+                            <input type="text" class="inputCaja" id="codigo" name="codigo" maxlength="8"
+                                value="{{ old('nombre') }}" required placeholder="Ej. MNTO-001">
+                        </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Color:<span>*</span></label></br>
+                            <label class="labelTitulo">Color: <span>*</span></label></br>
                             <input type="color" class="inputCaja" name="color" value="{{ old('color') }}">
                         </div>
 
@@ -202,9 +209,15 @@
                         @method('put')
                         <input type="hidden" name="controlId" id="controlId" value="">
                         <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Nombre:</label></br>
+                            <label class="labelTitulo">Nombre: <span>*</span></label></br>
                             <input type="text" class="inputCaja" id="controlNombre" name="nombre" value="">
                         </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Código: <span>*</span></label></br>
+                            <input type="text" class="inputCaja" id="controlCodigo" name="codigo" required placeholder="Ej. MNTO-001"  maxlength="8" value="">
+                        </div>
+
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Color:<span>*</span></label></br>
@@ -267,13 +280,16 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, color, comentarios) {
+        function cargaItem(id, nombre, codigo, color, comentarios) {
 
             const txtId = document.getElementById('controlId');
             txtId.value = id;
 
             const txtNombre = document.getElementById('controlNombre');
             txtNombre.value = nombre;
+
+            const txtCodigo = document.getElementById('controlCodigo');
+            txtCodigo.value = codigo;
 
             const txtComentarios = document.getElementById('controlComentarios');
             txtComentarios.value = comentarios;
