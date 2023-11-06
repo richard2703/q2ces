@@ -42,6 +42,21 @@ class usoMaquinariasController extends Controller
         return view('MTQ.indexUsoMaquinariaMtq', compact('maquinaria', 'servicios', 'marca'));
     }
 
+    public function indexQ2ces()
+    {
+        $marca = marca::all();
+        $maquinaria = maquinaria::join('marca', 'marca.id', 'maquinaria.marcaId')
+            // ->join('usoMaquinarias', 'usoMaquinarias.maquinariaId', 'maquinaria.id')
+            ->select('maquinaria.*', 'maquinaria.nombre as nombre_maquinaria', 'marca.nombre as nombre_marca', 'marca.id as id_marca')
+            ->where('compania', null)
+            ->orderBy('identificador', 'asc')
+            ->paginate(15);
+
+        $servicios = serviciosMtq::all();
+
+        return view('maquinaria.indexUsoMaquinaria', compact('maquinaria', 'servicios', 'marca'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -58,6 +73,18 @@ class usoMaquinariasController extends Controller
             ->get();
         // dd( $maquinaria );
         return view('MTQ.createUsoMaquinariaMtq', compact('maquinaria'));
+    }
+
+    public function createQ2ces()
+    {
+        // dd( 'create' )
+        $maquinaria = maquinaria::join('marca', 'marca.id', 'maquinaria.marcaId')
+            ->select('maquinaria.*', 'maquinaria.mantenimiento', 'identificador', 'maquinaria.nombre as nombre_maquinaria', 'marca.nombre as nombre_marca', 'marca.id as id_marca', 'modelo', 'placas')
+            ->where('compania', null)
+            ->orderBy('identificador', 'asc')
+            ->get();
+        // dd( $maquinaria );
+        return view('maquinaria.createUsoMaquinaria', compact('maquinaria'));
     }
     // 'kilometraje' => null
     // 'kom' => null

@@ -331,6 +331,20 @@
                             {{-- <li> --}}
                             {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                             {{-- <a href="{{ route('maquinaria.distribucion') }}" class="">
+                                <i class="bi bi-circle"></i><span>Distribución General</span>
+                            </a>
+                        </li> --}}
+                            <li>
+                                {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
+                                <a href="{{ route('maquinaria.indexQ2cesUso') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Uso Maquinaria</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('maquinaria_index')
+                            {{-- <li> --}}
+                            {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
+                            {{-- <a href="{{ route('maquinaria.distribucion') }}" class="">
                                     <i class="bi bi-circle"></i><span>Distribución General</span>
                                 </a>
                             </li> --}}
