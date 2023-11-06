@@ -44,7 +44,7 @@
                                         <input type="hidden" name="maquinariaId" id="maquinariaId" value="">
                                         <input type="hidden" name="identificador" id="identificador"
                                             value="{{ $maquinaria->identificador }}">
-                                        <input type="hidden" name="titulo" id="titulo" value="">
+                                        <input type="hidden" name="titulo" id="titulo" value="{{ $mantenimiento->titulo }}">
                                         <div class="col-12 my-4">
                                             <div class="row">
                                                 <input type="hidden" name="mantenimientoId" id="mantenimientoId"
@@ -56,21 +56,10 @@
                                                 <input type="hidden" name="personalId" id="personalId"
                                                     value="{{ $mantenimiento->personalId }}">
 
-                                                <input type="hidden" name="comentario" id="comentario"
-                                                    value="{{ $mantenimiento->comentario }}">
-
-                                                {{-- <div class=" col-12 col-sm-6 col-lg-12 my-1 ">
-                                                    <label class="labelTitulo">Equipo:
-                                                        <span>*</span></label></br>
-                                                    <input type="text" class="inputCaja" id="maquinaria1" readonly
-                                                        disabled="true" required name="maquinaria1"
-                                                        value="{{ $mantenimiento->maquinaria }}">
-                                                </div> --}}
-
                                                 <div class=" col-12 col-sm-6 col-lg-12 my-3 ">
                                                     <label class="labelTitulo">Indicaciones para el Mantenimiento:
                                                     </label></br>
-                                                    <textarea rows="2" cols="80" class="form-control" id="titulo" name="titulo" readonly>{{ $mantenimiento->comentario }}</textarea>
+                                                    <textarea rows="2" cols="80" class="form-control" id="comentario" name="comentario" readonly>{{ $mantenimiento->comentario }}</textarea>
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">

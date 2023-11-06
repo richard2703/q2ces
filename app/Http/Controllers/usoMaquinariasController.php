@@ -53,7 +53,9 @@ class usoMaquinariasController extends Controller
         // dd( 'create' )
         $maquinaria = maquinaria::join('marca', 'marca.id', 'maquinaria.marcaId')
             ->select('maquinaria.*', 'maquinaria.mantenimiento', 'identificador', 'maquinaria.nombre as nombre_maquinaria', 'marca.nombre as nombre_marca', 'marca.id as id_marca', 'modelo', 'placas')
-            ->where('compania', 'mtq')->get();
+            ->where('compania', 'mtq')
+            ->orderBy('identificador', 'asc')
+            ->get();
         // dd( $maquinaria );
         return view('MTQ.createUsoMaquinariaMtq', compact('maquinaria'));
     }

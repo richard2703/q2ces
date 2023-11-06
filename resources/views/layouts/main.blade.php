@@ -179,8 +179,7 @@
                     <a class="nav-link {{ $activePage == 'servicios' ? '' : 'collapsed' }}"
                         href="{{ route('serviciosTrasporte.misServicios') }}">
                         {{--  <i class="bi bi-shop"></i>  --}}
-                        <i class="fas fa-truck"></i>
-
+                        <i class="fas fa-truck-pickup"></i>
                         <span>Mis Servicios</span>
                     </a>
                 </li>
