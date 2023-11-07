@@ -8,6 +8,7 @@ use App\Models\cisternas;
 use App\Models\clientes;
 use App\Models\descarga;
 use App\Models\descargaDetalle;
+use App\Models\maquinaria;
 use App\Models\obraMaqPer;
 use App\Models\obras;
 use Illuminate\Http\Request;
@@ -168,6 +169,14 @@ class printController extends Controller
             ->first();
 
         return view('inventario.vistaPreviaImpresionCarga', compact('carga'));
+    }
+
+    public function printMaquinaria(Request $request)
+    {
+
+        $maquinaria = maquinaria::all();
+
+        return view('maquinaria.vistaPreviaImpresion', compact('maquinaria'));
     }
 
     public function printOnlyTicket(Request $request)

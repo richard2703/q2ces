@@ -168,11 +168,9 @@ class inventarioController extends Controller
         } else {
             $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(15);
 
-            if (count($inventarios) <=0) {
+            if ($inventarios == null) {
                 $inventarios = null;
             }
-
-            // dd($inventarios);
 
             return view('inventario.indexInventario', compact('inventarios', 'tipo'));
         }
@@ -203,12 +201,9 @@ class inventarioController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
-
         abort_if(Gate::denies('inventario_create'), 403);
 
         $data = $request->all();
-        // dd($data);
 
         if (isset($data['restock'])) {
             for ($i = 0; $i < count($request['restock']['id']); $i++) {
@@ -309,9 +304,6 @@ class inventarioController extends Controller
                 }
             }
         }
-
-
-
 
         Session::flash('message', 1);
         if (isset($request['nuevo'])) {
@@ -1158,14 +1150,15 @@ class inventarioController extends Controller
             return redirect()->back()->with('failed', 'No se encuentra el movimiento especificado!');
         }
     }
+
     public function movimiento(Request $request, inventario $producto)
     {
         abort_if(Gate::denies('inventario_edit'), 403);
         $movimiento = $request->all();
-
+        // dd($request);
         $objMovimiento = new inventarioMovimientos();
-        $objMovimiento->movimiento = 1; //*** agrega al inventario */
-        $objMovimiento->inventarioId = $producto->id;
+        $objMovimiento->movimiento = $movimiento['movimiento'];
+        $objMovimiento->inventarioId = $movimiento['inventarioId'];
         $objMovimiento->usuarioId = $movimiento['usuarioId'];
         $objMovimiento->cantidad = $movimiento['cantidad'];
         $objMovimiento->comentario = $movimiento['comentario'];
@@ -1176,18 +1169,20 @@ class inventarioController extends Controller
             $objMovimiento->precioUnitario = ($movimiento['costo'] / $movimiento['cantidad']);
             $objMovimiento->total = $movimiento['costo'];
         }
+
+        $prodcucto2 = inventario::select("*")->where('id', '=', $movimiento['inventarioId'])->first();
         $objMovimiento->Save();
 
         if ($movimiento['movimiento'] == 1) {
-            $producto->cantidad = ($producto->cantidad + $movimiento['cantidad']);
-            $producto->valor =  ($movimiento['costo'] / $movimiento['cantidad']);
-            $producto->save();
+            $prodcucto2->cantidad = ($prodcucto2->cantidad + $movimiento['cantidad']);
+            $prodcucto2->valor =  ($movimiento['costo'] / $movimiento['cantidad']);
+            $prodcucto2->save();
         } else if ($movimiento['movimiento'] == 2) {
-            $producto->cantidad = ($producto->cantidad - $movimiento['cantidad']);
-            $producto->save();
+            $prodcucto2->cantidad = ($prodcucto2->cantidad - $movimiento['cantidad']);
+            $prodcucto2->save();
         }
 
         Session::flash('message', 1);
-        return redirect()->route('inventario.index', $producto->tipo);
+        return redirect()->route('inventario.index', $prodcucto2->tipo);
     }
 }

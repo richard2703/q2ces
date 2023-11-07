@@ -142,7 +142,7 @@
             <div class="modal-content">
                 <div class="col-12">
                     <div class="card ">
-                        <form action="{{ route('inventario.movimiento', 1) }}" method="post">
+                        <form action="{{ route('inventario.movimiento', $inventario->id) }}" method="post">
                             @csrf
                             {{--  @method('put')  --}}
                             <div class="modal-header bacTituloPrincipal">
@@ -153,6 +153,7 @@
                             <div class="row  card-body">
                                 <div class="row card-body" style="text-align: center;">
                                     {{--  <input type="hidden" name="productoid" id="productoid" value="">  --}}
+                                    <input type="hidden" name="inventarioId" id="inventarioId" value="">
                                     <input type="hidden" name="usuarioId" id="usuarioId" value="{{ auth()->user()->id }}">
                                     <input type="hidden" name="movimiento" id="movimientoTipo">
 
@@ -220,6 +221,9 @@
 
             const movimiento = document.getElementById('movimientoTipo');
             movimiento.value = mov;
+
+            const inventarioId = document.getElementById('inventarioId');
+            inventarioId.value = id;
 
             const costoTotalDiv = document.getElementById('costo');
             const costoTotalInput = document.getElementById('costoInput');
