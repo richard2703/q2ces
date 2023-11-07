@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use App\Helpers\checkListPresentacion;
+use App\Helpers\Calculos;
 
 use App\Models\checkList;
 use App\Models\checkListRegistros;
@@ -56,6 +57,7 @@ class checkListRegistrosController extends Controller {
         $iRes = 1;
         $vctDebug =  array();
         $objTarea = new checkListPresentacion();
+        $objCalculos = new Calculos();
 
         // dd( $request );
 
@@ -68,7 +70,13 @@ class checkListRegistrosController extends Controller {
         $objCheckList->registrada = date( 'Y-m-d H:i:s' );
         $objCheckList->codigo = $request[ 'codigo' ];
         $objCheckList->version = $request[ 'version' ];
+        $objCheckList->usoKom = $request[ 'usoKom' ];
+        //*** se marca como ejecutada */
+        $objCheckList->estatus = 2;
         $objCheckList->save();
+
+        // Actualización del kilometraje o Horometro;
+        $objCalculos->updateKilometrajeMaquinaria($request['maquinariaId'], $request['usoKom'], $proviene = 'CheckList')  ;
 
         for ( $i = 0; $i < count( $request[ 'tareaId' ] ) ;
         $i++ ) {
@@ -224,7 +232,7 @@ class checkListRegistrosController extends Controller {
         $bitacora = bitacoras::select( 'bitacoras.*' )->where( 'id', '=', $checkList->bitacoraId )->first();
 
         // dd( $vctRecords );
-        return view( 'checkList.editarCheckList', compact( 'maquinaria','bitacora', 'checkList', 'vctRecords' ) );
+        return view( 'checkList.editarCheckList', compact( 'maquinaria', 'bitacora', 'checkList', 'vctRecords' ) );
     }
 
     /**
@@ -263,6 +271,7 @@ class checkListRegistrosController extends Controller {
             $objCheckList->bitacoraId = $request[ 'bitacoraId' ];
             $objCheckList->comentario = $request[ 'comentario' ];
             $objCheckList->registrada = date( 'Y-m-d H:i:s' );
+            $objCheckList->estatus = 2;//*** se marca como ejecutada */
             $objCheckList->save();
 
             // dd( $request );

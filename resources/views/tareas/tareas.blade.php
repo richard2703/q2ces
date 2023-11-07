@@ -84,7 +84,7 @@
                                         <table class="table">
                                             <thead class="labelTitulo">
                                                 <tr>
-                                                    <th class="labelTitulo" style="width:40px">Id</th>
+                                                    <th class="labelTitulo" style="width:60px">Id</th>
                                                     <th class="labelTitulo">Nombre</th>
                                                     <th class="labelTitulo">Grupo de Tareas</th>
                                                     <th class="labelTitulo">Categoría</th>

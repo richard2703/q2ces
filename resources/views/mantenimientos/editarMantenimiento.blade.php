@@ -44,7 +44,8 @@
                                         <input type="hidden" name="maquinariaId" id="maquinariaId" value="">
                                         <input type="hidden" name="identificador" id="identificador"
                                             value="{{ $maquinaria->identificador }}">
-                                        <input type="hidden" name="titulo" id="titulo" value="{{ $mantenimiento->titulo }}">
+                                        <input type="hidden" name="titulo" id="titulo"
+                                            value="{{ $mantenimiento->titulo }}">
                                         <div class="col-12 my-4">
                                             <div class="row">
                                                 <input type="hidden" name="mantenimientoId" id="mantenimientoId"
@@ -71,6 +72,31 @@
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Tipo:</label></br>
+
+                                                    <select id="tipoMantenimientoId" name="tipoMantenimientoId" required
+                                                        {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
+                                                        class="form-select form-select-lg mb-3 inputCaja"
+                                                        aria-label="Default select example">
+                                                        <option value="">Seleccione</option>
+                                                        @foreach ($vctTipos as $item)
+                                                            <option value="{{ $item->id }}"
+                                                                {{ $mantenimiento->tipoMantenimientoId == $item->id ? ' selected' : '' }}>
+                                                                {{ $item->nombre }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+
+                                                </div>
+
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                                    <label class="labelTitulo">Código: </label></br>
+                                                    <input type="text" class="inputCaja text-end" readonly
+                                                        disabled="true" value="{{ $mantenimiento->codigo }}"
+                                                        placeholder="Ej. 1" id="codigo" name="codigo">
+                                                </div>
+
+                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Estatus:</label></br>
                                                     <select class="form-select form-select-lg mb-3 inputCaja"
                                                         {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
@@ -92,44 +118,15 @@
                                                     </select>
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Tipo:</label></br>
-
-                                                    <select id="tipoMantenimientoId" name="tipoMantenimientoId" required
-                                                        {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
-                                                        class="form-select form-select-lg mb-3 inputCaja"
-                                                        aria-label="Default select example">
-                                                        <option value="">Seleccione</option>
-                                                        @foreach ($vctTipos as $item)
-                                                            <option value="{{ $item->id }}"
-                                                                {{ $mantenimiento->tipoMantenimientoId == $item->id ? ' selected' : '' }}>
-                                                                {{ $item->nombre }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-
-                                                </div>
 
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Horómetro: </label></br>
-                                                    <input type="number" class="inputCaja text-end"
+
+                                                    <label class="labelTitulo">Uso de la Maquinaría: </label></br>
+                                                    <input type="number" class="inputCaja text-end" placeholder="Ej. 1000"
+                                                        value="{{ $mantenimiento->usoKom }}" step="1" min="0"
+                                                        id="usoKom"
                                                         {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
-                                                        value="{{ $mantenimiento->horometro }}" placeholder="Ej. 1000"
-                                                        step="1" min="0" id="horometro" name="horometro">
-                                                </div>
-                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Km/m: </label></br>
-                                                    <input type="number" class="inputCaja text-end"
-                                                        {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
-                                                        value="{{ $mantenimiento->kilometraje }}" placeholder="Ej. 1000"
-                                                        step="1" min="0" id="kilometraje"
-                                                        name="kilometraje">
-                                                </div>
-                                                <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Código: </label></br>
-                                                    <input type="text" class="inputCaja text-end" readonly
-                                                        disabled="true" value="{{ $mantenimiento->codigo }}"
-                                                        placeholder="Ej. 1" id="codigo" name="codigo">
+                                                        name="usoKom">
                                                 </div>
 
 
@@ -679,7 +676,11 @@
                                         </button>
                                     </a>
                                     @if ($mantenimiento->estadoId < 3)
-                                        <button type="submit" class="btn botonGral">Guardar</button>
+                                        <button type="submit" name="guardar" class="btn botonGral">Guardar</button>
+                                    @endif
+
+                                    @if ($mantenimiento->estadoId < 2)
+                                        <button type="submit" name="terminar" class="btn botonGral">Terminar</button>
                                     @endif
                                 </div>
 

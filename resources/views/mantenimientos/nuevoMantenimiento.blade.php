@@ -64,17 +64,17 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class=" col-12 col-sm-6  col-lg-6 my-3 ">
+                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Fecha de Inicio: <span>*</span> </label></br>
                                             <input type="date" class="inputCaja" placeholder="Especifique..." required
                                                 min="{{ date('Y-m-d') }}" pattern="\d{2}/\d{2}/\d{4}"
                                                 placeholder="dd/mm/yyyy" id="fechaInicio" name="fechaInicio">
                                         </div>
 
-                                        <div class=" col-12 col-sm-6  col-lg-6 my-3 ">
+                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Tipo de Mantenimiento: <span>*</span></label></br>
                                             <select id="tipoMantenimientoId" name="tipoMantenimientoId"
-                                                class="form-select form-select-lg mb-3 inputCaja" required required
+                                                class="form-select form-select-lg mb-3 inputCaja" required
                                                 aria-label="Default select example">
                                                 <option value="">Seleccione</option>
                                                 @foreach ($vctTipos as $item)
@@ -84,10 +84,18 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+
+                                            <label class="labelTitulo">Uso de la Maquinaría: </label></br>
+                                            <input type="number" class="inputCaja text-end"
+                                                value="{{ old('kilometraje') }}" placeholder="Ej. 1000"
+                                                step="1" min="0" id="usoKom"
+                                                name="usoKom">
+                                        </div>
                                     </div>
 
                                     <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
-                                        <label class="labelTitulo">Comentarios:</label></br>
+                                        <label class="labelTitulo">Comentarios e Indicaciones para Ejecución del Mantenimiento:</label></br>
                                         <textarea rows="3" cols="80" class="form-control"
                                             placeholder="Escribe tus comentarios o información relevante para la ejecución del mantenimiento aquí." name="comentario"
                                             id="comentario"></textarea>
