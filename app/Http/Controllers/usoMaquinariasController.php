@@ -131,7 +131,8 @@ class usoMaquinariasController extends Controller
         }
         // dd( $request,  $intUpdate , $intSinDatos);
         Session::flash('message', 1);
-        return redirect()->action([usoMaquinariasController::class, 'index']);
+        return redirect()->back();
+        // return redirect()->action([usoMaquinariasController::class, 'index']);
     }
 
     /**
