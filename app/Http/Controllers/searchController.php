@@ -13,6 +13,7 @@ use App\Models\maquinaria;
 use App\Models\inventario;
 use App\Models\tarea;
 use App\Models\grupo;
+use App\Models\inventarioMtq;
 use App\Models\manoDeObra;
 
 use function PHPUnit\Framework\isNull;
@@ -152,8 +153,6 @@ class searchController extends Controller
 
     public function inventario(Request $request)
     {
-        // dd($request);
-        // $term = $request->input( 'term' );
         $term = $request->get('term');
         $tipo = $request->input('tipo');
 
@@ -172,9 +171,53 @@ class searchController extends Controller
             ->leftjoin('marca', 'marca.id', 'inventario.marcaId')
             ->get();
 
-
         $sugerencias = [];
         foreach ($inventario as $item) {
+            if ($item->compania == null) {
+                $sugerencias[] = [
+                    'value' =>   ' N.PARTE: ' . $item->numparte . ' - ' .  $item->nombre . ', Marca: ' . $item->marca . ', Modelo: ' . $item->modelo  . ', Cantidad: ' .  $item->cantidad,
+                    'id' => $item->id,
+                    'nombre' => $item->nombre,
+                    'numparte' => $item->numparte,
+                    'marca' => $item->marca,
+                    'tipo' => $item->tipo,
+                    // 'numserie' => $item->numserie,
+                    // 'placas' => $item->placas,
+                    'modelo' => $item->modelo,
+                    'cantidad' => $item->cantidad,
+                    // 'categoria' => $item->categoria,
+                    // 'compania' => $item->compania,
+                ];
+            }
+        }
+
+        return $sugerencias;
+        // return response()->json( $sugerencias );
+    }
+
+    public function inventarioMtq(Request $request)
+    {
+        $term = $request->get('term');
+        $tipo = $request->input('tipo');
+
+        $inventarioMtq = inventarioMtq::select('inventarioMtq.*', 'marca.nombre as marca')
+            ->where(function ($query) use ($tipo) {
+                if ($tipo) {
+                    $query->where('inventarioMtq.tipo', '=', $tipo);
+                }
+            })
+            ->where(function ($query) use ($term) {
+                $query->where('inventarioMtq.nombre', 'LIKE', '%' . $term . '%')
+                    ->orWhere('inventarioMtq.numparte', 'LIKE', '%' . $term . '%')
+                    ->orWhere('inventarioMtq.modelo', 'LIKE', '%' . $term . '%')
+                    ->orWhere('marca.nombre', 'LIKE', '%' . $term . '%');
+            })
+            ->leftjoin('marca', 'marca.id', 'inventarioMtq.marcaId')
+            ->get();
+
+
+        $sugerencias = [];
+        foreach ($inventarioMtq as $item) {
             if ($item->compania == null) {
                 $sugerencias[] = [
                     'value' =>   ' N.PARTE: ' . $item->numparte . ' - ' .  $item->nombre . ', Marca: ' . $item->marca . ', Modelo: ' . $item->modelo  . ', Cantidad: ' .  $item->cantidad,
