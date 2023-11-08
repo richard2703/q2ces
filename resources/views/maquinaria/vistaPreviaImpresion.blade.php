@@ -5,10 +5,10 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card" >
                     <div class="card-header bacTituloPrincipal">
                         {{-- <p class="card-category">Usuarios registrados</p> --}}
-                        Detalles de la Carga de Combustible
+                        Vista Previa de Impresion de Maquinaria
                     </div>
                     <div class="card-body">
                         <div class="row divBorder">
@@ -33,61 +33,129 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <div id="print-content" class="content-print" style="">
-                        <div class="table-responsive" style="font-size: 11px">
+                    {{--  <div id="print-header" class="print-header">
+                        <div class="row">
+                            <div class="col-4 text-start">
+                                <img src="{{ asset('/img/maquinariaPrint/Logo q2cem_1.svg') }}" alt="" width="80px;" class="mb-2">    
+                            </div>
+                            <div class="col-4 text-center">
+                                <img src="{{ asset('/img/maquinariaPrint/Maquinaria.svg') }}" alt="" width="290px;" class="mt-2">    
+                            </div>
+                            
+                            <div class="col-4 text-end">
+                                <img src="{{ asset('/img/maquinariaPrint/Logo q2ces_1.svg') }}" alt="" width="80px;" class="mb-2">    
+                            </div>
+                        </div>
+                    </div>  --}}
+                    <div id="content-center" class="content-center" style="display: none">
+                        <img src="{{ asset('/img/maquinariaPrint/Q de fondo.svg') }}" width="70%" alt="">    
+                    </div>
+                    <div id="print-content" class="print-content d-flex" style="margin-right: 15px">
+                        <div class="table-responsive" style="font-size: 12px">
                             <div class="row">
                                 <div class="col-4 text-start">
-                                    <img src="{{ asset('/img/maquinariaPrint/Logo q2cem_1.svg') }}" alt="" width="100px;" class="mb-2">    
+                                    <img src="{{ asset('/img/maquinariaPrint/Logo q2cem_1.svg') }}" alt="" width="75px;" class="mt-1" style="margin-left: 10px">    
                                 </div>
                                 <div class="col-4 text-center">
-                                    <img src="{{ asset('/img/maquinariaPrint/Maquinaria.svg') }}" alt="" width="380px;" class="mb-2">    
+                                    <img src="{{ asset('/img/maquinariaPrint/Maquinaria.svg') }}" alt="" width="290px;" class="mt-2">    
                                 </div>
                                 
                                 <div class="col-4 text-end">
-                                    <img src="{{ asset('/img/maquinariaPrint/Logo q2ces_1.svg') }}" alt="" width="100px;" class="mb-2">    
+                                    <img src="{{ asset('/img/maquinariaPrint/Logo q2ces_1.svg') }}" alt="" width="75px;" class="mt-1" style="margin-right: 10px">    
                                 </div>
-                            </div>  
+                            </div>
                             <table class="table">
                                 <thead class="labelTitulo">
-                                    <th class="labelTitulo text-center" style=" margin-right: 10px !important;">
-                                        <div style="border-radius: 2em; background-color: var(--select); color: #fff;">ID </div></th>
-                                    <th class="labelTitulo text-center" style=" margin-right: 10px !important; width: 280px;"> 
-                                        <div style="border-radius: 2em; background-color: var(--select); color: #fff;">Equipo </div></th>
-                                    <th class="labelTitulo text-center" style=" margin-right: 10px !important; width: 160px;"> 
-                                        <div style="border-radius: 2em; background-color: var(--select); color: #fff;">Modelo </div></th>
-                                    <th class="labelTitulo text-center" style=" margin-right: 10px !important; width: 160px;"> 
-                                        <div style="border-radius: 2em; background-color: var(--select); color: #fff;">Serie - VIN</div></th>
-                                    <th class="labelTitulo text-center" style=" margin-right: 10px !important;">
-                                        <div style="border-radius: 2em; background-color: var(--select); color: #fff;">Placas </div></th>
-                                    <th class="labelTitulo text-center"> 
-                                        <div style="border-radius: 2em; background-color: var(--select); color: #fff;">Año </div></th>
+                                    <th class="labelTitulo text-center" style=" height: 35px;">
+                                        <div class="d-flex justify-content-center align-items-center" style="font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">ID </div></th>
+                                    <th class="labelTitulo text-center" style=" height: 35px; width: 280px;"> 
+                                        <div class="d-flex justify-content-center align-items-center" style="font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Equipo </div></th>
+                                    <th class="labelTitulo text-center" style=" height: 35px; width: 160px;"> 
+                                        <div class="d-flex justify-content-center align-items-center" style="font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Modelo </div></th>
+                                    <th class="labelTitulo text-center" style=" height: 35px; width: 170px;"> 
+                                        <div class="d-flex justify-content-center align-items-center" style="font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Serie - VIN</div></th>
+                                    <th class="labelTitulo text-center" style=" height: 35px;">
+                                        <div class="d-flex justify-content-center align-items-center" style="font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Placas </div></th>
+                                    <th class="labelTitulo text-center" style=" height: 35px;"> 
+                                        <div class="d-flex justify-content-center align-items-center" style="font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Año </div></th>
                                 </thead>
                                 
                                 <tbody>
-                                    @forelse ($maquinaria as $maquina)
+                                    @forelse ($maquinaria as $key => $maquina)
+                                    @if ($key == 21 || $key == 43 || $key == 65 || $key == 83)
+                                        <tr><td id="columnaInvisible" style="visibility: hidden">HDJ</td></tr>
+                                        <tr><td id="columnaInvisible2" style="visibility: hidden">HDJ</td></tr>
+                                    @endif
                                         <tr>
-                                            <td class="text-center"><a
+                                            <td >
+                                                @if ($maquina->identificador)
+                                                <a
                                                     href="{{ route('maquinaria.vista', $maquina->id) }}"  title="Editar la información de la maquinaría."
-                                                    style="color: blue "><div style="border-radius: 2em; border-color: black;
-                                                    border-width: 3px;
-                                                    border-style: solid; ">{{ $maquina->identificador }}</div></a></td>
-                                                    <td class="text-center"><div style="border-radius: 2em; border-color: black;
-                                                        border-width: 3px;
-                                                        border-style: solid; ">{{ $maquina->nombre }}</div></td>
-                                            <td class="text-center"><div style="border-radius: 2em; border-color: black;
-                                                border-width: 3px;
-                                                border-style: solid; ">{{ $maquina->modelo }}</div></td>
-                                            <td class="text-center"><div style="border-radius: 2em; border-color: black;
-                                                border-width: 3px;
-                                                border-style: solid; ">{{ $maquina->numserie }}</div></td>
-                                            <td class="text-center"><div style="border-radius: 2em; border-color: black;
-                                                border-width: 3px;
-                                                border-style: solid; ">{{ $maquina->placas }}</div></td>
+                                                    style="color: blue "><div style="border-radius: 1em; border-color: black;
+                                                    border-width: 1px;
+                                                    border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center">{{ $maquina->identificador }}</div></a>
+                                            @else
+                                                <div style="border-radius: 1em; border-color: black;
+                                                border-width: 1px;
+                                                border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center"> - </div>
+                                            @endif
+                                            </td>
+                                            <td >
+                                                @if ($maquina->nombre)
+                                                <div style="border-radius: 1em; border-color: black;
+                                                border-width: 1px;
+                                                border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center">{{ $maquina->nombre }}</div>
+                                            @else
+                                                <div style="border-radius: 1em; border-color: black;
+                                                border-width: 1px;
+                                                border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center"> - </div>
+                                            @endif
+                                            </td>
+                                            <td >
+                                                @if ($maquina->modelo)
+                                                <div style="border-radius: 1em; border-color: black;
+                                                border-width: 1px;
+                                                border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center">{{ $maquina->modelo }}</div>
+                                            @else
+                                                <div style="border-radius: 1em; border-color: black;
+                                                border-width: 1px;
+                                                border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center"> - </div>
+                                            @endif
+                                            </td>
+                                            <td >
+                                                @if ($maquina->numserie)
+                                                <div style="border-radius: 1em; border-color: black;
+                                                border-width: 1px;
+                                                border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center">{{ $maquina->numserie }}</div>
+                                            @else
+                                                <div style="border-radius: 1em; border-color: black;
+                                                border-width: 1px;
+                                                border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center"> - </div>
+                                            @endif
+                                            </td>
+                                            <td >
+                                                @if ($maquina->placas)
+                                                <div style="border-radius: 1em; border-color: black;
+                                                border-width: 1px;
+                                                border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center">{{ $maquina->placas }}</div>
+                                            @else
+                                                <div style="border-radius: 1em; border-color: black;
+                                                border-width: 1px;
+                                                border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center"> - </div>
+                                            @endif
+                                            </td>
                                             {{--  <td class="text-center">{{ $maquina->submarca }}</td>  --}}
-                                            <td class="text-center"><div style="border-radius: 2em; border-color: black;
-                                                border-width: 3px;
-                                                border-style: solid; ">{{ $maquina->ano }}</div></td>
+                                            <td >
+                                                @if ($maquina->ano)
+                                                <div style="border-radius: 1em; border-color: black;
+                                                border-width: 1px;
+                                                border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center">{{ $maquina->ano }}</div>
+                                            @else
+                                                <div style="border-radius: 1em; border-color: black;
+                                                border-width: 1px;
+                                                border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center"> - </div>
+                                            @endif
+                                            </td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -98,9 +166,10 @@
                             </table>
                             
                         </div>
+                        
                     </div>
                     <div id="print-footer" class="print-footer">
-                        <img src="{{ asset('/img/maquinariaPrint/Pie de página_1.svg') }}" alt="" class="mb-2">
+                        <img src="{{ asset('/img/maquinariaPrint/Pie de página_1.svg') }}">
                     </div>
                 </div>
             </div>
@@ -109,50 +178,86 @@
 </div>
 
 <script>
-    window.onload = function () {
-        // Obtener la fecha y hora actual
-        let now = new Date();
-        let monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-        let dayNames = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-        let formattedDateTime = now.getDate() + " de " + monthNames[now.getMonth()] + " de " + now.getFullYear();
-        let formattedHora = "a la Hora:" + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
-        document.getElementById("fecha-hora").textContent = formattedDateTime;
-        document.getElementById("hora").textContent = formattedHora;
-        window.print();
-    };
-</script>
-<script>
     print(){
         window.print();
     }
 </script>
+<style>
+    .centered-text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 50%;
+    }
+</style>
 
+<style>
+    .page-break {
+        page-break-after: always;
+    }
+</style>
+    
 <style>
     @media print {
         body * {
             visibility: hidden;
         }
-        #print-content, #print-content * {
+        #print-content * {
             visibility: visible !important;
         }
-        .print-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            text-align: center;
+        #columnaInvisible {
+            visibility: hidden !important;
         }
+        #columnaInvisible2 {
+            visibility: hidden !important;
+        }
+        {{--  #print-content, #print-content {
+            margin-bottom: 6mm;
+        }  --}}
+      
+        #print-footer {
+            position: fixed;
+            bottom: 10mm;
+            left: 5mm;
+            right: 0mm;
+            text-align: center;
+            height: 0mm; /* Altura fija para el footer */
+            margin-top: 5mm;
+        }
+        table {
+            boder: none;
+          }
         #print-footer, #print-footer * {
             visibility: visible !important;
         }
+        .print-header {
+            position: fixed;
+            top: 6mm;
+            left: 5mm;
+            right: 5mm;
+            text-align: center;
+        }
+        #print-header, #print-header * {
+            visibility: visible !important;
+        }
+        .content-center {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            text-align: center;
+        }
+        #content-center, #content-center * {
+            visibility: visible !important;
+            display: inline-block !important;
+        }
         @page {
-            size: 215.9mm 279.4mm;
-            margin-bottom: 0mm;
-            margin-top: 0mm;
-            margin-right: 0mm;
+            size: letter;
+            margin-bottom: 20px;
         }
         body {
-            margin-top: -35mm !important;
+            margin-top: -65mm !important;
             padding: 0 !important;
         }
     }
@@ -161,14 +266,14 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        text-align: left !important;
+        text-align: center !important;
         font-family: Arial, sans-serif;
-        font-weight: bold;
         align-items: start;
+        
     }
 
     #main {
-        margin-top: 0px !important;
+        margin-top: 80px !important;
     }
 </style>
 
