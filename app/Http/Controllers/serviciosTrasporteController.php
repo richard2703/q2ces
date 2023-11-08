@@ -178,7 +178,7 @@ class serviciosTrasporteController extends Controller
 
     public function misServicios()
     {
-        abort_if(Gate::denies('serviciosTrasporte_Chofer'), 403);
+        abort_if(Gate::denies('servicio_Chofer'), 403);
 
         $personal = personal::where('userId', auth()->user()->id)->first();
         if (!isset($personal->id)) {
