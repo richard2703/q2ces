@@ -20,8 +20,10 @@
                             enctype="multipart/form-data">
                             @csrf
                             @method('put')
-                            <input type="hidden" name="maquinariaId" id="maquinariaId" value="{{ $checkList->maquinariaId }}">
-                            <input type="hidden" name="identificador" id="identificador" value="{{ $maquinaria->identificador }}">
+                            <input type="hidden" name="maquinariaId" id="maquinariaId"
+                                value="{{ $checkList->maquinariaId }}">
+                            <input type="hidden" name="identificador" id="identificador"
+                                value="{{ $maquinaria->identificador }}">
                             <input type="hidden" name="codigo" id="codigo" value="{{ $bitacora->codigo }}">
                             <input type="hidden" name="version" id="identificador" value="{{ $bitacora->version }}">
                             <input type="hidden" name="usuarioId" id="usuarioId" value="{{ auth()->user()->id }}">
@@ -49,10 +51,24 @@
                                 <div class="row mt-3">
 
 
-                                    <div class="col-12 col-md-8 ">
+                                    <div class="col-12 ">
 
                                         <div class="row alin">
-                                            <div class=" col-12  ">
+
+                                            <div class=" col-12 col-sm-8  col-lg-8 my-1  ">
+                                                <label class="labelTitulo">Bitácora:</label></br>
+                                                <input type="text" class="inputCaja" id="bitacora1" name="bitacora1"
+                                                    readonly disabled="true" value="{{ $checkList->bitacora }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-4  col-lg-4 my-1  ">
+                                                <label class="labelTitulo">Código:</label></br>
+                                                <input type="text" class="inputCaja" id="marca" name="marca"
+                                                    readonly disabled="true"
+                                                    value="{{ $bitacora->codigo . ' V' . $bitacora->version }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-8  col-lg-8 my-1  ">
                                                 <label class="labelTitulo">Equipo:
                                                     <span>*</span></label></br>
                                                 <input type="text" class="inputCaja" id="maquinaria1" readonly
@@ -60,10 +76,13 @@
                                                     value="{{ $checkList->maquinaria }}">
                                             </div>
 
-                                            <div class=" col-12   ">
-                                                <label class="labelTitulo">Bitácora:</label></br>
-                                                <input type="text" class="inputCaja" id="bitacora1" name="bitacora1"
-                                                    readonly disabled="true" value="{{ $checkList->bitacora }}">
+                                            <div class=" col-12 col-sm-4  col-lg-4 my-1 ">
+
+                                                <label class="labelTitulo">Uso de la Maquinaría:
+                                                </label></br>
+                                                <input type="number" class="inputCaja text-end" placeholder="Ej. 1000"
+                                                    value="{{ $checkList->usoKom }}" step="1" min="0"
+                                                    disabled="true" tabindex="0" id="usoKom" name="usoKom">
                                             </div>
 
                                             <div class=" col-12">

@@ -78,13 +78,14 @@ class mantenimientosController extends Controller {
     public function store( Request $request ) {
         abort_if ( Gate::denies( 'mantenimiento_create' ), '404' );
 
+        $objCalculos = new Calculos();
         // dd( $request );
 
         $request->validate( [
             'titulo' => 'required|max:250',
             'maquinariaId' => 'required',
             'tipoMantenimientoId' => 'required',
-            'comentario' => 'required|max:500',
+            // 'comentario' => 'required|max:500',
             'fechaInicio' => 'required|date|date_format:Y-m-d',
 
         ], [
@@ -92,19 +93,25 @@ class mantenimientosController extends Controller {
             'tipoMantenimientoId.required' => 'El campo tipo de mantenimiento es obligatorio.',
             'maquinariaId.required' => 'El campo maquinaria es obligatorio.',
             'titulo.max' => 'El campo título excede el límite de caracteres permitidos.',
-            'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+            // 'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
             'fechaInicio' => 'El campo de fecha de inicio del mantenimiento es obligatorio',
             'fechaInicio.date_format' => 'El campo fecha de nacimiento tiene un formato inválido.',
         ] );
 
         $mantenimiento = $request->all();
         $tipoManto = tipoMantenimiento::where( 'id', '=', $mantenimiento[ 'tipoMantenimientoId' ] )->first();
+
+        $mantenimiento[ 'comentario' ] = ( is_null($mantenimiento[ 'comentario' ])==false?$mantenimiento[ 'comentario' ]:"Sin indicaciones para el mantenimiento" );
         $mantenimiento[ 'codigo' ] = $tipoManto->codigo;
         $mantenimiento[ 'start' ] = strtoupper( $mantenimiento[ 'fechaInicio' ] );
 
         // dd( 'evento', $mantenimiento );
 
         $mantenimiento = mantenimientos::create( $mantenimiento );
+
+        // Actualización del kilometraje o Horometro;
+         $objCalculos->updateKilometrajeMaquinaria($request['maquinariaId'], $request['usoKom'], $proviene = 'Mantenimiento')  ;
+
         // $events = calendarioPrincipal::create( $mantenimiento );
         Session::flash( 'message', 1 );
 
@@ -154,7 +161,7 @@ class mantenimientosController extends Controller {
 
         $vctTipos = tipoMantenimiento::select( 'tipoMantenimiento.*' )->orderBy( 'tipoMantenimiento.nombre', 'asc' )->get();
 
-        // dd( $maquinaria );
+        // dd($mantenimiento, $maquinaria );
 
         return view( 'mantenimientos.editarMantenimiento', compact( 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria' ) );
     }
@@ -173,12 +180,13 @@ class mantenimientosController extends Controller {
         abort_if ( Gate::denies( 'mantenimiento_edit' ), '404' );
 
         $objValida = new Validaciones();
+        $objCalculos = new Calculos();
 
         $request->validate( [
             'titulo' => 'required|max:250',
             'maquinariaId' => 'required',
             'tipoMantenimientoId' => 'required',
-            'comentario' => 'required|max:500',
+            // 'comentario' => 'required|max:500',
             'fechaInicio' => 'required|date|date_format:Y-m-d',
 
         ], [
@@ -186,7 +194,7 @@ class mantenimientosController extends Controller {
             'titulo.max' => 'El campo título excede el límite de caracteres permitidos.',
             'tipoMantenimientoId.required' => 'El campo tipo de mantenimiento es obligatorio.',
             'maquinariaId.required' => 'El campo maquinaria es obligatorio.',
-            'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+            // 'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
             'fechaInicio' => 'El campo de fecha de inicio del mantenimiento es obligatorio',
             'fechaInicio.date_format' => 'El campo fecha de nacimiento tiene un formato inválido.',
         ] );

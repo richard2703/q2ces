@@ -12,6 +12,6 @@ class checkList extends Model {
     public $timestamps = true;
 
     protected $fillable = [
-        'bitacoraId', 'maquinariaId', 'usuarioId', 'registrada', 'comentario'
+        'bitacoraId','estatus', 'maquinariaId', 'usuarioId', 'registrada', 'comentario','usoKom'
     ];
 }
