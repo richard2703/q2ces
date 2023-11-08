@@ -20,7 +20,7 @@
                 <div class="col-12 align-self-center">
                     <div class="card">
                         <div class="card-header bacTituloPrincipal">
-                            <h4 class="card-title">Programación y Asignación de Checklist</h4>
+                            <h4 class="card-title">Asignación de Trabajo</h4>
                             {{-- <p class="card-category">Usuarios Registrados</p> --}}
                         </div>
                         <div class="card-body">

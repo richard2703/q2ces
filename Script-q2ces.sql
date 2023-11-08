@@ -945,10 +945,12 @@ CREATE TABLE inventarioMovimientos(
     cantidad float(10, 2) NOT NULL,
     precioUnitario float(10, 2) NOT NULL,
     total float(10, 2) NOT NULL,
+    mantenimientoId bigint(20) unsigned NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_inventarioMovimiento_inventario foreign key (inventarioId) references inventario(id),
+    CONSTRAINT FK_inventarioMovimiento_mantenimiento foreign key (mantenimientoId) references mantenimientos(id),
     CONSTRAINT FK_inventarioMovimiento_usuario foreign key (usuarioId) references users(id)
 );
 

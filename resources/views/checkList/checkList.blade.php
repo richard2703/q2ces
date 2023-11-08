@@ -114,7 +114,7 @@
                                                                 @default
                                                                     Cancelado
                                                             @endswitch
-
+                                                        </td>
                                                         <td>{{ $item->registrada }} </td>
 
                                                         <td class="td-actions text-center">
@@ -150,12 +150,6 @@
                                                                     <i class="fas fa-print "
                                                                     style="color: #8caf48;font-size: x-large;"></i>
                                                                 </a>
-                                                                {{-- @can('serviciosTrasporte_show')
-                                                                    <a href="{{ route('checkList.printTicketCheckList', $item->id) }}" title="Imprimir Ticket de Cierre de Checklist"
-                                                                        <i class="fas fa-print "
-                                                                        style="font-size: x-large;"></i>
-                                                                    </a>
-                                                                @endcan --}}
                                                             @endif
 
                                                             {{-- <form action="" method="POST"
