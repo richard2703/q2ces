@@ -181,18 +181,6 @@ class printController extends Controller
 
         return view('maquinaria.vistaPreviaImpresion', compact('maquinaria'));
     }
-
-    public function generatePDF()
-    {
-        $data = [
-            'title' => 'Ejemplo de PDF con DomPDF en Laravel',
-            'content' => 'Este es el contenido que se incluirá en el PDF.',
-        ];
-
-        $pdf = PDF::loadView('pdf', $data);
-
-        return $pdf->stream('ejemplo.pdf');
-    }
     // public function generarPDF(Request $request)
     // {
     //     $content = $request->input('content');

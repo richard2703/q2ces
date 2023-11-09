@@ -47,111 +47,111 @@
                             </div>
                         </div>
                     </div>  --}}
-                    <div id="content-center" class="content-center" style="display: none">
+                    {{--  <div id="content-center" class="content-center" style="display: none">
                         <img src="{{ asset('/img/maquinariaPrint/Q de fondo.svg') }}" width="70%" alt="">    
-                    </div>
-                    <div id="print-content" class="print-content d-flex" style="margin-right: 15px">
+                    </div>  --}}
+                    <div id="print-content" class="print-content d-flex align-items-center">
                         <div class="table-responsive" style="font-size: 12px">
-                            <div class="row">
+                            <div class="row mb-2">
                                 <div class="col-4 text-start">
-                                    <img src="{{ asset('/img/maquinariaPrint/Logo q2cem_1.svg') }}" alt="" width="75px;" class="mt-1" style="margin-left: 10px">    
+                                    <img src="{{ asset('/img/maquinariaPrint/Logo q2cem_1.svg') }}" alt="" width="75px;" class="mt-1">    
                                 </div>
                                 <div class="col-4 text-center">
-                                    <img src="{{ asset('/img/maquinariaPrint/Maquinaria.svg') }}" alt="" width="290px;" class="mt-2">    
+                                    <img src="{{ asset('/img/maquinariaPrint/Maquinaria-01.png') }}" alt="" width="245px;" class="mt-2" style="margin-right: 355px">    
                                 </div>
                                 
                                 <div class="col-4 text-end">
-                                    <img src="{{ asset('/img/maquinariaPrint/Logo q2ces_1.svg') }}" alt="" width="75px;" class="mt-1" style="margin-right: 10px">    
+                                    <img src="{{ asset('/img/maquinariaPrint/Logo q2ces_2.svg') }}" alt="" width="75px;" class="mt-1" style="margin-right: 8px">    
                                 </div>
                             </div>
-                            <table class="table">
+                            <table>
                                 <thead class="labelTitulo">
-                                    <th class="labelTitulo text-center" style=" height: 35px;">
-                                        <div class="d-flex justify-content-center align-items-center" style="font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">ID </div></th>
-                                    <th class="labelTitulo text-center" style=" height: 35px; width: 280px;"> 
-                                        <div class="d-flex justify-content-center align-items-center" style="font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Equipo </div></th>
-                                    <th class="labelTitulo text-center" style=" height: 35px; width: 160px;"> 
-                                        <div class="d-flex justify-content-center align-items-center" style="font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Modelo </div></th>
-                                    <th class="labelTitulo text-center" style=" height: 35px; width: 170px;"> 
-                                        <div class="d-flex justify-content-center align-items-center" style="font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Serie - VIN</div></th>
-                                    <th class="labelTitulo text-center" style=" height: 35px;">
-                                        <div class="d-flex justify-content-center align-items-center" style="font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Placas </div></th>
+                                    <th class="labelTitulo text-center" style="height: 35px;">
+                                        <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">ID </div></th>
+                                    <th class="labelTitulo text-center" style="height: 35px; width: 300px;"> 
+                                        <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Equipo </div></th>
+                                    <th class="labelTitulo text-center" style="height: 35px; width: 160px;"> 
+                                        <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Modelo </div></th>
+                                    <th class="labelTitulo text-center" style="height: 35px; width: 170px;"> 
+                                        <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Serie - VIN</div></th>
+                                    <th class="labelTitulo text-center" style="height: 35px;">
+                                        <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Placas </div></th>
                                     <th class="labelTitulo text-center" style=" height: 35px;"> 
-                                        <div class="d-flex justify-content-center align-items-center" style="font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Año </div></th>
+                                        <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Año </div></th>
                                 </thead>
                                 
                                 <tbody>
                                     @forelse ($maquinaria as $key => $maquina)
-                                    @if ($key == 21 || $key == 43 || $key == 65 || $key == 83)
+                                    @if ($key == 23 || $key == 47 || $key == 71 || $key == 95)
                                         <tr><td id="columnaInvisible" style="visibility: hidden">HDJ</td></tr>
                                         <tr><td id="columnaInvisible2" style="visibility: hidden">HDJ</td></tr>
                                     @endif
                                         <tr>
-                                            <td >
+                                            <td style="">
                                                 @if ($maquina->identificador)
                                                 <a
                                                     href="{{ route('maquinaria.vista', $maquina->id) }}"  title="Editar la información de la maquinaría."
-                                                    style="color: blue "><div style="border-radius: 1em; border-color: black;
+                                                    style="color: blue "><div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
                                                     border-width: 1px;
                                                     border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center">{{ $maquina->identificador }}</div></a>
                                             @else
-                                                <div style="border-radius: 1em; border-color: black;
+                                                <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
                                                 border-width: 1px;
                                                 border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center"> - </div>
                                             @endif
                                             </td>
-                                            <td >
+                                            <td style="">
                                                 @if ($maquina->nombre)
-                                                <div style="border-radius: 1em; border-color: black;
+                                                <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
                                                 border-width: 1px;
                                                 border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center">{{ $maquina->nombre }}</div>
                                             @else
-                                                <div style="border-radius: 1em; border-color: black;
+                                                <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
                                                 border-width: 1px;
                                                 border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center"> - </div>
                                             @endif
                                             </td>
-                                            <td >
+                                            <td style="">
                                                 @if ($maquina->modelo)
-                                                <div style="border-radius: 1em; border-color: black;
+                                                <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
                                                 border-width: 1px;
                                                 border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center">{{ $maquina->modelo }}</div>
                                             @else
-                                                <div style="border-radius: 1em; border-color: black;
+                                                <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
                                                 border-width: 1px;
                                                 border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center"> - </div>
                                             @endif
                                             </td>
-                                            <td >
+                                            <td style="">
                                                 @if ($maquina->numserie)
-                                                <div style="border-radius: 1em; border-color: black;
+                                                <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
                                                 border-width: 1px;
                                                 border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center">{{ $maquina->numserie }}</div>
                                             @else
-                                                <div style="border-radius: 1em; border-color: black;
+                                                <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
                                                 border-width: 1px;
                                                 border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center"> - </div>
                                             @endif
                                             </td>
-                                            <td >
+                                            <td style="">
                                                 @if ($maquina->placas)
-                                                <div style="border-radius: 1em; border-color: black;
+                                                <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
                                                 border-width: 1px;
                                                 border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center">{{ $maquina->placas }}</div>
                                             @else
-                                                <div style="border-radius: 1em; border-color: black;
+                                                <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
                                                 border-width: 1px;
                                                 border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center"> - </div>
                                             @endif
                                             </td>
                                             {{--  <td class="text-center">{{ $maquina->submarca }}</td>  --}}
-                                            <td >
+                                            <td style="">
                                                 @if ($maquina->ano)
-                                                <div style="border-radius: 1em; border-color: black;
+                                                <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
                                                 border-width: 1px;
                                                 border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center">{{ $maquina->ano }}</div>
                                             @else
-                                                <div style="border-radius: 1em; border-color: black;
+                                                <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
                                                 border-width: 1px;
                                                 border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center"> - </div>
                                             @endif
@@ -211,18 +211,20 @@
         #columnaInvisible2 {
             visibility: hidden !important;
         }
-        {{--  #print-content, #print-content {
-            margin-bottom: 6mm;
-        }  --}}
+        #print-content, #print-content {
+            margin-left: -6mm;
+            margin-right: -10mm;
+            
+        }
       
         #print-footer {
             position: fixed;
-            bottom: 10mm;
-            left: 5mm;
-            right: 0mm;
+            bottom: 7.2mm;
+            left: 3mm;
+            right: 1mm;
             text-align: center;
             height: 0mm; /* Altura fija para el footer */
-            margin-top: 5mm;
+            margin-top: 6mm;
         }
         table {
             boder: none;
@@ -254,7 +256,7 @@
         }
         @page {
             size: letter;
-            margin-bottom: 20px;
+            margin-bottom: 39px;
         }
         body {
             margin-top: -65mm !important;
@@ -267,9 +269,8 @@
         flex-direction: column;
         align-items: flex-start;
         text-align: center !important;
-        font-family: Arial, sans-serif;
+        font-family: 'Montserrat', sans-serif !important;
         align-items: start;
-        
     }
 
     #main {
