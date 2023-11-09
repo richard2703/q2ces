@@ -47,7 +47,7 @@
                                                 <button type="button" class="btn botonGral">Distribución General</button>
                                             </a>
                                         @endcan
-                                        @can('maquinaria_index')
+                                        @can('maquinaria_show')
                                             <a href="{{ route('printMaquinaria.post') }}">
                                                 <button type="button" class="btn regresar">Imprimir</button>
                                             </a>
