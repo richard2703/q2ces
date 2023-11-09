@@ -25,8 +25,19 @@
 
                                     <div class="row">
                                         <div class="d-flex p-3 divBorder">
+                                            <div class="col-6 text-left">
+                                                <a href="{{ route('catalogos.index') }}">
+                                                    <button class="btn regresar">
+                                                        <span class="material-icons">
+                                                            reply
+                                                        </span>
+                                                        Regresar
+                                                    </button>
+                                                </a>
+                                            </div>
+
                                             @can('bitacora_create')
-                                                <div class="col-12 text-end">
+                                                <div class="col-6 text-end">
                                                     <div class="row">
                                                         <a href="{{ url('/bitacoras/bitacora/nuevo') }}">
                                                             <!--Agregar ruta-->

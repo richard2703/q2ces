@@ -23,6 +23,14 @@
                                             {{ session('faild') }}
                                         </div>
                                     @endif
+                                    {{--  <a href="{{ route('catalogos.index') }}">
+                                        <button class="btn regresar">
+                                            <span class="material-icons">
+                                                reply
+                                            </span>
+                                            Regresar
+                                        </button>
+                                    </a>  --}}
                                     <div class="row divBorder">
                                         <div class="col-4 pb-3 text-start">
                                             <a href="{{ route('catalogos.index') }}">
@@ -43,6 +51,7 @@
                                             @endcan
                                         </div>
                                     </div>
+
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="labelTitulo">

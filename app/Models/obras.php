@@ -12,6 +12,6 @@ class obras extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'nombre', 'tipo', 'calle', 'numero', 'colonia', 'estado', 'ciudad', 'cp', 'logo', 'foto', 'estatus', 'clienteId',
+        'nombre', 'tipo', 'calle', 'numero', 'colonia', 'estado', 'ciudad', 'cp', 'logo', 'foto', 'estatus', 'clienteId','centroCostos','proyecto'
     ];
 }

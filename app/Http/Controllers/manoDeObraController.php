@@ -44,8 +44,8 @@ class manoDeObraController extends Controller {
 
         // dd( $request );
         $request->validate( [
-            'nombre' => 'required|max:250|unique:conceptos,nombre,' . $request[ 'nombre' ],
-            'codigo' => 'required|max:8|unique:conceptos,nombre,' . $request[ 'nombre' ],
+            'nombre' => 'required|max:250|unique:manoDeObra,nombre,' . $request[ 'nombre' ],
+            'codigo' => 'required|max:8|unique:manoDeObra,nombre,' . $request[ 'nombre' ],
             'comentarios' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
@@ -102,8 +102,8 @@ class manoDeObraController extends Controller {
         // dd( $request );
 
         $request->validate( [
-            'nombre' => 'required|max:250|unique:conceptos,nombre,' . $request[ 'controlId' ],
-            'codigo' => 'required|max:8|unique:conceptos,codigo,' . $request[ 'controlId' ],
+            'nombre' => 'required|max:250|unique:manoDeObra,nombre,' . $request[ 'controlId' ],
+            'codigo' => 'required|max:8|unique:manoDeObra,codigo,' . $request[ 'controlId' ],
             'comentario' => 'nullable|max:500',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',

@@ -27,27 +27,33 @@ class serviciosTrasporteController extends Controller
      */
     public function index()
     {
-        // dd("serviciosTrasporte");
-        abort_if(Gate::denies('cajachica_index'), 403);
+        abort_if(Gate::denies('serviciosTrasporte_index'), 403);
 
         $registros = serviciosTrasporte::join('conceptos', 'serviciosTrasporte.conceptoId', 'conceptos.id')
             ->leftJoin('obras', 'serviciosTrasporte.obraId', 'obras.id')
+            ->join('clientes', 'obras.clienteId', 'clientes.id')
             ->join('maquinaria', 'serviciosTrasporte.equipoId', 'maquinaria.id')
             ->join('personal', 'serviciosTrasporte.personalId', 'personal.id')
             ->select(
                 'serviciosTrasporte.id',
                 'serviciosTrasporte.fecha',
                 'conceptos.nombre as cnombre',
+                'clientes.nombre as cliente',
                 'obras.nombre as obra',
+                'obras.centroCostos',
+                'obras.proyecto',
                 'maquinaria.identificador',
                 'maquinaria.nombre as maquinaria',
                 'personal.nombres as pnombre',
                 'personal.apellidoP as papellidoP',
                 'cantidad',
+                'costoMano',
+                'costoServicio',
                 'serviciosTrasporte.estatus'
             )
             ->orderBy('fecha', 'desc')
             ->paginate(15);
+        // dd($registros);
 
         return view('serviciosTrasporte.indexServicios', compact('registros'));
     }
@@ -59,9 +65,9 @@ class serviciosTrasporteController extends Controller
      */
     public function create()
     {
-        abort_if(Gate::denies('cajachica_create'), 403);
+        abort_if(Gate::denies('serviciosTrasporte_create'), 403);
 
-        $conceptos = conceptos::where('tipo', 2)->orderBy('codigo', 'asc')->get();
+        $conceptos = conceptos::orderBy('codigo', 'asc')->get();
         $personal = personal::orderBy('nombres', 'asc')->where('estatusId', 1)->get();
         $obras = obras::orderBy('nombre', 'asc')->where('estatus', 1)->get();
         $maquinaria = maquinaria::where('compania', '!=', 'mtq')->orWhere('compania', null)->get();
@@ -79,7 +85,7 @@ class serviciosTrasporteController extends Controller
      */
     public function store(Request $request)
     {
-        abort_if(Gate::denies('cajachica_create'), 403);
+        abort_if(Gate::denies('serviciosTrasporte_create'), 403);
 
         $data = $request->all();
         $data['estatus'] = 1;
@@ -108,7 +114,7 @@ class serviciosTrasporteController extends Controller
      */
     public function edit(serviciosTrasporte $serviciosTrasporte)
     {
-        abort_if(Gate::denies('cajachica_create'), 403);
+        abort_if(Gate::denies('serviciosTrasporte_create'), 403);
 
         $conceptos = conceptos::orderBy('codigo', 'asc')->get();
         $personal = personal::orderBy('nombres', 'asc')->where('estatusId', 1)->get();
@@ -129,7 +135,7 @@ class serviciosTrasporteController extends Controller
      */
     public function update(Request $request, serviciosTrasporte $serviciosTrasporte)
     {
-        abort_if(Gate::denies('cajachica_create'), 403);
+        abort_if(Gate::denies('serviciosTrasporte_create'), 403);
 
         $data = $request->all();
         $serviciosTrasporte->update($data);
@@ -149,28 +155,43 @@ class serviciosTrasporteController extends Controller
 
     public function cajaChica(Request $request)
     {
-        abort_if(Gate::denies('cajachica_create'), 403);
+        abort_if(Gate::denies('serviciosTrasporte_create'), 403);
+        // dd($request);
         $serviciosTrasporte = serviciosTrasporte::find($request->id);
         $serviciosTrasporte->cajaChica = 1;
+        $serviciosTrasporte->estatus = 3;
         $serviciosTrasporte->save();
 
         $obra = obras::find($serviciosTrasporte->obraId);
-
+        // serviciosTrasporte.conceptoId
         $data['dia'] = $serviciosTrasporte->fecha;
-        $data['concepto'] = 1;
-        $data['comprobanteId'] = 4;
+        $data['concepto'] = $serviciosTrasporte->conceptoId;
+        $data['comprobanteId'] = 2;
         $data['ncomprobante'] = $serviciosTrasporte->id;
         $data['cliente'] = $obra->clienteId;
         $data['obra'] = $serviciosTrasporte->obraId;
         $data['equipo'] = $serviciosTrasporte->equipoId;
         $data['personal'] = $serviciosTrasporte->personalId;
         $data['tipo'] = 2;
-        $data['cantidad'] = $serviciosTrasporte->cantidad;
+        $data['cantidad'] = $serviciosTrasporte->cantidad + $serviciosTrasporte->costoMano;
         $data['servicioTrasporteId'] = $serviciosTrasporte->id;
+
 
         // $data['comentario'] = $serviciosTrasporte->id;
 
         cajaChica::create($data);
+
+        return redirect()->action([serviciosTrasporteController::class, 'index']);
+        dd('cajaChica');
+    }
+
+    public function pagado(Request $request)
+    {
+        abort_if(Gate::denies('serviciosTrasporte_create'), 403);
+        // dd($request);
+        $serviciosTrasporte = serviciosTrasporte::find($request->id);
+        $serviciosTrasporte->estatus = 4;
+        $serviciosTrasporte->save();
 
         return redirect()->action([serviciosTrasporteController::class, 'index']);
         dd('cajaChica');
@@ -236,6 +257,7 @@ class serviciosTrasporteController extends Controller
             ->join('obras', 'obras.id', 'serviciosTrasporte.obraId')
             ->join('clientes', 'clientes.id', 'obras.clienteId')
             ->join('almacenTiraderos', 'almacenTiraderos.id', 'serviciosTrasporte.almacenId')
+            ->join('conceptos', 'conceptos.id', 'serviciosTrasporte.conceptoId')
             ->select(
                 'serviciosTrasporte.id',
                 'personal.nombres',
@@ -247,6 +269,7 @@ class serviciosTrasporteController extends Controller
                 'almacenTiraderos.nombre as almacen',
                 'serviciosTrasporte.horaEntrega',
                 'serviciosTrasporte.comentario',
+                'conceptos.nombre as concepto'
             )
             ->where('serviciosTrasporte.id', $id)
             ->first();
@@ -264,6 +287,7 @@ class serviciosTrasporteController extends Controller
             ->join('obras', 'obras.id', 'serviciosTrasporte.obraId')
             ->join('clientes', 'clientes.id', 'obras.clienteId')
             ->join('almacenTiraderos', 'almacenTiraderos.id', 'serviciosTrasporte.almacenId')
+            ->join('conceptos', 'conceptos.id', 'serviciosTrasporte.conceptoId')
             ->select(
                 'serviciosTrasporte.id',
                 'personal.nombres',
@@ -283,7 +307,9 @@ class serviciosTrasporteController extends Controller
                 'serviciosTrasporte.costoMaterial',
                 'serviciosTrasporte.costoServicio',
                 'serviciosTrasporte.costoMano',
-                'serviciosTrasporte.servicio'
+                'serviciosTrasporte.servicio',
+                'serviciosTrasporte.cantidad',
+                'conceptos.nombre as concepto'
             )
             ->where('serviciosTrasporte.id', $id)
             ->first();

@@ -294,7 +294,8 @@ class checkListController extends Controller {
         abort_if ( Gate::denies( 'checkList_show' ), 403 );
 
         $checkList = checkList::select(
-            'checkList.*', 'maquinaria.identificador',
+            'checkList.*',
+            'maquinaria.identificador',
             DB::raw( "CONCAT(maquinaria.identificador,' - ',maquinaria.nombre) AS maquinaria" ),
             DB::raw( 'users.username AS usuario' ),
             DB::raw( 'bitacoras.nombre AS bitacora' )
@@ -318,9 +319,10 @@ class checkListController extends Controller {
         ->where( 'checkListRegistros.checkListId', '=', $id )->get();
 
         $maquinaria = maquinaria::select( 'maquinaria.*' )->where( 'id', '=', $checkList->maquinariaId )->first();
+        $bitacora = bitacoras::select( 'bitacoras.*' )->where( 'id', '=', $checkList->bitacoraId )->first();
 
         // dd( $records );
-        return view( 'checkList.detalleCheckList', compact('maquinaria', 'checkList', 'records' ) );
+        return view( 'checkList.detalleCheckList', compact( 'maquinaria', 'checkList', 'records','bitacora' ) );
     }
 
     /**
@@ -409,4 +411,45 @@ class checkListController extends Controller {
         }
         return redirect()->back()->with( 'success', 'Eliminado correctamente' );
     }
+
+    public function printTicketUsuario( $id ) {
+
+        $checkList = checkList::select(
+            'checkList.*', 'maquinaria.identificador',
+            'personal.nombres','personal.apellidoP','users.username' ,
+            DB::raw( "CONCAT(maquinaria.identificador,' - ',maquinaria.nombre) AS maquinaria" ),
+            DB::raw( 'users.username AS usuario' ),
+            DB::raw( 'bitacoras.nombre AS bitacora' )
+        )
+        ->join( 'maquinaria', 'maquinaria.id', '=', 'checkList.maquinariaId' )
+        ->join( 'users', 'users.id', '=', 'checkList.usuarioId' )
+        ->leftJoin( 'bitacoras', 'bitacoras.id', '=', 'checkList.bitacoraId' )
+        ->leftJoin( 'personal', 'personal.userId', '=', 'checkList.usuarioId' )
+        ->orderBy( 'registrada', 'desc' )
+        ->where( 'checkList.id', '=', $id )->first();
+
+        // dd( 'printTicketChofer', $checkList );
+
+        return view( 'checkList.ticketCheckListUsuario', compact( 'checkList' ) );
+    }
+
+    public function printTicketCheckList( $id ) {
+
+        $checkList = checkList::select(
+            'checkList.*', 'maquinaria.identificador',
+            DB::raw( "CONCAT(maquinaria.identificador,' - ',maquinaria.nombre) AS maquinaria" ),
+            DB::raw( 'users.username AS usuario' ),
+            DB::raw( 'bitacoras.nombre AS bitacora' )
+        )
+        ->join( 'maquinaria', 'maquinaria.id', '=', 'checkList.maquinariaId' )
+        ->join( 'users', 'users.id', '=', 'checkList.usuarioId' )
+        ->leftJoin( 'bitacoras', 'bitacoras.id', '=', 'checkList.bitacoraId' )
+        ->orderBy( 'registrada', 'desc' )
+        ->where( 'checkList.id', '=', $id )->first();
+
+        // dd( 'printTicketChofer', $servicio );
+
+        return view( 'checkList.ticketCheckListCerrado', compact( 'checkList' ) );
+    }
+
 }
