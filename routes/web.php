@@ -357,6 +357,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/mantenimientos/nuevo/', [App\Http\Controllers\mantenimientosController::class, 'create'])->name('mantenimientos.create');
     Route::post('/mantenimientos/nuevo/add', [App\Http\Controllers\mantenimientosController::class, 'store'])->name('mantenimientos.store');
     Route::get('/mantenimientos/editar/{id}', [App\Http\Controllers\mantenimientosController::class, 'edit'])->name('mantenimientos.edit');
+    Route::get('/mantenimientos/detalle/{id}', [App\Http\Controllers\mantenimientosController::class, 'show'])->name('mantenimientos.show');
     Route::put('/mantenimiento/editar/{id}/update', [App\Http\Controllers\mantenimientosController::class, 'update'])->name('mantenimientos.update');
 
     //*** operaciones con reparaciones */

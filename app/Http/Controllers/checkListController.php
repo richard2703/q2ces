@@ -294,7 +294,8 @@ class checkListController extends Controller {
         abort_if ( Gate::denies( 'checkList_show' ), 403 );
 
         $checkList = checkList::select(
-            'checkList.*', 'maquinaria.identificador',
+            'checkList.*',
+            'maquinaria.identificador',
             DB::raw( "CONCAT(maquinaria.identificador,' - ',maquinaria.nombre) AS maquinaria" ),
             DB::raw( 'users.username AS usuario' ),
             DB::raw( 'bitacoras.nombre AS bitacora' )
@@ -318,9 +319,10 @@ class checkListController extends Controller {
         ->where( 'checkListRegistros.checkListId', '=', $id )->get();
 
         $maquinaria = maquinaria::select( 'maquinaria.*' )->where( 'id', '=', $checkList->maquinariaId )->first();
+        $bitacora = bitacoras::select( 'bitacoras.*' )->where( 'id', '=', $checkList->bitacoraId )->first();
 
         // dd( $records );
-        return view( 'checkList.detalleCheckList', compact( 'maquinaria', 'checkList', 'records' ) );
+        return view( 'checkList.detalleCheckList', compact( 'maquinaria', 'checkList', 'records','bitacora' ) );
     }
 
     /**

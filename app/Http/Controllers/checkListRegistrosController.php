@@ -203,6 +203,7 @@ class checkListRegistrosController extends Controller {
 
         $checkList = checkList::select(
             'checkList.*',
+            'maquinaria.identificador',
             DB::raw( "CONCAT(maquinaria.identificador,' - ',maquinaria.nombre) AS maquinaria" ),
             DB::raw( 'users.username AS usuario' ),
             DB::raw( 'bitacoras.nombre AS bitacora' ),

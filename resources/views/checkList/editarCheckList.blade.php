@@ -118,6 +118,16 @@
                                             $intCont = 0;
                                             $blnNuevaSeccion = false;
                                             $objPresentacion = new checkListPresentacion();
+
+                                                /*** directorio contenedor de su información */
+                                                $strMaquinaria = str_pad($checkList->identificador, 4, '0', STR_PAD_LEFT);
+                                                //*** folio consecutivo del checklist */
+                                                $intFolioCheckList = str_pad($checkList->id, 4, '0', STR_PAD_LEFT);
+                                                //*** codigo y version de bitacora */
+                                                $strBitacora = str_replace(' ', '_', trim($checkList->codigo) . '_v' . trim($checkList->version));
+
+                                                $pathImagen = '/storage/maquinaria/' . $strMaquinaria . '/checkList/' . $strBitacora;
+                                                // dd($pathImagen);
                                             ?>
                                             @forelse ($vctRecords as $item)
                                                 <?php
@@ -168,6 +178,14 @@
                                                     <td>
                                                         {{-- {{ $item }} --}}
                                                         <?php echo $objPresentacion->getControlByTarea($item->tareaId, $item->resultado, $item->valor, $intCont); ?>
+                                                        <p>
+                                                            @php
+                                                                if (is_null($item->ruta) == false) {
+                                                                    echo "<a class='img-mouse'>Imagen</a>";
+                                                                    echo '<input class="img-a-mostrar"  type="image" width="300" id="image' . $item->tareaId . '" alt="Imagen" src="' . asset($pathImagen . '/' . $item->ruta) . '" />';
+                                                                }
+                                                            @endphp
+                                                        </p>
 
                                                     </td>
                                                 </tr>
@@ -202,7 +220,26 @@
         </div>
     </div>
 
-    </div>
+
+    <style>
+        .img-mouse {
+            background: #5c7c26;
+            color: #fff;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .img-a-mostrar {
+            display: none;
+        }
+
+        /* Aquí está la magia que no me funciona*/
+        .img-mouse:hover+.img-a-mostrar {
+            display: block !important;
+            /* activamos la imágen y hasta le ruego con un !important */
+        }
+    </style>
+
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
         crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
