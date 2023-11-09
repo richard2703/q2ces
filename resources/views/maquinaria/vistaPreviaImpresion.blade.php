@@ -74,7 +74,7 @@
                                         <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Modelo </div></th>
                                     <th class="labelTitulo text-center" style="height: 35px; width: 170px;"> 
                                         <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Serie - VIN</div></th>
-                                    <th class="labelTitulo text-center" style="height: 35px;">
+                                    <th class="labelTitulo text-center" style="height: 35px; width: 120px;">
                                         <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Placas </div></th>
                                     <th class="labelTitulo text-center" style=" height: 35px;"> 
                                         <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Año </div></th>
