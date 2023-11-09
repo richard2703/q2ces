@@ -128,6 +128,7 @@
                                                 $strBitacora = str_replace(' ', '_', trim($checkList->codigo) . '_v' . trim($checkList->version));
 
                                                 $pathImagen = '/storage/maquinaria/' . $strMaquinaria . '/checkList/' . $strBitacora;
+                                                // dd($pathImagen);
                                                 ?>
                                                 @forelse ($records as $item)
                                                     <?php
@@ -162,7 +163,6 @@
                                                                 @php
                                                                     if (is_null($item->ruta) == false) {
                                                                         echo "<a class='img-mouse'>Imagen</a>";
-                                                                        // echo "<img class='img-a-mostrar' src='" . asset($pathImagen . '/' . $item->ruta) . "'/>";
                                                                         echo '<input class="img-a-mostrar"  type="image" width="300" id="image' . $item->tareaId . '" alt="Imagen" src="' . asset($pathImagen . '/' . $item->ruta) . '" />';
                                                                     }
                                                                 @endphp

@@ -158,14 +158,24 @@
 
                                         <div class="row" id="divRequiereUnidad">
                                             <div class=" col-4  mb-3 ">
-                                                <label class="labelTitulo">Require Usar Unidad de Medida:
+                                                <label class="labelTitulo">Usar Unidad de Medida:
                                                     <span></span></label></br>
-                                                <input class="form-check-input is-invalid align-self-end mb-2"
-                                                    name='requiereUnidadMedida' type="checkbox" id="requiereUnidadMedida"
-                                                    <?php echo $tarea->requiereUnidadMedida == 1 ? 'checked' : ''; ?> style="font-size: 20px;">
+                                                <!-- <input class="form-check-input is-invalid align-self-end mb-2"
+                                                                                                    name='requiereUnidadMedida' type="checkbox" id="requiereUnidadMedida"
+                                                                                                    <?php echo $tarea->requiereUnidadMedida == 1 ? 'checked' : ''; ?> style="font-size: 20px;"> -->
+
+                                                <select class="form-select" aria-label="Default select example"
+                                                    id="requiereUnidadMedida" name="requiereUnidadMedida">
+                                                    <option value="0"
+                                                        {{ $tarea->requiereUnidadMedida == 0 ? ' selected' : '' }}>No
+                                                    </option>
+                                                    <option value="1"
+                                                        {{ $tarea->requiereUnidadMedida == 1 ? ' selected' : '' }}>Sí
+                                                    </option>
+                                                </select>
                                             </div>
 
-                                            <fieldset class=" col-8  mb-6 " id="requiereUnidadValor">
+                                            <div class=" col-8  mb-6 " id="requiereUnidadValor">
                                                 <div class="row">
 
                                                     <div class=" col-8  mb-6 ">
@@ -176,18 +186,24 @@
                                                             class="inputCaja">
                                                     </div>
                                                 </div>
-                                            </fieldset>
+                                            </div>
                                         </div>
 
                                         <div class="row" id="divRequiereLimites">
                                             <div class=" col-4  mb-3 ">
-                                                <label class="labelTitulo">Require Usar Limites: <span></span></label></br>
-                                                <input class="form-check-input is-invalid align-self-end mb-2"
-                                                    name='requiereLimites' type="checkbox" id="requiereLimites"
-                                                    <?php echo $tarea->requiereLimites == 1 ? 'checked' : ''; ?> style="font-size: 20px;">
+                                                <label class="labelTitulo">Usar Limites: <span></span></label></br>
+                                                <select class="form-select" aria-label="Default select example"
+                                                    id="requiereLimites" name="requiereLimites">
+                                                    <option value="0"
+                                                        {{ $tarea->requiereLimites == 0 ? ' selected' : '' }}>No
+                                                    </option>
+                                                    <option value="1"
+                                                        {{ $tarea->requiereLimites == 1 ? ' selected' : '' }}>Sí
+                                                    </option>
+                                                </select>
                                             </div>
 
-                                            <fieldset class=" col-8  mb-6 " id="requiereLimites">
+                                            <div class=" col-8  mb-6 " id="requiereLimites">
                                                 <div class="row">
                                                     <div class=" col-4  mb-3 ">
                                                         <label class="labelTitulo">Valor mínimo:</label></br>
@@ -205,19 +221,24 @@
                                                             name="limiteSuperior" value="{{ $tarea->limiteSuperior }}">
                                                     </div>
                                                 </div>
-
-                                            </fieldset>
+                                            </div>
                                         </div>
 
                                         <div class="row" id="divRequiereEscala">
                                             <div class=" col-4  mb-3 ">
-                                                <label class="labelTitulo">Require Usar Escala: <span></span></label></br>
-                                                <input class="form-check-input is-invalid align-self-end mb-2"
-                                                    <?php echo $tarea->requiereEscala == 1 ? 'checked' : ''; ?> name='requiereEscala' type="checkbox"
-                                                    id="requiereEscala" style="font-size: 20px;">
+                                                <label class="labelTitulo">Usar Escala: <span></span></label></br>
+                                                <select class="form-select" aria-label="Default select example"
+                                                    id="requiereEscala" name="requiereEscala">
+                                                    <option value="0"
+                                                        {{ $tarea->requiereEscala == 0 ? ' selected' : '' }}>No
+                                                    </option>
+                                                    <option value="1"
+                                                        {{ $tarea->requiereEscala == 1 ? ' selected' : '' }}>Sí
+                                                    </option>
+                                                </select>
                                             </div>
 
-                                            <fieldset class=" col-8  mb-6 " id="requiereEscala">
+                                            <div class=" col-8  mb-6 " id="requiereEscala">
                                                 <div class="row">
 
                                                     <div class=" col-4  mb-3 ">
@@ -238,19 +259,26 @@
                                                             value="{{ $tarea->limiteSuperiorEscala }}">
                                                     </div>
                                                 </div>
-                                            </fieldset>
+                                            </div>
                                         </div>
 
                                         <div class="row" id="divRequierePeriodo">
                                             <div class=" col-4  mb-3 ">
-                                                <label class="labelTitulo">Require Usar Periodo de Tiempo:
+                                                <label class="labelTitulo">Usar Periodo de Tiempo:
                                                     <span></span></label></br>
-                                                <input class="form-check-input is-invalid align-self-end mb-2"
-                                                    <?php echo $tarea->requierePeriodo == 1 ? 'checked' : ''; ?> name='requierePeriodo' type="checkbox"
-                                                    id="requierePeriodo" style="font-size: 20px;">
+
+                                                <select class="form-select" aria-label="Default select example"
+                                                    id="requierePeriodo" name="requierePeriodo">
+                                                    <option value="0"
+                                                        {{ $tarea->requierePeriodo == 0 ? ' selected' : '' }}>No
+                                                    </option>
+                                                    <option value="1"
+                                                        {{ $tarea->requierePeriodo == 1 ? ' selected' : '' }}>Sí
+                                                    </option>
+                                                </select>
                                             </div>
 
-                                            <fieldset class=" col-8  mb-6 " id="requiereEscala">
+                                            <div class=" col-8  mb-6 " id="requiereEscala">
                                                 <div class="row">
 
                                                     <div class=" col-4  mb-3 ">
@@ -269,7 +297,7 @@
                                                             value="{{ $tarea->fechaFinal }}">
                                                     </div>
                                                 </div>
-                                            </fieldset>
+                                            </div>
                                         </div>
 
                                         <div class="col-12 my-4  ">
@@ -306,16 +334,28 @@
     </script>
 
     <script>
+        window.onload = function() {
+            configurar();
+        };
+
         function configurar() {
 
             const listaSeleccion = document.getElementById('tipoValorId');
 
-            // const chkUnidad = document.getElementById('requiereUnidadMedida');
-            // const chkLimites = document.getElementById('requiereLimites');
-            // const chkEscala = document.getElementById('requiereEscala');
-            // const chkPeriodo = document.getElementById('requierePeriodo');
+            var lstRUM = document.getElementById('requiereUnidadMedida');
+            var txtUnidad = document.getElementById('unidadMedida');
 
-            const txtUnidad = document.getElementById('unidadMedida');
+            var lstLimites = document.getElementById('requiereLimites');
+            var txtSuperior = document.getElementById('limiteSuperior');
+            var txtInferior = document.getElementById('limiteInferior');
+
+            var lstEscala = document.getElementById('requiereEscala');
+            var txtSuperiorE = document.getElementById('limiteSuperiorEscala');
+            var txtInferiorE = document.getElementById('limiteInferiorEscala');
+
+            var lstPeriodo = document.getElementById('requierePeriodo');
+            var txtInicial = document.getElementById('fechaInicial');
+            var txtFinal = document.getElementById('fechaFinal');
 
             console.log(listaSeleccion.value);
 
@@ -323,14 +363,135 @@
                 case '1':
                     /* es para la etiqueta*/
                     console.log('En etiqueta');
-                    txtUnidad.value = "";
-                    txtUnidad.readonly = true;
 
-                    document.getElementById("requiereUnidadMedida").checked = off;
+                    lstRUM.disabled = true;
+                    txtUnidad.disabled = true;
+                    txtUnidad.value = "";
+
+                    lstLimites.disabled = true;
+                    txtSuperior.disabled = true;
+                    txtSuperior.value = "";
+                    txtInferior.disabled = true;
+                    txtInferior.value = "";
+
+                    lstEscala.disabled = true;
+                    txtSuperiorE.disabled = true;
+                    txtSuperiorE.value = "";
+                    txtInferiorE.disabled = true;
+                    txtInferiorE.value = "";
+
+                    lstPeriodo.disabled = true;
+                    txtInicial.disabled = true;
+                    txtInicial.value = "";
+                    txtFinal.disabled = true;
+                    txtFinal.value = "";
 
                     break;
 
+                case '2':
+                    /* es para textbox*/
+                    console.log('En Text');
+                    lstRUM.disabled = false;
+                    txtUnidad.disabled = false;
+                    txtUnidad.value = "";
+
+                    lstLimites.disabled = true;
+                    txtSuperior.disabled = true;
+                    txtSuperior.value = "";
+                    txtInferior.disabled = true;
+                    txtInferior.value = "";
+
+                    lstEscala.disabled = true;
+                    txtSuperiorE.disabled = true;
+                    txtSuperiorE.value = "";
+                    txtInferiorE.disabled = true;
+                    txtInferiorE.value = "";
+
+                    lstPeriodo.disabled = true;
+                    txtInicial.disabled = true;
+                    txtInicial.value = "";
+                    txtFinal.disabled = true;
+                    txtFinal.value = "";
+                    break;
+
+                case '3':
+                case '4':
+                    /* es para number*/
+                    console.log('En Numero y decimal');
+                    lstRUM.disabled = false;
+                    txtUnidad.disabled = false;
+                    txtUnidad.value = "";
+
+                    lstLimites.disabled = false;
+                    txtSuperior.disabled = false;
+                    txtSuperior.value = "";
+                    txtInferior.disabled = false;
+                    txtInferior.value = "";
+
+                    lstEscala.disabled = false;
+                    txtSuperiorE.disabled = false;
+                    txtSuperiorE.value = "";
+                    txtInferiorE.disabled = false;
+                    txtInferiorE.value = "";
+
+                    lstPeriodo.disabled = true;
+                    txtInicial.disabled = true;
+                    txtInicial.value = "";
+                    txtFinal.disabled = true;
+                    txtFinal.value = "";
+                    break;
+
+                case '5':
+                    /* es para date*/
+                    console.log('Fecha');
+                    lstRUM.disabled = true;
+                    txtUnidad.disabled = true;
+                    txtUnidad.value = "";
+
+                    lstLimites.disabled = true;
+                    txtSuperior.disabled = true;
+                    txtSuperior.value = "";
+                    txtInferior.disabled = true;
+                    txtInferior.value = "";
+
+                    lstEscala.disabled = true;
+                    txtSuperiorE.disabled = true;
+                    txtSuperiorE.value = "";
+                    txtInferiorE.disabled = true;
+                    txtInferiorE.value = "";
+
+                    lstPeriodo.disabled = false;
+                    txtInicial.disabled = false;
+                    txtInicial.value = "";
+                    txtFinal.disabled = false;
+                    txtFinal.value = "";
+                    break;
+
                 default:
+                    /* todo los demas */
+                    console.log('El resto');
+
+                    lstRUM.disabled = true;
+                    txtUnidad.disabled = true;
+                    txtUnidad.value = "";
+
+                    lstLimites.disabled = true;
+                    txtSuperior.disabled = true;
+                    txtSuperior.value = "";
+                    txtInferior.disabled = true;
+                    txtInferior.value = "";
+
+                    lstEscala.disabled = true;
+                    txtSuperiorE.disabled = true;
+                    txtSuperiorE.value = "";
+                    txtInferiorE.disabled = true;
+                    txtInferiorE.value = "";
+
+                    lstPeriodo.disabled = true;
+                    txtInicial.disabled = true;
+                    txtInicial.value = "";
+                    txtFinal.disabled = true;
+                    txtFinal.value = "";
                     break;
             }
 
