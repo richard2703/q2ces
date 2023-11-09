@@ -404,6 +404,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Servicios
     Route::post('serviciosTrasporte/cajaChica', [App\Http\Controllers\serviciosTrasporteController::class, 'cajaChica'])->name('serviciosTrasporte.cajaChica');
+    Route::put('serviciosTrasporte/pagado', [App\Http\Controllers\serviciosTrasporteController::class, 'pagado'])->name('serviciosTrasporte.pagado');
     Route::get('serviciosTrasporte/misServicios', [App\Http\Controllers\serviciosTrasporteController::class, 'misServicios'])->name('serviciosTrasporte.misServicios');
     Route::put('serviciosTrasporte/misServicios', [App\Http\Controllers\serviciosTrasporteController::class, 'misServiciosChofer'])->name('serviciosTrasporte.misServiciosChofer');
     Route::get('serviciosTrasporte/ticket/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'printTicketChofer'])->name('serviciosTrasporte.printTicketChofer');

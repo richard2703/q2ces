@@ -14,7 +14,7 @@
                             <div class="row divBorder">
 
                                 <div class="col-6 text-right">
-                                    <a href="{{ route('inventario.dashCombustible') }}">
+                                    <a href="{{ route('serviciosTrasporte.misServicios') }}">
                                         <button class="btn regresar">
                                             <span class="material-icons">
                                                 reply

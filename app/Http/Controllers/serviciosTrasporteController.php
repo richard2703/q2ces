@@ -31,18 +31,24 @@ class serviciosTrasporteController extends Controller
 
         $registros = serviciosTrasporte::join('conceptos', 'serviciosTrasporte.conceptoId', 'conceptos.id')
             ->leftJoin('obras', 'serviciosTrasporte.obraId', 'obras.id')
+            ->join('clientes', 'obras.clienteId', 'clientes.id')
             ->join('maquinaria', 'serviciosTrasporte.equipoId', 'maquinaria.id')
             ->join('personal', 'serviciosTrasporte.personalId', 'personal.id')
             ->select(
                 'serviciosTrasporte.id',
                 'serviciosTrasporte.fecha',
                 'conceptos.nombre as cnombre',
+                'clientes.nombre as cliente',
                 'obras.nombre as obra',
+                'obras.centroCostos',
+                'obras.proyecto',
                 'maquinaria.identificador',
                 'maquinaria.nombre as maquinaria',
                 'personal.nombres as pnombre',
                 'personal.apellidoP as papellidoP',
                 'cantidad',
+                'costoMano',
+                'costoServicio',
                 'serviciosTrasporte.estatus'
             )
             ->orderBy('fecha', 'desc')
@@ -150,27 +156,42 @@ class serviciosTrasporteController extends Controller
     public function cajaChica(Request $request)
     {
         abort_if(Gate::denies('serviciosTrasporte_create'), 403);
+        // dd($request);
         $serviciosTrasporte = serviciosTrasporte::find($request->id);
         $serviciosTrasporte->cajaChica = 1;
+        $serviciosTrasporte->estatus = 3;
         $serviciosTrasporte->save();
 
         $obra = obras::find($serviciosTrasporte->obraId);
         // serviciosTrasporte.conceptoId
         $data['dia'] = $serviciosTrasporte->fecha;
         $data['concepto'] = $serviciosTrasporte->conceptoId;
-        $data['comprobanteId'] = $serviciosTrasporte->obraId;
+        $data['comprobanteId'] = 2;
         $data['ncomprobante'] = $serviciosTrasporte->id;
         $data['cliente'] = $obra->clienteId;
         $data['obra'] = $serviciosTrasporte->obraId;
         $data['equipo'] = $serviciosTrasporte->equipoId;
         $data['personal'] = $serviciosTrasporte->personalId;
         $data['tipo'] = 2;
-        $data['cantidad'] = $serviciosTrasporte->cantidad;
+        $data['cantidad'] = $serviciosTrasporte->cantidad + $serviciosTrasporte->costoMano;
         $data['servicioTrasporteId'] = $serviciosTrasporte->id;
+
 
         // $data['comentario'] = $serviciosTrasporte->id;
 
         cajaChica::create($data);
+
+        return redirect()->action([serviciosTrasporteController::class, 'index']);
+        dd('cajaChica');
+    }
+
+    public function pagado(Request $request)
+    {
+        abort_if(Gate::denies('serviciosTrasporte_create'), 403);
+        // dd($request);
+        $serviciosTrasporte = serviciosTrasporte::find($request->id);
+        $serviciosTrasporte->estatus = 4;
+        $serviciosTrasporte->save();
 
         return redirect()->action([serviciosTrasporteController::class, 'index']);
         dd('cajaChica');

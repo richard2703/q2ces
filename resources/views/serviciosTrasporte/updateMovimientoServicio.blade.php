@@ -239,9 +239,9 @@
                                                     <option
                                                         value="2"{{ $serviciosTrasporte->estatus == 2 ? 'selected' : '' }}>
                                                         Hecho</option>
-                                                    <option
+                                                    {{--  <option
                                                         value="3"{{ $serviciosTrasporte->estatus == 3 ? 'selected' : '' }}>
-                                                        Cerrado</option>
+                                                        Cerrado</option>  --}}
                                                     <option
                                                         value="0"{{ $serviciosTrasporte->estatus == 0 ? 'selected' : '' }}>
                                                         Cancelado</option>
