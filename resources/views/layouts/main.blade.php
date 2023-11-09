@@ -179,8 +179,7 @@
                     <a class="nav-link {{ $activePage == 'servicios' ? '' : 'collapsed' }}"
                         href="{{ route('serviciosTrasporte.misServicios') }}">
                         {{--  <i class="bi bi-shop"></i>  --}}
-                        <i class="fas fa-truck"></i>
-
+                        <i class="fas fa-truck-pickup"></i>
                         <span>Mis Servicios</span>
                     </a>
                 </li>
@@ -262,7 +261,7 @@
                             fact_check
                         </span>
 
-                        <span>Bitácoras y Check List</span><i class="bi bi-chevron-down ms-auto"></i>
+                        <span>Check Lists</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="bitacora-nav" class="nav-content collapse {{ $activePage == 'bitacoras' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
@@ -290,10 +289,8 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('bitacora_index')
+                        {{-- @can('bitacora_index')
                             <li>
-                                {{--  <a href="{{ url('/indexBitacora') }}"
-                                    class="{{ $activeItem == 'bitacoras' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('bitacoras.index') }}" class="">
                                     <i class="bi bi-circle"></i><span>Ver Bitácoras</span>
                                 </a>
@@ -301,7 +298,6 @@
                         @endcan
                         @can('grupo_index')
                             <li>
-                                {{--  <a href="{{ url('/indexGrupos') }}" class="{{ $activeItem == 'grupos' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('grupo.index') }}" class="">
                                     <i class="bi bi-circle"></i><span>Ver Grupos</span>
                                 </a>
@@ -309,12 +305,11 @@
                         @endcan
                         @can('tarea_index')
                             <li>
-                                {{--  <a href="{{ url('/tareas') }}" class="{{ $activeItem == 'tareas' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('tarea.index') }}" class="">
                                     <i class="bi bi-circle"></i><span>Ver Tareas</span>
                                 </a>
                             </li>
-                        @endcan
+                        @endcan --}}
                     </ul>
                 </li>
             @endcan
@@ -332,6 +327,20 @@
                     </a>
                     <ul id="maquinaria-nav" class="nav-content collapse {{ $activePage == 'maquinaria' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
+                        @can('maquinaria_index')
+                            {{-- <li> --}}
+                            {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
+                            {{-- <a href="{{ route('maquinaria.distribucion') }}" class="">
+                                <i class="bi bi-circle"></i><span>Distribución General</span>
+                            </a>
+                        </li> --}}
+                            <li>
+                                {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
+                                <a href="{{ route('maquinaria.indexQ2cesUso') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Uso Maquinaria</span>
+                                </a>
+                            </li>
+                        @endcan
                         @can('maquinaria_index')
                             {{-- <li> --}}
                             {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}

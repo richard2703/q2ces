@@ -43,8 +43,8 @@ class tareaController extends Controller {
             DB::raw( 'tipoValorTarea.controlHtml AS controlHtml' ),
             DB::raw( 'grupo.nombre AS grupo' ),
         )
-        ->join( 'grupoTareas', 'grupoTareas.tareaId', '=', 'tarea.id' )
-        ->join( 'grupo', 'grupo.id', '=', 'grupoTareas.grupoId' )
+        ->leftJoin( 'grupoTareas', 'grupoTareas.tareaId', '=', 'tarea.id' )
+        ->leftJoin( 'grupo', 'grupo.id', '=', 'grupoTareas.grupoId' )
         ->leftJoin( 'tareaCategoria', 'tareaCategoria.id', '=', 'tarea.categoriaId' )
         ->leftJoin( 'tareaTipo', 'tareaTipo.id', '=', 'tarea.tipoId' )
         ->leftJoin( 'tareaUbicacion', 'tareaUbicacion.id', '=', 'tarea.ubicacionId' )

@@ -14,7 +14,9 @@
                             <div class="row divBorder">
 
                                 <div class="col-6 text-right">
-                                    <a href="{{ route('serviciosTrasporte.misServicios') }}">
+
+                                    {{--  @if ($carga->tipoCisternaId == null) --}}
+                                    <a href="{{ route('checkList.index') }}">
                                         <button class="btn regresar">
                                             <span class="material-icons">
                                                 reply
@@ -22,16 +24,7 @@
                                             Regresar
                                         </button>
                                     </a>
-                                    {{--  @if ($carga->tipoCisternaId == null)
-                                        <a href="{{ route('inventario.dashCombustible') }}">
-                                            <button class="btn regresar">
-                                                <span class="material-icons">
-                                                    reply
-                                                </span>
-                                                Regresar
-                                            </button>
-                                        </a>
-                                    @else
+                                    {{-- @else
                                         <a href="{{ route('combustibleTote.index') }}">
                                             <button class="btn regresar">
                                                 <span class="material-icons">
@@ -56,7 +49,7 @@
                             <img src="{{ asset('/img/login/002-sin-slogan.png') }}" alt="" width="180px;"
                                 class="mb-2" style="margin-left: -15px;">
 
-                            <div class="text-start">
+                            <div class="text-center">
                                 {{--  @if ($carga->tipoCisternaId == null)
                                     <img width="300px;" src="{{ asset('/img/login/Header1CargaGrande.svg') }}"
                                         alt="" class="mb-2">
@@ -65,42 +58,42 @@
                                         alt="" class="mb-2">
                                 @endif  --}}
 
-                                <img width="300px;" src="{{ asset('/img/login/Header1Servicios.svg') }}" alt=""
-                                    class="mb-2">
+                                <img width="300px;" src="{{ asset('/img/login/HeaderTicketsCheckList.svg') }}"
+                                    alt="" class="mb-2">
 
                                 <br>
                                 <h1 class="text-center" style="font-weight: 1000;">
-                                    Q2S/TS-{{ sprintf('%03d', $servicio->id) }}</h1><br>
+                                    Q2S/CH-{{ sprintf('%03d', $checkList->id) }}</h1><br>
                                 <h5 class="text-center" style="font-weight: 1000; ">FECHA DE IMPRESIÓN:</h5>
                                 <div class="text-center" id="fecha-hora"></div>
                                 <p class="text-center" id="hora"></p>
                                 <br><br>
                                 <div class="text-center">
-                                    <h5 style="font-weight: 1000; ">CONCEPTO: </h5> {{ $servicio->concepto }}
+                                    <h5 style="font-weight: 1000; ">CHECKLIST: </h5> {{ $checkList->bitacora }}
                                 </div>
                                 <div class="text-center">
-                                    <h5 style="font-weight: 1000; ">OPERADOR: </h5> {{ $servicio->nombres }}
-                                    {{ $servicio->apellidoP }}
+                                    <h5 style="font-weight: 1000;   ">CÓDIGO:</h5>
+                                    {{ $checkList->codigo }} V{{ $checkList->version }}
+                                </div>
+                                <div class="text-center">
+                                    <h5 style="font-weight: 1000; ">OPERADOR: </h5>
+                                    {{ $checkList->nombres ? $checkList->nombres . ' ' . $checkList->apellidoP : $checkList->username }}
                                 </div>
                                 <div class="text-center">
                                     <h5 style="font-weight: 1000;   ">EQUIPO:</h5>
-                                    {{ $servicio->equipo }}
+                                    {{ $checkList->maquinaria }}
                                 </div>
                                 <div class="text-center">
-                                    <h5 style="font-weight: 1000;   ">CLIENTE:</h5>
-                                    {{ $servicio->cliente }}
+                                    <h5 style="font-weight: 1000;   ">FECHA EJECUCIÓN:</h5>
+                                    {{ $checkList->created_at }}
                                 </div>
-                                <div class="text-center">
-                                    <h5 style="font-weight: 1000;   ">OBRA:</h5>
-                                    {{ $servicio->obra }}
-                                </div>
-                                <div class="text-center">
+                                {{-- <div class="text-center">
                                     <h5 style="font-weight: 1000;   ">QUIEN RECIBE:</h5>
-                                    {{ $servicio->recibe }}
-                                </div>
+                                    {{ $checkList->recibe }}
+                                </div> --}}
                                 <div class="text-center">
                                     <h5 style="font-weight: 1000;   ">COMENTARIO:</h5>
-                                    {{ $servicio->comentario }}
+                                    {{ $checkList->comentario }}
                                 </div>
                                 <p class="pt-5" style="margin-top: 20px; text-align: center;">
                                     ______________________________________<br>
@@ -155,12 +148,11 @@
                 visibility: visible !important;
             }
 
-            /*   @page {
-                                            size: 70mm 260mm;
-                                             Tamaño ISO C7 en milímetros
-                                            margin: 0;
+            @page {
+                size: 70mm 260mm;
+                Tamaño ISO C7 en milímetros margin: 0;
 
-                                        }*/
+            }
 
             body {
                 margin-top: -80mm !important;

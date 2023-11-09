@@ -16,6 +16,8 @@ use App\Models\grupo;
 use App\Models\inventarioMtq;
 use App\Models\manoDeObra;
 
+use function PHPUnit\Framework\isNull;
+
 class searchController extends Controller
 {
     /**
@@ -275,6 +277,42 @@ class searchController extends Controller
         // return response()->json( $sugerencias );
     }
 
+    public function equiposQ2ces(Request $request)
+    {
+        //dd( $request );
+        // $term = $request->input( 'term' );
+        $term = $request->get('term');
+
+        $maquinaria = Maquinaria::where('compania', null)
+            ->where(function ($query) use ($term) {
+                $query->where('nombre', 'LIKE', '%' . $term . '%')
+                    ->where('estatusId', '1')
+                    ->orWhere('marca', 'LIKE', '%' . $term . '%')
+                    ->orWhere('categoria', 'LIKE', '%' . $term . '%');
+            })
+            ->get();
+
+        $sugerencias = [];
+        foreach ($maquinaria as $item) {
+
+            $sugerencias[] = [
+                'value' =>  'Equipo ' . $item->nombre . ', Marca ' . $item->marcaId . ', Modelo ' . $item->modelo  . ', N.E. ' .  $item->identificador . ', Placas ' .  $item->placas,
+                'id' => $item->id,
+                'nombre' => $item->nombre,
+                'marca' => $item->marcaId,
+                'numserie' => $item->numserie,
+                'placas' => $item->placas,
+                'modelo' => $item->modelo,
+                'identificador' => $item->identificador,
+                'kilometraje' => $item->kilometraje,
+                'compania' => $item->compania,
+            ];
+        }
+
+        return $sugerencias;
+        // return response()->json( $sugerencias );
+    }
+
     /**
      * Busca material para el mantenimiento de equipos
      *
@@ -286,21 +324,39 @@ class searchController extends Controller
     {
         // dd($request);
         // $term = $request->input( 'term' );
+        $filter = $request->input('filter');
         $term = $request->get('term');
 
-        $inventario = inventario::select('inventario.*', DB::raw('marca.nombre AS marca'))
-            ->join('marca', 'marca.id', '=', 'inventario.marcaId')
-            ->where('inventario.nombre', 'LIKE', '%' . $term . '%')
-            ->whereIn('inventario.tipo', ['refacciones', 'consumibles', 'servicios'])
-            ->orwhere('inventario.numparte', 'LIKE', '%' . $term . '%')
-            ->orwhere('inventario.modelo', 'LIKE', '%' . $term . '%')
-            ->orwhere('inventario.tipo', 'LIKE', '%' . $term . '%')
-            ->orwhere('marca.nombre', 'LIKE', '%' . $term . '%')->get();
+        if (is_null($filter) == true) {
+
+            $inventario = inventario::select('inventario.*', DB::raw('marca.nombre AS marca'))
+                ->join('marca', 'marca.id', '=', 'inventario.marcaId')
+                ->where('inventario.nombre', 'LIKE', '%' . $term . '%')
+                ->whereIn('inventario.tipo', ['refacciones', 'consumibles', 'servicios', 'herramientas'])
+                ->orwhere('inventario.numparte', 'LIKE', '%' . $term . '%')
+                ->orwhere('inventario.modelo', 'LIKE', '%' . $term . '%')
+                ->orwhere('inventario.tipo', 'LIKE', '%' . $term . '%')
+                ->orwhere('marca.nombre', 'LIKE', '%' . $term . '%')
+                ->orderBy('inventario.nombre', 'Asc')
+                ->get();
+        } else {
+            $inventario = inventario::select(
+                'inventario.*',
+                DB::raw('marca.nombre AS marca'),
+                DB::raw("CONCAT(inventario.nombre,' ', inventario.numparte,' ',inventario.modelo,' ',marca.nombre)as buscando"),
+            )
+                ->join('marca', 'marca.id', '=', 'inventario.marcaId')
+                ->where('inventario.tipo', '=', $filter)
+                ->where(DB::raw("CONCAT(inventario.nombre,' ', inventario.numparte,' ',inventario.modelo,' ',marca.nombre)"), 'LIKE', '%' . $term . '%')
+                ->orderBy('inventario.nombre', 'Asc')
+                ->get();
+        }
+
 
         $sugerencias = [];
         foreach ($inventario as $item) {
             $sugerencias[] = [
-                'value' => 'Artículo: ' . $item->nombre . ', Número de parte: ' . $item->numparte . ', Modelo: ' . $item->modelo . ', PU: $ ' . $item->valor,
+                'value' =>   $item->nombre . ', Marca: ' . $item->marca . ', Modelo: ' . $item->modelo  . ', PU: $ ' . $item->valor. " [ Stock ". $item->cantidad . " ]",
                 'id' => $item->id,
                 'nombre' => $item->nombre,
                 'valor' => $item->valor,
@@ -332,19 +388,20 @@ class searchController extends Controller
         $inventario = manoDeObra::select('manoDeObra.*')
             ->where('manoDeObra.nombre', 'LIKE', '%' . $term . '%')
             ->orwhere('manoDeObra.codigo', 'LIKE', '%' . $term . '%')
-            ->orwhere('manoDeObra.comentario', 'LIKE', '%' . $term . '%')->get();
+            ->orwhere('manoDeObra.comentario', 'LIKE', '%' . $term . '%')
+            ->orderBy('nombre', 'asc')->get();
 
         $sugerencias = [];
         foreach ($inventario as $item) {
             $sugerencias[] = [
-                'value' => 'Artículo: ' . $item->nombre . ', Número de parte: ' . $item->codigo . ', Modelo: N/A, PU: $ ' . $item->costo,
+                'value' =>  $item->nombre . ', Código: ' . $item->codigo . ', PU: $ ' . $item->costo,
                 'id' => $item->id,
                 'nombre' => $item->nombre,
                 'valor' => $item->costo,
                 'cantidad' => 1,
                 'marca' => 'N/A',
                 'numparte' => $item->codigo,
-                'tipo' => 'Mano de Obra',
+                'tipo' => 'mano de obra',
                 'modelo' => 'N/A',
             ];
         }

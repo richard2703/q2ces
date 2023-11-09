@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'cajaChica', 'titlePage' => __('Caja Chica - Nuevo Movimiento')])
+@extends('layouts.main', ['activePage' => 'servicios', 'titlePage' => __('Caja Chica - Nuevo Movimiento')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -95,7 +95,7 @@
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Maniobrista: <span>*</span></label></br>
-                                                <select id="maniobristaId" name="maniobristaId" class="form-select" required
+                                                <select id="maniobristaId" name="maniobristaId" class="form-select"
                                                     aria-label="Default select example">
                                                     <option selected value="">Seleccione</option>
                                                     @forelse ($personal as $persona)
@@ -133,7 +133,7 @@
                                                 </select>
                                             </div>
 
-                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                            {{--  <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Almacen/Tiradero: <span>*</span></label></br>
                                                 <select id="almacenId" name="almacenId" class="form-select" required
                                                     aria-label="Default select example">
@@ -144,7 +144,7 @@
                                                     @empty
                                                     @endforelse
                                                 </select>
-                                            </div>
+                                            </div>  --}}
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Trabajo y/o Servicio:</label></br>

@@ -122,6 +122,16 @@
                                         <input type="text" class="inputCaja" id="estado" name="estado" required
                                             placeholder="Especifique..." value="{{ old('estado') }}">
                                     </div>
+                                    <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                        <label class="labelTitulo">Proyecto: </label></br>
+                                        <input type="text" class="inputCaja" id="proyecto" name="proyecto"
+                                            placeholder="Especifique..." value="{{ old('proyecto') }}">
+                                    </div>
+                                    <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                        <label class="labelTitulo">Centro de Costos: </label></br>
+                                        <input type="text" class="inputCaja" id="centroCostos" name="centroCostos"
+                                            placeholder="Especifique..." value="{{ old('centroCostos') }}">
+                                    </div>
                                 </div>
                             </div>
 

@@ -167,6 +167,14 @@
                                                                 @endcan
                                                             @endif
 
+                                                            @if ($item->estatus == 2)
+                                                                <a href="{{ route('checkList.printTicketUsuario', $item->id) }}"
+                                                                    title="Imprimir Ticket de Checklist" <i
+                                                                    class="fas fa-print "
+                                                                    style="color: #8caf48;font-size: x-large;"></i>
+                                                                </a>
+                                                            @endif
+
 
                                                             {{-- @can('checkList_edit')
                                                             <a href="#" data-bs-toggle="modal"
@@ -229,7 +237,7 @@
                             </div>
                             <div class="card-footer d-flex justify-content-center">
                                 @if (is_null($vctRecords) == false)
-                                     {{ $vctRecords->links() }}
+                                    {{ $vctRecords->links() }}
                                 @endif
                             </div>
                         </div>

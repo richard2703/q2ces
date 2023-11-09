@@ -106,6 +106,9 @@ class checkListPresentacion {
                 $strLeyenda .
                 ' required value="'. $strResultadoControl . '" '.
                 ' placeholder="Ej. Escribe el texto aquí" >';
+                $strCodigoControl .= $strImagen;
+
+                $vctDebug[] = $strCodigoControl ;
                 break;
 
                 case 'number':
@@ -128,7 +131,9 @@ class checkListPresentacion {
                 $strCodigoControl = '<input type="date" class="inputCaja" id="control'. $intConsecutivo . '" name="resultado'. $intTareaId . '" required value="'. $strResultadoControl . '" ' .
                 $strLeyenda .
                 $strMinimo .
-                $strMaximo . ' pattern="\d{4}-\d{2}-\d{2}">';
+                $strMaximo . ' pattern="\d{4}-\d{2}-\d{2}">' . $strImagen;
+
+                $vctDebug[] = $strCodigoControl ;
                 break;
 
                 case 'radio':
@@ -151,9 +156,11 @@ class checkListPresentacion {
 
                     }
 
+                    $strCodigoControl .= $strImagen;
                 } else {
                     $strCodigoControl = "<label class='labelTitulo'>Algo salio MAL con la tarea->$objTarea->nombre, favor de revisar!!!</label>";
                 }
+                $vctDebug[] = $strCodigoControl ;
                 break;
 
                 case 'select':
@@ -169,13 +176,16 @@ class checkListPresentacion {
                 ' name="resultado'. $intTareaId . '" required>' .
                 '<option value="">Seleccione</option>' .
                 $strItems .
-                '</select>';
+                '</select>' . $strImagen;
 
+                $vctDebug[] = $strCodigoControl ;
                 break;
 
                 case 'label':
                 default:
                 $strCodigoControl = '<label id="control'. $intConsecutivo . '">'. $objTarea->leyenda . '</label>';
+                $strCodigoControl .= $strImagen;
+
                 $vctDebug[] = $strCodigoControl ;
                 break;
             }

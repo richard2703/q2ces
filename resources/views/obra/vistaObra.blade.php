@@ -84,6 +84,12 @@
                                 </div>
 
                                 <div class=" col-12  my-3 order-1">
+                                    <h2 class="fs-5 textTitulo">Información Adicional:</h2>
+                                    <p class="txtVistaObra">Proyecto {{ ($obras->proyecto ? $obras->proyecto : '---')}}<br> Centro de Costos {{ ($obras->centroCostos ? $obras->centroCostos : '---') }}
+                                    </p>
+                                </div>
+
+                                <div class=" col-12  my-3 order-1">
                                     <h2 class="fs-5 textTitulo">Estatus:</h2>
                                     <p class="txtVistaObra">{{ $obras->estatus == 1 ? ' Activa' : 'Inactiva' }}
                                     </p>

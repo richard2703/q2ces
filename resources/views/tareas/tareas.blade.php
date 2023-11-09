@@ -35,7 +35,18 @@
 
                                     <div class="row">
                                         <div class="d-flex p-3 divBorder">
-                                            <div class="col-6 col-sm-6 col-lg-6 pb-6 text-center">
+
+                                            <div class="col-4 text-left">
+                                                <a href="{{ route('catalogos.index') }}">
+                                                    <button class="btn regresar">
+                                                        <span class="material-icons">
+                                                            reply
+                                                        </span>
+                                                        Regresar
+                                                    </button>
+                                                </a>
+                                            </div>
+                                            <div class="col-8 col-sm-8 col-lg-8 pb-8 text-end">
                                                 <form action="{{ route('tarea.index') }}" method="GET" id="filterForm">
                                                     <div class="input-group">
                                                         <label class="labelTitulo p-2">Grupo de Tareas: </label>
@@ -59,14 +70,9 @@
                                                     <div class="col-12 text-end">
                                                         <div class="row">
                                                             <a href="{{ url('/bitacoras/tareas/nueva') }}">
-                                                                <!--Agregar ruta-->
                                                                 <button type="button" class="btn botonGral">Nueva
                                                                     Tarea</button>
                                                             </a>
-                                                            {{-- <div class="col-12 text-right" data-bs-toggle="modal"
-                                                            data-bs-target="#nuevaTarea">
-                                                            <button type="button" class="btn botonGral">Nueva Tarea</button>
-                                                        </div> --}}
                                                         </div>
                                                     </div>
                                                 @endcan
@@ -78,7 +84,7 @@
                                         <table class="table">
                                             <thead class="labelTitulo">
                                                 <tr>
-                                                    <th class="labelTitulo" style="width:40px">Id</th>
+                                                    <th class="labelTitulo" style="width:60px">Id</th>
                                                     <th class="labelTitulo">Nombre</th>
                                                     <th class="labelTitulo">Grupo de Tareas</th>
                                                     <th class="labelTitulo">Categoría</th>
@@ -99,7 +105,7 @@
                                                         <td><a href="#"
                                                                 title="{{ $item->comentario }}">{{ $item->nombre }}</a>
                                                         </td>
-                                                        <td>{{ $item->grupo }} </td>
+                                                        <td>{{ $item->grupo ? $item->grupo : '---'  }} </td>
                                                         <td>{{ $item->categoria }} </td>
                                                         <td>{{ $item->ubicacion }}</td>
                                                         <td>{{ $item->tipo }}</td>
