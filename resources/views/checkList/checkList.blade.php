@@ -60,11 +60,12 @@
                                         <table class="table">
                                             <thead class="labelTitulo">
                                                 <tr>
-                                                    <th class="labelTitulo" style="width:50px">Folio</th>
+                                                    <th class="labelTitulo" style="width:60px">Folio</th>
                                                     <th class="labelTitulo">Equipo</th>
                                                     <th class="labelTitulo">Bitácora</th>
                                                     <th class="labelTitulo">Registro</th>
                                                     <th class="labelTitulo">Fecha</th>
+                                                    <th class="labelTitulo">Estatus</th>
                                                     <th class="labelTitulo text-center" style="width:120px">Acciones</th>
                                                 </tr>
                                             </thead>
@@ -80,7 +81,40 @@
 
                                                         <td>{{ $item->bitacora }}</td>
                                                         <td>{{ $item->usuario }} </td>
+                                                        <td class=@switch($item->estatus)
+                                                                @case(1)
+                                                                    'yellow'
+                                                                @break
 
+                                                                @case(2)
+                                                                    'green'
+
+                                                                @break
+
+                                                                @case(3)
+                                                                    'blue'
+                                                                @break
+
+                                                                @default
+                                                                'red'
+                                                            @endswitch>
+                                                            @switch($item->estatus)
+                                                                @case(1)
+                                                                    Espera
+                                                                @break
+
+                                                                @case(2)
+                                                                    Hecho
+                                                                @break
+
+                                                                @case(3)
+                                                                    Cerrado
+                                                                @break
+
+                                                                @default
+                                                                    Cancelado
+                                                            @endswitch
+                                                        </td>
                                                         <td>{{ $item->registrada }} </td>
 
                                                         <td class="td-actions text-center">
@@ -100,7 +134,7 @@
                                                             @endcan
 
                                                             @can('checkList_create')
-                                                                <a href="{{ route('checkListRegistros.show', $item->id) }}"
+                                                                <a href="{{ route('checkListRegistros.show', $item->id) }}" title="Edición del Checklist"
                                                                     class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                         height="28" fill="currentColor" title="Editar"
@@ -110,6 +144,13 @@
                                                                     </svg>
                                                                 </a>
                                                             @endcan
+
+                                                            @if ($item->estatus != 1)
+                                                                <a href="{{ route('checkList.printTicketUsuario', $item->id) }}" title="Imprimir Ticket de Checklist"
+                                                                    <i class="fas fa-print "
+                                                                    style="color: #8caf48;font-size: x-large;"></i>
+                                                                </a>
+                                                            @endif
 
                                                             {{-- <form action="" method="POST"
                                                                 style="display: inline-block;"

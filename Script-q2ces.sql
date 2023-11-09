@@ -945,10 +945,12 @@ CREATE TABLE inventarioMovimientos(
     cantidad float(10, 2) NOT NULL,
     precioUnitario float(10, 2) NOT NULL,
     total float(10, 2) NOT NULL,
+    mantenimientoId bigint(20) unsigned NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_inventarioMovimiento_inventario foreign key (inventarioId) references inventario(id),
+    CONSTRAINT FK_inventarioMovimiento_mantenimiento foreign key (mantenimientoId) references mantenimientos(id),
     CONSTRAINT FK_inventarioMovimiento_usuario foreign key (usuarioId) references users(id)
 );
 
@@ -1483,8 +1485,7 @@ CREATE TABLE mantenimientos(
     estadoId bigint(20) unsigned NOT NULL,
     comentario text NULL,
     adscripcion varchar(200) NULL,
-    horometro int NULL,
-    kilometraje int NULL,
+    usoKom float(10, 2) not null,
     subtotal float(10,2) NULL,
     iva float(10,2) NULL,
     costo float(10,2) NULL,
@@ -1719,6 +1720,8 @@ create table checkList(
     bitacoraId bigint(20) unsigned NOT NULL,
     usuarioId bigint(20) unsigned NOT NULL,
     maquinariaId bigint(20) unsigned NOT NULL,
+    usoKom float(10, 2) not null,
+    estatus INT NULL,
     registrada datetime NULL,
     comentario text NULL,
     created_at datetime NULL,

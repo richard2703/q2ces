@@ -16,57 +16,75 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <form class="alertaGuardar" action="{{ route('checkListRegistros.store') }}" method="post"
-                            enctype="multipart/form-data">
-                            @csrf
-                            <input type="hidden" name="maquinariaId" id="maquinariaId" value="{{ $maquinaria->id }}">
-                            <input type="hidden" name="identificador" id="identificador" value="{{ $maquinaria->identificador }}">
-                            <input type="hidden" name="codigo" id="codigo" value="{{ $bitacora->codigo }}">
-                            <input type="hidden" name="version" id="identificador" value="{{ $bitacora->version }}">
-                            <input type="hidden" name="usuarioId" id="usuarioId" value="{{ auth()->user()->id }}">
-                            <input type="hidden" name="bitacoraId" id="bitacoraId" value="{{ $bitacora->id }}">
-                            <input type="hidden" name="bitacora" id="bitacora" value="{{ $bitacora->nombre }}">
-                            <input type="hidden" name="maquinaria" id="maquinaria" value="{{ $maquinaria->nombre }}">
-                            <div class="card-header bacTituloPrincipal">
-                                <h4 class="card-title">Nuevo Registro de CheckList</h4>
-                            </div>
 
-                            <div class="card-body ">
-                                <div class="row">
-                                    <div class="col-12 text-right">
-                                        <a href="{{ route('checkList.index') }}">
-                                            <button class="btn regresar">
-                                                <span class="material-icons">
-                                                    reply
-                                                </span>
-                                                Regresar
-                                            </button>
-                                        </a>
-                                    </div>
+                        <div class="card-header bacTituloPrincipal">
+                            <h4 class="card-title">Nuevo Registro de CheckList</h4>
+                        </div>
+
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-12 text-right">
+                                    <a href="{{ route('checkList.index') }}">
+                                        <button class="btn regresar">
+                                            <span class="material-icons">
+                                                reply
+                                            </span>
+                                            Regresar
+                                        </button>
+                                    </a>
                                 </div>
+                            </div>
+                            <form class="alertaGuardar" action="{{ route('checkListRegistros.store') }}" method="post"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="maquinariaId" id="maquinariaId" value="{{ $maquinaria->id }}">
+                                <input type="hidden" name="identificador" id="identificador"
+                                    value="{{ $maquinaria->identificador }}">
+                                <input type="hidden" name="codigo" id="codigo" value="{{ $bitacora->codigo }}">
+                                <input type="hidden" name="version" id="identificador" value="{{ $bitacora->version }}">
+                                <input type="hidden" name="usuarioId" id="usuarioId" value="{{ auth()->user()->id }}">
+                                <input type="hidden" name="bitacoraId" id="bitacoraId" value="{{ $bitacora->id }}">
+                                <input type="hidden" name="bitacora" id="bitacora" value="{{ $bitacora->nombre }}">
+                                <input type="hidden" name="maquinaria" id="maquinaria" value="{{ $maquinaria->nombre }}">
                                 <div class="row mt-3">
 
 
-                                    <div class="col-12 col-md-8 ">
+                                    <div class="col-12  ">
 
                                         <div class="row alin">
-                                            <div class=" col-12  ">
-                                                <label class="labelTitulo">Equipo:
-                                                    <span>*</span></label></br>
-                                                <input type="text" class="inputCaja" id="nombre" readonly
-                                                    disabled="true" required name="nombre"
-                                                    value="{{ $maquinaria->identificador . ' - ' . $maquinaria->nombre }}">
-                                            </div>
 
 
-                                            <div class=" col-12   ">
+                                            <div class=" col-12 col-sm-8  col-lg-8 my-1  ">
                                                 <label class="labelTitulo">Bitácora:</label></br>
                                                 <input type="text" class="inputCaja" id="marca" name="marca"
                                                     readonly disabled="true" value="{{ $bitacora->nombre }}">
                                             </div>
 
+                                            <div class=" col-12 col-sm-4  col-lg-4 my-1  ">
+                                                <label class="labelTitulo">Código:</label></br>
+                                                <input type="text" class="inputCaja" id="marca" name="marca"
+                                                    readonly disabled="true"
+                                                    value="{{ $bitacora->codigo . ' V' . $bitacora->version }}">
+                                            </div>
 
-                                            <div class=" col-12">
+                                            <div class=" col-12 col-sm-8  col-lg-8 my-1  ">
+                                                <label class="labelTitulo">Equipo:
+                                                </label></br>
+                                                <input type="text" class="inputCaja" id="nombre" readonly
+                                                    disabled="true" name="nombre"
+                                                    value="{{ $maquinaria->identificador . ' - ' . $maquinaria->nombre }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-4  col-lg-4 my-1 ">
+
+                                                <label class="labelTitulo">Uso de la Maquinaría: <span>*</span>
+                                                </label></br>
+                                                <input type="number" class="inputCaja text-end" placeholder="Ej. 1000"
+                                                    value="{{ old('usoKom') }}" step="1" min="0" required
+                                                    tabindex="0" id="usoKom" name="usoKom">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-12  my-1  ">
                                                 <label class="labelTitulo">Comentarios:</label></br>
                                                 <textarea class="form-control" placeholder="Escribe tu comentario aquí sobre la revisión del CheckList" id="comentario"
                                                     name="comentario" spellcheck="true"></textarea>
@@ -90,7 +108,7 @@
                                     <table class="table">
                                         <thead class="labelTitulo">
                                             <input type="hidden" name="programacionId" id="programacionId"
-                                            value="{{ $programacionId }}">
+                                                value="{{ $programacionId }}">
                                         </thead>
                                         <tbody>
                                             <?php
@@ -244,24 +262,25 @@
                                     </table>
                                 </div>
 
-                            </div>
-                            @if ($vctTareas->isEmpty() === false)
-                                <div class="col-12 text-center m-3 pt-2">
-                                    <a href="{{ route('checkList.index') }}">
-                                        <button type="button" class="btn btn-danger">Cancelar</button>
-                                    </a>
-                                    <a href="#">
-                                        <button type="submit" class="btn botonGral">Guardar</button>
-                                    </a>
-                                </div>
-                            @else
-                                <div class="col-12 text-center mt-5 pt-5">
-                                    <p>La bitácora no cuenta con grupos de tareas asignados. Verifique que se asignen los
-                                        grupos de tareas correspondientes antes de continuar.</p>
-                                </div>
-                            @endif
+                                @if ($vctTareas->isEmpty() === false)
+                                    <div class="col-12 text-center m-3 pt-2">
+                                        <a href="{{ route('checkList.index') }}">
+                                            <button type="button" class="btn btn-danger">Cancelar</button>
+                                        </a>
+                                        <a href="#">
+                                            <button type="submit" class="btn botonGral">Guardar</button>
+                                        </a>
+                                    </div>
+                                @else
+                                    <div class="col-12 text-center mt-5 pt-5">
+                                        <p>La bitácora no cuenta con grupos de tareas asignados. Verifique que se asignen
+                                            los
+                                            grupos de tareas correspondientes antes de continuar.</p>
+                                    </div>
+                                @endif
+                            </form>
+                        </div>
 
-                        </form>
                     </div>
                 </div>
             </div>

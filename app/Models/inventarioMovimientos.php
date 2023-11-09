@@ -19,6 +19,7 @@ class inventarioMovimientos extends Model
         'cantidad',
         'precioUnitario',
         'total',
-        'comentario'
+        'comentario',
+        'mantenimientoId'
     ];
 }

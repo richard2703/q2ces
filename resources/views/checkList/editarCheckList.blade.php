@@ -20,8 +20,10 @@
                             enctype="multipart/form-data">
                             @csrf
                             @method('put')
-                            <input type="hidden" name="maquinariaId" id="maquinariaId" value="{{ $checkList->maquinariaId }}">
-                            <input type="hidden" name="identificador" id="identificador" value="{{ $maquinaria->identificador }}">
+                            <input type="hidden" name="maquinariaId" id="maquinariaId"
+                                value="{{ $checkList->maquinariaId }}">
+                            <input type="hidden" name="identificador" id="identificador"
+                                value="{{ $maquinaria->identificador }}">
                             <input type="hidden" name="codigo" id="codigo" value="{{ $bitacora->codigo }}">
                             <input type="hidden" name="version" id="identificador" value="{{ $bitacora->version }}">
                             <input type="hidden" name="usuarioId" id="usuarioId" value="{{ auth()->user()->id }}">
@@ -49,10 +51,24 @@
                                 <div class="row mt-3">
 
 
-                                    <div class="col-12 col-md-8 ">
+                                    <div class="col-12 ">
 
                                         <div class="row alin">
-                                            <div class=" col-12  ">
+
+                                            <div class=" col-12 col-sm-8  col-lg-8 my-1  ">
+                                                <label class="labelTitulo">Bitácora:</label></br>
+                                                <input type="text" class="inputCaja" id="bitacora1" name="bitacora1"
+                                                    readonly disabled="true" value="{{ $checkList->bitacora }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-4  col-lg-4 my-1  ">
+                                                <label class="labelTitulo">Código:</label></br>
+                                                <input type="text" class="inputCaja" id="marca" name="marca"
+                                                    readonly disabled="true"
+                                                    value="{{ $bitacora->codigo . ' V' . $bitacora->version }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-8  col-lg-8 my-1  ">
                                                 <label class="labelTitulo">Equipo:
                                                     <span>*</span></label></br>
                                                 <input type="text" class="inputCaja" id="maquinaria1" readonly
@@ -60,10 +76,13 @@
                                                     value="{{ $checkList->maquinaria }}">
                                             </div>
 
-                                            <div class=" col-12   ">
-                                                <label class="labelTitulo">Bitácora:</label></br>
-                                                <input type="text" class="inputCaja" id="bitacora1" name="bitacora1"
-                                                    readonly disabled="true" value="{{ $checkList->bitacora }}">
+                                            <div class=" col-12 col-sm-4  col-lg-4 my-1 ">
+
+                                                <label class="labelTitulo">Uso de la Maquinaría:
+                                                </label></br>
+                                                <input type="number" class="inputCaja text-end" placeholder="Ej. 1000"
+                                                    value="{{ $checkList->usoKom }}" step="1" min="0"
+                                                    disabled="true" tabindex="0" id="usoKom" name="usoKom">
                                             </div>
 
                                             <div class=" col-12">
@@ -99,6 +118,16 @@
                                             $intCont = 0;
                                             $blnNuevaSeccion = false;
                                             $objPresentacion = new checkListPresentacion();
+
+                                                /*** directorio contenedor de su información */
+                                                $strMaquinaria = str_pad($checkList->identificador, 4, '0', STR_PAD_LEFT);
+                                                //*** folio consecutivo del checklist */
+                                                $intFolioCheckList = str_pad($checkList->id, 4, '0', STR_PAD_LEFT);
+                                                //*** codigo y version de bitacora */
+                                                $strBitacora = str_replace(' ', '_', trim($checkList->codigo) . '_v' . trim($checkList->version));
+
+                                                $pathImagen = '/storage/maquinaria/' . $strMaquinaria . '/checkList/' . $strBitacora;
+                                                // dd($pathImagen);
                                             ?>
                                             @forelse ($vctRecords as $item)
                                                 <?php
@@ -149,6 +178,14 @@
                                                     <td>
                                                         {{-- {{ $item }} --}}
                                                         <?php echo $objPresentacion->getControlByTarea($item->tareaId, $item->resultado, $item->valor, $intCont); ?>
+                                                        <p>
+                                                            @php
+                                                                if (is_null($item->ruta) == false) {
+                                                                    echo "<a class='img-mouse'>Imagen</a>";
+                                                                    echo '<input class="img-a-mostrar"  type="image" width="300" id="image' . $item->tareaId . '" alt="Imagen" src="' . asset($pathImagen . '/' . $item->ruta) . '" />';
+                                                                }
+                                                            @endphp
+                                                        </p>
 
                                                     </td>
                                                 </tr>
@@ -183,7 +220,26 @@
         </div>
     </div>
 
-    </div>
+
+    <style>
+        .img-mouse {
+            background: #5c7c26;
+            color: #fff;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .img-a-mostrar {
+            display: none;
+        }
+
+        /* Aquí está la magia que no me funciona*/
+        .img-mouse:hover+.img-a-mostrar {
+            display: block !important;
+            /* activamos la imágen y hasta le ruego con un !important */
+        }
+    </style>
+
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
         crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>

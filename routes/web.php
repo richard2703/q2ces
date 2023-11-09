@@ -357,6 +357,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/mantenimientos/nuevo/', [App\Http\Controllers\mantenimientosController::class, 'create'])->name('mantenimientos.create');
     Route::post('/mantenimientos/nuevo/add', [App\Http\Controllers\mantenimientosController::class, 'store'])->name('mantenimientos.store');
     Route::get('/mantenimientos/editar/{id}', [App\Http\Controllers\mantenimientosController::class, 'edit'])->name('mantenimientos.edit');
+    Route::get('/mantenimientos/detalle/{id}', [App\Http\Controllers\mantenimientosController::class, 'show'])->name('mantenimientos.show');
     Route::put('/mantenimiento/editar/{id}/update', [App\Http\Controllers\mantenimientosController::class, 'update'])->name('mantenimientos.update');
 
     //*** operaciones con reparaciones */
@@ -430,6 +431,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/checkList/pendientes', [App\Http\Controllers\checkListController::class, 'pendientes'])->name('checkList.pendientes');
     Route::post('/checkList/asignacion/trabajo', [App\Http\Controllers\checkListController::class, 'asignacion'])->name('checkList.asignacion');
     Route::put('/checkList/asignacion/actualizar/', [App\Http\Controllers\checkListController::class, 'updateAsignacion'])->name('checkList.updateAsignacion');
+
+    Route::get('checkList/ticket/{id}', [App\Http\Controllers\checkListController::class, 'printTicketUsuario'])->name('checkList.printTicketUsuario');
+    Route::get('checkList/ticketCerrado/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'checkListController'])->name('checkList.printTicketCheckList');
 
     // Equipos MTQ
     // Route::get('mtq/inventario/dash', [App\Http\Controllers\inventarioMtqController::class, 'dash'])->name('inventarioMtq.dash');

@@ -460,7 +460,7 @@
                                                                 @endif
                                                             </p>
                                                             <p class="textTitulo my-2">Último Mantenimiento: @if (isset($lastMantenimiento->id))
-                                                                    <a href="{{ route('mantenimientos.edit', $lastMantenimiento->id) }}"
+                                                                    <a href="{{ route('mantenimientos.show', $lastMantenimiento->id) }}"
                                                                         style="color: blue; text-decoration: underline;">{{ $lastMantenimiento->titulo }}</a> {{ \Carbon\Carbon::parse($lastMantenimiento->created_at)->format('Y/m/d') }}
                                                                 @else
                                                                     <span>Ninguno registrado</span>
