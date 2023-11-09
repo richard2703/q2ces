@@ -133,7 +133,7 @@
                                                 </select>
                                             </div>
 
-                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                            {{--  <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Almacen/Tiradero: <span>*</span></label></br>
                                                 <select id="almacenId" name="almacenId" class="form-select" required
                                                     aria-label="Default select example">
@@ -144,7 +144,7 @@
                                                     @empty
                                                     @endforelse
                                                 </select>
-                                            </div>
+                                            </div>  --}}
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Trabajo y/o Servicio:</label></br>

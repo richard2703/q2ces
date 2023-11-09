@@ -121,9 +121,11 @@
                                                     <th class="labelTitulo">Día</th>
                                                     <th class="labelTitulo">Concepto</th>
                                                     <th class="labelTitulo">Obra</th>
+                                                    <th class="labelTitulo">Proyecto</th>
                                                     <th class="labelTitulo">Equipo</th>
                                                     <th class="labelTitulo">Personal</th>
-                                                    <th class="labelTitulo">Cantidad</th>
+                                                    <th class="labelTitulo">Gasto</th>
+                                                    <th class="labelTitulo">Cobro</th>
                                                     <th class="labelTitulo">Estatus</th>
                                                     <th class="labelTitulo text-right" style="width: 130px !important;">
                                                         Acciones</th>
@@ -140,12 +142,24 @@
                                                         </td>  --}}
                                                         {{--  <td>1234</td>  --}}
                                                         {{--  <td>{{ $registro->cliente }}</td>  --}}
-                                                        <td>{{ $registro->obra ? $registro->obra : '---' }}</td>
+                                                        <td>{{ $registro->obra ? $registro->obra : '---' }}
+                                                            {{ $registro->cliente }}
+                                                        </td>
+                                                        <td>{{ $registro->proyecto ? $registro->proyecto : '---' }}
+                                                            {{ $registro->centroCostos }}
+                                                        </td>
                                                         <td>{{ $registro->identificador }} - {{ $registro->maquinaria }}
                                                         </td>
                                                         <td>{{ $registro->pnombre }} {{ $registro->papellidoP }}</td>
                                                         {{--  <td>ingreso</td>  --}}
-                                                        <td>$ {{ number_format($registro->cantidad, 2) }}</td>
+                                                        <td>$
+                                                            {{ number_format($registro->cantidad + $registro->costoMano, 2) }}
+                                                            {{--  {{ number_format($registro->cantidad, 2) + number_format($registro->costoServicio, 2) }}  --}}
+                                                        </td>
+                                                        <td>$
+                                                            {{ number_format($registro->costoServicio, 2) }}
+                                                            {{--  {{ number_format($registro->cantidad, 2) + number_format($registro->costoServicio, 2) }}  --}}
+                                                        </td>
                                                         <td
                                                             class=@switch($registro->estatus)
                                                             @case(1)
@@ -159,6 +173,9 @@
 
                                                             @case(3)
                                                                 'blue'
+                                                            @break
+                                                            @case(4)
+                                                                'purple'
                                                             @break
 
                                                             @default
@@ -175,6 +192,15 @@
 
                                                                 @case(3)
                                                                     Cerrado
+                                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#pagar"
+                                                                        onclick="pagar('{{ $registro->id }}','{{ $registro->cnombre }}','{{ $registro->obra }}','{{ $registro->costoServicio }}')">
+                                                                        <i class="far fa-money-bill-alt"
+                                                                            style="color: #8caf48;font-size: x-large;"></i>
+                                                                    </a>
+                                                                @break
+
+                                                                @case(4)
+                                                                    Pagado
                                                                 @break
 
                                                                 @default
@@ -336,6 +362,52 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="pagar" tabindex="-1" aria-labelledby="exampleModalLabelEdit" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bacTituloPrincipal">
+                        <h1 class="modal-title fs-5" id="exampleModalLabelEdit">&nbsp Servicio Pagado? </label>
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="row d-flex" action="{{ route('serviciosTrasporte.pagado') }}" method="post"
+                            enctype="multipart/form-data">
+                            @csrf
+                            @method('put')
+                            <input type="hidden" name="id" value="" id="cid">
+
+                            <div class="col-6  mb-3 ">
+                                <label class="labelTitulo">Servicio:</label></br>
+                                <input type="text" class="inputCaja" id="Cservicio" name="Cservicio" value=""
+                                    readonly>
+                            </div>
+
+                            <div class="col-6  mb-3 ">
+                                <label class="labelTitulo">Obra: </label></br>
+                                <input type="text" class="inputCaja" id="Cobra" name="Cobra" value=""
+                                    readonly>
+                            </div>
+
+                            <div class="col-6  mb-3 ">
+                                <label class="labelTitulo">Cobro:</label></br>
+                                <input type="text" class="inputCaja text-right" id="Ccobro" name="Ccobro"
+                                    value="" readonly>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <div id="contenedorBotonGuardar">
+                                    <button type="submit" class="btn botonGral" id="btnTareaGuardar"
+                                        onclick="alertaGuardar()">Cobrar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endsection
 
     <script>
@@ -355,6 +427,23 @@
 
             const txtComentarios = document.getElementById('comentario');
             txtComentarios.value = comentario;
+        }
+    </script>
+    {{ $registro->id }}','{{ $registro->cnombre }}','{{ $registro->obra }}','{{ $registro->costoServicio }}
+    <script>
+        function pagar(id, cnombre, obra, Ccobro) {
+
+            const txtId = document.getElementById('cid');
+            txtId.value = id;
+
+            const txtServicio = document.getElementById('Cservicio');
+            txtServicio.value = cnombre;
+
+            const txtCobra = document.getElementById('Cobra');
+            txtCobra.value = obra;
+
+            const txtCcobro = document.getElementById('Ccobro');
+            txtCcobro.value = Ccobro;
         }
     </script>
     <script>
