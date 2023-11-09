@@ -8,10 +8,14 @@ use App\Models\cisternas;
 use App\Models\clientes;
 use App\Models\descarga;
 use App\Models\descargaDetalle;
+use App\Models\maquinaria;
 use App\Models\obraMaqPer;
 use App\Models\obras;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+// use Dompdf\Dompdf;
+// use Dompdf\Options;
+use PDF;
 
 class printController extends Controller
 {
@@ -169,6 +173,29 @@ class printController extends Controller
 
         return view('inventario.vistaPreviaImpresionCarga', compact('carga'));
     }
+
+    public function printMaquinaria(Request $request)
+    {
+
+        $maquinaria = maquinaria::all();
+
+        return view('maquinaria.vistaPreviaImpresion', compact('maquinaria'));
+    }
+    // public function generarPDF(Request $request)
+    // {
+    //     $content = $request->input('content');
+
+    //     $dompdf = new Dompdf();
+    //     $options = new Options();
+    //     $options->set('isPhpEnabled', true); // Habilita PHP en el HTML (opcional)
+    //     $dompdf->setOptions($options);
+
+    //     $dompdf->loadHtml($content);
+    //     $dompdf->setPaper('A4', 'portrait');
+    //     $dompdf->render();
+
+    //     return response($dompdf->output(), 200)->header('Content-Type', 'application/pdf');
+    // }
 
     public function printOnlyTicket(Request $request)
     {

@@ -179,8 +179,7 @@
                     <a class="nav-link {{ $activePage == 'servicios' ? '' : 'collapsed' }}"
                         href="{{ route('serviciosTrasporte.misServicios') }}">
                         {{--  <i class="bi bi-shop"></i>  --}}
-                        <i class="fas fa-truck"></i>
-
+                        <i class="fas fa-truck-pickup"></i>
                         <span>Mis Servicios</span>
                     </a>
                 </li>
@@ -328,6 +327,20 @@
                     </a>
                     <ul id="maquinaria-nav" class="nav-content collapse {{ $activePage == 'maquinaria' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
+                        @can('maquinaria_index')
+                            {{-- <li> --}}
+                            {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
+                            {{-- <a href="{{ route('maquinaria.distribucion') }}" class="">
+                                <i class="bi bi-circle"></i><span>Distribución General</span>
+                            </a>
+                        </li> --}}
+                            <li>
+                                {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
+                                <a href="{{ route('maquinaria.indexQ2cesUso') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Uso Maquinaria</span>
+                                </a>
+                            </li>
+                        @endcan
                         @can('maquinaria_index')
                             {{-- <li> --}}
                             {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}

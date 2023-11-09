@@ -14,6 +14,7 @@ class serviciosTrasporte extends Model
 
     protected $fillable = [
         'fecha', 'conceptoId', 'obraId', 'ncomprobante', 'equipoId', 'personalId', 'cantidad', 'estatus', 'recibe', 'horaEntrega',
-        'horaLlegada', 'cajaChica', 'almacenId', 'comentario', 'maniobristaId', 'odometro', 'servicio', 'costoMaterial', 'costoServicio', 'costoMano'
+        'horaLlegada', 'cajaChica', 'almacenId', 'comentario', 'maniobristaId', 'odometro', 'servicio', 'costoMaterial', 'costoServicio',
+        'costoMano', 'cobrado'
     ];
 }

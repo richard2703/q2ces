@@ -13,6 +13,7 @@ use App\Models\maquinaria;
 use App\Models\inventario;
 use App\Models\tarea;
 use App\Models\grupo;
+use App\Models\inventarioMtq;
 use App\Models\manoDeObra;
 
 use function PHPUnit\Framework\isNull;
@@ -152,8 +153,6 @@ class searchController extends Controller
 
     public function inventario(Request $request)
     {
-        // dd($request);
-        // $term = $request->input( 'term' );
         $term = $request->get('term');
         $tipo = $request->input('tipo');
 
@@ -172,9 +171,53 @@ class searchController extends Controller
             ->leftjoin('marca', 'marca.id', 'inventario.marcaId')
             ->get();
 
-
         $sugerencias = [];
         foreach ($inventario as $item) {
+            if ($item->compania == null) {
+                $sugerencias[] = [
+                    'value' =>   ' N.PARTE: ' . $item->numparte . ' - ' .  $item->nombre . ', Marca: ' . $item->marca . ', Modelo: ' . $item->modelo  . ', Cantidad: ' .  $item->cantidad,
+                    'id' => $item->id,
+                    'nombre' => $item->nombre,
+                    'numparte' => $item->numparte,
+                    'marca' => $item->marca,
+                    'tipo' => $item->tipo,
+                    // 'numserie' => $item->numserie,
+                    // 'placas' => $item->placas,
+                    'modelo' => $item->modelo,
+                    'cantidad' => $item->cantidad,
+                    // 'categoria' => $item->categoria,
+                    // 'compania' => $item->compania,
+                ];
+            }
+        }
+
+        return $sugerencias;
+        // return response()->json( $sugerencias );
+    }
+
+    public function inventarioMtq(Request $request)
+    {
+        $term = $request->get('term');
+        $tipo = $request->input('tipo');
+
+        $inventarioMtq = inventarioMtq::select('inventarioMtq.*', 'marca.nombre as marca')
+            ->where(function ($query) use ($tipo) {
+                if ($tipo) {
+                    $query->where('inventarioMtq.tipo', '=', $tipo);
+                }
+            })
+            ->where(function ($query) use ($term) {
+                $query->where('inventarioMtq.nombre', 'LIKE', '%' . $term . '%')
+                    ->orWhere('inventarioMtq.numparte', 'LIKE', '%' . $term . '%')
+                    ->orWhere('inventarioMtq.modelo', 'LIKE', '%' . $term . '%')
+                    ->orWhere('marca.nombre', 'LIKE', '%' . $term . '%');
+            })
+            ->leftjoin('marca', 'marca.id', 'inventarioMtq.marcaId')
+            ->get();
+
+
+        $sugerencias = [];
+        foreach ($inventarioMtq as $item) {
             if ($item->compania == null) {
                 $sugerencias[] = [
                     'value' =>   ' N.PARTE: ' . $item->numparte . ' - ' .  $item->nombre . ', Marca: ' . $item->marca . ', Modelo: ' . $item->modelo  . ', Cantidad: ' .  $item->cantidad,
@@ -234,6 +277,42 @@ class searchController extends Controller
         // return response()->json( $sugerencias );
     }
 
+    public function equiposQ2ces(Request $request)
+    {
+        //dd( $request );
+        // $term = $request->input( 'term' );
+        $term = $request->get('term');
+
+        $maquinaria = Maquinaria::where('compania', null)
+            ->where(function ($query) use ($term) {
+                $query->where('nombre', 'LIKE', '%' . $term . '%')
+                    ->where('estatusId', '1')
+                    ->orWhere('marca', 'LIKE', '%' . $term . '%')
+                    ->orWhere('categoria', 'LIKE', '%' . $term . '%');
+            })
+            ->get();
+
+        $sugerencias = [];
+        foreach ($maquinaria as $item) {
+
+            $sugerencias[] = [
+                'value' =>  'Equipo ' . $item->nombre . ', Marca ' . $item->marcaId . ', Modelo ' . $item->modelo  . ', N.E. ' .  $item->identificador . ', Placas ' .  $item->placas,
+                'id' => $item->id,
+                'nombre' => $item->nombre,
+                'marca' => $item->marcaId,
+                'numserie' => $item->numserie,
+                'placas' => $item->placas,
+                'modelo' => $item->modelo,
+                'identificador' => $item->identificador,
+                'kilometraje' => $item->kilometraje,
+                'compania' => $item->compania,
+            ];
+        }
+
+        return $sugerencias;
+        // return response()->json( $sugerencias );
+    }
+
     /**
      * Busca material para el mantenimiento de equipos
      *
@@ -245,29 +324,31 @@ class searchController extends Controller
     {
         // dd($request);
         // $term = $request->input( 'term' );
-        $filter = $request->input( 'filter' );
+        $filter = $request->input('filter');
         $term = $request->get('term');
 
-        if(is_null($filter)==true){
+        if (is_null($filter) == true) {
 
-        $inventario = inventario::select('inventario.*', DB::raw('marca.nombre AS marca'))
-            ->join('marca', 'marca.id', '=', 'inventario.marcaId')
-            ->where('inventario.nombre', 'LIKE', '%' . $term . '%')
-            ->whereIn('inventario.tipo', ['refacciones', 'consumibles', 'servicios','herramientas'])
-            ->orwhere('inventario.numparte', 'LIKE', '%' . $term . '%')
-            ->orwhere('inventario.modelo', 'LIKE', '%' . $term . '%')
-            ->orwhere('inventario.tipo', 'LIKE', '%' . $term . '%')
-            ->orwhere('marca.nombre', 'LIKE', '%' . $term . '%')
-            ->orderBy('inventario.nombre','Asc')
-            ->get();
-        }else{
-            $inventario = inventario::select('inventario.*',
-            DB::raw('marca.nombre AS marca'),
-            DB::raw( "CONCAT(inventario.nombre,' ', inventario.numparte,' ',inventario.modelo,' ',marca.nombre)as buscando" ),)
+            $inventario = inventario::select('inventario.*', DB::raw('marca.nombre AS marca'))
                 ->join('marca', 'marca.id', '=', 'inventario.marcaId')
-                ->where('inventario.tipo','=',$filter)
-                ->where(DB::raw( "CONCAT(inventario.nombre,' ', inventario.numparte,' ',inventario.modelo,' ',marca.nombre)" ), 'LIKE', '%' . $term . '%')
-                ->orderBy('inventario.nombre','Asc')
+                ->where('inventario.nombre', 'LIKE', '%' . $term . '%')
+                ->whereIn('inventario.tipo', ['refacciones', 'consumibles', 'servicios', 'herramientas'])
+                ->orwhere('inventario.numparte', 'LIKE', '%' . $term . '%')
+                ->orwhere('inventario.modelo', 'LIKE', '%' . $term . '%')
+                ->orwhere('inventario.tipo', 'LIKE', '%' . $term . '%')
+                ->orwhere('marca.nombre', 'LIKE', '%' . $term . '%')
+                ->orderBy('inventario.nombre', 'Asc')
+                ->get();
+        } else {
+            $inventario = inventario::select(
+                'inventario.*',
+                DB::raw('marca.nombre AS marca'),
+                DB::raw("CONCAT(inventario.nombre,' ', inventario.numparte,' ',inventario.modelo,' ',marca.nombre)as buscando"),
+            )
+                ->join('marca', 'marca.id', '=', 'inventario.marcaId')
+                ->where('inventario.tipo', '=', $filter)
+                ->where(DB::raw("CONCAT(inventario.nombre,' ', inventario.numparte,' ',inventario.modelo,' ',marca.nombre)"), 'LIKE', '%' . $term . '%')
+                ->orderBy('inventario.nombre', 'Asc')
                 ->get();
         }
 
@@ -298,36 +379,36 @@ class searchController extends Controller
      * @return void
      */
 
-     public function manoDeObra(Request $request)
-     {
-         // dd($request);
-         // $term = $request->input( 'term' );
-         $term = $request->get('term');
+    public function manoDeObra(Request $request)
+    {
+        // dd($request);
+        // $term = $request->input( 'term' );
+        $term = $request->get('term');
 
-         $inventario = manoDeObra::select('manoDeObra.*')
-             ->where('manoDeObra.nombre', 'LIKE', '%' . $term . '%')
-             ->orwhere('manoDeObra.codigo', 'LIKE', '%' . $term . '%')
-             ->orwhere('manoDeObra.comentario', 'LIKE', '%' . $term . '%')
-             ->orderBy('nombre','asc')->get();
+        $inventario = manoDeObra::select('manoDeObra.*')
+            ->where('manoDeObra.nombre', 'LIKE', '%' . $term . '%')
+            ->orwhere('manoDeObra.codigo', 'LIKE', '%' . $term . '%')
+            ->orwhere('manoDeObra.comentario', 'LIKE', '%' . $term . '%')
+            ->orderBy('nombre', 'asc')->get();
 
-         $sugerencias = [];
-         foreach ($inventario as $item) {
-             $sugerencias[] = [
-                 'value' =>  $item->nombre . ', Código: ' . $item->codigo . ', PU: $ ' . $item->costo,
-                 'id' => $item->id,
-                 'nombre' => $item->nombre,
-                 'valor' => $item->costo,
-                 'cantidad' => 1,
-                 'marca' => 'N/A',
-                 'numparte' => $item->codigo,
-                 'tipo' => 'mano de obra',
-                 'modelo' => 'N/A',
-             ];
-         }
+        $sugerencias = [];
+        foreach ($inventario as $item) {
+            $sugerencias[] = [
+                'value' =>  $item->nombre . ', Código: ' . $item->codigo . ', PU: $ ' . $item->costo,
+                'id' => $item->id,
+                'nombre' => $item->nombre,
+                'valor' => $item->costo,
+                'cantidad' => 1,
+                'marca' => 'N/A',
+                'numparte' => $item->codigo,
+                'tipo' => 'mano de obra',
+                'modelo' => 'N/A',
+            ];
+        }
 
-         return $sugerencias;
-         // return response()->json( $sugerencias );
-     }
+        return $sugerencias;
+        // return response()->json( $sugerencias );
+    }
 
     /**
      * Busca material para el mantenimiento de equipos

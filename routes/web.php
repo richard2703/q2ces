@@ -265,6 +265,10 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::delete('/catalogos/proveedores/categorias/{proveedorCategoria}', [App\Http\Controllers\proveedorCategoriaController::class, 'destroy'])->name('proveedorCategoria.delete');
 
     //Crud maquinaria
+    Route::get('/maquinaria/uso', [App\Http\Controllers\usoMaquinariasController::class, 'indexQ2ces'])->name('maquinaria.indexQ2cesUso');
+    Route::get('/maquinaria/uso/create', [App\Http\Controllers\usoMaquinariasController::class, 'createQ2ces'])->name('maquinaria.createQ2cesUso');
+
+
     Route::get('/maquinaria/nuevo', [App\Http\Controllers\maquinariaController::class, 'create'])->name('maquinaria.create');
     Route::post('/maquinaria', [App\Http\Controllers\maquinariaController::class, 'store'])->name('maquinaria.store');
     Route::get('/maquinaria', [App\Http\Controllers\maquinariaController::class, 'index'])->name('maquinaria.index');
@@ -278,6 +282,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'destroy'])->name('maquinaria.delete');
     Route::put('/maquinaria/asignacion/personal', [App\Http\Controllers\maquinariaController::class, 'asignacion'])->name('maquinaria.asignacion');
     Route::get('/maquinaria/distribucion/obras', [App\Http\Controllers\maquinariaController::class, 'distribucion'])->name('maquinaria.distribucion');
+
     // Maquinaria Imagen Borrar
     Route::put('/maquinaria/imagen/delete', [App\Http\Controllers\maquinariaController::class, 'destroyImage'])->name('maquinaria.destroyImage');
     // Route::get('maquinaria/uso', [App\Http\Controllers\maquinariaController::class, 'uso'])->name('maquinaria.uso');
@@ -400,6 +405,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Servicios
     Route::post('serviciosTrasporte/cajaChica', [App\Http\Controllers\serviciosTrasporteController::class, 'cajaChica'])->name('serviciosTrasporte.cajaChica');
+    Route::put('serviciosTrasporte/pagado', [App\Http\Controllers\serviciosTrasporteController::class, 'pagado'])->name('serviciosTrasporte.pagado');
     Route::get('serviciosTrasporte/misServicios', [App\Http\Controllers\serviciosTrasporteController::class, 'misServicios'])->name('serviciosTrasporte.misServicios');
     Route::put('serviciosTrasporte/misServicios', [App\Http\Controllers\serviciosTrasporteController::class, 'misServiciosChofer'])->name('serviciosTrasporte.misServiciosChofer');
     Route::get('serviciosTrasporte/ticket/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'printTicketChofer'])->name('serviciosTrasporte.printTicketChofer');
@@ -453,8 +459,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');
     Route::get('search/equiposMTQ', [App\Http\Controllers\searchController::class, 'equiposMTQ'])->name('search.equiposMTQ');
+    Route::get('search/equiposQ2ces', [App\Http\Controllers\searchController::class, 'equiposQ2ces'])->name('search.equiposQ2ces');
     Route::get('search/materialMantenimiento', [App\Http\Controllers\searchController::class, 'materialMantenimiento'])->name('search.materialMantenimiento');
     Route::get('search/inventario', [App\Http\Controllers\searchController::class, 'inventario'])->name('search.inventario');
+    Route::get('search/inventarioMtq', [App\Http\Controllers\searchController::class, 'inventarioMtq'])->name('search.inventarioMtq');
     Route::get('search/tareasParaGrupos', [App\Http\Controllers\searchController::class, 'tareasParaGrupos'])->name('search.tareasParaGrupos');
     Route::get('search/gruposParaBitacoras', [App\Http\Controllers\searchController::class, 'gruposParaBitacoras'])->name('search.gruposParaBitacoras');
     Route::get('search/manoDeObra', [App\Http\Controllers\searchController::class, 'manoDeObra'])->name('search.manoDeObra');
@@ -508,6 +516,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Imprimir
     Route::get('/print-combustible', 'App\Http\Controllers\printController@print')->name('print.get');
+    Route::get('/print-maquinaria', 'App\Http\Controllers\printController@printMaquinaria')->name('printMaquinaria.get');
+    Route::post('/print-maquinaria', 'App\Http\Controllers\printController@printMaquinaria')->name('printMaquinaria.post');
     Route::get('/print-vista-previa', 'App\Http\Controllers\printController@print')->name('print.get');
     Route::post('/print-combustible', 'App\Http\Controllers\printController@print')->name('print.post');
     Route::post('/print-carga-combustible', 'App\Http\Controllers\printController@printCarga')->name('printCarga.post');

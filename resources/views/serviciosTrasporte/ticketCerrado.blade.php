@@ -14,7 +14,14 @@
                             <div class="row divBorder">
 
                                 <div class="col-6 text-right">
-
+                                    <a href="{{ route('serviciosTrasporte.index') }}">
+                                        <button class="btn regresar">
+                                            <span class="material-icons">
+                                                reply
+                                            </span>
+                                            Regresar
+                                        </button>
+                                    </a>
                                     {{--  @if ($carga->tipoCisternaId == null)
                                         <a href="{{ route('inventario.dashCombustible') }}">
                                             <button class="btn regresar">
@@ -99,8 +106,8 @@
                                     {{ $servicio->recibe }}
                                 </div>
                                 <div class="text-center">
-                                    <h5 style="font-weight: 1000; ">TRABAJO/SERVICIO: </h5> {{ $servicio->nombres }}
-                                    {{ $servicio->apellidoP }}
+                                    <h5 style="font-weight: 1000; ">TRABAJO/SERVICIO: </h5>
+                                    {{ $servicio->servicio }}
                                 </div>
                                 <div class="text-center">
                                     <h5 style="font-weight: 1000;   ">TIRADERO:</h5>
@@ -256,11 +263,11 @@
                 }
 
                 /*   @page {
-                                                                                    size: 70mm 260mm;
-                                                                                     Tamaño ISO C7 en milímetros
-                                                                                    margin: 0;
+                                                                                                size: 70mm 260mm;
+                                                                                                 Tamaño ISO C7 en milímetros
+                                                                                                margin: 0;
 
-                                                                                }*/
+                                                                                            }*/
 
                 body {
                     margin-top: -80mm !important;
