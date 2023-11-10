@@ -17,13 +17,13 @@
                                             style="background: #727176; color: white; font-weight: bold;"
                                             class="form-control" onchange="document.getElementById('filterForm').submit();">
                                             <option selected value="0">Todos</option>
-                                            <option value="1">En
+                                            <option value="1" {{ request('estatus') == 1 ? 'selected' : '' }}>En
                                                 Espera
                                             </option>
-                                            <option value="2">
+                                            <option value="2"  {{ request('estatus') == 2 ? 'selected' : '' }}>
                                                 Realizando
                                             </option>
-                                            <option value="3">
+                                            <option value="3" {{ request('estatus') == 3 ? 'selected' : '' }}>
                                                 Terminado
                                             </option>
                                         </select>

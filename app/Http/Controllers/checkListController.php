@@ -61,6 +61,11 @@ class checkListController extends Controller {
     * @return void
     */
 
+    /**
+     * Vista de obtención de planeación de
+     *
+     * @return void
+     */
     public function programacion() {
         abort_if ( Gate::denies( 'checkList_index' ), 403 );
 
@@ -112,6 +117,57 @@ class checkListController extends Controller {
         // $vctBitacoras = bitacoras::select( 'bitacoras.nombre', 'bitacoras.id' )->where( 'bitacoras.activa', '=', 1 )->orderBy( 'bitacoras.nombre', 'asc' )->get();
 
         return view( 'checkList.programacion', compact( 'vctRecords', 'vctPersonal', 'vctMaquinaria', 'vctBitacoras' ) );
+
+    }
+
+
+    public function planeacion() {
+        abort_if ( Gate::denies( 'checkList_index' ), 403 );
+
+        $vctPersonal = personal::select(
+            'personal.id',
+            DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
+            'obras.nombre AS obra',
+            'maquinaria.identificador',
+            'maquinaria.nombre AS auto',
+            'nomina.puestoId',
+            'puesto.nombre AS puesto',
+            'puesto.puestoNivelId',
+            'personal.estatusId',
+            'puestoNivel.nombre AS puestoNivel'
+        )
+        ->join( 'nomina', 'nomina.personalId', 'personal.id' )
+        ->join( 'puesto', 'puesto.id', 'nomina.puestoId' )
+        ->join( 'puestoNivel', 'puestoNivel.id', 'puesto.puestoNivelId' )
+        ->leftjoin( 'obraMaqPer', 'obraMaqPer.personalId', 'personal.id' )
+        ->leftjoin( 'maquinaria', 'maquinaria.id', '=', 'obraMaqPer.maquinariaId' )
+        ->leftjoin( 'obras', 'obras.id', '=', 'obraMaqPer.obraId' )
+        ->where( 'puesto.puestoNivelId', '=', 5 )
+        ->where( 'personal.estatusId', '=', 1 ) //*** solo operarios de maquinaria */
+        ->orderBy( 'personal.nombres', 'asc' )->get();
+
+        $vctMaquinaria = maquinaria::select( '*' )
+        ->where( 'compania', '=', null )
+        ->where( 'estatusId', '=', 1 )
+        ->orderBy( 'maquinaria.identificador', 'asc' )->get();
+
+        $vctBitacoras = bitacoras::select( 'bitacoras.*', 'frecuenciaEjecucion.nombre as frecuencia' )
+        ->join( 'frecuenciaEjecucion', 'frecuenciaEjecucion.id', 'bitacoras.frecuenciaId' )
+        ->where( 'activa', '=', 1 )
+        ->orderBy( 'bitacoras.nombre', 'asc' )->get();
+
+        $vctRecords = programacionCheckLists::select(
+            'programacionCheckLists.*',
+            'bitacoras.nombre as bitacora',
+            DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
+            DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ),
+        )
+        ->join( 'personal', 'personal.id', '=', 'programacionCheckLists.personalId' )
+        ->join( 'maquinaria', 'maquinaria.id', '=', 'programacionCheckLists.maquinariaId' )
+        ->join( 'bitacoras', 'bitacoras.id', '=', 'programacionCheckLists.bitacoraId' )
+        ->orderBy( 'programacionCheckLists.id', 'desc' )
+        ->paginate( 15 );
+        return view( 'checkList.planeacion', compact( 'vctRecords', 'vctPersonal', 'vctMaquinaria', 'vctBitacoras' ) );
     }
 
     /**

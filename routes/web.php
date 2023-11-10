@@ -282,6 +282,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/maquinaria/{maquinaria}', [App\Http\Controllers\maquinariaController::class, 'destroy'])->name('maquinaria.delete');
     Route::put('/maquinaria/asignacion/personal', [App\Http\Controllers\maquinariaController::class, 'asignacion'])->name('maquinaria.asignacion');
     Route::get('/maquinaria/distribucion/obras', [App\Http\Controllers\maquinariaController::class, 'distribucion'])->name('maquinaria.distribucion');
+    Route::get('/maquinaria/asignacion/checklists', [App\Http\Controllers\maquinariaController::class, 'checkLists'])->name('maquinaria.checkLists');
+    Route::delete('/maquinaria/eliminar/checklists/{bitacoraEquiposId}', [App\Http\Controllers\maquinariaController::class, 'destroyCheckList'])->name('maquinaria.destroyCheckList');
+    Route::post('/maquinaria/checklist/', [App\Http\Controllers\maquinariaController::class, 'storeCheckList'])->name('maquinaria.storeCheckList');
 
     // Maquinaria Imagen Borrar
     Route::put('/maquinaria/imagen/delete', [App\Http\Controllers\maquinariaController::class, 'destroyImage'])->name('maquinaria.destroyImage');
@@ -431,6 +434,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/checkList/pendientes', [App\Http\Controllers\checkListController::class, 'pendientes'])->name('checkList.pendientes');
     Route::post('/checkList/asignacion/trabajo', [App\Http\Controllers\checkListController::class, 'asignacion'])->name('checkList.asignacion');
     Route::put('/checkList/asignacion/actualizar/', [App\Http\Controllers\checkListController::class, 'updateAsignacion'])->name('checkList.updateAsignacion');
+    Route::get('/checkList/planeacion', [App\Http\Controllers\checkListController::class, 'planeacion'])->name('checkList.planeacion');
+
 
     Route::get('checkList/ticket/{id}', [App\Http\Controllers\checkListController::class, 'printTicketUsuario'])->name('checkList.printTicketUsuario');
     Route::get('checkList/ticketCerrado/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'checkListController'])->name('checkList.printTicketCheckList');
