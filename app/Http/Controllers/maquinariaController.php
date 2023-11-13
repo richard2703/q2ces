@@ -6,6 +6,7 @@ use App\Models\maquinaria;
 use App\Models\maqdocs;
 use App\Models\maqimagen;
 use App\Models\bitacoras;
+use App\Models\bitacorasEquipos;
 use App\Models\checkList;
 use App\Models\checkListRegistros;
 use App\Models\obras;
@@ -28,6 +29,7 @@ use App\Models\maquinariaTipo;
 use App\Models\obraMaqPer;
 use App\Models\obraMaqPerHistorico;
 use Carbon\Carbon;
+use Illuminate\Database\QueryException;
 
 class maquinariaController extends Controller
 {
@@ -383,6 +385,37 @@ class maquinariaController extends Controller
 
         Session::flash('message', 1);
         return redirect()->route('maquinaria.index');
+    }
+
+
+    public function storeCheckList(Request $request){
+        // dd($request);
+
+        abort_if(Gate::denies('maquinaria_create'), 403);
+        $request->validate([
+            'maquinariaId' => 'required',
+            'bitacoraId' => 'required',
+        ], [
+            'maquinariaId.required' => 'El campo Maquinaría es obligatorio.',
+            'bitacoraId.required' => 'El campo Bitácora es obligatorio.',
+        ]);
+
+        $record = $request->all();
+
+        $objRecord = bitacorasEquipos::where('maquinariaId','=', $request['maquinariaId'])
+        ->where('bitacoraId','=', $request['bitacoraId'])
+        ->first();
+
+        if($objRecord){
+            return back()->withErrors([ 'maquinariaId' => 'La maquinaría ya tiene asignada esta bitácora.']);
+        }else{
+            //*** se guarda la maquinaria */
+            $maquinaria = bitacorasEquipos::create($record);
+        }
+
+    Session::flash('message', 1);
+    return redirect()->route('maquinaria.checkLists');
+
     }
 
     /**
@@ -791,6 +824,34 @@ class maquinariaController extends Controller
         $this->cambiaEstatusMaquinaria($id, $estatusId);
     }
 
+    /**
+     * Elimina la relacion de un equipo con un checklist
+     *
+     * @param int $bitacoraEquiposId Identificador del registro de la tabla de Bitacoras y Equipos
+     * @return void
+     */
+    public function destroyCheckList($bitacoraEquiposId )
+    {
+        // dd($bitacoraEquiposId);
+        abort_if(Gate::denies('maquinaria_destroy'), 403);
+        try {
+            $item = bitacorasEquipos::where( 'id', '=', $bitacoraEquiposId )->first();
+            $item->delete();
+            // Intenta eliminar
+        } catch ( QueryException $e ) {
+            if ( $e->getCode() === 23000 ) {
+                return redirect()->back()->with( 'faild', 'No Puedes Eliminar ' );
+                // Esto es un error de restricción de clave externa ( FOREIGN KEY constraint )
+                // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
+            } else {
+                return redirect()->back()->with( 'faild', 'No Puedes Eliminar si esta en uso' );
+                // Otro tipo de error de base de datos
+                // Maneja según sea necesario
+            }
+        }
+        return redirect()->back()->with( 'success', 'Eliminado correctamente' );
+    }
+
     public function cambiaEstatusMaquinaria($id, $estatusId)
     {
         abort_if(Gate::denies('maquinaria_destroy'), 403);
@@ -973,139 +1034,55 @@ class maquinariaController extends Controller
             $objResult = $objAsigna->registraMovimiento($data['maquinariaId'], $data['NpersonalId'], $data['NobraId'], $data['recordId'], $data['combustible'], $data['inicio'], $data['fin']);
         }
 
-        // //*** preguntamos si es un registro existente */
-        // if ($data['recordId'] !== null &&  $data['recordId'] > 0) {
-        //     $vctDebug[] = ('El registro existe: ' . $data['recordId']);
-        //     //*** obtenemos el registro */
-        //     $objRecord = obraMaqPer::where('id', $data['recordId'])->first();
-
-        //     if ($objRecord) {
-
-        //         //*** actualizamos los valores  */
-        //         $objRecord->combustible = $data['combustible'];
-        //         $objRecord->inicio = $data['inicio'];
-        //         $objRecord->fin = $data['fin'];
-        //         $objRecord->save();
-        //         $objHistorico->registraHistorico($objRecord) ;
-
-        //         //*** TRABAJO CON EL OPERADOR */
-        //         if ($data['NpersonalId'] == null || $data['NpersonalId'] == '') {
-        //             //*** se elimina la referencia del operador en este registro */
-        //             if ($objRecord) {
-        //                 $objRecord->personalId = null;
-        //                 $objRecord->save();
-        //                 $objHistorico->registraHistorico($objRecord) ;
-        //                 $vctDebug[] = ('Se Borra la referencia del operador: ' . $data['personalId'] . ' en el registro ' . $data['recordId']);
-        //             } else {
-        //                 $vctDebug[] = ('No se puede Borrar referencia (No existe registro): ' . $data['recordId']);
-        //             }
-        //         } else if ($data['NpersonalId'] != 0) {
-
-        //             /*** se cambiara el el operador asignado */
-        //             if ($objRecord->personalId == $data['NpersonalId']) {
-        //                 $vctDebug[] = ('Es el mismo operador que se trata de asignar, no hay cambio');
-        //             } else {
-        //                 $vctDebug[] = ('Son dos operadores diferentes');
-
-        //                 //*** buscamos si el operador tiene un registro en otro lado */
-        //                 $objOtro = obraMaqPer::where('personalId', $data['NpersonalId'])->first();
-
-        //                 if ($objOtro) {
-        //                     $vctDebug[] = ('Esta asignado en el registro: ' . $objOtro->id);
-        //                     $objOtro->personalId = null;
-        //                     $objOtro->save();
-        //                     $objHistorico->registraHistorico($objOtro) ;
-        //                     $vctDebug[] = ('Se libera el operador del registro: '  . $objOtro->id);
-        //                 } else {
-        //                     $vctDebug[] = ('No esta asignado a otro registro');
-        //                 }
-
-        //                 $objRecord->personalId = $data['NpersonalId'];
-        //                 $vctDebug[] = ('Se asigna el operador: ' . $data['NpersonalId'] . ' al registro ' . $objRecord->id);
-        //                 $objRecord->save();
-        //                 $objHistorico->registraHistorico($objRecord) ;
-        //             }
-        //         } else {
-        //             $vctDebug[] = ('Sin cambios');
-        //         }
-        //         //*** FIN TRABAJO CON EL OPERADOR */
-
-        //         //*** TRABAJO CON LA OBRA */
-        //         if ($data['NobraId'] == null || $data['NobraId'] == '') {
-        //             //*** se elimina la referencia del operador en este registro */
-        //             if ($objRecord) {
-        //                 // $objRecord->obraId = null;
-        //                 // $objRecord->save();
-        //                 $vctDebug[] = ('Se Borra la referencia de la obra: ' . $data['obraId'] . ' en el registro ' . $data['recordId']);
-        //             } else {
-        //                 $vctDebug[] = ('No se puede Borrar referencia (No existe registro): ' . $data['recordId']);
-        //             }
-        //         } else if ($data['NobraId'] != 0) {
-
-        //             /*** se cambiara el el operador asignado */
-        //             if ($objRecord->obraId == $data['NobraId']) {
-        //                 $vctDebug[] = ('Es la misma obra que se trata de asignar, no hay cambio');
-        //             } else {
-        //                 $vctDebug[] = ('Son dos obras diferentes');
-
-        //                 //*** buscamos si la obra tiene un registro en otro lado */
-        //                 // $objOtro = obraMaqPer::where( 'obraId', $data[ 'NobraId' ] )->first();
-
-        //                 // if ( $objOtro ) {
-        //                 //     $vctDebug[] = ( 'Esta asignado en el registro: ' . $objOtro->id );
-        //                 //     // $objOtro->obraId = null;
-        //                 //     // $objOtro->save();
-        //                 //     $vctDebug[] = ( 'Se libera el operador del registro: '  . $objOtro->id );
-
-        //                 // } else {
-        //                 //     $vctDebug[] = ( 'No esta asignado a otro registro' );
-        //                 // }
-
-        //                 $objRecord->obraId = $data['NobraId'];
-        //                 $vctDebug[] = ('Se asigna la Obra: ' . $data['NobraId'] . ' al registro ' . $objRecord->id);
-        //                 $objRecord->save();
-        //                 $objHistorico->registraHistorico($objRecord) ;
-        //             }
-        //         } else {
-        //             $vctDebug[] = ('Sin cambios');
-        //         }
-        //         //*** FIN TRABAJO CON LA OBRA */
-
-        //     } else {
-        //         'El registro No existe en la BD: ' . $data['recordId'];
-        //     }
-        // } else {
-        //     $vctDebug[] = ('El registro No existe: ' . $data['recordId']);
-
-        //     //*** buscamos si el operador tiene un registro en otro lado */
-        //     $objOtro = obraMaqPer::where('personalId', $data['NpersonalId'])->first();
-        //     if ($objOtro) {
-        //         $vctDebug[] = ('Esta asignado en el registro: ' . $objOtro->id);
-        //         $objOtro->personalId = null;
-        //         $objOtro->save();
-        //         $objHistorico->registraHistorico($objOtro) ;
-        //         $vctDebug[] = ('Se libera el operador del registro: '  . $objOtro->id);
-        //     } else {
-        //         $vctDebug[] = ('No esta asignado a otro registro');
-        //     }
-
-        //     $objRecord = new obraMaqPer();
-        //     $objRecord->obraId = $data['NobraId'];
-        //     $objRecord->maquinariaId = $data['maquinariaId'];
-        //     $objRecord->personalId = $data['NpersonalId'];
-        //     $objRecord->combustible = $data['combustible'];
-        //     $objRecord->inicio = $data['inicio'];
-        //     $objRecord->fin = $data['fin'];
-        //     // $objRecord->save();
-        //     // $objHistorico->registraHistorico($objRecord) ;
-
-        //     $vctDebug[] = ('Se creo el registro: ' . $objRecord->id);
-        //     $vctDebug[] = $objRecord;
-
-        // }
-
-        // dd( $vctDebug, $data );
-
         return redirect()->route('maquinaria.index');
+    }
+
+    /**
+     * Muestra la distribución de los equipos y checklist
+     *
+     * @return void
+     */
+    public function checkLists(Request $request){
+
+        abort_if(Gate::denies('maquinaria_index'), 403);
+        $estatus = $request->input('estatus', '0');
+
+        $vctMaquinaria = maquinaria::select('maquinaria.id', DB::raw("CONCAT(maquinaria.identificador,' ', maquinaria.nombre)as maquinaria"),)
+        ->whereNull('compania')
+        ->orderBy('maquinaria.identificador','asc')->get();
+
+        $vctBitacoras = bitacoras::select(DB::raw("CONCAT(bitacoras.nombre,' ', bitacoras.codigo,' v', bitacoras.version)as bitacora"),
+        'bitacoras.id',
+        'frecuenciaEjecucion.nombre as frecuencia',
+        'frecuenciaEjecucion.dias',)
+        ->join('frecuenciaEjecucion', 'frecuenciaEjecucion.id', 'bitacoras.id')
+        ->where('bitacoras.activa','=',1)
+        ->orderBy('bitacoras.nombre','asc')->get();
+
+        $vctRecords = bitacoras::select(
+            DB::raw("CONCAT(bitacoras.nombre,' ', bitacoras.codigo,' v', bitacoras.version)as bitacora"),
+            'bitacoras.id as bitacoraId',
+            'bitacorasEquipos.id as bitacoraEquiposId',
+            'frecuenciaEjecucion.nombre as frecuencia',
+            'bitacoras.frecuenciaId',
+            DB::raw("CONCAT(maquinaria.identificador,' ', maquinaria.nombre)as maquinaria"),
+            'maquinaria.id as maquinariaId',
+            'maquinaria.estatusId',
+        )
+            ->join('frecuenciaEjecucion', 'frecuenciaEjecucion.id', 'bitacoras.id')
+            ->leftjoin('bitacorasEquipos', 'bitacorasEquipos.bitacoraId', 'bitacoras.id')
+            ->rightjoin('maquinaria', 'maquinaria.id', 'bitacorasEquipos.maquinariaId')
+            ->whereNull('compania');
+
+        if ($estatus !== '0') {
+            $vctRecords = $vctRecords->where('maquinaria.id', $estatus);
+        }
+
+        $vctRecords = $vctRecords->where('maquinaria.estatusId','=',1)
+            ->orderBy('maquinaria.identificador', 'asc')
+            ->orderBy('frecuenciaEjecucion.dias', 'asc')
+            ->paginate(15);
+
+        return view('maquinaria.checkListMaquinaria', compact('vctRecords','vctMaquinaria','vctBitacoras'));
     }
 }

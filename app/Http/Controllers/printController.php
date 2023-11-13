@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\cajaChica;
 use App\Models\carga;
 use App\Models\cisternas;
 use App\Models\clientes;
+use App\Models\corteCajaChica;
 use App\Models\descarga;
 use App\Models\descargaDetalle;
 use App\Models\maquinaria;
 use App\Models\obraMaqPer;
 use App\Models\obras;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 // use Dompdf\Dompdf;
@@ -177,9 +180,50 @@ class printController extends Controller
     public function printMaquinaria(Request $request)
     {
 
-        $maquinaria = maquinaria::all();
+        $maquinaria = maquinaria::whereNull('compania')
+            ->orderBy('maquinaria.identificador', 'asc')->get();
 
         return view('maquinaria.vistaPreviaImpresion', compact('maquinaria'));
+    }
+
+    public function printCajaChica($saldoFormatted, $ingresoFormatted, $egresoFormatted, $saldo, $inicioSemana, $finSemana)
+    {
+        // dd($saldoFormatted, $ingresoFormatted, $egresoFormatted, $saldo, $inicioSemana, $finSemana);
+
+        $ultimoCorte = corteCajaChica::latest()->first();
+        $inicioSemanaFormatted = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $inicioSemana);
+        $finSemanaFormatted = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $finSemana);
+
+        $registros = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
+            ->leftJoin('obras', 'cajaChica.obra', 'obras.id')
+            ->leftJoin('maquinaria', 'cajaChica.equipo', 'maquinaria.id')
+            ->join('conceptos', 'cajaChica.concepto', 'conceptos.id')
+            ->join('comprobante', 'cajaChica.comprobanteId', 'comprobante.id')
+            ->leftJoin('clientes', 'obras.clienteId', 'clientes.id')
+            ->select(
+                'cajaChica.id',
+                'dia',
+                'conceptos.codigo',
+                'conceptos.nombre as cnombre',
+                'comprobanteId',
+                'comprobante.nombre as comprobante',
+                'ncomprobante',
+                'personal.nombres as pnombre',
+                'personal.apellidoP as papellidoP',
+                'clientes.nombre as cliente',
+                'obras.nombre as obra',
+                'maquinaria.identificador',
+                'maquinaria.nombre as maquinaria',
+                'cantidad',
+                'cajaChica.tipo',
+                'cajaChica.total'
+            )->orderby('dia', 'desc')->orderby('id', 'desc')
+            ->whereBetween('dia', [$inicioSemanaFormatted->clone()->subDay(1), $finSemanaFormatted])
+            ->get();
+
+        // dd($registros);
+
+        return view('cajaChica.vistaPreviaImpresion', compact('saldoFormatted', 'ingresoFormatted', 'egresoFormatted', 'saldo', 'inicioSemana', 'finSemana', 'ultimoCorte', 'registros'));
     }
     // public function generarPDF(Request $request)
     // {
