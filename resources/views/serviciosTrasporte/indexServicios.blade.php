@@ -429,7 +429,6 @@
             txtComentarios.value = comentario;
         }
     </script>
-    {{ $registro->id }}','{{ $registro->cnombre }}','{{ $registro->obra }}','{{ $registro->costoServicio }}
     <script>
         function pagar(id, cnombre, obra, Ccobro) {
 
