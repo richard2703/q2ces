@@ -186,28 +186,13 @@ class printController extends Controller
         return view('maquinaria.vistaPreviaImpresion', compact('maquinaria'));
     }
 
-    public function printCajaChica($semanaPasada)
+    public function printCajaChica($saldoFormatted, $ingresoFormatted, $egresoFormatted, $saldo, $inicioSemana, $finSemana)
     {
-        dd($semanaPasada);
-
-        if (Carbon::parse(now())->locale('es')->isoFormat('dddd') == 'lunes') {
-            $lunes = now();
-            // dd(Carbon::parse($pLunes)->locale('es')->isoFormat('dddd'));
-        } else {
-            $lunes = new Carbon('last monday');
-        }
-        if (Carbon::parse(now())->locale('es')->isoFormat('dddd') == 'domingo') {
-            $domingo = now();
-            // dd(Carbon::parse($pLunes)->locale('es')->isoFormat('dddd'));
-        } else {
-            $domingo = new Carbon('next sunday');
-        }
-
-        // SEMANA PASADA
-        $Adomingo = $domingo->clone()->subDay(7);
-        $Alunes = $lunes->clone()->subDay(7);
+        // dd($saldoFormatted, $ingresoFormatted, $egresoFormatted, $saldo, $inicioSemana, $finSemana);
 
         $ultimoCorte = corteCajaChica::latest()->first();
+        $inicioSemanaFormatted = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $inicioSemana);
+        $finSemanaFormatted = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $finSemana);
 
         $registros = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
             ->leftJoin('obras', 'cajaChica.obra', 'obras.id')
@@ -233,32 +218,12 @@ class printController extends Controller
                 'cajaChica.tipo',
                 'cajaChica.total'
             )->orderby('dia', 'desc')->orderby('id', 'desc')
-            ->whereBetween('dia', [$lunes->clone()->subDay(1), $domingo])
-            ->paginate(15);
+            ->whereBetween('dia', [$inicioSemanaFormatted->clone()->subDay(1), $finSemanaFormatted])
+            ->get();
 
-        $ingreso = cajaChica::whereBetween('dia', [$lunes->clone()->subDay(1), $domingo])
-            ->where('tipo', 1)
-            ->sum('cantidad');
+        // dd($registros);
 
-        $egreso = cajaChica::whereBetween('dia', [$lunes->clone()->subDay(1), $domingo])
-            ->where('tipo', 2)
-            ->sum('cantidad');
-
-        $saldo = $ingreso - $egreso;
-
-        $ingreso = $ingreso - $ultimoCorte->saldo;
-
-
-        $ultimocortefecha = $ultimoCorte->fin;
-        $test = Carbon::createFromFormat('Y-m-d H:i:s', $ultimocortefecha);
-
-        if (date_diff(now(), $test->addDays(1))->format('%D%') <= 1 || !isset($ultimoCorte->saldo)) {
-            $corte = 0;
-        } else {
-            $corte = 1;
-        }
-
-        return view('cajaChica.vistaPreviaImpresion', compact('registros', 'saldo', 'ingreso', 'egreso', 'lunes', 'domingo', 'ultimoCorte', 'corte'));
+        return view('cajaChica.vistaPreviaImpresion', compact('saldoFormatted', 'ingresoFormatted', 'egresoFormatted', 'saldo', 'inicioSemana', 'finSemana', 'ultimoCorte', 'registros'));
     }
     // public function generarPDF(Request $request)
     // {

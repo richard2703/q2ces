@@ -106,6 +106,27 @@
                                                             Movimiento</button>
                                                     </a>
                                                 @endcan
+                                                @php
+                                                    $saldoFormatted = isset($ultimoCorte->saldo) ? number_format($ultimoCorte->saldo, 2) : '0.00';
+                                                    $ingresoFormatted = number_format($ingreso, 2) > 0 ? number_format($ingreso, 2) : '0.00';
+                                                    $egresoFormatted = number_format($egreso, 2);
+                                                    $saldo = number_format($saldo, 2);
+                                                    $inicioSemana = $lunes;
+                                                    $finSemana = $domingo;
+                                                @endphp
+
+                                                @can('cajachica_show')
+                                                <a href="{{ route('printCajaChica.get', [
+                                                    'saldoFormatted' => $saldoFormatted,
+                                                    'ingresoFormatted' => $ingresoFormatted,
+                                                    'egresoFormatted' => $egresoFormatted,
+                                                    'saldo' => $saldo,
+                                                    'inicioSemana' => $inicioSemana,
+                                                    'finSemana' => $finSemana
+                                                ]) }}" class="ps-1">
+                                                    <button type="button" class="btn regresar">Imprimir</button>
+                                                </a>
+                                                @endcan
                                             </div>
                                         </div>
 
