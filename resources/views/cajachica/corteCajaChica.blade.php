@@ -58,7 +58,41 @@
                                             </p>
                                         </div>
                                         <div class="row">
-                                            <div class="col-12 text-end">
+                                            <div class="col-6 text-left">
+                                                <a href="{{ route('cajaChica.index') }}">
+                                                    <button class="btn regresar">
+                                                        <span class="material-icons">
+                                                            reply
+                                                        </span>
+                                                        Regresar
+                                                    </button>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-6 d-flex justify-content-end">
+                                                @php
+                                                $saldoFormatted = '0';
+                                                $ingresoFormatted = number_format($ingreso, 2);
+                                                $egresoFormatted = number_format($egreso, 2);
+                                                $saldo = number_format($saldo, 2);
+                                                $inicioSemana = $lunes . " 00:00:00";
+                                                $finSemana = $domingo . " 00:00:00";
+                                                @endphp
+
+                                                @can('cajachica_show')
+                                                <a href="{{ route('printCajaChica.get', [
+                                                    'saldoFormatted' => $saldoFormatted,
+                                                    'ingresoFormatted' => $ingresoFormatted,
+                                                    'egresoFormatted' => $egresoFormatted,
+                                                    'saldo' => $saldo,
+                                                    'inicioSemana' => $inicioSemana,
+                                                    'finSemana' => $finSemana,
+                                                ]) }}">
+                                                    <button type="button" class="btn regresar" style="margin-right: 5px;">Imprimir</button>
+                                                </a>
+                                                @endcan
+                                                {{--  @if (date_diff(now(), $ultimocortefecha->addDays(1))->format('%D%') <= 1 || !isset($ultimoCorte->saldo))  --}}
+                                                
                                                 @can('cajachica_create')
                                                     <form action="{{ route('cajaChica.cerrar') }}" method="post"
                                                         class="advertencia">
@@ -69,11 +103,9 @@
                                                             onClick=advertencia()>Cerrar Corte</button>
                                                     </form>
                                                 @endcan
-
-
+                                                
+                                                
                                             </div>
-
-
                                         </div>
 
                                     </div>
