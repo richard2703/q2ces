@@ -66,28 +66,55 @@
                                             <p class="combustibleLitros fw-semibold ">$
                                             </p>
                                         </div>  --}}
-                                        <div class="col-12 col-md-6">
-                                            <a href="{{ route('cajaChica.index') }}">
-                                                <button class="btn regresar">
-                                                    <span class="material-icons">
-                                                        reply
-                                                    </span>
-                                                    Regresar
-                                                </button>
-                                            </a>
-                                        </div>
+                                        <div class="row">
+                                            <div class="col-6 text-left">
+                                                <a href="{{ route('cajaChica.index') }}">
+                                                    <button class="btn regresar">
+                                                        <span class="material-icons">
+                                                            reply
+                                                        </span>
+                                                        Regresar
+                                                    </button>
+                                                </a>
+                                            </div>
 
-                                        <div class="col-12 col-md-6 text-end">
-                                            @can('cajachica_create')
+                                            <div class="col-6 d-flex justify-content-end">
+                                                @php
+                                                $saldoFormatted = '0';
+                                                $ingresoFormatted = number_format($ingreso, 2);
+                                                $egresoFormatted = number_format($egreso, 2);
+                                                $saldo = '0';
+                                                $inicioSemana = $inicio . " 00:00:00";
+                                                $finSemana = $fin . " 00:00:00";
+                                                @endphp
+
+                                                @can('cajachica_show')
+                                                <a href="{{ route('printCajaChica.get', [
+                                                    'saldoFormatted' => $saldoFormatted,
+                                                    'ingresoFormatted' => $ingresoFormatted,
+                                                    'egresoFormatted' => $egresoFormatted,
+                                                    'saldo' => $saldo,
+                                                    'inicioSemana' => $inicioSemana,
+                                                    'finSemana' => $finSemana
+                                                ]) }}">
+                                                    <button type="button" class="btn regresar" style="margin-right: 5px;">Imprimir</button>
+                                                </a>
+                                                @endcan
+                                                {{--  @if (date_diff(now(), $ultimocortefecha->addDays(1))->format('%D%') <= 1 || !isset($ultimoCorte->saldo))  --}}
+                                                
+                                                @can('cajachica_create')
                                                 <form action="{{ route('cajaChica.reporteExcel') }}" method="post">
                                                     @csrf
                                                     <input type="hidden" name="inicio" value="{{ $inicio }}">
                                                     <input type="hidden" name="fin" value="{{ $fin }}">
                                                     <button type="submit" class="btn botonGral">Descargar Excel</button>
                                                 </form>
-                                            @endcan
+                                                @endcan
+                                                
+                                                
+                                            </div>
                                         </div>
-
+                                        
                                     </div>
                                     <div class="table-responsive mt-2">
                                         <table class="table tablaCenter">
