@@ -83,7 +83,7 @@
                                 
                                 <tbody>
                                     <tr>
-                                        <td style="color: #5c7c26;">
+                                        <td style="color: #5c7c26; font-weight: bold">
                                             <div style="margin-right: 15px !important;border-radius: 1em; border-color: black;
                                             border-width: 1px;
                                             border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center">{{ \Carbon\Carbon::parse($inicioSemana)->locale('es')->isoFormat('dddd D MMMM') }}
