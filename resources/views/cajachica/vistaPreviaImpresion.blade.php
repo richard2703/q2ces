@@ -12,18 +12,13 @@
                     </div>
                     <div class="card-body">
                         <div class="row divBorder">
-
                             <div class="col-6 text-right">
-                                    
-                                <a href="{{ route('cajaChica.index') }}">
-                                    <button class="btn regresar">
-                                        <span class="material-icons">
-                                            reply
-                                        </span>
-                                        Regresar
-                                    </button>
-                                </a>
-                                
+                                <button class="btn regresar" onclick="goBack()">
+                                    <span class="material-icons">
+                                        reply
+                                    </span>
+                                    Regresar
+                                </button>
                             </div>
 
                             <div class="col-6 pb-3 text-end">
@@ -69,18 +64,26 @@
                                     <th class="labelTitulo text-center" style="height: 35px; width: 400px;">
                                         <div class="d-flex justify-content-center align-items-center" style="margin-right: 15px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Período: </div></th>
                                     <th class="labelTitulo text-center" style="height: 35px; width: 150px;"> 
-                                        <div class="d-flex justify-content-center align-items-center" style="margin-right: 15px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Semana Pasada </div></th>
+                                        @if ($saldoFormatted === '0')
+                                        @else
+                                        <div class="d-flex justify-content-center align-items-center" style="margin-right: 15px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Semana Pasada </div>
+                                        @endif
+                                        </th>
                                     <th class="labelTitulo text-center" style="height: 35px; width: 150px;"> 
                                         <div class="d-flex justify-content-center align-items-center" style="margin-right: 15px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Ingreso </div></th>
                                     <th class="labelTitulo text-center" style="height: 35px; width: 150px;"> 
                                         <div class="d-flex justify-content-center align-items-center" style="margin-right: 15px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Egreso </div></th>
                                     <th class="labelTitulo text-center" style="height: 35px; width: 150px;">
-                                        <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important; font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Saldo </div></th>
+                                        @if ($saldo === '0')
+                                        @else
+                                        <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important; font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Saldo </div>
+                                        @endif
+                                        </th>
                                 </thead>
                                 
                                 <tbody>
                                     <tr>
-                                        <td style="color: #5c7c26;">
+                                        <td style="color: #5c7c26; font-weight: bold">
                                             <div style="margin-right: 15px !important;border-radius: 1em; border-color: black;
                                             border-width: 1px;
                                             border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center">{{ \Carbon\Carbon::parse($inicioSemana)->locale('es')->isoFormat('dddd D MMMM') }}
@@ -88,9 +91,14 @@
                                             {{ \Carbon\Carbon::parse($finSemana)->locale('es')->isoFormat('dddd D MMMM') }}</div>
                                         </td>
                                         <td style="color: #7f7f7f; font-weight: bold">
-                                            <div style="margin-right: 15px !important;border-radius: 1em; border-color: black;
-                                            border-width: 1px;
-                                            border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center">${{ $saldoFormatted }}</div>
+                                            @if ($saldoFormatted === '0')
+                                                
+                                            @else
+                                                <div style="margin-right: 15px !important;border-radius: 1em; border-color: black;
+                                                border-width: 1px;
+                                                border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center">${{ $saldoFormatted }}</div>    
+                                            @endif
+                                            
                                         </td>
                                         <td style="color: #198754; font-weight: bold">
                                             <div style="margin-right: 15px !important;border-radius: 1em; border-color: black;
@@ -103,9 +111,13 @@
                                             border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center">${{ $egresoFormatted }}</div>
                                         </td>
                                         <td style="color: #657c26; font-weight: bold">
-                                            <div style="margin-right: 5px !important; border-radius: 1em; border-color: black;
-                                            border-width: 1px;
-                                            border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center">${{ $saldo }}</div>
+                                            @if ($saldo === '0')
+                                                
+                                            @else
+                                                <div style="margin-right: 5px !important; border-radius: 1em; border-color: black;
+                                                border-width: 1px;
+                                                border-style: solid; height: 35px;" class="d-flex justify-content-center align-items-center">${{ $saldo }}</div>    
+                                            @endif
                                         </td>
                                     </tr>
                                 </tbody>
@@ -277,6 +289,11 @@
         </div>
     </div>
 </div>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
 
 <script>
     print(){
