@@ -47,7 +47,12 @@
                                                 <button type="button" class="btn botonGral">Distribución General</button>
                                             </a>
                                         @endcan
-                                        @can('maquinaria_show')
+                                        @can('maquinaria_index')
+                                            <a href="{{ route('maquinaria.checkLists') }}">
+                                                <button type="button" class="btn botonGral">CheckLists General</button>
+                                            </a>
+                                        @endcan
+                                        @can('maquinaria_index')
                                             <a href="{{ route('printMaquinaria.post') }}">
                                                 <button type="button" class="btn regresar">Imprimir</button>
                                             </a>

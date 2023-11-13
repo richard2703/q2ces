@@ -30,7 +30,7 @@ class mantenimientosController extends Controller {
 
         abort_if ( Gate::denies( 'mantenimiento_index' ), '404' );
 
-        $estatus = $request->input( 'estatus', '0' );
+        $estatus = $request->input('estatus', '0');
 
         //** mantenimientos del mes seleccionado */
         $vctMantenimientos = mantenimientos::select(
