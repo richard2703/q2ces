@@ -49,6 +49,7 @@ class serviciosTrasporteController extends Controller
                 'cantidad',
                 'costoMano',
                 'costoServicio',
+                'numFactura',
                 'serviciosTrasporte.estatus'
             )
             ->orderBy('fecha', 'desc')
@@ -191,6 +192,7 @@ class serviciosTrasporteController extends Controller
         // dd($request);
         $serviciosTrasporte = serviciosTrasporte::find($request->id);
         $serviciosTrasporte->estatus = 4;
+        $serviciosTrasporte->numFactura = $request->numFactura;
         $serviciosTrasporte->save();
 
         return redirect()->action([serviciosTrasporteController::class, 'index']);

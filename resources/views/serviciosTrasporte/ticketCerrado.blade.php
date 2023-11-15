@@ -106,12 +106,12 @@
                                     {{ $servicio->recibe }}
                                 </div>
                                 <div class="text-center">
-                                    <h5 style="font-weight: 1000; ">TRABAJO/SERVICIO: </h5>
-                                    {{ $servicio->servicio }}
+                                    <h5 style="font-weight: 1000;   ">ALMACEN/TIRADERO:</h5>
+                                    {{ $servicio->almacen }}
                                 </div>
                                 <div class="text-center">
-                                    <h5 style="font-weight: 1000;   ">TIRADERO:</h5>
-                                    {{ $servicio->almacen }}
+                                    <h5 style="font-weight: 1000; ">TRABAJO/SERVICIO: </h5>
+                                    {{ $servicio->servicio }}
                                 </div>
                                 <div class="text-center">
                                     <h5 style="font-weight: 1000;   ">COMENTARIO:</h5>
@@ -157,12 +157,12 @@
                                     <h5 style="font-weight: 1000;   ">COSTO TOTAL:</h5>
                                     {{ $servicio->costoServicio + $servicio->costoMano + $servicio->cantidad }}
                                 </div>
-                                <BR>
+                                {{--  <BR>
 
                                 <p class="pt-5" style="margin-top: 20px; text-align: center;">
                                     ______________________________________<br>
                                     Nombre y Firma de Recibido<br>
-                                </p>
+                                </p>  --}}
                                 <br>
                                 <div class="copyright text-center" style="font-size: 10px;">
                                     &copy; Copyright <strong><span>Q2Ces</span></strong>. All Rights Reserved
@@ -263,11 +263,11 @@
                 }
 
                 /*   @page {
-                                                                                                size: 70mm 260mm;
-                                                                                                 Tamaño ISO C7 en milímetros
-                                                                                                margin: 0;
+                                                                                                        size: 70mm 260mm;
+                                                                                                         Tamaño ISO C7 en milímetros
+                                                                                                        margin: 0;
 
-                                                                                            }*/
+                                                                                                    }*/
 
                 body {
                     margin-top: -80mm !important;

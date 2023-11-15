@@ -121,7 +121,7 @@
                                                     <th class="labelTitulo">Día</th>
                                                     <th class="labelTitulo">Concepto</th>
                                                     <th class="labelTitulo">Obra</th>
-                                                    <th class="labelTitulo">Proyecto</th>
+                                                    {{--  <th class="labelTitulo">Proyecto</th>  --}}
                                                     <th class="labelTitulo">Equipo</th>
                                                     <th class="labelTitulo">Personal</th>
                                                     <th class="labelTitulo">Gasto</th>
@@ -143,11 +143,11 @@
                                                         {{--  <td>1234</td>  --}}
                                                         {{--  <td>{{ $registro->cliente }}</td>  --}}
                                                         <td>{{ $registro->obra ? $registro->obra : '---' }}
-                                                            {{ $registro->cliente }}
+                                                            {{ $registro->cliente }} "{{ $registro->centroCostos }}"
                                                         </td>
-                                                        <td>{{ $registro->proyecto ? $registro->proyecto : '---' }}
+                                                        {{--  <td>{{ $registro->proyecto ? $registro->proyecto : '---' }}
                                                             {{ $registro->centroCostos }}
-                                                        </td>
+                                                        </td>  --}}
                                                         <td>{{ $registro->identificador }} - {{ $registro->maquinaria }}
                                                         </td>
                                                         <td>{{ $registro->pnombre }} {{ $registro->papellidoP }}</td>
@@ -157,7 +157,7 @@
                                                             {{--  {{ number_format($registro->cantidad, 2) + number_format($registro->costoServicio, 2) }}  --}}
                                                         </td>
                                                         <td>$
-                                                            {{ number_format($registro->costoServicio, 2) }}
+                                                            {{ number_format($registro->cantidad + $registro->costoMano + $registro->costoServicio, 2) }}
                                                             {{--  {{ number_format($registro->cantidad, 2) + number_format($registro->costoServicio, 2) }}  --}}
                                                         </td>
                                                         <td
@@ -193,14 +193,14 @@
                                                                 @case(3)
                                                                     Cerrado
                                                                     <a href="#" data-bs-toggle="modal" data-bs-target="#pagar"
-                                                                        onclick="pagar('{{ $registro->id }}','{{ $registro->cnombre }}','{{ $registro->obra }}','{{ $registro->costoServicio }}')">
+                                                                        onclick="pagar('{{ $registro->id }}','{{ $registro->cnombre }}','{{ $registro->obra }}','{{ $registro->costoServicio }}','{{ $registro->centroCostos }}')">
                                                                         <i class="far fa-money-bill-alt"
                                                                             style="color: #8caf48;font-size: x-large;"></i>
                                                                     </a>
                                                                 @break
 
                                                                 @case(4)
-                                                                    Pagado
+                                                                    Pagado <br># {{ $registro->numFactura }}
                                                                 @break
 
                                                                 @default
@@ -225,38 +225,6 @@
                                                                     </svg>
                                                                 </a>
                                                             @endcan
-                                                            @can('serviciosTrasporte_edit')
-                                                                <a href="{{ route('serviciosTrasporte.edit', $registro->id) }}"
-                                                                    class="">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg " width="28"
-                                                                        height="28" fill="currentColor"
-                                                                        class="bi bi-pencil accionesIconos"
-                                                                        style="color: black;" viewBox="0 0 16 16">
-                                                                        <path
-                                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                                                    </svg>
-                                                                </a>
-                                                            @endcan
-                                                            {{--  @can('user_destroy')
-                                                                <form
-                                                                    action="{{ route('serviciosTrasporte.destroy', $registro->id) }}"
-                                                                    method="POST" style="display: inline-block;"
-                                                                    onsubmit="return confirm('Seguro?')">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button class="btnSinFondo" type="submit" rel="tooltip">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="28"
-                                                                            height="28" fill="currentColor"
-                                                                            class="bi bi-x-circle" viewBox="0 0 16 16">
-                                                                            <path
-                                                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                            <path
-                                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                                        </svg>
-                                                                    </button>
-                                                                </form>
-                                                            @endcan  --}}
-
                                                             @can('servicio_Chofer')
                                                                 <a href="#" data-bs-toggle="modal"
                                                                     data-bs-target="#editarItem"
@@ -269,7 +237,6 @@
                                                                     </svg>
                                                                 </a>
                                                             @endcan
-
                                                             @if ($registro->estatus != 1)
                                                                 <a href="{{ route('serviciosTrasporte.printTicketChofer', $registro->id) }}"
                                                                     <i class="fas fa-print "
@@ -282,6 +249,20 @@
                                                                     </a>
                                                                 @endcan
                                                             @endif
+
+
+                                                            @can('serviciosTrasporte_edit')
+                                                                <a href="{{ route('serviciosTrasporte.edit', $registro->id) }}"
+                                                                    class="">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg " width="28"
+                                                                        height="28" fill="currentColor"
+                                                                        class="bi bi-pencil accionesIconos"
+                                                                        style="color: black;" viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                    </svg>
+                                                                </a>
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                     @empty
@@ -396,6 +377,18 @@
                                     value="" readonly>
                             </div>
 
+                            <div class="col-6  mb-3 ">
+                                <label class="labelTitulo">Cobro:</label></br>
+                                <input type="text" class="inputCaja text-right" id="costos" name="costos"
+                                    value="" readonly>
+                            </div>
+
+                            <div class="col-6  mb-3 ">
+                                <label class="labelTitulo">Numero de Factura:</label></br>
+                                <input type="text" class="inputCaja text-right" id="numFactura" name="numFactura"
+                                    value="">
+                            </div>
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                 <div id="contenedorBotonGuardar">
@@ -430,7 +423,7 @@
         }
     </script>
     <script>
-        function pagar(id, cnombre, obra, Ccobro) {
+        function pagar(id, cnombre, obra, Ccobro, costos) {
 
             const txtId = document.getElementById('cid');
             txtId.value = id;
@@ -443,6 +436,9 @@
 
             const txtCcobro = document.getElementById('Ccobro');
             txtCcobro.value = Ccobro;
+
+            const txtCostos = document.getElementById('costos');
+            txtCostos.value = costos;
         }
     </script>
     <script>
