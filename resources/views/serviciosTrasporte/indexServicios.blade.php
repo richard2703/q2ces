@@ -34,38 +34,38 @@
                                         </div>
                                     @endif
                                     <div class="row division">
-                                        {{--  <div class="col-12 col-md-4">
-                                            <p>Semana del</br> <span
-                                                    class="combustibleLitros">{{ \Carbon\Carbon::parse($lunes)->locale('es')->isoFormat('dddd D MMMM') }}
+                                        <div class="col-12 col-md-4">
+                                            <p>Periodo del</br> <span
+                                                    class="combustibleLitros">{{ \Carbon\Carbon::parse($quincena)->locale('es')->isoFormat('dddd D MMMM') }}
                                                     al
-                                                    {{ \Carbon\Carbon::parse($domingo)->locale('es')->isoFormat('dddd D MMMM') }}</span>
+                                                    {{ \Carbon\Carbon::parse($hoy)->locale('es')->isoFormat('dddd D MMMM') }}</span>
                                             </p>
                                         </div>
 
                                         <div class="col-3 col-md-2 text-center">
-                                            <p class="">Semana Pasada</p>
-                                            <p class="combustibleLitros fw-semibold text-black-50 ">$
-                                                {{ isset($ultimoCorte->saldo) ? number_format($ultimoCorte->saldo, 2) : '0.00' }}
+                                            <p class="">Pendientes</p>
+                                            <p class="combustibleLitros fw-semibold text-danger">{{ $totalPendientes }}</p>
+                                        </div>
+                                        <div class="col-3 col-md-2 text-center">
+                                            <p class="">$ Pendiente</p>
+                                            <p class="combustibleLitros fw-semibold  text-danger">$
+                                                {{ number_format($sumaPendientes, 2) }}
                                             </p>
-                                            
+                                        </div>
+
+                                        <div class="col-3 col-md-2 text-center">
+                                            <p class="">Facturadas</p>
+                                            <p class="combustibleLitros fw-semibold ">{{ $totalPagados }}
+                                            <p>
                                         </div>
                                         <div class="col-3 col-md-2 text-center">
-                                            <p class="">Ingreso</p>
-                                            <p class="combustibleLitros fw-semibold text-success">$
-                                                {{ number_format($ingreso, 2) }}</p>
-                                        </div>
-                                        <div class="col-3 col-md-2  text-center">
-                                            <p class="">Egreso</p>
-                                            <p class="combustibleLitros fw-semibold text-danger">$
-                                                {{ number_format($egreso, 2) }}</p>
-                                        </div>
-                                        <div class="col-3 col-md-2 text-center">
-                                            <p class="">Saldo</p>
-                                            <p class="combustibleLitros fw-semibold ">$ {{ number_format($saldo, 2) }}
+                                            <p class="">$ Facturadas</p>
+                                            <p class="combustibleLitros fw-semibold ">$ {{ number_format($sumaPagados, 2) }}
                                             </p>
                                         </div>
                                         <div class="row">
-                                            <div class="col-6 text-left">
+                                            <div class="col-6 d-flex  ">
+
                                                 @can('cajachica_create')
                                                     <button type="button" class="btn botonGral" data-bs-toggle="modal"
                                                         data-bs-target="#modal-reporte">
@@ -74,42 +74,16 @@
                                                 @endcan
                                             </div>
 
-                                            <div class="col-6 d-flex justify-content-end">
-
-                                                @if (date_diff(now(), $domingo->addDays(1))->format('%D%') <= 1 || !isset($ultimoCorte->saldo))
-                                                    @can('cajachica_create')
-                                                        <form action="{{ route('cajaChica.corte') }}" method="post">
-                                                            @csrf
-                                                            <input type="hidden" name="fin"
-                                                                value={{ $lunes->subDays(1) }}>
-                                                            <input type="hidden" name="inicio"
-                                                                value={{ $lunes->subDays(6) }}>
-                                                            <button type="submit" class="btn botonGral">Corte de
-                                                                Caja</button>
-                                                        </form>
+                                            <div class="col-6 d-flex justify-content-end ">
+                                                @if ($reporte == 0)
+                                                    @can('serviciosTrasporte_create')
+                                                        <a href="{{ route('serviciosTrasporte.create') }}"
+                                                            class="ps-1 align-self-center">
+                                                            <button type="button" class="btn botonGral">Programar
+                                                                Servicio</button>
+                                                        </a>
                                                     @endcan
-                                                @else
                                                 @endif
-
-
-                                                @can('cajachica_create')
-                                                    <a href="{{ route('cajaChica.create') }}" class="ps-1">
-                                                        <button type="button" class="btn botonGral">Nuevo Movimiento</button>
-                                                    </a>
-                                                @endcan
-                                            </div>
-                                        </div>  --}}
-                                        <div class="row">
-                                            <div class="col-6 text-left">
-                                            </div>
-
-                                            <div class="col-6 d-flex justify-content-end">
-
-                                                @can('serviciosTrasporte_create')
-                                                    <a href="{{ route('serviciosTrasporte.create') }}" class="ps-1">
-                                                        <button type="button" class="btn botonGral">Programar Servicio</button>
-                                                    </a>
-                                                @endcan
                                             </div>
                                         </div>
 
@@ -296,8 +270,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form class="row d-flex" action="{{ route('serviciosTrasporte.misServiciosChofer') }}" method="post"
-                            enctype="multipart/form-data">
+                        <form class="row d-flex" action="{{ route('serviciosTrasporte.misServiciosChofer') }}"
+                            method="post" enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <input type="hidden" name="id" value="" id="id">
@@ -397,6 +371,50 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--MODALES-->
+        <div class="modal fade" id="modal-reporte" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-cliente"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="col-12">
+                        <div class="card ">
+                            <form action="{{ route('serviciosTrasporte.reporte') }}" method="post">
+                                @csrf
+                                <div class="card-header bacTituloPrincipal ">
+                                    <div class="nav-tabs-navigation">
+                                        <div class="nav-tabs-wrapper">
+                                            <span class="nav-tabs-title">
+                                                <h2 class="titulos">Periodo del Reporte</h2>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row  card-body">
+                                    <div class="row card-body" style=" text-align: center;">
+                                        <div class="col-12 col-lg-6">
+                                            <label class="labelTitulo">Inicio:
+                                                <span>*</span></label></br>
+                                            <input type="date" class="inputCaja text-right" id="ncomprobante" required
+                                                name="inicio" value="">
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <label class="labelTitulo">Fin:
+                                                <span>*</span></label></br>
+                                            <input type="date" class="inputCaja text-right" id="ncomprobante" required
+                                                name="fin" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12  mb-3 d-flex  justify-content-center align-self-end">
+                                    <button class="btn botonGral ">Ir</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

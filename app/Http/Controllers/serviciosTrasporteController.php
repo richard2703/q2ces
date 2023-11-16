@@ -29,6 +29,26 @@ class serviciosTrasporteController extends Controller
     {
         abort_if(Gate::denies('serviciosTrasporte_index'), 403);
 
+        $hoy = now();
+        $quincena = $hoy->clone()->subDay(15);
+        $reporte = 0;
+
+        $pendientes = serviciosTrasporte::whereBetween('fecha', [$quincena, $hoy])
+            ->whereNotIn('estatus', [4, 0])
+            // ->sum('costoServicio');
+            ->get();
+
+        $sumaPendientes = $pendientes->sum('costoServicio') + $pendientes->sum('cantidad') + $pendientes->sum('costoMano');
+        $totalPendientes = $pendientes->count();
+
+        $pagados = serviciosTrasporte::whereBetween('fecha', [$quincena, $hoy])
+            ->where('estatus', 4)
+            // ->sum('costoServicio');
+            ->get();
+
+        $sumaPagados = $pagados->sum('costoServicio') + $pagados->sum('cantidad') + $pagados->sum('costoMano');
+        $totalPagados = $pagados->count();
+
         $registros = serviciosTrasporte::join('conceptos', 'serviciosTrasporte.conceptoId', 'conceptos.id')
             ->leftJoin('obras', 'serviciosTrasporte.obraId', 'obras.id')
             ->join('clientes', 'obras.clienteId', 'clientes.id')
@@ -53,10 +73,11 @@ class serviciosTrasporteController extends Controller
                 'serviciosTrasporte.estatus'
             )
             ->orderBy('fecha', 'desc')
+            ->whereBetween('serviciosTrasporte.fecha', [$quincena, $hoy])
             ->paginate(15);
-        // dd($registros);
+        // dd($sumaPendientes, $Cpagados);
 
-        return view('serviciosTrasporte.indexServicios', compact('registros'));
+        return view('serviciosTrasporte.indexServicios', compact('registros', 'sumaPendientes', 'totalPendientes', 'sumaPagados', 'totalPagados', 'quincena', 'hoy', 'reporte'));
     }
 
     /**
@@ -319,5 +340,61 @@ class serviciosTrasporteController extends Controller
         // dd('printTicketChofer', $servicio);
 
         return view('serviciosTrasporte.ticketCerrado', compact('servicio'));
+    }
+
+    public function reporte(Request $request)
+    {
+        abort_if(Gate::denies('serviciosTrasporte_index'), 403);
+
+        // dd($request);
+        $hoy = $request->fin;
+        $quincena = $request->inicio;
+        $reporte = 1;
+
+        $pendientes = serviciosTrasporte::whereBetween('fecha', [$quincena, $hoy])
+            ->whereNotIn('estatus', [4, 0])
+            // ->sum('costoServicio');
+            ->get();
+
+        $sumaPendientes = $pendientes->sum('costoServicio') + $pendientes->sum('cantidad') + $pendientes->sum('costoMano');
+        $totalPendientes = $pendientes->count();
+
+        $pagados = serviciosTrasporte::whereBetween('fecha', [$quincena, $hoy])
+            ->where('estatus', 4)
+            // ->sum('costoServicio');
+            ->get();
+
+        $sumaPagados = $pagados->sum('costoServicio') + $pagados->sum('cantidad') + $pagados->sum('costoMano');
+        $totalPagados = $pagados->count();
+
+        $registros = serviciosTrasporte::join('conceptos', 'serviciosTrasporte.conceptoId', 'conceptos.id')
+            ->leftJoin('obras', 'serviciosTrasporte.obraId', 'obras.id')
+            ->join('clientes', 'obras.clienteId', 'clientes.id')
+            ->join('maquinaria', 'serviciosTrasporte.equipoId', 'maquinaria.id')
+            ->join('personal', 'serviciosTrasporte.personalId', 'personal.id')
+            ->select(
+                'serviciosTrasporte.id',
+                'serviciosTrasporte.fecha',
+                'conceptos.nombre as cnombre',
+                'clientes.nombre as cliente',
+                'obras.nombre as obra',
+                'obras.centroCostos',
+                'obras.proyecto',
+                'maquinaria.identificador',
+                'maquinaria.nombre as maquinaria',
+                'personal.nombres as pnombre',
+                'personal.apellidoP as papellidoP',
+                'cantidad',
+                'costoMano',
+                'costoServicio',
+                'numFactura',
+                'serviciosTrasporte.estatus'
+            )
+            ->orderBy('fecha', 'desc')
+            ->whereBetween('serviciosTrasporte.fecha', [$quincena, $hoy])
+            ->paginate(15);
+        // dd($sumaPendientes, $Cpagados);
+
+        return view('serviciosTrasporte.indexServicios', compact('registros', 'sumaPendientes', 'totalPendientes', 'sumaPagados', 'totalPagados', 'quincena', 'hoy', 'reporte'));
     }
 }
