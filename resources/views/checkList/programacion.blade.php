@@ -88,7 +88,7 @@
                                                     <td class="text-center">
                                                         {{ $item->fecha != '' ? \Carbon\Carbon::parse($item->fecha)->format('Y-m-d') : '---' }}
                                                     </td>
-                                                    <td
+                                                    <td style="width:50px"
                                                         class=@switch($item->estatus)
                                                             @case(1)
                                                                 'yellow'
@@ -202,7 +202,7 @@
                                                 </tr>
                                                 @empty
                                                     <tr>
-                                                        <td colspan="8">Sin Registros.</td>
+                                                        <td  class="td-actions text-center" colspan="7">Sin Registros.</td>
                                                     </tr>
                                                 @endforelse
                                             </tbody>

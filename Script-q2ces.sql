@@ -502,6 +502,7 @@ create table bitacoras(
     nombre varchar(255) NULL,
     comentario text NULL,
     activa TINYINT(1) NOT NULL DEFAULT '1',
+    renovacion TINYINT(1) NOT NULL DEFAULT '1',
     created_at datetime NULL,
     updated_at datetime NULL,
     primary key (id)

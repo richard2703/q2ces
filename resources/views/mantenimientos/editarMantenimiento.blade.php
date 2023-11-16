@@ -639,7 +639,7 @@
                                                                                 @php
                                                                                     $numFotosPermitidas = 0;
                                                                                     $numFotosCargadas = count($fotos);
-                                                                                    $maxNumFotos = 6;
+                                                                                    $maxNumFotos = 10;
                                                                                     $numFotosPermitidas = $maxNumFotos - $numFotosCargadas;
                                                                                 @endphp
 
@@ -663,7 +663,7 @@
                                                                                         <span class="">No puedes
                                                                                             subir más imágenes, <br>ya has
                                                                                             alcanzado el
-                                                                                            límite de 6.</span>
+                                                                                            límite de 10.</span>
                                                                                     </label>
                                                                                 @endif
                                                                             </div>

@@ -436,9 +436,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/checkList/asignacion/actualizar/', [App\Http\Controllers\checkListController::class, 'updateAsignacion'])->name('checkList.updateAsignacion');
     Route::get('/checkList/planeacion', [App\Http\Controllers\checkListController::class, 'planeacion'])->name('checkList.planeacion');
 
+    Route::put('/checkList/planeacion/registrar/', [App\Http\Controllers\checkListController::class, 'updatePlaneacion'])->name('checkList.updatePlaneacion');
 
     Route::get('checkList/ticket/{id}', [App\Http\Controllers\checkListController::class, 'printTicketUsuario'])->name('checkList.printTicketUsuario');
-    Route::get('checkList/ticketCerrado/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'checkListController'])->name('checkList.printTicketCheckList');
+
+    // Route::get('checkList/ticketCerrado/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'checkListController'])->name('checkList.printTicketCheckList');
 
     // Equipos MTQ
     // Route::get('mtq/inventario/dash', [App\Http\Controllers\inventarioMtqController::class, 'dash'])->name('inventarioMtq.dash');

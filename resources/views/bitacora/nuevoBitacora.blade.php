@@ -40,7 +40,17 @@
                                                     </select>
                                                 </div>
 
-                                                <div class=" col-5 col-sm-6  col-lg-5 my-6 ">
+                                                <div class=" col-2 col-sm-6  col-lg-3 my-6 ">
+                                                    <label class="labelTitulo">Reprogramación : <span></span></label></br>
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        id="renovacion" name="renovacion">
+                                                        <option value="0">No
+                                                        </option>
+                                                        <option value="1" >Sí
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class=" col-5 col-sm-6  col-lg-2 my-6 ">
                                                     <label class="labelTitulo">Código: <span>*</span></label></br>
                                                     <input type="text" required maxlength="10" id="codigo"
                                                         value="{{ old('codigo') }}" name="codigo"
@@ -63,7 +73,7 @@
                                                         name="comentario" placeholder="Escribe aquí tus comentarios sobre la bitácora.">{{ old('comentario') }}</textarea>
                                                 </div>
 
-                                                <input type="hidden" name="activo" id="activo" value="1">
+                                                <input type="hidden" name="activa" id="activa" value="1">
                                                 <div class="col-12 text-center mt-5 pt-5">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal"><a

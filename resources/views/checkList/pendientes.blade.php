@@ -220,12 +220,12 @@
                                                     </tr>
                                                     @empty
                                                         <tr>
-                                                            <td colspan="8">Sin Registros.</td>
+                                                            <td  class="td-actions text-center" colspan="7">Sin Registros.</td>
                                                         </tr>
                                                     @endforelse
                                                 @else
                                                     <tr>
-                                                        <td colspan="8">Sin Registros.</td>
+                                                        <td  class="td-actions text-center" colspan="7">Sin Registros.</td>
                                                     </tr>
                                                 @endif
 
