@@ -528,8 +528,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/print-maquinaria', 'App\Http\Controllers\printController@printMaquinaria')->name('printMaquinaria.post');
 
     Route::get('/print-cajaChica/{saldoFormatted}/{ingresoFormatted}/{egresoFormatted}/{saldo}/{inicioSemana}/{finSemana}', 'App\Http\Controllers\printController@printCajaChica')->name('printCajaChica.get');
-
     Route::post('/print-cajaChica', 'App\Http\Controllers\printController@printCajaChica')->name('printCajaChica.post');
+    Route::get('/print-asistencia/{semanaFormatted}', 'App\Http\Controllers\printController@printAsistencia')->name('printAsistencia.get');
 
     Route::get('/print-vista-previa', 'App\Http\Controllers\printController@print')->name('print.get');
     Route::post('/print-combustible', 'App\Http\Controllers\printController@print')->name('print.post');

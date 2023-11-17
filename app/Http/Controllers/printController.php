@@ -180,8 +180,10 @@ class printController extends Controller
     public function printMaquinaria(Request $request)
     {
 
-        $maquinaria = maquinaria::whereNull('compania')
-            ->orderBy('maquinaria.identificador', 'asc')->get();
+        // $maquinaria = maquinaria::whereNull('compania')
+        //     ->orderBy('maquinaria.identificador', 'asc')->get();
+
+        $maquinaria = maquinaria::all();
 
         return view('maquinaria.vistaPreviaImpresion', compact('maquinaria'));
     }
@@ -218,12 +220,25 @@ class printController extends Controller
                 'cajaChica.tipo',
                 'cajaChica.total'
             )->orderby('dia', 'desc')->orderby('id', 'desc')
-            ->whereBetween('dia', [$inicioSemanaFormatted->clone()->subDay(1), $finSemanaFormatted])
+            ->whereBetween('dia', [$inicioSemanaFormatted->clone(), $finSemanaFormatted])
             ->get();
 
         // dd($registros);
 
         return view('cajaChica.vistaPreviaImpresion', compact('saldoFormatted', 'ingresoFormatted', 'egresoFormatted', 'saldo', 'inicioSemana', 'finSemana', 'ultimoCorte', 'registros'));
+    }
+
+    public function printAsistencia($semanaFormatted)
+    {
+        // dd($semanaFormatted);
+
+        $ultimoCorte = corteCajaChica::latest()->first();
+        // $inicioSemanaFormatted = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $inicioSemana);
+        // $finSemanaFormatted = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $finSemana);
+
+        // dd($registros);
+
+        return view('asistencias.vistaPreviaImpresion', compact('semanaFormatted'));
     }
     // public function generarPDF(Request $request)
     // {

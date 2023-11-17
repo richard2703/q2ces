@@ -133,6 +133,19 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                         {{ /*ucwords*/ trans($objCalendar->getFechaFormateada(date_create(date('Y-m-d')), true)) }}</b>
                                                 </a>
                                             </div>
+                                            <div class="mb-3">
+                                                @can('cajachica_show')
+                                                @php
+                                                    $semanaFormatted = 'Semana ' . $semanaSeleccionada . ' del ' . $strFechaInicioPeriodo . ' al ' . $strFechaFinPeriodo;
+                                                @endphp
+
+                                                <a href="{{ route('printAsistencia.get', [
+                                                    'semanaFormatted' => $semanaFormatted
+                                                ]) }}">
+                                                    <button type="button" class="btn regresar" style="">Imprimir</button>
+                                                </a>
+                                                @endcan
+                                            </div>
                                             <div class="">
                                                 @can('asistencia_create')
                                                     <form
