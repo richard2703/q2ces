@@ -47,7 +47,7 @@ class cajaChicaController extends Controller
         } else {
             $domingo = new Carbon('next sunday');
         }
-
+        // dd($lunes, $domingo);
         // SEMANA PASADA
         $Adomingo = $domingo->clone()->subDay(7);
         $Alunes = $lunes->clone()->subDay(7);
@@ -78,7 +78,8 @@ class cajaChicaController extends Controller
                 'cajaChica.tipo',
                 'cajaChica.total'
             )->orderby('dia', 'desc')->orderby('id', 'desc')
-            ->whereBetween('dia', [$lunes->clone()->subDay(1), $domingo])
+            ->whereBetween('dia', [$lunes->clone(), $domingo])
+            // ->whereBetween('dia', [$lunes->clone()->subDay(1), $domingo])
             ->paginate(15);
 
         $ingreso = cajaChica::whereBetween('dia', [$lunes->clone()->subDay(1), $domingo])
