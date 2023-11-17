@@ -193,7 +193,7 @@
                                                 @if ($registro->dia)
                                                 <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
                                                 border-width: 1px;
-                                                border-style: solid; height: 31px; margin-top: 3px" class="d-flex justify-content-center align-items-center">{{ \Carbon\Carbon::parse($registro->dia)->locale('es')->isoFormat('dddd D MMMM') }} {{$key}}</div>
+                                                border-style: solid; height: 31px; margin-top: 3px" class="d-flex justify-content-center align-items-center">{{ \Carbon\Carbon::parse($registro->dia)->locale('es')->isoFormat('dddd D MMMM') }}</div>
                                             @else
                                                 <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
                                                 border-width: 1px;
