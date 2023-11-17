@@ -180,8 +180,10 @@ class printController extends Controller
     public function printMaquinaria(Request $request)
     {
 
-        $maquinaria = maquinaria::whereNull('compania')
-            ->orderBy('maquinaria.identificador', 'asc')->get();
+        // $maquinaria = maquinaria::whereNull('compania')
+        //     ->orderBy('maquinaria.identificador', 'asc')->get();
+
+        $maquinaria = maquinaria::all();
 
         return view('maquinaria.vistaPreviaImpresion', compact('maquinaria'));
     }
