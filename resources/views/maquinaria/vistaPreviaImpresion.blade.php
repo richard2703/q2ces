@@ -236,7 +236,7 @@
                             </table>
                             
                         </div>
-                        @for ($i = 0; $i <$faltante+3; $i++)
+                        @for ($i = 0; $i <$faltante+2; $i++)
                             <tr>
                                 <div style="border-radius: 1em; border-color: white; color: white; margin-right: 5px !important;
                                 border-width: 1px;
