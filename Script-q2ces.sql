@@ -225,6 +225,7 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('checkList_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('checkList_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('checkList_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
+	 ('checkList_mis_pendientes','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('mantenimiento_index','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('mantenimiento_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
@@ -502,6 +503,7 @@ create table bitacoras(
     nombre varchar(255) NULL,
     comentario text NULL,
     activa TINYINT(1) NOT NULL DEFAULT '1',
+    renovacion TINYINT(1) NOT NULL DEFAULT '1',
     created_at datetime NULL,
     updated_at datetime NULL,
     primary key (id)

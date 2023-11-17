@@ -79,7 +79,7 @@
                                         </a>
                                     </div>
                                 @endcan
-                                @can('checkList_execute')
+                                @can('checkList_mis_pendientes')
                                     <div class="col-12 col-md-6  col-lg-3 text-center my-4">
                                         <a href="{{ route('checkList.pendientes') }}" class="">
                                             <img src="/img/equipos/mis-pendientes.svg" alt="Mis Pendientes" title="Mis Pendientes" width="30%"
