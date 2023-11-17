@@ -341,6 +341,13 @@ class Calendario {
         return array( $dtFechaInicialPeriodo, $dtFechaFinalPeriodo );
     }
 
+    /**
+     * Obtiene el periodo de trabajo de una bitacora usando la fecha y la frecuencia de ejecución
+     *
+     * @param date $dtFecha Fecha sobre la que se realiza el calculo del periodo
+     * @param integer $intFrecuencia Identificador de frecuencia
+     * @return void
+     */
     function getPeriodoDeTrabajo( $dtFecha, $intFrecuencia = 1 ) {
         $dtFechaInicialPeriodo = $dtFecha;
         $dtFechaFinalPeriodo = $dtFecha;

@@ -108,12 +108,14 @@ class checkListController extends Controller {
         $vctRecords = programacionCheckLists::select(
             'programacionCheckLists.*',
             'bitacoras.nombre as bitacora',
+            'frecuenciaEjecucion.nombre as frecuencia',
             DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
             DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ),
         )
         ->join( 'personal', 'personal.id', '=', 'programacionCheckLists.personalId' )
         ->join( 'maquinaria', 'maquinaria.id', '=', 'programacionCheckLists.maquinariaId' )
         ->join( 'bitacoras', 'bitacoras.id', '=', 'programacionCheckLists.bitacoraId' )
+        ->join( 'frecuenciaEjecucion', 'frecuenciaEjecucion.id', 'bitacoras.frecuenciaId' )
         ->orderBy( 'programacionCheckLists.id', 'desc' )
         ->paginate( 15 );
 
@@ -133,7 +135,7 @@ class checkListController extends Controller {
         $vctDiasSemanaActual = null;
         $vctDiasPeriodo = null;
         if ( $estatus > 0 ) {
-            /** para la semana de trabajo */
+            /** para el periodo de trabajo */
             $vctDiasPeriodo = $objCalendar->getPeriodoDeTrabajo( date_create( date( 'Y-m-d' ) ), $estatus );
             $strFechaInicioPeriodo = $vctDiasPeriodo[ 0 ];
             $strFechaFinPeriodo = $vctDiasPeriodo[ 1 ];
@@ -335,12 +337,14 @@ class checkListController extends Controller {
             $vctRecords = programacionCheckLists::select(
                 'programacionCheckLists.*',
                 'bitacoras.nombre as bitacora',
+                'frecuenciaEjecucion.nombre as frecuencia',
                 DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
                 DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ),
             )
             ->join( 'personal', 'personal.id', '=', 'programacionCheckLists.personalId' )
             ->join( 'maquinaria', 'maquinaria.id', '=', 'programacionCheckLists.maquinariaId' )
             ->join( 'bitacoras', 'bitacoras.id', '=', 'programacionCheckLists.bitacoraId' )
+            ->join( 'frecuenciaEjecucion', 'frecuenciaEjecucion.id', 'bitacoras.frecuenciaId' )
             ->where( 'personal.id', '=', $objPersonal->id )
             ->orderBy( 'programacionCheckLists.id', 'desc' )
             ->paginate( 15 );
@@ -353,12 +357,14 @@ class checkListController extends Controller {
                 $vctRecords = programacionCheckLists::select(
                     'programacionCheckLists.*',
                     'bitacoras.nombre as bitacora',
+                    'frecuenciaEjecucion.nombre as frecuencia',
                     DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
                     DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ),
                 )
                 ->join( 'personal', 'personal.id', '=', 'programacionCheckLists.personalId' )
                 ->join( 'maquinaria', 'maquinaria.id', '=', 'programacionCheckLists.maquinariaId' )
                 ->join( 'bitacoras', 'bitacoras.id', '=', 'programacionCheckLists.bitacoraId' )
+                ->join( 'frecuenciaEjecucion', 'frecuenciaEjecucion.id', 'bitacoras.frecuenciaId' )
                 ->orderBy( 'programacionCheckLists.id', 'desc' )
                 ->paginate( 15 );
             } else {
