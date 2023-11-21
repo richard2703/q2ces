@@ -51,6 +51,7 @@ class checkListRegistrosController extends Controller {
     */
 
     public function store( Request $request ) {
+        // dd( $request );
 
         abort_if ( Gate::denies( 'checkList_execute' ), 403 );
         $i = 0;
@@ -76,7 +77,7 @@ class checkListRegistrosController extends Controller {
         $objCheckList->save();
 
         // Actualización del kilometraje o Horometro;
-        $objCalculos->updateKilometrajeMaquinaria($request['maquinariaId'], $request['usoKom'], $proviene = 'CheckList')  ;
+        $objCalculos->updateKilometrajeMaquinaria( $request[ 'maquinariaId' ], $request[ 'usoKom' ], $proviene = 'CheckList' )  ;
 
         for ( $i = 0; $i < count( $request[ 'tareaId' ] ) ;
         $i++ ) {
@@ -165,6 +166,10 @@ class checkListRegistrosController extends Controller {
                 $objProg->checkListId = $objCheckList->id;
                 $objProg->save();
             }
+
+            //*** generamos el proximo checklist programado */
+            $objCheckList->crearProximoChecklist( $objCheckList->id );
+
             return redirect()->route( 'checkList.pendientes' );
 
         } else {
@@ -184,6 +189,7 @@ class checkListRegistrosController extends Controller {
             }
 
         }
+
         // dd( $vctDebug, $request );
 
         return redirect()->route( 'checkList.index' );
@@ -272,7 +278,8 @@ class checkListRegistrosController extends Controller {
             $objCheckList->bitacoraId = $request[ 'bitacoraId' ];
             $objCheckList->comentario = $request[ 'comentario' ];
             $objCheckList->registrada = date( 'Y-m-d H:i:s' );
-            $objCheckList->estatus = 2;//*** se marca como ejecutada */
+            $objCheckList->estatus = 2;
+            //*** se marca como ejecutada */
             $objCheckList->save();
 
             // dd( $request );
@@ -321,7 +328,9 @@ class checkListRegistrosController extends Controller {
                 $iRes += 1;
             }
 
-            $blnExito = false;
+            $blnExito = true;
+            //*** generamos el proximo checklist programado */
+            $objCheckList->crearProximoChecklist( $objCheckList->id );
 
         } else {
             $blnExito = false;

@@ -198,6 +198,8 @@ class bitacorasController extends Controller {
             $bitacora->frecuenciaId = $request['frecuenciaId'];
             $bitacora->codigo = strtoupper(trim($request['codigo']));
             $bitacora->version = $request['version'];
+            $bitacora->activa = $request['activa'];
+            $bitacora->renovacion = $request['renovacion'];
             $bitacora->update();
             // dd( $data );
 

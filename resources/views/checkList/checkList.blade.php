@@ -40,11 +40,11 @@
                                                 </div>
                                                 <div>
                                                     @can('checkList_create')
-                                                        {{-- <a href="{{ route('checkList.seleccionar') }}">
+                                                        <a href="{{ route('checkList.planeacion') }}">
                                                             <!--Agregar ruta-->
-                                                            <button type="button" class="btn botonGral float-end">Añadir Nuevo
+                                                            <button type="button" class="btn botonGral float-end">Planeación
                                                                 Checklist</button>
-                                                        </a> --}}
+                                                        </a>
                                                         <a href="#" class="" data-bs-toggle="modal"
                                                             data-bs-target="#nuevoCheckList" {{-- onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->comentario }}')" --}}>
                                                             <button type="button" class="btn botonGral float-end">Añadir Nuevo

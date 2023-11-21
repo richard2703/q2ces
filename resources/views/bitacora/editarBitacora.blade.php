@@ -21,7 +21,7 @@
                                                 <div class="row">
                                                     <div class="card">
                                                         <div class="row">
-                                                            <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
+                                                            <div class=" col-12 col-sm-6  col-lg-9 my-6 ">
                                                                 <label class="labelTitulo">Nombre:
                                                                     <span>*</span></label></br>
 
@@ -32,7 +32,21 @@
                                                                     class="inputCaja">
                                                             </div>
 
-                                                            <div class=" col-5 col-sm-6  col-lg-5 my-6 ">
+
+                                                            <div class=" col-2 col-sm-6  col-lg-3 my-6 ">
+                                                                <label class="labelTitulo">Activa : <span></span></label></br>
+                                                                <select class="form-select" aria-label="Default select example"
+                                                                    id="activa" name="activa">
+                                                                    <option value="0"
+                                                                        {{ $bitacora->activa == 0 ? ' selected' : '' }}>No
+                                                                    </option>
+                                                                    <option value="1"
+                                                                        {{ $bitacora->activa == 1 ? ' selected' : '' }}>Sí
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class=" col-4 col-sm-6  col-lg-5 my-6 ">
                                                                 <label class="labelTitulo">Frecuencia de Ejecución:
                                                                     <span>*</span></label></br>
                                                                 <select class="form-select"
@@ -49,7 +63,20 @@
                                                                 </select>
                                                             </div>
 
-                                                            <div class=" col-5 col-sm-6  col-lg-5 my-6 ">
+                                                            <div class=" col-2 col-sm-6  col-lg-3 my-6 ">
+                                                                <label class="labelTitulo">Reprogramación : <span></span></label></br>
+                                                                <select class="form-select" aria-label="Default select example"
+                                                                    id="renovacion" name="renovacion">
+                                                                    <option value="0"
+                                                                        {{ $bitacora->renovacion == 0 ? ' selected' : '' }}>No
+                                                                    </option>
+                                                                    <option value="1"
+                                                                        {{ $bitacora->renovacion == 1 ? ' selected' : '' }}>Sí
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class=" col-4 col-sm-6  col-lg-2 my-6 ">
                                                                 <label class="labelTitulo">Código:
                                                                     <span>*</span></label></br>
                                                                 <input type="text" required maxlength="10" id="codigo"
@@ -68,6 +95,7 @@
                                                                     name="version" value="{{ $bitacora->version }}">
                                                             </div>
 
+
                                                             <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
                                                                 <label for="exampleFormControlTextarea1"
                                                                     class="labelTitulo">Descripción
@@ -77,8 +105,6 @@
                                                             </div>
 
                                                             <div class="col-12 text-center mt-2 pt-2">
-                                                                <input type="hidden" name="activa" id="activa"
-                                                                    value="{{ $bitacora->activo }}">
                                                                 <button type="button" class="btn btn-secondary"
                                                                     data-bs-dismiss="modal"><a
                                                                         href="{{ url('/bitacoras') }}">Regresar</a></button>
