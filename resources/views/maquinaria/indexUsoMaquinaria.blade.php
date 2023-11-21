@@ -69,7 +69,7 @@
 
                                                 <td class="text-center">{{ number_format($maquina->mantenimiento) }}</td>
 
-                                                <td class="td-actions text-center">
+                                                <td class="td-actions text-center ">
                                                     @can('maquinaria_mtq_edit')
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
                                                             onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre_maquinaria }}','{{ $maquina->id_marca }}','{{ $maquina->modelo }}','{{ $maquina->kilometraje }}','{{ false }}')">
@@ -81,6 +81,15 @@
                                                             </svg>
                                                         </a>
                                                     @endcan
+                                                    @can('maquinaria_mtq_edit')
+                                                        <a href="#" data-bs-toggle="modal"
+                                                            data-bs-target="#editarMantenimiento"
+                                                            onclick="cargaMantenimiento('{{ $maquina->id }}','{{ $maquina->mantenimiento }}')">
+                                                            <i class="fas fa-wrench"
+                                                                style="color: #8caf48;font-size: x-large;"></i>
+                                                        </a>
+                                                    @endcan
+
                                                 </td>
                                             </tr>
                                         @empty
@@ -171,109 +180,44 @@
         </div>
     </div>
 
-    <!-- Modal Body-->
-    <div class="modal fade" id="modalEvento" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
+    <!-- Modal Mantenimiento MTQ-->
+    <div class="modal fade" id="editarMantenimiento" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
-                    <h5 class="modal-title fs-5" id="modalTitleId">Añadir Mantenimiento</h5>
+                    <h1 class="modal-title fs-5" id="tituloModal">&nbsp Editar Mantenimiento MTQ</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="container-fluid">
-                        <form action="{{ route('calendarioMtq.store') }}" method="post">
-                            @csrf
-                            @method('post')
+                    <form class="row d-flex" action="{{ route('uso.mantenimiento') }}" method="post"
+                        enctype="multipart/form-data">
+                        @csrf
 
-                            <input type="hidden" name="maquinariaId" id="MmaquinariaId">
-                            <input type="hidden" id="colorBoxHidden" name="color" value="">
+                        <input type="hidden" name="mId" id="mId" value="">
 
-                            <div class="mb-3" role="search">
-                                <label for="title" class="labelTitulo">Buscador:</label>
-                                <input autofocus type="text" class="inputCaja" id="searchS" name="search"
-                                    placeholder="Buscar Equipo..." title="Escriba la(s) palabra(s) a buscar.">
-                            </div>
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Proximo Mantenimiento:</label></br>
+                            <input type="text" class="inputCaja" name="Rmantenimiento" value="" readonly
+                                id="Rmantenimiento">
+                        </div>
 
-                            <div class="row">
-                                <div class="mb-3 col-6">
-                                    <label for="title" class="labelTitulo">Nombre:</label>
-                                    <input autofocus type="text" class="inputCaja" id="Mnombre" name="nombre"
-                                        placeholder="Nombre Equipo..." readonly>
-                                </div>
+                        <div class=" col-12 col-sm-6  mb-3 ">
+                            <label class="labelTitulo">Edicion de Proximo Mantenimiento:</label></br>
+                            <input type="text" class="inputCaja" id="mantenimiento" name="mantenimiento"
+                                value="">
+                        </div>
 
-                                <div class="mb-3 col-6">
-                                    <label for="title" class="labelTitulo">Número Economico:</label>
-                                    <input autofocus type="text" class="inputCaja" id="Mnumeconomico"
-                                        name="numeconomico" placeholder="Del Equipo..." readonly>
-                                </div>
-
-                                <div class="mb-3 col-6">
-                                    <label for="title" class="labelTitulo">Placas:</label>
-                                    <input autofocus type="text" class="inputCaja" id="Mplacas" name="placas"
-                                        placeholder="Placas Equipo..." readonly>
-                                </div>
-
-                                <div class="mb-3 col-6">
-                                    <label for="title" class="labelTitulo">Marca:</label>
-                                    <select name='marca' class="form-select" name="marca" id="Mmarca"
-                                        placeholder="Marca Equipo..." readonly>
-                                        <option value="">Seleccione</option>
-                                        @foreach ($marca as $item)
-                                            <option value="{{ $item->id }}">
-                                                {{ $item->nombre }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="title" class="labelTitulo">Mantenimiento:</label>
-                                <select name="mantenimientoId" id="titleSelect" required class="form-select">
-                                    <option value="">Seleccione</option>
-                                    @foreach ($servicios as $item)
-                                        <option value="{{ $item->id }}" data-color="{{ $item->color }}">
-                                            {{ $item->nombre }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="color" class="labelTitulo">Color:</label>
-                                <div id="colorBox" class="color-box w-100" style="margin-left:-0.5px"></div>
-                            </div>
-
-                            <div class="row">
-                                <div class="mb-3 col-6">
-                                    <label for="fecha" class="labelTitulo">Fecha De Llegada:</label>
-                                    <input type="date" class="inputCaja" name="fecha" id="fecha"
-                                        aria-describedby="helpId" placeholder="Fecha">
-                                </div>
-
-                                <div class="mb-3 col-6">
-                                    <label for="hora" class="labelTitulo">Hora De Llegada:</label>
-                                    <input type="time" class="inputCaja" name="hora" id="hora"
-                                        aria-describedby="helpId" placeholder="Fecha">
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="descripcion" class="labelTitulo">Descripción:</label>
-                                <textarea class="form-control-textarea border-green" name="descripcion" id="descripcion" rows="3"
-                                    placeholder="Especifique..."></textarea>
-                            </div>
-
-                    </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn botonGral">Guardar</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn botonGral">Guardar</button>
-                </div>
-                </form>
             </div>
         </div>
     </div>
+
 
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
         crossorigin="anonymous"></script>
@@ -337,20 +281,6 @@
         });
     </script>
 
-    <style>
-        /* Estilos personalizados para alinear el botón de hacia la derecha */
-        .align-end {
-            display: flex !important;
-            justify-content: flex-end !important;
-        }
-
-        @media only screen and (max-width: 500px) {
-            .align-end button {
-                width: 120px !important;
-            }
-        }
-    </style>
-
     <script>
         function cargaItem(id, identificador, nombre, marca, modelo, km, modalTipo) {
             console.log(id);
@@ -412,6 +342,17 @@
                     campo.style.color = 'initial';
                 }
             });
+        }
+    </script>
+    <script>
+        function cargaMantenimiento(id, mantenimiento) {
+
+            const txtId = document.getElementById('mId');
+            txtId.value = id;
+
+            const txtMantenimiento = document.getElementById('Rmantenimiento');
+            txtMantenimiento.value = mantenimiento;
+
         }
     </script>
 
