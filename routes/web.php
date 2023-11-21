@@ -413,6 +413,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('serviciosTrasporte/misServicios', [App\Http\Controllers\serviciosTrasporteController::class, 'misServiciosChofer'])->name('serviciosTrasporte.misServiciosChofer');
     Route::get('serviciosTrasporte/ticket/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'printTicketChofer'])->name('serviciosTrasporte.printTicketChofer');
     Route::get('serviciosTrasporte/ticketCerrado/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'printTicketCerrado'])->name('serviciosTrasporte.printTicketCerrado');
+    Route::post('serviciosTrasporte/reporte', [App\Http\Controllers\serviciosTrasporteController::class, 'reporte'])->name('serviciosTrasporte.reporte');
     Route::resource('serviciosTrasporte', App\Http\Controllers\serviciosTrasporteController::class);
 
     // Conceptos
@@ -504,6 +505,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::resource('docs', App\Http\Controllers\docsController::class);
     // Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
     Route::resource('uso', App\Http\Controllers\usoMaquinariasController::class);
+    Route::post('uso/mantenimiento/nuevo', [App\Http\Controllers\usoMaquinariasController::class, 'mantenimiento'])->name('uso.mantenimiento');
     Route::resource('calendarioMtq', App\Http\Controllers\calendarioMtqController::class);
     Route::put('calendarioMtq/editar/{evento}', [App\Http\Controllers\calendarioMtqController::class, 'update'])->name('calendarioMtq.update');
 
