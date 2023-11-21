@@ -204,7 +204,7 @@
 
                         <div class=" col-12 col-sm-6  mb-3 ">
                             <label class="labelTitulo">Edicion de Proximo Mantenimiento:</label></br>
-                            <input type="text" class="inputCaja" id="mantenimiento" name="mantenimiento"
+                            <input type="number" class="inputCaja" id="mantenimiento" name="mantenimiento"
                                 value="">
                         </div>
 
