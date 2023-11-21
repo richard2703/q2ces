@@ -190,7 +190,7 @@
                                                 <label class="labelTitulo">Cantidad: <span>*</span></label></br>
                                                 <input type="number" class="inputCaja text-right" id="cantidad"
                                                     required name="cantidad" maxlength="100000" step="0.01"
-                                                    min="0.01" pattern="^\d*(\.\d{0,2})?$" max="99999"
+                                                    min="0" pattern="^\d*(\.\d{0,2})?$" max="99999"
                                                     placeholder="ej. 100" value="{{ old('calle') }}">
                                             </div>
 
