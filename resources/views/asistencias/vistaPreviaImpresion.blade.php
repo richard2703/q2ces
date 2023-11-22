@@ -306,10 +306,10 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                                                 style="">
                                                 <!-- Estatus de asistencia-->
                                                 @if ($item->pagos[$iDay]->esAsistencia)
-                                                    <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
+                                                    <div style="margin-right: 5px !important;border-radius: 1em; border-color: black; color: {{ $item->pagos[$iDay]->tipoAsistenciaColor }};
                                                     border-width: 1px;
                                                     border-style: solid; height: 35px; margin-top: 3px; padding-left: 10px; padding-right: 10px" class="d-flex justify-content-between align-items-center">
-                                                        {{ $item->pagos[$iDay]->esAsistencia }}
+                                                    <strong>{{ $item->pagos[$iDay]->esAsistencia }}</strong>
                                                      <strong>
                                                         {{ $intHorasCompletasDia }} Hrs<br>
                                                         {{--  {{ str_pad($intHorasDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosDia, 2, '0', STR_PAD_LEFT) }}  --}}
