@@ -18,6 +18,7 @@ use App\Models\maquinaria;
 use App\Models\tipoMantenimiento;
 use App\Models\inventario;
 use App\Models\inventarioMovimientos;
+use App\Models\personal;
 
 class mantenimientosController extends Controller {
     /**
@@ -30,7 +31,7 @@ class mantenimientosController extends Controller {
 
         abort_if ( Gate::denies( 'mantenimiento_index' ), '404' );
 
-        $estatus = $request->input('estatus', '0');
+        $estatus = $request->input( 'estatus', '0' );
 
         //** mantenimientos del mes seleccionado */
         $vctMantenimientos = mantenimientos::select(
@@ -153,9 +154,13 @@ class mantenimientosController extends Controller {
 
         $vctTipos = tipoMantenimiento::select( 'tipoMantenimiento.*' )->orderBy( 'tipoMantenimiento.nombre', 'asc' )->get();
 
+        $vctCoordinadores = personal::getPersonalPorNivel( 3 );
+        $vctMecanicos = personal::getPersonalPorNivel( 4 );
+        $vctResponsables = personal::getPersonalPorNivel( 5, true );
+
         // dd( $mantenimiento, $maquinaria );
 
-        return view( 'mantenimientos.detalleMantenimiento', compact( 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria' ) );
+        return view( 'mantenimientos.detalleMantenimiento', compact( 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctResponsables' ) );
 
     }
 
@@ -192,9 +197,13 @@ class mantenimientosController extends Controller {
 
         $vctTipos = tipoMantenimiento::select( 'tipoMantenimiento.*' )->orderBy( 'tipoMantenimiento.nombre', 'asc' )->get();
 
-        // dd( $gastos, $mantenimiento, $maquinaria );
+        $vctCoordinadores = personal::getPersonalPorNivel( 3 );
+        $vctMecanicos = personal::getPersonalPorNivel( 4 );
+        $vctResponsables = personal::getPersonalPorNivel( 5, true );
 
-        return view( 'mantenimientos.editarMantenimiento', compact( 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria' ) );
+        // dd( $gastos, $mantenimiento, $maquinaria, $vctMecanicos );
+
+        return view( 'mantenimientos.editarMantenimiento', compact( 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctResponsables' ) );
     }
 
     /**
