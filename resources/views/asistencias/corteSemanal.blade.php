@@ -136,7 +136,9 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             <div class="mb-3">
                                                 @can('cajachica_show')
                                                 @php
-                                                    $semanaFormatted = 'Semana ' . $semanaSeleccionada . ' del ' . $strFechaInicioPeriodo . ' al ' . $strFechaFinPeriodo;
+                                                $fechaInicioFormateada = date('d-m-Y', strtotime($strFechaInicioPeriodo));
+                                                $fechaFinFormateada = date('d-m-Y', strtotime($strFechaFinPeriodo));
+                                                    $semanaFormatted = 'Semana ' . $semanaSeleccionada . ' del ' . $fechaInicioFormateada . ' al ' . $fechaFinFormateada;
                                                 @endphp
 
                                                 <a href="{{ route('printAsistencia.get', [

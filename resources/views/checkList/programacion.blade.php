@@ -61,9 +61,8 @@
                                             <th class="labelTitulo text-center">Personal</th>
                                             <th class="labelTitulo text-center">CheckList</th>
                                             <th class="labelTitulo text-center" style="width:60px">Fecha</th>
-                                            <th class="labelTitulo text-center" style="width:60px">Estatus</th>
-                                            {{--  <th class="labelTitulo text-center">Sub Marca</th>  --}}
-                                            <th class="labelTitulo text-center" style="width:120px">Acciones</th>
+                                            <th class="labelTitulo text-center" style="width:50px">Estatus</th>
+                                            <th class="labelTitulo text-center" style="width:70px">Acciones</th>
                                         </thead>
                                         <tbody>
                                             @forelse ($vctRecords as $item)
@@ -84,11 +83,12 @@
                                                         @else
                                                             {{ $item->bitacora }}
                                                         @endif
+                                                        [{{ $item->frecuencia }}]
                                                     </td>
                                                     <td class="text-center">
                                                         {{ $item->fecha != '' ? \Carbon\Carbon::parse($item->fecha)->format('Y-m-d') : '---' }}
                                                     </td>
-                                                    <td
+                                                    <td style="width:50px"
                                                         class=@switch($item->estatus)
                                                             @case(1)
                                                                 'yellow'
@@ -202,7 +202,7 @@
                                                 </tr>
                                                 @empty
                                                     <tr>
-                                                        <td colspan="8">Sin Registros.</td>
+                                                        <td  class="td-actions text-center" colspan="7">Sin Registros.</td>
                                                     </tr>
                                                 @endforelse
                                             </tbody>

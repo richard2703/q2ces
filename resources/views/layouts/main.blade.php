@@ -274,7 +274,7 @@
                             </li>
                         @endcan
 
-                        @can('checkList_execute')
+                        @can('checkList_mis_pendientes')
                             <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
                                 <a href="{{ route('checkList.pendientes') }}" class="">
                                     <i class="bi bi-circle"></i><span>Mis Pendientes</span>

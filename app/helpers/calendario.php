@@ -9,6 +9,7 @@ use DateTime;
 use App\Models\tareas;
 use App\Models\carga;
 use App\Models\descarga;
+use App\Models\frecuenciaEjecucion;
 use App\Models\maquinaria;
 
 class Calendario {
@@ -341,6 +342,115 @@ class Calendario {
     }
 
     /**
+     * Obtiene el periodo de trabajo de una bitacora usando la fecha y la frecuencia de ejecución
+     *
+     * @param date $dtFecha Fecha sobre la que se realiza el calculo del periodo
+     * @param integer $intFrecuencia Identificador de frecuencia
+     * @return void
+     */
+    function getPeriodoDeTrabajo( $dtFecha, $intFrecuencia = 1 ) {
+        $dtFechaInicialPeriodo = $dtFecha;
+        $dtFechaFinalPeriodo = $dtFecha;
+
+        $intDia = $dtFecha->format( 'd' );
+        $intMes = $dtFecha->format( 'm' );
+        $intMesDias = $dtFecha->format( 'm' );
+        $intYear = $dtFecha->format( 'Y' );
+        $blnBisiesto = $dtFecha->format( 'L' );
+        $intPeriodo = 0;
+
+        $objFrecuencia = frecuenciaEjecucion::select( 'frecuenciaEjecucion.dias' )->where( 'id', '=', $intFrecuencia )->first();
+
+        if ( $objFrecuencia ) {
+            switch ( $objFrecuencia->dias ) {
+                case 1:
+                //*** diaria */
+                $dtFechaInicialPeriodo = $dtFecha;
+                $dtFechaFinalPeriodo = $dtFecha;
+                break;
+
+                case 7:
+                //*** semanal */
+                $vctFechas = $this->getSemanaTrabajo( $dtFecha, 1 );
+                $dtFechaInicialPeriodo = $vctFechas[ 0 ] ;
+                $dtFechaFinalPeriodo = $vctFechas[ 1 ] ;
+                // dd($vctFechas);
+                break;
+
+                case 15:
+                //*** quincenal */
+                if ( $intMes == 2 ) {
+                    $dtFechaInicialPeriodo = date_create( $intYear . '-' . $intMes .'-' . ( $intDia <= 14 ?    '01'  :     '15' ) );
+                    $dtFechaFinalPeriodo = date_create( $intYear . '-' . $intMes .'-' . ( $intDia <= 14 ?    '14'  :  ( $blnBisiesto == 1?'29':'28' ) ) ) ;
+                } else {
+                    $dtFechaInicialPeriodo = date_create( $intYear . '-' . $intMes .'-' . ( $intDia <= 15 ?    '01'  :     '16' ) );
+                    $dtFechaFinalPeriodo = date_create( $intYear . '-' . $intMes .'-' . ( $intDia <= 15 ?    '15'  :     date( 't' ) ) ) ;
+                }
+                break;
+
+                //*** mensual */
+                case 30:
+                $dtFechaInicialPeriodo = date_create( $intYear . '-' . $intMes .'-01' );
+                $dtFechaFinalPeriodo = date_create( $intYear . '-' . $intMes .'-' . cal_days_in_month( CAL_GREGORIAN, $intMes, $intYear ) ) ;
+                break;
+
+                /*** bimestral */
+                case 60:
+                $intPeriodo = ( int )( $intMes / 2 ) + ( $intMes % 2 ) ;
+                $dtFechaInicialPeriodo = date_create( $intYear . '-' . ( ( $intPeriodo*2 )-1 ) .'-01' );
+                $dtFechaFinalPeriodo = date_create( $intYear . '-' . ( $intPeriodo*2 ) .'-' . cal_days_in_month( CAL_GREGORIAN, ( $intPeriodo*2 ), $intYear ) ) ;
+                break;
+
+                /*** bimestral */
+                case 90:
+                $intPeriodo = ( int )( $intMes / 3 ) + ( ( $intMes % 3 )>1?1:0 ) ;
+                $dtFechaInicialPeriodo = date_create( $intYear . '-' . ( ( $intPeriodo*3 )-2 ) .'-01' );
+                $dtFechaFinalPeriodo = date_create( $intYear . '-' . ( $intPeriodo*3 ) .'-' . cal_days_in_month( CAL_GREGORIAN, ( $intPeriodo*3 ), $intYear ) ) ;
+                break;
+
+                /*** cuatrimestral */
+                case 120:
+                $intPeriodo = ( int )( $intMes / 4 ) + ( ( $intMes % 4 )>1?1:0 ) ;
+                $dtFechaInicialPeriodo = date_create( $intYear . '-' . ( ( $intPeriodo*4 )-3 ) .'-01' );
+                $dtFechaFinalPeriodo = date_create( $intYear . '-' . ( $intPeriodo*4 ) .'-' . cal_days_in_month( CAL_GREGORIAN, ( $intPeriodo*4 ), $intYear ) ) ;
+
+                break;
+
+                /*** semestral */
+                case 180:
+                $intPeriodo = ( int )( $intMes / 6 ) + ( ( $intMes % 6 )>1?1:0 ) ;
+                $dtFechaInicialPeriodo = date_create( $intYear . '-' . ( ( $intPeriodo*6 )-5 ) .'-01' );
+                $dtFechaFinalPeriodo = date_create( $intYear . '-' . ( $intPeriodo*6 ) .'-' . cal_days_in_month( CAL_GREGORIAN, ( $intPeriodo*6 ), $intYear ) ) ;
+
+                break;
+
+                /*** anual */
+                case 365:
+                $dtFechaInicialPeriodo = date_create( $intYear . '-01-01' );
+                $dtFechaFinalPeriodo = date_create( $intYear . '-12-31' ) ;
+
+                default:
+                # code...
+                break;
+            }
+        } else {
+
+        }
+        // dd( 'Días: '. $objFrecuencia->dias,
+        // 'Día: '. $intDia,
+        // 'Mes: '. $intMes,
+        // 'Bisiesto: ' . $blnBisiesto,
+        // 'Año: ' . $intYear,
+        // $dtFechaInicialPeriodo,
+        // $dtFechaFinalPeriodo,
+        // $intPeriodo
+        // );
+
+        return array( $dtFechaInicialPeriodo, $dtFechaFinalPeriodo );
+
+    }
+
+    /**
     * Obtiene si una fecha esta en el periodo de trabajo
     *
     * @param [ type ] $dtFecha
@@ -357,9 +467,10 @@ class Calendario {
             $blnEnSemanaDeTrabajo = true;
         }
 
-      /*  dd('Fecha', $dtFecha,
-         'Inicio',  $vctSemanaTrabajo[ 0 ],
-         'Fin',  $vctSemanaTrabajo[ 1 ]);*/
+        /*  dd( 'Fecha', $dtFecha,
+        'Inicio',  $vctSemanaTrabajo[ 0 ],
+        'Fin',  $vctSemanaTrabajo[ 1 ] );
+        */
 
         return $blnEnSemanaDeTrabajo;
 

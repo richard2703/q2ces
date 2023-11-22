@@ -554,6 +554,78 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-12 divBorder">
+                                            <h2 class="tituloEncabezado">Información de Control</h2></br></br>
+                                        </div>
+
+                                        <div class=" col-12 col-sm-6  col-lg-6 my-2 ">
+                                            <label class="labelTitulo">Coordinador de Taller:</label></br>
+
+                                            <select id="coordTaller" name="coordTaller"
+                                                {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
+                                                class="form-select form-select-lg mb-3 inputCaja"
+                                                aria-label="Default select example">
+                                                {{-- <option value="">Seleccione</option> --}}
+                                                @foreach ($vctCoordinadores as $item)
+                                                    <option value="{{ $item->nombreCompleto }}"
+                                                        {{ $mantenimiento->coordTaller == $item->nombreCompleto ? ' selected' : '' }}>
+                                                        {{ $item->personal }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class=" col-12 col-sm-6  col-lg-6 my-2 ">
+                                            <label class="labelTitulo">Coordinador de Operaciones:</label></br>
+
+                                            <select id="coordOperaciones" name="coordOperaciones"
+                                                {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
+                                                class="form-select form-select-lg mb-3 inputCaja"
+                                                aria-label="Default select example">
+                                                {{-- <option value="">Seleccione</option> --}}
+                                                @foreach ($vctCoordinadores as $item)
+                                                    <option value="{{ $item->nombreCompleto }}"
+                                                        {{ $mantenimiento->coordOperaciones == $item->nombreCompleto ? ' selected' : '' }}>
+                                                        {{ $item->personal }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class=" col-12 col-sm-6  col-lg-6 my-1 ">
+                                            <label class="labelTitulo">Mecánico:</label></br>
+
+                                            <select id="mecanico" name="mecanico"
+                                                {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
+                                                class="form-select form-select-lg mb-3 inputCaja"
+                                                aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($vctMecanicos as $item)
+                                                    <option value="{{ $item->nombreCompleto }}"
+                                                        {{ $mantenimiento->mecanico == $item->nombreCompleto ? ' selected' : '' }}>
+                                                        {{ $item->personal }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class=" col-12 col-sm-6  col-lg-6 my-1 ">
+                                            <label class="labelTitulo">Responsable del Equipo:</label></br>
+
+                                            <select id="responsable" name="responsable"
+                                                {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
+                                                class="form-select form-select-lg mb-3 inputCaja"
+                                                aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($vctResponsables as $item)
+                                                    <option value="{{ $item->nombreCompleto }}"
+                                                        {{ $mantenimiento->responsable == $item->nombreCompleto ? ' selected' : '' }}>
+                                                        {{ $item->personal }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
                                         <div class="col-12 text-center">
                                             <label class="labelTitulo">Observaciones:</label></br>
                                             <textarea rows="2" cols="80" class="form-control"

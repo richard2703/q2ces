@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\checkList;
 use App\Models\bitacoras;
 use App\Models\checkListRegistros;
+use App\Models\frecuenciaEjecucion;
 use App\Models\grupoBitacoras;
 use App\Models\grupoTareas;
 use App\Models\grupo;
@@ -20,6 +21,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use App\Helpers\Calendario;
+use stdClass;
 
 class checkListController extends Controller {
     /**
@@ -62,10 +65,11 @@ class checkListController extends Controller {
     */
 
     /**
-     * Vista de obtención de planeación de
-     *
-     * @return void
-     */
+    * Vista de obtención de planeación de
+    *
+    * @return void
+    */
+
     public function programacion() {
         abort_if ( Gate::denies( 'checkList_index' ), 403 );
 
@@ -104,12 +108,14 @@ class checkListController extends Controller {
         $vctRecords = programacionCheckLists::select(
             'programacionCheckLists.*',
             'bitacoras.nombre as bitacora',
+            'frecuenciaEjecucion.nombre as frecuencia',
             DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
             DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ),
         )
         ->join( 'personal', 'personal.id', '=', 'programacionCheckLists.personalId' )
         ->join( 'maquinaria', 'maquinaria.id', '=', 'programacionCheckLists.maquinariaId' )
         ->join( 'bitacoras', 'bitacoras.id', '=', 'programacionCheckLists.bitacoraId' )
+        ->join( 'frecuenciaEjecucion', 'frecuenciaEjecucion.id', 'bitacoras.frecuenciaId' )
         ->orderBy( 'programacionCheckLists.id', 'desc' )
         ->paginate( 15 );
 
@@ -120,9 +126,20 @@ class checkListController extends Controller {
 
     }
 
-
-    public function planeacion() {
+    public function planeacion( Request $request ) {
         abort_if ( Gate::denies( 'checkList_index' ), 403 );
+        $estatus = $request->input( 'estatus', '0' );
+        $objCalendar = new Calendario();
+
+        //*** Arreglo para los dias del periodo **/
+        $vctDiasSemanaActual = null;
+        $vctDiasPeriodo = null;
+        if ( $estatus > 0 ) {
+            /** para el periodo de trabajo */
+            $vctDiasPeriodo = $objCalendar->getPeriodoDeTrabajo( date_create( date( 'Y-m-d' ) ), $estatus );
+            $strFechaInicioPeriodo = $vctDiasPeriodo[ 0 ];
+            $strFechaFinPeriodo = $vctDiasPeriodo[ 1 ];
+        }
 
         $vctPersonal = personal::select(
             'personal.id',
@@ -146,28 +163,162 @@ class checkListController extends Controller {
         ->where( 'personal.estatusId', '=', 1 ) //*** solo operarios de maquinaria */
         ->orderBy( 'personal.nombres', 'asc' )->get();
 
-        $vctMaquinaria = maquinaria::select( '*' )
-        ->where( 'compania', '=', null )
-        ->where( 'estatusId', '=', 1 )
-        ->orderBy( 'maquinaria.identificador', 'asc' )->get();
-
-        $vctBitacoras = bitacoras::select( 'bitacoras.*', 'frecuenciaEjecucion.nombre as frecuencia' )
-        ->join( 'frecuenciaEjecucion', 'frecuenciaEjecucion.id', 'bitacoras.frecuenciaId' )
-        ->where( 'activa', '=', 1 )
-        ->orderBy( 'bitacoras.nombre', 'asc' )->get();
-
-        $vctRecords = programacionCheckLists::select(
-            'programacionCheckLists.*',
-            'bitacoras.nombre as bitacora',
-            DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
-            DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ),
+        /** que tenemos para ese tipo */
+        $vctListado = bitacoras::select(
+            DB::raw( "CONCAT(bitacoras.nombre,' ', bitacoras.codigo,' v', bitacoras.version)as bitacora" ),
+            'bitacoras.id as bitacoraId',
+            'bitacorasEquipos.id as bitacoraEquiposId',
+            'frecuenciaEjecucion.nombre as frecuencia',
+            'frecuenciaEjecucion.id as frecuenciaId',
+            DB::raw( "CONCAT(maquinaria.identificador,' ', maquinaria.nombre)as maquinaria" ),
+            'maquinaria.id as maquinariaId',
+            'maquinaria.estatusId',
         )
-        ->join( 'personal', 'personal.id', '=', 'programacionCheckLists.personalId' )
-        ->join( 'maquinaria', 'maquinaria.id', '=', 'programacionCheckLists.maquinariaId' )
+        ->join( 'frecuenciaEjecucion', 'frecuenciaEjecucion.id', 'bitacoras.frecuenciaId' )
+        ->leftjoin( 'bitacorasEquipos', 'bitacorasEquipos.bitacoraId', 'bitacoras.id' )
+        ->rightjoin( 'maquinaria', 'maquinaria.id', 'bitacorasEquipos.maquinariaId' )
+        ->whereNull( 'compania' );
+
+        if ( $estatus !== '0' ) {
+            $vctListado = $vctListado->where( 'bitacoras.frecuenciaId', '=', $estatus );
+        }
+
+        $vctListado = $vctListado->where( 'maquinaria.estatusId', '=', 1 )
+        ->orderBy( 'maquinaria.identificador', 'asc' )
+        ->orderBy( 'frecuenciaEjecucion.dias', 'asc' )
+        ->get() ;
+        /** FIN de que tenemos para ese tipo */
+
+        /** que tenemos programado */
+        $vctRegistrados = programacionCheckLists::select(
+            'programacionCheckLists.*',
+            'frecuenciaEjecucion.nombre as frecuencia',
+            'frecuenciaEjecucion.id as frecuenciaId',
+            DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ),
+            DB::raw( "CONCAT(bitacoras.nombre,' ', bitacoras.codigo,' v', bitacoras.version)as bitacora" ),
+            DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
+        )
         ->join( 'bitacoras', 'bitacoras.id', '=', 'programacionCheckLists.bitacoraId' )
-        ->orderBy( 'programacionCheckLists.id', 'desc' )
-        ->paginate( 15 );
-        return view( 'checkList.planeacion', compact( 'vctRecords', 'vctPersonal', 'vctMaquinaria', 'vctBitacoras' ) );
+        ->join( 'frecuenciaEjecucion', 'frecuenciaEjecucion.id', 'bitacoras.frecuenciaId' )
+        ->join( 'maquinaria', 'maquinaria.id', '=', 'programacionCheckLists.maquinariaId' )
+        ->join( 'personal', 'personal.id', '=', 'programacionCheckLists.personalId' );
+
+        if ( $estatus !== '0' ) {
+            $vctRegistrados = $vctRegistrados->where( 'bitacoras.frecuenciaId', $estatus )
+            ->whereBetween( 'programacionCheckLists.fecha',   [ $strFechaInicioPeriodo, $strFechaFinPeriodo ] );
+        }
+
+        $vctRegistrados = $vctRegistrados->orderBy( 'bitacoras.id', 'asc' )
+        ->orderBy( 'maquinaria.identificador', 'asc' )
+        ->get();
+        /** FIN de que tenemos programado */
+
+        $vctDebug = array();
+        $vctRegistros = array();
+        $vctRecords = array();
+        $vctIds = array();
+
+        if ( $estatus > '0' ) {
+            //*** recorremos el arreglo de los equipos registrados para checklist */
+            $vctDebug[] = 'Iniciando...';
+            if ( $vctRegistrados->IsEmpty() == false ) {
+
+                //*** trabajamos los registrados */
+                $vctDebug[] = 'Procesando los registrados';
+                foreach ( $vctRegistrados as $record ) {
+
+                    $objItem = new stdClass();
+
+                    $objItem->id = $record->id;
+                    $objItem->checkListId = $record->checkListId;
+                    $objItem->comentario = $record->comentario;
+                    $objItem->fecha = $record->fecha;
+                    $objItem->estatus = $record->estatus;
+                    $objItem->bitacora = $record->bitacora;
+                    $objItem->bitacoraId = $record->bitacoraId;
+                    $objItem->maquinaria = $record->maquinaria;
+                    $objItem->maquinariaId = $record->maquinariaId;
+                    $objItem->personal = $record->personal;
+                    $objItem->personalId = $record->personalId;
+                    $objItem->frecuencia = $record->frecuencia;
+                    $objItem->frecuenciaId = $record->frecuenciaId;
+
+                    $vctRecords[] = $objItem;
+                    $vctDebug[] = 'Procesado: '. $record->maquinaria. ' ' . $record->maquinariaId ;
+
+                    $vctItems[] = $objItem->maquinariaId;
+                    $vctDebug[] = 'Agregando: '. $record->maquinaria . $record->maquinariaId ;
+
+                }
+
+                $vctDebug[] = 'Registrados listos...'  ;
+                $vctDebug[] = $vctItems ;
+
+                $vctDebug[] = 'Procesando lista de equipos...'  ;
+
+                foreach ( $vctListado as $item ) {
+
+                    if ( in_array( $item->maquinariaId, $vctItems ) == false ) {
+                        $vctDebug[] = "Se procesa la maquina $item->maquinaria de la lista"  ;
+
+                        $objItem = new stdClass();
+
+                        $objItem->id = null;
+                        $objItem->checkListId = null;
+                        $objItem->comentario = $item->comentario;
+                        $objItem->fecha = null;
+                        $objItem->estatus = 1;
+                        $objItem->bitacora = $item->bitacora;
+                        $objItem->bitacoraId = $item->bitacoraId;
+                        $objItem->maquinaria = $item->maquinaria;
+                        $objItem->maquinariaId = $item->maquinariaId;
+                        $objItem->personal = null;
+                        $objItem->personalId = null;
+                        $objItem->frecuencia = $item->frecuencia;
+                        $objItem->frecuenciaId = $item->frecuenciaId;
+
+                        $vctRecords[] = $objItem;
+                        break;
+                    } else {
+                        $vctDebug[] = "La maquina $item->maquinaria ya se encuentra registrada"  ;
+
+                    }
+                }
+
+            } else {
+
+                foreach ( $vctListado as $item ) {
+                    $vctDebug[] = "Se procesa la maquina $item->maquinaria de la lista"  ;
+
+                    $objItem = new stdClass();
+
+                    $objItem->id = null;
+                    $objItem->checkListId = null;
+                    $objItem->comentario = $item->comentario;
+                    $objItem->fecha = null;
+                    $objItem->estatus = 1;
+                    $objItem->bitacora = $item->bitacora;
+                    $objItem->bitacoraId = $item->bitacoraId;
+                    $objItem->maquinaria = $item->maquinaria;
+                    $objItem->maquinariaId = $item->maquinariaId;
+                    $objItem->personal = null;
+                    $objItem->personalId = null;
+                    $objItem->frecuencia = $item->frecuencia;
+                    $objItem->frecuenciaId = $item->frecuenciaId;
+
+                    $vctRecords[] = $objItem;
+                }
+            }
+
+        }
+
+        $vctDebug[] = 'Terminado....';
+
+        $vctFilterFrecuencia = frecuenciaEjecucion::select( 'frecuenciaEjecucion.*' )->where( 'dias', '>', 0 )->orderBy( 'frecuenciaEjecucion.dias', 'asc' )->get();
+
+        // dd( $estatus, $vctDiasSemanaActual, 'Registrados', $vctRegistrados, 'Asignados', $vctListado, $vctDebug, 'Registros: ', $vctRecords );
+
+        return view( 'checkList.planeacion', compact( 'vctRecords', 'vctPersonal', 'vctFilterFrecuencia', 'vctDiasPeriodo' ) );
     }
 
     /**
@@ -186,12 +337,14 @@ class checkListController extends Controller {
             $vctRecords = programacionCheckLists::select(
                 'programacionCheckLists.*',
                 'bitacoras.nombre as bitacora',
+                'frecuenciaEjecucion.nombre as frecuencia',
                 DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
                 DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ),
             )
             ->join( 'personal', 'personal.id', '=', 'programacionCheckLists.personalId' )
             ->join( 'maquinaria', 'maquinaria.id', '=', 'programacionCheckLists.maquinariaId' )
             ->join( 'bitacoras', 'bitacoras.id', '=', 'programacionCheckLists.bitacoraId' )
+            ->join( 'frecuenciaEjecucion', 'frecuenciaEjecucion.id', 'bitacoras.frecuenciaId' )
             ->where( 'personal.id', '=', $objPersonal->id )
             ->orderBy( 'programacionCheckLists.id', 'desc' )
             ->paginate( 15 );
@@ -204,12 +357,14 @@ class checkListController extends Controller {
                 $vctRecords = programacionCheckLists::select(
                     'programacionCheckLists.*',
                     'bitacoras.nombre as bitacora',
+                    'frecuenciaEjecucion.nombre as frecuencia',
                     DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
                     DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ),
                 )
                 ->join( 'personal', 'personal.id', '=', 'programacionCheckLists.personalId' )
                 ->join( 'maquinaria', 'maquinaria.id', '=', 'programacionCheckLists.maquinariaId' )
                 ->join( 'bitacoras', 'bitacoras.id', '=', 'programacionCheckLists.bitacoraId' )
+                ->join( 'frecuenciaEjecucion', 'frecuenciaEjecucion.id', 'bitacoras.frecuenciaId' )
                 ->orderBy( 'programacionCheckLists.id', 'desc' )
                 ->paginate( 15 );
             } else {
@@ -306,6 +461,10 @@ class checkListController extends Controller {
         //
     }
 
+    public function storePlaneacion( Request $request ) {
+        //
+    }
+
     /**
     * Asigna y programa el trabajo de un checklist de personal
     *
@@ -378,7 +537,7 @@ class checkListController extends Controller {
         $bitacora = bitacoras::select( 'bitacoras.*' )->where( 'id', '=', $checkList->bitacoraId )->first();
 
         // dd( $records );
-        return view( 'checkList.detalleCheckList', compact( 'maquinaria', 'checkList', 'records','bitacora' ) );
+        return view( 'checkList.detalleCheckList', compact( 'maquinaria', 'checkList', 'records', 'bitacora' ) );
     }
 
     /**
@@ -402,6 +561,42 @@ class checkListController extends Controller {
 
     public function update( Request $request, $id ) {
         //
+    }
+
+    public function updatePlaneacion( Request $request ) {
+        // dd( $request );
+        abort_if ( Gate::denies( 'checkList_create' ), 403 );
+        $data = $request->all();
+
+        $vctDebug = array();
+
+        for ( $i = 0; $i < count( $data[ 'maquinariaId' ] ) ;
+        $i++ ) {
+
+            $intId =  $data[ 'id' ][ $i ];
+            $vctDebug[] = 'Validando el Id: ' . $data[ 'id' ][ $i ] . ' en la posición '. $i ;
+
+            $objRecord = ( $intId != 0? programacionCheckLists::where( 'id', '=', $intId )->first(): new programacionCheckLists() );
+
+            $vctDebug[] = $objRecord;
+
+            $objRecord->maquinariaId =  $data[ 'maquinariaId' ][ $i ];
+            $objRecord->personalId =  $data[ 'personalId' ][ $i ];
+            $objRecord->bitacoraId =  $data[ 'bitacoraId' ][ $i ];
+            $objRecord->fecha =  $data[ 'fecha' ][ $i ];
+            $objRecord->estatus =  $data[ 'estatus' ][ $i ];
+            $objRecord->comentario =  $data[ 'comentario' ][ $i ];
+            $objRecord->checkListId =  $data[ 'checkListId' ][ $i ];
+
+            $objRecord->save();
+            $vctDebug[] = 'Registrando maquinariaId: ' . $data[ 'maquinariaId' ][ $i ]  ;
+
+        }
+
+        // dd( $vctDebug );
+
+        return redirect()->route( 'checkList.index' )->with( 'success', 'Programación de Bitácora actualizada correctamente.' );
+
     }
 
     /**
@@ -472,7 +667,7 @@ class checkListController extends Controller {
 
         $checkList = checkList::select(
             'checkList.*', 'maquinaria.identificador',
-            'personal.nombres','personal.apellidoP','users.username' ,
+            'personal.nombres', 'personal.apellidoP', 'users.username' ,
             DB::raw( "CONCAT(maquinaria.identificador,' - ',maquinaria.nombre) AS maquinaria" ),
             DB::raw( 'users.username AS usuario' ),
             DB::raw( 'bitacoras.nombre AS bitacora' )

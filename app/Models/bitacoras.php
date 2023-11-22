@@ -13,6 +13,6 @@ class bitacoras extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'nombre', 'comentario', 'activa', 'frecuenciaId','codigo','version'
+        'nombre', 'comentario', 'activa', 'frecuenciaId','codigo','version','renovacion'
     ];
 }

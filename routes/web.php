@@ -413,6 +413,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('serviciosTrasporte/misServicios', [App\Http\Controllers\serviciosTrasporteController::class, 'misServiciosChofer'])->name('serviciosTrasporte.misServiciosChofer');
     Route::get('serviciosTrasporte/ticket/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'printTicketChofer'])->name('serviciosTrasporte.printTicketChofer');
     Route::get('serviciosTrasporte/ticketCerrado/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'printTicketCerrado'])->name('serviciosTrasporte.printTicketCerrado');
+    Route::post('serviciosTrasporte/reporte', [App\Http\Controllers\serviciosTrasporteController::class, 'reporte'])->name('serviciosTrasporte.reporte');
     Route::resource('serviciosTrasporte', App\Http\Controllers\serviciosTrasporteController::class);
 
     // Conceptos
@@ -436,9 +437,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/checkList/asignacion/actualizar/', [App\Http\Controllers\checkListController::class, 'updateAsignacion'])->name('checkList.updateAsignacion');
     Route::get('/checkList/planeacion', [App\Http\Controllers\checkListController::class, 'planeacion'])->name('checkList.planeacion');
 
+    Route::put('/checkList/planeacion/registrar/', [App\Http\Controllers\checkListController::class, 'updatePlaneacion'])->name('checkList.updatePlaneacion');
 
     Route::get('checkList/ticket/{id}', [App\Http\Controllers\checkListController::class, 'printTicketUsuario'])->name('checkList.printTicketUsuario');
-    Route::get('checkList/ticketCerrado/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'checkListController'])->name('checkList.printTicketCheckList');
+
+    // Route::get('checkList/ticketCerrado/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'checkListController'])->name('checkList.printTicketCheckList');
 
     // Equipos MTQ
     // Route::get('mtq/inventario/dash', [App\Http\Controllers\inventarioMtqController::class, 'dash'])->name('inventarioMtq.dash');
@@ -502,6 +505,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::resource('docs', App\Http\Controllers\docsController::class);
     // Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
     Route::resource('uso', App\Http\Controllers\usoMaquinariasController::class);
+    Route::post('uso/mantenimiento/nuevo', [App\Http\Controllers\usoMaquinariasController::class, 'mantenimiento'])->name('uso.mantenimiento');
     Route::resource('calendarioMtq', App\Http\Controllers\calendarioMtqController::class);
     Route::put('calendarioMtq/editar/{evento}', [App\Http\Controllers\calendarioMtqController::class, 'update'])->name('calendarioMtq.update');
 

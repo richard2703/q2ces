@@ -104,9 +104,11 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                                         <th class="labelTitulo text-center" style="height: 35px;"> 
                                             <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Días </div></th>
                                         <th class="labelTitulo text-center" style="height: 35px;"> 
-                                            <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px; width: 95px;">Salario Por Día </div></th>
+                                            <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px; width: 95px;">Salario Díario </div></th>
+                                        <th class="labelTitulo text-center" style="height: 35px;"> 
+                                                <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Horas Extra </div></th>
                                         <th class="labelTitulo text-center" style=" height: 35px;"> 
-                                            <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px; width: 100px;">Total Horas Extra </div></th>
+                                            <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px; width: 90px;">Total Horas Extra </div></th>
                                         <th class="labelTitulo text-center" style="height: 35px; width: 150px;">
                                             <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Pago Semanal </div></th>
                                     </thead>
@@ -160,9 +162,11 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                                             <th class="labelTitulo text-center" style="height: 35px;"> 
                                                 <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Días </div></th>
                                             <th class="labelTitulo text-center" style="height: 35px;"> 
-                                                <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px; width: 95px;">Salario Por Día </div></th>
+                                                <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px; width: 95px;">Salario Díario </div></th>
+                                            <th class="labelTitulo text-center" style="height: 35px;"> 
+                                                    <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px; width: 95px;">Horas Extra </div></th>
                                             <th class="labelTitulo text-center" style=" height: 35px;"> 
-                                                <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px; width: 100px;">Total Horas Extra </div></th>
+                                                <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px; width: 90px;">Total Horas Extra </div></th>
                                             <th class="labelTitulo text-center" style="height: 35px; width: 150px;">
                                                 <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Pago Semanal </div></th>
                                             </thead>       
@@ -306,10 +310,10 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                                                 style="">
                                                 <!-- Estatus de asistencia-->
                                                 @if ($item->pagos[$iDay]->esAsistencia)
-                                                    <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
+                                                    <div style="margin-right: 5px !important;border-radius: 1em; border-color: black; color: {{ $item->pagos[$iDay]->tipoAsistenciaColor }};
                                                     border-width: 1px;
                                                     border-style: solid; height: 35px; margin-top: 3px; padding-left: 10px; padding-right: 10px" class="d-flex justify-content-between align-items-center">
-                                                        {{ $item->pagos[$iDay]->esAsistencia }}
+                                                    <strong>{{ $item->pagos[$iDay]->esAsistencia }}</strong>
                                                      <strong>
                                                         {{ $intHorasCompletasDia }} Hrs<br>
                                                         {{--  {{ str_pad($intHorasDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosDia, 2, '0', STR_PAD_LEFT) }}  --}}
@@ -366,7 +370,7 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                                                 ?>
                                                 {{ str_pad($intHorasSemanal, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosSemanal, 2, '0', STR_PAD_LEFT) }}
                                             </td> --}}
-                                            {{--  <td class="text-right">
+                                            <td class="text-right">
                                                 @if ($intHorasSemanales)
                                                     <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
                                                     border-width: 1px;
@@ -381,7 +385,7 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                                                     border-width: 1px;
                                                     border-style: solid; height: 35px; margin-top: 3px" class="d-flex justify-content-center align-items-center"> 0 </div>
                                                 @endif
-                                            </td>  --}}
+                                            </td>
                                             <td class="text-right">
                                                 <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
                                                 border-width: 1px;
