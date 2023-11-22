@@ -413,6 +413,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('serviciosTrasporte/misServicios', [App\Http\Controllers\serviciosTrasporteController::class, 'misServiciosChofer'])->name('serviciosTrasporte.misServiciosChofer');
     Route::get('serviciosTrasporte/ticket/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'printTicketChofer'])->name('serviciosTrasporte.printTicketChofer');
     Route::get('serviciosTrasporte/ticketCerrado/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'printTicketCerrado'])->name('serviciosTrasporte.printTicketCerrado');
+    Route::post('serviciosTrasporte/reporte', [App\Http\Controllers\serviciosTrasporteController::class, 'reporte'])->name('serviciosTrasporte.reporte');
     Route::resource('serviciosTrasporte', App\Http\Controllers\serviciosTrasporteController::class);
 
     // Conceptos
@@ -504,6 +505,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::resource('docs', App\Http\Controllers\docsController::class);
     // Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
     Route::resource('uso', App\Http\Controllers\usoMaquinariasController::class);
+    Route::post('uso/mantenimiento/nuevo', [App\Http\Controllers\usoMaquinariasController::class, 'mantenimiento'])->name('uso.mantenimiento');
     Route::resource('calendarioMtq', App\Http\Controllers\calendarioMtqController::class);
     Route::put('calendarioMtq/editar/{evento}', [App\Http\Controllers\calendarioMtqController::class, 'update'])->name('calendarioMtq.update');
 
@@ -528,8 +530,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/print-maquinaria', 'App\Http\Controllers\printController@printMaquinaria')->name('printMaquinaria.post');
 
     Route::get('/print-cajaChica/{saldoFormatted}/{ingresoFormatted}/{egresoFormatted}/{saldo}/{inicioSemana}/{finSemana}', 'App\Http\Controllers\printController@printCajaChica')->name('printCajaChica.get');
-
     Route::post('/print-cajaChica', 'App\Http\Controllers\printController@printCajaChica')->name('printCajaChica.post');
+    Route::get('/print-asistencia/{semanaFormatted}', 'App\Http\Controllers\printController@printAsistencia')->name('printAsistencia.get');
 
     Route::get('/print-vista-previa', 'App\Http\Controllers\printController@print')->name('print.get');
     Route::post('/print-combustible', 'App\Http\Controllers\printController@print')->name('print.post');

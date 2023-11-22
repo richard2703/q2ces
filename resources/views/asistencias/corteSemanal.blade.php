@@ -133,6 +133,24 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                         {{ /*ucwords*/ trans($objCalendar->getFechaFormateada(date_create(date('Y-m-d')), true)) }}</b>
                                                 </a>
                                             </div>
+                                            <div class="mb-3">
+                                                @can('cajachica_show')
+                                                @php
+                                                $fechaInicioFormateada = date('d-m-Y', strtotime($strFechaInicioPeriodo));
+                                                $fechaFinFormateada = date('d-m-Y', strtotime($strFechaFinPeriodo));
+                                                    $semanaFormatted = 'Semana ' . $semanaSeleccionada . ' del ' . $fechaInicioFormateada . ' al ' . $fechaFinFormateada;
+                                                @endphp
+
+                                                <a href="{{ route('printAsistencia.get', [
+                                                    'semanaFormatted' => $semanaFormatted,
+                                                    'intAnio' => $intAnio, 
+                                                    'intMes' => $intMes, 
+                                                    'intDia' => $intDia
+                                                ]) }}">
+                                                    <button type="button" class="btn regresar" style="">Imprimir</button>
+                                                </a>
+                                                @endcan
+                                            </div>
                                             <div class="">
                                                 @can('asistencia_create')
                                                     <form
@@ -201,9 +219,9 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                         ?>
                                                         <tr>
                                                             <td style="color: {{ $item->estatusColor }};">
-                                                                <strong>{{ ucwords(trans($item->numEmpleado)) }}</strong>
+                                                                <strong>{{ $item->numEmpleado != null ? ucwords(trans($item->numEmpleado)) : '-' }}</strong>
                                                             </td>
-                                                            <td class="text-left">{{ ucwords(trans($item->empleado)) }}
+                                                            <td class="text-left">{{ $item->empleado != null ? ucwords(trans($item->empleado)) : '-' }}
                                                             </td>
                                                             <td>{{ ucwords(trans($item->puesto)) }}</td>
                                                             <?php
@@ -319,6 +337,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                                 style="color: {{ $item->pagos[$iDay]->tipoAsistenciaColor }};">
                                                                 <!-- Estatus de asistencia-->
                                                                 <strong> {{ $item->pagos[$iDay]->esAsistencia }}</strong>
+                                                                
                                                             </td>
                                                             <td
                                                                 title="Tiempo Extra: {{ str_pad($intHorasDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosDia, 2, '0', STR_PAD_LEFT) }}, Tiempo Retraso: {{ str_pad($intHorasRetrasoDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosRetrasoDia, 2, '0', STR_PAD_LEFT) }}, Se Paga proporcional sueldo : $ {{ $decValorHoraExtra }}">
