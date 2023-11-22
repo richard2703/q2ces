@@ -26,5 +26,10 @@ class mantenimientos extends Model
         'subtotal',
         'iva',
         'costo',
+        'coordTaller',
+        'coordOperaciones',
+        'mecanico',
+        'responsable',
+        'imagenSellos'
     ];
 }
