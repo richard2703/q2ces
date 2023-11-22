@@ -20,7 +20,7 @@
                                             <option value="1" {{ request('estatus') == 1 ? 'selected' : '' }}>En
                                                 Espera
                                             </option>
-                                            <option value="2"  {{ request('estatus') == 2 ? 'selected' : '' }}>
+                                            <option value="2" {{ request('estatus') == 2 ? 'selected' : '' }}>
                                                 Realizando
                                             </option>
                                             <option value="3" {{ request('estatus') == 3 ? 'selected' : '' }}>
@@ -96,6 +96,15 @@
                                             </td>
 
                                             <td class="td-actions text-center">
+                                                {{-- @if ($item->estadoId == 3)
+                                                    @can('mantenimiento_edit')
+                                                        <a href="#" class="" data-bs-toggle="modal"
+                                                            data-bs-target="#editarItem"
+                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->coordTaller }}','{{ $item->coordOperaciones }}','{{ $item->mecanico }}','{{ $item->responsable }}','{{ $item->imagenSellos }}')">
+                                                            <i class="fas fa-sign-out-alt iconoTablas" title="Responsables"></i>
+                                                        </a>
+                                                    @endcan
+                                                @endif --}}
 
                                                 @can('mantenimiento_show')
                                                     <a href="{{ route('mantenimientos.show', $item->id) }}"
@@ -140,6 +149,8 @@
                                                         </button>
                                                     </form>
                                                 @endcan
+
+
                                             </td>
                                         </tr>
                                     @empty
@@ -160,4 +171,77 @@
         </div>
     </div>
     </div>
+
+    <!-- Modal Editar  Tarea-->
+    <div class="modal fade" id="editarItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bacTituloPrincipal">
+
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp <span id="tituloModal">Editar
+                            Información de Control</label>
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row d-flex" action="{{ route('mantenimientos.update', 0) }}" method="post">
+                        @csrf
+                        @method('put')
+                        <input type="hidden" name="controlId" id="id" value="">
+
+                        <div class=" col-12  mb-3 ">
+                            <label class="labelTitulo">Coordinador de Taller :</label></br>
+                            <input type="text" class="inputCaja" id="controlCoordTaller" name="coordTaller" value="">
+                        </div>
+
+                        <div class=" col-12  mb-3 ">
+                            <label class="labelTitulo">Coordinador de Operaciones:</label></br>
+                            <input type="text" class="inputCaja" id="controlCoordOperaciones" name="coordOperaciones" value="">
+                        </div>
+
+                        <div class=" col-12  mb-3 ">
+                            <label class="labelTitulo">Mecánico:</label></br>
+                            <input type="text" class="inputCaja" id="controlMecanico" name="mecanico" value="">
+                        </div>
+
+                        <div class=" col-12  mb-3 ">
+                            <label class="labelTitulo">Responsable:</label></br>
+                            <input type="text" class="inputCaja" id="controlResponsable" name="responsable" value="">
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <div id="contenedorBotonGuardar">
+                                <button type="submit" class="btn botonGral" id="btnTareaGuardar">Guardar
+                                    Cambios</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- <script>
+        function cargaItem(id, coordTaller, coordOperaciones, mecanico, responsable, imagenSellos) {
+
+            alert(coordTaller);
+            const txtId = document.getElementById('controlId');
+
+            const txtControl1 = document.getElementById('controlCoordTaller');
+            txtControl1.value = coordTaller;
+
+            const txtControl2 = document.getElementById('controlCoordOperaciones');
+            txtControl2.value = coordOperaciones;
+
+            const txtControl3 = document.getElementById('controlCoordOperaciones');
+            txtControl3.value = coordOperaciones;
+
+            const txtControl4 = document.getElementById('controlCoordOperaciones');
+            txtControl4.value = coordOperaciones;
+
+        }
+    </script> --}}
 @endsection

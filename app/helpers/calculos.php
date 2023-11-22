@@ -46,7 +46,7 @@ class Calculos
         return $total;
     }
     /**
-     * Obtiene el total de decargas de un equipo o en general
+     * Obtiene el total de descargas de un equipo o en general
      *
      * @param integer $intMaquinaria Identificador del equipo a consultar, 0 es el general
      * @return float el Total de los litros descargados registrados
@@ -109,9 +109,9 @@ class Calculos
     }
 
     /**
-     * Recalcula el acumulado de la caja chica tomando en cuenta solo movimientos de entradas y salidas de ingresos
+     * Recalcular el acumulado de la caja chica tomando en cuenta solo movimientos de entradas y salidas de ingresos
      *
-     * @param int $registro Sobre el cual se realiza el pibote para el calculo
+     * @param int $registro Sobre el cual se realiza el pivote para el calculo
      * @return void
      */
 
@@ -121,7 +121,7 @@ class Calculos
         //*** Arreglo para buscar ingresos y egresos */
         $vctTipos = [1, 2];
 
-        //*** obtenemos la informacion del registro pivote  */
+        //*** obtenemos la información del registro pivote  */
         $objRecord = cajaChica::select('*')->where('id', '=', $registroId)->first();
 
         //*** buscamos el registro anterior inmediato */
@@ -150,7 +150,7 @@ class Calculos
             //*** no hay anterior */
             $decRegistroTotalActualizado = ($objRecord->tipo == 1 ? ($decTotalAnterior + $objRecord->cantidad)  : ($decTotalAnterior - $objRecord->cantidad));
             $objAnterior = null;
-            //*** nois aseguramos de que el inicial quede iniciado correctamente */
+            //*** nos aseguramos de que el inicial quede iniciado correctamente */
             $objRecord->total = $decRegistroTotalActualizado;
             $objRecord->save();
         }
@@ -201,9 +201,9 @@ class Calculos
     }
 
     /**
-     * Actualiza el kilometraje de una maquinaria
+     * Actualiza el Kilometraje de una maquinaria
      *
-     * @param int $intMaquinaria Identificador de la máquinaria
+     * @param int $intMaquinaria Identificador de la maquinaría
      * @param int $intKilometraje Kilometraje que será registrado
      * @param boolean $blnQ2ces True si es para Q2Ces
      * @return void
