@@ -140,7 +140,10 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                 @endphp
 
                                                 <a href="{{ route('printAsistencia.get', [
-                                                    'semanaFormatted' => $semanaFormatted
+                                                    'semanaFormatted' => $semanaFormatted,
+                                                    'intAnio' => $intAnio, 
+                                                    'intMes' => $intMes, 
+                                                    'intDia' => $intDia
                                                 ]) }}">
                                                     <button type="button" class="btn regresar" style="">Imprimir</button>
                                                 </a>
@@ -214,9 +217,9 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                         ?>
                                                         <tr>
                                                             <td style="color: {{ $item->estatusColor }};">
-                                                                <strong>{{ ucwords(trans($item->numEmpleado)) }}</strong>
+                                                                <strong>{{ $item->numEmpleado != null ? ucwords(trans($item->numEmpleado)) : '-' }}</strong>
                                                             </td>
-                                                            <td class="text-left">{{ ucwords(trans($item->empleado)) }}
+                                                            <td class="text-left">{{ $item->empleado != null ? ucwords(trans($item->empleado)) : '-' }}
                                                             </td>
                                                             <td>{{ ucwords(trans($item->puesto)) }}</td>
                                                             <?php
@@ -332,6 +335,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                                 style="color: {{ $item->pagos[$iDay]->tipoAsistenciaColor }};">
                                                                 <!-- Estatus de asistencia-->
                                                                 <strong> {{ $item->pagos[$iDay]->esAsistencia }}</strong>
+                                                                
                                                             </td>
                                                             <td
                                                                 title="Tiempo Extra: {{ str_pad($intHorasDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosDia, 2, '0', STR_PAD_LEFT) }}, Tiempo Retraso: {{ str_pad($intHorasRetrasoDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosRetrasoDia, 2, '0', STR_PAD_LEFT) }}, Se Paga proporcional sueldo : $ {{ $decValorHoraExtra }}">
