@@ -34,38 +34,38 @@
                                         </div>
                                     @endif
                                     <div class="row division">
-                                        {{--  <div class="col-12 col-md-4">
-                                            <p>Semana del</br> <span
-                                                    class="combustibleLitros">{{ \Carbon\Carbon::parse($lunes)->locale('es')->isoFormat('dddd D MMMM') }}
+                                        <div class="col-12 col-md-4">
+                                            <p>Periodo del</br> <span
+                                                    class="combustibleLitros">{{ \Carbon\Carbon::parse($quincena)->locale('es')->isoFormat('dddd D MMMM') }}
                                                     al
-                                                    {{ \Carbon\Carbon::parse($domingo)->locale('es')->isoFormat('dddd D MMMM') }}</span>
+                                                    {{ \Carbon\Carbon::parse($hoy)->locale('es')->isoFormat('dddd D MMMM') }}</span>
                                             </p>
                                         </div>
 
                                         <div class="col-3 col-md-2 text-center">
-                                            <p class="">Semana Pasada</p>
-                                            <p class="combustibleLitros fw-semibold text-black-50 ">$
-                                                {{ isset($ultimoCorte->saldo) ? number_format($ultimoCorte->saldo, 2) : '0.00' }}
+                                            <p class="">Pendientes</p>
+                                            <p class="combustibleLitros fw-semibold text-danger">{{ $totalPendientes }}</p>
+                                        </div>
+                                        <div class="col-3 col-md-2 text-center">
+                                            <p class="">$ Pendiente</p>
+                                            <p class="combustibleLitros fw-semibold  text-danger">$
+                                                {{ number_format($sumaPendientes, 2) }}
                                             </p>
-                                            
+                                        </div>
+
+                                        <div class="col-3 col-md-2 text-center">
+                                            <p class="">Facturadas</p>
+                                            <p class="combustibleLitros fw-semibold ">{{ $totalPagados }}
+                                            <p>
                                         </div>
                                         <div class="col-3 col-md-2 text-center">
-                                            <p class="">Ingreso</p>
-                                            <p class="combustibleLitros fw-semibold text-success">$
-                                                {{ number_format($ingreso, 2) }}</p>
-                                        </div>
-                                        <div class="col-3 col-md-2  text-center">
-                                            <p class="">Egreso</p>
-                                            <p class="combustibleLitros fw-semibold text-danger">$
-                                                {{ number_format($egreso, 2) }}</p>
-                                        </div>
-                                        <div class="col-3 col-md-2 text-center">
-                                            <p class="">Saldo</p>
-                                            <p class="combustibleLitros fw-semibold ">$ {{ number_format($saldo, 2) }}
+                                            <p class="">$ Facturadas</p>
+                                            <p class="combustibleLitros fw-semibold ">$ {{ number_format($sumaPagados, 2) }}
                                             </p>
                                         </div>
                                         <div class="row">
-                                            <div class="col-6 text-left">
+                                            <div class="col-6 d-flex  ">
+
                                                 @can('cajachica_create')
                                                     <button type="button" class="btn botonGral" data-bs-toggle="modal"
                                                         data-bs-target="#modal-reporte">
@@ -74,42 +74,16 @@
                                                 @endcan
                                             </div>
 
-                                            <div class="col-6 d-flex justify-content-end">
-
-                                                @if (date_diff(now(), $domingo->addDays(1))->format('%D%') <= 1 || !isset($ultimoCorte->saldo))
-                                                    @can('cajachica_create')
-                                                        <form action="{{ route('cajaChica.corte') }}" method="post">
-                                                            @csrf
-                                                            <input type="hidden" name="fin"
-                                                                value={{ $lunes->subDays(1) }}>
-                                                            <input type="hidden" name="inicio"
-                                                                value={{ $lunes->subDays(6) }}>
-                                                            <button type="submit" class="btn botonGral">Corte de
-                                                                Caja</button>
-                                                        </form>
+                                            <div class="col-6 d-flex justify-content-end ">
+                                                @if ($reporte == 0)
+                                                    @can('serviciosTrasporte_create')
+                                                        <a href="{{ route('serviciosTrasporte.create') }}"
+                                                            class="ps-1 align-self-center">
+                                                            <button type="button" class="btn botonGral">Programar
+                                                                Servicio</button>
+                                                        </a>
                                                     @endcan
-                                                @else
                                                 @endif
-
-
-                                                @can('cajachica_create')
-                                                    <a href="{{ route('cajaChica.create') }}" class="ps-1">
-                                                        <button type="button" class="btn botonGral">Nuevo Movimiento</button>
-                                                    </a>
-                                                @endcan
-                                            </div>
-                                        </div>  --}}
-                                        <div class="row">
-                                            <div class="col-6 text-left">
-                                            </div>
-
-                                            <div class="col-6 d-flex justify-content-end">
-
-                                                @can('serviciosTrasporte_create')
-                                                    <a href="{{ route('serviciosTrasporte.create') }}" class="ps-1">
-                                                        <button type="button" class="btn botonGral">Programar Servicio</button>
-                                                    </a>
-                                                @endcan
                                             </div>
                                         </div>
 
@@ -121,7 +95,7 @@
                                                     <th class="labelTitulo">Día</th>
                                                     <th class="labelTitulo">Concepto</th>
                                                     <th class="labelTitulo">Obra</th>
-                                                    <th class="labelTitulo">Proyecto</th>
+                                                    {{--  <th class="labelTitulo">Proyecto</th>  --}}
                                                     <th class="labelTitulo">Equipo</th>
                                                     <th class="labelTitulo">Personal</th>
                                                     <th class="labelTitulo">Gasto</th>
@@ -143,11 +117,11 @@
                                                         {{--  <td>1234</td>  --}}
                                                         {{--  <td>{{ $registro->cliente }}</td>  --}}
                                                         <td>{{ $registro->obra ? $registro->obra : '---' }}
-                                                            {{ $registro->cliente }}
+                                                            {{ $registro->cliente }} "{{ $registro->centroCostos }}"
                                                         </td>
-                                                        <td>{{ $registro->proyecto ? $registro->proyecto : '---' }}
+                                                        {{--  <td>{{ $registro->proyecto ? $registro->proyecto : '---' }}
                                                             {{ $registro->centroCostos }}
-                                                        </td>
+                                                        </td>  --}}
                                                         <td>{{ $registro->identificador }} - {{ $registro->maquinaria }}
                                                         </td>
                                                         <td>{{ $registro->pnombre }} {{ $registro->papellidoP }}</td>
@@ -157,7 +131,7 @@
                                                             {{--  {{ number_format($registro->cantidad, 2) + number_format($registro->costoServicio, 2) }}  --}}
                                                         </td>
                                                         <td>$
-                                                            {{ number_format($registro->costoServicio, 2) }}
+                                                            {{ number_format($registro->cantidad + $registro->costoMano + $registro->costoServicio, 2) }}
                                                             {{--  {{ number_format($registro->cantidad, 2) + number_format($registro->costoServicio, 2) }}  --}}
                                                         </td>
                                                         <td
@@ -193,14 +167,14 @@
                                                                 @case(3)
                                                                     Cerrado
                                                                     <a href="#" data-bs-toggle="modal" data-bs-target="#pagar"
-                                                                        onclick="pagar('{{ $registro->id }}','{{ $registro->cnombre }}','{{ $registro->obra }}','{{ $registro->costoServicio }}')">
+                                                                        onclick="pagar('{{ $registro->id }}','{{ $registro->cnombre }}','{{ $registro->obra }}','{{ $registro->costoServicio }}','{{ $registro->centroCostos }}')">
                                                                         <i class="far fa-money-bill-alt"
                                                                             style="color: #8caf48;font-size: x-large;"></i>
                                                                     </a>
                                                                 @break
 
                                                                 @case(4)
-                                                                    Pagado
+                                                                    Pagado <br># {{ $registro->numFactura }}
                                                                 @break
 
                                                                 @default
@@ -225,38 +199,6 @@
                                                                     </svg>
                                                                 </a>
                                                             @endcan
-                                                            @can('serviciosTrasporte_edit')
-                                                                <a href="{{ route('serviciosTrasporte.edit', $registro->id) }}"
-                                                                    class="">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg " width="28"
-                                                                        height="28" fill="currentColor"
-                                                                        class="bi bi-pencil accionesIconos"
-                                                                        style="color: black;" viewBox="0 0 16 16">
-                                                                        <path
-                                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                                                    </svg>
-                                                                </a>
-                                                            @endcan
-                                                            {{--  @can('user_destroy')
-                                                                <form
-                                                                    action="{{ route('serviciosTrasporte.destroy', $registro->id) }}"
-                                                                    method="POST" style="display: inline-block;"
-                                                                    onsubmit="return confirm('Seguro?')">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button class="btnSinFondo" type="submit" rel="tooltip">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="28"
-                                                                            height="28" fill="currentColor"
-                                                                            class="bi bi-x-circle" viewBox="0 0 16 16">
-                                                                            <path
-                                                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                            <path
-                                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                                        </svg>
-                                                                    </button>
-                                                                </form>
-                                                            @endcan  --}}
-
                                                             @can('servicio_Chofer')
                                                                 <a href="#" data-bs-toggle="modal"
                                                                     data-bs-target="#editarItem"
@@ -269,7 +211,6 @@
                                                                     </svg>
                                                                 </a>
                                                             @endcan
-
                                                             @if ($registro->estatus != 1)
                                                                 <a href="{{ route('serviciosTrasporte.printTicketChofer', $registro->id) }}"
                                                                     <i class="fas fa-print "
@@ -282,6 +223,20 @@
                                                                     </a>
                                                                 @endcan
                                                             @endif
+
+
+                                                            @can('serviciosTrasporte_edit')
+                                                                <a href="{{ route('serviciosTrasporte.edit', $registro->id) }}"
+                                                                    class="">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg " width="28"
+                                                                        height="28" fill="currentColor"
+                                                                        class="bi bi-pencil accionesIconos"
+                                                                        style="color: black;" viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                    </svg>
+                                                                </a>
+                                                            @endcan
                                                         </td>
                                                     </tr>
                                                     @empty
@@ -315,8 +270,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form class="row d-flex" action="{{ route('serviciosTrasporte.misServiciosChofer') }}" method="post"
-                            enctype="multipart/form-data">
+                        <form class="row d-flex" action="{{ route('serviciosTrasporte.misServiciosChofer') }}"
+                            method="post" enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <input type="hidden" name="id" value="" id="id">
@@ -396,6 +351,18 @@
                                     value="" readonly>
                             </div>
 
+                            <div class="col-6  mb-3 ">
+                                <label class="labelTitulo">Cobro:</label></br>
+                                <input type="text" class="inputCaja text-right" id="costos" name="costos"
+                                    value="" readonly>
+                            </div>
+
+                            <div class="col-6  mb-3 ">
+                                <label class="labelTitulo">Numero de Factura:</label></br>
+                                <input type="text" class="inputCaja text-right" id="numFactura" name="numFactura"
+                                    value="">
+                            </div>
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                 <div id="contenedorBotonGuardar">
@@ -404,6 +371,50 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--MODALES-->
+        <div class="modal fade" id="modal-reporte" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-cliente"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="col-12">
+                        <div class="card ">
+                            <form action="{{ route('serviciosTrasporte.reporte') }}" method="post">
+                                @csrf
+                                <div class="card-header bacTituloPrincipal ">
+                                    <div class="nav-tabs-navigation">
+                                        <div class="nav-tabs-wrapper">
+                                            <span class="nav-tabs-title">
+                                                <h2 class="titulos">Periodo del Reporte</h2>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row  card-body">
+                                    <div class="row card-body" style=" text-align: center;">
+                                        <div class="col-12 col-lg-6">
+                                            <label class="labelTitulo">Inicio:
+                                                <span>*</span></label></br>
+                                            <input type="date" class="inputCaja text-right" id="ncomprobante" required
+                                                name="inicio" value="">
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <label class="labelTitulo">Fin:
+                                                <span>*</span></label></br>
+                                            <input type="date" class="inputCaja text-right" id="ncomprobante" required
+                                                name="fin" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12  mb-3 d-flex  justify-content-center align-self-end">
+                                    <button class="btn botonGral ">Ir</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -430,7 +441,7 @@
         }
     </script>
     <script>
-        function pagar(id, cnombre, obra, Ccobro) {
+        function pagar(id, cnombre, obra, Ccobro, costos) {
 
             const txtId = document.getElementById('cid');
             txtId.value = id;
@@ -443,6 +454,9 @@
 
             const txtCcobro = document.getElementById('Ccobro');
             txtCcobro.value = Ccobro;
+
+            const txtCostos = document.getElementById('costos');
+            txtCostos.value = costos;
         }
     </script>
     <script>

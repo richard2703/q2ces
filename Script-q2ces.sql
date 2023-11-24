@@ -1687,6 +1687,7 @@ CREATE TABLE serviciosTrasporte(
     cajaChica int null,
     odometro int null,
     servicio text null,
+    numFactura varchar(45) null,
     comentario text null,
     created_at datetime NULL,
     updated_at datetime NULL,
