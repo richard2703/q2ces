@@ -6,13 +6,37 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class proveedor extends Model
-{
+ {
     use HasFactory;
-    protected $table = "proveedor";
+    protected $table = 'proveedor';
 
     public $timestamps = false;
 
     protected $fillable = [
-        'nombre', 'razonSocial', 'rfc', 'calle', 'exterior', 'interior', 'colonia', 'estado', 'ciudad', 'cp', 'logo', 'estatus', 'categoriaId', 'comentario'
+        'nombre',
+        'razonSocial',
+        'rfc',
+        'calle',
+        'exterior',
+        'interior',
+        'colonia',
+        'estado',
+        'ciudad',
+        'cp',
+        'logo',
+        'fiscal',
+        'estatus',
+        'categoriaId',
+        'comentario'
     ];
+
+    /**
+     * Obtiene todas las categorias que tiene el proveedor
+     *
+     * @return void
+     */
+    public function categorias()
+    {
+        return $this->belongsToMany(proveedorCategoria::class, 'provedorCategorias');
+    }
 }

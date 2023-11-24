@@ -189,7 +189,7 @@
                                 <label class="form-check-label" style="color: black;" for="chkMaquinaria">Maquinaria - Autos</label>
                             </div>
                         </div>
-                        
+
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
@@ -250,7 +250,7 @@
                                 <label class="form-check-label" style="color: black;" for="chkMaquinaria">Maquinaria - Autos</label>
                             </div>
                         </div>
-                        
+
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
@@ -336,8 +336,10 @@
             const txtComentarios = document.getElementById('controlComentarios');
             txtComentarios.value = comentarios;
             txtComentarios.readOnly = modalTipo;
+
             const objMarca = JSON.parse(marca);
             console.log('objMarca',objMarca);
+
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
             checkboxes.forEach(checkbox => {
                 const checkboxId = checkbox.id;
@@ -350,7 +352,7 @@
                 }
             });
             // Recorre el objeto 'marca' y muestra solo las propiedades con nombre
-           
+
 
             const txtMarca = document.getElementById('marca');
             const contenedorBotonGuardar = document.getElementById('contenedorBotonGuardar');
