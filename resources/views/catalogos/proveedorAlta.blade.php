@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'obras', 'titlePage' => __('Editar Cliente')])
+@extends('layouts.main', ['activePage' => 'obras', 'titlePage' => __('Alta de Proveedor')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -16,15 +16,14 @@
             <div class="justify-content-center">
                 <div class="card">
                     <div class="card-header bacTituloPrincipal">
-                        <h4 class="card-title">Editar Cliente</h4>
-                        {{-- <p class="card-category">Usuarios registrados</p> --}}
+                        <h4 class="card-title">Alta de Proveedor</h4>
                     </div>
                     <div class="card-body">
                         <div class="row">
 
                             <div class="d-flex p-3 divBorder">
                                 <div class="col-12 ">
-                                    <a href="{{ route('clientes.index') }}">
+                                    <a href="{{ route('proveedor.index') }}">
                                         <button class="btn regresar">
                                             <span class="material-icons">
                                                 reply
@@ -36,15 +35,15 @@
                             </div>
                         </div>
 
-                        <form class="alertaGuardar" action="{{ route('clientes.update', $cliente->id) }}" method="post"
+                        <form class="alertaGuardar" action="{{ route('proveedor.store') }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
-                            @method('put')
+
                             <div class="row mt-3 ">
                                 <div class="col-12 col-sm-4 ">
                                     <div class="text-center mx-auto border mb-4">
                                         <i><img class="imgVista img-fluid "
-                                                src="{{ $cliente->logo == '' ? '/img/general/default.jpg' : asset('/storage/clientes/' . str_pad($cliente->id, 4, '0', STR_PAD_LEFT) . '/' . $cliente->logo) }}"></i>
+                                                src="{{ asset('/img/general/default.jpg') }}"></i>
                                         <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="logo"
                                                 id="mi-archivo" accept="image/*"></span>
                                         <label for="mi-archivo">
@@ -66,56 +65,83 @@
                                         <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                             <label class="labelTitulo">Nombre Comercial: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="nombre" name="nombre" required
-                                                placeholder="Especifique..." value="{{ $cliente->nombre }}">
+                                                placeholder="Especifique..." value="{{ old('nombre') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Razón Social: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="rasonSocial" name="razonSocial"
-                                                required placeholder="Especifique..." value="{{ $cliente->razonSocial }}">
+                                                required placeholder="Especifique..." value="{{ old('rasonSocial') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">RFC: </label></br>
                                             <input type="text" class="inputCaja" id="rfc" name="rfc"
-                                                placeholder="Especifique..." value="{{ $cliente->rfc }}">
+                                                placeholder="Especifique..." value="{{ old('rfc') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Calle: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="calle" name="calle" required
-                                                placeholder="Especifique..." value="{{ $cliente->calle }}">
+                                                placeholder="Especifique..." value="{{ old('calle') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">No. Exterior:</label></br>
                                             <input type="text" class="inputCaja" id="exterior" name="exterior" required
-                                                value="{{ $cliente->exterior }}">
+                                                value="{{ old('cp') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">No. Interior: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="interior" name="interior"
-                                                placeholder="Especifique..." value="{{ $cliente->interior }}">
+                                                placeholder="Especifique..." value="{{ old('interior') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Código Postal:</label></br><input type="number"
                                                 maxlength="5" step="1" min="00000" max="99999"
                                                 placeholder="ej. 44100" class="inputCaja" id="cp" name="cp"
-                                                value="{{ $cliente->cp }}">
+                                                value="{{ old('cp') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Estado: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="estado" name="estado"
-                                                required placeholder="Especifique..." value="{{ $cliente->estado }}">
+                                                required placeholder="Especifique..." value="{{ old('estado') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Ciudad: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="ciudad" name="ciudad"
-                                                required placeholder="Especifique..." value="{{ $cliente->ciudad }}">
+                                                required placeholder="Especifique..." value="{{ old('ciudad') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Colonia: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="colonia" name="colonia"
-                                                required placeholder="Especifique..." value="{{ $cliente->colonia }}">
+                                                required placeholder="Especifique..." value="{{ old('colonia') }}">
                                         </div>
                                     </div>
                                 </div>
+
+
+                                <div class="d-flex p-3">
+                                    <div class="col-12" id="elementos">
+                                        <div class="d-flex">
+                                            <div class="col-12 divBorder">
+                                                <h2 class="tituloEncabezado ">Categorías</h2>
+                                            </div>
+                                        </div>
+                                        <div class=" col-12 col-sm-6 mb-3 ">
+                                            <label class="labelTitulo">Categorías:</label></br>
+
+                                            @foreach ($vctCategorias as $item)
+                                                <div class="form-check">
+                                                    <input class="form-check-input is-invalid" type="checkbox"
+                                                        name="categoria[]" value="{{ $item->id }}"
+                                                        id="chk{{ $item->nombre }}">
+                                                    <label class="form-check-label" style="color: black;"
+                                                        for="chk{{ $item->nombre }}">{{ $item->nombre }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
                                 <div class="d-flex p-3">
                                     <div class="col-12" id="elementos">
                                         <div class="d-flex">
@@ -128,61 +154,34 @@
                                             </div>
                                         </div>
 
-                                        @forelse ($residentes as $residente)
-                                            <div class="row opcion divBorderItems" id="opc">
-                                                <input type="hidden" name="idResidente[]" value="{{ $residente->id }}">
-                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Nombre:</label></br>
-                                                    <input type="text" class="inputCaja" id="rNombre"
-                                                        placeholder="Especifique..." name="rNombre[]"
-                                                        value="{{ $residente->nombre }}">
-                                                </div>
+                                        <div class="row opcion divBorderItems" id="opc">
 
-                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Correo:</label></br>
-                                                    <input type="email" class="inputCaja" id="rEmail"
-                                                    placeholder="ej. elcorreo@delresponsable.com" min="6" name="rEmail[]"
-                                                        value="{{ $residente->email }}">
-                                                </div>
-
-                                                <div class=" col-11 col-sm-5 col-lg-3 my-3 ">
-                                                    <label class="labelTitulo">Teléfono:</label></br>
-                                                    <input type="tel" class="inputCaja" id="rTelefono"
-                                                    pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}"
-                                                    placeholder="ej. 00-0000-0000" name="rTelefono[]"
-                                                        value="{{ $residente->telefono }}">
-                                                </div>
-
-                                                <div class="col-lg-1 my-3 text-end">
-                                                    <button type="button" id="removeRow" class="btnRojo"></button>
-                                                </div>
+                                            {{--  <input type="hidden" name="asignado[]" value="">  --}}
+                                            <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                <label class="labelTitulo">Nombre: <span>*</span></label></br>
+                                                <input type="text" class="inputCaja" id="rNombre"
+                                                    placeholder="Especifique..." name="rNombre[]" value="">
                                             </div>
-                                        @empty
-                                            <div class="row opcion divBorderItems" id="opc">
-                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <input type="hidden" name="idResidente[]" value="">
-                                                    <label class="labelTitulo">Nombre:</label></br>
-                                                    <input type="text" class="inputCaja" id="rNombre"
-                                                        placeholder="Especifique..." name="rNombre[]" value="">
-                                                </div>
 
-                                                <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <label class="labelTitulo">Correo:</label></br>
-                                                    <input type="text" class="inputCaja" id="rEmail"
-                                                        placeholder="Especifique..." name="rEmail[]" value="">
-                                                </div>
-
-                                                <div class=" col-11 col-sm-5 col-lg-3 my-3 ">
-                                                    <label class="labelTitulo">Telefono:</label></br>
-                                                    <input type="text" class="inputCaja" id="rTelefono"
-                                                        placeholder="Especifique..." name="rTelefono[]" value="">
-                                                </div>
-
-                                                <div class="col-lg-1 my-3 text-end">
-                                                    <button type="button" id="removeRow" class="btnRojo"></button>
-                                                </div>
+                                            <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                                                <label class="labelTitulo">Correo: <span>*</span></label></br>
+                                                <input type="email" class="inputCaja" id="rEmail"
+                                                    placeholder="ej. elcorreo@delresponsable.com" min="6"
+                                                    name="rEmail[]" value="">
                                             </div>
-                                        @endforelse
+
+                                            <div class=" col-11 col-sm-5 col-lg-3 my-3 ">
+                                                <label class="labelTitulo">Teléfono:</label></br>
+                                                <input type="tel" class="inputCaja" id="rTelefono"
+                                                    pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}" placeholder="ej. 00-0000-0000"
+                                                    name="rTelefono[]" value="">
+                                            </div>
+
+                                            <div class="col-lg-1 my-3 text-end">
+                                                <button type="button" id="removeRow" class="btnRojo"></button>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
 
@@ -212,6 +211,17 @@
             if ($('.opcion').length > 1) {
                 $(this).closest('.opcion').remove();
             }
+        });
+
+        function crearItemsB() {
+
+            $('.opcionB:first').clone().find("input").val("").end().appendTo('#elementosB');
+
+        }
+        // borrar registro
+        $(document).on('click', '#removeRow', function() {
+
+            $(this).closest('#opcB').remove();
         });
     </script>
 @endsection
