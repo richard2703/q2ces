@@ -118,12 +118,23 @@
                                                                 d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
                                                         </svg> </a>
                                                 @endcan
-                                                @can('mantenimiento_show')
-                                                <a href="{{ route('printMantenimiento.get') }}">
-                                                    <i class="fas fa-print"
-                                                        style="color: #8caf48; font-size: x-large;"></i>
-                                                </a>
-                                                @endcan
+                                                <form id="printForm" action="{{ route('printMantenimiento.get') }}" method="GET" style="display: inline-block;">
+                                                    @can('mantenimiento_show')
+                                                        <input type="hidden" name="mecanico" value="true">
+                                                        <button class="btnSinFondo" type="submit">
+                                                            <i class="fas fa-print" style="color: #8caf48; font-size: x-large;"></i>
+                                                        </button>
+                                                    @endcan
+                                                    
+                                                </form>
+                                                <form id="printForm" action="{{ route('printMantenimiento.get') }}" method="GET" style="display: inline-block;">
+                                                    @can('mantenimientoPrintCostos_show')
+                                                        <input type="hidden" name="mecanico" value="false">
+                                                        <button class="btnSinFondo" type="submit">
+                                                            <i class="fas fa-print" style="color: black; font-size: x-large;"></i>
+                                                        </button>
+                                                    @endcan
+                                                </form>
 
                                                 @can('mantenimiento_edit')
                                                     <a href="{{ url('/mantenimientos/editar/' . $item->id) }}"
@@ -155,8 +166,6 @@
                                                         </button>
                                                     </form>
                                                 @endcan
-
-
                                             </td>
                                         </tr>
                                     @empty
