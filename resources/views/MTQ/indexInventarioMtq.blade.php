@@ -62,7 +62,7 @@
                                                 <th class="labelTitulo text-center" style="width: 120px;">Acciones</th>
                                             </thead>
                                             <tbody class="text-capitalize">
-                                                @if ( $inventarios->count() > 0 )
+                                                @if (is_null($inventarios) == false)
                                                     @forelse ($inventarios as $inventario)
                                                         <tr>
                                                             <td class="text-center"><img class=""
@@ -125,7 +125,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer mr-auto">
-                                    {{ $inventarios->links() }}
+                                    {{ is_null($inventarios) == false ? $inventarios->links() : '' }}
                                 </div>
                             </div>
                         </div>

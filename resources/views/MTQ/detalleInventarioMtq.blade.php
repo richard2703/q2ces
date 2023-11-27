@@ -13,7 +13,7 @@
                                 @else
                                     {{ $inventario->tipo }}
                                 @endif
-                            </h4>                          
+                            </h4>
                             {{-- <p class="card-category">Usuarios registrados</p> --}}
                         </div>
 
@@ -60,7 +60,7 @@
 
                                     </div>
 
-                                     <div class="col-12 text-center mb-3 ">
+                                    <div class="col-12 text-center mb-3 ">
 
                                         <button type="submit" class="btn botonGral"
                                             onclick="alertaGuardar()">Guardar</button>
@@ -121,6 +121,16 @@
                                                 required id="cantidad" name="cantidad" readonly
                                                 value="{{ $inventario->cantidad }}">
                                         </div>
+                                        @if ($inventario->tipo == 'materiales')
+                                            <div class=" col-12 col-sm-6 col-lg-8 mb-3 ">
+                                                <label class="labelTitulo">Unidad: </label></br>
+                                                <input type="text" class="inputCaja" id="unidad" name="unidad"
+                                                    placeholder="Como se mide, Ej: Kg, Mts2, Sacos..."
+                                                    value="{{ $inventario->unidad }}">
+                                            </div>
+                                        @else
+                                            <input type="hidden" name="unidad" value="">
+                                        @endif
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Mínimo:</label></br>
@@ -130,8 +140,9 @@
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                             <label class="labelTitulo">Máximo:</label></br>
-                                            <input type="number" step="1" min="1" class="inputCaja text-end"
-                                                id="maximo" name="maximo" value="{{ $inventario->maximo }}">
+                                            <input type="number" step="1" min="1"
+                                                class="inputCaja text-end" id="maximo" name="maximo"
+                                                value="{{ $inventario->maximo }}">
                                         </div>
 
                                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -363,58 +374,58 @@
 
     <!-- Modal -->
     <!--
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bacTituloPrincipal mb-3">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Mover</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-    <form class="col-11" action="{{ route('inventario.mover', $inventario->id) }}" method="post">
-        @csrf
-        @method('put')
-        <input type="hidden" name="productoId" id="productoId" value="{{ $inventario->id }}">
-        <input type="hidden" name="productoTipo" id="productoTipo" value="{{ $inventario->tipo }}">
-        <label class="labelTitulo">Tipo de Movimiento:</label></br>
-        <select class="form-select" aria-label="Default select example" id="tipo" name="tipo">
-            <option value="asignar">Asignar</option>
-            <option value="desechar">Desechar</option>
-        </select>
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bacTituloPrincipal mb-3">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Mover</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                <form class="col-11" action="{{ route('inventario.mover', $inventario->id) }}" method="post">
+                    @csrf
+                    @method('put')
+                    <input type="hidden" name="productoId" id="productoId" value="{{ $inventario->id }}">
+                    <input type="hidden" name="productoTipo" id="productoTipo" value="{{ $inventario->tipo }}">
+                    <label class="labelTitulo">Tipo de Movimiento:</label></br>
+                    <select class="form-select" aria-label="Default select example" id="tipo" name="tipo">
+                        <option value="asignar">Asignar</option>
+                        <option value="desechar">Desechar</option>
+                    </select>
 
-        <label class="labelTitulo mt-3">Cantidad:</label></br>
-        <input type="number"  class="inputCaja" id="cantidad"
-            name="cantidad" value="">
+                    <label class="labelTitulo mt-3">Cantidad:</label></br>
+                    <input type="number"  class="inputCaja" id="cantidad"
+                        name="cantidad" value="">
 
-        <label class="labelTitulo mt-3">Origen:</label></br>
-        {{-- <input type="text" class="inputCaja" id="desde" name="desde" value=""> --}}
-        <select id="desde" name="desde" class="form-select" aria-label="Default select example">
-            @foreach ($vctDesde as $maquina)
+                    <label class="labelTitulo mt-3">Origen:</label></br>
+                    {{-- <input type="text" class="inputCaja" id="desde" name="desde" value=""> --}}
+                    <select id="desde" name="desde" class="form-select" aria-label="Default select example">
+                        @foreach ($vctDesde as $maquina)
     <option value="{{ $maquina->id }}" {{ $maquina->id == $inventario->id ? ' selected' : '' }}>
-        {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
-    </option>
+                    {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                </option>
     @endforeach
-    </select>
+                </select>
 
-    <label class="labelTitulo mt-3">Destino:</label></br>
-    {{-- <input type="text" class="inputCaja" id="hasta" name="hasta" value=""> --}}
-    <select id="hasta" name="hasta" class="form-select" aria-label="Default select example">
-        @foreach ($vctHasta as $maquina)
+                <label class="labelTitulo mt-3">Destino:</label></br>
+                {{-- <input type="text" class="inputCaja" id="hasta" name="hasta" value=""> --}}
+                <select id="hasta" name="hasta" class="form-select" aria-label="Default select example">
+                    @foreach ($vctHasta as $maquina)
     <option value="{{ $maquina->id }}" {{ $maquina->id == $inventario->id ? ' selected' : '' }}>
-        {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
-    </option>
+                    {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                </option>
     @endforeach
-                        </select>
+                                    </select>
 
-                        <label class="labelTitulo mt-3">Comentario:</label></br>
-                        <textarea class="col-12 inputCaja mb-3" id="comentarios" name="comentarios"></textarea>
+                                    <label class="labelTitulo mt-3">Comentario:</label></br>
+                                    <textarea class="col-12 inputCaja mb-3" id="comentarios" name="comentarios"></textarea>
 
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary botonGral mx-auto">Mover</button>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary botonGral mx-auto">Mover</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    -->
+                    </div>
+                -->
 @endsection
