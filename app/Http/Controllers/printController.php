@@ -225,7 +225,7 @@ class printController extends Controller
                 'cajaChica.tipo',
                 'cajaChica.total'
             )->orderby('dia', 'desc')->orderby('id', 'desc')
-            ->whereBetween('dia', [$inicioSemanaFormatted->clone(), $finSemanaFormatted])
+            ->whereBetween('dia', [$inicioSemanaFormatted->clone()->subDay(1), $finSemanaFormatted])
             ->get();
 
         // dd($registros);
@@ -455,6 +455,11 @@ class printController extends Controller
             $intCont += 1;
         }
         return view('asistencias.vistaPreviaImpresion', compact('semanaFormatted', 'usuario', 'vctAsistencias',   'asistencias', 'listaAsistencia', 'intDia', 'intMes', 'intAnio', 'strFechaInicioPeriodo', 'strFechaFinPeriodo'));
+    }
+
+    public function printMantenimiento()
+    {
+        return view('mantenimientos.vistaPreviaImpresion');
     }
     // public function generarPDF(Request $request)
     // {

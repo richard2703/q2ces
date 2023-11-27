@@ -47,10 +47,13 @@
                                                 </a>
 
                                                 @can('catalogos_create')
-                                                    <button class="btn botonGral float-end" data-bs-toggle="modal"
+                                                    {{-- <button class="btn botonGral float-end" data-bs-toggle="modal"
                                                         data-bs-target="#nuevoItem">
                                                         Añadir Proveedor
-                                                    </button>
+                                                    </button> --}}
+                                                    <a href="{{ route('proveedor.create') }}">
+                                                        <button type="button" class="btn botonGral">Añadir Proveedor</button>
+                                                    </a>
                                                 @endcan
                                             </div>
                                         </div>
@@ -77,7 +80,13 @@
                                                     <td>{{ $item->id }}</td>
                                                     <td class="text-left">{{ $item->nombre }}</td>
                                                     <td class="text-left">{{ $item->comentario }}</td>
-                                                    <td class="text-left">{{ $item->categoria }}</td>
+                                                    <td class="text-left">
+                                                        @forelse ($item->categorias as $categoria)
+                                                            {{ $categoria->nombre }}
+                                                        @empty
+                                                            Sin Categorías
+                                                        @endforelse
+                                                    </td>
 
                                                     <td class="td-actions text-right">
                                                         {{-- @can('catalogos_show') --}}
@@ -89,28 +98,39 @@
                                                             </a>--> --}}
                                                         {{-- @endcan --}}
                                                         @can('catalogos_destroy')
-                                                        <form action="{{ route('facturaProvedor.index') }}" method="GET" style="display: inline-block;">
-                                                            @csrf
-                                                            <input type="hidden" name="id" value="{{ $item->id }}">
-                                                            <button class="btnSinFondo" type="submit" rel="tooltip">
-                                                                <div class="" style="font-size: 28px; color:gray">
-                                                                    <i class="fas fa-solid fa-receipt"></i>
-                                                                </div>
-                                                            </button>
-                                                        </form>
-                                                        
+                                                            <form action="{{ route('facturaProvedor.index') }}" method="GET"
+                                                                style="display: inline-block;">
+                                                                @csrf
+                                                                <input type="hidden" name="id"
+                                                                    value="{{ $item->id }}">
+                                                                <button class="btnSinFondo" type="submit" rel="tooltip">
+                                                                    <div class="" style="font-size: 28px; color:gray">
+                                                                        <i class="fas fa-solid fa-receipt"></i>
+                                                                    </div>
+                                                                </button>
+                                                            </form>
                                                         @endcan
                                                         @can('catalogos_edit')
-                                                            <a href="#" class="" data-bs-toggle="modal"
+                                                            {{-- <a href="#" class="" data-bs-toggle="modal"
                                                                 data-bs-target="#editarItem"
-                                                                onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->categoriaId }}','{{ $item->comentario }}')">
+                                                                onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->razonSocial }}','{{ $item->categorias }}','{{ $item->comentario }}')">
                                                                 <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                     height="28" fill="currentColor"
                                                                     class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
                                                                     <path
                                                                         d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                                                 </svg>
-                                                            </a>
+                                                            </a> --}}
+                                                                <a href="{{ route('proveedor.edit', $item->id) }}"
+                                                                    class="mb-3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28"
+                                                                        height="28" fill="currentColor"
+                                                                        class="bi bi-card-text accionesIconos"
+                                                                        viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                    </svg>
+                                                                </a>
                                                         @endcan
                                                         @can('catalogos_destroy')
                                                             <form action="{{ route('proveedor.destroy', $item->id) }}"
@@ -130,7 +150,7 @@
                                                                 </button>
                                                             </form>
                                                         @endcan
-                                                        
+
                                                     </td>
                                                 </tr>
                                             @empty
@@ -176,10 +196,10 @@
                                 value="{{ old('razonSocial') }}" required placeholder="Especifique...">
                         </div>
 
-                        <div class=" col-12 col-sm-6 mb-3 ">
+                        {{-- <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Categoría:
                                 <span>*</span></label></br>
-                            <select id="categoriaId" name="categoriaId" class="form-select" required
+                            <select id="categoriaId" name="categoriaId" class="form-select"
                                 aria-label="Default select example">
                                 <option value="">Seleccione</option>
                                 @foreach ($vctCategorias as $item)
@@ -188,6 +208,20 @@
                                     </option>
                                 @endforeach
                             </select>
+                        </div> --}}
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Categorías:</label></br>
+
+                            @foreach ($vctCategorias as $item)
+                                <div class="form-check">
+                                    <input class="form-check-input is-invalid" type="checkbox" name="categoria[]"
+                                        value="{{ $item->id }}" id="chk{{ $item->nombre }}">
+                                    <label class="form-check-label" style="color: black;"
+                                        for="chk{{ $item->nombre }}">{{ $item->nombre }}</label>
+                                </div>
+                            @endforeach
+
                         </div>
 
                         <div class=" col-12  mb-3 ">
@@ -212,7 +246,7 @@
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
 
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar puesto</label>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Editar Proveedor</label>
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -223,16 +257,16 @@
                         <input type="hidden" name="controlId" id="controlId" value="">
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Nombre:</label></br>
-                            <input type="text" class="inputCaja" id="puestoNombre" name="nombre" value="">
+                            <input type="text" class="inputCaja" id="controlNombre" name="nombre" value="">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Razon Social:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="UrazonSocial" name="UrazonSocial"
+                            <input type="text" class="inputCaja" id="controlRazonSocial" name="razonSocial"
                                 value="{{ old('razonSocial') }}" required placeholder="Especifique...">
                         </div>
 
-                        <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
+                        {{-- <div class=" col-12 col-sm-6 col-lg-6 mb-3 ">
                             <label class="labelTitulo">Categoría: <span>*</span></label></br>
                             <select id="editPuestoNivelId" name="categoriaId" class="form-select" required
                                 aria-label="Default select example">
@@ -243,11 +277,25 @@
                                     </option>
                                 @endforeach
                             </select>
+                        </div> --}}
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Categorías:</label></br>
+
+                            @foreach ($vctCategorias as $item)
+                                <div class="form-check">
+                                    <input class="form-check-input is-invalid" type="checkbox" name="categoria[]"
+                                        value="{{ $item->id }}" id="chk{{ $item->nombre }}">
+                                    <label class="form-check-label" style="color: black;"
+                                        for="chk{{ $item->nombre }}">{{ $item->nombre }}</label>
+                                </div>
+                            @endforeach
+
                         </div>
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
-                            <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="puestoComentarios" name="comentario"></textarea>
+                            <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="controlComentario" name="comentario"></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -300,21 +348,35 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, razonSocial, nivel, comentarios) {
+        function cargaItem(id, nombre, razonSocial, categorias, comentarios) {
 
             const txtId = document.getElementById('controlId');
             txtId.value = id;
 
-            const txtNombre = document.getElementById('puestoNombre');
+            const txtNombre = document.getElementById('controlNombre');
             txtNombre.value = nombre;
 
-            const txtRazonSocial = document.getElementById('UrazonSocial');
+            const txtRazonSocial = document.getElementById('controlRazonSocial');
             txtRazonSocial.value = razonSocial;
 
-            const lstNivel = document.getElementById('editPuestoNivelId').value = nivel;
-
-            const txtComentarios = document.getElementById('puestoComentarios');
+            const txtComentarios = document.getElementById('controlComentario');
             txtComentarios.value = comentarios;
+
+            const objMarca = JSON.parse(categorias);
+            console.log('objMarca', objMarca);
+
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                const checkboxId = checkbox.id;
+                const found = objMarca.find(item => 'chk' + item.nombre === checkboxId);
+
+                if (found) {
+                    checkbox.checked = true; // Marca el checkbox si se encuentra
+                } else {
+                    checkbox.checked = false; // Desmarca el checkbox si no se encuentra
+                }
+            });
+            // Recorre el objeto 'marca' y muestra solo las propiedades con nombre
 
         }
     </script>
