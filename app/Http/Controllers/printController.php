@@ -456,6 +456,11 @@ class printController extends Controller
         }
         return view('asistencias.vistaPreviaImpresion', compact('semanaFormatted', 'usuario', 'vctAsistencias',   'asistencias', 'listaAsistencia', 'intDia', 'intMes', 'intAnio', 'strFechaInicioPeriodo', 'strFechaFinPeriodo'));
     }
+
+    public function printMantenimiento()
+    {
+        return view('mantenimientos.vistaPreviaImpresion');
+    }
     // public function generarPDF(Request $request)
     // {
     //     $content = $request->input('content');
