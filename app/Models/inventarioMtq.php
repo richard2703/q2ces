@@ -14,7 +14,7 @@ class inventarioMtq extends Model
 
     protected $fillable = [
         'numparte', 'nombre', 'marcaId', 'modelo', 'proveedorId', 'cantidad', 'reorden',
-        'maximo', 'valor', 'imagen', 'tipo',
+        'maximo', 'valor', 'imagen', 'tipo', 'unidad',
         'uniformeTipoId', 'uniformeTalla', 'uniformeRetornable',
         'extintorCapacidad', 'extintorCodigo', 'extintorFechaVencimiento', 'extintorTipo', 'extintorUbicacion', 'extintorAsignadoMaquinariaId'
     ];

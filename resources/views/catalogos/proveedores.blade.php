@@ -35,7 +35,7 @@
                                     @endif
                                     <div class="row">
                                         <div class="d-flex p-3">
-                                            <div class="col-12 text-right">
+                                            <div class="col-4 text-right">
 
                                                 <a href="{{ route('catalogos.index') }}">
                                                     <button class="btn regresar">
@@ -46,7 +46,10 @@
                                                     </button>
                                                 </a>
 
-                                                @can('catalogos_create')
+                                            </div>
+                                            <div class="col-8 pb-3 text-end">
+
+                                                @can('catalogos_edit')
                                                     {{-- <button class="btn botonGral float-end" data-bs-toggle="modal"
                                                         data-bs-target="#nuevoItem">
                                                         Añadir Proveedor
@@ -97,7 +100,7 @@
                                                                 </svg>
                                                             </a>--> --}}
                                                         {{-- @endcan --}}
-                                                        @can('catalogos_destroy')
+                                                        {{-- @can('catalogos_destroy')
                                                             <form action="{{ route('facturaProvedor.index') }}" method="GET"
                                                                 style="display: inline-block;">
                                                                 @csrf
@@ -109,7 +112,7 @@
                                                                     </div>
                                                                 </button>
                                                             </form>
-                                                        @endcan
+                                                        @endcan --}}
                                                         @can('catalogos_edit')
                                                             {{-- <a href="#" class="" data-bs-toggle="modal"
                                                                 data-bs-target="#editarItem"
