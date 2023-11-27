@@ -225,7 +225,7 @@ class printController extends Controller
                 'cajaChica.tipo',
                 'cajaChica.total'
             )->orderby('dia', 'desc')->orderby('id', 'desc')
-            ->whereBetween('dia', [$inicioSemanaFormatted->clone(), $finSemanaFormatted])
+            ->whereBetween('dia', [$inicioSemanaFormatted->clone()->subDay(1), $finSemanaFormatted])
             ->get();
 
         // dd($registros);
