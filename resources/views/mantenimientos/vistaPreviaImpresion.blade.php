@@ -1,5 +1,4 @@
 @extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Inventario')])
-
 @section('content')
 <div class="content">
     <div class="container-fluid">
@@ -25,7 +24,7 @@
 
                             <div class="col-6 pb-3 text-end">
                                 @can('inventario_create')
-                                    <button type="button" onclick="print()" class="btn botonGral text-capitalize">Volver A Imprimir</button>
+                                    <button type="button" onclick="print()" class="btn botonGral text-capitalize">Imprimir</button>
                                 @endcan
                             </div>
                         </div>
@@ -90,7 +89,7 @@
                         </div>   
                         <div class="col-12" style="margin-top: 5px; margin-right: 10px;">
                             <div class="d-flex align-items-center p-1 justify-content-center" style="font-weight: 500 !important; font-size: 8px !important; border-radius: 2em;border-width: 1px; border-style: solid; border-color: #727176; background-color: white; color: black; height: 20px !important;">
-                                <div class="d-flex align-items-center justify-content-center custom-section grey-section" style="margin-left: -10px;">
+                                <div class="d-flex align-items-center justify-content-center custom-section grey-section" style="margin-left: -30px;">
                                     <b>Equipo:</b>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none">
@@ -141,8 +140,6 @@
 
                             </div>
                             
-                            
-                            
                         </div>  
                         
                         <div class="col-12 " style="margin-top: 5px; margin-right: 10px;">
@@ -154,135 +151,249 @@
                                         <th colspan="4" class="text-white" style="background-color: #727176; height: 10px;  "><b>DESCRIPCIÓN DE MANTENIMIENTO REALIZADO</b></th>
                                     </tr>
                                     <tr style="border: 1px solid #727176;">
-                                        <th scope="col" style="width: 500px;">MATERIAL y/o MANO DE OBRA</th>
-                                        <th scope="col" class="text-white" style="   background-color: #727176; height: 10px !important"><b> CANTIDAD</b></th>
-                                        <th scope="col" style="width: 15px !important   ">COSTO</th>
-                                        <th scope="col" class="text-white" style="  background-color: #727176; height: 10px !important"><b>IMPORTE</b></th>
+                                        @if ($mecanico == "false")
+                                            <th scope="col" style="width: 500px;">MATERIAL y/o MANO DE OBRA</th>
+                                            <th scope="col" class="text-white" style="   background-color: #727176; height: 10px !important"><b> CANTIDAD</b></th>
+                                            <th scope="col" style="width: 15px !important   ">COSTO</th>
+                                            <th scope="col" class="text-white" style="  background-color: #727176; height: 10px !important"><b>IMPORTE</b></th>    
+                                        @else
+                                            <th scope="col" style="width: 700px;">MATERIAL y/o MANO DE OBRA</th>
+                                            <th scope="col" class="text-white" style="   background-color: #727176; height: 10px !important"><b> CANTIDAD</b></th>
+                                        @endif
                                     </tr>
                                     <tr style="border: 1px solid #727176;">
                                         <th rowspan="18" scope="rowgroup" style="vertical-align: middle; border: 1px solid #727176;">20/07/23</th>
                                         <th rowspan="18" scope="rowgroup" style="vertical-align: middle; border: 1px solid #727176;">2263979</th>
+                                        @if ($mecanico == "false")
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                            <td style="border: 1px solid #727176;">43</td>
+                                            <td style="border: 1px solid #727176;">72</td>    
+                                        @else
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                        
+                                        @endif
+                                        
+                                    </tr>
+                                    <tr style="border: 1px solid #727176; ">
+                                        @if ($mecanico == "false")
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                            <td style="border: 1px solid #727176;">43</td>
+                                            <td style="border: 1px solid #727176;">72</td>    
+                                        @else
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                        
+                                        @endif
+                                    </tr>
+                                    <tr style="border: 1px solid #727176; ">
+                                        @if ($mecanico == "false")
                                         <td style="border: 1px solid #727176;">56</td>
                                         <td style="border: 1px solid #727176;">22</td>
                                         <td style="border: 1px solid #727176;">43</td>
-                                        <td style="border: 1px solid #727176;">72</td>
-                                        
-                                    </tr>
-                                    <tr style="border: 1px solid #727176; ">
-                                        <td style="border: 1px solid #727176;">46</td>
-                                        <td style="border: 1px solid #727176;">18</td>
-                                        <td style="border: 1px solid #727176;">50</td>
-                                        <td style="border: 1px solid #727176;">61</td>
-                                    </tr>
-                                    <tr style="border: 1px solid #727176; ">
-                                        <td style="border: 1px solid #727176;">51</td>
-                                        <td style="border: 1px solid #727176;">27</td>
-                                        <td style="border: 1px solid #727176;">38</td>
-                                        <td style="border: 1px solid #727176;">69</td>
+                                        <td style="border: 1px solid #727176;">72</td>    
+                                    @else
+                                        <td style="border: 1px solid #727176;">56</td>
+                                        <td style="border: 1px solid #727176;">22</td>
+                                    
+                                    @endif
                                     </tr>
                                     <tr style=" border: 1px solid #727176;">
                                         
-                                        <td style="border: 1px solid #727176;">89</td>
-                                        <td style="border: 1px solid #727176;">34</td>
-                                        <td style="border: 1px solid #727176;">69</td>
-                                        <td style="border: 1px solid #727176;">85</td>
+                                        @if ($mecanico == "false")
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                            <td style="border: 1px solid #727176;">43</td>
+                                            <td style="border: 1px solid #727176;">72</td>    
+                                        @else
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                        
+                                        @endif
                                     </tr>
                                     <tr style="border: 1px solid #727176; ">
-                                        <td style="border: 1px solid #727176;">80</td>
-                                        <td style="border: 1px solid #727176;">12</td>
-                                        <td style="border: 1px solid #727176;">43</td>
-                                        <td style="border: 1px solid #727176;">36</td>
+                                        @if ($mecanico == "false")
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                            <td style="border: 1px solid #727176;">43</td>
+                                            <td style="border: 1px solid #727176;">72</td>    
+                                        @else
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                        
+                                        @endif
                                     </tr>
                                     <tr style=" border: 1px solid #727176;">
                                         
-                                        <td style="border: 1px solid #727176;">80</td>
-                                        <td style="border: 1px solid #727176;">12</td>
-                                        <td style="border: 1px solid #727176;">43</td>
-                                        <td style="border: 1px solid #727176;">36</td>
+                                        @if ($mecanico == "false")
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                            <td style="border: 1px solid #727176;">43</td>
+                                            <td style="border: 1px solid #727176;">72</td>    
+                                        @else
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                        
+                                        @endif
                                     </tr>
                                     <tr style="border: 1px solid #727176; ">
-                                        <td style="border: 1px solid #727176;">46</td>
-                                        <td style="border: 1px solid #727176;">18</td>
-                                        <td style="border: 1px solid #727176;">50</td>
-                                        <td style="border: 1px solid #727176;">61</td>
+                                        @if ($mecanico == "false")
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                            <td style="border: 1px solid #727176;">43</td>
+                                            <td style="border: 1px solid #727176;">72</td>    
+                                        @else
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                        
+                                        @endif
                                     </tr>
                                     <tr style="border: 1px solid #727176; ">
-                                        <td style="border: 1px solid #727176;">51</td>
-                                        <td style="border: 1px solid #727176;">27</td>
-                                        <td style="border: 1px solid #727176;">38</td>
-                                        <td style="border: 1px solid #727176;">69</td>
+                                        @if ($mecanico == "false")
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                            <td style="border: 1px solid #727176;">43</td>
+                                            <td style="border: 1px solid #727176;">72</td>    
+                                        @else
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                        
+                                        @endif
                                     </tr>
                                     <tr style=" border: 1px solid #727176;">
                                         
-                                        <td style="border: 1px solid #727176;">89</td>
-                                        <td style="border: 1px solid #727176;">34</td>
-                                        <td style="border: 1px solid #727176;">69</td>
-                                        <td style="border: 1px solid #727176;">85</td>
+                                        @if ($mecanico == "false")
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                            <td style="border: 1px solid #727176;">43</td>
+                                            <td style="border: 1px solid #727176;">72</td>    
+                                        @else
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                        
+                                        @endif
                                     </tr>
                                     <tr style="border: 1px solid #727176; ">
-                                        <td style="border: 1px solid #727176;">80</td>
-                                        <td style="border: 1px solid #727176;">12</td>
-                                        <td style="border: 1px solid #727176;">43</td>
-                                        <td style="border: 1px solid #727176;">36</td>
+                                        @if ($mecanico == "false")
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                            <td style="border: 1px solid #727176;">43</td>
+                                            <td style="border: 1px solid #727176;">72</td>    
+                                        @else
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                        
+                                        @endif
                                     </tr>
                                     <tr style=" border: 1px solid #727176;">
                                         
-                                        <td style="border: 1px solid #727176;">80</td>
-                                        <td style="border: 1px solid #727176;">12</td>
-                                        <td style="border: 1px solid #727176;">43</td>
-                                        <td style="border: 1px solid #727176;">36</td>
+                                        @if ($mecanico == "false")
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                            <td style="border: 1px solid #727176;">43</td>
+                                            <td style="border: 1px solid #727176;">72</td>    
+                                        @else
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                        
+                                        @endif
                                     </tr>
 
                                     <tr style="border: 1px solid #727176; ">
-                                        <td style="border: 1px solid #727176;">51</td>
-                                        <td style="border: 1px solid #727176;">27</td>
-                                        <td style="border: 1px solid #727176;">38</td>
-                                        <td style="border: 1px solid #727176;">69</td>
+                                        @if ($mecanico == "false")
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                            <td style="border: 1px solid #727176;">43</td>
+                                            <td style="border: 1px solid #727176;">72</td>    
+                                        @else
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                        
+                                        @endif
                                     </tr>
                                     <tr style=" border: 1px solid #727176;">
                                         
-                                        <td style="border: 1px solid #727176;">89</td>
-                                        <td style="border: 1px solid #727176;">34</td>
-                                        <td style="border: 1px solid #727176;">69</td>
-                                        <td style="border: 1px solid #727176;">85</td>
+                                        @if ($mecanico == "false")
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                            <td style="border: 1px solid #727176;">43</td>
+                                            <td style="border: 1px solid #727176;">72</td>    
+                                        @else
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                        
+                                        @endif
                                     </tr>
                                     <tr style="border: 1px solid #727176; ">
-                                        <td style="border: 1px solid #727176;">80</td>
-                                        <td style="border: 1px solid #727176;">12</td>
-                                        <td style="border: 1px solid #727176;">43</td>
-                                        <td style="border: 1px solid #727176;">36</td>
+                                        @if ($mecanico == "false")
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                            <td style="border: 1px solid #727176;">43</td>
+                                            <td style="border: 1px solid #727176;">72</td>    
+                                        @else
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                        
+                                        @endif
                                     </tr>
                                     <tr style=" border: 1px solid #727176;">
                                         
-                                        <td style="border: 1px solid #727176;">80</td>
-                                        <td style="border: 1px solid #727176;">12</td>
-                                        <td style="border: 1px solid #727176;">43</td>
-                                        <td style="border: 1px solid #727176;">36</td>
+                                        @if ($mecanico == "false")
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                            <td style="border: 1px solid #727176;">43</td>
+                                            <td style="border: 1px solid #727176;">72</td>    
+                                        @else
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                        
+                                        @endif
                                     </tr>
 
                                     <tr style=" border: 1px solid #727176;">
                                         
-                                        <td style="border: 1px solid #727176;">89</td>
-                                        <td style="border: 1px solid #727176;">34</td>
-                                        <td style="border: 1px solid #727176;">69</td>
-                                        <td style="border: 1px solid #727176;">85</td>
+                                        @if ($mecanico == "false")
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                            <td style="border: 1px solid #727176;">43</td>
+                                            <td style="border: 1px solid #727176;">72</td>    
+                                        @else
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                        
+                                        @endif
                                     </tr>
                                     <tr style="border: 1px solid #727176; ">
-                                        <td style="border: 1px solid #727176;">80</td>
-                                        <td style="border: 1px solid #727176;">12</td>
-                                        <td style="border: 1px solid #727176;">43</td>
-                                        <td style="border: 1px solid #727176;">36</td>
+                                        @if ($mecanico == "false")
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                            <td style="border: 1px solid #727176;">43</td>
+                                            <td style="border: 1px solid #727176;">72</td>    
+                                        @else
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                        
+                                        @endif
                                     </tr>
                                     <tr style=" border: 1px solid #727176;">
                                         
-                                        <td style="border: 1px solid #727176;">80</td>
-                                        <td style="border: 1px solid #727176;">12</td>
-                                        <td style="border: 1px solid #727176;">43</td>
-                                        <td style="border: 1px solid #727176;">36</td>
+                                        @if ($mecanico == "false")
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                            <td style="border: 1px solid #727176;">43</td>
+                                            <td style="border: 1px solid #727176;">72</td>    
+                                        @else
+                                            <td style="border: 1px solid #727176;">56</td>
+                                            <td style="border: 1px solid #727176;">22</td>
+                                        
+                                        @endif
                                     </tr>
 
-                                    <tr style="border: 1px solid #727176; ">
-                                        <th scope="col" colspan="3" style="border-right: 1px solid black;">Lorem ipsum dolor sit amet consectetur, sapiente odit! Accusamus est, excepturi, dignissimos consequuntur eum inventore veritatis consequatur nam sint culpa sequi repudiandae!</th>
+                                    <tr style="border: 1px solid #727176;">
+                                        @if ($mecanico == "false")
+                                        <th scope="col" colspan="3" style="border-right: 1px solid black;"> Lorem ipsum dolor sit amet consectetur, sapiente odit! Accusamus est, excepturi, dignissimos consequuntur eum inventore veritatis consequatur nam sint culpa sequi repudiandae!</th>
                                         <td class="text-white" style="background-color: #727176; border: 1px solid black; padding: 5px; font-weight: bold !important; border-right: 1px solid black;">
                                             SUB-TOTAL <br> 
                                             <span style="border-top: 1px solid black; display: block; padding-top: 5px;">I.V.A.</span>
@@ -298,8 +409,9 @@
                                             <span style="border-top: 1px solid black; display: block; padding-top: 5px;">$1,520.29</span>
                                             <span style="border-top: 1px solid black; display: block; padding-top: 5px;">$10,891.51</span>
                                         </td>
-                                        
-                                        
+                                        @else
+                                            <th scope="col" colspan="6" style="border-right: 1px solid black;">No Entra Lorem ipsum dolor sit amet consectetur, sapiente odit! Accusamus est, excepturi, dignissimos consequuntur eum inventore veritatis consequatur nam sint culpa sequi repudiandae!</th>
+                                        @endif
                                     </tr>
 
                                     <tr style="border: 1px solid #727176; ">
@@ -316,32 +428,32 @@
                             <div class="mt-2" style="display: flex; flex-direction: column; align-items: center;">
                                 <!-- Primera sección de imágenes -->
                                 <div style="display: flex; justify-content: space-between;">
-                                    <div style="width: 180px; height: 100px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
+                                    <div style="width: 195px; height: 100px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
                                         <img src="{{ asset('/img/general/default.jpg') }}" style="height: 100%; object-fit: cover;" >
                                     </div>
                                     
-                                    <div style="width: 180px; height: 100px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
+                                    <div style="width: 195px; height: 100px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
                                         <img src="{{ asset('/img/general/default.jpg') }}" style="height: 100%; object-fit: cover;" >
                                     </div>
-                                    <div style="width: 180px; height: 100px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
+                                    <div style="width: 195px; height: 100px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
                                         <img src="{{ asset('/img/general/default.jpg') }}" style="height: 100%; object-fit: cover;" >
                                     </div>
-                                    <div style="width: 180px; height: 100px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
+                                    <div style="width: 195px; height: 100px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
                                         <img src="{{ asset('/img/general/default.jpg') }}" style="height: 100%; object-fit: cover;" >
                                     </div>
                                 </div>
                                 <!-- Segunda sección de imágenes -->
                                 <div style="display: flex; justify-content: space-between;">
-                                    <div style="width: 180px; height: 100px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
+                                    <div style="width: 195px; height: 100px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
                                         <img src="{{ asset('/img/general/default.jpg') }}" style="height: 100%; object-fit: cover;" >
                                     </div>
-                                    <div style="width: 180px; height: 100px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
+                                    <div style="width: 195px; height: 100px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
                                         <img src="{{ asset('/img/general/default.jpg') }}" style="height: 100%; object-fit: cover;" >
                                     </div>
-                                    <div style="width: 180px; height: 100px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
+                                    <div style="width: 195px; height: 100px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
                                         <img src="{{ asset('/img/general/RecursoTest.png') }}" style="height: 100%; object-fit: cover;" >
                                     </div>
-                                    <div style="width: 180px; height: 100px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
+                                    <div style="width: 195px; height: 100px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
                                         <img src="{{ asset('/img/general/RecursoTest.png') }}" style="height: 100%; object-fit: cover;" >
                                     </div>
                                 </div>
@@ -365,7 +477,7 @@
                             <div class="col-3">
                                 <div style="margin-top: 20px; text-align: center; font-size: 9px; font-weight: bold">
                                     <p>VO.BO</p>
-                                    <div class="pt-3">
+                                    <div class="pt-4">
                                         _________________________________<br>
                                         COORDINADOR TALLER<br>
                                         Edgar Villalobos Gómez
@@ -375,7 +487,7 @@
                             <div class="col-3">
                                 <div style="margin-top: 20px; text-align: center; font-size: 9px; font-weight: bold">
                                     <p>AUDITORIA INTERNA</p>
-                                    <div class="pt-3">
+                                    <div class="pt-4">
                                         _________________________________<br>
                                         COORDINADOR OPERACIONES<br>
                                         José Israel López López
@@ -385,7 +497,7 @@
                             <div class="col-3">
                                 <div style="margin-top: 20px; text-align: center; font-size: 9px; font-weight: bold">
                                     <p>REVISÓ</p>
-                                    <div class="pt-3">
+                                    <div class="pt-4">
                                         _________________________________<br>
                                         MECÁNICO<br>
                                         Eduardo Navarrete Haro
@@ -395,7 +507,7 @@
                             <div class="col-3">
                                 <div style="margin-top: 20px; text-align: center; font-size: 9px; font-weight: bold">
                                     <p>RECIBIÓ</p>
-                                    <div class="pt-3">
+                                    <div class="pt-4">
                                         _________________________________<br>
                                         RESPONSABLE DEL EQUIPO<br>
                                         Jesús Esparza Serna
@@ -424,9 +536,6 @@ print(){
 .page-break {
     page-break-after: always;
 }
-td{
-    height: 10px !important;
-}
 </style>
 
 
@@ -445,11 +554,31 @@ td{
     #print-content, #print-content {
         margin-left: -6mm;
         margin-right: -10mm;
+        margin-top: -58mm !important;
     }
     
     body {
-        margin-top: -63mm !important;
+        {{--  margin-top: -63mm !important;  --}}
         padding: 0 !important;
+        margin: 0;
+    }
+
+    /* Define el contenido para la primera página */
+    @page {
+        size: letter; /* Define el tamaño de la página (A4 es un ejemplo) */
+        margin: 0; /* Elimina los márgenes para la página */
+    }
+
+    /* Define que solo la primera página será impresa */
+    @page :first {
+        margin: 0; /* Elimina los márgenes para la primera página */
+        size: A4; /* Define el tamaño de la página */
+        /* Puedes añadir más estilos específicos si es necesario */
+    }
+
+    /* Oculta todo el contenido después de la primera página */
+    @page :first + * {
+        display: none;
     }
 }
 
@@ -463,7 +592,7 @@ td{
 }
 
 #main {
-    margin-top: 80px !important;
+    {{--  margin-top: 80px !important;  --}}
 }
 
 
