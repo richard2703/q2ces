@@ -29,7 +29,7 @@
                                 </div>
                             @endif
                             <input type="hidden" name="tipoParaBuscador" id="tipoParaBuscador" value="{{$tipo}}">
-                            
+
                             <div class="row">
                                 <div class="col-lg-2 col-sm-6 mt-1 text-right">
                                     <a href="{{ route('inventarioMtq.index', $tipo) }}">
@@ -44,7 +44,7 @@
 
                                 <div class="mb-3 col-lg-10 col-sm-6 d-flex justify-content-start">
                                 {{--  <p class="subEncabezado text-capitalize">Busca {{$tipo}}:</p>  --}}
-                                
+
                                 <div role="search" class="">
                                     <input value="" class="search-submit ">
                                     <input autofocus type="text" class="search-text"
@@ -63,7 +63,7 @@
                                 <ul class="" id="newRowBuscador">
                                 </ul>
                             </div>
-                    
+
                     {{--  <div class="row opcion divBorderItems ">
                         <div class="col-9 pb-3 text-right">
                             <a href="{{ route('inventario.index', $tipo) }}">
@@ -80,16 +80,16 @@
                                 onclick="crearItems()">
                             </button>
                         </div>
-                        
+
                         <div class="col-lg-1 my-3 text-end">
                             <button type="button" id="removeRow"
                                 class="btnRojo"></button>
                         </div>
 
                     </div>  --}}
-                    
-                        
-                        
+
+
+
 
                         {{--  <div class="col-12 text-end mb-3 ">
                             <button type="submit" class="btn botonGral">Guardar</button>
@@ -99,21 +99,21 @@
                             <div class="d-flex">
                                 <div class="col-6 divBorder">
                                     <h2 class="tituloEncabezado text-capitalize">Agregar Nuevas {{$tipo}}</h2>
-                                    
+
                                 </div>
-                                
+
                                 <div class="col-6 divBorder pb-3 text-end">
                                     <button type="button" class="btnVerde"
                                         onclick="crearNuevoElemento()">
                                     </button>
                                 </div>
-                                
-                                
+
+
                             </div>
-                            
+
                                 <p id="sinAlta">No hay {{$tipo}} a subir, agrega todas las {{$tipo}} que quieras dar de alta en el inventario.</p>
                         </div>
-                        
+
                         <div class="col-12 text-center m-3 ">
                             <button type="submit" class="btn botonGral"
                                 onclick="alertaGuardar()">Guardar</button>
@@ -138,21 +138,21 @@
             cursor: pointer;
             text-align: center;
         }
-        
+
         .custom-file-upload input {
             display: none; /* Oculta el input file nativo */
-        }    
+        }
 
         .text-center.mx-auto.border.vistaFoto {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-        
+
         .image-container {
             margin-bottom: 20px; /* Espacio entre la imagen y el botón */
         }
-        
+
         .button-container {
             text-align: center;
         }
@@ -165,10 +165,10 @@
         function crearNuevoElemento() {
             // Crea un nuevo elemento 'div' con la clase 'opcion'
             var nuevoElemento = $('<div class="opcion">');
-        
+
             // Agrega el contenido HTML del elemento
             nuevoElemento.html(`<div class="row opcion divBorderItems" id="opc" >
-                                            
+
                 <div class="col-12 my-3 text-end" id="butonEliminar" >
                     <button type="button" id="removeRow"
                         class="btnRojo"></button>
@@ -184,33 +184,33 @@
                                 Subir Imagen
                             </label>
                         </div>
-                    </div>                                            
-    
+                    </div>
+
                     {{--  <div class="col-12 text-center mb-3 ">
                         <button type="submit" class="btn botonGral"
                             onclick="alertaGuardar()">Guardar</button>
                     </div>  --}}
                 </div>
-                
+
                 <div class="col-12 col-md-8 my-3 ">
                     <div class="row alin">
                         <input type="hidden" name="nuevo[usuarioId][]" class="usuarioId" value="{{ auth()->user()->id }}">
                         <input type="hidden" type="text" class="inputCaja tipoInventario" readonly value="{{ $tipo }}">
                         <input type="hidden" name="nuevo[tipo][]" class="tipoId" value="{{ $tipo }}">
-                        
+
                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Número de Parte: <span>*</span></label></br>
                             <input type="text" class="inputCaja text-right" required class="inputCaja"
                                 id="numparte" name="nuevo[numparte][]" value="{{ old('numparte') }}" maxlength="10"
                                 step="1" min="0">
                         </div>
-    
+
                         <div class="col-12 col-sm-6 col-lg-4 mb-3">
                             <label class="labelTitulo">Nombre: <span>*</span></label></br>
                             <input type="text" class="inputCaja" id="nombre" name="nuevo[nombre][]" required
                                 value="{{ old('nombre') }}">
                         </div>
-    
+
                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Marca: <span>*</span></label></br>
                             <select id="marcaId" name="nuevo[marcaId][]" class="form-select" required
@@ -223,13 +223,13 @@
                                 @endforeach
                             </select>
                         </div>
-    
+
                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Módelo: <span>*</span></label></br>
                             <input type="text" class="inputCaja" id="modelo" name="nuevo[modelo][]" required
                                 value="{{ old('modelo') }}">
                         </div>
-    
+
                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Proovedor: <span>*</span></label></br>
                             <select id="proveedorId" name="nuevo[proveedorId][]" class="form-select" required
@@ -242,34 +242,45 @@
                                 @endforeach
                             </select>
                         </div>
-    
+
                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Cantidad: <span>*</span></label></br>
                             <input type="number" step="1" min="1" class="inputCaja text-end"
                                 required id="cantidad" name="nuevo[cantidad][]" value="{{ old('cantidad') }}">
                         </div>
-    
+                        @if ($tipo == 'materiales')
+                            <div class=" col-12 col-sm-6 col-lg-8 mb-3 ">
+                                <label class="labelTitulo">Unidad: </label></br>
+                                <input type="text" class="inputCaja" name="nuevo[unidad][]" id="unidad"
+                                    placeholder="Como se mide, Ej: Kg, Mts2, Sacos..."
+                                    value="{{ old('unidad') }}">
+                            </div>
+                        @else
+                            <input type="hidden" name="nuevo[unidad][]" id="unidad" value="">
+                        @endif
+
+
                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Mínimo:</label></br>
                             <input type="number" step="1" min="1"
                                 class="inputCaja text-end" id="reorden" name="nuevo[reorden][]"
                                 value="{{ old('reorden') }}">
                         </div>
-    
+
                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Máximo:</label></br>
                             <input type="number" step="1" min="1"
                                 class="inputCaja text-end" id="maximo" name="nuevo[maximo][]"
                                 value="{{ old('maximo') }}">
                         </div>
-    
+
                         <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Costo Total: <span>*</span></label></br>
                             <input type="number" step="0.01" min="0.01"
                                 class="inputCaja text-end" id="valor" name="nuevo[valor][]" required
                                 value="{{ old('valor') }}">
                         </div>
-    
+
                         <!-- PARA USO EXCLUSIVO DE UNIFORMES -->
                         @if ($tipo == 'uniformes')
                             <div class=" col-12 col-sm-6 col-lg-4 mb-5 ">
@@ -284,13 +295,13 @@
                                     @endforeach
                                 </select>
                             </div>
-    
+
                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                 <label class="labelTitulo">Talla:</label></br>
                                 <input type="text" class="inputCaja" id="uniformeTalla"
                                     name="uniformeTalla" value="{{ old('uniformeTalla') }}">
                             </div>
-    
+
                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                 <label class="labelTitulo">Es Retornable:</label></br>
                                 <select class="form-select" aria-label="Default select example"
@@ -300,7 +311,7 @@
                                 </select>
                             </div>
                         @endif
-    
+
                         <!-- PARA USO EXCLUSIVO DE EXTINTORES -->
                         @if ($tipo == 'extintores')
                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
@@ -308,7 +319,7 @@
                                 <input type="text" class="inputCaja" id="extintorCapacidad"
                                     name="extintorCapacidad" value="{{ old('extintorCapacidad') }}">
                             </div>
-    
+
                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                 <label class="labelTitulo">Identificador:</label></br>
                                 <input type="text" class="inputCaja" id="extintorCodigo"
@@ -320,7 +331,7 @@
                                     name="extintorFechaVencimiento"
                                     value="{{ old('extintorFechaVencimiento') }}">
                             </div>
-    
+
                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                 <label class="labelTitulo">Tipo de Extintor:</label></br>
                                 <select class="form-select" aria-label="Default select example"
@@ -335,13 +346,13 @@
                                     </option>
                                 </select>
                             </div>
-    
+
                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                 <label class="labelTitulo">Ubicación:</label></br>
                                 <input type="text" class="inputCaja" id="extintorUbicacion"
                                     name="extintorUbicacion" value="{{ old('extintorUbicacion') }}">
                             </div>
-    
+
                             <div class=" col-12 col-sm-6 col-lg-4 mb-5 ">
                                 <label class="labelTitulo">Asignado :</label></br>
                                 <select id="extintorAsignadoMaquinariaId"
@@ -359,7 +370,7 @@
                     </div>
                 </div>
             </div>`);
-        
+
             // Inserta el nuevo elemento en el contenedor '#elementos'
             $('#elementos').append(nuevoElemento);
             const sinAltaDiv = document.getElementById('sinAlta');
@@ -383,7 +394,7 @@
             let usuarioIdValue = $('.usuarioId').val();
             let tipoInventarioValue = $('.tipoInventario').val();
             let tipoIdValue = $('.tipoId').val();
-        
+
             clonedInputs.each(function(index) {
                 let fieldClass = $(this).attr("class");
                 if (fieldClass === "usuarioId") {
@@ -427,7 +438,7 @@
                         tipo: tipo,
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
-                    
+
                     success: function(data) {
                         response(data);
                     }
@@ -480,7 +491,7 @@
             var html = '';
             html += '<li class="my-3 border-bottom" id="inputFormRow">';
                 html += '   <div class="row d-flex pb-4">';
-                html += '      <input type="hidden" name="restock[usuarioId][]" class="usuarioId" value="{{ auth()->user()->id }}">'    
+                html += '      <input type="hidden" name="restock[usuarioId][]" class="usuarioId" value="{{ auth()->user()->id }}">'
                 html += '      <input type="hidden" name="restock[tipo][]" id="id" value="' + tipo + '">';
                 html += '      <input type="hidden" name="restock[id][]" id="id" value="' + inventarioId + '">';
 

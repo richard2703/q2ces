@@ -52,7 +52,13 @@
                                         </label>
                                     </div>
                                     <div class="text-center mx-auto border mb-4">
-
+                                        @if ($proveedor->fiscal != "")
+                                        <p class="my-3">
+                                            <a href="{{ route('proveedor.download',[$proveedor->id, 'fiscal']) }}"
+                                                class="botonSinFondo mx-2" target="blank">Descargar
+                                            </a>
+                                        </p>
+                                    @endif
                                         <span class="mi-archivo2"> <input class="mb-4 ver" type="file" name="fiscal"
                                                 id="mi-archivo2" accept="application/pdf,"></span>
                                         <label for="mi-archivo2">

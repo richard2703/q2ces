@@ -72,29 +72,30 @@ class proveedorController extends Controller {
 
         $newProveedor->categorias()->sync( $request->input( 'categoria', [] ) );
 
-        $pathObra = str_pad($newProveedor->id, 4, '0', STR_PAD_LEFT);
+        $pathObra = str_pad( $newProveedor->id, 4, '0', STR_PAD_LEFT );
 
-        if ($request->hasFile('logo')) {
-            $newProveedor->logo = time() . '_' . 'logo.' . $request->file('logo')->getClientOriginalExtension();
-            $request->file('logo')->storeAs('/public/proveedores/' . $pathObra, $newProveedor->logo);
+        if ( $request->hasFile( 'logo' ) ) {
+            $newProveedor->logo = time() . '_' . 'logo.' . $request->file( 'logo' )->getClientOriginalExtension();
+            $request->file( 'logo' )->storeAs( '/public/proveedores/' . $pathObra, $newProveedor->logo );
             $newProveedor->save();
         }
 
-        if ($request->hasFile('fiscal')) {
-            $newProveedor->fiscal = time() . '_' . 'fiscal.' . $request->file('fiscal')->getClientOriginalExtension();
-            $request->file('fiscal')->storeAs('/public/proveedores/' . $pathObra, $newProveedor->fiscal);
+        if ( $request->hasFile( 'fiscal' ) ) {
+            $newProveedor->fiscal = time() . '_' . 'fiscal.' . $request->file( 'fiscal' )->getClientOriginalExtension();
+            $request->file( 'fiscal' )->storeAs( '/public/proveedores/' . $pathObra, $newProveedor->fiscal );
             $newProveedor->save();
         }
 
         /*** registro de residentes */
-        for ($i = 0; $i < count($request['rNombre']); $i++) {
+        for ( $i = 0; $i < count( $request[ 'rNombre' ] );
+        $i++ ) {
             //*** se guarda solo si se selecciono una máquina */
-            if ($request['rNombre'][$i] != '' || $request['rNombre'][$i] != null) {
+            if ( $request[ 'rNombre' ][ $i ] != '' || $request[ 'rNombre' ][ $i ] != null ) {
                 $objResidente = new proveedorContactos();
                 $objResidente->proveedorId  = $newProveedor->id;
-                $objResidente->nombre  = $request['rNombre'][$i];
-                $objResidente->telefono = $request['rTelefono'][$i];
-                $objResidente->email = $request['rEmail'][$i];
+                $objResidente->nombre  = $request[ 'rNombre' ][ $i ];
+                $objResidente->telefono = $request[ 'rTelefono' ][ $i ];
+                $objResidente->email = $request[ 'rEmail' ][ $i ];
                 $objResidente->save();
             }
         }
@@ -224,5 +225,23 @@ class proveedorController extends Controller {
             }
         }
         return redirect()->back()->with( 'success', 'Eliminado correctamente' );
+    }
+
+    public function download( $id, $doc ) {
+        $book = proveedor::where( 'id', $id )->firstOrFail();
+
+        /*** directorio contenedor de su información */
+        $pathFile = str_pad( $book->id, 4, '0', STR_PAD_LEFT );
+
+        if ( empty( $book ) === false ) {
+            $pathToFile = storage_path( 'app/public/proveedores/' . $pathFile .'/'. $book->fiscal );
+            // dd( $pathToFile, $id, $doc );
+            if ( file_exists( $pathToFile ) === true &&  is_file( $pathToFile ) === true ) {
+                // return response()->download( $pathToFile );
+                return response()->file( $pathToFile );
+            } else {
+                return redirect( '404' );
+            }
+        }
     }
 }
