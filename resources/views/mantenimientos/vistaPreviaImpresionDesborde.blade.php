@@ -498,7 +498,7 @@
                                 
                                 @if ($gastosCount <= 47)
                                 @php
-                                    $espaciosBlanco = 44;
+                                    $espaciosBlanco = 45;
                                 @endphp
                                 @else
                                     @php
@@ -506,8 +506,8 @@
                                     @endphp
                                 @endif
 
-                                <th rowspan="{{$espaciosBlanco + 2}}" scope="rowgroup" style="vertical-align: middle; border: 1px solid #727176; font-weight: 600 !important;">{{$fechaInicioFormateada}}</th>
-                                <th rowspan="{{$espaciosBlanco + 2}}" scope="rowgroup" style="vertical-align: middle; border: 1px solid #727176; font-weight: 600 !important;">{{$maquinaria->kilometraje}}</th>
+                                <th rowspan="{{$espaciosBlanco + 1}}" scope="rowgroup" style="vertical-align: middle; border: 1px solid #727176; font-weight: 600 !important;">{{$fechaInicioFormateada}}</th>
+                                <th rowspan="{{$espaciosBlanco + 1}}" scope="rowgroup" style="vertical-align: middle; border: 1px solid #727176; font-weight: 600 !important;">{{$maquinaria->kilometraje}}</th>
                                 
                                 @if ($gastos->isNotEmpty())
                                     @if ($mecanico == "false")
@@ -522,7 +522,7 @@
                                 @endif
                             </tr>
 
-                            @forelse ($gastos as $key => $item)
+                            @forelse ($gastos->slice(1) as $key => $item)
                             <!-- Tu lógica actual para mostrar los registros -->
                             <tr style="border: 1px solid #727176; font-weight: 600 !important;">
                                 @if ($mecanico == "false")
