@@ -128,7 +128,8 @@
                         </div>  
                         
                         <div class="col-12 " style="margin-top: 5px; margin-right: 10px;">
-                            <table class="d-flex align-items-center justify-content-center"  style="font-size: 12px; width: auto; height: auto; border-spacing: 0px !important;">
+                            
+                            <table class="d-flex align-items-center justify-content-center" style="font-size: 12px; width: auto; height: auto; border-spacing: 0px !important;">
                                 <tbody>
                                     <tr style="border: 1px solid #727176;">
                                         <td rowspan="2" class="text-white" style="height: 5px; background-color: #727176; width: 10px; font-weight: 500 !important;"><b>Fecha <br> DD/MM/AA</b></td>
@@ -152,23 +153,40 @@
                                             $fechaInicioFormateada = date('d/m/y', strtotime($mantenimiento->fechaInicio));
                                         @endphp
 
-                                        <th rowspan="{{$gastosCount > 0 ? 20 : 21}}" scope="rowgroup" style="vertical-align: middle; border: 1px solid #727176; font-weight: 600 !important;">{{$fechaInicioFormateada}}</th>
-                                        <th rowspan="{{$gastosCount > 0 ? 20 : 21}}" scope="rowgroup" style="vertical-align: middle; border: 1px solid #727176; font-weight: 600 !important;">{{$maquinaria->kilometraje}}</th>
+                                        <th rowspan="2" scope="rowgroup" style="vertical-align: middle; border: 1px solid #727176; font-weight: 600 !important;">{{$fechaInicioFormateada}}</th>
+                                        <th rowspan="2" scope="rowgroup" style="vertical-align: middle; border: 1px solid #727176; font-weight: 600 !important;">{{$maquinaria->kilometraje}}</th>
                                         
                                         @if ($gastos->isNotEmpty())
                                             @if ($mecanico == "false")
-                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}}</td>
-                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">{{ number_format($gastos[0]->cantidad, 2) }}</td>
-                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">${{ number_format($gastos[0]->costo, 2) }}</td>
-                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">${{ number_format($gastos[0]->total, 2) }}</td>
+                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">Materiales Totales</td>
+                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">{{ $totalMateriales }}</td>
+                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">${{ $totalCostoMateriales }}</td>
+                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">${{ $totalImporteMateriales }}</td>
                                             @else
-                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}}</td>
-                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">{{ number_format($gastos[0]->cantidad, 2) }}</td>
+                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">Materiales Totales</td>
+                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">{{ $totalMateriales }}</td>
                                             @endif
                                         @endif
                                     </tr>
 
-                                    @forelse ($gastos->slice(1) as $key => $item)
+                                    <tr style="border: 1px solid #727176;">
+                                        
+                                        @if ($gastos->isNotEmpty())
+                                            @if ($mecanico == "false")
+                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">Mano de Obra Totales</td>
+                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">{{ $totalManoObra }}</td>
+                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">${{ $totalCostoManoObra }}</td>
+                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">${{ $totalImporteManoObra }}</td>
+                                            @else
+                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">Materiales Totales</td>
+                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">{{ $totalManoObra }}</td>
+                                            @endif
+                                        @endif
+                                    </tr>
+
+
+
+                                    {{--  @forelse ($gastos->slice(1) as $key => $item)
                                     <!-- Tu lógica actual para mostrar los registros -->
                                     <tr style="border: 1px solid #727176; font-weight: 600 !important;">
                                         @if ($mecanico == "false")
@@ -186,20 +204,13 @@
 
                                     @for ($i = $gastos->count() + 1; $i <= 20; $i++)
                                         <!-- Completa con filas vacías hasta llegar a 20 -->
-                                        @if ($mecanico == "false")
                                         <tr>
                                             <td style="border: 1px solid #727176;">-</td>
                                             <td style="border: 1px solid #727176;">-</td>
                                             <td style="border: 1px solid #727176;">-</td>
                                             <td style="border: 1px solid #727176;">-</td>
                                         </tr>
-                                        @else
-                                        <tr>
-                                            <td style="border: 1px solid #727176;">-</td>
-                                            <td style="border: 1px solid #727176;">-</td>
-                                        </tr>
-                                        @endif
-                                    @endfor
+                                    @endfor  --}}
 
                                     <tr style="border: 1px solid #727176;">
                                         @if ($mecanico == "false")
@@ -242,65 +253,49 @@
                             </table>
                             <div class="mt-2" style="display: flex; flex-direction: column; align-items: center;">
                                 <!-- Primera sección de imágenes -->
-                                <div style="display: flex; justify-content: space-between;">
+                                <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
                                     @php
-                                        $fotosPrimeraSeccion = array_slice($fotos, 0, 4); // Obtener solo las primeras 4 imágenes
-                                        $fotosFaltantesPrimera = 4 - count($fotosPrimeraSeccion); // Calcula cuántas imágenes faltan para llegar a 4
+                                        $fotosPorFila = 3;
+                                        $totalFilas = 3;
+                                        $fotosSeccion = array_slice($fotos, 0, $fotosPorFila * $totalFilas);
+                                        $fotosFaltantes = $fotosPorFila * $totalFilas - count($fotosSeccion);
                                     @endphp
 
-                                    @foreach ($fotosPrimeraSeccion as $foto)
-                                        <div style="width: 238px; height: 120px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
+                                    @foreach ($fotosSeccion as $foto)
+                                        <div style="width: calc(33.33% - 8px); height: 180px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
                                             <img src="{{ empty($foto['ruta']) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/mantenimientos/' . $mantenimiento->codigo . '/' . $foto['ruta']) }}" style="height: 100%; object-fit: cover;">
                                         </div>
                                     @endforeach
 
-                                    @for ($i = 0; $i < $fotosFaltantesPrimera; $i++)
-                                        <div style="width: 238px; height: 120px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
+                                    @for ($i = 0; $i < $fotosFaltantes; $i++)
+                                        <div style="width: calc(33.33% - 8px); height: 180px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
                                             <img src="/img/general/default.jpg" style="height: 100%; object-fit: cover;">
                                         </div>
                                     @endfor
                                 </div>
-                                
-                                <!-- Segunda sección de imágenes -->
-                                <div style="display: flex; justify-content: space-between;">
-                                    @php
-                                        $fotosRestantes = array_slice($fotos, 4, 4); // Obtener las próximas 4 imágenes después de la cuarta
-                                        $fotosFaltantesSegunda = 4 - count($fotosRestantes); // Calcula cuántas imágenes faltan para llegar a 4
-                                    @endphp
-
-                                    @foreach ($fotosRestantes as $foto)
-                                        <div style="width: 238px; height: 120px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
-                                            <img src="{{ empty($foto['ruta']) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/mantenimientos/' . $mantenimiento->codigo . '/' . $foto['ruta']) }}" style="height: 100%; object-fit: cover;">
-                                        </div>
-                                    @endforeach
-
-                                    @for ($i = 0; $i < $fotosFaltantesSegunda; $i++)
-                                        <div style="width: 238px; height: 120px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
-                                            <img src="/img/general/default.jpg" style="height: 100%; object-fit: cover;">
-                                        </div>
-                                    @endfor
-                                </div>
-
 
                                 <!-- Tercera sección de imágenes -->
-                                <div class="mt-1" style="display: flex; justify-content: space-between;">      
+                                <div class="mt-1" style="display: flex; justify-content: space-between;">
                                     <!-- Imagen 9 -->
-                                    <div style="margin-top: 3px; width: 30%; height: 201px; border: 1px solid #727176; text-align: center; font-size:8px">
+                                    <div style="margin-top: 3px; width: 30%; height: 271px; border: 1px solid #727176; text-align: center; font-size:8px">
                                         <div class="mt-1"><b>SELLO DE TALLER</b></div>
                                     </div>
-                                    <div style="width: 403px; height: 201px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
-                                        <img class="img-fluid" src="{{ empty($fotos[8]['ruta']) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria->identificador, 4, '0', STR_PAD_LEFT) . '/mantenimientos/' . $mantenimiento->codigo . '/' . $fotos[8]['ruta']) }}" style="height: 100%; object-fit: cover;">
-                                    </div>
-                                    
-                                    <!-- Imagen 10 -->
-                                    <div style="width: 403px; height: 201px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
-                                        <img class="img-fluid" src="{{ empty($fotos[9]['ruta']) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria->identificador, 4, '0', STR_PAD_LEFT) . '/mantenimientos/' . $mantenimiento->codigo . '/' . $fotos[9]['ruta']) }}" style="height: 100%; object-fit: cover;">
-                                    </div>      
-                                    <div style="margin-top: 3px; width: 30%; height: 201px; border: 1px solid #727176; text-align: center; font-size:8px">
+
+                                    @if(count($fotos) >= 10 && !empty($fotos[9]['ruta']))
+                                        <div style="width: 783px; height: 271px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
+                                            <img class="img-fluid" src="{{ asset('/storage/maquinaria/' . str_pad($maquinaria->identificador, 4, '0', STR_PAD_LEFT) . '/mantenimientos/' . $mantenimiento->codigo . '/' . $fotos[9]['ruta']) }}" style="height: 100%; object-fit: cover;">
+                                        </div>
+                                    @else
+                                        <div style="width: 783px; height: 271px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
+                                            <img class="img-fluid" src="/img/general/default.jpg" style="height: 100%; object-fit: cover;">
+                                        </div>
+                                    @endif
+
+                                    <!-- Sello de oficina -->
+                                    <div style="margin-top: 3px; width: 30%; height: 271px; border: 1px solid #727176; text-align: center; font-size:8px">
                                         <div class="mt-1"><b>SELLO DE OFICINA</b></div>
                                     </div>
                                 </div>
-
                                 
                             </div>
 
@@ -382,10 +377,232 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-2 text-start">
+                                <img src="{{ asset('/img/maquinariaPrint/Logo q2cem.svg') }}" alt="" width="95px;" class="mt-1" style="margin-left: 15px">    
+                            </div>
+                            <div class="col-8 mr-3" style="margin-left: -10px">
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <h2 style="color: #a6ce34; font-weight: bold">Q2S, S.A de C.V.</h2>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <div class="copyright" style="font-size: 9px; font-weight: bold; color: #727176">
+                                            Oficina: José María Herédia No. 2387. Colonia Lomas de Guevara. Guadalajara, Jalisco. México C.P. 44657. Tel: 33-3640-2290. <br>
+                                            Taller: San Juan de los Lagos No. 1788. Colonia Hogares de Nuevo México. C.P. 45138. Tel: 33-3857-4027. www.q2ces.com
+                                            <div id="lineInvisible" style="visibility: hidden">.......................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container" style="margin-top: -20px">
+                                    <div class="row justify-content-center">
+                                        <div class="col text-center" style="max-width: 550px;">
+                                            <div class="d-flex align-items-center p-2 justify-content-center" style="font-weight: 500 !important; font-size: 16px !important; border-radius: 2em; background-color: #727176; color: white; height: 20px !important;">
+                                                BITÁCORA DE MANTENIMIENTO DE MAQUINARIA Y EQUIPO
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-2 text-end mt-2" style="margin-left: 10px">
+                                <div class="d-flex align-items-center p-2 justify-content-center" style="font-weight: 500 !important; font-size: 20px !important; background-color: #727176; color: black; height: 25px !important; width: 120px !important;">
+                                    <b>FOLIO</b>
+                                </div>
+                                <div class="d-flex align-items-center p-1 justify-content-center" style="font-weight: 500 !important; font-size: 20px !important; border-width: 1px; border-style: solid; border-color: #727176; color: red; width: 120px !important; height: 40px !important;">
+                                    M{{-$mantenimiento->id}}
+                                </div>
+                            </div>
 
+                        </div>   
+                        <div class="col-12" style="margin-top: 5px; margin-right: 10px;">
+                            <div class="d-flex align-items-center p-1 justify-content-center" style="font-weight: 500 !important; font-size: 8px !important; border-radius: 2em;border-width: 1px; border-style: solid; border-color: #727176; background-color: white; color: black; height: 25px !important;">
+                                <div class="d-flex align-items-center justify-content-center custom-section grey-section" style="margin-left: -5px;">
+                                    <b>Equipo:</b>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none">
+                                    
+                                    <b style="{{ strlen(trans($maquinaria->nombre)) > 16 ? 'font-size: 7px;' : '' }}">{{ $maquinaria->nombre }}</b>
+                                </div>
+
+                                <div class="d-flex align-items-center justify-content-center custom-section grey-section" style="width: 50px">
+                                    <b>VIN:</b>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none; width: 160px">
+                                    <b>{{$maquinaria->numserie}}</b>
+                                </div>
+
+                                <div class="d-flex align-items-center justify-content-center custom-section grey-section">
+                                    <b>MARCA:</b>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none; width: 95px">
+                                    <b style="{{ strlen(trans($maquinaria->nombre)) > 16 ? 'font-size: 7px;' : '' }}">{{$maquinaria->marca}}</b>
+                                </div>
+
+                                <div class="d-flex align-items-center justify-content-center custom-section grey-section">
+                                    <b>MODELO:</b>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none">
+                                    <b style="{{ strlen(trans($maquinaria->nombre)) > 16 ? 'font-size: 7px;' : '' }}">{{$maquinaria->modelo}}</b>
+                                </div>
+
+                                <div class="d-flex align-items-center justify-content-center custom-section grey-section" style="width: 30px">
+                                    <b>AÑO:</b>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none; width: 30px">
+                                    <b>{{$maquinaria->ano}}</b>
+                                </div>
+
+                                <div class="d-flex align-items-center justify-content-center custom-section grey-section">
+                                    <b>PLACAS:</b>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none; width: 100px">
+                                    <b>{{$maquinaria->placas}}</b>
+                                </div>
+
+                                <div class="d-flex align-items-center justify-content-center custom-section grey-section" style="width: 95px">
+                                    <b>N/ECONÓMICO:</b>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none">
+                                    <b>{{$maquinaria->identificador}}</b>
+                                </div>
+
+                            </div>
+                            
+                        </div>  
+                        
+                        <table class="d-flex align-items-center justify-content-center mt-1"  style="font-size: 12px; width: auto; height: auto; border-spacing: 0px !important; margin-block-end: 10px">
+                        <tbody>
+                            <tr style="border: 1px solid #727176;">
+                                <td rowspan="2" class="text-white" style="height: 5px; background-color: #727176; width: 10px; font-weight: 500 !important;"><b>Fecha <br> DD/MM/AA</b></td>
+                                <td rowspan="2" class="" style="width: 10px; border: 1px solid #727176; font-weight: 600 !important;">HOROMETRO <br> KM/MILLAS</td>
+                                <th colspan="4" class="text-white" style="background-color: #727176; height: 10px; font-weight: 500 !important;"><b>DESCRIPCIÓN DE MANTENIMIENTO REALIZADO</b></th>
+                            </tr>
+                            <tr style="border: 1px solid #727176;">
+                                @if ($mecanico == "false")
+                                    <th scope="col" style="width: 500px; font-weight: 600 !important;">MATERIAL y/o MANO DE OBRA</th>
+                                    <th scope="col" class="text-white" style="background-color: #727176; height: 10px !important; font-weight: 500 !important;"><b> CANTIDAD</b></th>
+                                    <th scope="col" style="width: 15px !important; font-weight: 600 !important;">COSTO</th>
+                                    <th scope="col" class="text-white" style="  background-color: #727176; height: 10px !important; font-weight: 500 !important;"><b>IMPORTE</b></th>    
+                                @else
+                                    <th scope="col" style="width: 700px; font-weight: 600 !important;" >MATERIAL y/o MANO DE OBRA</th>
+                                    <th scope="col" class="text-white" style="   background-color: #727176; height: 10px !important; font-weight: 500 !important;"><b> CANTIDAD</b></th>
+                                @endif
+                            </tr>
+                            <tr style="border: 1px solid #727176;">
+                                @php
+                                    $fechaInicioFormateada = date('d/m/y', strtotime($mantenimiento->fechaInicio));
+                                @endphp
+                                
+                                @if ($gastosCount <= 47)
+                                @php
+                                    $espaciosBlanco = 44;
+                                @endphp
+                                @else
+                                    @php
+                                        $espaciosBlanco = 52;
+                                    @endphp
+                                @endif
+
+                                <th rowspan="{{$espaciosBlanco + 2}}" scope="rowgroup" style="vertical-align: middle; border: 1px solid #727176; font-weight: 600 !important;">{{$fechaInicioFormateada}}</th>
+                                <th rowspan="{{$espaciosBlanco + 2}}" scope="rowgroup" style="vertical-align: middle; border: 1px solid #727176; font-weight: 600 !important;">{{$maquinaria->kilometraje}}</th>
+                                
+                                @if ($gastos->isNotEmpty())
+                                    @if ($mecanico == "false")
+                                        <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}}</td>
+                                        <td style="border: 1px solid #727176; font-weight: 600 !important;">{{ number_format($gastos[0]->cantidad, 2) }}</td>
+                                        <td style="border: 1px solid #727176; font-weight: 600 !important;">${{ number_format($gastos[0]->costo, 2) }}</td>
+                                        <td style="border: 1px solid #727176; font-weight: 600 !important;">${{ number_format($gastos[0]->total, 2) }}</td>
+                                    @else
+                                        <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}}</td>
+                                        <td style="border: 1px solid #727176; font-weight: 600 !important;">{{ number_format($gastos[0]->cantidad, 2) }}</td>
+                                    @endif
+                                @endif
+                            </tr>
+
+                            @forelse ($gastos as $key => $item)
+                            <!-- Tu lógica actual para mostrar los registros -->
+                            <tr style="border: 1px solid #727176; font-weight: 600 !important;">
+                                @if ($mecanico == "false")
+                                    <td style="border: 1px solid #727176;">{{$item->concepto}}</td>
+                                    <td style="border: 1px solid #727176;">{{ number_format($item->cantidad, 2) }}</td>
+                                    <td style="border: 1px solid #727176;">${{ number_format($item->costo, 2) }}</td>
+                                    <td style="border: 1px solid #727176;">${{ number_format($item->total, 2) }}</td>
+                                @else
+                                    <td style="border: 1px solid #727176;">{{$item->concepto}}</td>
+                                    <td style="border: 1px solid #727176;">{{ number_format($item->cantidad, 2) }}</td>
+                                @endif
+                            </tr>
+                            @empty
+                            @endforelse
+
+                            
+
+
+                            @for ($i = $gastos->count(); $i <= $espaciosBlanco; $i++)
+                                <!-- Completa con filas vacías hasta llegar a 45 -->
+                                @if ($mecanico == "false")
+                                <tr>
+                                    <td style="border: 1px solid #727176;">-</td>
+                                    <td style="border: 1px solid #727176;">-</td>
+                                    <td style="border: 1px solid #727176;">-</td>
+                                    <td style="border: 1px solid #727176;">-</td>
+                                </tr>
+                                @else
+                                <tr>
+                                    <td style="border: 1px solid #727176;">-</td>
+                                    <td style="border: 1px solid #727176;">-</td>
+                                </tr>
+                                @endif
+                            @endfor
+
+                            <tr style="border: 1px solid #727176;">
+                                @if ($mecanico == "false")
+                                <th scope="col" colspan="3" style="border-right: 1px solid black; font-weight: 500"> {{ $mantenimiento->comentario }}</th>
+                                <td class="text-white" style="background-color: #727176; border: 1px solid black; padding: 5px; font-weight: bold !important; border-right: 1px solid black;">
+                                    SUB-TOTAL <br> 
+                                    <span style="border-top: 1px solid black; display: block; padding-top: 5px;">I.V.A.</span>
+                                    <span style="border-top: 1px solid black; display: block; padding-top: 5px;">TOTAL</span>
+                                </td>
+                                <td class="text-white" style="background-color: #727176; border: 1px solid black; padding: 5px; font-weight: bold !important;">
+                                    <br> 
+                                    <span style="border-top: 1px solid black; display: block; border-bottom: 1px solid black; display: block; padding-top: 5px;">{{ $mantenimiento->iva }}%</span>
+                                    <br>
+                                </td>
+                                @php
+                                    $ivaPorcentaje = $mantenimiento->iva / 100;
+                                    $costoIva = $mantenimiento->costo * $ivaPorcentaje;
+                                    $costoIvaFormateado = number_format($costoIva, 2);
+                                @endphp
+                                <td class="text-white" style="background-color: #727176; border: 1px solid black; padding: 5px; font-weight: bold !important;">
+                                    ${{ $mantenimiento->subtotal }}<br>
+                                    <span style="border-top: 1px solid black; display: block; padding-top: 5px;">${{ $costoIvaFormateado }}</span>
+                                    <span style="border-top: 1px solid black; display: block; padding-top: 5px;">${{ $mantenimiento->costo }}</span>
+                                </td>
+                                @else
+                                    <th scope="col" colspan="6" style="border-right: 1px solid black; font-weight: 500; height: 75px;">{{ $mantenimiento->comentario }}</th>
+                                @endif
+                            </tr>
+
+                            <tr style="border: 1px solid #727176; font-weight: 900">
+                                <th style="border: 1px solid #727176;" scope="col" colspan="3"> LA PRESENTE BITÁCORA AMPARA EL ULTIMO MANTENIMIENTO REALIZADO EL</b></th>
+                                <th style="border: 1px solid #727176;" scope="col" colspan="3"> 20/07/23 </th>
+                            </tr>
+
+                            <tr style="border: 1px solid #727176; font-weight: 900">
+                                <th style="border: 1px solid #727176;" scope="col" colspan="3"> PRÓXIMOS SERVICIOS PROGRAMADOS </th>
+                                <th style="border: 1px solid #727176;" scope="col" colspan="3"> {{$maquinaria->mantenimiento}} </th>
+                            </tr>
+                        </tbody>
+                        </table>
                         </div>
+                        
                     </div>
                     <br>
+                    
+                   
                 </div>
             </div>
         </div>

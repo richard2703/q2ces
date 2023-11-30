@@ -121,15 +121,17 @@
                                                 <form id="printForm" action="{{ route('printMantenimiento.get') }}" method="GET" style="display: inline-block;">
                                                     @can('mantenimiento_show')
                                                         <input type="hidden" name="mecanico" value="true">
+                                                        <input type="hidden" name="id" value={{$item->id}}>
                                                         <button class="btnSinFondo" type="submit">
                                                             <i class="fas fa-print" style="color: #8caf48; font-size: x-large;"></i>
                                                         </button>
-                                                    @endcan
-                                                    
+                                                    @endcan    
                                                 </form>
+
                                                 <form id="printForm" action="{{ route('printMantenimiento.get') }}" method="GET" style="display: inline-block;">
                                                     @can('mantenimientoPrintCostos_show')
                                                         <input type="hidden" name="mecanico" value="false">
+                                                        <input type="hidden" name="id" value={{$item->id}}>
                                                         <button class="btnSinFondo" type="submit">
                                                             <i class="fas fa-print" style="color: black; font-size: x-large;"></i>
                                                         </button>
