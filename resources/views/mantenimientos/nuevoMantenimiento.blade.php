@@ -17,7 +17,8 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header bacTituloPrincipal">
-                            <h4 class="card-title">Nuevo Registro de Mantenimiento</h4>
+                            <h4 class="card-title">Nuevo Registro de Mantenimiento {{ $blnEsMtq == 'true' ? 'MTQ' : '' }}
+                            </h4>
                         </div>
 
                         <div class="col-12 col-md-2 mt-4" style="margin-left:20px">
@@ -46,10 +47,17 @@
                                         <p class="subEncabezado">Busca Una Maquinaria</p>
                                         <div class="mb-4 mt-0" role="search" class="">
                                             <input value="" class="search-submit ">
-                                            <input autofocus type="text" class="text" id="search" name="search"
-                                                placeholder="Buscar..." title="Escriba la(s) palabra(s) a buscar."><input
-                                                type="button" onclick="clearInput('search')" class="btn botonGral"
-                                                value="Borrar">
+                                            @if ($blnEsMtq == 'true')
+                                                <input autofocus type="text" class="text" id="searchMtq" name="searchMtq"
+                                                    placeholder="Buscar..."
+                                                    title="Escriba la(s) palabra(s) a buscar."><input type="button"
+                                                    onclick="clearInput('search')" class="btn botonGral" value="Borrar">
+                                            @else
+                                                <input autofocus type="text" class="text" id="search" name="search"
+                                                    placeholder="Buscar..."
+                                                    title="Escriba la(s) palabra(s) a buscar."><input type="button"
+                                                    onclick="clearInput('search')" class="btn botonGral" value="Borrar">
+                                            @endif
                                         </div>
                                     </div>
 
@@ -88,17 +96,17 @@
 
                                             <label class="labelTitulo">Uso de la Maquinaría: </label></br>
                                             <input type="number" class="inputCaja text-end"
-                                                value="{{ old('kilometraje') }}" placeholder="Ej. 1000"
-                                                step="1" min="0" id="usoKom"
-                                                name="usoKom">
+                                                value="{{ old('kilometraje') }}" placeholder="Ej. 1000" step="1"
+                                                min="0" id="usoKom" name="usoKom">
                                         </div>
                                     </div>
 
                                     <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
-                                        <label class="labelTitulo">Comentarios e Indicaciones para Ejecución del Mantenimiento:</label></br>
+                                        <label class="labelTitulo">Comentarios e Indicaciones para Ejecución del
+                                            Mantenimiento:</label></br>
                                         <textarea rows="3" cols="80" class="form-control"
-                                            placeholder="Escribe tus comentarios o información relevante para la ejecución del mantenimiento aquí." name="comentario"
-                                            id="comentario"></textarea>
+                                            placeholder="Escribe tus comentarios o información relevante para la ejecución del mantenimiento aquí."
+                                            name="comentario" id="comentario"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -136,6 +144,42 @@
             source: function(request, response) {
                 $.ajax({
                     url: "{{ route('search.equipos') }}",
+
+                    dataType: 'json',
+                    data: {
+                        term: request.term,
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minChars: 1,
+            width: 402,
+            matchContains: "word",
+            autoFill: true,
+            minLength: 1,
+            select: function(event, ui) {
+
+                // Rellenar los campos con los datos de la persona seleccionada
+                $('#maquinariaId').val(ui.item.id);
+                $('#descripcion').val(ui.item.value);
+                $('#titulo').val('Mantenimiento ' + ui.item.nombre);
+                // $('#nombre').val(ui.item.nombre);
+                // $('#marca').val(ui.item.marca);
+                // $('#modelo').val(ui.item.modelo);
+                // $('#numserie').val(ui.item.numserie);
+                // $('#placas').val(ui.item.placas);
+            }
+
+        });
+
+        $('#searchMtq').autocomplete({
+
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('search.equiposMTQ') }}",
 
                     dataType: 'json',
                     data: {

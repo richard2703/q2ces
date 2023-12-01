@@ -360,6 +360,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/mantenimientos/mtq', [App\Http\Controllers\mantenimientosController::class, 'indexMtq'])->name('mantenimientos.indexMtq');
     Route::get('/mantenimientos/mtq', [App\Http\Controllers\mantenimientosController::class, 'indexMtq'])->name('mantenimientos.indexMtq');
     Route::get('/mantenimientos/nuevo/', [App\Http\Controllers\mantenimientosController::class, 'create'])->name('mantenimientos.create');
+    Route::get('/mantenimientos/nuevo/mtq', [App\Http\Controllers\mantenimientosController::class, 'createMtq'])->name('mantenimientos.createMtq');
     Route::post('/mantenimientos/nuevo/add', [App\Http\Controllers\mantenimientosController::class, 'store'])->name('mantenimientos.store');
     Route::get('/mantenimientos/editar/{id}', [App\Http\Controllers\mantenimientosController::class, 'edit'])->name('mantenimientos.edit');
     Route::get('/mantenimientos/detalle/{id}', [App\Http\Controllers\mantenimientosController::class, 'show'])->name('mantenimientos.show');

@@ -33,7 +33,7 @@
                             </div>
                             <div class="col-4 text-end mt-4" style="margin-left:-20px">
                                 @can('mantenimiento_create')
-                                    <a href="{{ url('/mantenimientos/nuevo') }}">
+                                    <a href="{{ $blnEsMtq == true ? url('/mantenimientos/nuevo/mtq') : url('/mantenimientos/nuevo')  }}">
                                         <!--Agregar ruta-->
                                         <button type="button" class="btn botonGral">Añadir Mantenimiento</button>
                                     </a>
