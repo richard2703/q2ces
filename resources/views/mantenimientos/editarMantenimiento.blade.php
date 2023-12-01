@@ -729,7 +729,7 @@
                                                 class="form-select form-select-lg mb-3 inputCaja"
                                                 aria-label="Default select example">
                                                 {{-- <option value="">Seleccione</option> --}}
-                                                @foreach ($vctCoordinadores as $item)
+                                                @foreach ($vctCoordinadoresA as $item)
                                                     <option value="{{ $item->nombreCompleto }}"
                                                         {{ $mantenimiento->coordOperaciones == $item->nombreCompleto ? ' selected' : '' }}>
                                                         {{ $item->personal }}

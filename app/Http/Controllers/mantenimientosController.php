@@ -103,7 +103,19 @@ class mantenimientosController extends Controller
 
         $vctTipos = tipoMantenimiento::select('tipoMantenimiento.*')->orderBy('tipoMantenimiento.nombre', 'asc')->get();
         // dd( $vctTipos );
-        return view('mantenimientos.nuevoMantenimiento', compact('vctTipos'));
+        $blnEsMtq = false;
+        // dd('Q2Ces');
+        return view( 'mantenimientos.nuevoMantenimiento', compact( 'vctTipos', 'blnEsMtq' ) );
+    }
+
+    public function createMtq() {
+        abort_if ( Gate::denies( 'mantenimiento_create' ), '404' );
+
+        $vctTipos = tipoMantenimiento::select( 'tipoMantenimiento.*' )->orderBy( 'tipoMantenimiento.nombre', 'asc' )->get();
+        // dd( $vctTipos );
+        $blnEsMtq = true;
+        // dd('Mtq');
+        return view( 'mantenimientos.nuevoMantenimiento', compact( 'vctTipos', 'blnEsMtq' ) );
     }
 
     /**
@@ -238,13 +250,14 @@ class mantenimientosController extends Controller
         $vctTipos = tipoMantenimiento::select('tipoMantenimiento.*')->orderBy('tipoMantenimiento.nombre', 'asc')->get();
 
         $vctCoordinadores = personal::getPersonalPorNivel( 3 );
+        $vctCoordinadoresA = personal::getPersonalPorNivel( 1 );
         $vctMecanicos = personal::getPersonalPorNivel( 4 );
         $vctResponsables = personal::getPersonalPorNivel( 5, true );
         $vctResidentes = residente::all()->sortBy( 'nombre' );
 
         // dd( $gastos, $mantenimiento, $maquinaria, $vctMecanicos, $vctResidentes );
 
-        return view( 'mantenimientos.editarMantenimiento', compact( 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctResponsables', 'vctResidentes' ) );
+        return view( 'mantenimientos.editarMantenimiento', compact( 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores','vctCoordinadoresA', 'vctResponsables', 'vctResidentes' ) );
     }
 
     /**
@@ -286,7 +299,7 @@ class mantenimientosController extends Controller
 
             if (is_null($mantto) == false) {
 
-                $data['costo'] =  $data['total'];
+                $data[ 'costo' ] = $data[ 'total' ];
 
                 //*** manejo del estatus de la tarea cuando se cambia su estatus inicial*/
                 if ($mantto->estadoId <= 1 && $mantto->fechaReal == '0000-00-00') {
@@ -294,6 +307,7 @@ class mantenimientosController extends Controller
                         $data['fechaReal'] =  date('Y-m-d');
                     }
                 }
+
                 //*** manejo del estatus de la tarea cuando se cambia su estatus final*/
                 if ($data['estadoId'] == 3) {
                     $data['fechaReal'] =  date('Y-m-d');
