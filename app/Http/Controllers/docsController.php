@@ -41,7 +41,7 @@ class docsController extends Controller
     public function create()
     {
         abort_if(Gate::denies('catalogos_create'), 404);
-        $tiposDocs = tiposDocs::all();
+        $tiposDocs = tiposDocs::all()->sortBy('nombre');
 
         return view('catalogos.docs.createDocs', compact('tiposDocs'));
     }
@@ -81,7 +81,7 @@ class docsController extends Controller
     public function edit(docs $doc)
     {
         abort_if(Gate::denies('catalogos_edit'), 404);
-        $tiposDocs = tiposDocs::all();
+        $tiposDocs = tiposDocs::all()->sortBy('nombre');
         return view('catalogos.docs.editDocs', compact('doc', 'tiposDocs'));
     }
 

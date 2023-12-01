@@ -26,9 +26,9 @@ class calendarioPrincipalController extends Controller
     {
         abort_if(Gate::denies('calendarioPrincipal_index'), 404);
         // dd('HOLA');
-        $personal = personal::all();
-        $marca = marca::all();
-        $tiposMantenimiento = tipoMantenimiento::all();
+        $personal = personal::all()->sortBy('nombres');
+        $marca = marca::all()->sortBy('nombre');
+        $tiposMantenimiento = tipoMantenimiento::all()->sortBy('nombre');
         $herramientas = inventario::where('tipo', 'herramientas')->get();
         $refacciones = inventario::where('tipo', 'refacciones')->get();
         // $eventos = calendarioPrincipal::all();
@@ -89,8 +89,16 @@ class calendarioPrincipalController extends Controller
     public function store(Request $request)
     {
         abort_if(Gate::denies('calendarioPrincipal_create'), 404);
+
         $mantenimiento = $request->all();
+
+        $mantenimiento['fechaInicio'] =  $request['fecha'];
+        $mantenimiento['codigo'] =  $request['identificador'];
+        $mantenimiento['titulo'] = "Mantenimiento " . $request['identificador']. " " . $request['nombre'];
+
+        // dd($mantenimiento);
         $nuevoMantenimiento = mantenimientos::create($mantenimiento);
+
         // dd("NO");
         $eventoCalendario = new calendarioPrincipal();
         $eventoCalendario->mantenimientoId = $nuevoMantenimiento->id;

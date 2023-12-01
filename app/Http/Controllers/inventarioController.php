@@ -46,7 +46,7 @@ class inventarioController extends Controller
     {
         abort_if(Gate::denies('inventario_index'), 403);
         if ($tipo == 'combustible') {
-            $usuarios = personal::all();
+            $usuarios = personal::all()->sortBy('nombres');
             $despachador = personal::join('puesto', 'personal.puestoId', 'puesto.id')
                 ->join('puestoNivel', 'puesto.puestoNivelId', 'puestoNivel.id')
                 ->select('personal.id', 'personal.nombres', 'personal.apellidoP')
@@ -185,10 +185,10 @@ class inventarioController extends Controller
     {
         abort_if(Gate::denies('inventario_create'), 403);
 
-        $vctTipos = tipoUniforme::all();
-        $vctMarcas = marca::all();
-        $vctProveedores = proveedor::all();
-        $vctMaquinaria = maquinaria::all();
+        $vctTipos = tipoUniforme::all()->sortBy('nombre');
+        $vctMarcas = marca::all()->sortBy('nombre');
+        $vctProveedores = proveedor::all()->sortBy('nombre');
+        $vctMaquinaria = maquinaria::all()->sortBy('identificador');
 
         return view('inventario.inventarioNuevo', compact('tipo', 'vctTipos', 'vctMarcas', 'vctProveedores', 'vctMaquinaria'));
     }
@@ -323,12 +323,12 @@ class inventarioController extends Controller
     {
         abort_if(Gate::denies('inventario_show'), 403);
 
-        $vctDesde = maquinaria::all();
-        $vctHasta = maquinaria::all();
-        $vctTipos = tipoUniforme::all();
-        $vctMarcas = marca::all();
-        $vctProveedores = proveedor::all();
-        $vctMaquinaria = maquinaria::all();
+        $vctDesde = maquinaria::all()->sortBy('identificador');
+        $vctHasta = maquinaria::all()->sortBy('identificador');
+        $vctTipos = tipoUniforme::all()->sortBy('nombre');
+        $vctMarcas = marca::all()->sortBy('nombre');
+        $vctProveedores = proveedor::all()->sortBy('nombre');
+        $vctMaquinaria = maquinaria::all()->sortBy('identificador');
         // dd($vctDesde);
         $inventario = inventario::where("id", $inventario->id)->first();
         // dd($inventario);
@@ -347,7 +347,7 @@ class inventarioController extends Controller
         abort_if(Gate::denies('inventario_edit'), 403);
 
         $inventario = inventario::where("id", $inventario->id)->first();
-        $vctTipos = tipoUniforme::all();
+        $vctTipos = tipoUniforme::all()->sortBy('nombre');
 
         // dd($inventario);
         return view('inventario.detalleInventario', compact('inventario'));
