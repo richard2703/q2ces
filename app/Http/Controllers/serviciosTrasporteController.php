@@ -92,7 +92,7 @@ class serviciosTrasporteController extends Controller
         $conceptos = conceptos::orderBy('codigo', 'asc')->get();
         $personal = personal::orderBy('nombres', 'asc')->where('estatusId', 1)->get();
         $obras = obras::orderBy('nombre', 'asc')->where('estatus', 1)->get();
-        $maquinaria = maquinaria::where('compania', '!=', 'mtq')->orWhere('compania', null)->get();
+        $maquinaria = maquinaria::where('compania', '!=', 'mtq')->orWhere('compania', null)->orderBy('identificador', 'asc')->get();
         $vctComprobantes = comprobante::select()->orderBy('nombre', 'asc')->get();
         $vctClientes = clientes::select()->orderBy('nombre', 'asc')->get();
         $almacenes =  almacenTiraderos::select()->orderBy('nombre', 'asc')->get();
