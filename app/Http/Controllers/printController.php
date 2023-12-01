@@ -15,6 +15,7 @@ use App\Models\maquinaria;
 use App\Models\obraMaqPer;
 use App\Models\obras;
 use App\Models\personal;
+use App\Models\serviciosTrasporte;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -512,5 +513,60 @@ class printController extends Controller
         $cliente = false;
 
         return view('inventario.vistaPreviaImpresionOnlyprint', compact('descarga', 'cliente'));
+    }
+
+    // public function printServicios($saldoFormatted, $ingresoFormatted, $egresoFormatted, $saldo, $inicioSemana, $finSemana)
+    public function printServicios(Request $request)
+    {
+        // dd($request);
+        $hoy = $request->hoy;
+        $quincena = $request->quincena;
+        $reporte = 1;
+
+        $pendientes = serviciosTrasporte::whereBetween('fecha', [$quincena, $hoy])
+            ->whereNotIn('estatus', [4, 0])
+            // ->sum('costoServicio');
+            ->get();
+
+        $sumaPendientes = $pendientes->sum('costoServicio') + $pendientes->sum('cantidad') + $pendientes->sum('costoMano');
+        $totalPendientes = $pendientes->count();
+
+        $pagados = serviciosTrasporte::whereBetween('fecha', [$quincena, $hoy])
+            ->where('estatus', 4)
+            // ->sum('costoServicio');
+            ->get();
+
+        $sumaPagados = $pagados->sum('costoServicio') + $pagados->sum('cantidad') + $pagados->sum('costoMano');
+        $totalPagados = $pagados->count();
+
+        $registros = serviciosTrasporte::join('conceptos', 'serviciosTrasporte.conceptoId', 'conceptos.id')
+            ->leftJoin('obras', 'serviciosTrasporte.obraId', 'obras.id')
+            ->join('clientes', 'obras.clienteId', 'clientes.id')
+            ->join('maquinaria', 'serviciosTrasporte.equipoId', 'maquinaria.id')
+            ->join('personal', 'serviciosTrasporte.personalId', 'personal.id')
+            ->select(
+                'serviciosTrasporte.id',
+                'serviciosTrasporte.fecha',
+                'conceptos.nombre as cnombre',
+                'clientes.nombre as cliente',
+                'obras.nombre as obra',
+                'obras.centroCostos',
+                'obras.proyecto',
+                'maquinaria.identificador',
+                'maquinaria.nombre as maquinaria',
+                'personal.nombres as pnombre',
+                'personal.apellidoP as papellidoP',
+                'cantidad',
+                'costoMano',
+                'costoServicio',
+                'numFactura',
+                'serviciosTrasporte.estatus'
+            )
+            ->orderBy('fecha', 'desc')
+            ->whereBetween('serviciosTrasporte.fecha', [$quincena, $hoy])
+            ->get();
+        // dd($registros);
+
+        return view('serviciosTrasporte.vistaPreviaImpresion', compact('registros', 'sumaPendientes', 'totalPendientes', 'sumaPagados', 'totalPagados', 'quincena', 'hoy', 'reporte'));
     }
 }
