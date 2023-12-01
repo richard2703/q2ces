@@ -11,6 +11,9 @@ use App\Models\clientes;
 use App\Models\corteCajaChica;
 use App\Models\descarga;
 use App\Models\descargaDetalle;
+use App\Models\gastosMantenimiento;
+use App\Models\mantenimientoImagen;
+use App\Models\mantenimientos;
 use App\Models\maquinaria;
 use App\Models\obraMaqPer;
 use App\Models\obras;
@@ -22,6 +25,7 @@ use Illuminate\Support\Facades\Gate;
 // use Dompdf\Dompdf;
 // use Dompdf\Options;
 use App\Models\tipoHoraExtra;
+use App\Models\tipoMantenimiento;
 use PDF;
 use stdClass;
 
@@ -185,10 +189,9 @@ class printController extends Controller
     public function printMaquinaria(Request $request)
     {
 
-        // $maquinaria = maquinaria::whereNull('compania')
-        //     ->orderBy('maquinaria.identificador', 'asc')->get();
+        $maquinaria = maquinaria::whereNull('compania')->orderBy('maquinaria.identificador', 'asc')->get();
 
-        $maquinaria = maquinaria::all();
+        // $maquinaria = maquinaria::all();
 
         return view('maquinaria.vistaPreviaImpresion', compact('maquinaria'));
     }
@@ -460,11 +463,107 @@ class printController extends Controller
     public function printMantenimiento(Request $request)
     {
         $mecanico = $request->input('mecanico');
+        $id = $request->input('id');
+
+        $mecanico = $request->input('mecanico');
+        $id = $request->input('id');
 
         // Imprimir para verificar el valor recibido
         // dd($mecanico);
+        $mantenimiento = mantenimientos::select(
+            'mantenimientos.*',
+            DB::raw("CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria"),
+        )
+            ->join('maquinaria', 'maquinaria.id', '=', 'mantenimientos.maquinariaId')
+            ->where('mantenimientos.id', '=', $id)->first();
 
-        return view('mantenimientos.vistaPreviaImpresion', compact('mecanico'));
+        $gastos = gastosMantenimiento::select(
+            'gastosMantenimiento.*',
+            DB::raw('inventario.nombre as articulo'),
+            DB::raw('inventario.numparte as numparte'),
+            DB::raw('inventario.modelo as modelo'),
+            DB::raw('marca.nombre AS marca'),
+            DB::raw('inventario.valor as valor ')
+        )
+            ->leftjoin('inventario', 'inventario.id', '=', 'gastosMantenimiento.inventarioId')
+            ->leftjoin('marca', 'marca.id', '=', 'inventario.marcaId')
+            ->leftjoin('manoDeObra', 'manoDeObra.id', '=', 'gastosMantenimiento.manoObraId')
+            ->where('mantenimientoId', '=', $id)->get();
+
+        $fotos = mantenimientoImagen::where('mantenimientoId', $id)->get()->toArray();
+
+        $maquinaria = maquinaria::select(
+            'maquinaria.*',
+            'marca.nombre as marca'
+        )->leftjoin('marca', 'marca.id', 'maquinaria.marcaId')->where('maquinaria.id', '=', $mantenimiento->maquinariaId)->first();
+
+        $vctTipos = tipoMantenimiento::select('tipoMantenimiento.*')->orderBy('tipoMantenimiento.nombre', 'asc')->get();
+
+        $vctCoordinadores = personal::getPersonalPorNivel(3);
+        $vctMecanicos = personal::getPersonalPorNivel(4);
+        $vctResponsables = personal::getPersonalPorNivel(5, true);
+        $totalManoObra = $gastos->whereNotNull('manoObraId')->count();
+        $totalMateriales = $gastos->whereNotNull('inventarioId')->count();
+        $gastosCount = count($gastos);
+
+        $totalCostoManoObra = 0;
+        $totalCostoMateriales = 0;
+        $totalImporteManoObra = 0;
+        $totalImporteMateriales = 0;
+
+        foreach ($gastos as $gasto) {
+            // Sumar el costo si manoObraId no es nulo
+            if (!is_null($gasto->manoObraId)) {
+                $totalCostoManoObra += $gasto->costo;
+                $totalImporteManoObra += $gasto->total;
+            }
+
+            // Sumar el costo si inventarioId no es nulo
+            if (!is_null($gasto->inventarioId)) {
+                $totalCostoMateriales += $gasto->costo;
+                $totalImporteMateriales += $gasto->total;
+            }
+        }
+
+        // dd(
+        //     $totalCostoManoObra,
+        //     $totalImporteManoObra,
+        //     $totalCostoMateriales,
+        //     $totalImporteMateriales,
+        //     $totalManoObra,
+        //     $totalMateriales,
+        //     $gastosCount,
+        //     $mantenimiento,
+        //     $gastos,
+        //     $vctTipos,
+        //     $fotos,
+        //     $maquinaria,
+        //     $vctMecanicos,
+        //     $vctCoordinadores,
+        //     $vctResponsables
+        // );
+
+        if ($gastosCount > 20) {
+            return view('mantenimientos.vistaPreviaImpresionDesborde', compact(
+                'totalCostoManoObra',
+                'totalImporteManoObra',
+                'totalCostoMateriales',
+                'totalImporteMateriales',
+                'totalManoObra',
+                'totalMateriales',
+                'mecanico',
+                'mantenimiento',
+                'gastos',
+                'vctTipos',
+                'fotos',
+                'maquinaria',
+                'vctMecanicos',
+                'vctCoordinadores',
+                'vctResponsables'
+            ));
+        } else {
+            return view('mantenimientos.vistaPreviaImpresion', compact('mecanico', 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctResponsables'));
+        }
     }
 
 
