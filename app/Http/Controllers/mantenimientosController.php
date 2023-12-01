@@ -19,6 +19,8 @@ use App\Models\tipoMantenimiento;
 use App\Models\inventario;
 use App\Models\inventarioMovimientos;
 use App\Models\personal;
+use App\Models\residente;
+use App\Models\calendarioMtq;
 
 class mantenimientosController extends Controller {
     /**
@@ -43,8 +45,8 @@ class mantenimientosController extends Controller {
         )
         ->join( 'estados', 'estados.id', '=', 'mantenimientos.estadoId' )
         ->join( 'maquinaria', 'maquinaria.id', '=', 'mantenimientos.maquinariaId' )
-        ->join( 'tipoMantenimiento', 'tipoMantenimiento.id', '=', 'mantenimientos.tipoMantenimientoId' );
-        // ->where( 'mantenimientos.fechaInicio', '>=', $dteMesInicio )
+        ->join( 'tipoMantenimiento', 'tipoMantenimiento.id', '=', 'mantenimientos.tipoMantenimientoId' )
+        ->where( 'maquinaria.compania', null );
         // ->where( 'mantenimientos.fechaInicio', '<=', $dteMesFin )
 
         if ( $estatus !== '0' ) {
@@ -53,8 +55,38 @@ class mantenimientosController extends Controller {
 
         $vctMantenimientos = $vctMantenimientos->orderBy( 'estados.id', 'asc' )
         ->orderBy( 'mantenimientos.fechaInicio', 'desc' )->paginate( 10 );
+        $blnEsMtq = false;
 
-        return view( 'mantenimientos.mantenimientos', compact( 'vctMantenimientos' ) );
+        return view( 'mantenimientos.mantenimientos', compact( 'vctMantenimientos', 'blnEsMtq' ) );
+    }
+
+    public function indexMtq( Request $request ) {
+
+        abort_if ( Gate::denies( 'mantenimiento_index' ), '404' );
+
+        $estatus = $request->input( 'estatus', '0' );
+
+        //** mantenimientos del mes seleccionado */
+        $vctMantenimientos = mantenimientos::select(
+            'mantenimientos.*',
+            DB::raw( 'estados.nombre AS estado' ),
+            DB::raw( 'tipoMantenimiento.nombre AS tipoMantenimiento' ),
+            DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ),
+            DB::raw( 'maquinaria.identificador AS maquinariaCodigo' )
+        )
+        ->join( 'estados', 'estados.id', '=', 'mantenimientos.estadoId' )
+        ->join( 'maquinaria', 'maquinaria.id', '=', 'mantenimientos.maquinariaId' )
+        ->join( 'tipoMantenimiento', 'tipoMantenimiento.id', '=', 'mantenimientos.tipoMantenimientoId' )
+        ->where( 'maquinaria.compania', '=', 'mtq' );
+
+        if ( $estatus !== '0' ) {
+            $vctMantenimientos = $vctMantenimientos->where( 'mantenimientos.estadoId', $estatus );
+        }
+
+        $vctMantenimientos = $vctMantenimientos->orderBy( 'estados.id', 'asc' )
+        ->orderBy( 'mantenimientos.fechaInicio', 'desc' )->paginate( 10 );
+        $blnEsMtq = true;
+        return view( 'mantenimientos.mantenimientos', compact( 'vctMantenimientos', 'blnEsMtq' ) );
     }
 
     /**
@@ -175,6 +207,7 @@ class mantenimientosController extends Controller {
         abort_if ( Gate::denies( 'mantenimiento_edit' ), '404' );
 
         $mantenimiento = mantenimientos::select( 'mantenimientos.*',
+        'maquinaria.compania',
         DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ), )
         ->join( 'maquinaria', 'maquinaria.id', '=', 'mantenimientos.maquinariaId' )
         ->where( 'mantenimientos.id', '=', $id )->first();
@@ -200,10 +233,11 @@ class mantenimientosController extends Controller {
         $vctCoordinadores = personal::getPersonalPorNivel( 3 );
         $vctMecanicos = personal::getPersonalPorNivel( 4 );
         $vctResponsables = personal::getPersonalPorNivel( 5, true );
+        $vctResidentes = residente::all()->sortBy( 'nombre' );
 
-        // dd( $gastos, $mantenimiento, $maquinaria, $vctMecanicos );
+        // dd( $gastos, $mantenimiento, $maquinaria, $vctMecanicos, $vctResidentes );
 
-        return view( 'mantenimientos.editarMantenimiento', compact( 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctResponsables' ) );
+        return view( 'mantenimientos.editarMantenimiento', compact( 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctResponsables', 'vctResidentes' ) );
     }
 
     /**
@@ -215,8 +249,6 @@ class mantenimientosController extends Controller {
 
     public function update( Request $request ) {
 
-        // dd( $request );
-
         abort_if ( Gate::denies( 'mantenimiento_edit' ), '404' );
 
         if ( $request[ 'guardar' ] != 0 ) {
@@ -227,7 +259,7 @@ class mantenimientosController extends Controller {
                 'titulo' => 'required|max:250',
                 'maquinariaId' => 'required',
                 'tipoMantenimientoId' => 'required',
-                // 'comentario' => 'required|max:500',
+                'total' => 'required|numeric|min:1',
                 'fechaInicio' => 'required|date|date_format:Y-m-d',
 
             ], [
@@ -235,7 +267,7 @@ class mantenimientosController extends Controller {
                 'titulo.max' => 'El campo título excede el límite de caracteres permitidos.',
                 'tipoMantenimientoId.required' => 'El campo tipo de mantenimiento es obligatorio.',
                 'maquinariaId.required' => 'El campo maquinaria es obligatorio.',
-                // 'comentario.max' => 'El campo comentarios excede el límite de caracteres permitidos.',
+                'total.min' => 'Se necesita que registre al menos un concepto.',
                 'fechaInicio' => 'El campo de fecha de inicio del mantenimiento es obligatorio',
                 'fechaInicio.date_format' => 'El campo fecha de nacimiento tiene un formato inválido.',
             ] );
@@ -446,6 +478,16 @@ class mantenimientosController extends Controller {
                         }
                     }
 
+                    //*** verificamos si el mantenimiento tiene un evento registrado */
+                    $objEvento = ( $request[ 'compania' ] == 'mtq'? calendarioMtq::where( 'mantenimientoId', '=', $mantto->id )->first() : calendarioPrincipal::where( 'mantenimientoId', '=', $mantto->id )->first() ) ;
+
+                    if ( $objEvento ) {
+                        $objEvento->estatus = 2;
+                        $objEvento->end = date( 'Y-m-d H:i:00.000' );
+
+                        $objEvento->save();
+                    }
+
                 }
 
                 // dd( 'calculo de todo el gasto de Mantenimiento',  $objGasto );
@@ -453,7 +495,8 @@ class mantenimientosController extends Controller {
                 Session::flash( 'message', 1 );
             }
         }
-        return redirect()->route( 'mantenimientos.index' );
+
+        return ( $request[ 'compania' ] == 'mtq'? redirect()->route( 'mantenimientos.indexMtq' ): redirect()->route( 'mantenimientos.index' ) );
     }
 
     /**

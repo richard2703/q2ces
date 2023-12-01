@@ -20,7 +20,8 @@
                             <div class="card">
 
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Editar {{ $mantenimiento->titulo }}</h4>
+                                    <h4 class="card-title">Editar {{ $mantenimiento->compania == 'mtq' ? 'MTQ' : '' }}
+                                        {{ $mantenimiento->titulo }}</h4>
                                 </div>
 
                                 <div class="col-12 col-md-2 mt-4" style="margin-left:20px">
@@ -36,7 +37,7 @@
                                 <div class="d-flex p-3 divBorder w-100" style="margin-top:-10px"></div>
                                 <div class="card-body ">
 
-                                    <form class="row alertaGuardar"
+                                    <form class="row alertaGuardar" id="formulario"
                                         action="{{ route('mantenimientos.update', $mantenimiento->id) }}" method="post"
                                         enctype="multipart/form-data">
                                         @csrf
@@ -46,6 +47,8 @@
                                             value="{{ $maquinaria->identificador }}">
                                         <input type="hidden" name="titulo" id="titulo"
                                             value="{{ $mantenimiento->titulo }}">
+                                        <input type="hidden" name="compania" id="compania"
+                                            value="{{ $mantenimiento->compania == 'mtq' ? 'mtq' : 'q2ces' }}">
 
                                         <div class="col-12 my-4">
                                             <div class="row">
@@ -54,6 +57,9 @@
 
                                                 <input type="hidden" name="maquinariaId" id="maquinariaId"
                                                     value="{{ $mantenimiento->maquinariaId }}">
+
+                                                <input type="hidden" name="residenteId" id="residenteId"
+                                                    value="{{ $mantenimiento->residenteId }}">
 
                                                 <input type="hidden" name="personalId" id="personalId"
                                                     value="{{ $mantenimiento->personalId }}">
@@ -123,9 +129,9 @@
                                                 <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
 
                                                     <label class="labelTitulo">Uso de la Maquinaría: </label></br>
-                                                    <input type="number" class="inputCaja text-end" placeholder="Ej. 1000"
-                                                        value="{{ $mantenimiento->usoKom }}" step="1" min="0"
-                                                        id="usoKom"
+                                                    <input type="number" class="inputCaja text-end"
+                                                        placeholder="Ej. 1000" value="{{ $mantenimiento->usoKom }}"
+                                                        step="1" min="0" id="usoKom"
                                                         {{ $mantenimiento->estadoId < 3 ? '' : 'disabled="false"' }}
                                                         name="usoKom">
                                                 </div>
@@ -222,12 +228,12 @@
                                                                                                             Consumibles
                                                                                                         </option>
                                                                                                         <option
-                                                                                                            value="refacciones">
-                                                                                                            Refacciones
-                                                                                                        </option>
-                                                                                                        <option
                                                                                                             value="herramientas">
                                                                                                             Herramientas
+                                                                                                        </option>
+                                                                                                        <option
+                                                                                                            value="refacciones">
+                                                                                                            Refacciones
                                                                                                         </option>
                                                                                                     </select>
                                                                                                 </div>
@@ -335,6 +341,8 @@
 
                                                                                                             @if ($mantenimiento->estadoId != 3)
                                                                                                                 <input
+                                                                                                                    onblur="sumarItems()"
+                                                                                                                    onchange="sumarItems()"
                                                                                                                     type="number"
                                                                                                                     maxlength="2"
                                                                                                                     min="1"
@@ -527,6 +535,8 @@
                                                                                                                 class="col-2 ">
                                                                                                                 @if ($mantenimiento->estadoId < 3)
                                                                                                                     <input
+                                                                                                                        onblur="sumarItems()"
+                                                                                                                        onchange="sumarItems()"
                                                                                                                         type="number"
                                                                                                                         maxlength="2"
                                                                                                                         min="1"
@@ -553,21 +563,21 @@
 
                                                                                                             <div
                                                                                                                 class="col-2 ">
-                                                                                                                    <input
-                                                                                                                        type="text"
-                                                                                                                        readonly
-                                                                                                                        required
-                                                                                                                        class="inputCaja text-end"
-                                                                                                                        id="precioUnitario"
-                                                                                                                        placeholder="Ej. 1"
-                                                                                                                        name="precioUnitario[]"
-                                                                                                                        value="$ {{ $item->costo }}">
+                                                                                                                <input
+                                                                                                                    type="text"
+                                                                                                                    readonly
+                                                                                                                    required
+                                                                                                                    class="inputCaja text-end"
+                                                                                                                    id="precioUnitario"
+                                                                                                                    placeholder="Ej. 1"
+                                                                                                                    name="precioUnitario[]"
+                                                                                                                    value="$ {{ $item->costo }}">
                                                                                                             </div>
 
                                                                                                             <div
-                                                                                                                class="col-8">
+                                                                                                                class="col-6">
                                                                                                                 <textarea rows="2" cols="80" class="form-control form-select" id="descripcion" readonly
-                                                                                                                    name="descripcion[]" value="">{{ $item->concepto . ', Código: ' . $item->numeroParte  }} </textarea>
+                                                                                                                    name="descripcion[]" value="">{{ $item->concepto . ', Código: ' . $item->numeroParte }} </textarea>
                                                                                                             </div>
 
                                                                                                             @if ($mantenimiento->estadoId < 3)
@@ -753,12 +763,21 @@
                                                 class="form-select form-select-lg mb-3 inputCaja"
                                                 aria-label="Default select example">
                                                 <option value="">Seleccione</option>
-                                                @foreach ($vctResponsables as $item)
-                                                    <option value="{{ $item->nombreCompleto }}"
-                                                        {{ $mantenimiento->responsable == $item->nombreCompleto ? ' selected' : '' }}>
-                                                        {{ $item->personal }}
-                                                    </option>
-                                                @endforeach
+                                                @if ($mantenimiento->compania == 'mtq')
+                                                    @foreach ($vctResidentes as $item)
+                                                        <option value="{{ $item->nombre . ' ' . $item->apellido }}"
+                                                            {{ $mantenimiento->responsable == $item->nombre . ' ' . $item->apellido ? ' selected' : '' }}>
+                                                            {{ $item->nombre . ' ' . $item->apellido }}
+                                                        </option>
+                                                    @endforeach
+                                                @else
+                                                    @foreach ($vctResponsables as $item)
+                                                        <option value="{{ $item->nombreCompleto }}"
+                                                            {{ $mantenimiento->responsable == $item->nombreCompleto ? ' selected' : '' }}>
+                                                            {{ $item->personal }}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
                                             </select>
                                         </div>
 
@@ -812,6 +831,40 @@
                 getValue.focus();
             }
         }
+
+        function sumarItems() {
+
+            let arrCantidad = document.getElementsByName('cantidad[]');
+            let arrValor = document.getElementsByName('costo[]');
+            let decSubtotal = 0;
+            let decIva = 0;
+            let decTotal = 0;
+
+            for (var i = 0; i < arrCantidad.length; i++) {
+                let intCantidad = parseFloat(document.getElementsByName('cantidad[]')[i].value).toFixed(2);
+                let intValor = parseFloat(document.getElementsByName('costo[]')[i].value).toFixed(2);
+                decSubtotal += intCantidad * intValor;
+                console.log(intCantidad + ' x ' + intValor + ' = ' + (intCantidad * intValor));
+            }
+
+            decIva = decSubtotal * 0.16;
+            decTotal =  decSubtotal + decIva ;
+
+            console.log('Subtotal: ' + decSubtotal);
+            console.log('Iva: ' + decIva);
+            console.log('Total: ' + decTotal);
+
+            var txtSubtotal = document.getElementById('subtotal');
+            txtSubtotal.value = parseFloat(decSubtotal).toFixed(2);
+
+            var txtIva = document.getElementById('iva');
+            txtIva.value = parseFloat(decIva).toFixed(2);
+
+            var txtTotal = document.getElementById('total');
+            txtTotal.value = parseFloat(decTotal).toFixed(2);
+
+        }
+
 
         var curso = ['html', 'hola', 'hi'];
 
@@ -934,10 +987,13 @@
             html += '      <input type="hidden" name="concepto[]" id="concepto" value="' + concepto + '">';
             html += '      <input type="hidden" name="numeroParte[]" id="numeroParte" value="' + numparte + '">';
             html += '      <div class="col-2 ">';
-            html += '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="">';
+            html +=
+                '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="" onchange="sumarItems()" onblur="sumarItems()">';
             html += '      </div>';
             html += '      <div class="col-2 ">';
-            html += '           <input type="text" class="inputCaja text-end" id="precioUnitario" placeholder="Ej. 1" name="precioUnitario[]" value="$ ' + costo + '">';
+            html +=
+                '           <input type="text" class="inputCaja text-end" id="precioUnitario" placeholder="Ej. 1" name="precioUnitario[]" value="$ ' +
+                costo + '">';
             html += '      </div>';
             html += '      <div class="col-6">';
             html +=
@@ -957,6 +1013,7 @@
         // borrar registro
         $(document).on('click', '#removeRow', function() {
             $(this).closest('#inputFormRow').remove();
+            sumarItems();
         });
     </script>
 
@@ -973,10 +1030,13 @@
             html += '      <input type="hidden" name="concepto[]" id="concepto" value="' + concepto + '">';
             html += '      <input type="hidden" name="numeroParte[]" id="numeroParte" value="' + numparte + '">';
             html += '      <div class="col-2 ">';
-            html += '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="1" >';
+            html +=
+                '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="" onchange="sumarItems()" onblur="sumarItems()" >';
             html += '      </div>';
             html += '      <div class="col-2 ">';
-            html += '           <input type="text" class="inputCaja text-end" id="precioUnitario" placeholder="Ej. 1" name="precioUnitario[]" value="$ ' + costo + '">';
+            html +=
+                '           <input type="text" class="inputCaja text-end" id="precioUnitario" placeholder="Ej. 1" name="precioUnitario[]" value="$ ' +
+                costo + '">';
             html += '      </div>';
 
             html += '      <div class="col-6">';
@@ -997,6 +1057,7 @@
         // borrar registro
         $(document).on('click', '#removeRowMano', function() {
             $(this).closest('#inputFormRowMano').remove();
+            sumarItems();
         });
     </script>
 

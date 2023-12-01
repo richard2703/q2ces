@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\DB;
 use App\Models\serviciosMtq;
 use App\Models\maquinaria;
 use App\Models\marca;
+use App\Models\tipoMantenimiento;
+use App\Models\mantenimientos;
+use App\Models\personal;
+use App\Models\residente;
 use Illuminate\Support\Facades\Auth;
 
 class calendarioMtqController extends Controller
@@ -24,11 +28,13 @@ class calendarioMtqController extends Controller
     {
         abort_if(Gate::denies('calendario_mtq_index'), 403);
         //$eventos = calendarioMtq::all();
-        $servicios = serviciosMtq::all();
-        $marca = marca::all();
+        $servicios = tipoMantenimiento::all()->sortBy('nombre');
+        $marca = marca::all()->sortBy('nombre');
+        // $personal = personal::all()->sortBy('nombres');
+        $personal = residente::all()->sortBy('nombre');
         $eventos = calendarioMtq::join('maquinaria', "maquinaria.id", "mtqEventos.maquinariaId")
             ->join('marca', 'marca.id', 'maquinaria.marcaId')
-            ->join('serviciosMtq', 'serviciosMtq.id', 'mtqEventos.mantenimientoId')
+            ->join('mantenimientos', 'mantenimientos.id', 'mtqEventos.mantenimientoId')
             ->select(
                 'mtqEventos.id',
                 'mtqEventos.title',
@@ -44,14 +50,15 @@ class calendarioMtqController extends Controller
                 'maquinaria.identificador as numeconomico',
                 'maquinaria.placas',
                 'maquinaria.marcaId',
-                'serviciosMtq.nombre as nombreServicio',
-                'marca.nombre as nombre_marca'
+                'mantenimientos.titulo as nombreServicio',
+                'marca.nombre as nombre_marca',
+                'mantenimientos.tipoMantenimientoId'
                 // 'maquinaria.id as idDoc'
             )
             ->get();
         $eventosJson = $eventos->toJson();
         // dd($eventos);
-        return view('MTQ.calendario', compact('eventosJson', 'servicios', 'marca'));
+        return view('MTQ.calendario', compact('eventosJson', 'servicios', 'marca','personal'));
     }
 
     /**
@@ -71,9 +78,20 @@ class calendarioMtqController extends Controller
      */
     public function store(Request $request)
     {
-        // dd('GHP', $request);
         abort_if(Gate::denies('calendario_mtq_create'), 404);
+
+        $mantenimiento = $request->all();
+
+        $mantenimiento['fechaInicio'] =  $request['fecha'];
+        $mantenimiento['codigo'] =  $request['numeconomico'];
+        $mantenimiento['titulo'] = "Mantenimiento [" . $request['placas']. "] " . $request['nombre'];
+
+        // dd(  $mantenimiento);
+
+        $nuevoMantenimiento = mantenimientos::create($mantenimiento);
+
         $events = $request->all();
+        $events['mantenimientoId'] = $nuevoMantenimiento->id;
         $events['start'] = strtoupper($events['fecha'] . ' ' . $events['hora']);
         $events['title'] = strtoupper($events['placas'] . ' ' . $events['nombre'] . ' ' . $events['marca'] . ' ' . $events['numeconomico'] . ' ' . $events['descripcion']);
         // dd($events);

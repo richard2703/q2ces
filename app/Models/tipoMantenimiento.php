@@ -10,12 +10,13 @@ class tipoMantenimiento extends Model
     use HasFactory;
     protected $table = "tipoMantenimiento";
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'nombre',
         'codigo',
         'comentario',
-        'color'
+        'color',
+        'activo'
     ];
 }

@@ -29,10 +29,10 @@ class tareaController extends Controller {
         abort_if ( Gate::denies( 'tarea_index' ), 403 );
         $estatus = $request->input('estatus', '0');
 
-        $vctCategorias = tareaCategoria::all();
-        $vctTipos = tareaTipo::all();
-        $vctUbicaciones = tareaUbicacion::all();
-        $vctTipoValor = tipoValorTarea::all();
+        $vctCategorias = tareaCategoria::all()->sortBy('nombre');
+        $vctTipos = tareaTipo::all()->sortBy('nombre');
+        $vctUbicaciones = tareaUbicacion::all()->sortBy('nombre');
+        $vctTipoValor = tipoValorTarea::all()->sortBy('nombre');
 
         $vctTareas = tarea::select(
             'tarea.*',
@@ -73,10 +73,10 @@ class tareaController extends Controller {
 
         abort_if ( Gate::denies( 'tarea_create' ), 403 );
 
-        $vctCategorias = tareaCategoria::all();
-        $vctTipos = tareaTipo::all();
-        $vctUbicaciones = tareaUbicacion::all();
-        $vctTipoValor = tipoValorTarea::all();
+        $vctCategorias = tareaCategoria::all()->sortBy('nombre');
+        $vctTipos = tareaTipo::all()->sortBy('nombre');
+        $vctUbicaciones = tareaUbicacion::all()->sortBy('nombre');
+        $vctTipoValor = tipoValorTarea::all()->sortBy('nombre');
 
         return view( 'tareas.nuevaTarea', compact( 'vctCategorias', 'vctTipos', 'vctUbicaciones', 'vctTipoValor' ) );
     }
@@ -133,10 +133,10 @@ class tareaController extends Controller {
         abort_if ( Gate::denies( 'tarea_edit' ), 403 );
 
         $tarea =  tarea::where( 'id', '=', $id )->first();
-        $vctCategorias = tareaCategoria::all();
-        $vctTipos = tareaTipo::all();
-        $vctUbicaciones = tareaUbicacion::all();
-        $vctTipoValor = tipoValorTarea::all();
+        $vctCategorias = tareaCategoria::all()->sortBy('nombre');
+        $vctTipos = tareaTipo::all()->sortBy('nombre');
+        $vctUbicaciones = tareaUbicacion::all()->sortBy('nombre');
+        $vctTipoValor = tipoValorTarea::all()->sortBy('nombre');
 
         // dd( $tarea );
         return view( 'tareas.editarTarea', compact( 'tarea',  'vctCategorias', 'vctTipos', 'vctUbicaciones', 'vctTipoValor' ) );

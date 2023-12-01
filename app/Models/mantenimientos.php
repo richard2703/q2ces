@@ -18,6 +18,7 @@ class mantenimientos extends Model
         'codigo',
         'maquinariaId',
         'personalId',
+        'residenteId',
         'comentario',
         'fechaInicio',
         'fechaReal',
