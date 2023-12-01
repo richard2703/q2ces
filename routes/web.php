@@ -552,4 +552,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Crud facturaProvedor
     Route::resource('facturaProvedor', App\Http\Controllers\facturaProvedorController::class);
+
+    // Crud documentoSelladoMantenimiento
+    Route::resource('documentoSelladoMantenimiento', App\Http\Controllers\documentoSelladoMantenimientoController::class);
 });
