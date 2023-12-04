@@ -89,18 +89,18 @@
                                                             </a>
                                                         @endcan
                                                     @else
-                                                        {{--  @can('cajachica_create')
+                                                        @can('cajachica_create')
                                                             <form action="{{ route('serviciosTrasporte.impresion') }}"
                                                                 method="post">
                                                                 @csrf
                                                                 <input type="hidden" name="quincena" value={{ $quincena }}>
                                                                 <input type="hidden" name="hoy" value={{ $hoy }}>
-              
+
 
                                                                 <button type="submit" class="btn regresar"
                                                                     style="margin-right: 5px;">Imprimir</button>
                                                             </form>
-                                                        @endcan  --}}
+                                                        @endcan
                                                     @endif
                                                 </div>
                                             </div>
