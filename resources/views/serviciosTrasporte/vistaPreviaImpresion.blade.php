@@ -63,22 +63,22 @@
                                                 style="margin-right: 15px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">
                                                 Período: </div>
                                         </th>
-                                        <th class="labelTitulo text-center" style="height: 35px; width: 150px;">
+                                        <th class="labelTitulo text-center" style="height: 35px; width: 170px;">
                                             <div class="d-flex justify-content-center align-items-center"
                                                 style="margin-right: 15px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">
                                                 Pendientes </div>
                                         </th>
-                                        <th class="labelTitulo text-center" style="height: 35px; width: 150px;">
+                                        <th class="labelTitulo text-center" style="height: 35px; width: 170px;">
                                             <div class="d-flex justify-content-center align-items-center"
                                                 style="margin-right: 15px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">
                                                 Pendientes $ </div>
                                         </th>
-                                        <th class="labelTitulo text-center" style="height: 35px; width: 150px;">
+                                        <th class="labelTitulo text-center" style="height: 35px; width: 170px;">
                                             <div class="d-flex justify-content-center align-items-center"
                                                 style="margin-right: 15px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">
                                                 Facturadas </div>
                                         </th>
-                                        <th class="labelTitulo text-center" style="height: 35px; width: 150px;">
+                                        <th class="labelTitulo text-center" style="height: 35px; width: 170px;">
 
                                             <div class="d-flex justify-content-center align-items-center"
                                                 style="margin-right: 5px !important; font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">
@@ -88,11 +88,12 @@
                                     </thead>
 
                                     <tbody>
+
                                         <tr>
                                             <td style="color: #5c7c26; font-weight: bold">
                                                 <div style="margin-right: 15px !important;border-radius: 1em; border-color: black;
-                                            border-width: 1px;
-                                            border-style: solid; height: 25px; font-size:10px"
+                                                    border-width: 1px;
+                                                    border-style: solid; height: 25px; font-size:10px"
                                                     class="d-flex justify-content-center align-items-center">
                                                     {{ \Carbon\Carbon::parse($quincena)->locale('es')->isoFormat('dddd D MMMM') }}
                                                     al
@@ -102,34 +103,35 @@
                                             <td style="color: #7f7f7f; font-weight: bold">
 
                                                 <div style="margin-right: 15px !important;border-radius: 1em; border-color: black;
-                                                border-width: 1px; font-size: 12px !important;
-                                                border-style: solid; height: 25px;"
+                                                        border-width: 1px; font-size: 12px !important;
+                                                        border-style: solid; height: 25px;"
                                                     class="d-flex justify-content-center align-items-center">
                                                     ${{ $totalPendientes }}</div>
 
                                             </td>
                                             <td style="color: #198754; font-weight: bold">
                                                 <div style="margin-right: 15px !important;border-radius: 1em; border-color: black; font-size: 12px !important;
-                                            border-width: 1px;
-                                            border-style: solid; height: 25px;"
+                                                    border-width: 1px;
+                                                    border-style: solid; height: 25px;"
                                                     class="d-flex justify-content-center align-items-center">
                                                     ${{ $sumaPendientes }}</div>
                                             </td>
                                             <td style="color: #dc3545; font-weight: bold">
                                                 <div style="margin-right: 15px !important;border-radius: 1em; border-color: black; font-size: 12px !important;
-                                            border-width: 1px;
-                                            border-style: solid; height: 25px;"
+                                                    border-width: 1px;
+                                                    border-style: solid; height: 25px;"
                                                     class="d-flex justify-content-center align-items-center">
                                                     ${{ $totalPagados }}</div>
                                             </td>
                                             <td style="color: #657c26; font-weight: bold">
                                                 <div style="margin-right: 5px !important; border-radius: 1em; border-color: black; font-size: 12px !important;
-                                                border-width: 1px;
-                                                border-style: solid; height: 25px;"
+                                                        border-width: 1px;
+                                                        border-style: solid; height: 25px;"
                                                     class="d-flex justify-content-center align-items-center">
                                                     ${{ $sumaPagados }}</div>
                                             </td>
                                         </tr>
+
                                     </tbody>
                                 </table>
 
@@ -138,9 +140,14 @@
                                         <th class="labelTitulo text-center" style="height: 25px;">
                                             <div class="d-flex justify-content-center align-items-center"
                                                 style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
-                                                Día </div>
+                                                Folio </div>
                                         </th>
-                                        <th class="labelTitulo text-center" style="height: 25px; width: 200px;">
+                                        <th class="labelTitulo text-center" style="height: 25px; width: 175px;">
+                                            <div class="d-flex justify-content-center align-items-center"
+                                                style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
+                                                Dia </div>
+                                        </th>
+                                        <th class="labelTitulo text-center" style="height: 25px;">
                                             <div class="d-flex justify-content-center align-items-center"
                                                 style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
                                                 Concepto </div>
@@ -148,81 +155,32 @@
                                         <th class="labelTitulo text-center" style="height: 25px;">
                                             <div class="d-flex justify-content-center align-items-center"
                                                 style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
-                                                Nota </div>
+                                                obra </div>
                                         </th>
                                         <th class="labelTitulo text-center" style="height: 25px;">
-                                            <div class="d-flex justify-content-center align-items-center"
-                                                style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
-                                                Cliente </div>
-                                        </th>
-                                        <th class="labelTitulo text-center" style="height: 25px;">
-                                            <div class="d-flex justify-content-center align-items-center"
-                                                style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
-                                                Obra </div>
-                                        </th>
-                                        <th class="labelTitulo text-center" style=" height: 25px;">
                                             <div class="d-flex justify-content-center align-items-center"
                                                 style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
                                                 Equipo </div>
                                         </th>
-                                        <th class="labelTitulo text-center" style="height: 25px; width: 150px;">
+                                        <th class="labelTitulo text-center" style=" height: 25px; width: 175px;">
                                             <div class="d-flex justify-content-center align-items-center"
                                                 style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
                                                 Personal </div>
                                         </th>
-                                        <th class="labelTitulo text-center" style=" height: 25px; width: 150px;">
+                                        <th class="labelTitulo text-center" style="height: 25px; width: 125px;">
                                             <div class="d-flex justify-content-center align-items-center"
                                                 style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
-                                                Cantidad </div>
+                                                Gasto </div>
                                         </th>
-                                    </thead>
-                                </table>
-
-                                {{--  <table class="mt-3">
-                                    <thead class="labelTitulo">
-                                        <th class="labelTitulo text-center" style="height: 25px;">
+                                        <th class="labelTitulo text-center" style=" height: 25px; width: 125px;">
                                             <div class="d-flex justify-content-center align-items-center"
                                                 style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
-                                                Día </div>
-                                        </th>
-                                        <th class="labelTitulo text-center" style="height: 25px; width: 200px;">
-                                            <div class="d-flex justify-content-center align-items-center"
-                                                style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
-                                                Concepto </div>
-                                        </th>
-                                        <th class="labelTitulo text-center" style="height: 25px;">
-                                            <div class="d-flex justify-content-center align-items-center"
-                                                style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
-                                                Nota </div>
-                                        </th>
-                                        <th class="labelTitulo text-center" style="height: 25px;">
-                                            <div class="d-flex justify-content-center align-items-center"
-                                                style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
-                                                Cliente </div>
-                                        </th>
-                                        <th class="labelTitulo text-center" style="height: 25px;">
-                                            <div class="d-flex justify-content-center align-items-center"
-                                                style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
-                                                Obra </div>
-                                        </th>
-                                        <th class="labelTitulo text-center" style=" height: 25px;">
-                                            <div class="d-flex justify-content-center align-items-center"
-                                                style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
-                                                Equipo </div>
-                                        </th>
-                                        <th class="labelTitulo text-center" style="height: 25px; width: 150px;">
-                                            <div class="d-flex justify-content-center align-items-center"
-                                                style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
-                                                Personal </div>
-                                        </th>
-                                        <th class="labelTitulo text-center" style=" height: 25px; width: 150px;">
-                                            <div class="d-flex justify-content-center align-items-center"
-                                                style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
-                                                Cantidad </div>
+                                                Cobro </div>
                                         </th>
                                     </thead>
 
                                     <tbody>
+
                                         @php
                                             $totalRegistros = count($registros) - 1;
                                         @endphp
@@ -238,7 +196,25 @@
                                                 </style>
                                             @endif
 
-                                            @if ($key == 21 || $key == 44 || $key == 67 || $key == 90 || $key == 113 || $key == 136 || $key == 159 || $key == 182 || $key == 205 || $key == 228 || $key == 251 || $key == 274 || $key == 297 || $key == 320 || $key == 343 || $key == 366 || $key == 389 || $key == 412)
+                                            @if (
+                                                $key == 21 ||
+                                                    $key == 44 ||
+                                                    $key == 67 ||
+                                                    $key == 90 ||
+                                                    $key == 113 ||
+                                                    $key == 136 ||
+                                                    $key == 159 ||
+                                                    $key == 182 ||
+                                                    $key == 205 ||
+                                                    $key == 228 ||
+                                                    $key == 251 ||
+                                                    $key == 274 ||
+                                                    $key == 297 ||
+                                                    $key == 320 ||
+                                                    $key == 343 ||
+                                                    $key == 366 ||
+                                                    $key == 389 ||
+                                                    $key == 412)
                                     </tbody>
                                 </table>
                                 <div class="page mt-1"
@@ -247,15 +223,38 @@
                                 <br><br><br><br>
                                 <br>
                                 @endif
-                                @if ($key == 21 || $key == 44 || $key == 67 || $key == 90 || $key == 113 || $key == 136 || $key == 159 || $key == 182 || $key == 205 || $key == 228 || $key == 251 || $key == 274 || $key == 297 || $key == 320 || $key == 343 || $key == 366 || $key == 389 || $key == 412)
-                                    <table class="mt-3">
+                                @if (
+                                    $key == 21 ||
+                                        $key == 44 ||
+                                        $key == 67 ||
+                                        $key == 90 ||
+                                        $key == 113 ||
+                                        $key == 136 ||
+                                        $key == 159 ||
+                                        $key == 182 ||
+                                        $key == 205 ||
+                                        $key == 228 ||
+                                        $key == 251 ||
+                                        $key == 274 ||
+                                        $key == 297 ||
+                                        $key == 320 ||
+                                        $key == 343 ||
+                                        $key == 366 ||
+                                        $key == 389 ||
+                                        $key == 412)
+                                    <table class="">
                                         <thead class="labelTitulo">
                                             <th class="labelTitulo text-center" style="height: 25px;">
                                                 <div class="d-flex justify-content-center align-items-center"
                                                     style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
-                                                    Día</div>
+                                                    Folio </div>
                                             </th>
-                                            <th class="labelTitulo text-center" style="height: 25px; width: 200px;">
+                                            <th class="labelTitulo text-center" style="height: 25px; width: 175px;">
+                                                <div class="d-flex justify-content-center align-items-center"
+                                                    style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
+                                                    Dia </div>
+                                            </th>
+                                            <th class="labelTitulo text-center" style="height: 25px;">
                                                 <div class="d-flex justify-content-center align-items-center"
                                                     style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
                                                     Concepto </div>
@@ -263,191 +262,106 @@
                                             <th class="labelTitulo text-center" style="height: 25px;">
                                                 <div class="d-flex justify-content-center align-items-center"
                                                     style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
-                                                    Nota </div>
+                                                    obra </div>
                                             </th>
                                             <th class="labelTitulo text-center" style="height: 25px;">
-                                                <div class="d-flex justify-content-center align-items-center"
-                                                    style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
-                                                    Cliente </div>
-                                            </th>
-                                            <th class="labelTitulo text-center" style="height: 25px;">
-                                                <div class="d-flex justify-content-center align-items-center"
-                                                    style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
-                                                    Obra </div>
-                                            </th>
-                                            <th class="labelTitulo text-center" style=" height: 25px;">
                                                 <div class="d-flex justify-content-center align-items-center"
                                                     style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
                                                     Equipo </div>
                                             </th>
-                                            <th class="labelTitulo text-center" style="height: 25px; width: 150px;">
+                                            <th class="labelTitulo text-center" style=" height: 25px; width: 175px;">
                                                 <div class="d-flex justify-content-center align-items-center"
                                                     style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
                                                     Personal </div>
                                             </th>
-                                            <th class="labelTitulo text-center" style=" height: 25px; width: 150px;">
+                                            <th class="labelTitulo text-center" style="height: 25px; width: 125px;">
                                                 <div class="d-flex justify-content-center align-items-center"
                                                     style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
-                                                    Cantidad </div>
+                                                    Gasto </div>
                                             </th>
-
+                                            <th class="labelTitulo text-center" style=" height: 25px; width: 125px;">
+                                                <div class="d-flex justify-content-center align-items-center"
+                                                    style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 25px;">
+                                                    Cobro </div>
+                                            </th>
                                         </thead>
 
                                         <tbody>
                                 @endif
                                 <tr>
                                     <td style="">
-                                        @if ($registro->dia)
-                                            <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
-                                                border-width: 1px;
-                                                border-style: solid; height: 31px; margin-top: 3px"
-                                                class="d-flex justify-content-center align-items-center">
-                                                {{ \Carbon\Carbon::parse($registro->dia)->locale('es')->isoFormat('dddd D MMMM') }}
-                                            </div>
-                                        @else
-                                            <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
-                                                border-width: 1px;
-                                                border-style: solid; height: 31px; margin-top: 3px"
-                                                class="d-flex justify-content-center align-items-center"> - </div>
-                                        @endif
+
+                                        <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
+                                            border-width: 1px;
+                                            border-style: solid; height: 31px; margin-top: 3px"
+                                            class="d-flex justify-content-center align-items-center">
+                                            {{ $registro->id }} </div>
+
                                     </td>
                                     <td style="">
-                                        @if ($registro->cnombre)
-                                            <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
-                                                border-width: 1px;
-                                                border-style: solid; height: 31px; margin-top: 3px"
-                                                class="d-flex justify-content-center align-items-center">
-                                                {{ $registro->cnombre }}</div>
-                                        @else
-                                            <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
-                                                border-width: 1px;
-                                                border-style: solid; height: 31px; margin-top: 3px"
-                                                class="d-flex justify-content-center align-items-center"> - </div>
-                                        @endif
+
+                                        <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
+                                            border-width: 1px;
+                                            border-style: solid; height: 31px; margin-top: 3px"
+                                            class="d-flex justify-content-center align-items-center">
+                                            {{ \Carbon\Carbon::parse($registro->fecha)->locale('es')->isoFormat('dddd D MMMM') }}
+                                        </div>
                                     </td>
                                     <td style="">
-                                        @if ($registro->comprobante && $registro->comprobante)
-                                            <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
-                                                border-width: 1px;
-                                                border-style: solid; height: 31px; margin-top: 3px"
-                                                class="d-flex justify-content-center align-items-center">
-                                                {{ $registro->comprobante ? $registro->comprobante : '---' }}
-                                                <br>
-                                                {{ $registro->ncomprobante }}
-                                            </div>
-                                        @else
-                                            <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
-                                                border-width: 1px;
-                                                border-style: solid; height: 31px; margin-top: 3px"
-                                                class="d-flex justify-content-center align-items-center"> - </div>
-                                        @endif
+
+                                        <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
+                                            border-width: 1px;
+                                            border-style: solid; height: 31px; margin-top: 3px"
+                                            class="d-flex justify-content-center align-items-center">
+                                            {{ $registro->cnombre ? $registro->cnombre : '---' }} </div>
                                     </td>
                                     <td style="">
-                                        @if ($registro->cliente)
-                                            <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
-                                                border-width: 1px;
-                                                border-style: solid; height: 31px; margin-top: 3px"
-                                                class="d-flex justify-content-center align-items-center">
-                                                {{ $registro->cliente }}</div>
-                                        @else
-                                            <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
-                                                border-width: 1px;
-                                                border-style: solid; height: 31px; margin-top: 3px"
-                                                class="d-flex justify-content-center align-items-center"> - </div>
-                                        @endif
+
+                                        <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
+                                            border-width: 1px;
+                                            border-style: solid; height: 31px; margin-top: 3px"
+                                            class="d-flex justify-content-center align-items-center">
+                                            {{ $registro->obra ? $registro->obra : '---' }} </div>
                                     </td>
                                     <td style="">
-                                        @if ($registro->obra)
-                                            <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
-                                                border-width: 1px;
-                                                border-style: solid; height: 31px; margin-top: 3px"
-                                                class="d-flex justify-content-center align-items-center">
-                                                {{ $registro->obra }}</div>
-                                        @else
-                                            <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
-                                                border-width: 1px;
-                                                border-style: solid; height: 31px; margin-top: 3px"
-                                                class="d-flex justify-content-center align-items-center"> - </div>
-                                        @endif
+
+                                        <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
+                                            border-width: 1px;
+                                            border-style: solid; height: 31px; margin-top: 3px; {{ strlen(trans($registro->maquinaria)) > 30 ? 'font-size: 7px;' : '' }}"
+                                            class="d-flex justify-content-center align-items-center">
+                                            {{ $registro->maquinaria ? $registro->maquinaria : '---' }}
+                                        </div>
                                     </td>
                                     <td style="">
-                                        @if ($registro->identificador && $registro->maquinaria)
-                                            <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
-                                                border-width: 1px;
-                                                border-style: solid; height: 31px; margin-top: 3px"
-                                                class="d-flex justify-content-center align-items-center">
-                                                {{ $registro->identificador }}</div>
-                                        @else
-                                            <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
-                                                border-width: 1px;
-                                                border-style: solid; height: 31px; margin-top: 3px"
-                                                class="d-flex justify-content-center align-items-center"> - </div>
-                                        @endif
+
+                                        <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
+                                            border-width: 1px;
+                                            border-style: solid; height: 31px; margin-top: 3px"
+                                            class="d-flex justify-content-center align-items-center">
+                                            {{ $registro->pnombre ? $registro->pnombre : '---' }} </div>
                                     </td>
                                     <td style="">
-                                        @if ($registro->pnombre && $registro->pnombre && $registro->papellidoP)
-                                            <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
-                                                border-width: 1px;
-                                                border-style: solid; height: 31px; margin-top: 3px"
-                                                class="d-flex justify-content-center align-items-center">
-                                                {{ $registro->pnombre ? $registro->pnombre : '---' }}
-                                                {{ $registro->papellidoP }}</div>
-                                        @else
-                                            <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
-                                                border-width: 1px;
-                                                border-style: solid; height: 31px; margin-top: 3px"
-                                                class="d-flex justify-content-center align-items-center"> - </div>
-                                        @endif
-                                    </td>
 
-                                    <td style="font-size: 12px"
-                                        class=@switch($registro->tipo)
-                                                @case(1)
-                                                    'green'
-                                                @break
-
-                                                @case(2)
-                                                    'red'
-                                                @break
-
-                                                @case(3)
-                                                    'blue'
-                                                @break
-
-                                                @default
-                                                    ''
-                                            @endswitch
-                                        title=@switch($registro->tipo)
-                                                @case(1)
-                                                    'Ingreso'
-                                                @break
-
-                                                @case(2)
-                                                    'Egreso'
-                                                @break
-
-                                                @case(3)
-                                                    'Ingreso de servicios'
-                                                @break
-
-                                                @case(4)
-                                                    'Pendiente de Cobro Y/O factura'
-                                                @break
-
-                                                @default
-                                            @endswitch>
-                                        <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
-                                                border-width: 1px;
-                                                border-style: solid; height: 31px; margin-top: 3px"
+                                        <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
+                                            border-width: 1px;
+                                            border-style: solid; height: 31px; margin-top: 3px"
                                             class="d-flex justify-content-center align-items-center">$
-                                            {{ number_format($registro->cantidad, 2) }}</div>
+                                            {{ number_format($registro->cantidad + $registro->costoMano, 2) }}
+                                        </div>
+                                    </td>
+
+                                    <td style="font-size: 12px">
+                                        <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
+                                            border-width: 1px;
+                                            border-style: solid; height: 31px; margin-top: 3px"
+                                            class="d-flex justify-content-center align-items-center">$
+                                            {{ number_format($registro->cantidad + $registro->costoMano + $registro->costoServicio, 2) }}
+
+                                        </div>
                                     </td>
                                 </tr>
 
-                            @empty  --}}
-                                <tr>
-                                    <td colspan="2">Sin Registros.</td>
-                                </tr>
+                            @empty
                                 @endforelse
                                 @php
                                     $numeroTotal = $totalRegistros;
@@ -469,17 +383,20 @@
                                 </table>
 
                             </div>
-
-                            {{--  @for ($i = 0; $i < $faltante; $i++)
-                                    <tr>
-                                        <div style="border-radius: 1em; border-color: white; color: white; margin-right: 5px !important;
-                                                border-width: 1px;
-                                                border-style: solid; height: 31px; margin-top: 3px; visibility: hidden" class="d-flex justify-content-center align-items-center"> - </div>
-                                    </tr>
-                                    @endfor
-                        @if (isset($key) && $key == $totalRegistros)
-                            <div class="page mt-1" id="ultimoNumPage" style="font-weight: 500 !important; font-size: 14px !important; border-radius: 2em; background-color: #f7c90d; color: var(--select); height: 20px; "></div>
-                        @endif  --}}
+                            @for ($i = 0; $i < $faltante; $i++)
+                                <tr>
+                                    <div style="border-radius: 1em; border-color: white; color: white; margin-right: 5px !important;
+                                            border-width: 1px;
+                                            border-style: solid; height: 31px; margin-top: 3px; visibility: hidden"
+                                        class="d-flex justify-content-center align-items-center"> - </div>
+                                </tr>
+                            @endfor
+                            @if (isset($key) && $key == $totalRegistros)
+                                {{--  <div>{{$var}}, Total:{{$numeroTotal}}Faltantes: {{$faltante}}</div>  --}}
+                                <div class="page mt-1" id="ultimoNumPage"
+                                    style="font-weight: 500 !important; font-size: 14px !important; border-radius: 2em; background-color: #f7c90d; color: var(--select); height: 20px; ">
+                                </div>
+                            @endif
                         </div>
 
                         <br>
