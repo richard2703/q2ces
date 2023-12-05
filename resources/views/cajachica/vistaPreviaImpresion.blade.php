@@ -341,7 +341,7 @@
                                                 border-style: solid; height: 31px; margin-top: 3px; visibility: hidden" class="d-flex justify-content-center align-items-center"> - </div>
                                     </tr>
                                     @endfor
-                        @if ($key == $totalRegistros)
+                        @if (isset($key) && $key == $totalRegistros)
                         {{--  <div>{{$var}}, Total:{{$numeroTotal}}Faltantes: {{$faltante}}</div>  --}}
                             <div class="page mt-1" id="ultimoNumPage" style="font-weight: 500 !important; font-size: 14px !important; border-radius: 2em; background-color: #f7c90d; color: var(--select); height: 20px; "></div>
                         @endif

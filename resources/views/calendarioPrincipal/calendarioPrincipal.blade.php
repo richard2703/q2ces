@@ -376,11 +376,11 @@
                                         <div id="labelReparacion" style="display: none; background:#5c7c26 !important; color:white">
                                             <h3 style="font-weight: bold !important;">Reparaciónes</h3>
                                         </div>
-    
+
                                         <div id="labelReparacionCombustible" style="display: none; background:#5c7c26 !important; color:white">
                                             <h3 style="font-weight: bold !important;">Combustibles</h3>
                                         </div>
-    
+
                                         <div id="labelReparacionHerramienta" style="display: none; background:#5c7c26 !important; color:white">
                                             <h3 style="font-weight: bold !important;">Herramientas</h3>
                                         </div>
@@ -574,6 +574,7 @@
                                     <input type="hidden" name="tipo" value="En Espera">
                                     <input type="hidden" name="userId" value="{{auth()->user()->id}}">
                                     <input type="hidden" name="maquinariaId" id="maquinariaId">
+                                    <input type="hidden" name="identificador" id="identificador">
                                     <input type="hidden" id="colorBoxHidden" name="color" value="">
 
                                     <div class="mb-3" role="search">
@@ -605,7 +606,7 @@
                                             <label for="title" class="labelTitulo">Marca:</label>
                                                 <select id="marca"
                                                 name="marca"
-                                                class="form-select" id="marcaSolicitud" placeholder="Marca Equipo..." readonly>
+                                                class="form-select"  placeholder="Marca Equipo..." readonly>
                                                 <option value="">Seleccione</option>
                                                 @foreach ($marca as $item)
                                                     <option value="{{ $item->id }}">
@@ -1676,7 +1677,7 @@
         $('#searchS').autocomplete({
             source: function(request, response) {
                 $.ajax({
-                    url: "{{ route('search.equipos') }}",
+                    url: "{{ route('search.equiposCalendario') }}",
                     dataType: 'json',
                     data: {
                         term: request.term,
@@ -1700,16 +1701,16 @@
                 // $('#descripcion').val(ui.item.value);
                 $('#nombre').val(ui.item.nombre);
                 $('#marca').val(ui.item.marca);
-                // $('#modelo').val(ui.item.modelo);
                 $('#numeconomico').val(ui.item.numserie);
                 $('#placas').val(ui.item.placas);
+                $('#identificador').val(ui.item.identificador);
             }
         });
 
         $('#searchMantenimientoEdit').autocomplete({
             source: function(request, response) {
                 $.ajax({
-                    url: "{{ route('search.equipos') }}",
+                    url: "{{ route('search.equiposCalendario') }}",
                     dataType: 'json',
                     data: {
                         term: request.term,
@@ -1742,7 +1743,7 @@
         $('#searchSolicitudes').autocomplete({
             source: function(request, response) {
                 $.ajax({
-                    url: "{{ route('search.equipos') }}",
+                    url: "{{ route('search.equiposCalendario') }}",
                     dataType: 'json',
                     data: {
                         term: request.term,
@@ -1774,7 +1775,7 @@
         $('#searchSEdit').autocomplete({
             source: function(request, response) {
                 $.ajax({
-                    url: "{{ route('search.equipos') }}",
+                    url: "{{ route('search.equiposCalendario') }}",
                     dataType: 'json',
                     data: {
                         term: request.term,
@@ -1806,7 +1807,7 @@
         $('#searchSEditSolicitud').autocomplete({
             source: function(request, response) {
                 $.ajax({
-                    url: "{{ route('search.equipos') }}",
+                    url: "{{ route('search.equiposCalendario') }}",
                     dataType: 'json',
                     data: {
                         term: request.term,
@@ -1956,7 +1957,7 @@
                             }else{
                                 recuperarDatosEventoSolicitud(informacion.event);
                             }
-                            
+
                         } else {
                             alertaNoPermission();
                         }
@@ -1964,7 +1965,7 @@
                     .catch(error => {
                         console.error("Error al verificar permisos:", error);
                     });
-                    
+
                 },
                 events: eventosJson,
 
@@ -2446,7 +2447,7 @@
             document.getElementById('placasEditSolicitud').value = placas;
             //document.getElementById('searchSEdit').value =  'Equipo ' . nombre . ', Marca ' . marca . ', N. ECO. ' . numeconomico . ', Placas ' .  placas;
             document.getElementById('idSolicitud').value = evento._def.publicId;
-            
+
             let labelReparacion = document.getElementById('labelReparacion');
             let labelReparacionCombustible = document.getElementById('labelReparacionCombustible');
             let labelReparacionHerramienta = document.getElementById('labelReparacionHerramienta');
@@ -2463,14 +2464,14 @@
                 if (data && data.length > 0) {
                     // Supongamos que 'data' contiene los detalles de la solicitud
                     const modalContenedor = document.getElementById('detalleSolicitud');
-            
+
                     // Construye el contenido que deseas agregar al modal
                     let contenidoModal = `<div class="text-end">
                         <h5 style="color:#5c7c26 !important; margin-top: 10px; font-weight: bold;" class="text-center">Modificar los Registros en la Solicitud</h5>
                         <button type="button" class="btnVerde"
                             onclick="${data[0].tipo == 'refaccion' ? 'crearItemsRefaccion()' : data[0].tipo == 'reparacion' ? 'crearItemsReparacion()' : data[0].tipo == 'herramienta' ? 'crearItemsHerramienta()' : data[0].tipo == 'herramienta' ? 'crearItemsHerramienta()' : 'crearItemsCombustible()'}">
                         </button>
-                        
+
                     </div>`;
                     switch (data[0].tipo) {
                         case 'reparacion':
@@ -2498,7 +2499,7 @@
                             labelReparacion.style.display = 'none';
                             break;
                     }
-                    
+
                     // Suponiendo que 'data' es una matriz de detalles
                     data.forEach(detalle => {
                         console.log('detalle.tipo',detalle);
@@ -2520,7 +2521,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            
+
                                             <div class="mb-3 col-5">
                                                 <label for="cantidad" class="labelTitulo">Cantidad:</label>
                                                 <input type="number" class="inputCaja detalleSolicitud" name="cantidadRefaccion[]" id="cantidadSolicitudRefaccion"
@@ -2529,7 +2530,7 @@
 
                                             <div class="col-1" style="margin-left: -5px;"><button type="button" id="removeRowRefaccion"
                                                 class="btnRojo"></button></div>
-                                               
+
                                             <div class="mb-3">
                                                 <label for="comentarioRefaccion" class="labelTitulo">Comentario:</label>
                                                 <textarea class="form-control-textarea border-green" name="comentarioRefaccion[]" id="comentarioRefaccion" rows="3"
@@ -2539,12 +2540,12 @@
                                 </div>
                             </div>`;
 
-                            
+
                         }
                         if(detalle.tipo == 'herramienta'){
                             contenidoModal += `<div id="herramienta_campos" class="campos-solicitud">
                                 <div class="row">
-                                    
+
                                     <div class="opcHerramienta text-start">
                                         <div class="row">
                                             <div class="line mb-2"></div>
@@ -2560,7 +2561,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            
+
                                             <div class="mb-3 col-5">
                                                 <label for="cantidad" class="labelTitulo">Cantidad:</label>
                                                 <input type="number" class="inputCaja" name="cantidadHerramienta[]" id="cantidadSolicitudHerramienta"
@@ -2569,7 +2570,7 @@
 
                                             <div class="col-1" style="margin-left: -5px;"><button type="button" id="removeRowHerramienta"
                                                 class="btnRojo"></button></div>
-                                               
+
                                             <div class="mb-3">
                                                 <label for="comentarioHerramienta" class="labelTitulo">Comentario:</label>
                                                 <textarea class="form-control-textarea border-green" name="comentarioHerramienta[]" id="comentarioHerramienta" rows="3"
@@ -2578,12 +2579,12 @@
                                     </div>
                                 </div>
                             </div>`;
-                            
+
                         }
                         if(detalle.tipo == 'reparacion'){
                             contenidoModal += `<div id="reparacion_campos" class="campos-solicitud">
                                 <div class="row">
-                                    
+
                                     <div class="opcReparacion text-start">
                                         <div class="row">
                                             <div class="line mb-2"></div>
@@ -2597,7 +2598,7 @@
 
                                             <div class="col-1" style="margin-left: -5px;"><button type="button" id="removeRowReparacion"
                                                 class="btnRojo"></button></div>
-                                               
+
                                             <div class="mb-3">
                                                 <label for="comentarioReparacion" class="labelTitulo">Comentario:</label>
                                                 <textarea class="form-control-textarea border-green" name="comentarioReparacion[]" id="comentarioReparacion" rows="3"
@@ -2611,7 +2612,7 @@
                         if(detalle.tipo == 'combustible'){
                             contenidoModal += `<div id="combustible_campos" class="campos-solicitud">
                                 <div class="row">
-                                    
+
                                     <div class="opcCombustible text-start">
                                         <div class="row">
                                             <div class="line mb-2"></div>
@@ -2633,7 +2634,7 @@
                                                 <button type="button" id="removeRowCombustible"
                                                     class="btnRojo"></button>
                                                 </div>
-                                               
+
                                             <div class="mb-3">
                                                 <label for="comentarioCombustible" class="labelTitulo">Comentario:</label>
                                                 <textarea class="form-control-textarea border-green" name="comentarioCombustible[]" id="comentarioCombustible" rows="3"
@@ -2642,9 +2643,9 @@
                                     </div>
                                 </div>
                             </div>`;
-                            
+
                         }
-                        
+
                     });
                     contenidoModal += '</div>';
                     modalContenedor.innerHTML = contenidoModal;
@@ -2671,19 +2672,19 @@
                             }
                         }
                     });
-                    
-                    
+
+
                 } else {
                     console.log('NO HAY DETALLE para esa solicitud');
                 }
-                
+
             });
             let myModalEditSolicitud = new bootstrap.Modal(document.getElementById('myModalEditSolicitud'), {
                 keyboard: false
             });
             myModalEditSolicitud.show();
         }
-        
+
         /*<div id="reparacion_campos" class="campos-solicitud" style="display: none;">
             <div class="row">
                 <div class="col-12 pb-3 text-end">
@@ -2703,10 +2704,10 @@
                             <button type="button" id="removeRowReparacion"
                             class="btnRojo"></button>
                         </div>
-                        
+
                     </div>
                 </div>
-            
+
             </div>
         </div>
 
@@ -2742,9 +2743,9 @@
                                 placeholder="Especifique..."></textarea>
                         </div>
                     </div>
-                    
+
                 </div>
-                
+
             </div>
         </div>
 
@@ -2784,9 +2785,9 @@
                                 placeholder="Especifique..."></textarea>
                         </div>
                     </div>
-                    
+
                 </div>
-                
+
             </div>
         </div>
 
@@ -2890,7 +2891,7 @@
                     vista = true;
                     campos.forEach(function(campo) {
                         if (campo.id !== 'nombreEdit' && campo.id !== 'numeconomicoEdit' && campo
-                            .id !== 'placasEdit' && campo.id !== 'marcaEdit') {
+                            .id !== 'placasEdit' && campo.id !== 'marcaEdit' && campo.id !== 'fechaSalida' && campo.id !== 'horaSalida') {
                             campo.removeAttribute('readonly');
                         }
                         if (campo.id !== 'nombreEdit' || campo.id !== 'numeconomicoEdit' || campo
@@ -3010,7 +3011,7 @@
                         campo.removeAttribute('readonly');
                         campo.style.color = 'initial';
                     });*/
-                    
+
                 } else {
                     vistaSolicitud = false;
                     editarCamposLink.innerHTML = `

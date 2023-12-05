@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'obra', 'titlePage' => __('Alta de Clientes')])
+@extends('layouts.main', ['activePage' => 'obra', 'titlePage' => __('Lista de Clientes')])
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -42,7 +42,7 @@
                                                 </button>
                                             </a>
                                         </div>
-                                        
+
                                         <div class="col-8 pb-3 text-end">
                                             @can('cliente_create')
                                                 <a href="{{ route('clientes.create') }}">

@@ -39,6 +39,8 @@ Route::prefix('catalogos')->middleware('auth')->group(function () {
 	Route::get('/proveedores', [App\Http\Controllers\catalogosController::class, 'indexCatalogoProveedor'])->name('catalogoProveedor.index');
 	Route::resource('proveedor', App\Http\Controllers\proveedorController::class);
 
+    Route::get('/proveedor/descarga/{id}/{doc}', [App\Http\Controllers\proveedorController::class, 'download'])->name('proveedor.download');
+
 	Route::get('/catalogos/proveedores/categorias', [App\Http\Controllers\catalogosController::class, 'indexCatalogoProveedorCategoria'])->name('catalogoProveedorCategoria.index');
 	Route::get('/proveedores/categorias/nuevo', [App\Http\Controllers\proveedorCategoriaController::class, 'create'])->name('proveedorCategoria.create');
 	Route::post('/proveedores/categorias', [App\Http\Controllers\proveedorCategoriaController::class, 'store'])->name('proveedorCategoria.store');

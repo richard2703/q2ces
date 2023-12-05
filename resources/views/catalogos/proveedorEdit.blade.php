@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'obras', 'titlePage' => __('Editar Cliente')])
+@extends('layouts.main', ['activePage' => 'obras', 'titlePage' => __('Editar Proveedor')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -16,7 +16,7 @@
             <div class="justify-content-center">
                 <div class="card">
                     <div class="card-header bacTituloPrincipal">
-                        <h4 class="card-title">Editar Cliente</h4>
+                        <h4 class="card-title">Editar Proveedor</h4>
                         {{-- <p class="card-category">Usuarios registrados</p> --}}
                     </div>
                     <div class="card-body">
@@ -24,7 +24,7 @@
 
                             <div class="d-flex p-3 divBorder">
                                 <div class="col-12 ">
-                                    <a href="{{ route('clientes.index') }}">
+                                    <a href="{{ route('catalogos.index') }}">
                                         <button class="btn regresar">
                                             <span class="material-icons">
                                                 reply
@@ -36,7 +36,7 @@
                             </div>
                         </div>
 
-                        <form class="alertaGuardar" action="{{ route('clientes.update', $cliente->id) }}" method="post"
+                        <form class="alertaGuardar" action="{{ route('proveedor.update', $proveedor->id) }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
                             @method('put')
@@ -44,7 +44,7 @@
                                 <div class="col-12 col-sm-4 ">
                                     <div class="text-center mx-auto border mb-4">
                                         <i><img class="imgVista img-fluid "
-                                                src="{{ $cliente->logo == '' ? '/img/general/default.jpg' : asset('/storage/clientes/' . str_pad($cliente->id, 4, '0', STR_PAD_LEFT) . '/' . $cliente->logo) }}"></i>
+                                                src="{{ $proveedor->logo == '' ? '/img/general/default.jpg' : asset('/storage/proveedores/' . str_pad($proveedor->id, 4, '0', STR_PAD_LEFT) . '/' . $proveedor->logo) }}"></i>
                                         <span class="mi-archivo"> <input class="mb-4 ver" type="file" name="logo"
                                                 id="mi-archivo" accept="image/*"></span>
                                         <label for="mi-archivo">
@@ -52,7 +52,13 @@
                                         </label>
                                     </div>
                                     <div class="text-center mx-auto border mb-4">
-
+                                        @if ($proveedor->fiscal != "")
+                                        <p class="my-3">
+                                            <a href="{{ route('proveedor.download',[$proveedor->id, 'fiscal']) }}"
+                                                class="botonSinFondo mx-2" target="blank">Descargar
+                                            </a>
+                                        </p>
+                                    @endif
                                         <span class="mi-archivo2"> <input class="mb-4 ver" type="file" name="fiscal"
                                                 id="mi-archivo2" accept="application/pdf,"></span>
                                         <label for="mi-archivo2">
@@ -66,56 +72,79 @@
                                         <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                             <label class="labelTitulo">Nombre Comercial: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="nombre" name="nombre" required
-                                                placeholder="Especifique..." value="{{ $cliente->nombre }}">
+                                                placeholder="Especifique..." value="{{ $proveedor->nombre }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Razón Social: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="rasonSocial" name="razonSocial"
-                                                required placeholder="Especifique..." value="{{ $cliente->razonSocial }}">
+                                                required placeholder="Especifique..." value="{{ $proveedor->razonSocial }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">RFC: </label></br>
                                             <input type="text" class="inputCaja" id="rfc" name="rfc"
-                                                placeholder="Especifique..." value="{{ $cliente->rfc }}">
+                                                placeholder="Especifique..." value="{{ $proveedor->rfc }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Calle: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="calle" name="calle" required
-                                                placeholder="Especifique..." value="{{ $cliente->calle }}">
+                                                placeholder="Especifique..." value="{{ $proveedor->calle }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">No. Exterior:</label></br>
                                             <input type="text" class="inputCaja" id="exterior" name="exterior" required
-                                                value="{{ $cliente->exterior }}">
+                                                value="{{ $proveedor->exterior }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">No. Interior: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="interior" name="interior"
-                                                placeholder="Especifique..." value="{{ $cliente->interior }}">
+                                                placeholder="Especifique..." value="{{ $proveedor->interior }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Código Postal:</label></br><input type="number"
                                                 maxlength="5" step="1" min="00000" max="99999"
                                                 placeholder="ej. 44100" class="inputCaja" id="cp" name="cp"
-                                                value="{{ $cliente->cp }}">
+                                                value="{{ $proveedor->cp }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Estado: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="estado" name="estado"
-                                                required placeholder="Especifique..." value="{{ $cliente->estado }}">
+                                                required placeholder="Especifique..." value="{{ $proveedor->estado }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Ciudad: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="ciudad" name="ciudad"
-                                                required placeholder="Especifique..." value="{{ $cliente->ciudad }}">
+                                                required placeholder="Especifique..." value="{{ $proveedor->ciudad }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Colonia: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="colonia" name="colonia"
-                                                required placeholder="Especifique..." value="{{ $cliente->colonia }}">
+                                                required placeholder="Especifique..." value="{{ $proveedor->colonia }}">
                                         </div>
                                     </div>
                                 </div>
+                                <div class="d-flex p-3">
+                                    <div class="col-12" id="elementos">
+                                        <div class="d-flex">
+                                            <div class="col-12 divBorder">
+                                                <h2 class="tituloEncabezado ">Categorías</h2>
+                                            </div>
+                                        </div>
+                                        <div class=" col-12 col-sm-6 mb-3 ">
+                                            <label class="labelTitulo">Categorías:</label></br>
+
+                                            @foreach ($categorias as $item)
+                                                <div class="form-check">
+                                                    <input class="form-check-input is-invalid" type="checkbox" name="categoria[]"
+                                                        value="{{ $item->id }}" id="chk{{ $item->nombre }}"
+                                                        {{ $proveedor->categorias->contains($item->id) ? 'checked' : '' }}>
+                                                    <label class="form-check-label" style="color: black;"
+                                                        for="chk{{ $item->nombre }}">{{ $item->nombre }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="d-flex p-3">
                                     <div class="col-12" id="elementos">
                                         <div class="d-flex">
@@ -128,21 +157,21 @@
                                             </div>
                                         </div>
 
-                                        @forelse ($residentes as $residente)
+                                        @forelse ($contactos as $contacto)
                                             <div class="row opcion divBorderItems" id="opc">
-                                                <input type="hidden" name="idResidente[]" value="{{ $residente->id }}">
+                                                <input type="hidden" name="idContacto[]" value="{{ $contacto->id }}">
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Nombre:</label></br>
                                                     <input type="text" class="inputCaja" id="rNombre"
                                                         placeholder="Especifique..." name="rNombre[]"
-                                                        value="{{ $residente->nombre }}">
+                                                        value="{{ $contacto->nombre }}">
                                                 </div>
 
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Correo:</label></br>
                                                     <input type="email" class="inputCaja" id="rEmail"
                                                     placeholder="ej. elcorreo@delresponsable.com" min="6" name="rEmail[]"
-                                                        value="{{ $residente->email }}">
+                                                        value="{{ $contacto->email }}">
                                                 </div>
 
                                                 <div class=" col-11 col-sm-5 col-lg-3 my-3 ">
@@ -150,7 +179,7 @@
                                                     <input type="tel" class="inputCaja" id="rTelefono"
                                                     pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}"
                                                     placeholder="ej. 00-0000-0000" name="rTelefono[]"
-                                                        value="{{ $residente->telefono }}">
+                                                        value="{{ $contacto->telefono }}">
                                                 </div>
 
                                                 <div class="col-lg-1 my-3 text-end">
@@ -160,7 +189,7 @@
                                         @empty
                                             <div class="row opcion divBorderItems" id="opc">
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                                                    <input type="hidden" name="idResidente[]" value="">
+                                                    <input type="hidden" name="idContacto[]" value="">
                                                     <label class="labelTitulo">Nombre:</label></br>
                                                     <input type="text" class="inputCaja" id="rNombre"
                                                         placeholder="Especifique..." name="rNombre[]" value="">

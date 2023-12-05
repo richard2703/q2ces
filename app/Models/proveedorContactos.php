@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class tipoMantenimiento extends Model
-{
+class proveedorContactos extends Model
+ {
     use HasFactory;
-    protected $table = "tipoMantenimiento";
+    protected $table = 'proveedorContactos';
 
-    public $timestamps = true;
+    public $timestamps = false;
 
     protected $fillable = [
+        'proveedorId',
         'nombre',
-        'codigo',
-        'comentario',
-        'color',
-        'activo'
+        'telefono',
+        'email',
     ];
+
 }

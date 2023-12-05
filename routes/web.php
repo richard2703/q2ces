@@ -357,7 +357,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Mantenimiento
     Route::get('/mantenimientos', [App\Http\Controllers\mantenimientosController::class, 'index'])->name('mantenimientos.index');
+    Route::get('/mantenimientos/mtq', [App\Http\Controllers\mantenimientosController::class, 'indexMtq'])->name('mantenimientos.indexMtq');
+    Route::get('/mantenimientos/mtq', [App\Http\Controllers\mantenimientosController::class, 'indexMtq'])->name('mantenimientos.indexMtq');
     Route::get('/mantenimientos/nuevo/', [App\Http\Controllers\mantenimientosController::class, 'create'])->name('mantenimientos.create');
+    Route::get('/mantenimientos/nuevo/mtq', [App\Http\Controllers\mantenimientosController::class, 'createMtq'])->name('mantenimientos.createMtq');
     Route::post('/mantenimientos/nuevo/add', [App\Http\Controllers\mantenimientosController::class, 'store'])->name('mantenimientos.store');
     Route::get('/mantenimientos/editar/{id}', [App\Http\Controllers\mantenimientosController::class, 'edit'])->name('mantenimientos.edit');
     Route::get('/mantenimientos/detalle/{id}', [App\Http\Controllers\mantenimientosController::class, 'show'])->name('mantenimientos.show');
@@ -414,6 +417,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('serviciosTrasporte/ticket/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'printTicketChofer'])->name('serviciosTrasporte.printTicketChofer');
     Route::get('serviciosTrasporte/ticketCerrado/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'printTicketCerrado'])->name('serviciosTrasporte.printTicketCerrado');
     Route::post('serviciosTrasporte/reporte', [App\Http\Controllers\serviciosTrasporteController::class, 'reporte'])->name('serviciosTrasporte.reporte');
+    Route::post('serviciosTrasporte/reporte/imprimir', [App\Http\Controllers\printController::class, 'printServicios'])->name('serviciosTrasporte.impresion');
     Route::resource('serviciosTrasporte', App\Http\Controllers\serviciosTrasporteController::class);
 
     // Conceptos
@@ -466,6 +470,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');
+    Route::get('search/equiposCalendario', [App\Http\Controllers\searchController::class, 'equiposCalendario'])->name('search.equiposCalendario');
     Route::get('search/equiposMTQ', [App\Http\Controllers\searchController::class, 'equiposMTQ'])->name('search.equiposMTQ');
     Route::get('search/equiposQ2ces', [App\Http\Controllers\searchController::class, 'equiposQ2ces'])->name('search.equiposQ2ces');
     Route::get('search/materialMantenimiento', [App\Http\Controllers\searchController::class, 'materialMantenimiento'])->name('search.materialMantenimiento');

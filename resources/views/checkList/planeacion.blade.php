@@ -70,12 +70,12 @@
                                                 Regresar
                                             </button>
                                         </a>
-                                        @can('checkList_assign_bitacoras')
+                                        {{-- @can('checkList_assign_bitacoras')
                                             <button class="btn botonGral float-end" data-bs-toggle="modal"
                                                 data-bs-target="#nuevoTrabajo">
                                                 Añadir Trabajo
                                             </button>
-                                        @endcan
+                                        @endcan --}}
                                     </div>
                                 </div>
 

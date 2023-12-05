@@ -5,12 +5,13 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header bacTituloPrincipal">
-                        <h4 class="card-title">Mantenimientos</h4>
+                        <h4 class="card-title">Mantenimientos {{ $blnEsMtq == true ? 'MTQ' :'' }}</h4>
                     </div>
                     <div class="row">
                         <div class="d-flex p-3">
                             <div class="col-8 text-end mt-4">
-                                <form action="{{ route('mantenimientos.index') }}" method="GET" id="filterForm">
+                                <form action="{{ $blnEsMtq == false ? route('mantenimientos.index') : route('mantenimientos.indexMtq') }}"
+                                    method="GET" id="filterForm">
                                     <div class="input-group">
                                         <label class="labelTitulo p-2">Estado: </label>
                                         <select name="estatus" id="estatus"
@@ -32,7 +33,7 @@
                             </div>
                             <div class="col-4 text-end mt-4" style="margin-left:-20px">
                                 @can('mantenimiento_create')
-                                    <a href="{{ url('/mantenimientos/nuevo') }}">
+                                    <a href="{{ $blnEsMtq == true ? url('/mantenimientos/nuevo/mtq') : url('/mantenimientos/nuevo')  }}">
                                         <!--Agregar ruta-->
                                         <button type="button" class="btn botonGral">Añadir Mantenimiento</button>
                                     </a>
@@ -241,22 +242,26 @@
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Coordinador de Taller :</label></br>
-                            <input type="text" class="inputCaja" id="controlCoordTaller" name="coordTaller" value="">
+                            <input type="text" class="inputCaja" id="controlCoordTaller" name="coordTaller"
+                                value="">
                         </div>
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Coordinador de Operaciones:</label></br>
-                            <input type="text" class="inputCaja" id="controlCoordOperaciones" name="coordOperaciones" value="">
+                            <input type="text" class="inputCaja" id="controlCoordOperaciones" name="coordOperaciones"
+                                value="">
                         </div>
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Mecánico:</label></br>
-                            <input type="text" class="inputCaja" id="controlMecanico" name="mecanico" value="">
+                            <input type="text" class="inputCaja" id="controlMecanico" name="mecanico"
+                                value="">
                         </div>
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Responsable:</label></br>
-                            <input type="text" class="inputCaja" id="controlResponsable" name="responsable" value="">
+                            <input type="text" class="inputCaja" id="controlResponsable" name="responsable"
+                                value="">
                         </div>
 
 
