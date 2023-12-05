@@ -217,13 +217,13 @@
                                                 <label class="labelTitulo">Costo Servicio: <span>*</span></label></br>
                                                 <input type="number" class="inputCaja text-right" id="costoServicio"
                                                     name="costoServicio" maxlength="100000" step="0.01"
-                                                    min="0.01" max="99999" placeholder="ej. 100"
+                                                    min="0.00" max="99999" placeholder="ej. 100"
                                                     value="{{ $serviciosTrasporte->costoServicio }}">
                                             </div>
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Costo Mano de Obra: <span>*</span></label></br>
                                                 <input type="number" class="inputCaja text-right" id="costoMano"
-                                                    name="costoMano" maxlength="100000" step="0.01" min="0.01"
+                                                    name="costoMano" maxlength="100000" step="0.01" min="0.00"
                                                     max="99999" placeholder="ej. 100"
                                                     value="{{ $serviciosTrasporte->costoMano }}">
                                             </div>
@@ -239,9 +239,9 @@
                                                     <option
                                                         value="2"{{ $serviciosTrasporte->estatus == 2 ? 'selected' : '' }}>
                                                         Hecho</option>
-                                                    {{--  <option
+                                                    <option
                                                         value="3"{{ $serviciosTrasporte->estatus == 3 ? 'selected' : '' }}>
-                                                        Cerrado</option>  --}}
+                                                        Cerrado</option>
                                                     <option
                                                         value="0"{{ $serviciosTrasporte->estatus == 0 ? 'selected' : '' }}>
                                                         Cancelado</option>
