@@ -106,7 +106,7 @@
                                                         border-width: 1px; font-size: 12px !important;
                                                         border-style: solid; height: 25px;"
                                                     class="d-flex justify-content-center align-items-center">
-                                                    ${{ $totalPendientes }}</div>
+                                                    {{ $totalPendientes }}</div>
 
                                             </td>
                                             <td style="color: #198754; font-weight: bold">
@@ -121,7 +121,7 @@
                                                     border-width: 1px;
                                                     border-style: solid; height: 25px;"
                                                     class="d-flex justify-content-center align-items-center">
-                                                    ${{ $totalPagados }}</div>
+                                                    {{ $totalPagados }}</div>
                                             </td>
                                             <td style="color: #657c26; font-weight: bold">
                                                 <div style="margin-right: 5px !important; border-radius: 1em; border-color: black; font-size: 12px !important;
@@ -485,6 +485,10 @@
         @media print {
             body * {
                 visibility: hidden;
+            }
+
+            body {
+                background-color: #fff;
             }
 
             #print-content * {
