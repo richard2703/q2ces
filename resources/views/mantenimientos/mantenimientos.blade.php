@@ -123,9 +123,19 @@
                                                     @can('mantenimiento_show')
                                                         <input type="hidden" name="mecanico" value="true">
                                                         <input type="hidden" name="id" value={{$item->id}}>
-                                                        <button class="btnSinFondo" type="submit">
-                                                            <i class="fas fa-print" style="color: #8caf48; font-size: x-large;"></i>
-                                                        </button>
+
+                                                        <input type="hidden" name="cordinadorTaller" value="true">
+                                                        <input type="hidden" name="cordinadorOperaciones" value={{$item->id}}>
+
+                                                        <input type="hidden" name="mecanicoFirma" value="true">
+                                                        <input type="hidden" name="responsableEquipo" value={{$item->id}}>
+
+                                                        @if ($item->estadoId == 3)
+                                                            <button class="btnSinFondo" type="submit">
+                                                                <i class="fas fa-print" style="color: #8caf48; font-size: x-large;"></i>
+                                                            </button>
+                                                        @endif
+                                                        
                                                     @endcan    
                                                 </form>
 
@@ -133,9 +143,32 @@
                                                     @can('mantenimientoPrintCostos_show')
                                                         <input type="hidden" name="mecanico" value="false">
                                                         <input type="hidden" name="id" value={{$item->id}}>
-                                                        <button class="btnSinFondo" type="submit">
-                                                            <i class="fas fa-print" style="color: black; font-size: x-large;"></i>
-                                                        </button>
+
+                                                        <input type="hidden" name="cordinadorTaller" value="true">
+                                                        <input type="hidden" name="cordinadorOperaciones" value={{$item->id}}>
+
+                                                        <input type="hidden" name="mecanicoFirma" value="true">
+                                                        <input type="hidden" name="responsableEquipo" value={{$item->id}}>
+
+                                                        @if ($item->estadoId == 3)
+                                                            <button class="btnSinFondo" type="submit">
+                                                                <i class="fas fa-print" style="color: black; font-size: x-large;"></i>
+                                                            </button>
+                                                        @endif
+                                                    @endcan
+                                                </form>
+
+                                                <form id="printForm" action="{{ route('documentoSelladoMantenimiento.index') }}" method="GET" style="display: inline-block;">
+                                                    @can('mantenimientoPrintCostos_show')
+                                                        <input type="hidden" name="mecanico" value="false">
+                                                        <input type="hidden" name="id" value={{$item->id}}>
+                                                        
+                                                        @if ($item->estadoId == 3)
+                                                            <button class="btnSinFondo" type="submit">
+                                                                <i class="fas fa-solid fa-file-signature" style="{{ $item->documentoSellado == 1 ? 'color: green; font-size: x-large;' : 'color: red; font-size: x-large;' }}"
+                                                                ></i>
+                                                            </button>
+                                                        @endif
                                                     @endcan
                                                 </form>
 
