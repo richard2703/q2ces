@@ -81,7 +81,7 @@
                                     <b style="{{ strlen(trans($maquinaria->nombre)) > 16 ? 'font-size: 7px;' : '' }}">{{ $maquinaria->nombre }}</b>
                                 </div>
 
-                                <div class="d-flex align-items-center justify-content-center custom-section grey-section" style="width: 50px">
+                                <div class="d-flex align-items-center justify-content-center custom-section grey-section" style="width: 40px">
                                     <b>VIN:</b>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none; width: 120px">
@@ -157,12 +157,12 @@
                                         
                                         @if ($gastos->isNotEmpty())
                                             @if ($mecanico == "false")
-                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}}, Modelo: {{$gastos[0]->modelo}}, Marca: {{$gastos[0]->marca}}</td>
+                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}}, Marca: {{$gastos[0]->marca}}, Modelo: {{$gastos[0]->modelo}}</td>
                                                 <td style="border: 1px solid #727176; font-weight: 600 !important;">{{ number_format($gastos[0]->cantidad, 2) }}</td>
                                                 <td style="border: 1px solid #727176; font-weight: 600 !important;">$ {{number_format($gastos[0]->costo, 2, '.', ',')}}</td>
                                                 <td style="border: 1px solid #727176; font-weight: 600 !important;">$ {{number_format($gastos[0]->total, 2, '.', ',')}}</td>
                                             @else
-                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}}, Modelo: {{$gastos[0]->modelo}}, Marca: {{$gastos[0]->marca}}</td>
+                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}}, Marca: {{$gastos[0]->marca}}, Modelo: {{$gastos[0]->modelo}}</td>
                                                 <td style="border: 1px solid #727176; font-weight: 600 !important;">{{ number_format($gastos[0]->cantidad, 2) }}</td>
                                             @endif
                                         @endif
@@ -172,12 +172,12 @@
                                     <!-- Tu lógica actual para mostrar los registros -->
                                     <tr style="border: 1px solid #727176; font-weight: 600 !important;">
                                         @if ($mecanico == "false")
-                                            <td style="border: 1px solid #727176;">{{$item->concepto}}, Modelo: {{$item->modelo}}, Marca: {{$item->marca}}</td>
+                                            <td style="border: 1px solid #727176;">{{$item->concepto}}, Marca: {{$item->marca}}, Modelo: {{$item->modelo}}</td>
                                             <td style="border: 1px solid #727176;">{{ number_format($item->cantidad, 2) }}</td>
                                             <td style="border: 1px solid #727176;">${{ number_format($item->costo, 2, '.', ',') }}</td>
                                             <td style="border: 1px solid #727176;">${{ number_format($item->total, 2, '.', ',') }}</td>
                                         @else
-                                            <td style="border: 1px solid #727176;">{{$item->concepto}}, Modelo: {{$item->modelo}}, Marca: {{$item->marca}}</td>
+                                            <td style="border: 1px solid #727176;">{{$item->concepto}}, Marca: {{$item->marca}}, Modelo: {{$item->modelo}}</td>
                                             <td style="border: 1px solid #727176;">{{ number_format($item->cantidad, 2) }}</td>
                                         @endif
                                     </tr>
@@ -211,16 +211,12 @@
                                         </td>
                                         <td class="text-white" style="background-color: #727176; border: 1px solid black; padding: 5px; font-weight: bold !important;">
                                             <br> 
-                                            <span style="border-top: 1px solid black; display: block; border-bottom: 1px solid black; display: block; padding-top: 5px;">{{ $mantenimiento->iva }}%</span>
+                                            <span style="border-top: 1px solid black; display: block; border-bottom: 1px solid black; display: block; padding-top: 5px;">{{ 16 }}%</span>
                                             <br>
                                         </td>
-                                        @php
-                                            $ivaPorcentaje = 16 / 100;
-                                            $costoIva = $mantenimiento->costo * $ivaPorcentaje;
-                                        @endphp
                                         <td class="text-white" style="background-color: #727176; border: 1px solid black; padding: 5px; font-weight: bold !important;">
                                             $ {{number_format($mantenimiento->subtotal, 2, '.', ',')}}<br>
-                                            <span style="border-top: 1px solid black; display: block; padding-top: 5px;">$ {{number_format($costoIva, 2, '.', ',')}}<br></span>
+                                            <span style="border-top: 1px solid black; display: block; padding-top: 5px;">${{number_format($mantenimiento->iva, 2, '.', ',')}}<br></span>
                                             <span style="border-top: 1px solid black; display: block; padding-top: 5px;">${{ $mantenimiento->costo }}</span>
                                         </td>
                                         @else
@@ -235,7 +231,7 @@
 
                                     <tr style="border: 1px solid #727176; font-weight: 900">
                                         <th style="border: 1px solid #727176;" scope="col" colspan="3"> PRÓXIMOS SERVICIOS PROGRAMADOS </th>
-                                        <th style="border: 1px solid #727176;" scope="col" colspan="3"> {{$maquinaria->mantenimiento}} </th>
+                                        <th style="border: 1px solid #727176;" scope="col" colspan="3"> {{$mantenimiento->mantenimientoPrint}} </th>
                                     </tr>
                                 </tbody>
                             </table>
@@ -243,42 +239,24 @@
                                 <!-- Primera sección de imágenes -->
                                 <div style="display: flex; justify-content: space-between;">
                                     @php
-                                        $fotosPrimeraSeccion = array_slice($fotos, 0, 4); // Obtener solo las primeras 4 imágenes
-                                        $fotosFaltantesPrimera = 4 - count($fotosPrimeraSeccion); // Calcula cuántas imágenes faltan para llegar a 4
+                                        $fotosPrimeraSeccion = array_slice($fotos, 0, 3); // Obtener solo las primeras 4 imágenes
+                                        $fotosFaltantesPrimera = 3 - count($fotosPrimeraSeccion); // Calcula cuántas imágenes faltan para llegar a 4
                                     @endphp
 
                                     @foreach ($fotosPrimeraSeccion as $foto)
-                                        <div style="width: 238px; height: 110px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
+                                        <div style="width: 320px; height: 211px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
                                             <img src="{{ empty($foto['ruta']) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/mantenimientos/' . $mantenimiento->codigo . '/' . $foto['ruta']) }}" style="height: 100%; object-fit: cover;">
                                         </div>
                                     @endforeach
 
                                     @for ($i = 0; $i < $fotosFaltantesPrimera; $i++)
-                                        <div style="width: 238px; height: 110px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
+                                        <div style="width: 320px; height: 211px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
                                             <img src="/img/general/default.jpg" style="height: 100%; object-fit: cover;">
                                         </div>
                                     @endfor
                                 </div>
                                 
-                                <!-- Segunda sección de imágenes -->
-                                <div style="display: flex; justify-content: space-between;">
-                                    @php
-                                        $fotosRestantes = array_slice($fotos, 4, 4); // Obtener las próximas 4 imágenes después de la cuarta
-                                        $fotosFaltantesSegunda = 4 - count($fotosRestantes); // Calcula cuántas imágenes faltan para llegar a 4
-                                    @endphp
-
-                                    @foreach ($fotosRestantes as $foto)
-                                        <div style="width: 238px; height: 110px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
-                                            <img src="{{ empty($foto['ruta']) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT) . '/mantenimientos/' . $mantenimiento->codigo . '/' . $foto['ruta']) }}" style="height: 100%; object-fit: cover;">
-                                        </div>
-                                    @endforeach
-
-                                    @for ($i = 0; $i < $fotosFaltantesSegunda; $i++)
-                                        <div style="width: 238px; height: 110px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
-                                            <img src="/img/general/default.jpg" style="height: 100%; object-fit: cover;">
-                                        </div>
-                                    @endfor
-                                </div>
+                                
 
 
                                 <!-- Tercera sección de imágenes -->
@@ -288,12 +266,12 @@
                                         <div class="mt-1"><b>SELLO DE TALLER</b></div>
                                     </div>
                                     <div style="width: 403px; height: 201px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
-                                        <img class="img-fluid" src="{{ empty($fotos[8]['ruta']) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria->identificador, 4, '0', STR_PAD_LEFT) . '/mantenimientos/' . $mantenimiento->codigo . '/' . $fotos[8]['ruta']) }}" style="height: 100%; object-fit: cover;">
+                                        <img class="img-fluid" src="{{ empty($fotos[3]['ruta']) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria->identificador, 4, '0', STR_PAD_LEFT) . '/mantenimientos/' . $mantenimiento->codigo . '/' . $fotos[3]['ruta']) }}" style="height: 100%; object-fit: cover;">
                                     </div>
                                     
                                     <!-- Imagen 10 -->
                                     <div style="width: 403px; height: 201px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
-                                        <img class="img-fluid" src="{{ empty($fotos[9]['ruta']) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria->identificador, 4, '0', STR_PAD_LEFT) . '/mantenimientos/' . $mantenimiento->codigo . '/' . $fotos[9]['ruta']) }}" style="height: 100%; object-fit: cover;">
+                                        <img class="img-fluid" src="{{ empty($fotos[4]['ruta']) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria->identificador, 4, '0', STR_PAD_LEFT) . '/mantenimientos/' . $mantenimiento->codigo . '/' . $fotos[4]['ruta']) }}" style="height: 100%; object-fit: cover;">
                                     </div>      
                                     <div style="margin-top: 3px; width: 30%; height: 201px; border: 1px solid #727176; text-align: center; font-size:8px">
                                         <div class="mt-1"><b>SELLO DE OFICINA</b></div>

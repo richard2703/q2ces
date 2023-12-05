@@ -254,10 +254,15 @@ class mantenimientosController extends Controller
 
             $mantto = mantenimientos::where('id', $data['mantenimientoId'])->first();
 
+            $maquinaria = maquinaria::select(
+                'maquinaria.*',
+                'marca.nombre as marca'
+            )->leftjoin('marca', 'marca.id', 'maquinaria.marcaId')->where('maquinaria.id', '=', $mantto->maquinariaId)->first();
+
+            // dd($mantto);
             if (is_null($mantto) == false) {
 
                 $data['costo'] =  $data['total'];
-
                 //*** manejo del estatus de la tarea cuando se cambia su estatus inicial*/
                 if ($mantto->estadoId <= 1 && $mantto->fechaReal == '0000-00-00') {
                     if ($data['estadoId'] > 1) {
@@ -267,9 +272,11 @@ class mantenimientosController extends Controller
                 //*** manejo del estatus de la tarea cuando se cambia su estatus final*/
                 if ($data['estadoId'] == 3) {
                     $data['fechaReal'] =  date('Y-m-d');
+                    $data['mantenimientoPrint'] =  $maquinaria->mantenimiento;
                 }
 
                 $data['estadoId'] =  $data['estadoId'];
+                // $data['mantenimientoPrint'] =  $maquinaria->mantenimiento;
 
                 // dd( $data );
                 $mantto->update($data);
@@ -417,6 +424,8 @@ class mantenimientosController extends Controller
                     $mantto->update();
                 } elseif ($data['guardar'] == 2) {
                     //*** terminamos el mantenimiento y cerramos el inventario */
+                    $mantto->fechaReal =  date('Y-m-d');
+                    $mantto->mantenimientoPrint =  $maquinaria->mantenimiento;
                     $mantto->estadoId = 3;
                     $mantto->update();
 

@@ -66,13 +66,13 @@
                                     <b>FOLIO</b>
                                 </div>
                                 <div class="d-flex align-items-center p-1 justify-content-center" style="font-weight: 500 !important; font-size: 20px !important; border-width: 1px; border-style: solid; border-color: #727176; color: red; width: 120px !important; height: 40px !important;">
-                                    M{{-$mantenimiento->id}}
+                                    M-{{ str_pad($mantenimiento->id, 5, '0', STR_PAD_LEFT) }}
                                 </div>
                             </div>
 
                         </div>   
                         <div class="col-12" style="margin-top: 5px; margin-right: 10px;">
-                            <div class="d-flex align-items-center p-1 justify-content-center" style="font-weight: 500 !important; font-size: 8px !important; border-radius: 2em;border-width: 1px; border-style: solid; border-color: #727176; background-color: white; color: black; height: 25px !important;">
+                            <div class="d-flex align-items-center p-1 justify-content-center" style="font-weight: 500 !important; font-size: 8px !important; border-radius: 2em;border-width: 1px; border-style: solid; border-color: #727176; background-color: white; color: black; height: 45px !important;">
                                 <div class="d-flex align-items-center justify-content-center custom-section grey-section" style="margin-left: -5px;">
                                     <b>Equipo:</b>
                                 </div>
@@ -84,7 +84,7 @@
                                 <div class="d-flex align-items-center justify-content-center custom-section grey-section" style="width: 50px">
                                     <b>VIN:</b>
                                 </div>
-                                <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none; width: 160px">
+                                <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none; width: 110px">
                                     <b>{{$maquinaria->numserie}}</b>
                                 </div>
 
@@ -102,17 +102,17 @@
                                     <b style="{{ strlen(trans($maquinaria->nombre)) > 16 ? 'font-size: 7px;' : '' }}">{{$maquinaria->modelo}}</b>
                                 </div>
 
-                                <div class="d-flex align-items-center justify-content-center custom-section grey-section" style="width: 30px">
+                                <div class="d-flex align-items-center justify-content-center custom-section grey-section" style="width: 60px">
                                     <b>AÑO:</b>
                                 </div>
-                                <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none; width: 30px">
+                                <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none; width: 40px">
                                     <b>{{$maquinaria->ano}}</b>
                                 </div>
 
                                 <div class="d-flex align-items-center justify-content-center custom-section grey-section">
                                     <b>PLACAS:</b>
                                 </div>
-                                <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none; width: 100px">
+                                <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none; width: 60px">
                                     <b>{{$maquinaria->placas}}</b>
                                 </div>
 
@@ -216,24 +216,19 @@
                                         @if ($mecanico == "false")
                                         <th scope="col" colspan="3" style="border-right: 1px solid black; font-weight: 500"> {{ $mantenimiento->comentario }}</th>
                                         <td class="text-white" style="background-color: #727176; border: 1px solid black; padding: 5px; font-weight: bold !important; border-right: 1px solid black;">
-                                            SUB-TOTAL <br> 
+                                            SUB-TOTAL <br>
                                             <span style="border-top: 1px solid black; display: block; padding-top: 5px;">I.V.A.</span>
                                             <span style="border-top: 1px solid black; display: block; padding-top: 5px;">TOTAL</span>
                                         </td>
                                         <td class="text-white" style="background-color: #727176; border: 1px solid black; padding: 5px; font-weight: bold !important;">
-                                            <br> 
-                                            <span style="border-top: 1px solid black; display: block; border-bottom: 1px solid black; display: block; padding-top: 5px;">{{ $mantenimiento->iva }}%</span>
+                                            <br>
+                                            <span style="border-top: 1px solid black; display: block; border-bottom: 1px solid black; display: block; padding-top: 5px;">{{ 16 }}%</span>
                                             <br>
                                         </td>
-                                        @php
-                                            $ivaPorcentaje = $mantenimiento->iva / 100;
-                                            $costoIva = $mantenimiento->costo * $ivaPorcentaje;
-                                            $costoIvaFormateado = number_format($costoIva, 2);
-                                        @endphp
                                         <td class="text-white" style="background-color: #727176; border: 1px solid black; padding: 5px; font-weight: bold !important;">
-                                            ${{ $mantenimiento->subtotal }}<br>
-                                            <span style="border-top: 1px solid black; display: block; padding-top: 5px;">${{ $costoIvaFormateado }}</span>
-                                            <span style="border-top: 1px solid black; display: block; padding-top: 5px;">${{ $mantenimiento->costo }}</span>
+                                            $ {{number_format($mantenimiento->subtotal, 2, '.', ',')}}<br>
+                                            <span style="border-top: 1px solid black; display: block; padding-top: 5px;">$ {{number_format($mantenimiento->iva, 2, '.', ',')}}<br></span>
+                                            <span style="border-top: 1px solid black; display: block; padding-top: 5px;">$ {{number_format($mantenimiento->costo, 2, '.', ',')}}</span>
                                         </td>
                                         @else
                                             <th scope="col" colspan="6" style="border-right: 1px solid black; font-weight: 500; height: 75px;">{{ $mantenimiento->comentario }}</th>
@@ -242,12 +237,12 @@
 
                                     <tr style="border: 1px solid #727176; font-weight: 900">
                                         <th style="border: 1px solid #727176;" scope="col" colspan="3"> LA PRESENTE BITÁCORA AMPARA EL ULTIMO MANTENIMIENTO REALIZADO EL</b></th>
-                                        <th style="border: 1px solid #727176;" scope="col" colspan="3"> 20/07/23 </th>
+                                        <th style="border: 1px solid #727176;" scope="col" colspan="3">{{ isset($mantenimiento->fechaReal) ? $mantenimiento->fechaReal : "" }}</th>
                                     </tr>
 
                                     <tr style="border: 1px solid #727176; font-weight: 900">
                                         <th style="border: 1px solid #727176;" scope="col" colspan="3"> PRÓXIMOS SERVICIOS PROGRAMADOS </th>
-                                        <th style="border: 1px solid #727176;" scope="col" colspan="3"> {{$maquinaria->mantenimiento}} </th>
+                                        <th style="border: 1px solid #727176;" scope="col" colspan="3"> {{$mantenimiento->mantenimientoPrint}} </th>
                                     </tr>
                                 </tbody>
                             </table>
@@ -277,22 +272,22 @@
                                 <!-- Tercera sección de imágenes -->
                                 <div class="mt-1" style="display: flex; justify-content: space-between;">
                                     <!-- Imagen 9 -->
-                                    <div style="margin-top: 3px; width: 30%; height: 271px; border: 1px solid #727176; text-align: center; font-size:8px">
+                                    <div style="margin-top: 3px; width: 30%; height: 261px; border: 1px solid #727176; text-align: center; font-size:8px">
                                         <div class="mt-1"><b>SELLO DE TALLER</b></div>
                                     </div>
 
                                     @if(count($fotos) >= 10 && !empty($fotos[9]['ruta']))
-                                        <div style="width: 783px; height: 271px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
+                                        <div style="width: 783px; height: 261px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
                                             <img class="img-fluid" src="{{ asset('/storage/maquinaria/' . str_pad($maquinaria->identificador, 4, '0', STR_PAD_LEFT) . '/mantenimientos/' . $mantenimiento->codigo . '/' . $fotos[9]['ruta']) }}" style="height: 100%; object-fit: cover;">
                                         </div>
                                     @else
-                                        <div style="width: 783px; height: 271px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
+                                        <div style="width: 783px; height: 261px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
                                             <img class="img-fluid" src="/img/general/default.jpg" style="height: 100%; object-fit: cover;">
                                         </div>
                                     @endif
 
                                     <!-- Sello de oficina -->
-                                    <div style="margin-top: 3px; width: 30%; height: 271px; border: 1px solid #727176; text-align: center; font-size:8px">
+                                    <div style="margin-top: 3px; width: 30%; height: 261px; border: 1px solid #727176; text-align: center; font-size:8px">
                                         <div class="mt-1"><b>SELLO DE OFICINA</b></div>
                                     </div>
                                 </div>
@@ -304,7 +299,7 @@
                                 <div style="margin-top: 20px; text-align: center; font-size: 9px;">
                                     <b>
                                         <p>VO.BO</p>
-                                        <div class="pt-3">
+                                        <div class="pt-2">
                                             _____________________________________________<br>
                                             COORDINADOR TALLER<br>
                                     </b>
@@ -323,7 +318,7 @@
                                 <div style="margin-top: 20px; text-align: center; font-size: 9px;">
                                     <b>
                                         <p>AUDITORIA INTERNA</p>
-                                        <div class="pt-3">
+                                        <div class="pt-2">
                                             _____________________________________________<br>
                                             COORDINADOR OPERACIONES<br>
                                     </b>
@@ -342,7 +337,7 @@
                                 <div style="margin-top: 20px; text-align: center; font-size: 9px;">
                                     <b>
                                         <p>REVISÓ</p>
-                                        <div class="pt-3">
+                                        <div class="pt-2">
                                             _____________________________________________<br>
                                             MECÁNICO<br>
                                     </b>
@@ -362,7 +357,7 @@
                                 <div style="margin-top: 20px; text-align: center; font-size: 9px;">
                                     <b>
                                         <p>RECIBIÓ</p>
-                                        <div class="pt-3">
+                                        <div class="pt-2">
                                             _____________________________________________<br>
                                             RESPONSABLE DEL EQUIPO<br>
                                     </b>
@@ -412,13 +407,13 @@
                                     <b>FOLIO</b>
                                 </div>
                                 <div class="d-flex align-items-center p-1 justify-content-center" style="font-weight: 500 !important; font-size: 20px !important; border-width: 1px; border-style: solid; border-color: #727176; color: red; width: 120px !important; height: 40px !important;">
-                                    M{{-$mantenimiento->id}}
+                                    M-{{ str_pad($mantenimiento->id, 5, '0', STR_PAD_LEFT) }}
                                 </div>
                             </div>
 
                         </div>   
                         <div class="col-12" style="margin-top: 5px; margin-right: 10px;">
-                            <div class="d-flex align-items-center p-1 justify-content-center" style="font-weight: 500 !important; font-size: 8px !important; border-radius: 2em;border-width: 1px; border-style: solid; border-color: #727176; background-color: white; color: black; height: 25px !important;">
+                            <div class="d-flex align-items-center p-1 justify-content-center" style="font-weight: 500 !important; font-size: 8px !important; border-radius: 2em;border-width: 1px; border-style: solid; border-color: #727176; background-color: white; color: black; height: 45px !important;">
                                 <div class="d-flex align-items-center justify-content-center custom-section grey-section" style="margin-left: -5px;">
                                     <b>Equipo:</b>
                                 </div>
@@ -430,7 +425,7 @@
                                 <div class="d-flex align-items-center justify-content-center custom-section grey-section" style="width: 50px">
                                     <b>VIN:</b>
                                 </div>
-                                <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none; width: 160px">
+                                <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none; width: 110px">
                                     <b>{{$maquinaria->numserie}}</b>
                                 </div>
 
@@ -448,17 +443,17 @@
                                     <b style="{{ strlen(trans($maquinaria->nombre)) > 16 ? 'font-size: 7px;' : '' }}">{{$maquinaria->modelo}}</b>
                                 </div>
 
-                                <div class="d-flex align-items-center justify-content-center custom-section grey-section" style="width: 30px">
+                                <div class="d-flex align-items-center justify-content-center custom-section grey-section" style="width: 60px">
                                     <b>AÑO:</b>
                                 </div>
-                                <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none; width: 30px">
+                                <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none; width: 40px">
                                     <b>{{$maquinaria->ano}}</b>
                                 </div>
 
                                 <div class="d-flex align-items-center justify-content-center custom-section grey-section">
                                     <b>PLACAS:</b>
                                 </div>
-                                <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none; width: 100px">
+                                <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none; width: 60px">
                                     <b>{{$maquinaria->placas}}</b>
                                 </div>
 
@@ -498,7 +493,7 @@
                                 
                                 @if ($gastosCount <= 47)
                                 @php
-                                    $espaciosBlanco = 45;
+                                    $espaciosBlanco = 44;
                                 @endphp
                                 @else
                                     @php
@@ -511,12 +506,13 @@
                                 
                                 @if ($gastos->isNotEmpty())
                                     @if ($mecanico == "false")
-                                        <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}}</td>
+                                        <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}}, Marca: {{$gastos[0]->marca}}, Modelo: {{$gastos[0]->modelo}}</td>
                                         <td style="border: 1px solid #727176; font-weight: 600 !important;">{{ number_format($gastos[0]->cantidad, 2) }}</td>
-                                        <td style="border: 1px solid #727176; font-weight: 600 !important;">${{ number_format($gastos[0]->costo, 2) }}</td>
-                                        <td style="border: 1px solid #727176; font-weight: 600 !important;">${{ number_format($gastos[0]->total, 2) }}</td>
+                                        
+                                        <td style="border: 1px solid #727176; font-weight: 600 !important;">$ {{number_format($gastos[0]->costo, 2, '.', ',')}}</td>
+                                        <td style="border: 1px solid #727176; font-weight: 600 !important;">$ {{number_format($gastos[0]->total, 2, '.', ',')}}</td>
                                     @else
-                                        <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}}</td>
+                                        <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}}, Marca: {{$gastos[0]->marca}}, Modelo: {{$gastos[0]->modelo}}</td>
                                         <td style="border: 1px solid #727176; font-weight: 600 !important;">{{ number_format($gastos[0]->cantidad, 2) }}</td>
                                     @endif
                                 @endif
@@ -526,20 +522,17 @@
                             <!-- Tu lógica actual para mostrar los registros -->
                             <tr style="border: 1px solid #727176; font-weight: 600 !important;">
                                 @if ($mecanico == "false")
-                                    <td style="border: 1px solid #727176;">{{$item->concepto}}</td>
+                                    <td style="border: 1px solid #727176;">{{$item->concepto}}, Marca: {{$item->marca}}, Modelo: {{$item->modelo}}</td>
                                     <td style="border: 1px solid #727176;">{{ number_format($item->cantidad, 2) }}</td>
-                                    <td style="border: 1px solid #727176;">${{ number_format($item->costo, 2) }}</td>
-                                    <td style="border: 1px solid #727176;">${{ number_format($item->total, 2) }}</td>
+                                    <td style="border: 1px solid #727176;">${{ number_format($item->costo, 2, '.', ',') }}</td>
+                                    <td style="border: 1px solid #727176;">${{ number_format($item->total, 2, '.', ',') }}</td>
                                 @else
-                                    <td style="border: 1px solid #727176;">{{$item->concepto}}</td>
+                                    <td style="border: 1px solid #727176;">{{$item->concepto}}, Marca: {{$item->marca}}, Modelo: {{$item->modelo}}</td>
                                     <td style="border: 1px solid #727176;">{{ number_format($item->cantidad, 2) }}</td>
                                 @endif
                             </tr>
                             @empty
                             @endforelse
-
-                            
-
 
                             @for ($i = $gastos->count(); $i <= $espaciosBlanco; $i++)
                                 <!-- Completa con filas vacías hasta llegar a 45 -->
@@ -568,18 +561,13 @@
                                 </td>
                                 <td class="text-white" style="background-color: #727176; border: 1px solid black; padding: 5px; font-weight: bold !important;">
                                     <br> 
-                                    <span style="border-top: 1px solid black; display: block; border-bottom: 1px solid black; display: block; padding-top: 5px;">{{ $mantenimiento->iva }}%</span>
+                                    <span style="border-top: 1px solid black; display: block; border-bottom: 1px solid black; display: block; padding-top: 5px;">{{ 16 }}%</span>
                                     <br>
                                 </td>
-                                @php
-                                    $ivaPorcentaje = $mantenimiento->iva / 100;
-                                    $costoIva = $mantenimiento->costo * $ivaPorcentaje;
-                                    $costoIvaFormateado = number_format($costoIva, 2);
-                                @endphp
                                 <td class="text-white" style="background-color: #727176; border: 1px solid black; padding: 5px; font-weight: bold !important;">
-                                    ${{ $mantenimiento->subtotal }}<br>
-                                    <span style="border-top: 1px solid black; display: block; padding-top: 5px;">${{ $costoIvaFormateado }}</span>
-                                    <span style="border-top: 1px solid black; display: block; padding-top: 5px;">${{ $mantenimiento->costo }}</span>
+                                    $ {{number_format($mantenimiento->subtotal, 2, '.', ',')}}<br>
+                                    <span style="border-top: 1px solid black; display: block; padding-top: 5px;">$ {{number_format($mantenimiento->iva, 2, '.', ',')}}<br></span>
+                                    <span style="border-top: 1px solid black; display: block; padding-top: 5px;">$ {{number_format($mantenimiento->costo, 2, '.', ',')}}</span>
                                 </td>
                                 @else
                                     <th scope="col" colspan="6" style="border-right: 1px solid black; font-weight: 500; height: 75px;">{{ $mantenimiento->comentario }}</th>
@@ -588,12 +576,12 @@
 
                             <tr style="border: 1px solid #727176; font-weight: 900">
                                 <th style="border: 1px solid #727176;" scope="col" colspan="3"> LA PRESENTE BITÁCORA AMPARA EL ULTIMO MANTENIMIENTO REALIZADO EL</b></th>
-                                <th style="border: 1px solid #727176;" scope="col" colspan="3"> 20/07/23 </th>
+                                <th style="border: 1px solid #727176;" scope="col" colspan="3">{{ isset($mantenimiento->fechaReal) ? $mantenimiento->fechaReal : "" }}</th>
                             </tr>
 
                             <tr style="border: 1px solid #727176; font-weight: 900">
                                 <th style="border: 1px solid #727176;" scope="col" colspan="3"> PRÓXIMOS SERVICIOS PROGRAMADOS </th>
-                                <th style="border: 1px solid #727176;" scope="col" colspan="3"> {{$maquinaria->mantenimiento}} </th>
+                                <th style="border: 1px solid #727176;" scope="col" colspan="3"> {{$mantenimiento->mantenimientoPrint}} </th>
                             </tr>
                         </tbody>
                         </table>
@@ -638,6 +626,10 @@ print(){
 @media print {
     body * {
         visibility: hidden;
+        
+    }
+    body {
+        background: white;
     }
     #print-content * {
         visibility: visible !important;
@@ -685,7 +677,7 @@ print(){
     border-style: solid;
     border-color: #727176;
     color: white;
-    height: 25px !important;
+    height: 45px !important;
     width: calc(100% / 14);
     text-align: center;
     margin: 0;

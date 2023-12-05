@@ -21,6 +21,7 @@ class mantenimientos extends Model
         'comentario',
         'fechaInicio',
         'fechaReal',
+        'mantenimientoPrint',
         'observaciones',
         'usoKom',
         'subtotal',

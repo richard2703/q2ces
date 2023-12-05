@@ -562,7 +562,7 @@ class printController extends Controller
                 'vctResponsables'
             ));
         } else {
-            return view('mantenimientos.vistaPreviaImpresion', compact('mecanico', 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctResponsables'));
+            return view('mantenimientos.vistaPreviaImpresionDiseño2', compact('gastosCount', 'mecanico', 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctResponsables'));
         }
     }
 
