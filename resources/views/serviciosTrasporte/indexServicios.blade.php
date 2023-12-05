@@ -33,65 +33,85 @@
                                             {{ session('faild') }}
                                         </div>
                                     @endif
-                                    <div class="row division">
-                                        <div class="col-12 col-md-4">
-                                            <p>Periodo del</br> <span
-                                                    class="combustibleLitros">{{ \Carbon\Carbon::parse($quincena)->locale('es')->isoFormat('dddd D MMMM') }}
-                                                    al
-                                                    {{ \Carbon\Carbon::parse($hoy)->locale('es')->isoFormat('dddd D MMMM') }}</span>
-                                            </p>
-                                        </div>
-
-                                        <div class="col-3 col-md-2 text-center">
-                                            <p class="">Pendientes</p>
-                                            <p class="combustibleLitros fw-semibold text-danger">{{ $totalPendientes }}</p>
-                                        </div>
-                                        <div class="col-3 col-md-2 text-center">
-                                            <p class="">$ Pendiente</p>
-                                            <p class="combustibleLitros fw-semibold  text-danger">$
-                                                {{ number_format($sumaPendientes, 2) }}
-                                            </p>
-                                        </div>
-
-                                        <div class="col-3 col-md-2 text-center">
-                                            <p class="">Facturadas</p>
-                                            <p class="combustibleLitros fw-semibold ">{{ $totalPagados }}
-                                            <p>
-                                        </div>
-                                        <div class="col-3 col-md-2 text-center">
-                                            <p class="">$ Facturadas</p>
-                                            <p class="combustibleLitros fw-semibold ">$ {{ number_format($sumaPagados, 2) }}
-                                            </p>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-6 d-flex  ">
-
-                                                @can('cajachica_create')
-                                                    <button type="button" class="btn botonGral" data-bs-toggle="modal"
-                                                        data-bs-target="#modal-reporte">
-                                                        Reporte de Movimientos
-                                                    </button>
-                                                @endcan
+                                    @can('serviciosTrasporte_show')
+                                        <div class="row division">
+                                            <div class="col-12 col-md-4">
+                                                <p>Periodo del</br> <span
+                                                        class="combustibleLitros">{{ \Carbon\Carbon::parse($quincena)->locale('es')->isoFormat('dddd D MMMM') }}
+                                                        al
+                                                        {{ \Carbon\Carbon::parse($hoy)->locale('es')->isoFormat('dddd D MMMM') }}</span>
+                                                </p>
                                             </div>
+                                            @can('serviciosTrasporte_cobros')
+                                                <div class="col-3 col-md-2 text-center">
+                                                    <p class="">Pendientes</p>
+                                                    <p class="combustibleLitros fw-semibold text-danger">{{ $totalPendientes }}</p>
+                                                </div>
+                                                <div class="col-3 col-md-2 text-center">
+                                                    <p class="">$ Pendiente</p>
+                                                    <p class="combustibleLitros fw-semibold  text-danger">$
+                                                        {{ number_format($sumaPendientes, 2) }}
+                                                    </p>
+                                                </div>
 
-                                            <div class="col-6 d-flex justify-content-end ">
-                                                @if ($reporte == 0)
-                                                    @can('serviciosTrasporte_create')
-                                                        <a href="{{ route('serviciosTrasporte.create') }}"
-                                                            class="ps-1 align-self-center">
-                                                            <button type="button" class="btn botonGral">Programar
-                                                                Servicio</button>
-                                                        </a>
+                                                <div class="col-3 col-md-2 text-center">
+                                                    <p class="">Facturadas</p>
+                                                    <p class="combustibleLitros fw-semibold ">{{ $totalPagados }}
+                                                    <p>
+                                                </div>
+
+                                                <div class="col-3 col-md-2 text-center">
+                                                    <p class="">$ Facturadas</p>
+                                                    <p class="combustibleLitros fw-semibold ">$ {{ number_format($sumaPagados, 2) }}
+                                                    </p>
+                                                </div>
+                                            @endcan
+
+                                            <div class="row">
+                                                <div class="col-6 d-flex  ">
+
+                                                    @can('cajachica_create')
+                                                        <button type="button" class="btn botonGral" data-bs-toggle="modal"
+                                                            data-bs-target="#modal-reporte">
+                                                            Reporte de Movimientos
+                                                        </button>
                                                     @endcan
-                                                @endif
+
+                                                </div>
+
+                                                <div class="col-6 d-flex justify-content-end ">
+                                                    @if ($reporte == 0)
+                                                        @can('serviciosTrasporte_create')
+                                                            <a href="{{ route('serviciosTrasporte.create') }}"
+                                                                class="ps-1 align-self-center">
+                                                                <button type="button" class="btn botonGral">Programar
+                                                                    Servicio</button>
+                                                            </a>
+                                                        @endcan
+                                                    @else
+                                                        @can('cajachica_create')
+                                                            <form action="{{ route('serviciosTrasporte.impresion') }}"
+                                                                method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="quincena" value={{ $quincena }}>
+                                                                <input type="hidden" name="hoy" value={{ $hoy }}>
+
+
+                                                                <button type="submit" class="btn regresar"
+                                                                    style="margin-right: 5px;">Imprimir</button>
+                                                            </form>
+                                                        @endcan
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
+                                    @endcan
 
-                                    </div>
                                     <div class="table-responsive mt-2">
                                         <table class="table tablaCenter">
                                             <thead class="labelTitulo">
                                                 <tr>
+                                                    <th class="labelTitulo">Folio</th>
                                                     <th class="labelTitulo">Día</th>
                                                     <th class="labelTitulo">Concepto</th>
                                                     <th class="labelTitulo">Obra</th>
@@ -99,7 +119,9 @@
                                                     <th class="labelTitulo">Equipo</th>
                                                     <th class="labelTitulo">Personal</th>
                                                     <th class="labelTitulo">Gasto</th>
-                                                    <th class="labelTitulo">Cobro</th>
+                                                    @can('serviciosTrasporte_cobros')
+                                                        <th class="labelTitulo">Cobro</th>
+                                                    @endcan
                                                     <th class="labelTitulo">Estatus</th>
                                                     <th class="labelTitulo text-right" style="width: 130px !important;">
                                                         Acciones</th>
@@ -108,6 +130,7 @@
                                             <tbody>
                                                 @forelse ($registros as $registro)
                                                     <tr>
+                                                        <td>{{ $registro->id }}</td>
                                                         <td>{{ \Carbon\Carbon::parse($registro->fecha)->locale('es')->isoFormat('dddd D MMMM') }}
                                                         </td>
                                                         <td title={{ $registro->codigo }}>{{ $registro->cnombre }}</td>
@@ -130,10 +153,12 @@
                                                             {{ number_format($registro->cantidad + $registro->costoMano, 2) }}
                                                             {{--  {{ number_format($registro->cantidad, 2) + number_format($registro->costoServicio, 2) }}  --}}
                                                         </td>
-                                                        <td>$
-                                                            {{ number_format($registro->cantidad + $registro->costoMano + $registro->costoServicio, 2) }}
-                                                            {{--  {{ number_format($registro->cantidad, 2) + number_format($registro->costoServicio, 2) }}  --}}
-                                                        </td>
+                                                        @can('serviciosTrasporte_cobros')
+                                                            <td>$
+                                                                {{ number_format($registro->cantidad + $registro->costoMano + $registro->costoServicio, 2) }}
+                                                                {{--  {{ number_format($registro->cantidad, 2) + number_format($registro->costoServicio, 2) }}  --}}
+                                                            </td>
+                                                        @endcan
                                                         <td
                                                             class=@switch($registro->estatus)
                                                             @case(1)
@@ -149,7 +174,6 @@
                                                                 'blue'
                                                             @break
                                                             @case(4)
-                                                                'purple'
                                                             @break
 
                                                             @default
@@ -174,7 +198,7 @@
                                                                 @break
 
                                                                 @case(4)
-                                                                    Pagado <br># {{ $registro->numFactura }}
+                                                                    <b>Pagado <br># {{ $registro->numFactura }} </b>
                                                                 @break
 
                                                                 @default
@@ -284,7 +308,7 @@
                             <div class="col-6  mb-3 ">
                                 <label class="labelTitulo">Odometro: <span>*</span></label></br>
                                 <input type="number" class="inputCaja text-right" id="odometro" name="odometro"
-                                    maxlength="100000" step="0.01" min="0.01" max="99999" placeholder="ej. 100"
+                                    maxlength="100000" step="0.01" min="0.01" max="999999" placeholder="ej. 100"
                                     value="">
                             </div>
 
@@ -351,11 +375,11 @@
                                     value="" readonly>
                             </div>
 
-                            <div class="col-6  mb-3 ">
+                            {{--  <div class="col-6  mb-3 ">
                                 <label class="labelTitulo">Cobro:</label></br>
-                                <input type="text" class="inputCaja text-right" id="costos" name="costos"
-                                    value="" readonly>
-                            </div>
+                                <input type="number" class="inputCaja text-right" id="costos" name="costos"
+                                    value="">
+                            </div>  --}}
 
                             <div class="col-6  mb-3 ">
                                 <label class="labelTitulo">Numero de Factura:</label></br>

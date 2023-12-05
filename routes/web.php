@@ -417,6 +417,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('serviciosTrasporte/ticket/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'printTicketChofer'])->name('serviciosTrasporte.printTicketChofer');
     Route::get('serviciosTrasporte/ticketCerrado/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'printTicketCerrado'])->name('serviciosTrasporte.printTicketCerrado');
     Route::post('serviciosTrasporte/reporte', [App\Http\Controllers\serviciosTrasporteController::class, 'reporte'])->name('serviciosTrasporte.reporte');
+    Route::post('serviciosTrasporte/reporte/imprimir', [App\Http\Controllers\printController::class, 'printServicios'])->name('serviciosTrasporte.impresion');
     Route::resource('serviciosTrasporte', App\Http\Controllers\serviciosTrasporteController::class);
 
     // Conceptos
@@ -536,6 +537,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/print-cajaChica/{saldoFormatted}/{ingresoFormatted}/{egresoFormatted}/{saldo}/{inicioSemana}/{finSemana}', 'App\Http\Controllers\printController@printCajaChica')->name('printCajaChica.get');
     Route::post('/print-cajaChica', 'App\Http\Controllers\printController@printCajaChica')->name('printCajaChica.post');
     Route::get('/print-asistencia/{semanaFormatted}', 'App\Http\Controllers\printController@printAsistencia')->name('printAsistencia.get');
+    Route::get('/print-mantenimiento', 'App\Http\Controllers\printController@printMantenimiento')->name('printMantenimiento.get');
 
     Route::get('/print-vista-previa', 'App\Http\Controllers\printController@print')->name('print.get');
     Route::post('/print-combustible', 'App\Http\Controllers\printController@print')->name('print.post');
@@ -555,4 +557,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Crud facturaProvedor
     Route::resource('facturaProvedor', App\Http\Controllers\facturaProvedorController::class);
+
+    // Crud documentoSelladoMantenimiento
+    Route::resource('documentoSelladoMantenimiento', App\Http\Controllers\documentoSelladoMantenimientoController::class);
 });

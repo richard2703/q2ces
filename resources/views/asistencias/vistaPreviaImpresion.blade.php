@@ -64,9 +64,9 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                         </div>
                     </div>
                     
-                    {{--  <div id="content-center" class="content-center" style="display: none">
-                        <img src="{{ asset('/img/maquinariaPrint/Q de fondo.svg') }}" width="70%" alt="">    
-                    </div>  --}}
+                    <div id="content-center" class="content-center" style="display: none">
+                        <img src="{{ asset('/img/maquinariaPrint/Q de fondo.svg') }}" width="45%" alt="">    
+                    </div>
                     <div id="print-content" class="print-content d-flex align-items-center">
                         <div class="table-responsive" style="font-size: 11px">
                             <div id="print-header" class="print-header">

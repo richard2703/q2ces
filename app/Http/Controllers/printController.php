@@ -11,10 +11,14 @@ use App\Models\clientes;
 use App\Models\corteCajaChica;
 use App\Models\descarga;
 use App\Models\descargaDetalle;
+use App\Models\gastosMantenimiento;
+use App\Models\mantenimientoImagen;
+use App\Models\mantenimientos;
 use App\Models\maquinaria;
 use App\Models\obraMaqPer;
 use App\Models\obras;
 use App\Models\personal;
+use App\Models\serviciosTrasporte;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,6 +26,7 @@ use Illuminate\Support\Facades\Gate;
 // use Dompdf\Dompdf;
 // use Dompdf\Options;
 use App\Models\tipoHoraExtra;
+use App\Models\tipoMantenimiento;
 use PDF;
 use stdClass;
 
@@ -185,10 +190,9 @@ class printController extends Controller
     public function printMaquinaria(Request $request)
     {
 
-        // $maquinaria = maquinaria::whereNull('compania')
-        //     ->orderBy('maquinaria.identificador', 'asc')->get();
+        $maquinaria = maquinaria::whereNull('compania')->orderBy('maquinaria.identificador', 'asc')->get();
 
-        $maquinaria = maquinaria::all();
+        // $maquinaria = maquinaria::all();
 
         return view('maquinaria.vistaPreviaImpresion', compact('maquinaria'));
     }
@@ -225,7 +229,7 @@ class printController extends Controller
                 'cajaChica.tipo',
                 'cajaChica.total'
             )->orderby('dia', 'desc')->orderby('id', 'desc')
-            ->whereBetween('dia', [$inicioSemanaFormatted->clone(), $finSemanaFormatted])
+            ->whereBetween('dia', [$inicioSemanaFormatted->clone()->subDay(1), $finSemanaFormatted])
             ->get();
 
         // dd($registros);
@@ -456,6 +460,115 @@ class printController extends Controller
         }
         return view('asistencias.vistaPreviaImpresion', compact('semanaFormatted', 'usuario', 'vctAsistencias',   'asistencias', 'listaAsistencia', 'intDia', 'intMes', 'intAnio', 'strFechaInicioPeriodo', 'strFechaFinPeriodo'));
     }
+
+    public function printMantenimiento(Request $request)
+    {
+        $mecanico = $request->input('mecanico');
+        $id = $request->input('id');
+
+        $mecanico = $request->input('mecanico');
+        $id = $request->input('id');
+
+        // Imprimir para verificar el valor recibido
+        // dd($mecanico);
+        $mantenimiento = mantenimientos::select(
+            'mantenimientos.*',
+            DB::raw("CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria"),
+        )
+            ->join('maquinaria', 'maquinaria.id', '=', 'mantenimientos.maquinariaId')
+            ->where('mantenimientos.id', '=', $id)->first();
+
+        $gastos = gastosMantenimiento::select(
+            'gastosMantenimiento.*',
+            DB::raw('inventario.nombre as articulo'),
+            DB::raw('inventario.numparte as numparte'),
+            DB::raw('inventario.modelo as modelo'),
+            DB::raw('marca.nombre AS marca'),
+            DB::raw('inventario.valor as valor ')
+        )
+            ->leftjoin('inventario', 'inventario.id', '=', 'gastosMantenimiento.inventarioId')
+            ->leftjoin('marca', 'marca.id', '=', 'inventario.marcaId')
+            ->leftjoin('manoDeObra', 'manoDeObra.id', '=', 'gastosMantenimiento.manoObraId')
+            ->where('mantenimientoId', '=', $id)->get();
+
+        $fotos = mantenimientoImagen::where('mantenimientoId', $id)->get()->toArray();
+
+        $maquinaria = maquinaria::select(
+            'maquinaria.*',
+            'marca.nombre as marca'
+        )->leftjoin('marca', 'marca.id', 'maquinaria.marcaId')->where('maquinaria.id', '=', $mantenimiento->maquinariaId)->first();
+
+        $vctTipos = tipoMantenimiento::select('tipoMantenimiento.*')->orderBy('tipoMantenimiento.nombre', 'asc')->get();
+
+        $vctCoordinadores = personal::getPersonalPorNivel(3);
+        $vctMecanicos = personal::getPersonalPorNivel(4);
+        $vctResponsables = personal::getPersonalPorNivel(5, true);
+        $totalManoObra = $gastos->whereNotNull('manoObraId')->count();
+        $totalMateriales = $gastos->whereNotNull('inventarioId')->count();
+        $gastosCount = count($gastos);
+
+        $totalCostoManoObra = 0;
+        $totalCostoMateriales = 0;
+        $totalImporteManoObra = 0;
+        $totalImporteMateriales = 0;
+
+        foreach ($gastos as $gasto) {
+            // Sumar el costo si manoObraId no es nulo
+            if (!is_null($gasto->manoObraId)) {
+                $totalCostoManoObra += $gasto->costo;
+                $totalImporteManoObra += $gasto->total;
+            }
+
+            // Sumar el costo si inventarioId no es nulo
+            if (!is_null($gasto->inventarioId)) {
+                $totalCostoMateriales += $gasto->costo;
+                $totalImporteMateriales += $gasto->total;
+            }
+        }
+
+        // dd(
+        //     $totalCostoManoObra,
+        //     $totalImporteManoObra,
+        //     $totalCostoMateriales,
+        //     $totalImporteMateriales,
+        //     $totalManoObra,
+        //     $totalMateriales,
+        //     $gastosCount,
+        //     $mantenimiento,
+        //     $gastos,
+        //     $vctTipos,
+        //     $fotos,
+        //     $maquinaria,
+        //     $vctMecanicos,
+        //     $vctCoordinadores,
+        //     $vctResponsables
+        // );
+
+        if ($gastosCount > 20) {
+            return view('mantenimientos.vistaPreviaImpresionDesborde', compact(
+                'totalCostoManoObra',
+                'totalImporteManoObra',
+                'totalCostoMateriales',
+                'totalImporteMateriales',
+                'totalManoObra',
+                'totalMateriales',
+                'mecanico',
+                'mantenimiento',
+                'gastos',
+                'vctTipos',
+                'fotos',
+                'maquinaria',
+                'vctMecanicos',
+                'vctCoordinadores',
+                'vctResponsables'
+            ));
+        } else {
+            return view('mantenimientos.vistaPreviaImpresionDiseño2', compact('gastosCount', 'mecanico', 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctResponsables'));
+        }
+    }
+
+
+
     // public function generarPDF(Request $request)
     // {
     //     $content = $request->input('content');
@@ -499,5 +612,60 @@ class printController extends Controller
         $cliente = false;
 
         return view('inventario.vistaPreviaImpresionOnlyprint', compact('descarga', 'cliente'));
+    }
+
+    // public function printServicios($saldoFormatted, $ingresoFormatted, $egresoFormatted, $saldo, $inicioSemana, $finSemana)
+    public function printServicios(Request $request)
+    {
+        // dd($request);
+        $hoy = $request->hoy;
+        $quincena = $request->quincena;
+        $reporte = 1;
+
+        $pendientes = serviciosTrasporte::whereBetween('fecha', [$quincena, $hoy])
+            ->whereNotIn('estatus', [4, 0])
+            // ->sum('costoServicio');
+            ->get();
+
+        $sumaPendientes = $pendientes->sum('costoServicio') + $pendientes->sum('cantidad') + $pendientes->sum('costoMano');
+        $totalPendientes = $pendientes->count();
+
+        $pagados = serviciosTrasporte::whereBetween('fecha', [$quincena, $hoy])
+            ->where('estatus', 4)
+            // ->sum('costoServicio');
+            ->get();
+
+        $sumaPagados = $pagados->sum('costoServicio') + $pagados->sum('cantidad') + $pagados->sum('costoMano');
+        $totalPagados = $pagados->count();
+
+        $registros = serviciosTrasporte::join('conceptos', 'serviciosTrasporte.conceptoId', 'conceptos.id')
+            ->leftJoin('obras', 'serviciosTrasporte.obraId', 'obras.id')
+            ->join('clientes', 'obras.clienteId', 'clientes.id')
+            ->join('maquinaria', 'serviciosTrasporte.equipoId', 'maquinaria.id')
+            ->join('personal', 'serviciosTrasporte.personalId', 'personal.id')
+            ->select(
+                'serviciosTrasporte.id',
+                'serviciosTrasporte.fecha',
+                'conceptos.nombre as cnombre',
+                'clientes.nombre as cliente',
+                'obras.nombre as obra',
+                'obras.centroCostos',
+                'obras.proyecto',
+                'maquinaria.identificador',
+                'maquinaria.nombre as maquinaria',
+                'personal.nombres as pnombre',
+                'personal.apellidoP as papellidoP',
+                'cantidad',
+                'costoMano',
+                'costoServicio',
+                'numFactura',
+                'serviciosTrasporte.estatus'
+            )
+            ->orderBy('fecha', 'desc')
+            ->whereBetween('serviciosTrasporte.fecha', [$quincena, $hoy])
+            ->get();
+        // dd($registros);
+
+        return view('serviciosTrasporte.vistaPreviaImpresion', compact('registros', 'sumaPendientes', 'totalPendientes', 'sumaPagados', 'totalPagados', 'quincena', 'hoy', 'reporte'));
     }
 }
