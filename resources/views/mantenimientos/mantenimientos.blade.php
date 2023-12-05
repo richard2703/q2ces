@@ -5,12 +5,13 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header bacTituloPrincipal">
-                        <h4 class="card-title">Mantenimientos</h4>
+                        <h4 class="card-title">Mantenimientos {{ $blnEsMtq == true ? 'MTQ' :'' }}</h4>
                     </div>
                     <div class="row">
                         <div class="d-flex p-3">
                             <div class="col-8 text-end mt-4">
-                                <form action="{{ route('mantenimientos.index') }}" method="GET" id="filterForm">
+                                <form action="{{ $blnEsMtq == false ? route('mantenimientos.index') : route('mantenimientos.indexMtq') }}"
+                                    method="GET" id="filterForm">
                                     <div class="input-group">
                                         <label class="labelTitulo p-2">Estado: </label>
                                         <select name="estatus" id="estatus"
@@ -32,7 +33,7 @@
                             </div>
                             <div class="col-4 text-end mt-4" style="margin-left:-20px">
                                 @can('mantenimiento_create')
-                                    <a href="{{ url('/mantenimientos/nuevo') }}">
+                                    <a href="{{ $blnEsMtq == true ? url('/mantenimientos/nuevo/mtq') : url('/mantenimientos/nuevo')  }}">
                                         <!--Agregar ruta-->
                                         <button type="button" class="btn botonGral">Añadir Mantenimiento</button>
                                     </a>
@@ -121,18 +122,53 @@
                                                 <form id="printForm" action="{{ route('printMantenimiento.get') }}" method="GET" style="display: inline-block;">
                                                     @can('mantenimiento_show')
                                                         <input type="hidden" name="mecanico" value="true">
-                                                        <button class="btnSinFondo" type="submit">
-                                                            <i class="fas fa-print" style="color: #8caf48; font-size: x-large;"></i>
-                                                        </button>
-                                                    @endcan
-                                                    
+                                                        <input type="hidden" name="id" value={{$item->id}}>
+
+                                                        <input type="hidden" name="cordinadorTaller" value="true">
+                                                        <input type="hidden" name="cordinadorOperaciones" value={{$item->id}}>
+
+                                                        <input type="hidden" name="mecanicoFirma" value="true">
+                                                        <input type="hidden" name="responsableEquipo" value={{$item->id}}>
+
+                                                        @if ($item->estadoId == 3)
+                                                            <button class="btnSinFondo" type="submit">
+                                                                <i class="fas fa-print" style="color: #8caf48; font-size: x-large;"></i>
+                                                            </button>
+                                                        @endif
+                                                        
+                                                    @endcan    
                                                 </form>
+
                                                 <form id="printForm" action="{{ route('printMantenimiento.get') }}" method="GET" style="display: inline-block;">
                                                     @can('mantenimientoPrintCostos_show')
                                                         <input type="hidden" name="mecanico" value="false">
-                                                        <button class="btnSinFondo" type="submit">
-                                                            <i class="fas fa-print" style="color: black; font-size: x-large;"></i>
-                                                        </button>
+                                                        <input type="hidden" name="id" value={{$item->id}}>
+
+                                                        <input type="hidden" name="cordinadorTaller" value="true">
+                                                        <input type="hidden" name="cordinadorOperaciones" value={{$item->id}}>
+
+                                                        <input type="hidden" name="mecanicoFirma" value="true">
+                                                        <input type="hidden" name="responsableEquipo" value={{$item->id}}>
+
+                                                        @if ($item->estadoId == 3)
+                                                            <button class="btnSinFondo" type="submit">
+                                                                <i class="fas fa-print" style="color: black; font-size: x-large;"></i>
+                                                            </button>
+                                                        @endif
+                                                    @endcan
+                                                </form>
+
+                                                <form id="printForm" action="{{ route('documentoSelladoMantenimiento.index') }}" method="GET" style="display: inline-block;">
+                                                    @can('mantenimientoPrintCostos_show')
+                                                        <input type="hidden" name="mecanico" value="false">
+                                                        <input type="hidden" name="id" value={{$item->id}}>
+                                                        
+                                                        @if ($item->estadoId == 3)
+                                                            <button class="btnSinFondo" type="submit">
+                                                                <i class="fas fa-solid fa-file-signature" style="{{ $item->documentoSellado == 1 ? 'color: green; font-size: x-large;' : 'color: red; font-size: x-large;' }}"
+                                                                ></i>
+                                                            </button>
+                                                        @endif
                                                     @endcan
                                                 </form>
 
@@ -206,22 +242,26 @@
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Coordinador de Taller :</label></br>
-                            <input type="text" class="inputCaja" id="controlCoordTaller" name="coordTaller" value="">
+                            <input type="text" class="inputCaja" id="controlCoordTaller" name="coordTaller"
+                                value="">
                         </div>
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Coordinador de Operaciones:</label></br>
-                            <input type="text" class="inputCaja" id="controlCoordOperaciones" name="coordOperaciones" value="">
+                            <input type="text" class="inputCaja" id="controlCoordOperaciones" name="coordOperaciones"
+                                value="">
                         </div>
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Mecánico:</label></br>
-                            <input type="text" class="inputCaja" id="controlMecanico" name="mecanico" value="">
+                            <input type="text" class="inputCaja" id="controlMecanico" name="mecanico"
+                                value="">
                         </div>
 
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Responsable:</label></br>
-                            <input type="text" class="inputCaja" id="controlResponsable" name="responsable" value="">
+                            <input type="text" class="inputCaja" id="controlResponsable" name="responsable"
+                                value="">
                         </div>
 
 

@@ -357,7 +357,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Mantenimiento
     Route::get('/mantenimientos', [App\Http\Controllers\mantenimientosController::class, 'index'])->name('mantenimientos.index');
+    Route::get('/mantenimientos/mtq', [App\Http\Controllers\mantenimientosController::class, 'indexMtq'])->name('mantenimientos.indexMtq');
+    Route::get('/mantenimientos/mtq', [App\Http\Controllers\mantenimientosController::class, 'indexMtq'])->name('mantenimientos.indexMtq');
     Route::get('/mantenimientos/nuevo/', [App\Http\Controllers\mantenimientosController::class, 'create'])->name('mantenimientos.create');
+    Route::get('/mantenimientos/nuevo/mtq', [App\Http\Controllers\mantenimientosController::class, 'createMtq'])->name('mantenimientos.createMtq');
     Route::post('/mantenimientos/nuevo/add', [App\Http\Controllers\mantenimientosController::class, 'store'])->name('mantenimientos.store');
     Route::get('/mantenimientos/editar/{id}', [App\Http\Controllers\mantenimientosController::class, 'edit'])->name('mantenimientos.edit');
     Route::get('/mantenimientos/detalle/{id}', [App\Http\Controllers\mantenimientosController::class, 'show'])->name('mantenimientos.show');
@@ -467,6 +470,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('search/equipos', [App\Http\Controllers\searchController::class, 'equipos'])->name('search.equipos');
+    Route::get('search/equiposCalendario', [App\Http\Controllers\searchController::class, 'equiposCalendario'])->name('search.equiposCalendario');
     Route::get('search/equiposMTQ', [App\Http\Controllers\searchController::class, 'equiposMTQ'])->name('search.equiposMTQ');
     Route::get('search/equiposQ2ces', [App\Http\Controllers\searchController::class, 'equiposQ2ces'])->name('search.equiposQ2ces');
     Route::get('search/materialMantenimiento', [App\Http\Controllers\searchController::class, 'materialMantenimiento'])->name('search.materialMantenimiento');
@@ -553,4 +557,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Crud facturaProvedor
     Route::resource('facturaProvedor', App\Http\Controllers\facturaProvedorController::class);
+
+    // Crud documentoSelladoMantenimiento
+    Route::resource('documentoSelladoMantenimiento', App\Http\Controllers\documentoSelladoMantenimientoController::class);
 });

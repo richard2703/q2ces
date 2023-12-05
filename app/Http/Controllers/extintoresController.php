@@ -21,7 +21,7 @@ class extintoresController extends Controller
     public function index()
     {
         $extintores = extintores::orderBy('created_at', 'desc')->paginate(15);
-        $ubicaciones = ubicaciones::all();
+        $ubicaciones = ubicaciones::all()->sortBy('nombre');
         return view('extintores.indexExtintores', compact('extintores', 'ubicaciones'));
     }
 
