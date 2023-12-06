@@ -10,8 +10,10 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use App\Helpers\Validaciones;
 use App\Models\clientes;
+use App\Models\conceptos;
 use App\Models\obraMaqPer;
 use App\Models\obraMaqPerHistorico;
+use App\Models\obrasServicios;
 use App\Models\residente;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -43,10 +45,10 @@ class obrasController extends Controller
     {
         abort_if(Gate::denies('obra_create'), 403);
 
-        $vctMaquinaria = maquinaria::select( '*' )
-        ->where( 'compania', '=', null )
-        ->where( 'estatusId', '=', 1 )
-        ->orderBy( 'maquinaria.identificador', 'asc' )->get();
+        $vctMaquinaria = maquinaria::select('*')
+            ->where('compania', '=', null)
+            ->where('estatusId', '=', 1)
+            ->orderBy('maquinaria.identificador', 'asc')->get();
         // $vctPersonal = personal::select( '*', db::raw( 'puesto.nombre AS puesto' ) )
 
         // ->join( 'puesto', 'puesto.id', '=', 'personal.puestoId' )
@@ -76,9 +78,11 @@ class obrasController extends Controller
             ->orderBy('personal.nombres', 'asc')->get();
 
         $Clientes = clientes::orderBy('clientes.nombre', 'asc')->get();
+        $servicios = conceptos::orderBy('codigo', 'asc')->get();
+        // dd($servicios);
 
         // dd( $vctPersonal );
-        return view('obra.altaObra', compact('vctMaquinaria', 'vctPersonal', 'Clientes'));
+        return view('obra.altaObra', compact('vctMaquinaria', 'vctPersonal', 'Clientes', 'servicios'));
     }
 
     /**
@@ -117,6 +121,7 @@ class obrasController extends Controller
             'ciudad.max' => 'El campo localidad excede el límite de caracteres permitidos.',
             'estado.max' => 'El campo estado excede el límite de caracteres permitidos.',
         ]);
+
 
         $objValida = new Validaciones();
 
@@ -158,11 +163,28 @@ class obrasController extends Controller
 
                     //*** realizamos el registro de movimiento */
                     $objResult = $objAsigna->registraMovimiento($request['maquinariaId'][$i], $request['personalId'][$i], $obraId, 0,  $request['combustible'][$i], $request['inicio'][$i], $request['fin'][$i]);
-
                 }
             }
             // dd( $vctDebug );
         }
+
+        if ($request->servicioId[0] != null && $request->precio[0] > 0) {
+            for ($i = 0; $i < count($request->servicioId); $i++) {
+                //*** se guarda solo si se selecciono una máquina */
+                if ($request->servicioId[$i] != '') {
+
+
+                    $objServicio = new obrasServicios();
+                    $objServicio->obraId = $obra->id;
+                    $objServicio->conceptoId  = $request->servicioId[$i];
+                    $objServicio->precio = $request->precio[$i];
+                    $objServicio->save();
+                }
+            }
+            // dd( $vctDebug );
+        }
+
+
 
         Session::flash('message', 1);
 
@@ -208,6 +230,7 @@ class obrasController extends Controller
         $vctResidenteAsignado = residente::select('*')->where('obraId', '=', $obras->id)->get();
         $Clientes = clientes::orderBy('clientes.nombre', 'asc')->get();
 
+
         return view('obra.vistaObra', compact('obras', 'vctPersonal', 'vctMaquinaria', 'vctResidenteAsignado', 'vctMaquinariaAsignada', 'Clientes'));
     }
 
@@ -222,10 +245,10 @@ class obrasController extends Controller
     {
         abort_if(Gate::denies('obra_edit'), 403);
 
-        $vctMaquinaria =  maquinaria::select( '*' )
-        ->where( 'compania', '=', null )
-        ->where( 'estatusId', '=', 1 )
-        ->orderBy( 'maquinaria.identificador', 'asc' )->get();
+        $vctMaquinaria =  maquinaria::select('*')
+            ->where('compania', '=', null)
+            ->where('estatusId', '=', 1)
+            ->orderBy('maquinaria.identificador', 'asc')->get();
 
         // $vctPersonal = personal::select( '*', db::raw( 'puesto.nombre AS puesto' ) )
         // ->join( 'puesto', 'puesto.id', '=', 'personal.puestoId' )
@@ -257,9 +280,13 @@ class obrasController extends Controller
         $vctMaquinariaAsignada = obraMaqPer::select('*')->where('obraId', '=', $obras->id)->get();
         $vctResidenteAsignado = residente::select('*')->where('obraId', '=', $obras->id)->get();
         $Clientes = clientes::orderBy('clientes.nombre', 'asc')->get();
+        $servicios = conceptos::orderBy('codigo', 'asc')->get();
+        $vctObraServicio = obrasServicios::select('*')->where('obraId', '=', $obras->id)->get();
+
+        // dd($vctObraServicio);
 
         // dd( $vctResidenteAsignado );
-        return view('obra.detalleObra', compact('obras', 'vctPersonal', 'vctMaquinaria', 'vctResidenteAsignado', 'vctMaquinariaAsignada', 'Clientes'));
+        return view('obra.detalleObra', compact('obras', 'vctPersonal', 'vctMaquinaria', 'vctResidenteAsignado', 'vctMaquinariaAsignada', 'Clientes', 'servicios', 'vctObraServicio'));
     }
 
     /**
@@ -339,7 +366,6 @@ class obrasController extends Controller
                         /*** no existe y se debe de eliminar */
 
                         $objResult = $objAsigna->eliminarReferenciaDeOperador($vctRegistrados[$i]);
-
                     } else {
                         /*** existe el registro */
                     }
@@ -356,7 +382,6 @@ class obrasController extends Controller
                 // dd($request[ 'maquinariaId' ][ $i ], $request[ 'personalId' ][ $i ],$request[ 'obraId' ], $request[ 'idObraMaqPer' ][ $i ],  $request[ 'combustible' ][ $i ], $request[ 'inicio' ][ $i ], $request[ 'fin' ][ $i ] );
                 //*** realizamos el registro de movimiento */
                 $objResult = $objAsigna->registraMovimiento($request['maquinariaId'][$i], $request['personalId'][$i], $request['obraId'], $request['idObraMaqPer'][$i],  $request['combustible'][$i], $request['inicio'][$i], $request['fin'][$i]);
-
             }
         } else {
             //*** se deben de eliminar todos los registrados */
@@ -368,9 +393,28 @@ class obrasController extends Controller
                 ) {
 
                     $objResult = $objAsigna->eliminarReferenciaDeOperador($vctRegistrados[$i]);
-
                 }
             }
+        }
+
+        $nuevaLista = collect();
+        // dd($request);
+
+        if ($request->servicioId[0] != null && $request->precio[0] > 0) {
+            # code...
+
+            for ($i = 0; $i < count($request->servicioId); $i++) {
+
+                $array = [
+                    'id' => $request->Idser[$i],
+                    'obraId' => $request->obraId,
+                    'conceptoId' => $request->servicioId[$i],
+                    'precio' => $request->precio[$i],
+                ];
+                $objRelacion = obrasServicios::updateOrCreate(['id' => $array['id']], $array);
+                $nuevaLista->push($objRelacion->id);
+            }
+            $test = obrasServicios::where('obraId', $request->obraId)->whereNotIn('id', $nuevaLista)->delete();
         }
 
         // dd( $vctDebug, $request );
