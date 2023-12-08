@@ -5,12 +5,13 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header bacTituloPrincipal">
-                        <h4 class="card-title">Mantenimientos {{ $blnEsMtq == true ? 'MTQ' :'' }}</h4>
+                        <h4 class="card-title">Mantenimientos {{ $blnEsMtq == true ? 'MTQ' : '' }}</h4>
                     </div>
                     <div class="row">
                         <div class="d-flex p-3">
                             <div class="col-8 text-end mt-4">
-                                <form action="{{ $blnEsMtq == false ? route('mantenimientos.index') : route('mantenimientos.indexMtq') }}"
+                                <form
+                                    action="{{ $blnEsMtq == false ? route('mantenimientos.index') : route('mantenimientos.indexMtq') }}"
                                     method="GET" id="filterForm">
                                     <div class="input-group">
                                         <label class="labelTitulo p-2">Estado: </label>
@@ -33,7 +34,8 @@
                             </div>
                             <div class="col-4 text-end mt-4" style="margin-left:-20px">
                                 @can('mantenimiento_create')
-                                    <a href="{{ $blnEsMtq == true ? url('/mantenimientos/nuevo/mtq') : url('/mantenimientos/nuevo')  }}">
+                                    <a
+                                        href="{{ $blnEsMtq == true ? url('/mantenimientos/nuevo/mtq') : url('/mantenimientos/nuevo') }}">
                                         <!--Agregar ruta-->
                                         <button type="button" class="btn botonGral">Añadir Mantenimiento</button>
                                     </a>
@@ -54,8 +56,7 @@
                                         <th class="labelTitulo text-center">Fecha</th>
                                         <th class="labelTitulo text-center">Costo</th>
                                         <th class="labelTitulo text-center">Estatus</th>
-
-                                        <th class="labelTitulo text-center" style="width:120px">Acciones</th>
+                                        <th class="labelTitulo text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -183,11 +184,11 @@
                                                         </svg>
                                                     </a>
                                                 @endcan
-
-
-                                                @can('mantenimiento_destroy')
-                                                    <form action="" method="POST" style="display: inline-block;"
-                                                        onsubmit="return confirm('Seguro?')">
+                                                {{-- Solo si no esta terminado se puede eliminar --}}
+                                                @can('mantenimientos_destroy')
+                                                    <form action="{{ route('mantenimientos.destroy', $item->id) }}"
+                                                        method="POST" style="display: inline-block;"
+                                                        onsubmit="return confirm('¿Estas Seguro que Deseas Eliminar Este Mantenimiento y Toda la Información Relacionada?')">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="btnSinFondo" type="submit" rel="tooltip">
@@ -202,6 +203,7 @@
                                                         </button>
                                                     </form>
                                                 @endcan
+
                                             </td>
                                         </tr>
                                     @empty

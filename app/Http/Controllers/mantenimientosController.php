@@ -21,6 +21,8 @@ use App\Models\inventarioMovimientos;
 use App\Models\personal;
 use App\Models\residente;
 use App\Models\calendarioMtq;
+use App\Models\eventos;
+use Illuminate\Database\QueryException;
 
 class mantenimientosController extends Controller
 {
@@ -104,7 +106,7 @@ class mantenimientosController extends Controller
         $vctTipos = tipoMantenimiento::select('tipoMantenimiento.*')->orderBy('tipoMantenimiento.nombre', 'asc')->get();
         // dd( $vctTipos );
         $blnEsMtq = false;
-        // dd('Q2Ces');
+        // dd( 'Q2Ces' );
         return view( 'mantenimientos.nuevoMantenimiento', compact( 'vctTipos', 'blnEsMtq' ) );
     }
 
@@ -114,7 +116,7 @@ class mantenimientosController extends Controller
         $vctTipos = tipoMantenimiento::select( 'tipoMantenimiento.*' )->orderBy( 'tipoMantenimiento.nombre', 'asc' )->get();
         // dd( $vctTipos );
         $blnEsMtq = true;
-        // dd('Mtq');
+        // dd( 'Mtq' );
         return view( 'mantenimientos.nuevoMantenimiento', compact( 'vctTipos', 'blnEsMtq' ) );
     }
 
@@ -257,7 +259,7 @@ class mantenimientosController extends Controller
 
         // dd( $gastos, $mantenimiento, $maquinaria, $vctMecanicos, $vctResidentes );
 
-        return view( 'mantenimientos.editarMantenimiento', compact( 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores','vctCoordinadoresA', 'vctResponsables', 'vctResidentes' ) );
+        return view( 'mantenimientos.editarMantenimiento', compact( 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctCoordinadoresA', 'vctResponsables', 'vctResidentes' ) );
     }
 
     /**
@@ -471,6 +473,7 @@ class mantenimientosController extends Controller
                     $mantto->fechaReal =  date('Y-m-d');
                     $mantto->mantenimientoPrint =  $maquinaria->mantenimiento;
                     $mantto->estadoId = 3;
+                    $mantto->fechaReal  =  date( 'Y-m-d' );
                     $mantto->update();
 
                     $vctItems = gastosMantenimiento::select(
@@ -539,9 +542,95 @@ class mantenimientosController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy($id)
-    {
-        abort_if(Gate::denies('mantenimiento_destroy'), '404');
-        //
+    public function destroy( $id ) {
+        abort_if ( Gate::denies( 'mantenimiento_destroy' ), '404' );
+        $debug = array();
+
+        try {
+            /** buscamos el mantenimiento */
+            $objMantto  = mantenimientos::where( 'mantenimientos.id', '=', $id )->first();
+
+            if ( $objMantto ) {
+                //*** buscamos los movimientos de inventario */
+                $vctMovimientos = inventarioMovimientos::where( 'mantenimientoId', '=', $id )->get();
+                $debug[] = 'Hay registros de movimiento de inventario' ;
+                if ( $vctMovimientos->count()>0 ) {
+                    $intCont = 1;
+                    foreach ( $vctMovimientos as $item ) {
+                        //*** existe el producto en inventario */
+                        $producto = inventario::where( 'id', $item->inventarioId )->first();
+
+                        if ( $producto ) {
+                            $debug[] = $intCont . '.- Actualizamos el item: ' . $producto->nombre;
+                            //*** regresamos la cantidad */
+                            $producto->cantidad = $producto->cantidad + $item->cantidad;
+                            $producto->save();
+
+                            //*** generamos el movimiento */
+                            $movimiento = $item->replicate();
+                            $movimiento->movimiento = 1;
+                            $movimiento->comentario = 'Se elimino el mantenimiento Id->'. $id . ', se regreso al inventario la cantidad de ' . $item->cantidad . ' unidad(es) del item '. $producto->nombre;
+                            $movimiento->usuarioId = auth()->user()->id;
+                            $movimiento->save();
+                            $debug[] = '    Se elimino el mantenimiento Id->'. $id . ', se regreso al inventario la cantidad de ' . $item->cantidad . ' unidad(es) del item '. $producto->nombre;
+                        }
+                        $intCont += 1;
+                    }
+
+                } else {
+                    $debug[] = '- Sin registros de movimientos de inventario' ;
+                }
+
+                //*** buscamos sus registro de gastos*/
+                $vctGastos = gastosMantenimiento::where( 'gastosMantenimiento.mantenimientoId', '=', $id )->get();
+                $debug[] = 'Hay gastos de mantenimiento' ;
+                if ( $vctGastos->count()>0 ) {
+                    $debug[] = '- Eliminamos ' . $vctGastos->count() . ' registros de los gastos de mantenimiento' ;
+                    $vctGastos = gastosMantenimiento::where( 'gastosMantenimiento.mantenimientoId', '=', $id )->delete();
+                } else {
+                    $debug[] = '- Sin registros de gastos de mantenimiento' ;
+                }
+
+                //*** buscamos si existe registro de programacion */
+                $objMaquinaria = maquinaria::where( 'id', '=', $objMantto->maquinariaId )->first();
+
+                $objEvento = null;
+                if ( $objMaquinaria->compania == 'mtq' ) {
+                    $debug[] = 'Hay evento en el calendario de MTQ' ;
+                    $objEvento = calendarioMtq::where( 'mantenimientoId', '=', $objMantto->id )->first();
+                    if ( $objEvento ) {
+                        $debug[] = '- Eliminamos el evento del calendario de MTQ' ;
+                        $objEvento->delete();
+                    }
+                } else {
+                    $debug[] = 'Hay evento en el calendario de Q2ces' ;
+                    $objEvento = calendarioPrincipal::where( 'mantenimientoId', '=', $objMantto->id )->first();
+                    if ( $objEvento ) {
+                        $debug[] = '- Eliminamos el evento del calendario de Q2ces' ;
+                        $objEvento->delete();
+                    }
+                }
+
+                $debug[] = 'Eliminamos el registro de mantenimiento'  ;
+                $objMantto  = mantenimientos::where( 'mantenimientos.id', '=', $id )->delete();
+            } else {
+                $debug[] = 'Sin registros de mantenimiento' ;
+            }
+
+            // Intenta eliminar
+        } catch ( QueryException $e ) {
+            if ( $e->getCode() === 23000 ) {
+                return redirect()->back()->with( 'faild', 'No Puedes Eliminar ' );
+                // Esto es un error de restricción de clave externa ( FOREIGN KEY constraint )
+                // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
+            } else {
+                return redirect()->back()->with( 'faild', 'No Puedes Eliminar si esta en uso' );
+                // Otro tipo de error de base de datos
+                // Maneja según sea necesario
+            }
+        }
+        dd( $debug );
+        return redirect()->back()->with( 'success', 'Se ha eliminado correctamente toda la información relacionada' );
+
     }
 }

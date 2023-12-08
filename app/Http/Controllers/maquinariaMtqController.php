@@ -84,7 +84,7 @@ class maquinariaMtqController extends Controller
         $request->validate([
             'identificador' => 'required|max:150|unique:maquinaria,identificador',
         ], [
-            'identificador.unique' => 'El Numero Economico Ya Existe.',
+            'identificador.unique' => 'El Numero Económico Ya Existe.',
         ]);
 
         $maquinaria = $request->all();
@@ -96,6 +96,7 @@ class maquinariaMtqController extends Controller
         $maquinaria['marcaId'] = $request->marca[0];
 
         /*** directorio contenedor de su información */
+        $maquinaria['kom'] = 'Km';
         $maquinaria['placas'] = strtoupper($maquinaria['placas']);
         $maquinaria['nummotor'] = strtoupper($maquinaria['nummotor']);
         $maquinaria['numserie'] = strtoupper($maquinaria['numserie']);

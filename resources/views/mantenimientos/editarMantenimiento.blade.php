@@ -564,6 +564,20 @@
                                                                                                             <div
                                                                                                                 class="col-2 ">
                                                                                                                 <input
+                                                                                                                        onblur="sumarItems()"
+                                                                                                                        onchange="sumarItems()"
+                                                                                                                        type="number"
+                                                                                                                        maxlength="10"
+                                                                                                                        min="1"
+                                                                                                                        required
+                                                                                                                        max="99999999"
+                                                                                                                        step="1"
+                                                                                                                        class="inputCaja text-end"
+                                                                                                                        id="precioUnitario"
+                                                                                                                        placeholder="Ej. 1"
+                                                                                                                        name="precioUnitario[]"
+                                                                                                                        value="{{ $item->costo }}">
+                                                                                                                {{-- <input
                                                                                                                     type="text"
                                                                                                                     readonly
                                                                                                                     required
@@ -571,7 +585,7 @@
                                                                                                                     id="precioUnitario"
                                                                                                                     placeholder="Ej. 1"
                                                                                                                     name="precioUnitario[]"
-                                                                                                                    value="$ {{ $item->costo }}">
+                                                                                                                    value="$ {{ $item->costo }}"> --}}
                                                                                                             </div>
 
                                                                                                             <div

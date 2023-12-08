@@ -365,6 +365,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/mantenimientos/editar/{id}', [App\Http\Controllers\mantenimientosController::class, 'edit'])->name('mantenimientos.edit');
     Route::get('/mantenimientos/detalle/{id}', [App\Http\Controllers\mantenimientosController::class, 'show'])->name('mantenimientos.show');
     Route::put('/mantenimiento/editar/{id}/update', [App\Http\Controllers\mantenimientosController::class, 'update'])->name('mantenimientos.update');
+    Route::delete('/mantenimiento/{mantenimiento}', [App\Http\Controllers\mantenimientosController::class, 'destroy'])->name('mantenimientos.destroy');
 
     //*** operaciones con reparaciones */
     // Route::post('/calendario/reparaciones/nuevo', [App\Http\Controllers\reparacionesController::class, 'store'])->name('reparaciones.store');
@@ -436,6 +437,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/checkList/registros/editar/{id}', [App\Http\Controllers\checkListRegistrosController::class, 'show'])->name('checkListRegistros.show');
     Route::put('/checkList/registros/editar/', [App\Http\Controllers\checkListRegistrosController::class, 'update'])->name('checkListRegistros.update');
     Route::get('/checkList/programacion', [App\Http\Controllers\checkListController::class, 'programacion'])->name('checkList.programacion');
+    Route::delete('/checkList/programacion/{checklist}', [App\Http\Controllers\checkListController::class, 'programacionDelete'])->name('checkList.programacionDelete');
     Route::get('/checkList/pendientes', [App\Http\Controllers\checkListController::class, 'pendientes'])->name('checkList.pendientes');
     Route::post('/checkList/asignacion/trabajo', [App\Http\Controllers\checkListController::class, 'asignacion'])->name('checkList.asignacion');
     Route::put('/checkList/asignacion/actualizar/', [App\Http\Controllers\checkListController::class, 'updateAsignacion'])->name('checkList.updateAsignacion');
@@ -444,6 +446,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/checkList/planeacion/registrar/', [App\Http\Controllers\checkListController::class, 'updatePlaneacion'])->name('checkList.updatePlaneacion');
 
     Route::get('checkList/ticket/{id}', [App\Http\Controllers\checkListController::class, 'printTicketUsuario'])->name('checkList.printTicketUsuario');
+    Route::delete('/checkList/{checklist}', [App\Http\Controllers\checkListController::class, 'destroy'])->name('checkList.destroy');
 
     // Route::get('checkList/ticketCerrado/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'checkListController'])->name('checkList.printTicketCheckList');
 
