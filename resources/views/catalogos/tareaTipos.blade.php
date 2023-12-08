@@ -89,7 +89,7 @@
                                                         @can('tarea_edit')
                                                             <a href="#" class="" data-bs-toggle="modal"
                                                                 data-bs-target="#editarItem"
-                                                                onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->requiereAsistencia }}','{{ $item->usaCajaChica }}','{{ $item->comentario }}')">
+                                                                onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->requiereAsistencia }}','{{ $item->usaCajaChica }}','{{ $item->comentario }}','{{ $item->imagen }}')">
                                                                 <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                     height="28" fill="currentColor"
                                                                     class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -147,19 +147,36 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('tareaTipo.store') }}" method="post">
+                    <form class="row d-flex" action="{{ route('tareaTipo.store') }}" method="post"
+                        enctype="multipart/form-data">
                         @csrf
                         {{-- <input type="hidden" name="userId" id="userId" value="{{ $usuario->id }}"> --}}
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Nombre:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="nombre" name="nombre"
-                                value="{{ old('nombre') }}" required placeholder="Especifique...">
-                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class=" col-12  mb-3 ">
+                                    <label class="labelTitulo">Nombre:<span>*</span></label></br>
+                                    <input type="text" class="inputCaja" id="nombre" name="nombre"
+                                        value="{{ old('nombre') }}" required placeholder="Especifique...">
+                                </div>
 
-                        <div class=" col-12  mb-3 ">
-                            <label class="labelTitulo">Comentarios:</label></br>
-                            <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario"
-                                spellcheck="true"></textarea>
+                                <div class="col-12  mb-3 ">
+                                    <label class="labelTitulo">Comentarios:</label></br>
+                                    <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario"
+                                        spellcheck="true"></textarea>
+                                </div>
+
+                            </div>
+                            <div class="col-4">
+                                <div class=" col-12  mb-3 text-center mx-auto border mb-4">
+                                    <i><img class="imgVista img-fluid " src="{{ asset('/img/general/default.jpg') }}"></i>
+                                    <span class="mi-archivo">
+                                        <input class="mb-4 ver" type="file" name="imagen" id="mi-archivo"
+                                            accept="image/*"></span>
+                                    <label for="mi-archivo">
+                                        <span>Subir Icono</span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="modal-footer">
@@ -183,23 +200,41 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('tareaTipo.update', 0) }}" method="post">
+                    <form class="row d-flex" action="{{ route('tareaTipo.update', 0) }}" method="post"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('put')
-                        <input type="hidden" name="controlId" id="controlId" value="">
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Nombre:</label></br>
-                            <input type="text" class="inputCaja" id="controlNombre" name="nombre" value="">
-                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                <input type="hidden" name="controlId" id="controlId" value="">
+                                <div class=" col-12 mb-3 ">
+                                    <label class="labelTitulo">Nombre:</label></br>
+                                    <input type="text" class="inputCaja" id="controlNombre" name="nombre"
+                                        value="">
+                                </div>
 
-                        <div class=" col-12  mb-3 ">
-                            <label class="labelTitulo">Comentarios:</label></br>
-                            <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="controlComentarios" name="comentario"></textarea>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn botonGral" id="btnTareaGuardar">Guardar cambios</button>
-                        </div>
+                                <div class=" col-12  mb-3 ">
+                                    <label class="labelTitulo">Comentarios:</label></br>
+                                    <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="controlComentarios" name="comentario"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class=" col-12 mb-3 text-center mx-auto border mb-4">
+                                    <i><img class="imgVista img-fluid " id="vistaPrevia"
+                                            src="{{ asset('/img/general/default.jpg') }}"></i>
+                                    <span class="ControlImagen">
+                                        <input class="mb-4 ver" type="file" name="ControlImagen" id="ControlImagen"
+                                            accept="image/*"></span>
+                                    <label for="ControlImagen">
+                                        <span>Subir Icono</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn botonGral" id="btnTareaGuardar">Guardar
+                                    cambios</button>
+                            </div>
 
                     </form>
                 </div>
@@ -247,7 +282,7 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, asistencia, caja, comentarios) {
+        function cargaItem(id, nombre, asistencia, caja, comentarios, imagen) {
 
             const txtId = document.getElementById('controlId');
             txtId.value = id;
@@ -258,6 +293,13 @@
             const txtComentarios = document.getElementById('controlComentarios');
             txtComentarios.value = comentarios;
 
+            const ctrlImagen = document.getElementById('vistaPrevia');
+
+            if (imagen !== '') {
+                ctrlImagen.src = '/storage/interfaz/tareas/' + imagen;
+            } else {
+                ctrlImagen.src = '/img/general/defaultinventario.jpg';
+            }
         }
     </script>
 @endsection

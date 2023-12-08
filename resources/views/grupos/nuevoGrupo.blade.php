@@ -27,20 +27,38 @@
                                         <div class="col-12 my-4">
                                             <div class="row">
 
-                                                <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
-                                                    <label class="labelTitulo">Nombre: <span>*</span></label></br>
-                                                    <input type="text" required maxlength="250" id="nombre" name="nombre"
-                                                        placeholder="Especifique el nombre del grupo." class="inputCaja">
+                                                <div class="col-8">
+
+                                                    <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
+                                                        <label class="labelTitulo">Nombre: <span>*</span></label></br>
+                                                        <input type="text" required maxlength="250" id="nombre"
+                                                            name="nombre" placeholder="Especifique el nombre del grupo."
+                                                            class="inputCaja">
+                                                    </div>
+
+                                                    <div class=" col-12 col-sm-6  col-lg-12 my-6 mt-2 pt-2">
+                                                        <label for="exampleFormControlTextarea1"
+                                                            class="labelTitulo">Descripción
+                                                            del Grupo de Tareas: <span>*</span></label>
+                                                        <textarea class="form-select" id="exampleFormControlTextarea1" rows="3" maxlength="1000" required id="comentario"
+                                                            name="comentario" placeholder="Escribe aquí tus comentarios sobre el grupo."></textarea>
+                                                    </div>
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
-                                                    <label for="exampleFormControlTextarea1" class="labelTitulo">Descripción
-                                                        del Grupo de Tareas: <span>*</span></label>
-                                                    <textarea class="form-select" id="exampleFormControlTextarea1" rows="3" maxlength="1000" required  id="comentario" name="comentario"
-                                                        placeholder="Escribe aquí tus comentarios sobre el grupo."></textarea>
-                                                </div>
+                                                <div class="col-4">
 
-                                                <input type="hidden" name="activa" id="activa" value="1">
+                                                    <div class="text-center mx-auto border mb-4">
+                                                        <i><img class="imgVista img-fluid "
+                                                                src="{{ asset('/img/general/default.jpg') }}"></i>
+                                                        <span class="mi-archivo">
+                                                            <input class="mb-4 ver" type="file" name="imagen"
+                                                                id="mi-archivo" accept="image/*"></span>
+                                                        <label for="mi-archivo">
+                                                            <span>Subir Icono</span>
+                                                        </label>
+                                                    </div>
+                                                    <input type="hidden" name="activa" id="activa" value="1">
+                                                </div>
 
 
                                                 <div class="col-12 text-center mt-5 pt-5">

@@ -389,7 +389,7 @@
                                                                             aria-label="Default select example"
                                                                             name="kom">
                                                                             <option value="Km">Km</option>
-                                                                            <option value="Ml">Ml</option>
+                                                                            <option value="Mi">Mi</option>
                                                                             <option value="Hr">Hr</option>
                                                                         </select>
                                                                     </div>

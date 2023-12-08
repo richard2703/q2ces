@@ -460,8 +460,8 @@
                                                                             <option value="Km"
                                                                                 {{ $maquinaria->kom == 'Km' ? ' selected' : '' }}>
                                                                                 Km</option>
-                                                                            <option value="Ml"
-                                                                                {{ $maquinaria->kom == 'MI' ? ' selected' : '' }}>
+                                                                            <option value="Mi"
+                                                                                {{ $maquinaria->kom == 'Mi' ? ' selected' : '' }}>
                                                                                 Ml</option>
                                                                             <option value="Hr"
                                                                                 {{ $maquinaria->kom == 'Hr' ? ' selected' : '' }}>

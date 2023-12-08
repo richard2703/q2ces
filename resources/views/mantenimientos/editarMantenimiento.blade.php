@@ -377,11 +377,11 @@
                                                                                                                 id="precioUnitario"
                                                                                                                 placeholder="Ej. 1"
                                                                                                                 name="precioUnitario[]"
-                                                                                                                value="$ {{ $item->valor }}">
+                                                                                                                value="{{ $item->valor }}">
                                                                                                         </div>
 
                                                                                                         <div
-                                                                                                            class="col-8">
+                                                                                                            class="col-6">
 
                                                                                                             <textarea rows="2" cols="80" class="form-control form-select" id="descripcion" readonly
                                                                                                                 name="descripcion[]" value="">{{ $item->articulo . ', Marca: ' . $item->marca . ', Modelo: ' . $item->modelo }} </textarea>
@@ -563,29 +563,32 @@
 
                                                                                                             <div
                                                                                                                 class="col-2 ">
-                                                                                                                <input
+                                                                                                                @if ($mantenimiento->estadoId < 3)
+                                                                                                                    <input
                                                                                                                         onblur="sumarItems()"
                                                                                                                         onchange="sumarItems()"
                                                                                                                         type="number"
                                                                                                                         maxlength="10"
                                                                                                                         min="1"
                                                                                                                         required
-                                                                                                                        max="99999999"
-                                                                                                                        step="1"
+                                                                                                                        max="999999999"
+                                                                                                                        step="0.01"
                                                                                                                         class="inputCaja text-end"
                                                                                                                         id="precioUnitario"
                                                                                                                         placeholder="Ej. 1"
                                                                                                                         name="precioUnitario[]"
                                                                                                                         value="{{ $item->costo }}">
-                                                                                                                {{-- <input
-                                                                                                                    type="text"
-                                                                                                                    readonly
-                                                                                                                    required
-                                                                                                                    class="inputCaja text-end"
-                                                                                                                    id="precioUnitario"
-                                                                                                                    placeholder="Ej. 1"
-                                                                                                                    name="precioUnitario[]"
-                                                                                                                    value="$ {{ $item->costo }}"> --}}
+                                                                                                                @else
+                                                                                                                    <input
+                                                                                                                        type="text"
+                                                                                                                        readonly
+                                                                                                                        required
+                                                                                                                        class="inputCaja text-end"
+                                                                                                                        id="precioUnitario"
+                                                                                                                        placeholder="Ej. 1"
+                                                                                                                        name="precioUnitario[]"
+                                                                                                                        value="{{ $item->costo }}">
+                                                                                                                @endif
                                                                                                             </div>
 
                                                                                                             <div
@@ -856,13 +859,13 @@
 
             for (var i = 0; i < arrCantidad.length; i++) {
                 let intCantidad = parseFloat(document.getElementsByName('cantidad[]')[i].value).toFixed(2);
-                let intValor = parseFloat(document.getElementsByName('costo[]')[i].value).toFixed(2);
+                let intValor = parseFloat(document.getElementsByName('precioUnitario[]')[i].value).toFixed(2);
                 decSubtotal += intCantidad * intValor;
                 console.log(intCantidad + ' x ' + intValor + ' = ' + (intCantidad * intValor));
             }
 
             decIva = decSubtotal * 0.16;
-            decTotal =  decSubtotal + decIva ;
+            decTotal = decSubtotal + decIva;
 
             console.log('Subtotal: ' + decSubtotal);
             console.log('Iva: ' + decIva);
@@ -1006,7 +1009,7 @@
             html += '      </div>';
             html += '      <div class="col-2 ">';
             html +=
-                '           <input type="text" class="inputCaja text-end" id="precioUnitario" placeholder="Ej. 1" name="precioUnitario[]" value="$ ' +
+                '           <input type="text" class="inputCaja text-end" id="precioUnitario" placeholder="Ej. 1" name="precioUnitario[]" value="' +
                 costo + '">';
             html += '      </div>';
             html += '      <div class="col-6">';
@@ -1044,13 +1047,14 @@
             html += '      <input type="hidden" name="concepto[]" id="concepto" value="' + concepto + '">';
             html += '      <input type="hidden" name="numeroParte[]" id="numeroParte" value="' + numparte + '">';
             html += '      <div class="col-2 ">';
-            html +=
-                '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="" onchange="sumarItems()" onblur="sumarItems()" >';
+            html += '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="" onchange="sumarItems()" onblur="sumarItems()" >';
             html += '      </div>';
             html += '      <div class="col-2 ">';
-            html +=
-                '           <input type="text" class="inputCaja text-end" id="precioUnitario" placeholder="Ej. 1" name="precioUnitario[]" value="$ ' +
-                costo + '">';
+            // html +=
+            //     '           <input type="text" class="inputCaja text-end" id="precioUnitario" placeholder="Ej. 1" name="precioUnitario[]" value="' +
+            //     costo + '">';
+                html +='           <input type="number" maxlength="10" min="1" required max="999999999" step="0.01" class="inputCaja text-end" id="precioUnitario" placeholder="Ej. 123.55" name="precioUnitario[]" value="' +
+                costo + '" onchange="sumarItems()" onblur="sumarItems()">';
             html += '      </div>';
 
             html += '      <div class="col-6">';

@@ -244,7 +244,7 @@
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ url('/mantenimientos/nuevo') }}" class="">
-                                    <i class="bi bi-circle"></i><span>Nuevo Mantenimeinto</span>
+                                    <i class="bi bi-circle"></i><span>Nuevo Mantenimiento</span>
                                 </a>
                             </li>
                         @endcan

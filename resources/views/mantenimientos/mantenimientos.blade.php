@@ -28,6 +28,9 @@
                                             <option value="3" {{ request('estatus') == 3 ? 'selected' : '' }}>
                                                 Terminado
                                             </option>
+                                            <option value="4" {{ request('estatus') == 4 ? 'selected' : '' }}>
+                                                Borrado
+                                            </option>
                                         </select>
                                     </div>
                                 </form>
@@ -46,6 +49,16 @@
                     </div>
                     <div class="d-flex p-3 divBorder w-100" style="margin-top:-10px"></div>
                     <div class="card-body">
+                        @if (session('success'))
+                            <div class="alert alert-success" role="success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        @if (session('faild'))
+                            <div class="alert alert-danger" role="faild">
+                                {{ session('faild') }}
+                            </div>
+                        @endif
                         <div class="table-responsive">
                             <table class="table">
                                 <thead class="labelTitulo">
@@ -136,8 +149,8 @@
                                                                 <i class="fas fa-print" style="color: #8caf48; font-size: x-large;"></i>
                                                             </button>
                                                         @endif
-                                                        
-                                                    @endcan    
+
+                                                    @endcan
                                                 </form>
 
                                                 <form id="printForm" action="{{ route('printMantenimiento.get') }}" method="GET" style="display: inline-block;">
@@ -163,7 +176,7 @@
                                                     @can('mantenimientoPrintCostos_show')
                                                         <input type="hidden" name="mecanico" value="false">
                                                         <input type="hidden" name="id" value={{$item->id}}>
-                                                        
+
                                                         @if ($item->estadoId == 3)
                                                             <button class="btnSinFondo" type="submit">
                                                                 <i class="fas fa-solid fa-file-signature" style="{{ $item->documentoSellado == 1 ? 'color: green; font-size: x-large;' : 'color: red; font-size: x-large;' }}"

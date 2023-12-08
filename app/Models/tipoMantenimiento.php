@@ -17,6 +17,10 @@ class tipoMantenimiento extends Model
         'codigo',
         'comentario',
         'color',
-        'activo'
+        'activo',
+        'imagen',
+        'proximaRevisionKm',
+        'proximaRevisionMi',
+        'proximaRevisionHr'
     ];
 }
