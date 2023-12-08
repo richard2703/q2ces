@@ -72,6 +72,8 @@ if (checkboxInput.checked) {
 		// Resto del código que utilizas para manejar los eventos, pero ahora con el ID proporcionado
 		var facturaInput = document.getElementById(id);
 		var nullInput = document.getElementById(nombre);
+
+		document.getElementById('modificacion' + id).value = '1';
 		
 		var downloadFacturaButton = document.getElementById("downloadButton" + id);
 		var removeFacturaButton = document.getElementById("removeButton" + id);

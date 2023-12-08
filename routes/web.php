@@ -37,7 +37,6 @@ Route::get('/', function () {
 Route::get('/usuarios/export', [App\Http\Controllers\UserController::class, 'export'])->name('users.export');
 Route::get('/asistencia/export', [App\Http\Controllers\asistenciaController::class, 'export'])->name('asistencia.export');
 
-
 // //Mantenimiento
 // Route::get('/mantenimientos', function () {
 //     return view('mantenimientos.mantenimientos');
@@ -342,6 +341,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('calendarioPrincipal', App\Http\Controllers\calendarioPrincipalController::class);
     Route::put('calendarioPrincipal/editar/{evento}', [App\Http\Controllers\calendarioPrincipalController::class, 'update'])->name('calendarioPrincipal.update');
     Route::resource('actividades', App\Http\Controllers\actividadesController::class);
+    Route::resource('eventosImportantes', App\Http\Controllers\eventoImportanteController::class);
     // Route::get('/calendario', [App\Http\Controllers\calendarioController::class, 'index'])->name('calendarioPrincipal.index');
     // Route::get('/calendario2', [App\Http\Controllers\calendarioController::class, 'index2'])->name('calendarioPrincipal.index2');
     // Route::get('/calendario/{anio}/{mes}', [App\Http\Controllers\calendarioController::class, 'reloadCalendario'])->name('calendario.reloadCalendario');
@@ -522,6 +522,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/check-permission/{permission}', 'App\Http\Controllers\calendarioMtqController@checkPermission');
     Route::get('/check-permission-calendarioPrincipal/{permission}', 'App\Http\Controllers\calendarioPrincipalController@checkPermission');
     Route::get('/solicitud-detalle/{solicitudId}', 'App\Http\Controllers\calendarioPrincipalController@solicitudDetalle');
+
     // Route::get('/autos-asignados-mtq/{autoId}', 'App\Http\Controllers\maquinariaMtqController@autoAsignado');
 
     // Import Excel
@@ -560,4 +561,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Crud documentoSelladoMantenimiento
     Route::resource('documentoSelladoMantenimiento', App\Http\Controllers\documentoSelladoMantenimientoController::class);
+
+    // Route::get('/generarDiasFeriados/{days}', 'App\Http\Controllers\calendarioPrincipalController@generarDiasFeriados');
+    Route::post('/generarDiasFeriados', 'App\Http\Controllers\calendarioPrincipalController@generarDiasFeriados');
 });

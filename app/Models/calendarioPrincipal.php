@@ -22,7 +22,6 @@ class calendarioPrincipal extends Model
         'solicitudesId',
         'actividadesId',
         'eventosId',
-        'fecha',
         'descripcion',
         'estatus',
         'color',

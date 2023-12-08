@@ -1059,6 +1059,9 @@
                                                                 <input type="hidden" id='{{ $doc->idDoc }}'
                                                                     name='archivo[{{ $contador }}][idDoc]'
                                                                     value='{{ $doc->idDoc }}'>
+                                                                
+                                                                <input type="hidden" id='modificacion{{ $doc->id }}' name='archivo[{{ $contador }}][modificacionDocs]' value='0'>
+
                                                                 <input type="hidden" id='{{ $doc->nombre }}'
                                                                     name='archivo[{{ $contador }}][tipoDocs]'
                                                                     value='{{ $doc->id }}'>
@@ -1154,6 +1157,7 @@
                                                                 <input type="hidden" id=''
                                                                     name='archivo[{{ $contador }}][idDoc]'
                                                                     value='{{ $doc->idDoc }}'>
+                                                                <input type="hidden" id='modificacion{{ $doc->id }}' name='archivo[{{ $contador }}][modificacionDocs]' value='0'>
                                                                 <input type="hidden" id='{{ $doc->nombre }}'
                                                                     name='archivo[{{ $contador }}][tipoDocs]'
                                                                     value='{{ $doc->id }}'>
@@ -1505,6 +1509,7 @@
             if (ruta != null) {
                 console.log('ruta');
                 handleDocumento(id);
+                document.getElementById('modificacion' + id).value = '1';
 
             }
         }
