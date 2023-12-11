@@ -73,7 +73,7 @@
                                 class="alertaGuardar" enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
-
+                                <input type="hidden" name="userId" id="userId" value="{{ auth()->user()->id }}">
                                 <div class="d-md-flex p-3">
                                     <div class="col-12 col-md-4 px-2 ">
                                         <div class="text-center mx-auto border  mb-4">
@@ -1509,7 +1509,7 @@
             if (ruta != null) {
                 console.log('ruta');
                 handleDocumento(id);
-                document.getElementById('modificacion' + id).value = '1';
+                
 
             }
         }

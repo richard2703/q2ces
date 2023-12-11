@@ -214,9 +214,11 @@ class calendarioPrincipalController extends Controller
             $eventoCalendario = new calendarioPrincipal();
             $eventoCalendario->title = 'Feriado: ' . $dia['name']; // Accede a 'name' dentro de cada día
             $eventoCalendario->start = strtoupper($dia['date']); // Accede a 'date' dentro de cada día
-            $eventoCalendario->descripcion = 'Este dia es festivo porque es: ' . $dia['name']; // Accede a 'name' dentro de cada día
+            $eventoCalendario->descripcion = 'Este día es festivo porque es: ' . $dia['name']; // Accede a 'name' dentro de cada día
             $eventoCalendario->color = '#a6ce34';
             $eventoCalendario->tipoEvento = 'DiaFeriado';
+            $eventoCalendario->estadoId = 3;
+            $eventoCalendario->userId = 1;
             $eventoCalendario->save();
         }
 

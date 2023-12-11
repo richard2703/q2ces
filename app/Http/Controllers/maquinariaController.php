@@ -333,7 +333,7 @@ class maquinariaController extends Controller
                         $eventoCalendario->color = '#f70202';
                         $eventoCalendario->tipoEvento = 'ExpiranDocumentos';
                         $eventoCalendario->userId = $maquinaria['userId'];
-                        $eventoCalendario->estadoId = 1;
+                        $eventoCalendario->estadoId = 3;
                         // dd($eventoCalendario);
                         $eventoCalendario->save();
                     }
@@ -744,14 +744,14 @@ class maquinariaController extends Controller
                             if ($request->archivo[$i]['modificacionDocs'] == 1) {
                                 $eventoCalendario = new calendarioPrincipal();
                                 $eventoCalendario->maquinariaId = $maquinaria->id;
-                                $eventoCalendario->title = 'Expira documento: ' . $request->archivo[$i]['tipoDocsNombre'];
+                                $eventoCalendario->title = 'Expira Documento: ' . $request->archivo[$i]['tipoDocsNombre'];
                                 $eventoCalendario->end = strtoupper($documento['fechaVencimiento'] . ' ' . '23:00:00');
                                 $eventoCalendario->start = strtoupper($documento['fechaVencimiento'] . ' ' . '01:00:00');
                                 $eventoCalendario->descripcion = 'Expiración del Documento: ' . $request->archivo[$i]['tipoDocsNombre'] . ' Perteneciente al Equipo: ' . $maquinaria->nombre . ', con Placas: ' . $maquinaria->placas . ', y N/Económico: ' . $maquinaria->identificador;
                                 $eventoCalendario->color = '#f70202';
                                 $eventoCalendario->tipoEvento = 'ExpiranDocumentos';
                                 $eventoCalendario->userId = $data['userId'];
-                                $eventoCalendario->estadoId = 1;
+                                $eventoCalendario->estadoId = 3;
                                 // dd($eventoCalendario);
                                 $eventoCalendario->save();
                             }
