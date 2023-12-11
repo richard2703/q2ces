@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Calculos;
 use App\Models\serviciosTrasporte;
 use App\Http\Controllers\Controller;
+use App\Models\almacenServicios;
 use App\Models\almacenTiraderos;
 use App\Models\cajaChica;
 use App\Models\clientes;
@@ -13,6 +14,7 @@ use App\Models\conceptos;
 use App\Models\conceptosServiciosTrasporte;
 use App\Models\maquinaria;
 use App\Models\obras;
+use App\Models\obrasServicios;
 use App\Models\personal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -431,5 +433,56 @@ class serviciosTrasporteController extends Controller
         // dd($sumaPendientes, $Cpagados);
 
         return view('serviciosTrasporte.indexServicios', compact('registros', 'sumaPendientes', 'totalPendientes', 'sumaPagados', 'totalPagados', 'quincena', 'hoy', 'reporte'));
+    }
+
+    public function obrasXconcepto($conceptoId)
+    {
+        $data = obrasServicios::select('obrasServicios.precio', 'obrasServicios.conceptoId', 'obras.id', 'obras.nombre')
+            ->join('obras', 'obrasServicios.obraId', 'obras.id')
+            ->where('conceptoId', $conceptoId)
+            ->get();
+
+        return response()->json($data);
+        // return response()->json(['hasPermission' => $hasPermission]);
+
+    }
+
+    public function obrasXconceptoPrecio($conceptoId, $obraId)
+    {
+        $data = obrasServicios::select('obrasServicios.precio', 'obrasServicios.conceptoId', 'obras.id', 'obras.nombre')
+            ->join('obras', 'obrasServicios.obraId', 'obras.id')
+            ->where('conceptoId', $conceptoId)
+            ->where('obraId', $obraId)
+            ->first();
+
+        return response()->json($data);
+        // return response()->json(['hasPermission' => $hasPermission]);
+
+    }
+
+    public function almacenXconcepto($conceptoId)
+    {
+        // dd($conceptoId);
+        $data = almacenServicios::select('almacenServicios.precio', 'almacenServicios.conceptoId', 'almacenTiraderos.id', 'almacenTiraderos.nombre')
+            ->join('almacenTiraderos', 'almacenServicios.almacenId', 'almacenTiraderos.id')
+            ->where('almacenServicios.conceptoId', $conceptoId)
+            ->get();
+
+        return response()->json($data);
+        // return response()->json(['hasPermission' => $hasPermission]);
+
+    }
+
+    public function almacenXconceptoPrecio($conceptoId, $almacenId)
+    {
+        $data = almacenServicios::select('almacenServicios.precio', 'almacenServicios.conceptoId', 'almacenTiraderos.id', 'almacenTiraderos.nombre')
+            ->join('almacenTiraderos', 'almacenServicios.almacenId', 'almacenTiraderos.id')
+            ->where('conceptoId', $conceptoId)
+            ->where('almacenId', $almacenId)
+            ->first();
+
+        return response()->json($data);
+        // return response()->json(['hasPermission' => $hasPermission]);
+
     }
 }

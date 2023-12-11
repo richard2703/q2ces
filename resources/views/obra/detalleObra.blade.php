@@ -376,6 +376,7 @@
                                                     {{--  <input type="hidden" name="idRefaccion[]" value="">  --}}
                                                     <div class=" col-12 col-sm-6  my-3 ">
                                                         <label class="labelTitulo">Servicio:</label></br>
+                                                        <input type="hidden" name="Idser[]" value="">
                                                         <select id="tipoRefaccion" name='servicioId[]' class="form-select">
                                                             <option value="">Seleccione</option>
                                                             @foreach ($servicios as $item)

@@ -418,6 +418,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('serviciosTrasporte/ticketCerrado/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'printTicketCerrado'])->name('serviciosTrasporte.printTicketCerrado');
     Route::post('serviciosTrasporte/reporte', [App\Http\Controllers\serviciosTrasporteController::class, 'reporte'])->name('serviciosTrasporte.reporte');
     Route::post('serviciosTrasporte/reporte/imprimir', [App\Http\Controllers\printController::class, 'printServicios'])->name('serviciosTrasporte.impresion');
+    Route::get('serviciosTrasporte/obrasXconcepto/{conceptoId}', [App\Http\Controllers\serviciosTrasporteController::class, 'obrasXconcepto'])->name('serviciosTrasporte.obrasXconcepto');
+    Route::get('serviciosTrasporte/obrasXconceptoPrecio/{conceptoId}/{obraId}', [App\Http\Controllers\serviciosTrasporteController::class, 'obrasXconceptoPrecio'])->name('serviciosTrasporte.obrasXconceptoPrecio');
+    Route::get('serviciosTrasporte/almacenXconcepto/{conceptoId}', [App\Http\Controllers\serviciosTrasporteController::class, 'almacenXconcepto'])->name('serviciosTrasporte.almacenXconcepto');
+    Route::get('serviciosTrasporte/almacenXconceptoPrecio/{conceptoId}/{obraId}', [App\Http\Controllers\serviciosTrasporteController::class, 'almacenXconceptoPrecio'])->name('serviciosTrasporte.almacenXconceptoPrecio');
+
     Route::resource('serviciosTrasporte', App\Http\Controllers\serviciosTrasporteController::class);
 
     // Conceptos

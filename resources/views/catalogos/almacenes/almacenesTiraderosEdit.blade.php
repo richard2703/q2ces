@@ -71,25 +71,24 @@
                                 @can('obra_assign_maquinaria')
                                     <div class="row card-body" id="elementosB">
 
-                                        @forelse ($vctAlmacenServicio as $servicio)
-                                            <div class="d-flex p-3">
-                                                <div class="col-12" id="elementos">
-                                                    <div class="d-flex">
-                                                        <div class="col-6 divBorder">
-                                                            <h2 class="tituloEncabezado ">Servicios de obra</h2>
-                                                        </div>
-
-                                                        <div class="col-6 divBorder pb-3 text-end">
-                                                            <button type="button" class="btnVerde" onclick="crearItems()">
-                                                            </button>
-                                                        </div>
+                                        <div class="d-flex p-3">
+                                            <div class="col-12" id="elementos">
+                                                <div class="d-flex">
+                                                    <div class="col-6 divBorder">
+                                                        <h2 class="tituloEncabezado ">Servicios de obra</h2>
                                                     </div>
+
+                                                    <div class="col-6 divBorder pb-3 text-end">
+                                                        <button type="button" class="btnVerde" onclick="crearItems()">
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                @forelse ($vctAlmacenServicio as $servicio)
                                                     <div class="row opcion divBorderItems" id="opc">
-                                                        {{--  <input type="hidden" name="idRefaccion[]" value="">  --}}
                                                         <div class=" col-12 col-sm-6  my-3 ">
                                                             <label class="labelTitulo">Servicio:</label></br>
                                                             <input type="hidden" name="Idser[]" value="{{ $item->id }}">
-                                                            <select id="tipoRefaccion" name='servicioId[]' class="form-select">
+                                                            <select id="servicioId" name='servicioId[]' class="form-select">
                                                                 <option value="">Seleccione</option>
                                                                 @foreach ($servicios as $item)
                                                                     <option value="{{ $item->id }}"
@@ -113,28 +112,12 @@
                                                         </div>
 
                                                     </div>
-
-                                                </div>
-                                            </div>
-                                        @empty
-                                            <div class="d-flex p-3">
-                                                <div class="col-12" id="elementos">
-                                                    <div class="d-flex">
-                                                        <div class="col-6 divBorder">
-                                                            <h2 class="tituloEncabezado ">Servicios de obra</h2>
-                                                        </div>
-
-                                                        <div class="col-6 divBorder pb-3 text-end">
-                                                            <button type="button" class="btnVerde" onclick="crearItems()">
-                                                            </button>
-                                                        </div>
-                                                    </div>
+                                                @empty
                                                     <div class="row opcion divBorderItems" id="opc">
-                                                        {{--  <input type="hidden" name="idRefaccion[]" value="">  --}}
                                                         <div class=" col-12 col-sm-6  my-3 ">
                                                             <label class="labelTitulo">Servicio:</label></br>
-                                                            <select id="tipoRefaccion" name='servicioId[]'
-                                                                class="form-select">
+                                                            <input type="hidden" name="Idser[]" value="">
+                                                            <select id="tipoRefaccion" name='servicioId[]' class="form-select">
                                                                 <option value="">Seleccione</option>
                                                                 @foreach ($servicios as $item)
                                                                     <option value="{{ $item->id }}">
@@ -157,10 +140,9 @@
                                                         </div>
 
                                                     </div>
-
-                                                </div>
+                                                @endforelse
                                             </div>
-                                        @endforelse
+                                        </div>
                                     </div>
                                 @endcan
 
