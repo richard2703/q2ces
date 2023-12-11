@@ -269,7 +269,7 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('ticketDescarga_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('ticketDescarga_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('ticketDescarga_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
-     
+
 INSERT INTO permissions (name, guard_name, created_at, updated_at) VALUES
 	 ('mantenimientoPrintCostos_show','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 
@@ -398,6 +398,7 @@ create table tareaTipo(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     nombre varchar(200) not NULL,
     comentario text NULL,
+    imagen VARCHAR(255) NULL,
     primary key (id)
 );
 
@@ -517,6 +518,7 @@ create table grupo(
     nombre varchar(255) NULL,
     comentario text NULL,
     activo TINYINT(1) NOT NULL DEFAULT '1',
+    imagen VARCHAR(255) NULL,
     created_at datetime NULL,
     updated_at datetime NULL,
     primary key (id)
@@ -562,8 +564,15 @@ create table comprobante(
 create table tipoMantenimiento(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     nombre varchar(200) not NULL,
+    codigo varchar(255),
     comentario text NULL,
-    color varchar(255);
+    color varchar(255),
+    proximaRevisionKm int(10) NULL,
+    proximaRevisionMi int(10) NULL,
+    proximaRevisionHr int(10) NULL,
+    activo TINYINT(1) NOT NULL DEFAULT '1',
+    created_at timestamp NULL DEFAULT NULL,
+    updated_at timestamp NULL DEFAULT NULL,
     primary key (id)
 );
 

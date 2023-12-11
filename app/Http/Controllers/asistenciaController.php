@@ -76,26 +76,8 @@ class asistenciaController extends Controller {
         ->groupBy( 'asistencia.personalId' )
         ->orderBy( 'personal.apellidoP', 'asc' )->get();
 
-        //*** lista de asistencia */
-        $listaAsistencia = personal::select(
-            'personal.id',
-            'personal.nombres',
-            'personal.apellidoP',
-            'personal.apellidoM',
-            DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
-            DB::raw( 'puesto.nombre AS puesto' ),
-            DB::raw( 'puestoNivel.nombre AS puestoNivel' ),
-            DB::raw( 'nomina.nomina AS numNomina' ),
-            DB::raw( 'userEstatus.nombre AS estatus' ),
-            DB::raw( 'userEstatus.color AS estatusColor' )
-        )
-        ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
-        ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
-        ->join( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
-        ->join( 'puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId' )
-        ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
-        ->where( 'personal.estatusId', '=', '1' )
-        ->orderBy( 'personal.apellidoP', 'asc' )->get();
+        //*** lista de asistencia del personal activo */
+        $listaAsistencia = personal::getListaAsistenciaPersonal();
 
         // dd( $intAnio, $intMes, $intDia, $listaAsistencia );
         return view( 'asistencias.indexAsistencias', compact( 'usuario', 'personal', 'listaAsistencia', 'intDia', 'intMes', 'intAnio' ) );
@@ -171,67 +153,24 @@ class asistenciaController extends Controller {
             $intDia = date( 'd' );
         }
 
-        $strDate = $intAnio . '-' . $intMes . '-' . $intDia;
+        // $strDate = $intAnio . '-' . $intMes . '-' . $intDia;
+        // $dteMesInicio = $intAnio . '-' . $intMes . '-01';
+        // $dteMesFin = $intAnio . '-' . $intMes . '-' . $objCalendario->getTotalDaysInMonth( $intMes, $intAnio );
 
         $usuario = personal::where( 'userId', auth()->user()->id )->first();
 
-        $personal = personal::select(
-            'personal.*',
-            DB::raw( 'puesto.nombre AS puesto' ),
-            DB::raw( 'puestoNivel.nombre AS puestoNivel' ),
-            DB::raw( 'userEstatus.nombre AS estatus' ),
-            DB::raw( 'userEstatus.color AS estatusColor' ),
-            DB::raw( 'nomina.nomina AS numNomina' ),
-            DB::raw( 'nomina.hEntrada AS horarioEntrada' ),
-            DB::raw( 'nomina.hSalida AS horarioSalida' ),
-            DB::raw( 'nomina.hEntradaSabado AS horarioEntradaSabado' ),
-            DB::raw( 'nomina.hSalidaSabado AS horarioSalidaSabado' ),
-            DB::raw( 'nomina.ingreso AS fechaIngreso' ),
-        )
-        ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
-        ->join( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
-        ->join( 'puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId' )
-        ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
-        ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
-        ->where( 'userEstatus.id', '=', '1' )
-        ->where( 'nomina.ingreso', '<=', $strDate )
-        ->orderBy( 'personal.apellidoP', 'asc' )->get();
+        //*** lista de asistencia del personal activo */
+        $listaAsistencia = personal::getListaAsistenciaPersonal( $intAnio, $intMes, $intDia );
 
-        $dteMesInicio = $intAnio . '-' . $intMes . '-01';
-        $dteMesFin = $intAnio . '-' . $intMes . '-' . $objCalendario->getTotalDaysInMonth( $intMes, $intAnio );
-
-        $asistencias = personal::select(
-            'personal.*', 'asistencia.*',
-            DB::raw( 'puesto.nombre AS puesto' ),
-            DB::raw( 'puestoNivel.nombre AS puestoNivel' ),
-            DB::raw( 'userEstatus.nombre AS estatus' ),
-            DB::raw( 'userEstatus.color AS estatusColor' ),
-            DB::raw( 'nomina.nomina AS numNomina' ),
-            DB::raw( 'nomina.hEntrada AS horarioEntrada' ),
-            DB::raw( 'nomina.hSalida AS horarioSalida' ),
-            DB::raw( 'nomina.hEntradaSabado AS horarioEntradaSabado' ),
-            DB::raw( 'nomina.hSalidaSabado AS horarioSalidaSabado' ),
-            DB::raw( 'nomina.ingreso AS fechaIngreso' ),
-            DB::raw( 'asistencia.id AS recordId' ),
-            DB::raw( 'asistencia.entradaAnticipada' ),
-        )
-        ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
-        ->join( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
-        ->join( 'puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId' )
-        ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
-        ->join( 'asistencia', 'asistencia.personalId', '=', 'personal.id' )
-        ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
-        ->where( 'userEstatus.id', '=', '1' )
-        ->where( 'nomina.ingreso', '<=', $strDate )
-        ->where( 'asistencia.fecha', '=', $strDate )
-        ->orderBy( 'personal.apellidoP', 'asc' )->get();
+        //*** obtenemos las asistencias del dia especificado */
+        $asistencias = personal::getAsistenciaDia( $intAnio, $intMes, $intDia );
 
         //*** validamos si ya se tomo asistencia para enviar la orden de actualización en bloque */
-        $blnAsistenciaRegistrada = ( $asistencias->IsEmpty() == true ?false:true )  ;
+        $blnAsistenciaRegistrada = ( $asistencias->IsEmpty() == true ? false : true )  ;
 
         // dd( $personal, $asistencias, $blnAsistenciaRegistrada,  $asistencias->IsEmpty() );
 
-        return view( 'asistencias.asistenciaDiaria', compact( 'usuario', 'personal', 'asistencias', 'intDia', 'intMes', 'intAnio', 'blnAsistenciaRegistrada' ) );
+        return view( 'asistencias.asistenciaDiaria', compact( 'usuario', 'listaAsistencia', 'asistencias', 'intDia', 'intMes', 'intAnio', 'blnAsistenciaRegistrada' ) );
     }
 
     public function reloadLista( $intAnio, $intMes, $intDia ) {
@@ -268,82 +207,21 @@ class asistenciaController extends Controller {
                     $objRecord->hEntrada = ( $request->$value[ 0 ] == 1 ?  $request[ 'hEntrada' ][ $i ]:null );
                     $objRecord->hSalida = ( $request->$value[ 0 ] == 1 ?   $request[ 'hSalida' ][ $i ]:null );
 
-                    //*** calculamos tiempo extra anticipado */
-                    $objRecord->horasAnticipada = 0;
+                    //*** calculamos el tiempo extra */
+                    $objCalculo = personal::getCalculaTiempoExtra(
+                        $request[ 'hEntrada' ][ $i ],
+                        $request[ 'horarioEntrada' ][ $i ],
+                        $request[ 'entradaAnticipada' ][ $i ],
+                        $request[ 'hSalida' ][ $i ],
+                        $request[ 'horarioSalida' ][ $i ]
+                    );
 
-                    $dteHorario =   Carbon::parse( $request[ 'horarioEntrada' ][ $i ] );
-                    $dteHoraEntrada =  Carbon::parse( $request[ 'hEntrada' ][ $i ] );
-
-                    if ( $request[ 'entradaAnticipada' ][ $i ] == 1 ) {
-                        $intMinutos = 0;
-
-                        //*** preguntamos si la entrada es menor que la hora salida */
-                        if ( $dteHoraEntrada < $dteHorario ) {
-                            $intMinutos = $dteHoraEntrada->diffInMinutes( $dteHorario ) ;
-                            $vctDebug[] = 'Tengo tiempo anticipado '. $intMinutos . ' minutos' ;
-                        } else {
-                            $vctDebug[] = 'No tengo tiempo anticipado' ;
-                        }
-
-                        $objRecord->horasAnticipada = $intMinutos;
-                    }
-
-                    //*** calculamos tiempo de retraso de entrada */
-                    $objRecord->horasRetraso = 0;
-
-                    //*** preguntamos si la entrada es menor que la hora salida */
-                    if ( $dteHoraEntrada > $dteHorario ) {
-                        $objRecord->horasRetraso = $dteHoraEntrada->diffInMinutes( $dteHorario ) ;
-                        $vctDebug[] = 'Tengo un retraso de '. $objRecord->horasRetraso . ' minutos' ;
-                    } else {
-                        $vctDebug[] = 'Sin retraso' ;
-                    }
-
-                    $dteHorarioSalida = null;
-                    $dteHoraSalida = null;
-
-                    //*** obtenemos los minutos de diferencia */
-                    if ( is_null( $request[ 'horarioSalida' ][ $i ] ) == false &&  is_null( $request[ 'hSalida' ][ $i ] ) == false ) {
-
-                        $intMinutos = 0;
-                        $dteHorarioSalida =   Carbon::parse( $request[ 'horarioSalida' ][ $i ] );
-                        $dteHoraSalida =  Carbon::parse( $request[ 'hSalida' ][ $i ] );
-
-                        //*** preguntamos si la salida es mayor que la hora salida */
-                        if ( $dteHoraSalida > $dteHorarioSalida ) {
-                            $intMinutos = $dteHoraSalida->diffInMinutes( $dteHorarioSalida ) ;
-                            // $objAsistencia->tipoHoraExtraId = $request[ 'tipoHoraExtraId' ][ $i ];
-                            $vctDebug[] = 'Tengo tiempo extra '. $intMinutos . ' minutos' ;
-                        } else {
-                            $vctDebug[] = 'No tengo tiempo extra'  ;
-                            // $objAsistencia->tipoHoraExtraId = 1;
-                        }
-
-                        //*** validamos el descuento de tiempo de retraso */
-                        if ( $objRecord->horasRetraso > 0 ) {
-                            $vctDebug[] = 'Se aplica descuento de tiempo por retraso de entrada'  ;
-                            $objRecord->horasExtra = ( $intMinutos - $objRecord->horasRetraso );
-
-                        } else {
-                            $vctDebug[] = 'Sin descuento de tiempo por retraso de entrada'  ;
-                            $objRecord->horasExtra = $intMinutos;
-                        }
-
-                    } else {
-                        //*** se marca en 0 y se marca que no aplica */
-                        $vctDebug[] = 'No tengo tiempo extra definido todavia'  ;
-                        $objRecord->horasExtra = 0;
-                        $objRecord->totalHorasExtra = 0;
-                    }
-
-                    //*** obtenemos las horas extras a pagar */
-                    $intHoras = ( int ) (( $objRecord->horasExtra + $objRecord->horasAnticipada ) / 60 );
-                    $intHorasFraccionadas = ( ( $objRecord->horasExtra + $objRecord->horasAnticipada ) >= 35 ? 1 : 0 );
-                    $objRecord->totalHorasExtra = $intHoras + $intHorasFraccionadas;
-
-                    $objRecord->hSalida = $request[ 'hSalida' ][ $i ];
-
+                    $objRecord->totalHorasExtra = $objCalculo->totalHorasExtra;
+                    $objRecord->horasExtra = $objCalculo->horasExtra;
+                    $objRecord->horasRetraso = $objCalculo->horasRetraso;
+                    $objRecord->horasAnticipada = $objCalculo->horasAnticipada;
                     $vctDebug[] = $objRecord  ;
+
                     $objRecord->save();
                     // $vctIds[] = $objRecord;
                 }
@@ -356,19 +234,34 @@ class asistenciaController extends Controller {
         } else {
             //*** no hay registros, es la apertura */
             foreach ( $request[ 'personalId' ] as $value ) {
-                // dd( $request->$value[ 0 ] );
 
                 $objAsistencia = new asistencia();
                 $objAsistencia->personalId = $request[ 'personalId' ][ $i ];
                 $objAsistencia->asistenciaId = $request->$value[ 0 ];
                 $objAsistencia->fecha = $request[ 'fecha' ];
-                $objAsistencia->horasExtra = $request[ 'horasExtra' ];
                 $objAsistencia->hEntrada = $request[ 'hEntrada' ][ $i ];
                 $objAsistencia->hSalida = $request[ 'hSalida' ][ $i ];
-                // $objAsistencia->tipoHoraExtraId = 1;
+                $objAsistencia->entradaAnticipada = $request[ 'entradaAnticipada' ][ $i ];
+                $objAsistencia->hSalida = $request[ 'hSalida' ][ $i ];
+
+                //*** calculamos el tiempo extra */
+                $objCalculo = personal::getCalculaTiempoExtra(
+                    $request[ 'hEntrada' ][ $i ],
+                    $request[ 'horarioEntrada' ][ $i ],
+                    $request[ 'entradaAnticipada' ][ $i ],
+                    $request[ 'hSalida' ][ $i ],
+                    $request[ 'horarioSalida' ][ $i ]
+                );
+
+                $objAsistencia->totalHorasExtra = $objCalculo->totalHorasExtra;
+                $objAsistencia->horasExtra = $objCalculo->horasExtra;
+                $objAsistencia->horasRetraso = $objCalculo->horasRetraso;
+                $objAsistencia->horasAnticipada = $objCalculo->horasAnticipada;
+
                 $objAsistencia->save();
                 // dd( $objAsistencia );
                 $i += 1;
+                $vctDebug[] = $objAsistencia  ;
             }
 
         }
@@ -511,7 +404,7 @@ class asistenciaController extends Controller {
                     }
 
                     //*** obtenemos las horas extras a pagar */
-                    $intHoras = ( int ) (( $objAsistencia->horasExtra + $objAsistencia->horasAnticipada ) / 60 );
+                    $intHoras = ( int ) ( ( $objAsistencia->horasExtra + $objAsistencia->horasAnticipada ) / 60 );
                     $intHorasFraccionadas = ( ( $objAsistencia->horasExtra + $objAsistencia->horasAnticipada ) >= 35 ? 1 : 0 );
                     $objAsistencia->totalHorasExtra = $intHoras + $intHorasFraccionadas;
 
@@ -624,6 +517,15 @@ class asistenciaController extends Controller {
         return redirect()->action( [ asistenciaController::class, 'show' ], [ 'personalId' => $personalId, 'intAnio' => $intAnio, 'intMes' => $intMes, 'intDia' => $intDia ] );
     }
 
+    /**
+    * Vista del calculo de corte semanal
+    *
+    * @param [ type ] $intAnio
+    * @param [ type ] $intMes
+    * @param [ type ] $intDia
+    * @return void
+    */
+
     public function corteSemanal( $intAnio = null, $intMes = null, $intDia = null ) {
         abort_if ( Gate::denies( 'asistencia_execute_corte_semanal' ), '403' );
 
@@ -649,11 +551,14 @@ class asistenciaController extends Controller {
         // dd( $strDate, $vctFechas, $strFechaInicioPeriodo, $strFechaFinPeriodo );
 
         $usuario = personal::where( 'userId', auth()->user()->id )->first();
-        // $personal = personal::where( 'id', $personalId )->first();
 
+        //** todas las aistencias registradas dentro de la semana de trabajo especificada */
         $asistencias = personal::select(
             DB::raw( 'personal.id AS personalId' ),
-            DB::raw( "CONCAT( personal.apellidoP,' ', personal.apellidoM,', ',personal.nombres)as personal" ),
+            'personal.nombres',
+            'personal.apellidoP',
+            'personal.apellidoM',
+            DB::raw( "CONCAT( personal.apellidoP,' ', IFNULL(personal.apellidoM,''),', ',personal.nombres)as personal" ),
             DB::raw( 'puestoNivel.nombre AS puesto' ),
             DB::raw( 'asistencia.id AS id' ),
             DB::raw( 'asistencia.asistenciaId as tipoAsistenciaId' ),
@@ -666,9 +571,6 @@ class asistenciaController extends Controller {
             DB::raw( 'tipoAsistencia.color AS tipoAsistenciaColor' ),
             DB::raw( 'tipoAsistencia.nombre AS tipoAsistenciaNombre' ),
             DB::raw( 'tipoAsistencia.esAsistencia AS esAsistencia' ),
-            // DB::raw( 'tipoHoraExtra.color AS horaExtraColor' ),
-            // DB::raw( 'tipoHoraExtra.valor AS horaExtraCosto' ),
-            // DB::raw( 'tipoHoraExtra.nombre AS horaExtraNombre' ),
             DB::raw( 'userEstatus.nombre AS estatus' ),
             DB::raw( 'userEstatus.color AS estatusColor' ),
             DB::raw( 'asistencia.entradaAnticipada' ),
@@ -676,36 +578,19 @@ class asistenciaController extends Controller {
         ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
         ->join( 'asistencia', 'asistencia.personalId', '=', 'personal.id' )
         ->join( 'tipoAsistencia', 'tipoAsistencia.id', '=', 'asistencia.asistenciaId' )
-        // ->join( 'tipoHoraExtra', 'tipoHoraExtra.id', '=', 'asistencia.tipoHoraExtraId' )
         ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
         ->join( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
         ->join( 'puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId' )
         ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
+        ->where( 'personal.estatusId', '=', '1' )
         // ->where( 'asistencia.personalId', '=', 12 )
         ->whereBetween( 'asistencia.fecha',   [ $strFechaInicioPeriodo, $strFechaFinPeriodo ] )
         ->orderBy( 'personal.apellidoP', 'asc' )
         ->orderBy( 'asistencia.personalId', 'asc' )
         ->orderBy( 'asistencia.fecha', 'asc' )->get();
 
-        //*** lista de asistencia */
-        $listaAsistencia = personal::select(
-            'personal.id',
-            'personal.nombres',
-            'personal.apellidoP',
-            'personal.apellidoM',
-            DB::raw( 'puestoNivel.nombre AS puesto' ),
-            DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
-            DB::raw( 'puestoNivel.nombre AS puesto' ),
-            DB::raw( 'nomina.nomina AS numNomina' ),
-            DB::raw( 'userEstatus.nombre AS estatus' ),
-            DB::raw( 'userEstatus.color AS estatusColor' )
-        )
-        ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
-        ->join( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
-        ->join( 'puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId' )
-        ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
-        ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
-        ->orderBy( 'personal.apellidoP', 'asc' )->get();
+        //*** lista de asistencia de personal activo */
+        $listaAsistencia = personal::getListaAsistenciaPersonal();
 
         $dteMesInicio = $intAnio . '-' . $intMes . '-01';
         $dteMesFin = $intAnio . '-' . $intMes . '-' . $objCalendario->getTotalDaysInMonth( $intMes, $intAnio );
@@ -719,28 +604,27 @@ class asistenciaController extends Controller {
 
         $vctDebug = array();
         $intCont = 0;
-        $intTotalAsistencias = count( $asistencias )-1;
+        $intTotalAsistencias = $asistencias->count();
 
+        $vctDebug[] = 'INICIANDO...';
+        $vctDebug[] = 'Asistencias registradas: ' . $intTotalAsistencias;
+        $intCont = 0;
         foreach ( $asistencias as $key => $item ) {
 
-            $vctDebug[] = $intCont .'.- ' .$item->personal ;
-            // $vctDebug[] = $item;
+            $vctDebug[] = 'Analizando el registro ' .  ($intCont + 1) ;
 
-            if ( $intCont == $intTotalAsistencias ) {
-                $vctDebug[] = 'Es el final iniciando...';
-            }
-
-            $vctDebug[] = '*** Creamos el primer objeto para trabajar y se asigna a ' . $intDiaTrabajado . ' - '. $strEmpleado;
-            if ( $intDiaTrabajado == 0 && $strEmpleado == null ) {
-                $vctDebug[] = '*** Creamos el primer objeto para trabajar y se asigna a ' . $item->personal;
+            if ( $intCont == 0 ) {
+                $vctDebug[] = '- Creamos el objeto para de ' . $item->personal;
                 $objDia = new stdClass;
+            } else if ( $intCont == ( $intTotalAsistencias   ) ) {
+                $vctDebug[] = 'Ya no hay registros... '  ;
+
             } else {
-                //*** el objeto sigue vivo */
-                $vctDebug[] = 'Seguimos con el objeto ' .  $item->personal  ;
+                $vctDebug[] = '- Seguimos con el objeto de ' .  $item->personal  ;
             }
 
             if ( $intDiaTrabajado == 0 && $strEmpleado == null ) {
-                $vctDebug[] = '-> Trabajamos con el Primer registro de empleado a trabajar : ' . $item->personal ;
+                $vctDebug[] = '--> Inicializacion del primer objeto : ' . $item->personal ;
                 unset( $vctPagos );
                 $strEmpleado = $item->personal;
                 $objDia->numEmpleado = str_pad( $item->numeroNomina, 4, '0', STR_PAD_LEFT );
@@ -761,10 +645,9 @@ class asistenciaController extends Controller {
                 $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
                 $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
                 $vctPagos[] = $objPagos;
-
                 $intDiaTrabajado += 1;
-                $vctDebug[] = '<- Terminamos con el Primer registro de empleado a trabajar : ' . $item->personal ;
-            } else  if ( ( $intDiaTrabajado == 6 ) && ( $strEmpleado ==  $item->personal ) ) {
+                $vctDebug[] = '<-- Terminamos con el Primer registro del objeto de  : ' . $item->personal ;
+            } else if ( ( $intDiaTrabajado == 6 ) && ( $strEmpleado ==  $item->personal ) ) {
                 $vctDebug[] = '-> Ultimo registro del empleado del periodo en los casos ' . $item->personal;
                 $objPagos = new stdClass;
                 $objPagos->fecha = $item->fecha;
@@ -803,11 +686,12 @@ class asistenciaController extends Controller {
                 $intDiaTrabajado += 1;
                 $vctDebug[] = $objPagos;
 
-                if ( $intCont == $intTotalAsistencias ) {
-                    $vctDebug[] = 'Es el final ' . $intCont;
-
+                if (( $intCont + 1) == $intTotalAsistencias ) {
+                    $vctDebug[] = '---- Es el ultimo registro ' . ($intCont + 1);
                     $objDia->pagos  = $vctPagos;
                     $vctAsistencias[] =  $objDia;
+                }else{
+                    $vctDebug[] = '----- Hay mas registros por trabajar';
                 }
 
             } else {
@@ -815,7 +699,6 @@ class asistenciaController extends Controller {
                 $objDia->pagos  = $vctPagos;
                 $vctAsistencias[] =  $objDia;
 
-                // dd( 'Entre al cierre forzoso ',  $intDiaTrabajado, $objDia );
                 $vctDebug[] = '-> Creamos el siguiente objeto para ' . $item->personal;
                 $intDiaTrabajado = 0;
                 $strEmpleado = null;
@@ -844,15 +727,23 @@ class asistenciaController extends Controller {
                 $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
                 $vctPagos[] = $objPagos;
 
+                if (( $intCont + 1) == $intTotalAsistencias ) {
+                    $vctDebug[] = '---- Es el ultimo registro ' . ($intCont + 1);
+                    $objDia->pagos  = $vctPagos;
+                    $vctAsistencias[] =  $objDia;
+                }else{
+                    $vctDebug[] = '----- Hay mas registros por trabajar';
+                }
+
             }
             $intCont += 1;
         }
 
-        // dd( $asistencias, $vctDebug, $vctAsistencias );
-        //   dd( $vctAsistencias, $asistencias, $intAnio, $intMes, $intDia, $strDate, $vctFechas[ 0 ], $vctFechas[ 1 ], );
+        // dd( 'Lista asistencia', $listaAsistencia, 'Aistencias', $asistencias, $vctDebug, 'Procesado', $vctAsistencias );
+        //  dd( $vctAsistencias, $asistencias, $intAnio, $intMes, $intDia, $strDate, $vctFechas[ 0 ], $vctFechas[ 1 ], );
 
         return view( 'asistencias.corteSemanal',  compact( 'usuario', 'vctAsistencias',   'asistencias', 'listaAsistencia', 'intDia', 'intMes', 'intAnio', 'strFechaInicioPeriodo', 'strFechaFinPeriodo' ) );
-    }
+      }
 
     /**
     * Realiza el calculo del corte semanal a partir de los parametros de la fecha entregada
@@ -950,7 +841,7 @@ class asistenciaController extends Controller {
         $strEmpleado = null;
         $intEmpleado = null;
         $intCont = 0;
-        $intTotalAsistencias = count( $asistencias )-1;
+        $intTotalAsistencias = $asistencias->count();
 
         foreach ( $asistencias as $key => $item ) {
 
@@ -1150,7 +1041,7 @@ class asistenciaController extends Controller {
 
                 $vctPagos[] = $objPagos;
                 $intDia += 1;
-                if ( $intCont == $intTotalAsistencias ) {
+                if ( $intCont +1 == $intTotalAsistencias ) {
                     $vctDebug[] = 'Es el final ' . $intCont;
 
                     $objDia->pagos  = $vctPagos;
@@ -1234,6 +1125,14 @@ class asistenciaController extends Controller {
                 $vctDebug[] = $intCont . ".-Entre al cierre forzoso,  $intDia ";
                 $vctDebug[] =  $objDia;
                 $vctDebug[] =  $objPagos;
+
+                if ( $intCont +1 == $intTotalAsistencias ) {
+                    $vctDebug[] = 'Es el final ' . $intCont;
+
+                    $objDia->pagos  = $vctPagos;
+                    $vctAsistencias[] =  $objDia;
+                    $vctDebug[] = $objDia;
+                }
 
             }
             $intCont += 1;
@@ -1442,7 +1341,7 @@ class asistenciaController extends Controller {
                     }
 
                     //*** obtenemos las horas extras a pagar */
-                    $intHoras = ( int ) (( $objAsistencia->horasExtra + $objAsistencia->horasAnticipada ) / 60 );
+                    $intHoras = ( int ) ( ( $objAsistencia->horasExtra + $objAsistencia->horasAnticipada ) / 60 );
                     $intHorasFraccionadas = ( ( $objAsistencia->horasExtra + $objAsistencia->horasAnticipada ) >= 35 ? 1 : 0 );
                     $objAsistencia->totalHorasExtra = $intHoras + $intHorasFraccionadas;
 
@@ -1500,11 +1399,13 @@ class asistenciaController extends Controller {
         $strFechaFinPeriodo = $vctFechas[ 1 ]->format( 'Y-m-d' );
 
         $usuario = personal::where( 'userId', auth()->user()->id )->first();
-        // $personal = personal::where( 'id', $personalId )->first();
 
         $asistencias = personal::select(
             DB::raw( 'personal.id AS personalId' ),
-            DB::raw( "CONCAT( personal.apellidoP,' ', personal.apellidoM,', ',personal.nombres)as personal" ),
+            'personal.nombres',
+            'personal.apellidoP',
+            'personal.apellidoM',
+            DB::raw( "CONCAT( personal.apellidoP,' ', IFNULL(personal.apellidoM,''),', ',personal.nombres)as personal" ),
             DB::raw( 'puestoNivel.nombre AS puesto' ),
             DB::raw( 'asistencia.id AS id' ),
             DB::raw( 'asistencia.asistenciaId as tipoAsistenciaId' ),
@@ -1517,9 +1418,6 @@ class asistenciaController extends Controller {
             DB::raw( 'tipoAsistencia.color AS tipoAsistenciaColor' ),
             DB::raw( 'tipoAsistencia.nombre AS tipoAsistenciaNombre' ),
             DB::raw( 'tipoAsistencia.esAsistencia AS esAsistencia' ),
-            // DB::raw( 'tipoHoraExtra.color AS horaExtraColor' ),
-            // DB::raw( 'tipoHoraExtra.valor AS horaExtraCosto' ),
-            // DB::raw( 'tipoHoraExtra.nombre AS horaExtraNombre' ),
             DB::raw( 'userEstatus.nombre AS estatus' ),
             DB::raw( 'userEstatus.color AS estatusColor' ),
             DB::raw( 'asistencia.entradaAnticipada' ),
@@ -1527,36 +1425,19 @@ class asistenciaController extends Controller {
         ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
         ->join( 'asistencia', 'asistencia.personalId', '=', 'personal.id' )
         ->join( 'tipoAsistencia', 'tipoAsistencia.id', '=', 'asistencia.asistenciaId' )
-        // ->join( 'tipoHoraExtra', 'tipoHoraExtra.id', '=', 'asistencia.tipoHoraExtraId' )
         ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
         ->join( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
         ->join( 'puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId' )
         ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
-        // ->where( 'asistencia.personalId', '=', 23 )
+        ->where( 'personal.estatusId', '=', '1' )
+        // ->where( 'asistencia.personalId', '=', 12 )
         ->whereBetween( 'asistencia.fecha',   [ $strFechaInicioPeriodo, $strFechaFinPeriodo ] )
         ->orderBy( 'personal.apellidoP', 'asc' )
         ->orderBy( 'asistencia.personalId', 'asc' )
         ->orderBy( 'asistencia.fecha', 'asc' )->get();
 
-        //*** lista de asistencia */
-        $listaAsistencia = personal::select(
-            'personal.id',
-            'personal.nombres',
-            'personal.apellidoP',
-            'personal.apellidoM',
-            DB::raw( 'puestoNivel.nombre AS puesto' ),
-            DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal" ),
-            DB::raw( 'puestoNivel.nombre AS puesto' ),
-            DB::raw( 'nomina.nomina AS numNomina' ),
-            DB::raw( 'userEstatus.nombre AS estatus' ),
-            DB::raw( 'userEstatus.color AS estatusColor' )
-        )
-        ->join( 'nomina', 'nomina.personalId', '=', 'personal.id' )
-        ->join( 'puesto', 'puesto.id', '=', 'nomina.puestoId' )
-        ->join( 'puestoNivel', 'puestoNivel.id', '=', 'puesto.puestoNivelId' )
-        ->join( 'userEstatus', 'userEstatus.id', '=', 'personal.estatusId' )
-        ->where( 'puestoNivel.requiereAsistencia', '=', '1' )
-        ->orderBy( 'personal.apellidoP', 'asc' )->get();
+        //*** lista de asistencia de personal activo */
+        $listaAsistencia = personal::getListaAsistenciaPersonal();
 
         $dteMesInicio = $intAnio . '-' . $intMes . '-01';
         $dteMesFin = $intAnio . '-' . $intMes . '-' . $objCalendario->getTotalDaysInMonth( $intMes, $intAnio );
@@ -1564,22 +1445,33 @@ class asistenciaController extends Controller {
         $vctAsistencias = array();
         $vctEmpleado = array();
         $vctPagos = array();
-        $intDia = 0;
+        $intDiaTrabajado = 0;
         $strEmpleado = null;
         $intEmpleado = null;
 
+        $vctDebug = array();
+        $intCont = 0;
+        $intTotalAsistencias = $asistencias->count();
+
+        $vctDebug[] = 'INICIANDO...';
+        $vctDebug[] = 'Asistencias registradas: ' . $intTotalAsistencias;
+        $intCont = 0;
         foreach ( $asistencias as $key => $item ) {
 
-            if ( $intDia == 0 && $strEmpleado == null ) {
-                //*** creamos el objeto */
+            $vctDebug[] = 'Analizando el registro ' .  ($intCont + 1) ;
+
+            if ( $intCont == 0 ) {
+                $vctDebug[] = '- Creamos el objeto para de ' . $item->personal;
                 $objDia = new stdClass;
+            } else if ( $intCont == ( $intTotalAsistencias   ) ) {
+                $vctDebug[] = 'Ya no hay registros... '  ;
+
             } else {
-                //*** el objeto sigue vivo */
-                // dd( 'Seguimos con el objeto ' .  $intDia );
+                $vctDebug[] = '- Seguimos con el objeto de ' .  $item->personal  ;
             }
 
-            if ( $intDia == 0 && $strEmpleado == null ) {
-                //** primer registro del empleado */
+            if ( $intDiaTrabajado == 0 && $strEmpleado == null ) {
+                $vctDebug[] = '--> Inicializacion del primer objeto : ' . $item->personal ;
                 unset( $vctPagos );
                 $strEmpleado = $item->personal;
                 $objDia->numEmpleado = str_pad( $item->numeroNomina, 4, '0', STR_PAD_LEFT );
@@ -1594,27 +1486,21 @@ class asistenciaController extends Controller {
                 $objPagos->horasExtra = $item->horasExtra;
                 $objPagos->horasAnticipada = $item->horasAnticipada;
                 $objPagos->horasRetraso = $item->horasRetraso;
-                // $objPagos->horaExtraColor = $item->horaExtraColor;
-                // $objPagos->horaExtraCosto = $item->horaExtraCosto;
-                // $objPagos->horaExtraNombre = $item->horaExtraNombre;
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->entradaAnticipada = $item->entradaAnticipada;
                 $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
                 $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
                 $vctPagos[] = $objPagos;
-
-                $intDia += 1;
-            } else  if ( ( $intDia == 6 ) &&  ( $strEmpleado ==  $item->personal ) ) {
-                //** ultimo registro del empleado del periodo en los casos */
+                $intDiaTrabajado += 1;
+                $vctDebug[] = '<-- Terminamos con el Primer registro del objeto de  : ' . $item->personal ;
+            } else if ( ( $intDiaTrabajado == 6 ) && ( $strEmpleado ==  $item->personal ) ) {
+                $vctDebug[] = '-> Ultimo registro del empleado del periodo en los casos ' . $item->personal;
                 $objPagos = new stdClass;
                 $objPagos->fecha = $item->fecha;
                 $objPagos->horasExtra = $item->horasExtra;
                 $objPagos->horasAnticipada = $item->horasAnticipada;
                 $objPagos->horasRetraso = $item->horasRetraso;
-                // $objPagos->horaExtraColor = $item->horaExtraColor;
-                // $objPagos->horaExtraCosto = $item->horaExtraCosto;
-                // $objPagos->horaExtraNombre = $item->horaExtraNombre;
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->entradaAnticipada = $item->entradaAnticipada;
@@ -1625,37 +1511,50 @@ class asistenciaController extends Controller {
                 $objDia->pagos  = $vctPagos;
                 $vctAsistencias[] =  $objDia;
 
-                $intDia = 0;
+                $intDiaTrabajado = 0;
                 $strEmpleado = null;
                 unset( $vctPagos );
-            } else  if ( ( $intDia > 0 &&  $intDia < 6 ) &&  ( $strEmpleado ==  $item->personal ) ) {
-                //*** seguimos con el siguiente dia y verificamos que se trate de la misma persona */
+                $vctDebug[] = '<- Terminamos las asistencias de la semana de ' . $item->personal;
+
+            } else  if ( ( $intDiaTrabajado > 0 &&  $intDiaTrabajado < 6 ) &&  ( $strEmpleado ==  $item->personal ) ) {
+                $vctDebug[] = '-> Seguimos con el siguiente dia y verificamos que se trate de la misma persona ' . $item->personal;
+
                 $objPagos = new stdClass;
                 $objPagos->fecha = $item->fecha;
                 $objPagos->horasExtra = $item->horasExtra;
                 $objPagos->horasAnticipada = $item->horasAnticipada;
                 $objPagos->horasRetraso = $item->horasRetraso;
-                // $objPagos->horaExtraColor = $item->horaExtraColor;
-                // $objPagos->horaExtraCosto = $item->horaExtraCosto;
-                // $objPagos->horaExtraNombre = $item->horaExtraNombre;
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->entradaAnticipada = $item->entradaAnticipada;
                 $objPagos->tipoAsistenciaColor = $item->tipoAsistenciaColor;
                 $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
                 $vctPagos[] = $objPagos;
-                $intDia += 1;
+                $intDiaTrabajado += 1;
+                $vctDebug[] = $objPagos;
+
+                if (( $intCont + 1) == $intTotalAsistencias ) {
+                    $vctDebug[] = '---- Es el ultimo registro ' . ($intCont + 1);
+                    $objDia->pagos  = $vctPagos;
+                    $vctAsistencias[] =  $objDia;
+                }else{
+                    $vctDebug[] = '----- Hay mas registros por trabajar';
+                }
+
             } else {
-                //*** el empleado ya no tiene registros y hay que cerrar y crear el nuevo */
+                $vctDebug[] = '-> El empleado ya no tiene registros de asistencia y hay que cerrar su objeto ' . $item->personal;
                 $objDia->pagos  = $vctPagos;
                 $vctAsistencias[] =  $objDia;
-                // dd( 'Entre al cierre forzoso ',  $intDia, $objDia );
-                $intDia = 0;
+
+                $vctDebug[] = '-> Creamos el siguiente objeto para ' . $item->personal;
+                $intDiaTrabajado = 0;
                 $strEmpleado = null;
                 unset( $vctPagos );
                 $objDia = new stdClass;
 
                 $strEmpleado = $item->personal;
+                $intDiaTrabajado = 1;
+
                 $objDia->numEmpleado = str_pad( $item->numeroNomina, 4, '0', STR_PAD_LEFT );
                 $objDia->empleado = $item->personal;
                 $objDia->puesto = $item->puesto;
@@ -1668,9 +1567,6 @@ class asistenciaController extends Controller {
                 $objPagos->horasExtra = $item->horasExtra;
                 $objPagos->horasAnticipada = $item->horasAnticipada;
                 $objPagos->horasRetraso = $item->horasRetraso;
-                // $objPagos->horaExtraColor = $item->horaExtraColor;
-                // $objPagos->horaExtraCosto = $item->horaExtraCosto;
-                // $objPagos->horaExtraNombre = $item->horaExtraNombre;
                 $objPagos->tipoAsistencia = $item->tipoAsistenciaId;
                 $objPagos->esAsistencia = $item->esAsistencia;
                 $objPagos->entradaAnticipada = $item->entradaAnticipada;
@@ -1678,13 +1574,19 @@ class asistenciaController extends Controller {
                 $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
                 $vctPagos[] = $objPagos;
 
-                $intDia += 1;
-                // dd( 'Entre al cierre forzoso ',  $intDia, $objDia );
+                if (( $intCont + 1) == $intTotalAsistencias ) {
+                    $vctDebug[] = '---- Es el ultimo registro ' . ($intCont + 1);
+                    $objDia->pagos  = $vctPagos;
+                    $vctAsistencias[] =  $objDia;
+                }else{
+                    $vctDebug[] = '----- Hay mas registros por trabajar';
+                }
 
             }
+            $intCont += 1;
         }
 
-        // dd( $request );
+        // dd( $vctDebug );
 
         return ( new CorteSemanalExport( compact( 'usuario', 'vctAsistencias',   'asistencias', 'listaAsistencia', 'intDia', 'intMes', 'intAnio', 'strFechaInicioPeriodo', 'strFechaFinPeriodo' ) ) )->download( 'corteSemanal.xlsx' );
     }

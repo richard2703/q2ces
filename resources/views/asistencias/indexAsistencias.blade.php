@@ -81,7 +81,6 @@ $anioSeleccionado = $intAnio;
                                                     <p class="botonTitulos mt-2">Otro Mes</p>
                                                 </button>
                                             </div>
-
                                         </div>
                                         <div class="row">
                                             <div class="col-4 text-left">
@@ -93,14 +92,14 @@ $anioSeleccionado = $intAnio;
                                             </div>
 
                                             <div class="col-8 text-end">
-                                                @can('asistencia_edit')
-                                                    <a href="{{ route('asistencia.horasExtra') }}">
-                                                        <button type="button" class="btn botonGral">Tiempo Extra</button>
+                                                @can('asistencia_create')
+                                                    <a href="{{ route('asistencia.create') }}" title="Click para registrar la asistencia del personal">
+                                                        <button type="button" class="btn botonGral">Asistencia</button>
                                                     </a>
                                                 @endcan
-                                                @can('asistencia_create')
-                                                    <a href="{{ route('asistencia.create') }}">
-                                                        <button type="button" class="btn botonGral">Asistencia</button>
+                                                @can('asistencia_edit')
+                                                    <a href="{{ route('asistencia.horasExtra') }}" title="Click para registrar la salida del personal">
+                                                        <button type="button" class="btn botonGral">Tiempo Extra</button>
                                                     </a>
                                                 @endcan
 
@@ -111,6 +110,7 @@ $anioSeleccionado = $intAnio;
                                     <div class="table-responsive mt-4">
                                         <table class="table">
                                             <thead class="labelTitulo text-center">
+                                                <th class="labelTitulo" style="width:25px !important">#</th>
                                                 <th class="labelTitulo">Código</th>
                                                 <th class="labelTitulo">Nombre</th>
                                                 <th class="labelTitulo">Puesto</th>
@@ -121,9 +121,10 @@ $anioSeleccionado = $intAnio;
                                                 <th class="labelTitulo " style="width:140px !important">Acciones</th>
                                             </thead>
                                             <tbody class="text-center">
-
+                                                @php $intCont = 1; @endphp
                                                 @forelse ($personal as $item)
                                                     <tr>
+                                                        <td>{{ $intCont }}</td>
                                                         <td style="color: {{ $item->estatusColor }};">
                                                             <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                         </td>
@@ -158,9 +159,13 @@ $anioSeleccionado = $intAnio;
                                                             @endcan
                                                         </td>
                                                     </tr>
+                                                    @php
+                                                        $intCont += 1;
+                                                    @endphp
                                                 @empty
                                                     @forelse ($listaAsistencia as $item)
                                                         <tr>
+                                                            <td>{{ $intCont }}</td>
                                                             <td style="color: {{ $item->estatusColor }};">
                                                                 <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                             </td>
@@ -173,9 +178,12 @@ $anioSeleccionado = $intAnio;
                                                             <td>---</td>
                                                             <td class="td-actions">---</td>
                                                         </tr>
+                                                        @php
+                                                            $intCont += 1;
+                                                        @endphp
                                                     @empty
                                                         <tr>
-                                                            <td colspan="2">Sin registros.</td>
+                                                            <td colspan="8">Sin registros.</td>
                                                         </tr>
                                                     @endforelse
                                                 @endforelse

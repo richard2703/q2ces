@@ -26,29 +26,54 @@
                                         method="post" enctype="multipart/form-data">
                                         @csrf
                                         @method('put')
+
                                         <div class="col-12 my-4">
                                             <div class="row">
 
-                                                <input type="hidden" name="id" id="id"
-                                                    value="{{ $grupo->id }}">
+                                                <div class=" col-8">
 
-                                                <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
-                                                    <label class="labelTitulo">Nombre: <span>*</span></label></br>
+                                                    <div class=" col-12 col-sm-6  col-lg-12  ">
+                                                        <input type="hidden" name="id" id="id"
+                                                            value="{{ $grupo->id }}">
+                                                        <label class="labelTitulo">Nombre:
+                                                            <span>*</span></label></br>
 
-                                                    <input type="text" required maxlength="250" id="nombre"
-                                                        name="nombre" value="{{ $grupo->nombre }}"
-                                                        placeholder="Especifique el nombre del grupo." class="inputCaja">
+                                                        <input type="text" required maxlength="250" id="nombre"
+                                                            name="nombre" value="{{ $grupo->nombre }}"
+                                                            placeholder="Especifique el nombre del grupo."
+                                                            class="inputCaja">
+                                                    </div>
+
+                                                    <div class=" col-12 col-sm-6  col-lg-12 my-6 mt-2 pt-2">
+                                                        <label for="exampleFormControlTextarea1"
+                                                            class="labelTitulo">Descripción
+                                                            del Grupo de Tareas: <span>*</span></label>
+                                                        <textarea class="form-select" id="exampleFormControlTextarea1" rows="3" maxlength="1000" required id="comentario"
+                                                            name="comentario" placeholder="Escribe aquí tus comentarios sobre el grupo.">  {{ $grupo->comentario }} </textarea>
+                                                    </div>
+
+                                                    <input type="hidden" name="activo" id="activo"
+                                                        value="{{ $grupo->activo }}">
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
-                                                    <label for="exampleFormControlTextarea1" class="labelTitulo">Descripción
-                                                        del Grupo de Tareas: <span>*</span></label>
-                                                    <textarea class="form-select" id="exampleFormControlTextarea1" rows="3" maxlength="1000" required id="comentario"
-                                                        name="comentario" placeholder="Escribe aquí tus comentarios sobre el grupo.">  {{ $grupo->comentario }} </textarea>
-                                                </div>
+                                                <div class=" col-4">
 
-                                                <input type="hidden" name="activo" id="activo"
-                                                    value="{{ $grupo->activo }}">
+                                                    <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
+                                                        <div class="text-center mx-auto border  mb-4">
+                                                            <i><img class="imgPersonal img-fluid"
+                                                                    src="{{ $grupo->imagen == '' ? ' /img/general/default.jpg' : asset('/storage/interfaz/grupos/' . $grupo->imagen) }}"></i>
+
+                                                            <span class="mi-archivo"> <input class="mb-4 ver" type="file"
+                                                                    name="imagen" id="mi-archivo" accept="image/*"></span>
+                                                            <label for="mi-archivo">
+                                                                <span>Sube Imagen</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
 
                                                 <div class="row d-flex">
                                                     <div class="col-12 col-md-6  mt-3 ">
@@ -59,7 +84,7 @@
                                                                 name="search"
                                                                 placeholder="Escribe aquí el texto a buscar..."
                                                                 title="Escriba la(s) palabra(s) a buscar.">
-                                                                <input type="button" onclick="clearInput()"
+                                                            <input type="button" onclick="clearInput()"
                                                                 class="btn botonGral" value="Borrar">
                                                         </div>
                                                     </div>
@@ -102,8 +127,8 @@
                                                                     <div class="col-5">
                                                                         <label for="descripcion"
                                                                             class="">Descripción</label></br></br>
-                                                                        <textarea rows="3" cols="80" class="form-control form-select" id="descripcion" readonly name="descripcion[]"
-                                                                            disabled="true" value="">{{ $item->comentario }} </textarea>
+                                                                        <textarea rows="3" cols="80" class="form-control form-select" id="descripcion" readonly
+                                                                            name="descripcion[]" disabled="true" value="">{{ $item->comentario }} </textarea>
                                                                     </div>
 
                                                                     <div class="col-2"></br></br>
@@ -222,6 +247,7 @@
                 getValue.value = "";
             }
         }
+
         function crearItems(tareaId, nombre, descripcion, value) {
             var html = '';
             html += '<li class="listaMaterialMantenimiento my-3 border-bottom" id="inputFormRow">';

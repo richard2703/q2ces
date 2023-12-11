@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'cajaChica', 'titlePage' => __('Caja Chica - Nuevo Movimiento')])
+@extends('layouts.main', ['activePage' => 'servicios', 'titlePage' => __('Caja Chica - Nuevo Movimiento')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -82,7 +82,8 @@
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Concepto: <span>*</span></label></br>
                                                 <select id="concepto" name="conceptoServicioTrasporteId"
-                                                    class="form-select" required aria-label="Default select example">
+                                                    class="form-select" required aria-label="Default select example"
+                                                    onchange="almacenes()">
                                                     <option selected value="">Seleccione</option>
                                                     @forelse ($conceptos as $concepto)
                                                         <option value="{{ $concepto->id }}"
@@ -168,7 +169,7 @@
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Almacen/Tiradero: <span>*</span></label></br>
                                                 <select id="almacenId" name="almacenId" class="form-select" required
-                                                    aria-label="Default select example">
+                                                    aria-label="Default select example" onchange="precioAlmacen()">
                                                     <option selected value="">Seleccione</option>
                                                     @forelse ($almacenes as $almacen)
                                                         <option value="{{ $almacen->id }}"
@@ -217,13 +218,13 @@
                                                 <label class="labelTitulo">Costo Servicio: <span>*</span></label></br>
                                                 <input type="number" class="inputCaja text-right" id="costoServicio"
                                                     name="costoServicio" maxlength="100000" step="0.01"
-                                                    min="0.01" max="99999" placeholder="ej. 100"
+                                                    min="0.00" max="99999" placeholder="ej. 100"
                                                     value="{{ $serviciosTrasporte->costoServicio }}">
                                             </div>
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Costo Mano de Obra: <span>*</span></label></br>
                                                 <input type="number" class="inputCaja text-right" id="costoMano"
-                                                    name="costoMano" maxlength="100000" step="0.01" min="0.01"
+                                                    name="costoMano" maxlength="100000" step="0.01" min="0.00"
                                                     max="99999" placeholder="ej. 100"
                                                     value="{{ $serviciosTrasporte->costoMano }}">
                                             </div>
@@ -239,9 +240,9 @@
                                                     <option
                                                         value="2"{{ $serviciosTrasporte->estatus == 2 ? 'selected' : '' }}>
                                                         Hecho</option>
-                                                    {{--  <option
+                                                    <option
                                                         value="3"{{ $serviciosTrasporte->estatus == 3 ? 'selected' : '' }}>
-                                                        Cerrado</option>  --}}
+                                                        Cerrado</option>
                                                     <option
                                                         value="0"{{ $serviciosTrasporte->estatus == 0 ? 'selected' : '' }}>
                                                         Cancelado</option>
@@ -314,6 +315,89 @@
             </div>
         </div>
     </div>  --}}
+
+    <script>
+        function precioObra() {
+            const conceptoId = document.getElementById('concepto').value;
+            const obraId = document.getElementById('obra').value;
+            const precioObra = document.getElementById('costoServicio');
+            //console.log(conceptoId);
+            //console.log(obraId);
+
+            var url = '{{ route('serviciosTrasporte.obrasXconceptoPrecio', [':conceptoId', ':obraId']) }}';
+            url = url.replace(':conceptoId', conceptoId);
+            url = url.replace(':obraId', obraId);
+
+            //console.log(url); //serviciosTrasporte.obrasXconcepto
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Actualiza las opciones en el select "item"
+                    //console.log(data.precio);
+                    precioObra.value = data.precio;
+
+                });
+        };
+
+        function almacenes() {
+            const conceptoId = document.getElementById('concepto').value;
+            const ListaSeleccionar = document.getElementById('almacenId');
+
+            var url = '{{ route('serviciosTrasporte.almacenXconcepto', ':conceptoId') }}';
+            url = url.replace(':conceptoId', conceptoId);
+
+            //console.log(url); //serviciosTrasporte.obrasXconcepto
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Actualiza las opciones en el select "item"
+                    //console.log(data);
+                    ListaSeleccionar.innerHTML = '';
+                    data.forEach(item => {
+                        //console.log(item);
+                        var option = document.createElement('option');
+                        option.value = item.id;
+                        option.textContent = item.nombre;
+                        ListaSeleccionar.appendChild(option);
+                    });
+                    precioAlmacen();
+                });
+        };
+
+        function precioAlmacen() {
+            const conceptoId = document.getElementById('concepto').value;
+            const almacenId = document.getElementById('almacenId').value;
+            const precioAlmacen = document.getElementById('cantidad');
+            //console.log(conceptoId);
+            console.log(almacenId);
+
+            var url = '{{ route('serviciosTrasporte.almacenXconceptoPrecio', [':conceptoId', ':almacenId']) }}';
+            url = url.replace(':conceptoId', conceptoId);
+            url = url.replace(':almacenId', almacenId);
+
+            console.log(url); //serviciosTrasporte.obrasXconcepto
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Actualiza las opciones en el select "item"
+                    console.log(data.precio);
+                    precioAlmacen.value = data.precio;
+
+                });
+        };
+
+        if (document.getElementById('costoServicio').value == 0) {
+            precioObra();
+        }
+
+        if (document.getElementById('almacenId').value == "") {
+            almacenes();
+        }
+
+        if (document.getElementById('cantidad').value == "") {
+            precioAlmacen();
+        }
+    </script>
 @endsection
 <script>
     function Guardado() {

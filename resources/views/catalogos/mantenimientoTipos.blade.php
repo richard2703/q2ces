@@ -62,7 +62,6 @@
                                     </div>
                                 </div>
 
-
                                 <table class="table table-responsive">
                                     <thead class="labelTitulo">
                                         <tr>
@@ -100,7 +99,7 @@
                                                     @can('catalogos_edit')
                                                         <a href="#" class="" data-bs-toggle="modal"
                                                             data-bs-target="#editarItem"
-                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->codigo }}', '{{ $item->color }}','{{ $item->comentario }}')">
+                                                            onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->codigo }}', '{{ $item->color }}','{{ $item->comentario }}','{{ $item->proximaRevisionKm }}','{{ $item->proximaRevisionMi }}','{{ $item->proximaRevisionHr }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                 height="28" fill="currentColor"
                                                                 class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -177,6 +176,27 @@
                             <input type="color" class="inputCaja" name="color" value="{{ old('color') }}">
                         </div>
 
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Kilometraje Próximo Mantenimiento :</label></br>
+                            <input type="number" class="inputCaja text-end" id="proximaRevisionKm" maxlength="6" min="0"
+                                step="1" max="99999" placeholder="Ej. 250" name="proximaRevisionKm"
+                                value="">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Millaje Próximo Mantenimiento :</label></br>
+                            <input type="number" class="inputCaja text-end" id="proximaRevisionMi" maxlength="6" min="0"
+                                step="1" max="99999" placeholder="Ej. 250" name="proximaRevisionMi"
+                                value="">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Horas Próximo Mantenimiento :</label></br>
+                            <input type="number" class="inputCaja text-end" id="proximaRevisionHr" maxlength="6" min="0"
+                                step="1" max="99999" placeholder="Ej. 250" name="proximaRevisionHr"
+                                value="">
+                        </div>
+
                         <div class=" col-12  mb-3 ">
                             <label class="labelTitulo">Comentarios:</label></br>
                             <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario"
@@ -218,11 +238,31 @@
                             <input type="text" class="inputCaja" id="controlCodigo" name="codigo" required placeholder="Ej. MNTO-001"  maxlength="8" value="">
                         </div>
 
-
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Color:<span>*</span></label></br>
                             <input type="color" class="inputCaja" name="color" value="{{ old('color') }}"
                                 id="color">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Kilometraje Próximo Mantenimiento :</label></br>
+                            <input type="number" class="inputCaja text-end" id="controlProximaRevisionKm" maxlength="6" min="0"
+                                step="1" max="99999" placeholder="Ej. 250" name="proximaRevisionKm"
+                                value="{{ old('proximaRevisionKm') }}">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Millaje Próximo Mantenimiento :</label></br>
+                            <input type="number" class="inputCaja text-end" id="controlProximaRevisionMi" maxlength="6" min="0"
+                                step="1" max="99999" placeholder="Ej. 250" name="proximaRevisionMi"
+                                value="{{ old('proximaRevisionMi') }}">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Horas Próximo Mantenimiento :</label></br>
+                            <input type="number" class="inputCaja text-end" id="controlProximaRevisionHr" maxlength="6" min="0"
+                                step="1" max="99999" placeholder="Ej. 250" name="proximaRevisionHr"
+                                value="{{ old('proximaRevisionHr') }}">
                         </div>
 
                         <div class=" col-12  mb-3 ">
@@ -280,7 +320,7 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, codigo, color, comentarios) {
+        function cargaItem(id, nombre, codigo, color, comentarios, proximoKm, proximoMi, proximoHr) {
 
             const txtId = document.getElementById('controlId');
             txtId.value = id;
@@ -296,6 +336,15 @@
 
             const txtColor = document.getElementById('color');
             txtColor.value = color;
+
+            const txtProximoKm = document.getElementById('controlProximaRevisionKm');
+            txtProximoKm.value = proximoKm;
+
+            const txtProximoMi = document.getElementById('controlProximaRevisionMi');
+            txtProximoMi.value = proximoMi;
+
+            const txtProximoHr = document.getElementById('controlProximaRevisionHr');
+            txtProximoHr.value = proximoHr;
 
         }
     </script>

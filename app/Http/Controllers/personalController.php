@@ -287,7 +287,7 @@ class personalController extends Controller
             //** guardamos el id de usuario para el registro de personal */
             $personal['userId'] = $newuser->id;
         }
-        // dd( $request );
+        // dd($request);
 
         $personal = personal::create($personal);
 
@@ -336,6 +336,8 @@ class personalController extends Controller
                         $eventoCalendario->descripcion = 'Expiración del Documento: ' . $request->archivo[$i]['tipoDocsNombre'] . ', Perteneciente al Usuario: ' . $newuser->name . ', con el Email: ' . $newuser->email . ', con el Celular: ' . $newuser->celular;
                         $eventoCalendario->color = '#f70202';
                         $eventoCalendario->tipoEvento = 'ExpiranDocumentos';
+                        $eventoCalendario->estadoId = 3;
+                        $eventoCalendario->userId = $personal['userId'];
                         $eventoCalendario->save();
                     }
                 } else {
@@ -871,6 +873,7 @@ class personalController extends Controller
 
         $data = $request->all();
 
+        // dd($data);
         /*** directorio contenedor de su información */
         $pathPesonal = str_pad($personal->id, 4, '0', STR_PAD_LEFT);
 
@@ -1012,6 +1015,8 @@ class personalController extends Controller
                                 $eventoCalendario->descripcion = 'Expiración del Documento: ' . $request->archivo[$i]['tipoDocsNombre'] . ', Perteneciente al Usuario: ' . $newuser . ', con el Email: ' . $personal->email . ', con el Celular: ' . $personal->celular;
                                 $eventoCalendario->color = '#f70202';
                                 $eventoCalendario->tipoEvento = 'ExpiranDocumentos';
+                                $eventoCalendario->estadoId = 3;
+                                $eventoCalendario->userId = $data['userId'];
                                 $eventoCalendario->save();
                             }
                             $fechaActual = Carbon::now();
