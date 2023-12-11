@@ -656,6 +656,9 @@
                                                                                 id='{{ $item->idDoc }}'
                                                                                 name='archivo[{{ $count }}][idDoc]'
                                                                                 value='{{ $item->idDoc }}'>
+
+                                                                                <input type="hidden" id='modificacion{{ $item->id }}' name='archivo[{{ $count }}][modificacionDocs]' value='0'>
+
                                                                             <input type="hidden"
                                                                                 id='{{ $item->nombre }}'
                                                                                 name='archivo[{{ $count }}][tipoDocs]'
@@ -760,6 +763,9 @@
                                                                             <input type="hidden" id=''
                                                                                 name='archivo[{{ $count }}][idDoc]'
                                                                                 value='{{ $item->idDoc }}'>
+
+                                                                                <input type="hidden" id='modificacion{{ $item->id }}' name='archivo[{{ $count }}][modificacionDocs]' value='0'>
+
                                                                             <input type="hidden"
                                                                                 id='{{ $item->nombre }}'
                                                                                 name='archivo[{{ $count }}][tipoDocs]'
