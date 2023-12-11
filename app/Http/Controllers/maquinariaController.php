@@ -333,6 +333,7 @@ class maquinariaController extends Controller
                         $eventoCalendario->color = '#f70202';
                         $eventoCalendario->tipoEvento = 'ExpiranDocumentos';
                         $eventoCalendario->userId = $maquinaria['userId'];
+                        $eventoCalendario->estadoId = 1;
                         // dd($eventoCalendario);
                         $eventoCalendario->save();
                     }
@@ -750,6 +751,7 @@ class maquinariaController extends Controller
                                 $eventoCalendario->color = '#f70202';
                                 $eventoCalendario->tipoEvento = 'ExpiranDocumentos';
                                 $eventoCalendario->userId = $data['userId'];
+                                $eventoCalendario->estadoId = 1;
                                 // dd($eventoCalendario);
                                 $eventoCalendario->save();
                             }
