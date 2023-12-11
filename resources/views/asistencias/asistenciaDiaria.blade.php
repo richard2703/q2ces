@@ -148,6 +148,7 @@ $blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
                                             <div class="table-responsive">
                                                 <table class="table">
                                                     <thead class="labelTitulo text-center">
+                                                        <th class="labelTitulo" style="width:35px !important">#</th>
                                                         <th class="labelTitulo">Código</th>
                                                         <th class="labelTitulo">Nombre</th>
                                                         <th class="labelTitulo">Puesto</th>
@@ -161,20 +162,23 @@ $blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
                                                         <th class="labelTitulo" style="width:140px !important">Descansos
                                                         </th>
                                                         <th class="labelTitulo">Horario Entrada</th>
-                                                        <th class="labelTitulo" style="width:140px !important">Entrada
+                                                        <th class="labelTitulo" style="width:120px !important">Entrada
                                                             Anticipada
                                                         </th>
-                                                        <th class="labelTitulo" style="width:140px !important">Entrada
+                                                        <th class="labelTitulo" style="width:120px !important">Entrada
                                                         </th>
                                                         <th class="labelTitulo">Horario Salida</th>
-                                                        <th class="labelTitulo" style="width:140px !important">Salida
+                                                        <th class="labelTitulo" style="width:120px !important">Salida
                                                         </th>
                                                     </thead>
                                                     <tbody class="text-center">
-
+                                                        @php
+                                                            $intCont = 1;
+                                                        @endphp
                                                         @if ($blnAsistenciaRegistrada == false)
-                                                            @forelse ($personal as $item)
+                                                            @forelse ($listaAsistencia as $item)
                                                                 <tr>
+                                                                    <td>{{ $intCont }}</td>
                                                                     <td class=""
                                                                         style="color: {{ $item->estatusColor }};">
                                                                         <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
@@ -263,6 +267,9 @@ $blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
                                                                             value="{{ $item->hSalida }}">
                                                                     </td>
                                                                 </tr>
+                                                                @php
+                                                                    $intCont += 1;
+                                                                @endphp
                                                             @empty
                                                                 <tr>
                                                                     <td colspan="2">Sin Registros.</td>
@@ -271,6 +278,7 @@ $blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
                                                         @else
                                                             @forelse ($asistencias as $item)
                                                                 <tr>
+                                                                    <td>{{ $intCont }}</td>
                                                                     <td class=""
                                                                         style="color: {{ $item->estatusColor }};">
                                                                         <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
@@ -369,6 +377,9 @@ $blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
                                                                             value="{{ $item->hSalida ? \Carbon\Carbon::parse($item->hSalida)->format('H:i') : '' }}">
                                                                     </td>
                                                                 </tr>
+                                                                @php
+                                                                $intCont += 1;
+                                                            @endphp
                                                             @empty
                                                                 <tr>
                                                                     <td colspan="2">Sin Registros.</td>

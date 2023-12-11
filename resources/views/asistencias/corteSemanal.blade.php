@@ -135,20 +135,22 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                             </div>
                                             <div class="mb-3">
                                                 @can('cajachica_show')
-                                                @php
-                                                $fechaInicioFormateada = date('d-m-Y', strtotime($strFechaInicioPeriodo));
-                                                $fechaFinFormateada = date('d-m-Y', strtotime($strFechaFinPeriodo));
-                                                    $semanaFormatted = 'Semana ' . $semanaSeleccionada . ' del ' . $fechaInicioFormateada . ' al ' . $fechaFinFormateada;
-                                                @endphp
+                                                    @php
+                                                        $fechaInicioFormateada = date('d-m-Y', strtotime($strFechaInicioPeriodo));
+                                                        $fechaFinFormateada = date('d-m-Y', strtotime($strFechaFinPeriodo));
+                                                        $semanaFormatted = 'Semana ' . $semanaSeleccionada . ' del ' . $fechaInicioFormateada . ' al ' . $fechaFinFormateada;
+                                                    @endphp
 
-                                                <a href="{{ route('printAsistencia.get', [
-                                                    'semanaFormatted' => $semanaFormatted,
-                                                    'intAnio' => $intAnio, 
-                                                    'intMes' => $intMes, 
-                                                    'intDia' => $intDia
-                                                ]) }}">
-                                                    <button type="button" class="btn regresar" style="">Imprimir</button>
-                                                </a>
+                                                    <a
+                                                        href="{{ route('printAsistencia.get', [
+                                                            'semanaFormatted' => $semanaFormatted,
+                                                            'intAnio' => $intAnio,
+                                                            'intMes' => $intMes,
+                                                            'intDia' => $intDia,
+                                                        ]) }}">
+                                                        <button type="button" class="btn regresar"
+                                                            style="">Imprimir</button>
+                                                    </a>
                                                 @endcan
                                             </div>
                                             <div class="">
@@ -165,7 +167,6 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                 @endcan
                                             </div>
                                         </div>
-
                                     </div>
 
                                     <form class="row alertaGuardar" action="{{ route('asistencia.update', 1) }}"
@@ -177,10 +178,11 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                         <input type="hidden" name="intDia" value="{{ $intDia }}">
                                         {{-- <input type="hidden" name="personalId" value="{{ $personal->id }}"> --}}
 
-
                                         <div class="table-responsive">
                                             <table class="table">
+                                                @php $intCont = 1; @endphp
                                                 <thead class="labelTitulo text-center">
+                                                    <th class="labelTitulo" style="width:35px !important">#</th>
                                                     <th class="labelTitulo corte">Código</th>
                                                     <th class="labelTitulo corte">Nombre</th>
                                                     <th class="labelTitulo corte">Puesto</th>
@@ -218,10 +220,12 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                         $intTotalHorasCompletas = 0;
                                                         ?>
                                                         <tr>
+                                                            <td>{{ $intCont }}</td>
                                                             <td style="color: {{ $item->estatusColor }};">
                                                                 <strong>{{ $item->numEmpleado != null ? ucwords(trans($item->numEmpleado)) : '-' }}</strong>
                                                             </td>
-                                                            <td class="text-left">{{ $item->empleado != null ? ucwords(trans($item->empleado)) : '-' }}
+                                                            <td class="text-left">
+                                                                {{ $item->empleado != null ? ucwords(trans($item->empleado)) : '-' }}
                                                             </td>
                                                             <td>{{ ucwords(trans($item->puesto)) }}</td>
                                                             <?php
@@ -337,7 +341,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                                 style="color: {{ $item->pagos[$iDay]->tipoAsistenciaColor }};">
                                                                 <!-- Estatus de asistencia-->
                                                                 <strong> {{ $item->pagos[$iDay]->esAsistencia }}</strong>
-                                                                
+
                                                             </td>
                                                             <td
                                                                 title="Tiempo Extra: {{ str_pad($intHorasDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosDia, 2, '0', STR_PAD_LEFT) }}, Tiempo Retraso: {{ str_pad($intHorasRetrasoDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosRetrasoDia, 2, '0', STR_PAD_LEFT) }}, Se Paga proporcional sueldo : $ {{ $decValorHoraExtra }}">
@@ -394,10 +398,13 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                                 ?>
                                                             </td>
                                                         </tr>
+
+                                                        @php $intCont += 1; @endphp
                                                     @empty
 
                                                         @forelse ($listaAsistencia as $item)
                                                             <tr>
+                                                                <td>{{ $intCont }}</td>
                                                                 <td style="color: {{ $item->estatusColor }};">
                                                                     <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                                 </td>
@@ -425,6 +432,8 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                                 <td>---</td>
                                                                 <td class="td-actions">---</td>
                                                             </tr>
+
+                                                            @php $intCont += 1; @endphp
                                                         @empty
                                                             <tr>
                                                                 <td colspan="2">Sin Registros.<br><br> <b>Es Necesario
@@ -436,7 +445,7 @@ $blnBloquearRegistro = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == tru
                                                     @endforelse
 
                                                     <tr>
-                                                        <td colspan="21"></td>
+                                                        <td colspan="22"></td>
                                                         <td class="text-right">$
                                                             {{ number_format($intTotalGeneralHorasExtras, 2) }} </td>
                                                         <td class="text-right">$
