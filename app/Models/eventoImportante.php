@@ -5,16 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class grupo extends Model {
+class eventoImportante extends Model
+{
     use HasFactory;
-    protected $table = 'grupo';
+    protected $table = "eventoImportante";
 
     public $timestamps = true;
 
     protected $fillable = [
-        'nombre',
-        'comentario',
-        'imagen',
-        'activo'
+        'userId',
+        'titulo',
+        'start',
+        'end',
+        'comentario'
     ];
 }

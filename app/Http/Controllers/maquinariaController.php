@@ -7,6 +7,7 @@ use App\Models\maqdocs;
 use App\Models\maqimagen;
 use App\Models\bitacoras;
 use App\Models\bitacorasEquipos;
+use App\Models\calendarioPrincipal;
 use App\Models\checkList;
 use App\Models\checkListRegistros;
 use App\Models\obras;
@@ -107,7 +108,7 @@ class maquinariaController extends Controller
         $maquinaria = maquinaria::select(
             'maquinaria.id',
             'maquinaria.identificador',
-            DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ),
+            DB::raw("CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria"),
             'obras.id as obraId',
             'obras.nombre as obra',
             'obraMaqPer.combustible as cargaCombustible',
@@ -115,21 +116,21 @@ class maquinariaController extends Controller
             'obraMaqPer.fin as fechaFinal',
             'obraMaqPer.id as recordId',
             'personal.id as operadorId',
-            DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as operador" )
+            DB::raw("CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as operador")
         )
-        ->leftjoin( 'obraMaqPer', 'obraMaqPer.maquinariaId', 'maquinaria.id' )
-        ->leftjoin( 'personal', 'personal.id', 'obraMaqPer.personalId' )
-        ->leftjoin( 'obras', 'obras.id', 'obraMaqPer.obraId' )
-        ->leftjoin('marca','marca.id','maquinaria.marcaId')
-        ->leftjoin('maquinariaCategoria','maquinariaCategoria.id','maquinaria.categoriaId')
-        ->whereNull( 'compania' )
-        ->orderBy('maquinaria.identificador','asc')
-        ->paginate( 15 );
+            ->leftjoin('obraMaqPer', 'obraMaqPer.maquinariaId', 'maquinaria.id')
+            ->leftjoin('personal', 'personal.id', 'obraMaqPer.personalId')
+            ->leftjoin('obras', 'obras.id', 'obraMaqPer.obraId')
+            ->leftjoin('marca', 'marca.id', 'maquinaria.marcaId')
+            ->leftjoin('maquinariaCategoria', 'maquinariaCategoria.id', 'maquinaria.categoriaId')
+            ->whereNull('compania')
+            ->orderBy('maquinaria.identificador', 'asc')
+            ->paginate(15);
 
         $vctObras = obras::select('obras.*', 'clientes.nombre as cliente')
             ->join('clientes', 'clientes.id', 'obras.clienteId')
             ->where('obras.id', '<>', 2)
-            ->orderBy('obras.nombre','asc')->get();
+            ->orderBy('obras.nombre', 'asc')->get();
         //*** Todas excepto la de MTQ control */
 
         $vctOperarios = personal::select(
@@ -151,7 +152,7 @@ class maquinariaController extends Controller
             ->leftjoin('maquinaria', 'maquinaria.id', '=', 'obraMaqPer.maquinariaId')
             ->leftjoin('obras', 'obras.id', '=', 'obraMaqPer.obraId')
             ->where('puesto.puestoNivelId', '=', 5)
-            ->where( 'personal.estatusId', '=', 1 ) //*** solo operarios de maquinaria */ //*** solo operarios de maquinaria */
+            ->where('personal.estatusId', '=', 1) //*** solo operarios de maquinaria */ //*** solo operarios de maquinaria */
             ->orderBy('personal.nombres', 'asc')->get();
 
         // dd( $vctMaquinaria );
@@ -271,7 +272,7 @@ class maquinariaController extends Controller
         //** Generamos el identificador de la maquinaria */
         // $maquinaria[ 'identificador' ] = $this->generaCodigoIdentificacion( $maquinaria[ 'categoriaId' ] );
         $maquinaria['estatusId'] = 1;
-        // dd( $maquinaria[ 'identificador' ] );
+
 
         /*** directorio contenedor de su información */
         $pathMaquinaria = str_pad($maquinaria['identificador'], 4, '0', STR_PAD_LEFT);
@@ -313,14 +314,28 @@ class maquinariaController extends Controller
 
                 if ((isset($request->archivo[$i]['check']) && $request->archivo[$i]['check'] == 'on')) {
                     $documento->vencimiento = 1;
+
                     //Si es 1 SI vence el documento
                     $documento->estatus = '0';
                     //Si esta en 0 Esta MAL
                     if (isset($request->archivo[$i]['fecha'])) {
                         $documento->fechaVencimiento = $request->archivo[$i]['fecha'];
+
                         // Evaluar fecha de vencimiento
                         $documento->estatus = '1';
                         //Si es 1 Esta proximo a vencer
+                        $eventoCalendario = new calendarioPrincipal();
+                        $eventoCalendario->maquinariaId = $documento->maquinariaId;
+                        $eventoCalendario->title = 'Expira documento: ' . $request->archivo[$i]['tipoDocsNombre'];
+                        $eventoCalendario->end = strtoupper($request->archivo[$i]['fecha'] . ' ' . '23:00:00');
+                        $eventoCalendario->start = strtoupper($request->archivo[$i]['fecha'] . ' ' . '01:00:00');
+                        $eventoCalendario->descripcion = 'Expiración del Documento: ' . $request->archivo[$i]['tipoDocsNombre'] . ' Perteneciente al Equipo: ' . $maquinaria->nombre . ', con Placas: ' . $maquinaria->placas . ', y N/Económico: ' . $maquinaria->identificador;
+                        $eventoCalendario->color = '#f70202';
+                        $eventoCalendario->tipoEvento = 'ExpiranDocumentos';
+                        $eventoCalendario->userId = $maquinaria['userId'];
+                        $eventoCalendario->estadoId = 3;
+                        // dd($eventoCalendario);
+                        $eventoCalendario->save();
                     }
                 } else {
                     $documento->vencimiento = 0;
@@ -388,7 +403,8 @@ class maquinariaController extends Controller
     }
 
 
-    public function storeCheckList(Request $request){
+    public function storeCheckList(Request $request)
+    {
         // dd($request);
 
         abort_if(Gate::denies('maquinaria_create'), 403);
@@ -402,20 +418,19 @@ class maquinariaController extends Controller
 
         $record = $request->all();
 
-        $objRecord = bitacorasEquipos::where('maquinariaId','=', $request['maquinariaId'])
-        ->where('bitacoraId','=', $request['bitacoraId'])
-        ->first();
+        $objRecord = bitacorasEquipos::where('maquinariaId', '=', $request['maquinariaId'])
+            ->where('bitacoraId', '=', $request['bitacoraId'])
+            ->first();
 
-        if($objRecord){
-            return back()->withErrors([ 'maquinariaId' => 'La maquinaría ya tiene asignada esta bitácora.']);
-        }else{
+        if ($objRecord) {
+            return back()->withErrors(['maquinariaId' => 'La maquinaría ya tiene asignada esta bitácora.']);
+        } else {
             //*** se guarda la maquinaria */
             $maquinaria = bitacorasEquipos::create($record);
         }
 
-    Session::flash('message', 1);
-    return redirect()->route('maquinaria.checkLists');
-
+        Session::flash('message', 1);
+        return redirect()->route('maquinaria.checkLists');
     }
 
     /**
@@ -479,13 +494,13 @@ class maquinariaController extends Controller
         $refaccionTipo = refaccionTipo::select('refaccionTipo.*')->orderBy('refaccionTipo.nombre', 'asc')->get();
         $categorias = maquinariaCategoria::select('maquinariaCategoria.*')->orderBy('maquinariaCategoria.nombre', 'asc')->get();
         $tipos = maquinariaTipo::select('maquinariaTipo.*')->orderBy('maquinariaTipo.nombre', 'asc')->get();
-        $lastCheckList = checkList::select('checkList.id','bitacoras.nombre as bitacora')
-        ->join('bitacoras','bitacoras.id','checkList.bitacoraId')
-        ->where('maquinariaId','=', $maquinaria->id)
-        ->orderBy('checkList.id', 'desc')->first();
-        $lastMantenimiento = mantenimientos::select('*')->where('maquinariaId','=', $maquinaria->id)->orderBy('mantenimientos.id', 'desc')->first();
+        $lastCheckList = checkList::select('checkList.id', 'bitacoras.nombre as bitacora')
+            ->join('bitacoras', 'bitacoras.id', 'checkList.bitacoraId')
+            ->where('maquinariaId', '=', $maquinaria->id)
+            ->orderBy('checkList.id', 'desc')->first();
+        $lastMantenimiento = mantenimientos::select('*')->where('maquinariaId', '=', $maquinaria->id)->orderBy('mantenimientos.id', 'desc')->first();
         // dd($obraMaqPer);
-        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'doc', 'fotos',  'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos', 'obraMaqPer','lastCheckList','lastMantenimiento'));
+        return view('maquinaria.detalleMaquinaria', compact('maquinaria', 'doc', 'fotos',  'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos', 'obraMaqPer', 'lastCheckList', 'lastMantenimiento'));
     }
 
     /**
@@ -548,13 +563,13 @@ class maquinariaController extends Controller
         $categorias = maquinariaCategoria::all();
         $tipos = maquinariaTipo::all();
 
-        $lastCheckList = checkList::select('checkList.id','bitacoras.nombre as bitacora')
-        ->join('bitacoras','bitacoras.id','checkList.bitacoraId')
-        ->where('maquinariaId','=', $maquinaria->id)
-        ->orderBy('checkList.id', 'desc')->first();
-        $lastMantenimiento = mantenimientos::select('*')->where('maquinariaId','=', $maquinaria->id)->orderBy('mantenimientos.id', 'desc')->first();
+        $lastCheckList = checkList::select('checkList.id', 'bitacoras.nombre as bitacora')
+            ->join('bitacoras', 'bitacoras.id', 'checkList.bitacoraId')
+            ->where('maquinariaId', '=', $maquinaria->id)
+            ->orderBy('checkList.id', 'desc')->first();
+        $lastMantenimiento = mantenimientos::select('*')->where('maquinariaId', '=', $maquinaria->id)->orderBy('mantenimientos.id', 'desc')->first();
         // dd($lastMantenimiento);
-        return view('maquinaria.verMaquinaria', compact('maquinaria', 'doc', 'fotos', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos', 'obraMaqPer','lastCheckList','lastMantenimiento'));
+        return view('maquinaria.verMaquinaria', compact('maquinaria', 'doc', 'fotos', 'vctEstatus', 'marcas', 'refaccionTipo', 'refacciones', 'categorias', 'tipos', 'obraMaqPer', 'lastCheckList', 'lastMantenimiento'));
     }
 
     /**
@@ -659,7 +674,7 @@ class maquinariaController extends Controller
         ]);
 
         $data = $request->all();
-        // dd( $data );
+        // dd($data, $maquinaria);
 
         $data['identificador'] = strtoupper($data['identificador']);
         $data['placas'] = strtoupper($data['placas']);
@@ -718,12 +733,29 @@ class maquinariaController extends Controller
                     if ((isset($request->archivo[$i]['check']) && $request->archivo[$i]['check'] == 'on')) {
                         $documento['vencimiento'] = 1;
                         //Si es 1 SI vence el documento
+
                         $documento['estatus'] = '0';
                         //Si esta en 0 Esta MAL
                         // dd( 'check', $request->archivo[ $i ][ 'fecha' ] );
+                        // dd($request->archivo);
                         if (isset($request->archivo[$i]['fecha'])) {
                             $documento['fechaVencimiento'] = $request->archivo[$i]['fecha'];
                             // Evaluar fecha de vencimiento
+                            if ($request->archivo[$i]['modificacionDocs'] == 1) {
+                                $eventoCalendario = new calendarioPrincipal();
+                                $eventoCalendario->maquinariaId = $maquinaria->id;
+                                $eventoCalendario->title = 'Expira Documento: ' . $request->archivo[$i]['tipoDocsNombre'];
+                                $eventoCalendario->end = strtoupper($documento['fechaVencimiento'] . ' ' . '23:00:00');
+                                $eventoCalendario->start = strtoupper($documento['fechaVencimiento'] . ' ' . '01:00:00');
+                                $eventoCalendario->descripcion = 'Expiración del Documento: ' . $request->archivo[$i]['tipoDocsNombre'] . ' Perteneciente al Equipo: ' . $maquinaria->nombre . ', con Placas: ' . $maquinaria->placas . ', y N/Económico: ' . $maquinaria->identificador;
+                                $eventoCalendario->color = '#f70202';
+                                $eventoCalendario->tipoEvento = 'ExpiranDocumentos';
+                                $eventoCalendario->userId = $data['userId'];
+                                $eventoCalendario->estadoId = 3;
+                                // dd($eventoCalendario);
+                                $eventoCalendario->save();
+                            }
+
                             $fechaActual = Carbon::now();
                             // Obtén la fecha que deseas evaluar ( por ejemplo, desde una base de datos )
                             $fechaProximaAVencer = Carbon::parse($request->archivo[$i]['fecha']);
@@ -830,26 +862,26 @@ class maquinariaController extends Controller
      * @param int $bitacoraEquiposId Identificador del registro de la tabla de Bitacoras y Equipos
      * @return void
      */
-    public function destroyCheckList($bitacoraEquiposId )
+    public function destroyCheckList($bitacoraEquiposId)
     {
         // dd($bitacoraEquiposId);
         abort_if(Gate::denies('maquinaria_destroy'), 403);
         try {
-            $item = bitacorasEquipos::where( 'id', '=', $bitacoraEquiposId )->first();
+            $item = bitacorasEquipos::where('id', '=', $bitacoraEquiposId)->first();
             $item->delete();
             // Intenta eliminar
-        } catch ( QueryException $e ) {
-            if ( $e->getCode() === 23000 ) {
-                return redirect()->back()->with( 'faild', 'No Puedes Eliminar ' );
+        } catch (QueryException $e) {
+            if ($e->getCode() === 23000) {
+                return redirect()->back()->with('faild', 'No Puedes Eliminar ');
                 // Esto es un error de restricción de clave externa ( FOREIGN KEY constraint )
                 // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
             } else {
-                return redirect()->back()->with( 'faild', 'No Puedes Eliminar si esta en uso' );
+                return redirect()->back()->with('faild', 'No Puedes Eliminar si esta en uso');
                 // Otro tipo de error de base de datos
                 // Maneja según sea necesario
             }
         }
-        return redirect()->back()->with( 'success', 'Eliminado correctamente' );
+        return redirect()->back()->with('success', 'Eliminado correctamente');
     }
 
     public function cambiaEstatusMaquinaria($id, $estatusId)
@@ -1042,22 +1074,25 @@ class maquinariaController extends Controller
      *
      * @return void
      */
-    public function checkLists(Request $request){
+    public function checkLists(Request $request)
+    {
 
         abort_if(Gate::denies('maquinaria_index'), 403);
         $estatus = $request->input('estatus', '0');
 
         $vctMaquinaria = maquinaria::select('maquinaria.id', DB::raw("CONCAT(maquinaria.identificador,' ', maquinaria.nombre)as maquinaria"),)
-        ->whereNull('compania')
-        ->orderBy('maquinaria.identificador','asc')->get();
+            ->whereNull('compania')
+            ->orderBy('maquinaria.identificador', 'asc')->get();
 
-        $vctBitacoras = bitacoras::select(DB::raw("CONCAT(bitacoras.nombre,' ', bitacoras.codigo,' v', bitacoras.version)as bitacora"),
-        'bitacoras.id',
-        'frecuenciaEjecucion.nombre as frecuencia',
-        'frecuenciaEjecucion.dias',)
-        ->join('frecuenciaEjecucion', 'frecuenciaEjecucion.id', 'bitacoras.id')
-        ->where('bitacoras.activa','=',1)
-        ->orderBy('bitacoras.nombre','asc')->get();
+        $vctBitacoras = bitacoras::select(
+            DB::raw("CONCAT(bitacoras.nombre,' ', bitacoras.codigo,' v', bitacoras.version)as bitacora"),
+            'bitacoras.id',
+            'frecuenciaEjecucion.nombre as frecuencia',
+            'frecuenciaEjecucion.dias',
+        )
+            ->join('frecuenciaEjecucion', 'frecuenciaEjecucion.id', 'bitacoras.id')
+            ->where('bitacoras.activa', '=', 1)
+            ->orderBy('bitacoras.nombre', 'asc')->get();
 
         $vctRecords = bitacoras::select(
             DB::raw("CONCAT(bitacoras.nombre,' ', bitacoras.codigo,' v', bitacoras.version)as bitacora"),
@@ -1078,11 +1113,11 @@ class maquinariaController extends Controller
             $vctRecords = $vctRecords->where('maquinaria.id', $estatus);
         }
 
-        $vctRecords = $vctRecords->where('maquinaria.estatusId','=',1)
+        $vctRecords = $vctRecords->where('maquinaria.estatusId', '=', 1)
             ->orderBy('maquinaria.identificador', 'asc')
             ->orderBy('frecuenciaEjecucion.dias', 'asc')
             ->paginate(15);
 
-        return view('maquinaria.checkListMaquinaria', compact('vctRecords','vctMaquinaria','vctBitacoras'));
+        return view('maquinaria.checkListMaquinaria', compact('vctRecords', 'vctMaquinaria', 'vctBitacoras'));
     }
 }

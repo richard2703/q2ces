@@ -644,10 +644,38 @@ class checkListController extends Controller {
     public function destroy( $id ) {
 
         abort_if ( Gate::denies( 'checkList_destroy' ), 403 );
+        $debug = array();
         try {
 
-            $bitacora = bitacoras::where( 'id', '=', $id )->first();
-            $bitacora->delete();
+            //*** buscamos si existe registro de programacion */
+            $objProgramacion  = programacionCheckLists::where( 'programacionCheckLists.checklistId', '=', $id )->get();
+            if ( $objProgramacion->count()>0 ) {
+                $debug[] = 'Eliminamos el registro de planeacion del checklist' ;
+                $objProgramacion  = programacionCheckLists::where( 'programacionCheckLists.checklistId', '=', $id )->delete();
+            } else {
+                $debug[] = 'Sin registros de planeacion del checklist' ;
+            }
+
+            //*** buscamos sus registro */
+            $objRecords = checkListRegistros::where( 'checkListRegistros.checklistId', '=', $id )->get();
+            if ( $objRecords->count()>0 ) {
+                $debug[] = 'Eliminamos los registros del checklist' ;
+                $objRecords = checkListRegistros::where( 'checkListRegistros.checklistId', '=', $id )->delete();
+            } else {
+                $debug[] = 'Sin registros del checklist' ;
+            }
+
+            //*** buscamos el checklist */
+            $checkList = checkList::where( 'id', '=', $id )->get();
+            if ( $checkList->count()>0 ) {
+                $debug[] = 'Eliminamos el checklist' ;
+                $checkList = checkList::where( 'id', '=', $id )->delete();
+            } else {
+                $debug[] = 'Sin checklist' ;
+            }
+
+            // $bitacora->delete();
+
             // Intenta eliminar
         } catch ( QueryException $e ) {
             if ( $e->getCode() === 23000 ) {
@@ -660,7 +688,72 @@ class checkListController extends Controller {
                 // Maneja según sea necesario
             }
         }
-        return redirect()->back()->with( 'success', 'Eliminado correctamente' );
+        // dd( $debug );
+        return redirect()->back()->with( 'success', 'Se ha eliminado correctamente toda la información relacionada' );
+    }
+
+    /**
+    * Undocumented function
+    *
+    * @param [ type ] $id
+    * @return void
+    */
+
+    public function programacionDelete( $id ) {
+
+        abort_if ( Gate::denies( 'checkList_destroy' ), 403 );
+        $debug = array();
+        $intCheckList = 0;
+        try {
+
+            //*** buscamos si existe registro de programacion */
+            $objProgramacion  = programacionCheckLists::where( 'programacionCheckLists.id', '=', $id )->first();
+            if ( $objProgramacion ) {
+                $intCheckList = ( $objProgramacion->checkListId != 0? $objProgramacion->checkListId : 0 );
+                $debug[] = 'Eliminamos el registro de planeacion del checklist'  ;
+                $debug[] = 'Checklist Asignado: ' . $intCheckList ;
+                $objProgramacion  = programacionCheckLists::where( 'programacionCheckLists.id', '=', $id )->delete();
+            } else {
+                $debug[] = 'Sin registros de planeacion del checklist' ;
+            }
+
+            //** si hay un checklist registrado se eliminan esas referencias tambien */
+            if ( $intCheckList != 0 ) {
+                //*** buscamos sus registro */
+                $objRecords = checkListRegistros::where( 'checkListRegistros.checklistId', '=', $id )->get();
+                if ( $objRecords->count()>0 ) {
+                    $debug[] = 'Eliminamos los registros del checklist' ;
+                    $objRecords = checkListRegistros::where( 'checkListRegistros.checklistId', '=', $id )->delete();
+                } else {
+                    $debug[] = 'Sin registros del checklist' ;
+                }
+
+                //*** buscamos el checklist */
+                $checkList = checkList::where( 'id', '=', $id )->get();
+                if ( $checkList->count()>0 ) {
+                    $debug[] = 'Eliminamos el checklist' ;
+                    $checkList = checkList::where( 'id', '=', $id )->delete();
+                } else {
+                    $debug[] = 'Sin checklist' ;
+                }
+            }else {
+                $debug[] = 'Sin checklist asignado' ;
+            }
+
+            // Intenta eliminar
+        } catch ( QueryException $e ) {
+            if ( $e->getCode() === 23000 ) {
+                return redirect()->back()->with( 'faild', 'No Puedes Eliminar ' );
+                // Esto es un error de restricción de clave externa ( FOREIGN KEY constraint )
+                // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
+            } else {
+                return redirect()->back()->with( 'faild', 'No Puedes Eliminar si esta en uso' );
+                // Otro tipo de error de base de datos
+                // Maneja según sea necesario
+            }
+        }
+        // dd( $debug );
+        return redirect()->back()->with( 'success', 'Se ha eliminado correctamente toda la información relacionada' );
     }
 
     public function printTicketUsuario( $id ) {

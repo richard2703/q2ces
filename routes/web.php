@@ -37,7 +37,6 @@ Route::get('/', function () {
 Route::get('/usuarios/export', [App\Http\Controllers\UserController::class, 'export'])->name('users.export');
 Route::get('/asistencia/export', [App\Http\Controllers\asistenciaController::class, 'export'])->name('asistencia.export');
 
-
 // //Mantenimiento
 // Route::get('/mantenimientos', function () {
 //     return view('mantenimientos.mantenimientos');
@@ -342,6 +341,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('calendarioPrincipal', App\Http\Controllers\calendarioPrincipalController::class);
     Route::put('calendarioPrincipal/editar/{evento}', [App\Http\Controllers\calendarioPrincipalController::class, 'update'])->name('calendarioPrincipal.update');
     Route::resource('actividades', App\Http\Controllers\actividadesController::class);
+    Route::resource('eventosImportantes', App\Http\Controllers\eventoImportanteController::class);
     // Route::get('/calendario', [App\Http\Controllers\calendarioController::class, 'index'])->name('calendarioPrincipal.index');
     // Route::get('/calendario2', [App\Http\Controllers\calendarioController::class, 'index2'])->name('calendarioPrincipal.index2');
     // Route::get('/calendario/{anio}/{mes}', [App\Http\Controllers\calendarioController::class, 'reloadCalendario'])->name('calendario.reloadCalendario');
@@ -365,6 +365,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/mantenimientos/editar/{id}', [App\Http\Controllers\mantenimientosController::class, 'edit'])->name('mantenimientos.edit');
     Route::get('/mantenimientos/detalle/{id}', [App\Http\Controllers\mantenimientosController::class, 'show'])->name('mantenimientos.show');
     Route::put('/mantenimiento/editar/{id}/update', [App\Http\Controllers\mantenimientosController::class, 'update'])->name('mantenimientos.update');
+    Route::delete('/mantenimiento/{mantenimiento}', [App\Http\Controllers\mantenimientosController::class, 'destroy'])->name('mantenimientos.destroy');
 
     //*** operaciones con reparaciones */
     // Route::post('/calendario/reparaciones/nuevo', [App\Http\Controllers\reparacionesController::class, 'store'])->name('reparaciones.store');
@@ -441,6 +442,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/checkList/registros/editar/{id}', [App\Http\Controllers\checkListRegistrosController::class, 'show'])->name('checkListRegistros.show');
     Route::put('/checkList/registros/editar/', [App\Http\Controllers\checkListRegistrosController::class, 'update'])->name('checkListRegistros.update');
     Route::get('/checkList/programacion', [App\Http\Controllers\checkListController::class, 'programacion'])->name('checkList.programacion');
+    Route::delete('/checkList/programacion/{checklist}', [App\Http\Controllers\checkListController::class, 'programacionDelete'])->name('checkList.programacionDelete');
     Route::get('/checkList/pendientes', [App\Http\Controllers\checkListController::class, 'pendientes'])->name('checkList.pendientes');
     Route::post('/checkList/asignacion/trabajo', [App\Http\Controllers\checkListController::class, 'asignacion'])->name('checkList.asignacion');
     Route::put('/checkList/asignacion/actualizar/', [App\Http\Controllers\checkListController::class, 'updateAsignacion'])->name('checkList.updateAsignacion');
@@ -449,6 +451,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/checkList/planeacion/registrar/', [App\Http\Controllers\checkListController::class, 'updatePlaneacion'])->name('checkList.updatePlaneacion');
 
     Route::get('checkList/ticket/{id}', [App\Http\Controllers\checkListController::class, 'printTicketUsuario'])->name('checkList.printTicketUsuario');
+    Route::delete('/checkList/{checklist}', [App\Http\Controllers\checkListController::class, 'destroy'])->name('checkList.destroy');
 
     // Route::get('checkList/ticketCerrado/{id}', [App\Http\Controllers\serviciosTrasporteController::class, 'checkListController'])->name('checkList.printTicketCheckList');
 
@@ -527,6 +530,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/check-permission/{permission}', 'App\Http\Controllers\calendarioMtqController@checkPermission');
     Route::get('/check-permission-calendarioPrincipal/{permission}', 'App\Http\Controllers\calendarioPrincipalController@checkPermission');
     Route::get('/solicitud-detalle/{solicitudId}', 'App\Http\Controllers\calendarioPrincipalController@solicitudDetalle');
+
     // Route::get('/autos-asignados-mtq/{autoId}', 'App\Http\Controllers\maquinariaMtqController@autoAsignado');
 
     // Import Excel
@@ -565,4 +569,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Crud documentoSelladoMantenimiento
     Route::resource('documentoSelladoMantenimiento', App\Http\Controllers\documentoSelladoMantenimientoController::class);
+
+    // Route::get('/generarDiasFeriados/{days}', 'App\Http\Controllers\calendarioPrincipalController@generarDiasFeriados');
+    Route::post('/generarDiasFeriados', 'App\Http\Controllers\calendarioPrincipalController@generarDiasFeriados');
 });

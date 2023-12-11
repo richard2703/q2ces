@@ -11,7 +11,7 @@ $diaSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$int
 $mesSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$intDia"), 'm');
 $anioSiguiente = date_format($objCalendar->getDiaSiguiente("$intAnio-$intMes-$intDia"), 'Y');
 $fechaSeleccionada = date_create(date('Y-m-d', strtotime("$intAnio-$intMes-$intDia")));
-$diaSeleccionado = $objCalendar->getNameDay(date_format($fechaSeleccionada, 'N'),true);
+$diaSeleccionado = $objCalendar->getNameDay(date_format($fechaSeleccionada, 'N'), true);
 $mesSeleccionado = $objCalendar->getNameMonth(date_format($fechaSeleccionada, 'm'));
 
 $dtToday = date('Ymd');
@@ -110,7 +110,7 @@ if ($asistencias->isEmpty() == true) {
                                                 <a href="{{ route('asistencia.HEstore') }}"
                                                     class="combustibleLitros fw-semibold text-end"
                                                     title="Ir al día de hoy"><b>Horas Extras del Día
-                                                        {{ /*ucwords*/(trans($objCalendar->getFechaFormateada($fechaSeleccionada, true))) }}</b>
+                                                        {{ /*ucwords*/ trans($objCalendar->getFechaFormateada($fechaSeleccionada, true)) }}</b>
                                                 </a>
                                             </div>
 
@@ -139,6 +139,7 @@ if ($asistencias->isEmpty() == true) {
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="labelTitulo text-center">
+                                                <th class="labelTitulo" style="width:25px !important">#</th>
                                                 <th class="labelTitulo">Código</th>
                                                 <th class="labelTitulo">Nombre</th>
                                                 <th class="labelTitulo">Puesto</th>
@@ -148,8 +149,12 @@ if ($asistencias->isEmpty() == true) {
                                                 <th class="labelTitulo">Tiempo Extra</th>
                                             </thead>
                                             <tbody class="text-center">
+                                                @php
+                                                    $intCont = 1;
+                                                @endphp
                                                 @forelse ($asistencias as $item)
                                                     <tr>
+                                                        <td>{{ $intCont }}</td>
                                                         <td style="color: {{ $item->estatusColor }};">
                                                             <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                             <input type="hidden" name="asistenciaId[]"
@@ -205,9 +210,13 @@ if ($asistencias->isEmpty() == true) {
                                                                 value="{{ str_pad($intHoras, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutos, 2, '0', STR_PAD_LEFT) }}">
                                                         </td>
                                                     </tr>
+                                                    @php
+                                                        $intCont += 1;
+                                                    @endphp
                                                 @empty
                                                     @forelse ($listaAsistencia as $item)
                                                         <tr>
+                                                            <td>{{ $intCont }}</td>
                                                             <td style="color: {{ $item->estatusColor }};">
                                                                 <strong>{{ str_pad($item->numNomina, 4, '0', STR_PAD_LEFT) }}</strong>
                                                             </td>
@@ -219,6 +228,9 @@ if ($asistencias->isEmpty() == true) {
                                                             {{-- <td>---</td> --}}
                                                             <td class="td-actions">---</td>
                                                         </tr>
+                                                        @php
+                                                            $intCont += 1;
+                                                        @endphp
                                                     @empty
                                                         <tr>
                                                             <td colspan="2">Sin registros.<br><br> <b>Es necesario

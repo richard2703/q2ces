@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Models\personal;
 use App\Models\contactos;
 use App\Models\beneficiario;
+use App\Models\calendarioPrincipal;
 use App\Models\docs;
 use App\Models\nomina;
 use App\Models\equipo;
@@ -286,7 +287,7 @@ class personalController extends Controller
             //** guardamos el id de usuario para el registro de personal */
             $personal['userId'] = $newuser->id;
         }
-        // dd( $request );
+        // dd($request);
 
         $personal = personal::create($personal);
 
@@ -327,6 +328,17 @@ class personalController extends Controller
                         // Evaluar fecha de vencimiento
                         $documento->estatus = '1';
                         //Si es 1 Esta proximo a vencer
+                        $eventoCalendario = new calendarioPrincipal();
+                        $eventoCalendario->personalId = $personal->id;
+                        $eventoCalendario->title = 'Expira Documento: ' . $request->archivo[$i]['tipoDocsNombre'];
+                        $eventoCalendario->end = strtoupper($request->archivo[$i]['fecha'] . ' ' . '23:00:00');
+                        $eventoCalendario->start = strtoupper($request->archivo[$i]['fecha'] . ' ' . '01:00:00');
+                        $eventoCalendario->descripcion = 'Expiración del Documento: ' . $request->archivo[$i]['tipoDocsNombre'] . ', Perteneciente al Usuario: ' . $newuser->name . ', con el Email: ' . $newuser->email . ', con el Celular: ' . $newuser->celular;
+                        $eventoCalendario->color = '#f70202';
+                        $eventoCalendario->tipoEvento = 'ExpiranDocumentos';
+                        $eventoCalendario->estadoId = 3;
+                        $eventoCalendario->userId = $personal['userId'];
+                        $eventoCalendario->save();
                     }
                 } else {
                     $documento->vencimiento = 0;
@@ -508,53 +520,54 @@ class personalController extends Controller
             ->orderBy('nombres', 'asc')->get();
         // $documentos = docs::where( 'tipoId', '1' )->orderBy( 'nombre', 'asc' )->get();
 
-    $nomina->decSalarioDiario = ( $nomina->diario );
-    $nomina->decSalarioDiarioIntegrado = round( $nomina->decSalarioDiario * 1.05137, 2 );
-    $nomina->decSalarioMensual = round( $nomina->decSalarioDiario * 30, 2 );
-    $nomina->decSalarioMensualIntegrado = round( $nomina->decSalarioDiarioIntegrado * 30, 2 );
-    $nomina->decEstado = round( $nomina->decSalarioMensual * 0.025, 2 );
-    $nomina->decImss = round( $nomina->decSalarioMensualIntegrado  * 0.0938, 2 );
-    $nomina->decImssRiesgo = round( $nomina->decSalarioMensualIntegrado * 0.0658875, 2 );
-    $nomina->decAfore = round( $nomina->decSalarioMensualIntegrado * 0.0628, 2 );
-    $nomina->decInfonavit = round( $nomina->decSalarioMensualIntegrado * 0.05, 2 );
-    $nomina->decVacaciones = round( $nomina->decSalarioDiario * 6, 2 );
-    $nomina->decPrimaVacacional = round( $nomina->decVacaciones * 0.25, 2 );
-    $nomina->decAguinaldo = round( $nomina->decSalarioDiario * 15, 2 );
-    $nomina->decTotal = round( $nomina->decSalarioMensual + $nomina->decEstado + $nomina->decImss + $nomina->decImssRiesgo +
-    $nomina->decAfore + $nomina->decInfonavit + $nomina->decVacaciones + $nomina->decPrimaVacacional + $nomina->decAguinaldo + $nomina->isr, 2 );
-    //*** listado de maquinaria que puede asignarse */
-    $vctMaquinaria = maquinaria::select(
-        'maquinaria.*',
-        'maquinaria.nombre as maquina',
-        'obras.nombre as obra',
-        'obras.id as obraId',
-        'personal.id as operadorId',
-        'obraMaqPer.combustible as cargaCombustible',
-        'obraMaqPer.inicio as fechaInicial',
-        'obraMaqPer.fin as fechaFinal',
-        'obraMaqPer.id as recordId',
-        DB::raw( "CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as operador" )
-    )
-    ->leftjoin( 'obraMaqPer', 'obraMaqPer.maquinariaId', 'maquinaria.id' )
-    ->leftjoin( 'personal', 'personal.id', 'obraMaqPer.personalId' )
-    ->leftjoin( 'obras', 'obras.id', 'obraMaqPer.obraId' )
-    ->whereNull( 'compania' )
-    ->where( 'maquinaria.estatusId', '=', 1 )
-    ->paginate( 15 );
+        $nomina->decSalarioDiario = ($nomina->diario);
+        $nomina->decSalarioDiarioIntegrado = round($nomina->decSalarioDiario * 1.05137, 2);
+        $nomina->decSalarioMensual = round($nomina->decSalarioDiario * 30, 2);
+        $nomina->decSalarioMensualIntegrado = round($nomina->decSalarioDiarioIntegrado * 30, 2);
+        $nomina->decEstado = round($nomina->decSalarioMensual * 0.025, 2);
+        $nomina->decImss = round($nomina->decSalarioMensualIntegrado  * 0.0938, 2);
+        $nomina->decImssRiesgo = round($nomina->decSalarioMensualIntegrado * 0.0658875, 2);
+        $nomina->decAfore = round($nomina->decSalarioMensualIntegrado * 0.0628, 2);
+        $nomina->decInfonavit = round($nomina->decSalarioMensualIntegrado * 0.05, 2);
+        $nomina->decVacaciones = round($nomina->decSalarioDiario * 6, 2);
+        $nomina->decPrimaVacacional = round($nomina->decVacaciones * 0.25, 2);
+        $nomina->decAguinaldo = round($nomina->decSalarioDiario * 15, 2);
+        $nomina->decTotal = round($nomina->decSalarioMensual + $nomina->decEstado + $nomina->decImss + $nomina->decImssRiesgo +
+            $nomina->decAfore + $nomina->decInfonavit + $nomina->decVacaciones + $nomina->decPrimaVacacional + $nomina->decAguinaldo + $nomina->isr, 2);
+        //*** listado de maquinaria que puede asignarse */
+        $vctMaquinaria = maquinaria::select(
+            'maquinaria.*',
+            'maquinaria.nombre as maquina',
+            'obras.nombre as obra',
+            'obras.id as obraId',
+            'personal.id as operadorId',
+            'obraMaqPer.combustible as cargaCombustible',
+            'obraMaqPer.inicio as fechaInicial',
+            'obraMaqPer.fin as fechaFinal',
+            'obraMaqPer.id as recordId',
+            DB::raw("CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as operador")
+        )
+            ->leftjoin('obraMaqPer', 'obraMaqPer.maquinariaId', 'maquinaria.id')
+            ->leftjoin('personal', 'personal.id', 'obraMaqPer.personalId')
+            ->leftjoin('obras', 'obras.id', 'obraMaqPer.obraId')
+            ->whereNull('compania')
+            ->where('maquinaria.estatusId', '=', 1)
+            ->paginate(15);
 
-    //*** listado de obras */
-    $vctObras = obras::select( 'obras.*', 'clientes.nombre as cliente' )
-    ->join( 'clientes', 'clientes.id', 'obras.clienteId' )
-    ->where( 'obras.id', '<>', 2 )->get();
-    //*** asignaciones */
-    $vctAsignacion = obraMaqPer::select(
-        'obraMaqPer.*',
-        'obraMaqPer.id as recordId',
-        'obras.nombre as obra',
-        'maquinaria.nombre as maquina' )
-        ->leftjoin( 'obras', 'obras.id', 'obraMaqPer.obraId' )
-        ->leftjoin( 'maquinaria', 'maquinaria.id', 'obraMaqPer.maquinariaId' )
-        ->where( 'personalId', $personal->id )->first();
+        //*** listado de obras */
+        $vctObras = obras::select('obras.*', 'clientes.nombre as cliente')
+            ->join('clientes', 'clientes.id', 'obras.clienteId')
+            ->where('obras.id', '<>', 2)->get();
+        //*** asignaciones */
+        $vctAsignacion = obraMaqPer::select(
+            'obraMaqPer.*',
+            'obraMaqPer.id as recordId',
+            'obras.nombre as obra',
+            'maquinaria.nombre as maquina'
+        )
+            ->leftjoin('obras', 'obras.id', 'obraMaqPer.obraId')
+            ->leftjoin('maquinaria', 'maquinaria.id', 'obraMaqPer.maquinariaId')
+            ->where('personalId', $personal->id)->first();
 
         if (!$vctAsignacion) {
             //*** si no existe asignacion */
@@ -860,6 +873,7 @@ class personalController extends Controller
 
         $data = $request->all();
 
+        // dd($data);
         /*** directorio contenedor de su información */
         $pathPesonal = str_pad($personal->id, 4, '0', STR_PAD_LEFT);
 
@@ -922,7 +936,6 @@ class personalController extends Controller
         $nomina->fechaPagoPrimaVac = $request->fechaPagoPrimaVac;
         $nomina->puestoId = $request->puestoId;
         $nomina->asistencia = $request->asistencia;
-        // dd( $nomina, $request );
         $nomina->save();
 
         $equipo = equipo::where('personalId', $personal->id)->first();
@@ -988,8 +1001,24 @@ class personalController extends Controller
                         //Si es 1 SI vence el documento
                         $documento['estatus'] = '0';
                         //Si esta en 0 Esta MAL
-                        if (isset($request->archivo[$i]['fecha'])) {
+                        // dd($request->archivo);
+                        if ($request->archivo[$i]['modificacionDocs'] == 1) {
                             $documento['fechaVencimiento'] = $request->archivo[$i]['fecha'];
+
+                            $newuser = Str::substr($personal['nombres'], 0, 1) . ' ' . str_replace(' ', '', $personal['apellidoP']) . ' ' . str_replace(' ', '', $personal['apellidoM']);
+                            if (isset($request->archivo[$i]['fecha'])) {
+                                $eventoCalendario = new calendarioPrincipal();
+                                $eventoCalendario->personalId = $personal->id;
+                                $eventoCalendario->title = 'Expira Documento: ' . $request->archivo[$i]['tipoDocsNombre'];
+                                $eventoCalendario->end = strtoupper($request->archivo[$i]['fecha'] . ' ' . '23:00:00');
+                                $eventoCalendario->start = strtoupper($request->archivo[$i]['fecha'] . ' ' . '01:00:00');
+                                $eventoCalendario->descripcion = 'Expiración del Documento: ' . $request->archivo[$i]['tipoDocsNombre'] . ', Perteneciente al Usuario: ' . $newuser . ', con el Email: ' . $personal->email . ', con el Celular: ' . $personal->celular;
+                                $eventoCalendario->color = '#f70202';
+                                $eventoCalendario->tipoEvento = 'ExpiranDocumentos';
+                                $eventoCalendario->estadoId = 3;
+                                $eventoCalendario->userId = $data['userId'];
+                                $eventoCalendario->save();
+                            }
                             $fechaActual = Carbon::now();
                             // Obtén la fecha que deseas evaluar ( por ejemplo, desde una base de datos )
                             $fechaProximaAVencer = Carbon::parse($request->archivo[$i]['fecha']);

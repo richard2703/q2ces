@@ -19,6 +19,7 @@
             enctype="multipart/form-data">
             @csrf
             @method('put')
+            <input type="hidden" name="userId" id="userId" value="{{ auth()->user()->id }}">
             <div class="container-fluid mb-2">
                 <div class="row justify-content-center">
                     <div class="col-12 align-self-center">
@@ -460,8 +461,8 @@
                                                                             <option value="Km"
                                                                                 {{ $maquinaria->kom == 'Km' ? ' selected' : '' }}>
                                                                                 Km</option>
-                                                                            <option value="Ml"
-                                                                                {{ $maquinaria->kom == 'MI' ? ' selected' : '' }}>
+                                                                            <option value="Mi"
+                                                                                {{ $maquinaria->kom == 'Mi' ? ' selected' : '' }}>
                                                                                 Ml</option>
                                                                             <option value="Hr"
                                                                                 {{ $maquinaria->kom == 'Hr' ? ' selected' : '' }}>
@@ -656,6 +657,10 @@
                                                                                 id='{{ $item->idDoc }}'
                                                                                 name='archivo[{{ $count }}][idDoc]'
                                                                                 value='{{ $item->idDoc }}'>
+
+                                                                            <input type="hidden" id='modificacion{{ $item->id }}' name='archivo[{{ $count }}][modificacionDocs]' value='0'>
+                                                                            
+
                                                                             <input type="hidden"
                                                                                 id='{{ $item->nombre }}'
                                                                                 name='archivo[{{ $count }}][tipoDocs]'
@@ -760,6 +765,9 @@
                                                                             <input type="hidden" id=''
                                                                                 name='archivo[{{ $count }}][idDoc]'
                                                                                 value='{{ $item->idDoc }}'>
+
+                                                                                <input type="hidden" id='modificacion{{ $item->id }}' name='archivo[{{ $count }}][modificacionDocs]' value='0'>
+
                                                                             <input type="hidden"
                                                                                 id='{{ $item->nombre }}'
                                                                                 name='archivo[{{ $count }}][tipoDocs]'

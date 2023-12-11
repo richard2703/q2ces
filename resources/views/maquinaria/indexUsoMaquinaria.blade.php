@@ -44,9 +44,10 @@
                                         <th class="labelTitulo text-center">Marca</th>
                                         <th class="labelTitulo text-center">Modelo</th>
                                         <th class="labelTitulo text-center">Placas</th>
-                                        <th class="labelTitulo text-center">Km. Actual</th>
-                                        <th class="labelTitulo text-center no-wrap">Km para Mantenimiento</th>
-                                        <th class="labelTitulo text-center no-wrap">Proximo Mantenimeinto</th>
+                                        <th class="labelTitulo text-center">Tipo</th>
+                                        <th class="labelTitulo text-center">Uso Actual</th>
+                                        <th class="labelTitulo text-center no-wrap">Resta para Mantenimiento</th>
+                                        <th class="labelTitulo text-center no-wrap">Próximo Mantenimiento</th>
                                         <th class="labelTitulo text-center" style="width:120px">Acciones</th>
                                     </thead>
                                     <tbody>
@@ -57,6 +58,7 @@
                                                 <td class="text-center">{{ $maquina->nombre_marca }}</td>
                                                 <td class="text-center">{{ $maquina->modelo }}</td>
                                                 <td class="text-center">{{ $maquina->placas }}</td>
+                                                <td class="text-center">{{ $maquina->kom }}</td>
                                                 <td class="text-center">{{ number_format($maquina->kilometraje) }}</td>
 
                                                 <td class="text-center">

@@ -47,6 +47,7 @@
                             <form class=" alertaGuardar" action="{{ route('personal.store') }}" method="post"
                                 enctype="multipart/form-data">
                                 @csrf
+                                <input type="hidden" name="userId" id="userId" value="{{ auth()->user()->id }}">
                                 <input type="hidden" name="estatusId" id="estatusId" value="1">
                                 <div class="accordion " id="accordionExample">
                                     {{--  Datos Personales  --}}
