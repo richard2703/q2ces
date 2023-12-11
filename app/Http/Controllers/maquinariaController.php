@@ -332,6 +332,7 @@ class maquinariaController extends Controller
                         $eventoCalendario->descripcion = 'Expiración del Documento: ' . $request->archivo[$i]['tipoDocsNombre'] . ' Perteneciente al Equipo: ' . $maquinaria->nombre . ', con Placas: ' . $maquinaria->placas . ', y N/Económico: ' . $maquinaria->identificador;
                         $eventoCalendario->color = '#f70202';
                         $eventoCalendario->tipoEvento = 'ExpiranDocumentos';
+                        $eventoCalendario->userId = $maquinaria['userId'];
                         // dd($eventoCalendario);
                         $eventoCalendario->save();
                     }
@@ -748,6 +749,7 @@ class maquinariaController extends Controller
                                 $eventoCalendario->descripcion = 'Expiración del Documento: ' . $request->archivo[$i]['tipoDocsNombre'] . ' Perteneciente al Equipo: ' . $maquinaria->nombre . ', con Placas: ' . $maquinaria->placas . ', y N/Económico: ' . $maquinaria->identificador;
                                 $eventoCalendario->color = '#f70202';
                                 $eventoCalendario->tipoEvento = 'ExpiranDocumentos';
+                                $eventoCalendario->userId = $data['userId'];
                                 // dd($eventoCalendario);
                                 $eventoCalendario->save();
                             }

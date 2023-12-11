@@ -49,6 +49,7 @@
                             <form class="row alertaGuardar" action="{{ route('maquinaria.store') }}" method="post"
                                 enctype="multipart/form-data">
                                 @csrf
+                                <input type="hidden" name="userId" id="userId" value="{{ auth()->user()->id }}">
                                 <div class="accordion my-3" id="accordionExample">
 
                                     <div class="accordion-item" style="margin-top: -20px;" id="AccordionPrincipal">
@@ -79,7 +80,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-12 col-md-8 ">
+                                                    <div class="col-12 col-md-8">
 
                                                         <div class="row alin">
                                                             <div class=" col-12 col-sm-8 mb-3 ">
@@ -389,7 +390,7 @@
                                                                             aria-label="Default select example"
                                                                             name="kom">
                                                                             <option value="Km">Km</option>
-                                                                            <option value="Mi">Mi</option>
+                                                                            <option value="Ml">Ml</option>
                                                                             <option value="Hr">Hr</option>
                                                                         </select>
                                                                     </div>
