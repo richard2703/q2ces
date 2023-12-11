@@ -360,7 +360,7 @@
                         option.textContent = item.nombre;
                         ListaSeleccionar.appendChild(option);
                     });
-
+                    precioAlmacen();
                 });
         };
 
@@ -392,7 +392,6 @@
 
         if (document.getElementById('almacenId').value == "") {
             almacenes();
-            precioAlmacen();
         }
 
         if (document.getElementById('cantidad').value == "") {
