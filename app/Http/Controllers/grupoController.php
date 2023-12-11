@@ -72,6 +72,16 @@ class grupoController extends Controller {
         $grupo = $request->all();
 
         $grupo = grupo::create( $grupo );
+
+        $grupoNombre='imagenGrupo'.  str_pad($grupo->id, 2, '0', STR_PAD_LEFT);
+
+        if ($request->hasFile('imagen')) {
+            $grupo->imagen =  $grupoNombre . '_'. time() .'.' . $request->file('imagen')->getClientOriginalExtension();
+
+            $request->file('imagen')->storeAs('/public/interfaz/grupos/', $grupo->imagen);
+            $grupo->save();
+        }
+
         Session::flash( 'message', 1 );
         return redirect()->route( 'grupo.edit', $grupo->id )->with('success','Grupo creado correctamente.');
     }
@@ -221,6 +231,15 @@ class grupoController extends Controller {
                         // dd( 'Borrando toda tarea de grupo' );
                     }
                 }
+            }
+
+            $grupoNombre='imagenGrupo'.  str_pad($grupo->id, 2, '0', STR_PAD_LEFT);
+
+            if ($request->hasFile('imagen')) {
+                $grupo->imagen =  $grupoNombre . '_'. time() .'.' . $request->file('imagen')->getClientOriginalExtension();
+
+                $request->file('imagen')->storeAs('/public/interfaz/grupos/', $grupo->imagen);
+                $grupo->save();
             }
 
             Session::flash( 'message', 1 );

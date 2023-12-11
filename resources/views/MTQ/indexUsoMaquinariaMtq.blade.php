@@ -77,7 +77,7 @@
                                         <th class="labelTitulo text-center">Placas</th>
                                         <th class="labelTitulo text-center">Km. Actual</th>
                                         <th class="labelTitulo text-center no-wrap">Km para Mantenimiento</th>
-                                        <th class="labelTitulo text-center no-wrap">Proximo Mantenimeinto</th>
+                                        <th class="labelTitulo text-center no-wrap">Próximo Mantenimiento</th>
                                         <th class="labelTitulo text-center" style="width:120px">Acciones</th>
                                     </thead>
                                     <tbody>
@@ -89,8 +89,8 @@
                                                 <td class="text-center">{{ $maquina->modelo }}</td>
                                                 <td class="text-center">{{ $maquina->placas }}</td>
                                                 <td class="text-center">{{ number_format($maquina->kilometraje) }}</td>
-                                                
-                                                <td class="text-center"> 
+
+                                                <td class="text-center">
                                                     @if($maquina->mantenimiento != 0)
                                                         {{ number_format($maquina->mantenimiento - $maquina->kilometraje) }}
                                                     @else
@@ -157,7 +157,7 @@
                             <input type="text" class="inputCaja" name="nombre" id="nombre"
                                 value="{{ old('nombre') }}" readonly id="nombre">
                         </div>
-                        
+
                         <div class="col-12 col-sm-6 mb-3" style="display: none">
                             <label for="title" class="labelTitulo">Marca:</label>
                             <select name='marca'

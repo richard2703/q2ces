@@ -7,37 +7,36 @@ use App\Models\descarga;
 use App\Models\maquinaria;
 use App\Models\usoMaquinarias;
 use App\Models\cajaChica;
+use App\Models\tipoMantenimiento;
 use Illuminate\Support\Facades\DB;
 
-class Calculos
-{
+class Calculos {
 
     /**
-     * Obtiene el total de cargas de un equipo o en general
-     *
-     * @param integer $intMaquinaria Identificador del equipo a consultar, 0 es el general
-     * @return float el Total de los litros de carga registrados
-     */
+    * Obtiene el total de cargas de un equipo o en general
+    *
+    * @param integer $intMaquinaria Identificador del equipo a consultar, 0 es el general
+    * @return float el Total de los litros de carga registrados
+    */
 
-    public function getTotalLitrosCargas($intMaquinaria = 0)
-    {
+    public function getTotalLitrosCargas( $intMaquinaria = 0 ) {
         $total = 0;
-        if ($intMaquinaria == 0) {
+        if ( $intMaquinaria == 0 ) {
             //*** en general */
             $objLitros = carga::select(
-                DB::raw('sum(carga.litros)as litros')
+                DB::raw( 'sum(carga.litros)as litros' )
             )
-                ->groupby('carga.maquinariaId')->first();
+            ->groupby( 'carga.maquinariaId' )->first();
         } else {
             /*** en particular */
             $objLitros = carga::select(
-                DB::raw('sum(carga.litros)as litros')
+                DB::raw( 'sum(carga.litros)as litros' )
             )
-                ->where('carga.maquinariaId', '=', $intMaquinaria)
-                ->groupby('carga.maquinariaId')->first();
+            ->where( 'carga.maquinariaId', '=', $intMaquinaria )
+            ->groupby( 'carga.maquinariaId' )->first();
         }
 
-        if ($objLitros) {
+        if ( $objLitros ) {
             $total = $objLitros->litros;
         } else {
             $total = 0;
@@ -46,31 +45,30 @@ class Calculos
         return $total;
     }
     /**
-     * Obtiene el total de descargas de un equipo o en general
-     *
-     * @param integer $intMaquinaria Identificador del equipo a consultar, 0 es el general
-     * @return float el Total de los litros descargados registrados
-     */
+    * Obtiene el total de descargas de un equipo o en general
+    *
+    * @param integer $intMaquinaria Identificador del equipo a consultar, 0 es el general
+    * @return float el Total de los litros descargados registrados
+    */
 
-    public function getTotalLitrosDescargas($intMaquinaria = 0)
-    {
+    public function getTotalLitrosDescargas( $intMaquinaria = 0 ) {
         $total = 0;
-        if ($intMaquinaria == 0) {
+        if ( $intMaquinaria == 0 ) {
             //*** en general */
             $objLitros = descarga::select(
-                DB::raw('sum(descarga.litros)as litros')
+                DB::raw( 'sum(descarga.litros)as litros' )
             )
-                ->groupby('descarga.maquinariaId')->first();
+            ->groupby( 'descarga.maquinariaId' )->first();
         } else {
             /*** en particular */
             $objLitros = descarga::select(
-                DB::raw('sum(descarga.litros)as litros')
+                DB::raw( 'sum(descarga.litros)as litros' )
             )
-                ->where('descarga.maquinariaId', '=', $intMaquinaria)
-                ->groupby('descarga.maquinariaId')->first();
+            ->where( 'descarga.maquinariaId', '=', $intMaquinaria )
+            ->groupby( 'descarga.maquinariaId' )->first();
         }
 
-        if ($objLitros) {
+        if ( $objLitros ) {
             $total = $objLitros->litros;
         } else {
             $total = 0;
@@ -80,26 +78,25 @@ class Calculos
     }
 
     /**
-     * Obtiene el nivel de una cisterna mediante la consulta de todas sus cargas y descargas,
-     *
-     * @param integer $intMaquinaria  Identificador del equipo a consultar, 0 es el general
-     * @return float El total de litros del nivel de la cisterna
-     */
+    * Obtiene el nivel de una cisterna mediante la consulta de todas sus cargas y descargas,
+    *
+    * @param integer $intMaquinaria  Identificador del equipo a consultar, 0 es el general
+    * @return float El total de litros del nivel de la cisterna
+    */
 
-    public function getNivelTotalCisterna($intMaquinaria = 0)
-    {
+    public function getNivelTotalCisterna( $intMaquinaria = 0 ) {
         $totalLitros  = 0;
         $decCargados = 0;
         $decDescargados = 0;
 
-        if ($intMaquinaria == 0) {
+        if ( $intMaquinaria == 0 ) {
             //*** total general */
-            $decCargados = $this->getTotalLitrosCargas(0);
-            $decDescargados = $this->getTotalLitrosDescargas(0);
+            $decCargados = $this->getTotalLitrosCargas( 0 );
+            $decDescargados = $this->getTotalLitrosDescargas( 0 );
         } else {
             //*** total individual */
-            $decCargados = $this->getTotalLitrosCargas($intMaquinaria);
-            $decDescargados = $this->getTotalLitrosDescargas($intMaquinaria);
+            $decCargados = $this->getTotalLitrosCargas( $intMaquinaria );
+            $decDescargados = $this->getTotalLitrosDescargas( $intMaquinaria );
         }
 
         //  dd( "$intMaquinaria .-" . $decCargados . ' / ' . $decDescargados );
@@ -109,46 +106,45 @@ class Calculos
     }
 
     /**
-     * Recalcular el acumulado de la caja chica tomando en cuenta solo movimientos de entradas y salidas de ingresos
-     *
-     * @param int $registro Sobre el cual se realiza el pivote para el calculo
-     * @return void
-     */
+    * Recalcular el acumulado de la caja chica tomando en cuenta solo movimientos de entradas y salidas de ingresos
+    *
+    * @param int $registro Sobre el cual se realiza el pivote para el calculo
+    * @return void
+    */
 
-    public function RecalcularCajaChica($registroId)
-    {
+    public function RecalcularCajaChica( $registroId ) {
         $blnExito = true;
         //*** Arreglo para buscar ingresos y egresos */
-        $vctTipos = [1, 2];
+        $vctTipos = [ 1, 2 ];
 
         //*** obtenemos la información del registro pivote  */
-        $objRecord = cajaChica::select('*')->where('id', '=', $registroId)->first();
+        $objRecord = cajaChica::select( '*' )->where( 'id', '=', $registroId )->first();
 
         //*** buscamos el registro anterior inmediato */
-        $objAnterior = cajaChica::select('*')
-            ->where('cajaChica.dia', '<=', $objRecord->dia)
-            ->where('id', '!=', $registroId)
-            ->where('id', '<', $registroId)
-            ->whereIn('cajaChica.tipo',   $vctTipos)
-            ->orderBy('cajaChica.id', 'desc')->first();
+        $objAnterior = cajaChica::select( '*' )
+        ->where( 'cajaChica.dia', '<=', $objRecord->dia )
+        ->where( 'id', '!=', $registroId )
+        ->where( 'id', '<', $registroId )
+        ->whereIn( 'cajaChica.tipo',   $vctTipos )
+        ->orderBy( 'cajaChica.id', 'desc' )->first();
 
         $registroAnteriorId = 0;
         $decTotalAnterior = 0;
         $decRegistroTotalActualizado = 0;
         $decRegistroTotalAnterior = $objRecord->total;
 
-        if ($objAnterior) {
+        if ( $objAnterior ) {
             $registroAnteriorId = $objAnterior->id;
             //*** Existe anterior y ajustamos el total */
             $decTotalAnterior = $objAnterior->total;
 
-            $decRegistroTotalActualizado =  ($objRecord->tipo == 1 ? ($decTotalAnterior + $objRecord->cantidad)  : ($decTotalAnterior - $objRecord->cantidad));
+            $decRegistroTotalActualizado =  ( $objRecord->tipo == 1 ? ( $decTotalAnterior + $objRecord->cantidad )  : ( $decTotalAnterior - $objRecord->cantidad ) );
 
             $objRecord->total =  $decRegistroTotalActualizado;
             $objRecord->save();
         } else {
             //*** no hay anterior */
-            $decRegistroTotalActualizado = ($objRecord->tipo == 1 ? ($decTotalAnterior + $objRecord->cantidad)  : ($decTotalAnterior - $objRecord->cantidad));
+            $decRegistroTotalActualizado = ( $objRecord->tipo == 1 ? ( $decTotalAnterior + $objRecord->cantidad )  : ( $decTotalAnterior - $objRecord->cantidad ) );
             $objAnterior = null;
             //*** nos aseguramos de que el inicial quede iniciado correctamente */
             $objRecord->total = $decRegistroTotalActualizado;
@@ -156,29 +152,29 @@ class Calculos
         }
 
         //*** buscamos los registros posteriores al pivote */
-        $vctRegistros = cajaChica::select('cajaChica.*')
-            // ->where( 'cajaChica.id', '!=', $registroId )
-            ->where('cajaChica.id', '>', $registroId)
-            ->where('cajaChica.dia', '>=', $objRecord->dia)
-            ->whereIn('cajaChica.tipo',   $vctTipos)
-            ->orderBy('cajaChica.id', 'asc')
-            ->orderBy('cajaChica.dia', 'asc')
-            ->get();
+        $vctRegistros = cajaChica::select( 'cajaChica.*' )
+        // ->where( 'cajaChica.id', '!=', $registroId )
+        ->where( 'cajaChica.id', '>', $registroId )
+        ->where( 'cajaChica.dia', '>=', $objRecord->dia )
+        ->whereIn( 'cajaChica.tipo',   $vctTipos )
+        ->orderBy( 'cajaChica.id', 'asc' )
+        ->orderBy( 'cajaChica.dia', 'asc' )
+        ->get();
 
         $intCont = 0;
         $decTotal = $decRegistroTotalActualizado;
         //*** para el control del ciclo */
-        if ($vctRegistros->count() > 0) {
+        if ( $vctRegistros->count() > 0 ) {
             //*** actualizamos los registros posteriores */
-            foreach ($vctRegistros as $key => $objItem) {
+            foreach ( $vctRegistros as $key => $objItem ) {
 
                 //*** preguntamos por el tipo de movimiento */
-                if ($objItem->tipo == 1) {
+                if ( $objItem->tipo == 1 ) {
                     //*** ingreso Suma */
-                    $decTotal  +=  ($objItem->cantidad);
+                    $decTotal  +=  ( $objItem->cantidad );
                 } else {
                     //*** egreso Resta */
-                    $decTotal -=  ($objItem->cantidad);
+                    $decTotal -=  ( $objItem->cantidad );
                 }
 
                 $objItem->total = $decTotal;
@@ -201,20 +197,21 @@ class Calculos
     }
 
     /**
-     * Actualiza el Kilometraje de una maquinaria
-     *
-     * @param int $intMaquinaria Identificador de la maquinaría
-     * @param int $intKilometraje Kilometraje que será registrado
-     * @param boolean $blnQ2ces True si es para Q2Ces
-     * @return void
-     */
-    public function updateKilometrajeMaquinaria($intMaquinaria, $intKilometraje, $proviene = 'indefinido', $blnQ2ces = true)
-    {
+    * Actualiza el Kilometraje de una maquinaria
+    *
+    * @param int $intMaquinaria Identificador de la maquinaría
+    * @param int $intKilometraje Kilometraje que será registrado
+    * @param string $proviene De donde proviene la actualización, CheckList, Mantenimiento, Indefinido por Defecto
+    * @param int $tipoMantoId El identificador del tipo de mantenimiento
+    * @return void
+    */
+
+    public function updateKilometrajeMaquinaria( $intMaquinaria, $intKilometraje, $proviene = 'indefinido', $tipoMantoId = null ) {
 
         $blnExito = false;
 
-        $maquina  = maquinaria::find($intMaquinaria);
-        if ($maquina) {
+        $maquina  = maquinaria::find( $intMaquinaria );
+        if ( $maquina ) {
             $objUso = new usoMaquinarias();
 
             $objUso->maquinariaId  =  $intMaquinaria;
@@ -225,17 +222,54 @@ class Calculos
             $objUso->restantes = $maquina->mantenimiento - $intKilometraje;
             $objUso->save();
 
-            $maquina->kilometraje = $intKilometraje;
 
-            if ($proviene == 'Mantenimiento') {
-                if ($maquina->kom == 'Km') {   //Si es por KM
-                    $maquina->mantenimiento = $intKilometraje + 10000;
-                } else if ($maquina->kom == 'MI') {      //Si es por Mi
-                    $maquina->mantenimiento = $intKilometraje + 6000;
-                } else {           //Si es por Hr
-                    $maquina->mantenimiento = $intKilometraje + 250;
+            if ( $proviene == 'Mantenimiento' ) {
+
+                $kom = 0;
+                if ( $tipoMantoId >0 ) {
+
+                    $tipoManto = tipoMantenimiento::where( 'id', '=', $tipoMantoId )->first();
+                    if ( $tipoManto ) {
+                        //*** si el tipo de mantenimiento tiene que agregar valor */
+                        if ( $kom > 0 ) {
+                            $maquina->mantenimiento =  $maquina->mantenimiento + $kom;
+                            $maquina->save();
+                        }
+
+                        switch ( $maquina->kom ) {
+                            case 'Km':
+                            $kom = $tipoManto->proximaRevisionKm;
+                            break;
+
+                            case 'Mi':
+                            $kom = $tipoManto->proximaRevisionMi;
+                            break;
+
+                            case 'Hr':
+                            $kom = $tipoManto->proximaRevisionHr;
+                            break;
+
+                            default:
+                            $kom = 0;
+                            break;
+                        }
+                    }
+                }
+
+                if ( $maquina->kom == 'Km' ) {
+                    //Si es por KM
+                    $maquina->mantenimiento = $intKilometraje +   $kom  ;
+                } else if ( $maquina->kom == 'Mi' ) {
+                    //Si es por Mi
+                    $maquina->mantenimiento = $intKilometraje +  $kom ;
+                } else {
+                    //Si es por Hr
+                    $maquina->mantenimiento = $intKilometraje +  $kom ;
                 }
             }
+
+            //*** actualizamos el kilometraje */
+            $maquina->kilometraje = $intKilometraje;
             $maquina->save();
 
             $blnExito = true;

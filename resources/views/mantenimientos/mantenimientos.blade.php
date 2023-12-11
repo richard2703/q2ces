@@ -5,12 +5,13 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header bacTituloPrincipal">
-                        <h4 class="card-title">Mantenimientos {{ $blnEsMtq == true ? 'MTQ' :'' }}</h4>
+                        <h4 class="card-title">Mantenimientos {{ $blnEsMtq == true ? 'MTQ' : '' }}</h4>
                     </div>
                     <div class="row">
                         <div class="d-flex p-3">
                             <div class="col-8 text-end mt-4">
-                                <form action="{{ $blnEsMtq == false ? route('mantenimientos.index') : route('mantenimientos.indexMtq') }}"
+                                <form
+                                    action="{{ $blnEsMtq == false ? route('mantenimientos.index') : route('mantenimientos.indexMtq') }}"
                                     method="GET" id="filterForm">
                                     <div class="input-group">
                                         <label class="labelTitulo p-2">Estado: </label>
@@ -27,13 +28,17 @@
                                             <option value="3" {{ request('estatus') == 3 ? 'selected' : '' }}>
                                                 Terminado
                                             </option>
+                                            <option value="4" {{ request('estatus') == 4 ? 'selected' : '' }}>
+                                                Borrado
+                                            </option>
                                         </select>
                                     </div>
                                 </form>
                             </div>
                             <div class="col-4 text-end mt-4" style="margin-left:-20px">
                                 @can('mantenimiento_create')
-                                    <a href="{{ $blnEsMtq == true ? url('/mantenimientos/nuevo/mtq') : url('/mantenimientos/nuevo')  }}">
+                                    <a
+                                        href="{{ $blnEsMtq == true ? url('/mantenimientos/nuevo/mtq') : url('/mantenimientos/nuevo') }}">
                                         <!--Agregar ruta-->
                                         <button type="button" class="btn botonGral">Añadir Mantenimiento</button>
                                     </a>
@@ -44,6 +49,16 @@
                     </div>
                     <div class="d-flex p-3 divBorder w-100" style="margin-top:-10px"></div>
                     <div class="card-body">
+                        @if (session('success'))
+                            <div class="alert alert-success" role="success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        @if (session('faild'))
+                            <div class="alert alert-danger" role="faild">
+                                {{ session('faild') }}
+                            </div>
+                        @endif
                         <div class="table-responsive">
                             <table class="table">
                                 <thead class="labelTitulo">
@@ -54,8 +69,7 @@
                                         <th class="labelTitulo text-center">Fecha</th>
                                         <th class="labelTitulo text-center">Costo</th>
                                         <th class="labelTitulo text-center">Estatus</th>
-
-                                        <th class="labelTitulo text-center" style="width:120px">Acciones</th>
+                                        <th class="labelTitulo text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -135,8 +149,8 @@
                                                                 <i class="fas fa-print" style="color: #8caf48; font-size: x-large;"></i>
                                                             </button>
                                                         @endif
-                                                        
-                                                    @endcan    
+
+                                                    @endcan
                                                 </form>
 
                                                 <form id="printForm" action="{{ route('printMantenimiento.get') }}" method="GET" style="display: inline-block;">
@@ -162,7 +176,7 @@
                                                     @can('mantenimientoPrintCostos_show')
                                                         <input type="hidden" name="mecanico" value="false">
                                                         <input type="hidden" name="id" value={{$item->id}}>
-                                                        
+
                                                         @if ($item->estadoId == 3)
                                                             <button class="btnSinFondo" type="submit">
                                                                 <i class="fas fa-solid fa-file-signature" style="{{ $item->documentoSellado == 1 ? 'color: green; font-size: x-large;' : 'color: red; font-size: x-large;' }}"
@@ -183,11 +197,11 @@
                                                         </svg>
                                                     </a>
                                                 @endcan
-
-
-                                                @can('mantenimiento_destroy')
-                                                    <form action="" method="POST" style="display: inline-block;"
-                                                        onsubmit="return confirm('Seguro?')">
+                                                {{-- Solo si no esta terminado se puede eliminar --}}
+                                                @can('mantenimientos_destroy')
+                                                    <form action="{{ route('mantenimientos.destroy', $item->id) }}"
+                                                        method="POST" style="display: inline-block;"
+                                                        onsubmit="return confirm('¿Estas Seguro que Deseas Eliminar Este Mantenimiento y Toda la Información Relacionada?')">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="btnSinFondo" type="submit" rel="tooltip">
@@ -202,6 +216,7 @@
                                                         </button>
                                                     </form>
                                                 @endcan
+
                                             </td>
                                         </tr>
                                     @empty

@@ -12,6 +12,9 @@ class grupo extends Model {
     public $timestamps = true;
 
     protected $fillable = [
-        'nombre', 'comentario', 'activo'
+        'nombre',
+        'comentario',
+        'imagen',
+        'activo'
     ];
 }
