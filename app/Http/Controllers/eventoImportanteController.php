@@ -29,7 +29,7 @@ class eventoImportanteController extends Controller
         $eventoCalendario->userId = $actividad['userId'];
         $eventoCalendario->descripcion = $actividad['descripcion'];
         $eventoCalendario->color = $actividad['color'];
-        $eventoCalendario->estadoId = 0;
+        $eventoCalendario->estadoId = 1;
         $eventoCalendario->tipoEvento = 'EventoImportante';
         // dd($eventoCalendario);
         $eventoCalendario->save();
