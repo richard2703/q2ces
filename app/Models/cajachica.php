@@ -14,6 +14,6 @@ class cajaChica extends Model
 
     protected $fillable = [
         'dia', 'concepto', 'comprobanteId', 'ncomprobante', 'cliente', 'obra', 'equipo', 'personal', 'tipo', 'cantidad', 'comentario',
-        'total'
+        'total', 'servicioTrasporteId'
     ];
 }

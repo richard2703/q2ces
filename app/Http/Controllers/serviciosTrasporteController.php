@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Calculos;
 use App\Models\serviciosTrasporte;
 use App\Http\Controllers\Controller;
+use App\Models\almacenServicios;
 use App\Models\almacenTiraderos;
 use App\Models\cajaChica;
 use App\Models\clientes;
@@ -12,6 +14,7 @@ use App\Models\conceptos;
 use App\Models\conceptosServiciosTrasporte;
 use App\Models\maquinaria;
 use App\Models\obras;
+use App\Models\obrasServicios;
 use App\Models\personal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -72,7 +75,7 @@ class serviciosTrasporteController extends Controller
                 'numFactura',
                 'serviciosTrasporte.estatus'
             )
-            ->orderBy('fecha', 'desc')
+            ->orderBy('id', 'desc')
             ->whereBetween('serviciosTrasporte.fecha', [$quincena, $hoy])
             ->paginate(15);
         // dd($sumaPendientes, $Cpagados);
@@ -161,6 +164,7 @@ class serviciosTrasporteController extends Controller
 
         $data = $request->all();
         $serviciosTrasporte->update($data);
+
         return redirect()->action([serviciosTrasporteController::class, 'index']);
     }
 
@@ -172,7 +176,35 @@ class serviciosTrasporteController extends Controller
      */
     public function destroy(serviciosTrasporte $serviciosTrasporte)
     {
-        //
+        // servicioTrasporteId
+        if ($serviciosTrasporte->cajachica == 1) {
+            $cajaChica = cajaChica::select('*')
+                ->where('servicioTrasporteId', $serviciosTrasporte->id)
+                ->first();
+
+            $cajaChica->delete();
+        }
+        $serviciosTrasporte->delete();
+        return redirect()->back()->with('success', 'Eliminado correctamente');
+
+        dd($serviciosTrasporte);
+
+        abort_if(Gate::denies('catalogos_destroy'), 403);
+        // try {
+        //     $tiposDocs->delete();
+        //     // Intenta eliminar
+        // } catch (QueryException $e) {
+        //     if ($e->getCode() === 23000) {
+        //         return redirect()->back()->with('faild', 'No Puedes Eliminar ');
+        //         // Esto es un error de restricción de clave externa ( FOREIGN KEY constraint )
+        //         // Puedes mostrar un mensaje de error o realizar otras acciones aquí.
+        //     } else {
+        //         return redirect()->back()->with('faild', 'No Puedes Eliminar si esta en uso');
+        //         // Otro tipo de error de base de datos
+        //         // Maneja según sea necesario
+        //     }
+        // }
+        // return redirect()->back()->with('success', 'Eliminado correctamente');
     }
 
     public function cajaChica(Request $request)
@@ -267,6 +299,11 @@ class serviciosTrasporteController extends Controller
         $serviciosTrasporte->comentario = $request->comentario;
         $serviciosTrasporte->estatus = 2;
         $serviciosTrasporte->horaEntrega = $now->format('H:i:s');
+        $serviciosTrasporte->odometro = $request->odometro;
+        // dd($serviciosTrasporte, $request);
+        $objCalculos = new Calculos();
+        $objCalculos->updateKilometrajeMaquinaria($serviciosTrasporte->equipoId, $request->odometro, $proviene = 'Servicios');
+
         // dd($serviciosTrasporte);
 
         $serviciosTrasporte->save();
@@ -396,5 +433,56 @@ class serviciosTrasporteController extends Controller
         // dd($sumaPendientes, $Cpagados);
 
         return view('serviciosTrasporte.indexServicios', compact('registros', 'sumaPendientes', 'totalPendientes', 'sumaPagados', 'totalPagados', 'quincena', 'hoy', 'reporte'));
+    }
+
+    public function obrasXconcepto($conceptoId)
+    {
+        $data = obrasServicios::select('obrasServicios.precio', 'obrasServicios.conceptoId', 'obras.id', 'obras.nombre')
+            ->join('obras', 'obrasServicios.obraId', 'obras.id')
+            ->where('conceptoId', $conceptoId)
+            ->get();
+
+        return response()->json($data);
+        // return response()->json(['hasPermission' => $hasPermission]);
+
+    }
+
+    public function obrasXconceptoPrecio($conceptoId, $obraId)
+    {
+        $data = obrasServicios::select('obrasServicios.precio', 'obrasServicios.conceptoId', 'obras.id', 'obras.nombre')
+            ->join('obras', 'obrasServicios.obraId', 'obras.id')
+            ->where('conceptoId', $conceptoId)
+            ->where('obraId', $obraId)
+            ->first();
+
+        return response()->json($data);
+        // return response()->json(['hasPermission' => $hasPermission]);
+
+    }
+
+    public function almacenXconcepto($conceptoId)
+    {
+        // dd($conceptoId);
+        $data = almacenServicios::select('almacenServicios.precio', 'almacenServicios.conceptoId', 'almacenTiraderos.id', 'almacenTiraderos.nombre')
+            ->join('almacenTiraderos', 'almacenServicios.almacenId', 'almacenTiraderos.id')
+            ->where('almacenServicios.conceptoId', $conceptoId)
+            ->get();
+
+        return response()->json($data);
+        // return response()->json(['hasPermission' => $hasPermission]);
+
+    }
+
+    public function almacenXconceptoPrecio($conceptoId, $almacenId)
+    {
+        $data = almacenServicios::select('almacenServicios.precio', 'almacenServicios.conceptoId', 'almacenTiraderos.id', 'almacenTiraderos.nombre')
+            ->join('almacenTiraderos', 'almacenServicios.almacenId', 'almacenTiraderos.id')
+            ->where('conceptoId', $conceptoId)
+            ->where('almacenId', $almacenId)
+            ->first();
+
+        return response()->json($data);
+        // return response()->json(['hasPermission' => $hasPermission]);
+
     }
 }

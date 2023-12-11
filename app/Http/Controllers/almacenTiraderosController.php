@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\almacenTiraderos;
 use App\Models\tipoAlmacen;
 use App\Http\Controllers\Controller;
+use App\Models\almacenServicios;
+use App\Models\conceptos;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -42,8 +44,9 @@ class almacenTiraderosController extends Controller
 
         abort_if(Gate::denies('catalogos_create'), 404);
         $tiposDocs = tipoAlmacen::all();
+        $servicios = conceptos::orderBy('codigo', 'asc')->get();
 
-        return view('catalogos.almacenes.almacenesTiraderosCreate', compact('tiposDocs'));
+        return view('catalogos.almacenes.almacenesTiraderosCreate', compact('tiposDocs', 'servicios'));
     }
 
     /**
@@ -57,6 +60,22 @@ class almacenTiraderosController extends Controller
         abort_if(Gate::denies('catalogos_create'), 404);
         $docs = $request->all();
         $docs = almacenTiraderos::create($docs);
+
+        if ($request->servicioId[0] != null && $request->precio[0] > 0) {
+            for ($i = 0; $i < count($request->servicioId); $i++) {
+                //*** se guarda solo si se selecciono una máquina */
+                if ($request->servicioId[$i] != '') {
+
+                    $objServicio = new almacenServicios();
+                    $objServicio->almacenId = $docs->id;
+                    $objServicio->conceptoId  = $request->servicioId[$i];
+                    $objServicio->precio = $request->precio[$i];
+                    $objServicio->save();
+                }
+            }
+            // dd( $vctDebug );
+        }
+
         Session::flash('message', 1);
         return redirect()->action([almacenTiraderosController::class, 'index']);
     }
@@ -83,7 +102,9 @@ class almacenTiraderosController extends Controller
         abort_if(Gate::denies('catalogos_edit'), 404);
         // $doc = $almacenTiraderos;
         $tiposDocs = tipoAlmacen::all();
-        return view('catalogos.almacenes.almacenesTiraderosEdit', compact('almacenTiradero', 'tiposDocs'));
+        $servicios = conceptos::orderBy('codigo', 'asc')->get();
+        $vctAlmacenServicio = almacenServicios::select('*')->where('almacenId', '=', $almacenTiradero->id)->get();
+        return view('catalogos.almacenes.almacenesTiraderosEdit', compact('almacenTiradero', 'tiposDocs', 'servicios', 'vctAlmacenServicio'));
     }
 
     /**
@@ -99,6 +120,26 @@ class almacenTiraderosController extends Controller
         $data = $request->all();
         //dd($data);
         $almacenTiradero->update($data);
+
+        $nuevaLista = collect();
+        // dd($request);
+
+        if ($request->servicioId[0] != null && $request->precio[0] > 0) {
+            # code...
+
+            for ($i = 0; $i < count($request->servicioId); $i++) {
+
+                $array = [
+                    'id' => $request->Idser[$i],
+                    'almacenId' => $almacenTiradero->id,
+                    'conceptoId' => $request->servicioId[$i],
+                    'precio' => $request->precio[$i],
+                ];
+                $objRelacion = almacenServicios::updateOrCreate(['id' => $array['id']], $array);
+                $nuevaLista->push($objRelacion->id);
+            }
+            $test = almacenServicios::where('almacenId', $request->obraId)->whereNotIn('id', $nuevaLista)->delete();
+        }
         Session::flash('message', 1);
         return redirect()->action([almacenTiraderosController::class, 'index']);
     }
