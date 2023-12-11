@@ -2609,136 +2609,15 @@
 
     <script>
         function generarDiasFeriados(anoActual) {
-            //const url = `https://api.generadordni.es/v2/holidays/holidays?country=MX&year=${anoActual}`;
-            //fetch(url)
-            //.then(response => response.json())
-            //.then(data => {
-                enviarDatosAlControlador( $data = [
-                    {
-                    "date": "2023-01-01 00:00:00",
-                    "start": "2023-01-01T06:00:00.000Z",
-                    "end": "2023-01-02T06:00:00.000Z",
-                    "name": "Año Nuevo",
-                    "type": "public",
-                    "rule": "01-01"
-                    },
-                    {
-                    "date": "2023-02-05 00:00:00",
-                    "start": "2023-02-05T06:00:00.000Z",
-                    "end": "2023-02-06T06:00:00.000Z",
-                    "name": "Día de la Constitución",
-                    "type": "public",
-                    "rule": "02-05"
-                    },
-                    {
-                    "date": "2023-02-06 00:00:00",
-                    "start": "2023-02-06T06:00:00.000Z",
-                    "end": "2023-02-07T06:00:00.000Z",
-                    "name": "Día de la Constitución (día libre)",
-                    "type": "public",
-                    "rule": "1st monday in February"
-                    },
-                    {
-                    "date": "2023-03-20 00:00:00",
-                    "start": "2023-03-20T06:00:00.000Z",
-                    "end": "2023-03-21T06:00:00.000Z",
-                    "name": "Natalicio de Benito Juárez (día libre)",
-                    "type": "public",
-                    "rule": "3rd monday in March"
-                    },
-                    {
-                    "date": "2023-03-21 00:00:00",
-                    "start": "2023-03-21T06:00:00.000Z",
-                    "end": "2023-03-22T06:00:00.000Z",
-                    "name": "Natalicio de Benito Juárez",
-                    "type": "public",
-                    "rule": "03-21"
-                    },
-                    {
-                    "date": "2023-04-06 00:00:00",
-                    "start": "2023-04-06T06:00:00.000Z",
-                    "end": "2023-04-07T06:00:00.000Z",
-                    "name": "Jueves Santo",
-                    "type": "bank",
-                    "rule": "easter -3"
-                    },
-                    {
-                    "date": "2023-04-07 00:00:00",
-                    "start": "2023-04-07T06:00:00.000Z",
-                    "end": "2023-04-08T06:00:00.000Z",
-                    "name": "Viernes Santo",
-                    "type": "bank",
-                    "rule": "easter -2"
-                    },
-                    {
-                    "date": "2023-05-01 00:00:00",
-                    "start": "2023-05-01T06:00:00.000Z",
-                    "end": "2023-05-02T06:00:00.000Z",
-                    "name": "Día del trabajador",
-                    "type": "public",
-                    "rule": "05-01"
-                    },
-                    {
-                    "date": "2023-05-10 00:00:00",
-                    "start": "2023-05-10T06:00:00.000Z",
-                    "end": "2023-05-11T06:00:00.000Z",
-                    "name": "Día de la Madre",
-                    "type": "observance",
-                    "rule": "05-10"
-                    },
-                    {
-                    "date": "2023-09-16 00:00:00",
-                    "start": "2023-09-16T06:00:00.000Z",
-                    "end": "2023-09-17T06:00:00.000Z",
-                    "name": "Día de la Independencia",
-                    "type": "public",
-                    "rule": "09-16"
-                    },
-                    {
-                    "date": "2023-11-02 00:00:00",
-                    "start": "2023-11-02T06:00:00.000Z",
-                    "end": "2023-11-03T06:00:00.000Z",
-                    "name": "Día de los Difuntos",
-                    "type": "bank",
-                    "rule": "11-02"
-                    },
-                    {
-                    "date": "2023-11-20 00:00:00",
-                    "start": "2023-11-20T06:00:00.000Z",
-                    "end": "2023-11-21T06:00:00.000Z",
-                    "name": "Día de la Revolución",
-                    "type": "public",
-                    "rule": "11-20"
-                    },
-                    {
-                    "date": "2023-11-20 00:00:00",
-                    "start": "2023-11-20T06:00:00.000Z",
-                    "end": "2023-11-21T06:00:00.000Z",
-                    "name": "Día de la Revolución (día libre)",
-                    "type": "public",
-                    "rule": "3rd monday in November"
-                    },
-                    {
-                    "date": "2023-12-12 00:00:00",
-                    "start": "2023-12-12T06:00:00.000Z",
-                    "end": "2023-12-13T06:00:00.000Z",
-                    "name": "Día de la Virgen de Guadalupe",
-                    "type": "bank",
-                    "rule": "12-12"
-                    },
-                    {
-                    "date": "2023-12-25 00:00:00",
-                    "start": "2023-12-25T06:00:00.000Z",
-                    "end": "2023-12-26T06:00:00.000Z",
-                    "name": "Navidad",
-                    "type": "public",
-                    "rule": "12-25"
-                    }
-                    ] );
-            //})
-            //.catch(error => {
-            //    console.error(error);
-            //});
+            const url = `https://api.generadordni.es/v2/holidays/holidays?country=MX&year=${anoActual}`;
+            fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                enviarDatosAlControlador( data );
+            })
+            .catch(error => {
+                console.error(error);
+            });
             
         }
 
