@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class calendarioPrincipalController extends Controller
 {
@@ -35,6 +36,7 @@ class calendarioPrincipalController extends Controller
         $eventos = calendarioPrincipal::leftJoin('solicitudes', 'calendarioPrincipal.solicitudesId', '=', 'solicitudes.id')
             ->leftJoin('actividades', 'calendarioPrincipal.actividadesId', '=', 'actividades.id')
             ->leftJoin('maquinaria', 'calendarioPrincipal.maquinariaId', '=', 'maquinaria.id')
+            ->leftJoin('personal', 'calendarioPrincipal.personalId', '=', 'personal.id')
             // ->leftJoin('solicitudDetalle', 'solicitudes.id', '=', 'solicitudDetalle.solicitudId')
             ->select(
                 'calendarioPrincipal.*',
@@ -42,7 +44,6 @@ class calendarioPrincipalController extends Controller
                 'calendarioPrincipal.title',
                 'calendarioPrincipal.mantenimientoId',
                 'calendarioPrincipal.maquinariaId',
-                'calendarioPrincipal.fecha',
                 'calendarioPrincipal.descripcion',
                 'calendarioPrincipal.estatus',
                 'calendarioPrincipal.color',
@@ -55,6 +56,10 @@ class calendarioPrincipalController extends Controller
                 'maquinaria.identificador as numeconomico',
                 'maquinaria.placas',
                 'maquinaria.marcaId',
+                'personal.nombres as personalNombre',
+                'personal.apellidoP as personalApellidoP',
+                'personal.celular as celular',
+                'personal.mailEmpresarial as email',
                 // 'solicitudDetalle.cantidad',
                 // 'solicitudDetalle.tipo',
                 // 'solicitudDetalle.comentario',
@@ -92,9 +97,9 @@ class calendarioPrincipalController extends Controller
 
         $mantenimiento = $request->all();
 
-        $mantenimiento['fechaInicio'] =  $request['fecha'];
+        // $mantenimiento['fechaInicio'] =  $request['fecha'];
         $mantenimiento['codigo'] =  $request['identificador'];
-        $mantenimiento['titulo'] = "Mantenimiento " . $request['identificador']. " " . $request['nombre'];
+        $mantenimiento['titulo'] = "Mantenimiento " . $request['identificador'] . " " . $request['nombre'];
 
         // dd($mantenimiento);
         $nuevoMantenimiento = mantenimientos::create($mantenimiento);
@@ -186,6 +191,40 @@ class calendarioPrincipalController extends Controller
     public function destroy(calendarioPrincipal $calendarioPrincipal)
     {
         //
+    }
+
+    // public function generarDiasFeriados($days)
+    // {
+    //     foreach ($days as $dia) {
+    //         $eventoCalendario = new calendarioPrincipal();
+    //         $eventoCalendario->title = 'Feriado: ' . $dia['name']; // Accede a 'name' dentro de cada día
+    //         $eventoCalendario->start = strtoupper($dia['date']); // Accede a 'date' dentro de cada día
+    //         $eventoCalendario->descripcion = 'Se suspenden actividades laborales debido a que es: ' . $dia['name']; // Accede a 'name' dentro de cada día
+    //         $eventoCalendario->color = '#a6ce34';
+    //         $eventoCalendario->tipoEvento = 'DiaFeriado';
+    //         $eventoCalendario->save();
+    //     }
+    // }
+
+    public function generarDiasFeriados(Request $request)
+    {
+        $data = $request->input('days'); // Obtiene los datos enviados desde JavaScript
+
+        foreach ($data as $dia) {
+            $eventoCalendario = new calendarioPrincipal();
+            $eventoCalendario->title = 'Feriado: ' . $dia['name']; // Accede a 'name' dentro de cada día
+            $eventoCalendario->start = strtoupper($dia['date']); // Accede a 'date' dentro de cada día
+            $eventoCalendario->descripcion = 'Este día es festivo porque es: ' . $dia['name']; // Accede a 'name' dentro de cada día
+            $eventoCalendario->color = '#a6ce34';
+            $eventoCalendario->tipoEvento = 'DiaFeriado';
+            $eventoCalendario->estadoId = 3;
+            $eventoCalendario->userId = 1;
+            $eventoCalendario->save();
+        }
+
+        Session::flash('message', 1);
+
+        return redirect()->route('calendarioPrincipal.index');
     }
 
     public function solicitudDetalle($solicitudId)

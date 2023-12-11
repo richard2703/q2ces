@@ -13,8 +13,8 @@
             integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
         <!-- CSS Personalizado MTQ -->
         <link rel="stylesheet" type="text/css" href="{{ asset('css/calendarMtq.css') }}">
-
     </head>
+
     <div class="content">
         <div class="row">
             <div class="col-6 text-left mb-1" style="margin-left: 12px">
@@ -38,6 +38,10 @@
                 @can('calendarioPrincipal_create')
                     <button data-bs-toggle="modal" data-bs-target="#myModal" type="button" class="btn botonGral">Añadir
                         al Calendario</button>
+                    @php
+                        $anoActual = date('Y');
+                    @endphp
+                    <button onclick="generarDiasFeriados({{$anoActual}})" type="button" class="btn botonGral">Generar Dias Feriados del Año Actual</button>
                     {{--  <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary py-2 px-4">Click Here !</button>  --}}
                 @endcan
             </div>
@@ -539,6 +543,322 @@
                 </div>
             </div>
 
+            <div class="modal fade" id="myModalEditEventoImportante" tabindex="-1" aria-labelledby="modalTitleEventoImportanteId"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bacTituloPrincipal">
+                            <h5 class="modal-title fs-5" id="modalTitleId">&nbsp <span id="tituloModalEventoImportante">Ver Evento Importante
+                            </h5>
+                            <button type="button" class="btn-close align-self-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <form action="{{ route('eventosImportantes.update', 0) }}" method="post">
+                                    @csrf
+                                    @method('put')
+                                    <!-- <div class="mb-3">
+                                        <label for="id" class="form-label">ID:</label>
+                                        <input type="text"
+                                        class="form-control" name="id" id="id" aria-describedby="helpId" placeholder="ID">
+                                    </div> -->
+                                    <input type="hidden" name="id" value="" id="idEventoImportanteModal">
+                                    <input type="hidden" id="colorBoxHiddenEditEventoImportante" name="color" value="">
+
+                                    <div class="row">
+                                        <input type="hidden" id="colorBoxHiddenEventoImportanteEdit" name="color" value="">
+                                        <div class="col-11 mb-3">
+                                            <label for="title" class="labelTitulo">Título:</label>
+                                            <input autofocus type="text" class="inputCaja" name="title" id="titleEditEventoImportante"
+                                                placeholder="Título de EventoImportante..." title="Escriba El Título de la EventoImportante." readonly>
+                                        </div>
+
+                                        <div class="col-1 mt-4">
+                                            @can('calendarioPrincipal_edit')
+                                                <div id="editarCamposEventoImportante">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                                                        fill="currentColor" class="bi bi-pencil accionesIconos"
+                                                        viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                    </svg>
+                                                </div>
+                                            @endcan
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                    <div class="mb-3">
+                                        <label for="color" class="labelTitulo">Color:</label>
+                                        <div id="colorBoxEditEventoImportante" class="color-box w-100" style="margin-left:-0.5px; background: #8a8a8a"></div>
+                                    </div>
+
+                                        <div class="mb-3 col-6">
+                                            <label for="fecha" class="labelTitulo">Fecha Inicio:</label>
+                                            <input type="date" class="inputCaja" name="fecha" id="fechaEditEventoImportante"
+                                                aria-describedby="helpId" placeholder="Fecha" readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6">
+                                            <label for="hora" class="labelTitulo">Hora Inicio:</label>
+                                            <input type="time" class="inputCaja" name="hora" id="horaEditEventoImportante"
+                                                aria-describedby="helpId" placeholder="Fecha" readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6">
+                                            <label for="fecha" class="labelTitulo">Fecha Termino:</label>
+                                            <input type="date" class="inputCaja" name="fechaSalida" id="fechaSalidaEventoImportante"
+                                                aria-describedby="helpId" placeholder="Fecha" readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6">
+                                            <label for="hora" class="labelTitulo">Hora Termino:</label>
+                                            <input type="time" class="inputCaja" name="horaSalida" id="horaSalidaEventoImportante"
+                                                aria-describedby="helpId" placeholder="Fecha" readonly>
+                                        </div>
+
+                                    <div class="mb-3">
+                                        <label for="descripcion" class="labelTitulo">Descripción:</label>
+                                        <textarea class="form-control-textarea border-green" name="descripcion" id="descripcionEditEventoImportante" rows="3"
+                                            placeholder="Especifique..." readonly></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <div id="contenedorBotonGuardarEventoImportante" style="display:none">
+                                <button type="submit" class="btn botonGral">Guardar</button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="myModalEditExpiranDocumentos" tabindex="-1" aria-labelledby="modalTitleExpiranDocumentosId"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bacTituloPrincipal">
+                            <h5 class="modal-title fs-5" id="modalTitleId">&nbsp <span id="tituloModalExpiranDocumentos">Expiración de Documento
+                            </h5>
+                            <button type="button" class="btn-close align-self-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <form method="post">
+                                    @csrf
+                                    @method('put')
+                                    <!-- <div class="mb-3">
+                                        <label for="id" class="form-label">ID:</label>
+                                        <input type="text"
+                                        class="form-control" name="id" id="id" aria-describedby="helpId" placeholder="ID">
+                                    </div> -->
+                                    <input type="hidden" name="id" value="" id="idExpiranDocumentosModal">
+                                    <input type="hidden" id="colorBoxHiddenEditExpiranDocumentos" name="color" value="">
+
+                                    <div class="row">
+                                        <input type="hidden" id="colorBoxHiddenExpiranDocumentosEdit" name="color" value="">
+
+                                        <div class="col-12 mb-3">
+                                            <label for="title" class="labelTitulo">Título:</label>
+                                            <input autofocus type="text" class="inputCaja" name="title" id="titleEditExpiranDocumentos"
+                                                placeholder="Título de ExpiranDocumentos..." title="Escriba El Título de la ExpiranDocumentos." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-12">
+                                            <label for="fecha" class="labelTitulo">Fecha Expiración:</label>
+                                            <input type="date" class="inputCaja" name="fecha" id="fechaEditExpiranDocumentos"
+                                                aria-describedby="helpId" placeholder="Fecha" readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-12" style="display: none" id="nombreEditExpiranDocumentosHidden">
+                                            <label for="title" class="labelTitulo">Nombre Equipo:</label>
+                                            <input autofocus type="text" class="inputCaja" id="nombreEditExpiranDocumentos"
+                                                name="nombre" placeholder="Nombre Equipo..." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6" style="display: none" id="numeconomicoEditExpiranDocumentosHidden">
+                                            <label for="title" class="labelTitulo">Número Económico:</label>
+                                            <input autofocus type="text" class="inputCaja" id="numeconomicoEditExpiranDocumentos"
+                                                name="numeconomico" placeholder="Del Equipo..." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6" style="display: none" id="placasEditExpiranDocumentosHidden">
+                                            <label for="title" class="labelTitulo">Placas:</label>
+                                            <input autofocus type="text" class="inputCaja" id="placasEditExpiranDocumentos"
+                                                name="placas" placeholder="Placas Equipo..." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-12" style="display: none" id="nombreUsuarioEditExpiranDocumentosHidden">
+                                            <label for="title" class="labelTitulo">Nombre Usuario:</label>
+                                            <input autofocus type="text" class="inputCaja" id="nombreUsuarioEditExpiranDocumentos"
+                                                name="personalNombre" placeholder="Nombre Usuario..." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6" style="display: none" id="emailEditExpiranDocumentosHidden">
+                                            <label for="title" class="labelTitulo">Email:</label>
+                                            <input autofocus type="text" class="inputCaja" id="emailEditExpiranDocumentos"
+                                                placeholder="Email Usuario..." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6" style="display: none" id="celularEditExpiranDocumentosHidden">
+                                            <label for="title" class="labelTitulo">Telefono:</label>
+                                            <input autofocus type="text" class="inputCaja" id="celularEditExpiranDocumentos"
+                                                placeholder="Telefono Usuario..." readonly>
+                                        </div>
+
+                                        {{--  <div class="col-1 mt-4">
+                                            @can('calendarioPrincipal_edit')
+                                                <div id="editarCamposExpiranDocumentos">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                                                        fill="currentColor" class="bi bi-pencil accionesIconos"
+                                                        viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                    </svg>
+                                                </div>
+                                            @endcan
+                                        </div>  --}}
+                                    </div>
+
+                                    <div class="row">
+
+                                    <div class="mb-3">
+                                        <label for="color" class="labelTitulo">Color:</label>
+                                        <div id="colorBoxEditExpiranDocumentos" class="color-box w-100" style="margin-left:-0.5px; background: #8a8a8a"></div>
+                                    </div>
+
+                                        
+
+                                        <div class="mb-3 col-6" style="display: none">
+                                            <label for="hora" class="labelTitulo">Hora Inicio:</label>
+                                            <input type="time" class="inputCaja" name="hora" id="horaEditExpiranDocumentos"
+                                                aria-describedby="helpId" placeholder="Fecha" readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-12" style="display: none">
+                                            <label for="fecha" class="labelTitulo">Fecha Termino:</label>
+                                            <input type="date" class="inputCaja" name="fechaSalida" id="fechaSalidaExpiranDocumentos"
+                                                aria-describedby="helpId" placeholder="Fecha" readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6" style="display: none">
+                                            <label for="hora" class="labelTitulo">Hora Termino:</label>
+                                            <input type="time" class="inputCaja" name="horaSalida" id="horaSalidaExpiranDocumentos"
+                                                aria-describedby="helpId" placeholder="Fecha" readonl y>
+                                        </div>
+
+                                        <div class="mb-3 col-12">
+                                            <label for="hora" class="labelTitulo">Ir al Registro:</label>
+                                            <p class="textTitulo my-2">
+                                                <a style="color: blue; text-decoration: underline;" id="linkExpiranDocumentos">
+                                                </a>
+                                            
+                                            </p>
+                                        </div>
+
+                                    <div class="mb-3">
+                                        <label for="descripcion" class="labelTitulo">Descripción:</label>
+                                        <textarea class="form-control-textarea border-green" name="descripcion" id="descripcionEditExpiranDocumentos" rows="3"
+                                            placeholder="Especifique..." readonly></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <div id="contenedorBotonGuardarExpiranDocumentos" style="display:none">
+
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="myModalEditDiaFeriado" tabindex="-1" aria-labelledby="modalTitleDiaFeriadoId"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bacTituloPrincipal">
+                            <h5 class="modal-title fs-5" id="modalTitleId">&nbsp <span id="tituloModalDiaFeriado">Día Feriado
+                            </h5>
+                            <button type="button" class="btn-close align-self-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <form method="post">
+                                    @csrf
+                                    @method('put')
+                                    <!-- <div class="mb-3">
+                                        <label for="id" class="form-label">ID:</label>
+                                        <input type="text"
+                                        class="form-control" name="id" id="id" aria-describedby="helpId" placeholder="ID">
+                                    </div> -->
+                                    <input type="hidden" name="id" value="" id="idDiaFeriadoModal">
+                                    <input type="hidden" id="colorBoxHiddenEditDiaFeriado" name="color" value="">
+
+                                    <div class="row">
+                                        <input type="hidden" id="colorBoxHiddenDiaFeriadoEdit" name="color" value="">
+
+                                        <div class="col-12 mb-3">
+                                            <label for="title" class="labelTitulo">Título:</label>
+                                            <input autofocus type="text" class="inputCaja" name="title" id="titleEditDiaFeriado"
+                                                placeholder="Título de DiaFeriado..." title="Escriba El Título de la DiaFeriado." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-12">
+                                            <label for="fecha" class="labelTitulo">Fecha:</label>
+                                            <input type="date" class="inputCaja" name="fecha" id="fechaEditDiaFeriado"
+                                                aria-describedby="helpId" placeholder="Fecha" readonly>
+                                        </div>
+
+                                        {{--  <div class="col-1 mt-4">
+                                            @can('calendarioPrincipal_edit')
+                                                <div id="editarCamposExpiranDocumentos">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                                                        fill="currentColor" class="bi bi-pencil accionesIconos"
+                                                        viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                    </svg>
+                                                </div>
+                                            @endcan
+                                        </div>  --}}
+                                    </div>
+
+                                    <div class="row">
+
+                                    <div class="mb-3">
+                                        <label for="color" class="labelTitulo">Color:</label>
+                                        <div id="colorBoxEditExpiranDocumentos" class="color-box w-100" style="margin-left:-0.5px; background: #a6ce34"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="descripcion" class="labelTitulo">Descripción:</label>
+                                        <textarea class="form-control-textarea border-green" name="descripcion" id="descripcionEditDiaFeriado" rows="3"
+                                            placeholder="Especifique..." readonly></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <div id="contenedorBotonGuardarExpiranDocumentos" style="display:none">
+
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         <!-- Modal-->
         <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true" class="modal fade text-left">
             <div role="document" class="modal-dialog modal-lg">
@@ -552,6 +872,9 @@
                         </div>
                         <div class="tabs" id="tab03">
                             <h6 class=""><img src="/img/calendario/solicitud.svg" alt="Solicitud" title="Solicitud" width="20px" class="botonIconoPrincipal mb-1"> Solicitud</h6>
+                        </div>
+                        <div class="tabs" id="tab04">
+                            <h6 class=""><img src="/img/calendario/Eventos importantes-01.svg" alt="Eventos" title="Eventos" width="20px" class="botonIconoPrincipal mb-1"> Eventos</h6>
                         </div>
                         <button type="button" class="btn-close mb-2" style="margin-left: 10px;" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -878,8 +1201,6 @@
                                         </select>
                                     </div>
 
-
-
                                     <div class="mb-3">
                                         <label for="color" class="labelTitulo">Color:</label>
                                         <div id="colorBoxSolicitud" class="color-box w-100" style="margin-left:-0.5px"></div>
@@ -1088,8 +1409,69 @@
                             </div>
                         </form>
                         </fieldset>
-                    </div>
+                        <fieldset id="tab041">
+                            <div class="text-center" style="color:#5C7C26; margin-top: 10px; font-weight: bold;">
+                                <h4 class="" style="color:#5C7C26; margin-top: 10px; font-weight: bold;">Añadir Evento Importante</h4>
+                            </div>
 
+                            <div class="line"></div>
+                            <form action="{{ route('eventosImportantes.store') }}" method="post">
+                            <div class="container-fluid mt-1">
+                                @csrf
+                                @method('post')
+                                <div class="row">
+                                    <input type="hidden" id="colorBoxHiddenEventoImportante" name="color" value="#8a8a8a">
+                                    {{--  <input type="hidden" name="tipo" value="En Espera">  --}}
+                                    <input type="hidden" name="userId" value="{{auth()->user()->id}}">
+                                    <div class="col-12 mb-3">
+                                        <label for="title" class="labelTitulo">Título:</label>
+                                        <input autofocus type="text" class="inputCaja" name="title"
+                                            placeholder="Título de Evento Importante..." title="Escriba El Título del Evento Importante.">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="color" class="labelTitulo">Color:</label>
+                                        <div id="colorBoxEventoImportante" class="color-box w-100" style="margin-left:-0.5px; background: #8a8a8a"></div>
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="fecha" class="labelTitulo">Fecha Inicio:</label>
+                                        <input type="date" class="inputCaja" name="fechaEventoImportante" id="fechaEventoImportante"
+                                            aria-describedby="helpId" placeholder="Fecha">
+                                    </div>
+
+                                    <div class="mb-3 col-6">
+                                        <label for="hora" class="labelTitulo">Hora Inicio:</label>
+                                        <input type="time" class="inputCaja" name="horaEventoImportante" id="horaEventoImportante"
+                                            aria-describedby="helpId" placeholder="Fecha">
+                                    </div>
+
+                                    <div class="mb-3 col-6">
+                                        <label for="fecha" class="labelTitulo">Fecha Termino:</label>
+                                        <input type="date" class="inputCaja" name="fechaEventoImportanteEdit" id="fechaEventoImportanteEdit"
+                                            aria-describedby="helpId" placeholder="Fecha">
+                                    </div>
+
+                                    <div class="mb-3 col-6">
+                                        <label for="hora" class="labelTitulo">Hora Termino:</label>
+                                        <input type="time" class="inputCaja" name="horaEventoImportanteEdit" id="horaEventoImportanteEdit"
+                                            aria-describedby="helpId" placeholder="Fecha">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="descripcion" class="labelTitulo">Descripción:</label>
+                                        <textarea class="form-control-textarea border-green" name="descripcion" id="descripcionEventoImportante" rows="3"
+                                            placeholder="Especifique..."></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="line"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn botonGral">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1846,7 +2228,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
         integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
     </script>
+
     <script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let myModal = new bootstrap.Modal(document.getElementById('myModal'), {
@@ -1864,6 +2248,18 @@
             });
 
             let myModalEditSolicitud = new bootstrap.Modal(document.getElementById('myModalEditSolicitud'), {
+                keyboard: false
+            });
+
+            let myModalEditEventoImportante = new bootstrap.Modal(document.getElementById('myModalEditEventoImportante'), {
+                keyboard: false
+            });
+
+            let myModalEditExpiranDocumentos = new bootstrap.Modal(document.getElementById('myModalEditExpiranDocumentos'), {
+                keyboard: false
+            });
+
+            let myModalEditDiaFeriado = new bootstrap.Modal(document.getElementById('myModalEditDiaFeriado'), {
                 keyboard: false
             });
 
@@ -1889,6 +2285,9 @@
                     // };
 
                 //}
+                if(evento.tipoEvento == 'DiaFeriado'){
+                    evento.allDay = true
+                }
             }
 
             console.log('$eventosJson', eventosJson);
@@ -1954,8 +2353,20 @@
                                 myModalEditActividad.show();
                                 recuperarDatosEventoActividad(informacion.event);
                                 //myModalEdit.show();
-                            }else{
+                            }else if(informacion.event._def.extendedProps.tipoEvento == 'solicitud'){
+                                myModalEditSolicitud.show();
                                 recuperarDatosEventoSolicitud(informacion.event);
+                            }else if(informacion.event._def.extendedProps.tipoEvento == 'EventoImportante'){
+                                myModalEditEventoImportante.show();
+                                recuperarDatosEventoEventoImportante(informacion.event);
+                            }
+                            else if(informacion.event._def.extendedProps.tipoEvento == 'ExpiranDocumentos'){
+                                myModalEditExpiranDocumentos.show();
+                                recuperarDatosEventoExpiranDocumentos(informacion.event);
+                            }
+                            else if(informacion.event._def.extendedProps.tipoEvento == 'DiaFeriado'){
+                                myModalEditDiaFeriado.show();
+                                recuperarDatosEventoDiaFeriado(informacion.event);
                             }
 
                         } else {
@@ -2008,6 +2419,7 @@
             calendar.render();
         });
     </script>
+
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
     crossorigin="anonymous"></script>
 
@@ -2016,14 +2428,13 @@
             $('.opcReparacion:first').clone().find("input").val("").end().appendTo('#reparacion_campos');
         }
 
-        // Borrar registro
         $(document).on('click', '#removeRowReparacion', function() {
             if ($('.opcReparacion').length > 1) {
                 $(this).closest('.opcReparacion').remove();
             }
         });
-
     </script>
+
     <script>
         function crearItemsCombustible() {
             $('.opcCombustible:first').clone().find("input").val("").end().appendTo('#combustible_campos');
@@ -2035,34 +2446,32 @@
                 $(this).closest('.opcCombustible').remove();
             }
         });
-
-
     </script>
+
     <script>
         function crearItemsHerramienta() {
             $('.opcHerramienta:first').clone().find("input").val("").end().appendTo('#herramienta_campos');
         }
 
-        // Borrar registro
         $(document).on('click', '#removeRowHerramienta', function() {
             if ($('.opcHerramienta').length > 1) {
                 $(this).closest('.opcHerramienta').remove();
             }
         });
-
     </script>
+
     <script>
         function crearItemsRefaccion() {
             $('.opcRefaccion:first').clone().find("input").val("").end().appendTo('#refaccion_campos');
         }
 
-        // Borrar registro
         $(document).on('click', '#removeRowRefaccion', function() {
             if ($('.opcRefaccion').length > 1) {
                 $(this).closest('.opcRefaccion').remove();
             }
         });
     </script>
+
     <style>
         body {
             color: #000;
@@ -2161,6 +2570,7 @@
             margin-right: 10px !important; /* Espacio entre los radio buttons */
         }
     </style>
+
     <script>
         $(document).ready(function(){
 
@@ -2198,6 +2608,37 @@
     </script>
 
     <script>
+        function generarDiasFeriados(anoActual) {
+            const url = `https://api.generadordni.es/v2/holidays/holidays?country=MX&year=${anoActual}`;
+            fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                enviarDatosAlControlador( data );
+            })
+            .catch(error => {
+                console.error(error);
+            });
+            
+        }
+
+        function enviarDatosAlControlador(data) {
+            fetch('/generarDiasFeriados', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}', // Asegúrate de tener el token CSRF válido
+                },
+                body: JSON.stringify({ days: data }), // Envia los datos al controlador en formato JSON
+            })
+            .then(response => {
+                // Maneja la respuesta del controlador si es necesario
+                console.log('Datos enviados al controlador');
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        }
+
         function recuperarDatosEvento(evento) {
             console.log('info Modal', evento);
 
@@ -2685,6 +3126,262 @@
             myModalEditSolicitud.show();
         }
 
+        function recuperarDatosEventoEventoImportante(evento) {
+            console.log('info Modal', evento);
+
+            let fecha = evento._instance.range.start;
+            let fechaObj = new Date(fecha);
+            let fechaFormateada = fechaObj.toISOString().split("T")[0];
+            let horaFormateada = fechaObj.toLocaleTimeString("es-MX", {
+                hour12: false
+            });
+            let stringFecha = fechaFormateada + ' ' + horaFormateada;
+            // Convertir al objeto DateTime con formato personalizado
+            var startObj = luxon.DateTime.fromFormat(stringFecha, "yyyy-MM-dd HH:mm:ss");
+
+            // Restar 6 horas
+            var start6Hours = startObj.plus({
+                hours: 6
+            });
+
+            // Obtener la hora local de México
+            var startLocal = start6Hours.setZone("America/Mexico_City").toLocal();
+            var formattedTime = startLocal.toFormat("HH:mm:ss");
+            // var horaModal = startLocal.c.
+            console.log('start', startLocal);
+            console.log('fechaObj', fechaObj);
+            //fechaEdit = evento._def.extendedProps.fecha;
+            let fechaEdit = evento._instance.range.end;
+            let fechaEditObj = new Date(fechaEdit);
+            console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', fechaEditObj.toISOString().split("T")[0]);
+            let fechaEditFormateada = fechaEditObj.toISOString().split("T")[0];
+            let horaEditFormateada = fechaEditObj.toLocaleTimeString("es-MX", {
+                hour12: false
+            });
+            let stringFechaEdit = fechaEditFormateada + ' ' + horaEditFormateada;
+            // Convertir al objeto DateTime con formato personalizado
+            var startObjEdit = luxon.DateTime.fromFormat(stringFechaEdit, "yyyy-MM-dd HH:mm:ss");
+
+            // Restar 6 horas
+            var start6HoursEdit = startObjEdit.plus({
+                hours: 6
+            });
+
+            // Obtener la hora local de México
+            var startLocalEdit = start6HoursEdit.setZone("America/Mexico_City").toLocal();
+            var formattedTimeEdit = startLocalEdit.toFormat("HH:mm:ss");
+            console.log('fechaSalida', evento);
+
+            document.getElementById('fechaEditEventoImportante').value = fechaFormateada;            
+            document.getElementById('horaEditEventoImportante').value = formattedTime;
+            
+            // if(fechaSalida)
+            if(evento._def.hasEnd){
+                console.log('FEHCASSSSSS EDITADA');
+                console.log('fechaEditFormateada',fechaEditFormateada);
+                console.log('fechaEditFormateada',formattedTimeEdit);
+                document.getElementById('fechaSalidaEventoImportante').value = fechaEditFormateada;
+                document.getElementById('horaSalidaEventoImportante').value = formattedTimeEdit;
+            }else{
+                console.log('FEHCASSSSSS NO EDITADA');
+            }
+
+            //fechaEdit = evento._def.extendedProps.fecha;
+            console.log('evento._def.extendedProps.title', evento._def.title);
+            document.getElementById('titleEditEventoImportante').value = evento._def.title;
+            document.getElementById("colorBoxEditEventoImportante").style.backgroundColor = evento._def.ui.backgroundColor;
+            document.getElementById('descripcionEditEventoImportante').value = evento._def.extendedProps.descripcion;
+
+            //document.getElementById('searchSEdit').value =  'Equipo ' . nombre . ', Marca ' . marca . ', N. ECO. ' . numeconomico . ', Placas ' .  placas;
+            document.getElementById('idEventoImportanteModal').value = evento._def.publicId;
+            // document.getElementById('editarCampos').id =  "editarCampos" + evento._def.publicId;
+        }
+
+        function recuperarDatosEventoExpiranDocumentos(evento) {
+            console.log('info Modal', evento);
+
+            let fecha = evento._instance.range.start;
+            let fechaObj = new Date(fecha);
+            let fechaFormateada = fechaObj.toISOString().split("T")[0];
+            let horaFormateada = fechaObj.toLocaleTimeString("es-MX", {
+                hour12: false
+            });
+            let stringFecha = fechaFormateada + ' ' + horaFormateada;
+            // Convertir al objeto DateTime con formato personalizado
+            var startObj = luxon.DateTime.fromFormat(stringFecha, "yyyy-MM-dd HH:mm:ss");
+
+            // Restar 6 horas
+            var start6Hours = startObj.plus({
+                hours: 6
+            });
+
+            // Obtener la hora local de México
+            var startLocal = start6Hours.setZone("America/Mexico_City").toLocal();
+            var formattedTime = startLocal.toFormat("HH:mm:ss");
+            // var horaModal = startLocal.c.
+            console.log('start', startLocal);
+            console.log('fechaObj', fechaObj);
+            //fechaEdit = evento._def.extendedProps.fecha;
+            let fechaEdit = evento._instance.range.end;
+            let fechaEditObj = new Date(fechaEdit);
+            console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', fechaEditObj.toISOString().split("T")[0]);
+            let fechaEditFormateada = fechaEditObj.toISOString().split("T")[0];
+            let horaEditFormateada = fechaEditObj.toLocaleTimeString("es-MX", {
+                hour12: false
+            });
+            let stringFechaEdit = fechaEditFormateada + ' ' + horaEditFormateada;
+            // Convertir al objeto DateTime con formato personalizado
+            var startObjEdit = luxon.DateTime.fromFormat(stringFechaEdit, "yyyy-MM-dd HH:mm:ss");
+
+            // Restar 6 horas
+            var start6HoursEdit = startObjEdit.plus({
+                hours: 6
+            });
+
+            // Obtener la hora local de México
+            var startLocalEdit = start6HoursEdit.setZone("America/Mexico_City").toLocal();
+            var formattedTimeEdit = startLocalEdit.toFormat("HH:mm:ss");
+            console.log('fechaSalida', evento);
+
+            document.getElementById('fechaEditExpiranDocumentos').value = fechaFormateada;            
+            document.getElementById('horaEditExpiranDocumentos').value = formattedTime;
+            
+            // if(fechaSalida)
+            if(evento._def.hasEnd){
+                console.log('FEHCASSSSSS EDITADA');
+                console.log('fechaEditFormateada',fechaEditFormateada);
+                console.log('fechaEditFormateada',formattedTimeEdit);
+                document.getElementById('fechaSalidaExpiranDocumentos').value = fechaEditFormateada;
+                document.getElementById('horaSalidaExpiranDocumentos').value = formattedTimeEdit;
+            }else{
+                console.log('FEHCASSSSSS NO EDITADA');
+            }
+
+            //fechaEdit = evento._def.extendedProps.fecha;
+            console.log('evento._def.extendedProps.title', evento._def.title);
+            document.getElementById('titleEditExpiranDocumentos').value = evento._def.title;
+            document.getElementById("colorBoxEditExpiranDocumentos").style.backgroundColor = evento._def.ui.backgroundColor;
+            document.getElementById('descripcionEditExpiranDocumentos').value = evento._def.extendedProps.descripcion;
+
+            let nombre = evento._def.extendedProps.nombre;
+            let numeconomico = evento._def.extendedProps.numeconomico;
+            let placas = evento._def.extendedProps.placas;
+
+            let nombrePersonal = evento._def.extendedProps.personalNombre + evento._def.extendedProps.personalApellidoP;
+            let email = evento._def.extendedProps.email;
+            let celular = evento._def.extendedProps.celular;
+
+            console.log('marca',marca);
+            console.log('nombre',nombre);
+            console.log('numeconomico',numeconomico);
+            console.log('placas',placas);
+            console.log('evento', evento);
+
+            if(evento._def.extendedProps.maquinariaId != null){
+                var enlace = document.getElementById('linkExpiranDocumentos');
+                enlace.innerHTML = evento._def.extendedProps.nombre;
+                enlace.href =  'maquinaria/' + evento._def.extendedProps.maquinariaId;
+                document.getElementById('nombreEditExpiranDocumentosHidden').style.display = 'block';
+                document.getElementById('numeconomicoEditExpiranDocumentosHidden').style.display = 'block';
+                document.getElementById('placasEditExpiranDocumentosHidden').style.display = 'block';
+                document.getElementById('nombreUsuarioEditExpiranDocumentosHidden').style.display = 'none';
+                document.getElementById('emailEditExpiranDocumentosHidden').style.display = 'none';
+                document.getElementById('celularEditExpiranDocumentosHidden').style.display = 'none';
+            }
+            if(evento._def.extendedProps.personalId != null){
+                var enlace = document.getElementById('linkExpiranDocumentos');
+                enlace.innerHTML = nombrePersonal;
+                enlace.href = 'personal/' + evento._def.extendedProps.personalId;
+                document.getElementById('nombreEditExpiranDocumentosHidden').style.display = 'none';
+                document.getElementById('numeconomicoEditExpiranDocumentosHidden').style.display = 'none';
+                document.getElementById('placasEditExpiranDocumentosHidden').style.display = 'none';
+                document.getElementById('nombreUsuarioEditExpiranDocumentosHidden').style.display = 'block';
+                document.getElementById('emailEditExpiranDocumentosHidden').style.display = 'block';
+                document.getElementById('celularEditExpiranDocumentosHidden').style.display = 'block';
+            }
+
+            document.getElementById('nombreEditExpiranDocumentos').value = nombre;
+            document.getElementById('numeconomicoEditExpiranDocumentos').value = numeconomico;
+            document.getElementById('placasEditExpiranDocumentos').value = placas;
+
+            document.getElementById('nombreUsuarioEditExpiranDocumentos').value = nombrePersonal;
+            document.getElementById('emailEditExpiranDocumentos').value = email;
+            document.getElementById('celularEditExpiranDocumentos').value = celular;
+
+            //document.getElementById('searchSEdit').value =  'Equipo ' . nombre . ', Marca ' . marca . ', N. ECO. ' . numeconomico . ', Placas ' .  placas;
+            document.getElementById('idExpiranDocumentosModal').value = evento._def.publicId;
+            // document.getElementById('editarCampos').id =  "editarCampos" + evento._def.publicId;
+        }
+
+        
+        function recuperarDatosEventoDiaFeriado(evento) {
+            let fecha = evento._instance.range.start;
+            let fechaObj = new Date(fecha);
+            let fechaFormateada = fechaObj.toISOString().split("T")[0];
+            let horaFormateada = fechaObj.toLocaleTimeString("es-MX", {
+                hour12: false
+            });
+            let stringFecha = fechaFormateada + ' ' + horaFormateada;
+            // Convertir al objeto DateTime con formato personalizado
+            var startObj = luxon.DateTime.fromFormat(stringFecha, "yyyy-MM-dd HH:mm:ss");
+
+            // Restar 6 horas
+            var start6Hours = startObj.plus({
+                hours: 6
+            });
+
+            // Obtener la hora local de México
+            var startLocal = start6Hours.setZone("America/Mexico_City").toLocal();
+            var formattedTime = startLocal.toFormat("HH:mm:ss");
+            // var horaModal = startLocal.c.
+            console.log('start', startLocal);
+            console.log('fechaObj', fechaObj);
+            //fechaEdit = evento._def.extendedProps.fecha;
+            let fechaEdit = evento._instance.range.end;
+            let fechaEditObj = new Date(fechaEdit);
+            console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', fechaEditObj.toISOString().split("T")[0]);
+            let fechaEditFormateada = fechaEditObj.toISOString().split("T")[0];
+            let horaEditFormateada = fechaEditObj.toLocaleTimeString("es-MX", {
+                hour12: false
+            });
+            let stringFechaEdit = fechaEditFormateada + ' ' + horaEditFormateada;
+            // Convertir al objeto DateTime con formato personalizado
+            var startObjEdit = luxon.DateTime.fromFormat(stringFechaEdit, "yyyy-MM-dd HH:mm:ss");
+
+            // Restar 6 horas
+            var start6HoursEdit = startObjEdit.plus({
+                hours: 6
+            });
+
+            // Obtener la hora local de México
+            var startLocalEdit = start6HoursEdit.setZone("America/Mexico_City").toLocal();
+            var formattedTimeEdit = startLocalEdit.toFormat("HH:mm:ss");
+            console.log('fechaSalida', evento);
+
+            document.getElementById('fechaEditDiaFeriado').value = fechaFormateada;
+            
+            /* if(fechaSalida)
+            //if(evento._def.hasEnd){
+            //    console.log('FEHCASSSSSS EDITADA');
+            //    console.log('fechaEditFormateada',fechaEditFormateada);
+            //    console.log('fechaEditFormateada',formattedTimeEdit);
+                document.getElementById('fechaSalidaDiaFeriado').value = fechaEditFormateada;
+                document.getElementById('horaSalidaDiaFeriado').value = formattedTimeEdit;
+            }else{
+                console.log('FEHCASSSSSS NO EDITADA');
+            }*/
+
+            //fechaEdit = evento._def.extendedProps.fecha;
+            console.log('evento._def.extendedProps.title', evento._def.title);
+            document.getElementById('titleEditDiaFeriado').value = evento._def.title;
+            document.getElementById('descripcionEditDiaFeriado').value = evento._def.extendedProps.descripcion;
+            document.getElementById("colorBoxEditDiaFeriado").style.backgroundColor = evento._def.ui.backgroundColor;
+            
+
+            //document.getElementById('searchSEdit').value =  'Equipo ' . nombre . ', Marca ' . marca . ', N. ECO. ' . numeconomico . ', Placas ' .  placas;
+            document.getElementById('idDiaFeriadoModal').value = evento._def.publicId;
+            // document.getElementById('editarCampos').id =  "editarCampos" + evento._def.publicId;
+        }
         /*<div id="reparacion_campos" class="campos-solicitud" style="display: none;">
             <div class="row">
                 <div class="col-12 pb-3 text-end">
@@ -2974,6 +3671,53 @@
     </script>
 
     <script>
+        let vistaEventoImportante = false;
+        document.addEventListener('DOMContentLoaded', function() {
+            let idModal = document.getElementById('idEventoImportanteModal');
+            let editarCamposLink = document.getElementById('editarCamposEventoImportante' + idModal.value);
+            let campos = document.querySelectorAll('.inputCaja, .form-select, .form-control-textarea');
+            const tituloModal = document.getElementById('tituloModalActividad');
+            const contenedorBotonGuardarEventoImportante = document.getElementById('contenedorBotonGuardarEventoImportante');
+            console.log('editarCamposLink', editarCamposLink);
+            editarCamposLink.addEventListener('click', function(event) {
+
+                event.stopPropagation();
+                if (!vistaEventoImportante) {
+                    editarCamposLink.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-card-text accionesIconos" viewBox="0 0 16 16">
+                    <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
+                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                </svg>
+            `;
+                    tituloModal.textContent = 'Editar Actividad';
+                    contenedorBotonGuardarEventoImportante.style.display = 'block';
+                    vistaEventoImportante = true;
+                    campos.forEach(function(campo) {
+                        campo.removeAttribute('readonly');
+                        campo.style.color = 'initial';
+                    });
+
+                } else {
+                    vistaEventoImportante = false;
+                    editarCamposLink.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
+                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+            </svg>
+            `;
+                    tituloModal.textContent = 'Ver Actividad';
+                    contenedorBotonGuardarEventoImportante.style.display = 'none';
+                    campos.forEach(function(campo) {
+                        campo.setAttribute('readonly', 'readonly');
+                        campo.style.color = 'gray';
+                    });
+                }
+
+            });
+
+        });
+    </script>
+
+    <script>
         let vistaSolicitud = false;
         document.addEventListener('DOMContentLoaded', function() {
             let idModal = document.getElementById('idSolicitud');
@@ -3037,6 +3781,7 @@
 
         });
     </script>
+
     <script>
         // Obtén los checkboxes y los campos específicos
         const checkboxes = document.querySelectorAll('input[name="tipo_solicitud"]');

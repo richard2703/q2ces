@@ -1586,6 +1586,8 @@ CREATE TABLE calendarioPrincipal (
     CONSTRAINT FK_calendarioPrincipal_estadoId FOREIGN KEY (estadoId) REFERENCES estados(id)
 );
 
+ALTER TABLE calendarioPrincipal add documentosVencimiento int(10) NULL;
+
 CREATE TABLE solicitudes(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     userId bigint(20) unsigned NOT NULL,

@@ -68,7 +68,7 @@
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Concepto: <span>*</span></label></br>
                                                 <select id="concepto" name="conceptoId" class="form-select" required
-                                                    aria-label="Default select example">
+                                                    aria-label="Default select example" onchange="obras()">
                                                     <option selected value="">Seleccione</option>
                                                     @forelse ($conceptos as $concepto)
                                                         <option value="{{ $concepto->id }}">{{ $concepto->codigo }} -
@@ -133,19 +133,6 @@
                                                 </select>
                                             </div>
 
-                                            {{--  <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
-                                                <label class="labelTitulo">Almacen/Tiradero: <span>*</span></label></br>
-                                                <select id="almacenId" name="almacenId" class="form-select" required
-                                                    aria-label="Default select example">
-                                                    <option selected value="">Seleccione</option>
-                                                    @forelse ($almacenes as $almacen)
-                                                        <option value="{{ $almacen->id }}">{{ $almacen->nombre }}
-                                                        </option>
-                                                    @empty
-                                                    @endforelse
-                                                </select>
-                                            </div>  --}}
-
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Trabajo y/o Servicio:</label></br>
                                                 <textarea id="servicio" class="inputCaja" name="servicio" rows="5" cols="20"></textarea>
@@ -171,42 +158,37 @@
         </div>
     </div>
 
-    {{--  Modales  --}}
-    <div class="modal fade" id="modalConcepto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bacTituloPrincipal">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nuevo Concepto</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('conceptos.store') }}" method="post">
-                        @csrf
-                        <div class=" col-12 col-sm-6  mb-3 ">
-                            <label class="labelTitulo">Código:</label></br>
-                            <input type="text" class="inputCaja" id="codigo" name="codigo"
-                                value="{{ old('comentario') }}">
-                        </div>
-                        <div class=" col-12 col-sm-6  mb-3 ">
-                            <label class="labelTitulo">Nombre:</label></br>
-                            <input type="text" class="inputCaja" id="nombre" name="nombre"
-                                value="{{ old('comentario') }}">
-                        </div>
-                        <div class=" col-12  mb-3 ">
-                            <label class="labelTitulo">Comentario:</label></br>
-                            <textarea id="comentario" class="inputCaja" name="comentario" rows="5" cols="20"></textarea>
 
-                        </div>
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn botonGral">Guardar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <script>
+        function obras() {
+            const conceptoId = document.getElementById('concepto').value;
+            const ListaSeleccionar = document.getElementById('obra');
+
+            var url = '{{ route('serviciosTrasporte.obrasXconcepto', ':conceptoId') }}';
+            url = url.replace(':conceptoId', conceptoId);
+
+            console.log(url); //serviciosTrasporte.obrasXconcepto
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Actualiza las opciones en el select "item"
+                    console.log(data);
+                    ListaSeleccionar.innerHTML = '';
+                    data.forEach(item => {
+                        console.log(item);
+                        var option = document.createElement('option');
+                        option.value = item.id;
+                        option.textContent = item.nombre;
+                        ListaSeleccionar.appendChild(option);
+                    });
+
+                });
+
+
+        };
+    </script>
+
 @endsection
 <script>
     function Guardado() {

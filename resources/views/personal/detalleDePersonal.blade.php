@@ -73,7 +73,7 @@
                                 class="alertaGuardar" enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
-
+                                <input type="hidden" name="userId" id="userId" value="{{ auth()->user()->id }}">
                                 <div class="d-md-flex p-3">
                                     <div class="col-12 col-md-4 px-2 ">
                                         <div class="text-center mx-auto border  mb-4">
@@ -1059,6 +1059,9 @@
                                                                 <input type="hidden" id='{{ $doc->idDoc }}'
                                                                     name='archivo[{{ $contador }}][idDoc]'
                                                                     value='{{ $doc->idDoc }}'>
+                                                                
+                                                                <input type="hidden" id='modificacion{{ $doc->id }}' name='archivo[{{ $contador }}][modificacionDocs]' value='0'>
+
                                                                 <input type="hidden" id='{{ $doc->nombre }}'
                                                                     name='archivo[{{ $contador }}][tipoDocs]'
                                                                     value='{{ $doc->id }}'>
@@ -1154,6 +1157,7 @@
                                                                 <input type="hidden" id=''
                                                                     name='archivo[{{ $contador }}][idDoc]'
                                                                     value='{{ $doc->idDoc }}'>
+                                                                <input type="hidden" id='modificacion{{ $doc->id }}' name='archivo[{{ $contador }}][modificacionDocs]' value='0'>
                                                                 <input type="hidden" id='{{ $doc->nombre }}'
                                                                     name='archivo[{{ $contador }}][tipoDocs]'
                                                                     value='{{ $doc->id }}'>
@@ -1505,6 +1509,7 @@
             if (ruta != null) {
                 console.log('ruta');
                 handleDocumento(id);
+                
 
             }
         }

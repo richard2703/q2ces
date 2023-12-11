@@ -44,7 +44,7 @@
                                                 width="75px;" class="mt-1">
                                         </div>
                                         <div class="col-4 text-center">
-                                            <img src="{{ asset('/img/maquinariaPrint/Caja Chica_1.svg') }}" alt=""
+                                            <img src="{{ asset('/img/maquinariaPrint/Servicios.svg') }}" alt=""
                                                 width="230px; margin-top: 3px" class="mt-2" style="margin-right: 355px">
                                         </div>
 
