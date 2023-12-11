@@ -392,6 +392,7 @@
 
         if (document.getElementById('almacenId').value == "") {
             almacenes();
+            precioAlmacen();
         }
 
         if (document.getElementById('cantidad').value == "") {
