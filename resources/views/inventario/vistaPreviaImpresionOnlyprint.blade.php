@@ -50,19 +50,19 @@
                                 <img width="300px;" src="{{ asset('/img/login/Header4GenericoGrande.svg') }}" alt="" class="mb-2">
                             @endif
                             
-
-                            <h1 class="text-center" style="font-weight: 1000;">Q2S/COMB-{{ sprintf("%03d", $descarga->id) }}</h1><br>
+                            <br>
+                            <h1 class="text-center" style="font-weight: 1000;">Q2S/COMB-{{ sprintf("%03d", $descarga->id) }}</h1> <br>
                             <div class="text-center" style="font-weight: 1000; ">FECHA DE IMPRESIÓN:</div>
                             <div class="text-center" id="fecha-hora"></div>
                             <p class="text-center" id="hora"></p>
-                            <br> <br>
+                            <br><br>
                             @if ($descarga->tipoCisternaId == null)
                                 @if ($descarga->nombre_cliente)
                                 <h6 class="text-center" style="font-weight: 1000; ">CLIENTE: </h6> <div style="font-size:14px;">{{ $descarga->nombre_cliente }}</div>    
                                 @else
                                     <h6 class="text-center" style="font-weight: 1000; ">CLIENTE: </h6> <div style="font-size:14px;">SIN CLIENTE</div>    
                                 @endif
-                                <br>
+                                 
                                 @if ($descarga->obras_nombre)
                                     <h6 class="text-center" style="font-weight: 1000; ">OBRA: </h6> <div style="font-size:14px;">{{ $descarga->obras_nombre }}</div>
                                 @else
@@ -74,7 +74,7 @@
                                 @else
                                     <h6 class="text-center" style="font-weight: 1000; ">CLIENTE: </h6> <div style="font-size:14px;">SIN CLIENTE</div>    
                                 @endif
-                                <br>
+                                 
                                 @if ($descarga->obrasTote_nombre)
                                     <h6 class="text-center" style="font-weight: 1000; ">OBRA: </h6> <div style="font-size:14px;">{{ $descarga->obrasTote_nombre }}</div>
                                 @else
@@ -138,7 +138,7 @@
                                 0 </div> <div class="text-center" style="font-size:16px;"> 
                             @endif 
                                 
-                                costo: ${{ $descarga->grasaUnitario }} Total: ${{($descarga->grasa*$descarga->grasaUnitario)}} </div> <br> <br>
+                                costo: ${{ $descarga->grasaUnitario }} Total: ${{($descarga->grasa*$descarga->grasaUnitario)}} </div>    
                                 
                             <h6 style="font-weight: 1000;" class="text-center">ACEITE MOTOR: </h6> <div class="text-center"> @if ($descarga->motor) 
                                 {{ $descarga->motor }} LTS/KG</div>  
@@ -215,9 +215,9 @@
                                 <div class="text-center"><h6 style="font-weight: 1000;  margin-top: 10px;">OBSERVACIONES: </h6>{{$descarga->detalles_observaciones}}</div>
                                 <p class="pt-5" style="margin-top: 20px; text-align: center;">
                                     ______________________________________<br>
-                                    Nombre Y Firma De Recibido<br>
-                                    <p class="text-center">:{{$descarga->detalles_nombreSolicitante}}</p>
+                                    Nombre y Firma de Recibido<br>
                                 </p>
+                                <br>
                                 @endif
                             {{--  @if (!empty($descarga->litros))
                                 <h6 style="font-weight: 1000; text-center">LITROS: {{ $descarga->litros }} L</h6>
@@ -271,9 +271,9 @@
                                 @if ($descarga->tipoCisternaId == null)
                                 <p class="pt-5" style="margin-top: 20px; text-align: center;">
                                     ______________________________________<br>
-                                    Nombre Y Firma De Recibido<br>
-                                    <p class="text-center">:{{$descarga->detalles_nombreSolicitante}}</p>
+                                    Nombre y Firma de Recibido<br>
                                 </p>
+                                <br>
                                 @endif
                                 <img width="300px;" src="{{ asset('/img/login/Header3DescargaGrande.svg') }}" alt="" class="mb-2">
                                 @if ($descarga->tipoCisternaId == null)
@@ -327,14 +327,20 @@
             visibility:visible !important;
         }
         
-        @page {
+        {{--  @page {
             size: 90mm 105mm; /* Tamaño ISO C7 en milímetros */
             margin-bottom: 0mm;
             margin-top: 0mm;
-        }
+        }  --}}
         body {
             margin-top: -115mm !important;
             padding: 0 !important;
+        }
+        .print-content {
+            max-height: 100vh;
+            /* Establece una altura máxima en la altura de la ventana gráfica */
+            page-break-inside: avoid;
+            /* Evita saltos de página dentro del elemento .ticket */
         }
     }
     #print-content {
@@ -359,5 +365,6 @@
         border: 2px solid black;
         align-items: center;
     }
+    
 </style>
 @endsection
