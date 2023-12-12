@@ -66,7 +66,7 @@
                                     <b>FOLIO</b>
                                 </div>
                                 <div class="d-flex align-items-center p-1 justify-content-center" style="font-weight: 500 !important; font-size: 20px !important; border-width: 1px; border-style: solid; border-color: #727176; color: red; width: 120px !important; height: 40px !important;">
-                                    M-{{ str_pad($mantenimiento->id, 5, '0', STR_PAD_LEFT) }}
+                                    M-{{ str_pad($mantenimiento->id, 4, '0', STR_PAD_LEFT) }}
                                 </div>
                             </div>
 
@@ -407,7 +407,7 @@
                                     <b>FOLIO</b>
                                 </div>
                                 <div class="d-flex align-items-center p-1 justify-content-center" style="font-weight: 500 !important; font-size: 20px !important; border-width: 1px; border-style: solid; border-color: #727176; color: red; width: 120px !important; height: 40px !important;">
-                                    M-{{ str_pad($mantenimiento->id, 5, '0', STR_PAD_LEFT) }}
+                                    M-{{ str_pad($mantenimiento->id, 4, '0', STR_PAD_LEFT) }}
                                 </div>
                             </div>
 
@@ -506,13 +506,33 @@
                                 
                                 @if ($gastos->isNotEmpty())
                                     @if ($mecanico == "false")
-                                        <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}}, Marca: {{$gastos[0]->marca}}, Modelo: {{$gastos[0]->modelo}}</td>
+                                        <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}}, @if ($gastos[0]->marca)
+                                            Marca: {{$gastos[0]->marca}},
+                                        @else
+                                            
+                                        @endif 
+                                        @if ($gastos[0]->modelo)
+                                            Modelo: {{$gastos[0]->modelo}}
+                                        @else
+                                            
+                                        @endif
+                                       </td>
                                         <td style="border: 1px solid #727176; font-weight: 600 !important;">{{ number_format($gastos[0]->cantidad, 2) }}</td>
                                         
                                         <td style="border: 1px solid #727176; font-weight: 600 !important;">$ {{number_format($gastos[0]->costo, 2, '.', ',')}}</td>
                                         <td style="border: 1px solid #727176; font-weight: 600 !important;">$ {{number_format($gastos[0]->total, 2, '.', ',')}}</td>
                                     @else
-                                        <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}}, Marca: {{$gastos[0]->marca}}, Modelo: {{$gastos[0]->modelo}}</td>
+                                        <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}}, 
+                                            @if ($gastos[0]->marca)
+                                            Marca: {{$gastos[0]->marca}},
+                                        @else
+                                            
+                                        @endif 
+                                        @if ($gastos[0]->modelo)
+                                            Modelo: {{$gastos[0]->modelo}}
+                                        @else
+                                            
+                                        @endif</td>
                                         <td style="border: 1px solid #727176; font-weight: 600 !important;">{{ number_format($gastos[0]->cantidad, 2) }}</td>
                                     @endif
                                 @endif
@@ -522,12 +542,32 @@
                             <!-- Tu lógica actual para mostrar los registros -->
                             <tr style="border: 1px solid #727176; font-weight: 600 !important;">
                                 @if ($mecanico == "false")
-                                    <td style="border: 1px solid #727176;">{{$item->concepto}}, Marca: {{$item->marca}}, Modelo: {{$item->modelo}}</td>
+                                    <td style="border: 1px solid #727176;">{{$item->concepto}} @if ($item->marca)
+                                        , Marca: {{$item->marca}}, 
+                                    @else
+                                        
+                                    @endif 
+                                    @if ($item->modelo)
+                                        Modelo: {{$item->modelo}}
+                                    @else
+                                        
+                                    @endif
+                                    </td>
                                     <td style="border: 1px solid #727176;">{{ number_format($item->cantidad, 2) }}</td>
                                     <td style="border: 1px solid #727176;">${{ number_format($item->costo, 2, '.', ',') }}</td>
                                     <td style="border: 1px solid #727176;">${{ number_format($item->total, 2, '.', ',') }}</td>
                                 @else
-                                    <td style="border: 1px solid #727176;">{{$item->concepto}}, Marca: {{$item->marca}}, Modelo: {{$item->modelo}}</td>
+                                    <td style="border: 1px solid #727176;">{{$item->concepto}} 
+                                        @if ($item->marca)
+                                        , Marca: {{$item->marca}}, 
+                                    @else
+                                        
+                                    @endif 
+                                    @if ($item->modelo)
+                                        Modelo: {{$item->modelo}}
+                                    @else
+                                        
+                                    @endif</td>
                                     <td style="border: 1px solid #727176;">{{ number_format($item->cantidad, 2) }}</td>
                                 @endif
                             </tr>

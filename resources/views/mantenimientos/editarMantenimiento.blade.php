@@ -679,7 +679,7 @@
                                                                                             data-max="{{ $numFotosPermitidas }}">
                                                                                     </span>
                                                                                     <label for="mi-archivo">
-                                                                                        <span class="">Sube Imagen
+                                                                                        <span class="">Sube 5 Imagenes o 10
                                                                                             (Puedes subir hasta
                                                                                             {{ $numFotosPermitidas }}
                                                                                             más)</span>

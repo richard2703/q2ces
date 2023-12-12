@@ -78,7 +78,7 @@
                                             <td class="text-center">
                                                 <a href="{{ url('/mantenimientos/editar/' . $item->id) }}"
                                                     title="Editar el mantenimiento" class=""
-                                                    style="color: blue">{{ str_pad($item->id, 5, '0', STR_PAD_LEFT) }}
+                                                    style="color: blue">{{ str_pad($item->id, 4, '0', STR_PAD_LEFT) }}
                                                 </a>
                                             </td>
                                             </td>
