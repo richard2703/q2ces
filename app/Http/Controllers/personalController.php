@@ -19,6 +19,7 @@ use App\Models\calendarioPrincipal;
 use App\Models\docs;
 use App\Models\nomina;
 use App\Models\equipo;
+use App\Models\eventosCalendarioTipos;
 use App\Models\User;
 use App\Models\userdocs;
 use App\Models\obras;
@@ -328,13 +329,14 @@ class personalController extends Controller
                         // Evaluar fecha de vencimiento
                         $documento->estatus = '1';
                         //Si es 1 Esta proximo a vencer
+                        $eventosCalendarioTipos = eventosCalendarioTipos::where('tipoEvento', 'ExpiranDocumentos')->first();
                         $eventoCalendario = new calendarioPrincipal();
                         $eventoCalendario->personalId = $personal->id;
                         $eventoCalendario->title = 'Expira Documento: ' . $request->archivo[$i]['tipoDocsNombre'];
                         $eventoCalendario->end = strtoupper($request->archivo[$i]['fecha'] . ' ' . '23:00:00');
                         $eventoCalendario->start = strtoupper($request->archivo[$i]['fecha'] . ' ' . '01:00:00');
                         $eventoCalendario->descripcion = 'Expiración del Documento: ' . $request->archivo[$i]['tipoDocsNombre'] . ', Perteneciente al Usuario: ' . $newuser->name . ', con el Email: ' . $newuser->email . ', con el Celular: ' . $newuser->celular;
-                        $eventoCalendario->color = '#f70202';
+                        $eventoCalendario->color = $eventosCalendarioTipos['color'];
                         $eventoCalendario->tipoEvento = 'ExpiranDocumentos';
                         $eventoCalendario->estadoId = 3;
                         $eventoCalendario->userId = $personal['userId'];
@@ -1007,13 +1009,14 @@ class personalController extends Controller
 
                             $newuser = Str::substr($personal['nombres'], 0, 1) . ' ' . str_replace(' ', '', $personal['apellidoP']) . ' ' . str_replace(' ', '', $personal['apellidoM']);
                             if (isset($request->archivo[$i]['fecha'])) {
+                                $eventosCalendarioTipos = eventosCalendarioTipos::where('tipoEvento', 'ExpiranDocumentos')->first();
                                 $eventoCalendario = new calendarioPrincipal();
                                 $eventoCalendario->personalId = $personal->id;
                                 $eventoCalendario->title = 'Expira Documento: ' . $request->archivo[$i]['tipoDocsNombre'];
                                 $eventoCalendario->end = strtoupper($request->archivo[$i]['fecha'] . ' ' . '23:00:00');
                                 $eventoCalendario->start = strtoupper($request->archivo[$i]['fecha'] . ' ' . '01:00:00');
                                 $eventoCalendario->descripcion = 'Expiración del Documento: ' . $request->archivo[$i]['tipoDocsNombre'] . ', Perteneciente al Usuario: ' . $newuser . ', con el Email: ' . $personal->email . ', con el Celular: ' . $personal->celular;
-                                $eventoCalendario->color = '#f70202';
+                                $eventoCalendario->color = $eventosCalendarioTipos['color'];
                                 $eventoCalendario->tipoEvento = 'ExpiranDocumentos';
                                 $eventoCalendario->estadoId = 3;
                                 $eventoCalendario->userId = $data['userId'];

@@ -121,6 +121,15 @@ function mostrarSpinner(estado) {
         });
     }
 
+	function mostrarAlertaBorrarExito() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Borrado Exitosamente',
+            showConfirmButton: false,
+            timer: 1500 // La alerta se cierra automáticamente después de 1.5 segundos
+        });
+    }
+
     // Alerta de error
     function mostrarAlertaError() {
         Swal.fire({
