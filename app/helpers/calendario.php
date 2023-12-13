@@ -11,6 +11,7 @@ use App\Models\carga;
 use App\Models\descarga;
 use App\Models\frecuenciaEjecucion;
 use App\Models\maquinaria;
+use Symfony\Component\Finder\Iterator\VcsIgnoredFilterIterator;
 
 class Calendario {
     /**
@@ -342,12 +343,13 @@ class Calendario {
     }
 
     /**
-     * Obtiene el periodo de trabajo de una bitacora usando la fecha y la frecuencia de ejecución
-     *
-     * @param date $dtFecha Fecha sobre la que se realiza el calculo del periodo
-     * @param integer $intFrecuencia Identificador de frecuencia
-     * @return void
-     */
+    * Obtiene el periodo de trabajo de una bitacora usando la fecha y la frecuencia de ejecución
+    *
+    * @param date $dtFecha Fecha sobre la que se realiza el calculo del periodo
+    * @param integer $intFrecuencia Identificador de frecuencia
+    * @return void
+    */
+
     function getPeriodoDeTrabajo( $dtFecha, $intFrecuencia = 1 ) {
         $dtFechaInicialPeriodo = $dtFecha;
         $dtFechaFinalPeriodo = $dtFecha;
@@ -374,7 +376,7 @@ class Calendario {
                 $vctFechas = $this->getSemanaTrabajo( $dtFecha, 1 );
                 $dtFechaInicialPeriodo = $vctFechas[ 0 ] ;
                 $dtFechaFinalPeriodo = $vctFechas[ 1 ] ;
-                // dd($vctFechas);
+                // dd( $vctFechas );
                 break;
 
                 case 15:
@@ -518,4 +520,97 @@ class Calendario {
 
         return "$intDiaNombre $intDia de $intMes de $intAnio al $intDiaNombre2 $intDia2 de $intMes2 de $intAnio2";
     }
+
+    /**
+    * Valida si permite o no editar la asistencia de la semana actual usando una fecha seleccionada
+    *
+    * @param date $dteFecha Fecha a Validar del periodo de la semana de trabajo
+    * @param integer $intSemanaDiaInicial El día en que inicia la semana de trabajo
+    * @param integer $intSemanaDiaCorte El día en que se realizará el corte para asistencia
+    * @return boolean True si se tiene que bloquear, False en caso contrario
+    */
+
+    public function getEditarAsistencia( $dteFecha, $intSemanaDiaInicial = 1, $intSemanaDiaCorte = 2 ) {
+        $vctDebug = array();
+        $blnBloquear = false;
+
+        //*** fecha del día */
+        $dtToday =  date_create( date( 'Y-m-d' ) );
+
+        /*** semana de trabajo seleccionada*/
+        $vctSemanaTrabajoActual = $this->getSemanaTrabajo( $dtToday, $intSemanaDiaInicial );
+
+        /*** semana de trabajo seleccionada*/
+        $vctSemanaTrabajoSeleccionada = $this->getSemanaTrabajo( $dteFecha, $intSemanaDiaInicial );
+
+        //*** estoy dentro del periodo de la semana de trabajo en curso
+        $blnEnSemanaEnCurso = $this->getEnSemanaDeTrabajo( $dteFecha, $intSemanaDiaInicial );
+
+        //*** fecha inicial del periodo anterior del periodo actual en curso */
+        $dteFechaInicialPeriodoAnterior = date( 'Y-m-d', strtotime( $vctSemanaTrabajoActual[ 0 ]->format( 'Y-m-d' ).'- 1 week' ) );
+
+        $vctDebug[] = 'Fecha: '. $dteFecha->format( 'Y-m-d' );
+        $vctDebug[] = 'Inicio semana: '. $intSemanaDiaInicial;
+        $vctDebug[] = 'Dia de corte: '. $intSemanaDiaCorte ;
+        $vctDebug[] = 'Semana de Trabajo Seleccionada: ' . $vctSemanaTrabajoSeleccionada[ 0 ]->format( 'Y-m-d' ). ' al ' . $vctSemanaTrabajoSeleccionada[ 1 ]->format( 'Y-m-d' ) ;
+        $vctDebug[] = 'Semana de Trabajo Actual: ' . $vctSemanaTrabajoActual[ 0 ]->format( 'Y-m-d' ). ' al ' . $vctSemanaTrabajoActual[ 1 ]->format( 'Y-m-d' ) ;
+        $vctDebug[] = 'En semana de trabajo: '. $blnEnSemanaEnCurso ;
+        $vctDebug[] = 'Fecha inicial periodo anterior al actual: ' . $dteFechaInicialPeriodoAnterior;
+        $vctDebug[] = 'Hoy es: '. $dtToday->format( 'Y-m-d' );
+
+        $vctDebug[] = 'VALIDANDO...';
+
+        //*** estamos en el dia de corte maximo */
+        if ( $dtToday->format( 'N' ) == $intSemanaDiaCorte ) {
+            $vctDebug[] = 'Hoy es el día de corte máximo del periodo anterior:' . $dtToday->format( 'N' );
+            //*** validamos si estamos en la semana en curso */
+            if ( $vctSemanaTrabajoSeleccionada[ 0 ] < $vctSemanaTrabajoActual[ 0 ] ) {
+                $vctDebug[] = 'Estamos en un periodo anterior';
+                if ( $vctSemanaTrabajoSeleccionada[ 0 ]->format( 'Y-m-d' ) >= $dteFechaInicialPeriodoAnterior ) {
+                    $vctDebug[] = 'Podemos editar el periodo anterior';
+                } else {
+                    $vctDebug[] = 'Estamos 2 o mas periodos anteriores';
+                    $blnBloquear = true;
+                }
+
+            } else {
+
+                if ( $blnEnSemanaEnCurso == 1 ) {
+                    $vctDebug[] = 'Estamos en la semana en curso';
+                    if ( $dteFecha <= $dtToday ) {
+                        $vctDebug[] = 'Podemos editar el día';
+                    } else {
+                        $vctDebug[] = 'No podemos editar, el día es mayor a la fecha de hoy';
+                        $blnBloquear=true;
+                    }
+
+                } else {
+                    $vctDebug[] = 'Ya estamos fuera de la semana en curso';
+                    if ( $dteFecha >= $vctSemanaTrabajoSeleccionada[ 0 ] ) {
+                        if ( ( $intSemanaDiaInicial + 1 ) == $intSemanaDiaCorte ) {
+                            $vctDebug[] = 'Podemos editar, estamos en fecha maxima de corte ';
+                        } else {
+                            $vctDebug[] = 'Estamos fuera de corte';
+                            $blnBloquear = true;
+
+                        }
+                    } else {
+                        $vctDebug[] = 'Estamos fuera del rango permitido de la semana de corte';
+                        $blnBloquear = true;
+                    }
+
+                }
+            }
+
+        } else {
+            $vctDebug[] = 'No es día de corte ' . $dtToday->format( 'N' );
+            $blnBloquear=true;
+        }
+        $vctDebug[] = "Bloquear: " . ($blnBloquear==true?'Sí':'No');
+
+        // dd( $vctDebug );
+        return $blnBloquear;
+
+    }
+
 }

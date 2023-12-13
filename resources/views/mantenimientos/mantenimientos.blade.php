@@ -28,9 +28,9 @@
                                             <option value="3" {{ request('estatus') == 3 ? 'selected' : '' }}>
                                                 Terminado
                                             </option>
-                                            <option value="4" {{ request('estatus') == 4 ? 'selected' : '' }}>
+                                            {{-- <option value="4" {{ request('estatus') == 4 ? 'selected' : '' }}>
                                                 Borrado
-                                            </option>
+                                            </option> --}}
                                         </select>
                                     </div>
                                 </form>
@@ -76,7 +76,7 @@
                                     @forelse ($vctMantenimientos as $item)
                                         <tr>
                                             <td class="text-center">
-                                                <a href="{{ url('/mantenimientos/editar/' . $item->id) }}"
+                                                <a href="{{  ($blnEsMtq == true ? url('/mantenimientos/editar/mtq/'. $item->id) : url('/mantenimientos/editar/'. $item->id)) }}"
                                                     title="Editar el mantenimiento" class=""
                                                     style="color: blue">{{ str_pad($item->id, 5, '0', STR_PAD_LEFT) }}
                                                 </a>
@@ -122,7 +122,7 @@
                                                 @endif --}}
 
                                                 @can('mantenimiento_show')
-                                                    <a href="{{ route('mantenimientos.show', $item->id) }}"
+                                                    <a href="{{ ($blnEsMtq == true ? url('/mantenimientos/detalle/mtq/'. $item->id) : url('/mantenimientos/detalle/'. $item->id)) }}"
                                                         title="Ver el detalle del Mantenimiento" class="">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
                                                             fill="currentColor" class="bi bi-card-text accionesIconos mb-2"
@@ -187,7 +187,7 @@
                                                 </form>
 
                                                 @can('mantenimiento_edit')
-                                                    <a href="{{ url('/mantenimientos/editar/' . $item->id) }}"
+                                                    <a href="{{  ($blnEsMtq == true ? url('/mantenimientos/editar/mtq/'. $item->id) : url('/mantenimientos/editar/'. $item->id)) }}"
                                                         title="Editar el mantenimiento" class="">
                                                         <svg xmlns="http://www.w3.org/2000/svg " width="28" height="28"
                                                             fill="currentColor" title="Editar"

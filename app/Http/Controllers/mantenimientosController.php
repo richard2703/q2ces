@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
@@ -55,8 +54,9 @@ class mantenimientosController extends Controller {
             $vctMantenimientos = $vctMantenimientos->where( 'mantenimientos.estadoId', $estatus );
         }
 
-        $vctMantenimientos = $vctMantenimientos->orderBy( 'estados.id', 'asc' )
-        ->orderBy( 'mantenimientos.fechaInicio', 'desc' )->paginate( 10 );
+        $vctMantenimientos = $vctMantenimientos->orderBy( 'mantenimientos.id', 'desc' )
+        ->orderBy( 'estados.id', 'asc' )
+        ->paginate( 10 );
         $blnEsMtq = false;
 
         return view( 'mantenimientos.mantenimientos', compact( 'vctMantenimientos', 'blnEsMtq' ) );
@@ -85,8 +85,9 @@ class mantenimientosController extends Controller {
             $vctMantenimientos = $vctMantenimientos->where( 'mantenimientos.estadoId', $estatus );
         }
 
-        $vctMantenimientos = $vctMantenimientos->orderBy( 'estados.id', 'asc' )
-        ->orderBy( 'mantenimientos.fechaInicio', 'desc' )->paginate( 10 );
+        $vctMantenimientos = $vctMantenimientos->orderBy( 'mantenimientos.id', 'desc' )
+        ->orderBy( 'estados.id', 'asc' )
+        ->paginate( 10 );
         $blnEsMtq = true;
         return view( 'mantenimientos.mantenimientos', compact( 'vctMantenimientos', 'blnEsMtq' ) );
     }
@@ -159,7 +160,7 @@ class mantenimientosController extends Controller {
         $mantenimiento = mantenimientos::create( $mantenimiento );
 
         // Actualización del kilometraje o Horometro;
-        $objCalculos->updateKilometrajeMaquinaria( $request[ 'maquinariaId' ], $request[ 'usoKom' ], $proviene = 'Mantenimiento', $request[ 'tipoMantenimientoId' ] );
+        // $objCalculos->updateKilometrajeMaquinaria( $request[ 'maquinariaId' ], $request[ 'usoKom' ], $proviene = 'Mantenimiento', $request[ 'tipoMantenimientoId' ] );
 
         // $events = calendarioPrincipal::create( $mantenimiento );
         Session::flash( 'message', 1 );
@@ -205,10 +206,49 @@ class mantenimientosController extends Controller {
         $vctCoordinadores = personal::getPersonalPorNivel( 3 );
         $vctMecanicos = personal::getPersonalPorNivel( 4 );
         $vctResponsables = personal::getPersonalPorNivel( 5, true );
+        $blnEsMtq = false;
 
         // dd( $mantenimiento, $maquinaria );
 
-        return view( 'mantenimientos.detalleMantenimiento', compact( 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctResponsables' ) );
+        return view( 'mantenimientos.detalleMantenimiento', compact( 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctResponsables', 'blnEsMtq' ) );
+    }
+
+    public function showMtq( $id ) {
+        abort_if ( Gate::denies( 'mantenimiento_show' ), '404' );
+
+        $mantenimiento = mantenimientos::select(
+            'mantenimientos.*',
+            DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ),
+        )
+        ->join( 'maquinaria', 'maquinaria.id', '=', 'mantenimientos.maquinariaId' )
+        ->where( 'mantenimientos.id', '=', $id )->first();
+
+        $gastos = gastosMantenimiento::select(
+            'gastosMantenimiento.*',
+            'inventario.nombre as articulo',
+            'inventario.numparte as numparte',
+            'inventario.modelo as modelo',
+            'marca.nombre AS marca',
+            'inventario.valor as valor'
+        )
+        ->leftjoin( 'inventario', 'inventario.id', '=', 'gastosMantenimiento.inventarioId' )
+        ->leftjoin( 'marca', 'marca.id', '=', 'inventario.marcaId' )
+        ->leftjoin( 'manoDeObra', 'manoDeObra.id', '=', 'gastosMantenimiento.manoObraId' )
+        ->where( 'mantenimientoId', '=', $id )->get();
+
+        $fotos = mantenimientoImagen::where( 'mantenimientoId', $id )->get();
+        $maquinaria = maquinaria::where( 'id', '=', $mantenimiento->maquinariaId )->first();
+
+        $vctTipos = tipoMantenimiento::select( 'tipoMantenimiento.*' )->orderBy( 'tipoMantenimiento.nombre', 'asc' )->get();
+
+        $vctCoordinadores = personal::getPersonalPorNivel( 3 );
+        $vctMecanicos = personal::getPersonalPorNivel( 4 );
+        $vctResponsables = personal::getPersonalPorNivel( 5, true );
+        $blnEsMtq = true;
+
+        // dd( $mantenimiento, $maquinaria );
+
+        return view( 'mantenimientos.detalleMantenimiento', compact( 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctResponsables', 'blnEsMtq' ) );
     }
 
     /**
@@ -252,8 +292,47 @@ class mantenimientosController extends Controller {
         $vctResidentes = residente::all()->sortBy( 'nombre' );
 
         // dd( $gastos, $mantenimiento, $maquinaria, $vctMecanicos, $vctResidentes );
+        $blnEsMtq = false;
 
-        return view( 'mantenimientos.editarMantenimiento', compact( 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctCoordinadoresA', 'vctResponsables', 'vctResidentes' ) );
+        return view( 'mantenimientos.editarMantenimiento', compact( 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctCoordinadoresA', 'vctResponsables', 'vctResidentes', 'blnEsMtq' ) );
+    }
+
+    public function editMtq( $id ) {
+        abort_if ( Gate::denies( 'mantenimiento_edit' ), '404' );
+
+        $mantenimiento = mantenimientos::select( 'mantenimientos.*',
+        'maquinaria.compania',
+        DB::raw( "CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria" ), )
+        ->join( 'maquinaria', 'maquinaria.id', '=', 'mantenimientos.maquinariaId' )
+        ->where( 'mantenimientos.id', '=', $id )->first();
+
+        $gastos = gastosMantenimiento::select(
+            'gastosMantenimiento.*',
+            DB::raw( 'inventario.nombre as articulo' ),
+            DB::raw( 'inventario.numparte as numparte' ),
+            DB::raw( 'inventario.modelo as modelo' ),
+            DB::raw( 'marca.nombre AS marca' ),
+            DB::raw( 'inventario.valor as valor ' )
+        )
+        ->leftjoin( 'inventario', 'inventario.id', '=', 'gastosMantenimiento.inventarioId' )
+        ->leftjoin( 'manoDeObra', 'manoDeObra.id', '=', 'gastosMantenimiento.manoObraId' )
+        ->leftjoin( 'marca', 'marca.id', '=', 'inventario.marcaId' )
+        ->where( 'mantenimientoId', '=', $id )->get();
+
+        $fotos = mantenimientoImagen::where( 'mantenimientoId', $id )->get();
+        $maquinaria = maquinaria::where( 'id', '=', $mantenimiento->maquinariaId )->first();
+
+        $vctTipos = tipoMantenimiento::select( 'tipoMantenimiento.*' )->orderBy( 'tipoMantenimiento.nombre', 'asc' )->get();
+
+        $vctCoordinadores = personal::getPersonalPorNivel( 3 );
+        $vctCoordinadoresA = personal::getPersonalPorNivel( 1 );
+        $vctMecanicos = personal::getPersonalPorNivel( 4 );
+        $vctResponsables = personal::getPersonalPorNivel( 5, true );
+        $vctResidentes = residente::all()->sortBy( 'nombre' );
+        $blnEsMtq = true;
+        // dd( $gastos, $mantenimiento, $maquinaria, $vctMecanicos, $vctResidentes );
+
+        return view( 'mantenimientos.editarMantenimiento', compact( 'mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctCoordinadoresA', 'vctResponsables', 'vctResidentes', 'blnEsMtq' ) );
     }
 
     /**
@@ -516,6 +595,9 @@ class mantenimientosController extends Controller {
                         $objEvento->save();
                     }
 
+                    // Actualización del kilometraje o Horometro;
+                    $objCalculos->updateKilometrajeMaquinaria( $request[ 'maquinariaId' ], $request[ 'usoKom' ], $proviene = 'Mantenimiento', $request[ 'tipoMantenimientoId' ] );
+
                 }
 
                 // dd( 'calculo de todo el gasto de Mantenimiento',  $objGasto );
@@ -543,6 +625,37 @@ class mantenimientosController extends Controller {
             $objMantto  = mantenimientos::where( 'mantenimientos.id', '=', $id )->first();
 
             if ( $objMantto ) {
+
+                //*** buscamos el registro de maquinaria */
+                $objMaquinaria = maquinaria::where( 'id', '=', $objMantto->maquinariaId )->first();
+
+                //*** buscamos los imagenes del mantenimiento */
+                if ( $objMantto->estadoId <  3 ) {
+                    $vctImagenes = mantenimientoImagen::where( 'mantenimientoId', '=', $id )->get();
+                    $debug[] = 'Hay registros de imagenes de inventario' ;
+
+                    $debug[] = 'Eliminamos las imagenes del servidor' ;
+                    foreach ( $vctImagenes as $item ) {
+
+                        $strPath = storage_path( 'app/public/maquinaria/' . str_pad( $objMaquinaria->identificador, 4, '0', STR_PAD_LEFT ) . '/mantenimientos/' . $objMantto->codigo . '/' . $item->ruta );
+                        if ( file_exists( $strPath )  == true ) {
+                            unlink( $strPath );
+                            $debug[] = '- Eliminando el archivo: ' . $strPath ;
+                        } else {
+                            $debug[] = '- No existe el archivo: ' . $strPath ;
+
+                        }
+
+                    }
+
+                    if ( $vctImagenes->count()>0 ) {
+                        $intCont = 1;
+                        $debug[] = '- Eliminamos ' . $vctImagenes->count() . ' registros de imagenes de mantenimiento' ;
+                        $vctGastos = mantenimientoImagen::where( 'mantenimientoImagen.mantenimientoId', '=', $id )->delete();
+                    } else {
+                        $debug[] = '- Sin registros de imagenes de mantenimiento' ;
+                    }
+                }
 
                 //*** buscamos los movimientos de inventario */
                 $vctMovimientos = inventarioMovimientos::where( 'mantenimientoId', '=', $id )->get();
@@ -588,17 +701,14 @@ class mantenimientosController extends Controller {
                     $debug[] = '- Se quedan los gastos por borrado logico' ;
                 }
 
-                //*** buscamos si existe registro de programacion */
-                $objMaquinaria = maquinaria::where( 'id', '=', $objMantto->maquinariaId )->first();
-
                 $objEvento = null;
                 if ( $objMaquinaria->compania == 'mtq' ) {
                     $debug[] = 'Hay evento en el calendario de MTQ' ;
                     $objEvento = calendarioMtq::where( 'mantenimientoId', '=', $objMantto->id )->first();
                     if ( $objEvento ) {
                         $debug[] = '- Eliminamos el evento del calendario de MTQ' ;
-                          $objEvento->delete();
-                    }else{
+                        $objEvento->delete();
+                    } else {
                         $debug[] = '- No esta el evento del calendario de MTQ' ;
                     }
                 } else {
@@ -607,7 +717,7 @@ class mantenimientosController extends Controller {
                     if ( $objEvento ) {
                         $debug[] = '- Eliminamos el evento del calendario de Q2ces' ;
                         $objEvento->delete();
-                    }else{
+                    } else {
                         $debug[] = '- No esta el evento del calendario de Q2ces' ;
                     }
                 }
@@ -615,8 +725,8 @@ class mantenimientosController extends Controller {
                 $debug[] = 'Estatus mantenimiento: ' . $objMantto->estadoId  ;
 
                 if ( $objMantto->estadoId <  3 ) {
-                      $objMantto  = mantenimientos::where( 'mantenimientos.id', '=', $id )->delete();
-                      $debug[] = '- Se elimino el mantenimiento' ;
+                    $objMantto  = mantenimientos::where( 'mantenimientos.id', '=', $id )->delete();
+                    $debug[] = '- Se elimino el mantenimiento' ;
                 } else {
                     //*** lo marcamos como borrado logico */
                     $objMantto->estadoId = 4;

@@ -433,6 +433,7 @@ class checkListController extends Controller {
             DB::raw( 'tarea.id AS tareaId' ),
             DB::raw( 'tarea.nombre AS tarea' ),
             DB::raw( 'tarea.tipoValorId' ),
+            DB::raw( 'tarea.tipoId' ),
             DB::raw( 'tipoValorTarea.nombre AS tipoValor' ),
             DB::raw( 'tipoValorTarea.controlHtml' ),
             DB::raw( 'grupo.nombre AS grupo' ),

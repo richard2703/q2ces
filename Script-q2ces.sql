@@ -750,6 +750,7 @@ create table tarea(
     updated_at datetime NULL,
     activa TINYINT(1) NOT NULL DEFAULT '1',
     tipoValor INT(2) NOT NULL DEFAULT '1',
+    imagen VARCHAR(255) NULL,
     primary key (id),
     CONSTRAINT FK_tarea_categoria foreign key (categoriaId) references tareaCategoria(id),
     CONSTRAINT FK_tarea_tipo foreign key (tipoId) references tareaTipo(id),

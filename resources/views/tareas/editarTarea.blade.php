@@ -29,23 +29,39 @@
                                         @method('put')
                                         <div class="col-12 my-4">
                                             <div class="row">
-                                                <input type="hidden" name="tareaId" id="tareaId"
-                                                    value="{{ $tarea->id }}">
-                                                <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
-                                                    <label class="labelTitulo">Nombre: <span>*</span></label></br>
+                                                <div class="col-8">
+                                                    <input type="hidden" name="tareaId" id="tareaId"
+                                                        value="{{ $tarea->id }}">
+                                                    <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
+                                                        <label class="labelTitulo">Nombre: <span>*</span></label></br>
 
-                                                    <input type="text" required maxlength="250" id="nombre"
-                                                        name="nombre" value="{{ $tarea->nombre }}"
-                                                        placeholder="Especifique el nombre de la bitácora."
-                                                        class="inputCaja">
+                                                        <input type="text" required maxlength="250" id="nombre"
+                                                            name="nombre" value="{{ $tarea->nombre }}"
+                                                            placeholder="Especifique el nombre de la bitácora."
+                                                            class="inputCaja">
+                                                    </div>
+
+                                                    <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
+                                                        <label for="exampleFormControlTextarea1"
+                                                            class="labelTitulo">Descripción
+                                                            de la Tarea: <span>*</span></label>
+                                                        <textarea class="form-select" id="exampleFormControlTextarea1" rows="3" maxlength="1000" required id="comentario"
+                                                            name="comentario" placeholder="Escribe aquí tus comentarios sobre la bitácora.">{{ $tarea->comentario }}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="text-center mx-auto border mb-4">
+                                                        <i><img class="imgVista img-fluid "
+                                                            src="{{ $tarea->imagen == '' ? '/img/general/default.jpg' : asset('/storage/interfaz/tareas/' . $tarea->imagen) }}"></i>
+                                                        <span class="mi-archivo">
+                                                            <input class="mb-4 ver" type="file" name="imagen"
+                                                                id="mi-archivo" accept="image/*"></span>
+                                                        <label for="mi-archivo">
+                                                            <span>Subir Icono</span>
+                                                        </label>
+                                                    </div>
                                                 </div>
 
-                                                <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
-                                                    <label for="exampleFormControlTextarea1" class="labelTitulo">Descripción
-                                                        de la Tarea: <span>*</span></label>
-                                                    <textarea class="form-select" id="exampleFormControlTextarea1" rows="3" maxlength="1000" required id="comentario"
-                                                        name="comentario" placeholder="Escribe aquí tus comentarios sobre la bitácora.">{{ $tarea->comentario }}</textarea>
-                                                </div>
                                             </div>
 
                                             <div class="row">
@@ -161,8 +177,8 @@
                                                 <label class="labelTitulo">Usar Unidad de Medida:
                                                     <span></span></label></br>
                                                 <!-- <input class="form-check-input is-invalid align-self-end mb-2"
-                                                                                                    name='requiereUnidadMedida' type="checkbox" id="requiereUnidadMedida"
-                                                                                                    <?php echo $tarea->requiereUnidadMedida == 1 ? 'checked' : ''; ?> style="font-size: 20px;"> -->
+                                                                                                        name='requiereUnidadMedida' type="checkbox" id="requiereUnidadMedida"
+                                                                                                        <?php echo $tarea->requiereUnidadMedida == 1 ? 'checked' : ''; ?> style="font-size: 20px;"> -->
 
                                                 <select class="form-select" aria-label="Default select example"
                                                     id="requiereUnidadMedida" name="requiereUnidadMedida">
