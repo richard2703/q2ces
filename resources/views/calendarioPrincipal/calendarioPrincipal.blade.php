@@ -17,32 +17,31 @@
 
     <div class="content">
         <div class="row">
-            <div class="col-6 text-left mb-1" style="margin-left: 12px">
+            <label class="labelTitulo" style="padding-left: 1.50rem !important">Tipo de Evento: </label>
+            <div class="col-4 text-left mb-1" style="margin-left: 12px">
+                <select id="filtroTipoEvento" class="filtroTipoEvento">
+                    <option value="todos" selected>Todos</option>
+                    <option value="EventoImportante">Eventos Importantes</option>
+                    <option value="ExpiranDocumentos">Expiración de Documentos</option>
+                    <option value="DiaFeriado">Días Feriados</option>
+                    <option value="actividades">Actividades</option>
+                    <option value="solicitud">Solicitudes</option>
+                </select>
+            </div>
+            <div class="col-4">
                 <span>
                     <div
-                        class="display-8 text-start" title="Ir al periodo en curso" style="color: #5C7C26;"><b>CALENDARIO: Tareas, Solicitudes y Mantenimientos Q2CES</b></div>
+                        class="display-8 text-start tituloPrincipalCentrado" title="Ir al periodo en curso" style="color: #5C7C26; font-size: 24px"><b>CALENDARIO: GENERAL Q2CES</b></div>
                 </span>
-                {{--  <a href="{{ url('dashMtq') }}" id="regresarId">
-                    <button class="btn regresar"
-                        style="background-color: var(--select);
-                color: #fff;
-                display: inline-flex;">
-                        <span class="material-icons">
-                            reply
-                        </span>
-                        Regresar
-                    </button>
-                </a>  --}}
             </div>
-            <div class="col-6 text-end mb-1" style="margin-left: -25px">
+            <div class="col-4 text-end mb-1" style="margin-left: -25px;">
                 @can('calendarioPrincipal_create')
                     <button data-bs-toggle="modal" data-bs-target="#myModal" type="button" class="btn botonGral">Añadir
                         al Calendario</button>
                     @php
                         $anoActual = date('Y');
                     @endphp
-                    <button onclick="generarDiasFeriados({{$anoActual}})" type="button" class="btn botonGral">Generar Dias Feriados del Año Actual</button>
-                    {{--  <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary py-2 px-4">Click Here !</button>  --}}
+                    {{--  <button onclick="generarDiasFeriados({{$anoActual}})" type="button" class="btn botonGral">Generar Dias Feriados del Año Actual</button>  --}}
                 @endcan
             </div>
         </div>
@@ -2248,6 +2247,7 @@
     <script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js"></script>
 
     <script>
+        var calendar;
         document.addEventListener('DOMContentLoaded', function() {
             let myModal = new bootstrap.Modal(document.getElementById('myModal'), {
                 keyboard: false
@@ -2307,7 +2307,7 @@
             }
 
             console.log('$eventosJson', eventosJson);
-            var calendar = new FullCalendar.Calendar(calendarEl, {
+            calendar = new FullCalendar.Calendar(calendarEl, {
                 // height: 850,
                 dayMaxEventRows: true, // for all non-TimeGrid views
                 views: {
@@ -2434,6 +2434,30 @@
             }
             calendar.render();
         });
+    </script>
+
+    <script>
+        const filtroTipoEvento = document.getElementById('filtroTipoEvento');
+        var eventosJson = {!! $eventosJson !!};
+        // Manejar evento de cambio en el select
+        filtroTipoEvento.addEventListener('change', function() {
+            const selectedTipoEvento = this.value;
+
+            // Filtrar eventos basados en el tipo seleccionado
+            const eventosFiltrados = eventosJson.filter(evento => {
+                return selectedTipoEvento === 'todos' || evento.tipoEvento === selectedTipoEvento;
+            });
+            actualizarEventos(eventosFiltrados);
+            
+        });
+    </script>
+
+    <script>
+        function actualizarEventos(eventos) {
+            calendar.removeAllEvents(); // Eliminar todos los eventos actuales
+            calendar.addEventSource(eventos); // Agregar los nuevos eventos
+            calendar.refetchEvents(); // Actualizar la vista con los nuevos eventos
+        }
     </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -2575,16 +2599,51 @@
             height: 2px;
             width: 100%;
         }
+        .filtroTipoEvento{
+            font-weight: bold;
+            background-color: #5c7c26;
+            color: white;
+        }
+
+        .filtroTipoEvento option {
+            font-weight: bold;
+            background-color: #5c7c26;
+            color: white;
+        }
+
+        /* Estilos para la opción seleccionada y en foco */
+        .filtroTipoEvento option:checked:focus {
+            font-weight: bold;
+            background-color: #5c7c26;
+            color: white;
+        }
+
+        .filtroTipoEvento:focus {
+            font-weight: bold;
+            background-color: #5c7c26;
+            color: white;
+        }
 
         @media screen and (max-width: 768px) {
             .tabs h6 {
                 font-size: 12px;
             }
+            .filtroTipoEvento{
+                font-size: 12px !important;
+                white-space: nowrap !important;
+            }
+            .tituloPrincipalCentrado{
+                font-size: 12px !important;
+                white-space: nowrap !important;
+            }
         }
+
         .radio-buttons input[type="radio"] {
             display: inline-block !important;
             margin-right: 10px !important; /* Espacio entre los radio buttons */
         }
+                
+        
     </style>
 
     <script>
@@ -2634,7 +2693,6 @@
             .catch(error => {
                 console.error(error);
             });
-            
         }
 
         function enviarDatosAlControlador(data) {
