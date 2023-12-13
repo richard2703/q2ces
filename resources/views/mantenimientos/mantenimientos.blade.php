@@ -133,54 +133,59 @@
                                                                 d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
                                                         </svg> </a>
                                                 @endcan
-                                                <form id="printForm" action="{{ route('printMantenimiento.get') }}" method="GET" style="display: inline-block;">
+                                                <form id="printForm" action="{{ route('printMantenimiento.get') }}"
+                                                    method="GET" style="display: inline-block;">
                                                     @can('mantenimiento_show')
                                                         <input type="hidden" name="mecanico" value="true">
-                                                        <input type="hidden" name="id" value={{$item->id}}>
+                                                        <input type="hidden" name="id" value={{ $item->id }}>
 
                                                         <input type="hidden" name="cordinadorTaller" value="true">
-                                                        <input type="hidden" name="cordinadorOperaciones" value={{$item->id}}>
+                                                        <input type="hidden" name="cordinadorOperaciones"
+                                                            value={{ $item->id }}>
 
                                                         <input type="hidden" name="mecanicoFirma" value="true">
-                                                        <input type="hidden" name="responsableEquipo" value={{$item->id}}>
+                                                        <input type="hidden" name="responsableEquipo"
+                                                            value={{ $item->id }}>
 
-                                                        @if ($item->estadoId == 3)
-                                                            <button class="btnSinFondo" type="submit">
-                                                                <i class="fas fa-print" style="color: #8caf48; font-size: x-large;"></i>
-                                                            </button>
-                                                        @endif
-
+                                                        <button class="btnSinFondo" type="submit">
+                                                            <i class="fas fa-print"
+                                                                style="color: #8caf48; font-size: x-large;"></i>
+                                                        </button>
                                                     @endcan
                                                 </form>
 
-                                                <form id="printForm" action="{{ route('printMantenimiento.get') }}" method="GET" style="display: inline-block;">
+                                                <form id="printForm" action="{{ route('printMantenimiento.get') }}"
+                                                    method="GET" style="display: inline-block;">
                                                     @can('mantenimientoPrintCostos_show')
                                                         <input type="hidden" name="mecanico" value="false">
-                                                        <input type="hidden" name="id" value={{$item->id}}>
+                                                        <input type="hidden" name="id" value={{ $item->id }}>
 
                                                         <input type="hidden" name="cordinadorTaller" value="true">
-                                                        <input type="hidden" name="cordinadorOperaciones" value={{$item->id}}>
+                                                        <input type="hidden" name="cordinadorOperaciones"
+                                                            value={{ $item->id }}>
 
                                                         <input type="hidden" name="mecanicoFirma" value="true">
-                                                        <input type="hidden" name="responsableEquipo" value={{$item->id}}>
+                                                        <input type="hidden" name="responsableEquipo"
+                                                            value={{ $item->id }}>
 
-                                                        @if ($item->estadoId == 3)
-                                                            <button class="btnSinFondo" type="submit">
-                                                                <i class="fas fa-print" style="color: black; font-size: x-large;"></i>
-                                                            </button>
-                                                        @endif
+                                                        <button class="btnSinFondo" type="submit">
+                                                            <i class="fas fa-print"
+                                                                style="color: black; font-size: x-large;"></i>
+                                                        </button>
                                                     @endcan
                                                 </form>
 
-                                                <form id="printForm" action="{{ route('documentoSelladoMantenimiento.index') }}" method="GET" style="display: inline-block;">
+                                                <form id="printForm"
+                                                    action="{{ route('documentoSelladoMantenimiento.index') }}"
+                                                    method="GET" style="display: inline-block;">
                                                     @can('mantenimientoPrintCostos_show')
                                                         <input type="hidden" name="mecanico" value="false">
-                                                        <input type="hidden" name="id" value={{$item->id}}>
+                                                        <input type="hidden" name="id" value={{ $item->id }}>
 
                                                         @if ($item->estadoId == 3)
                                                             <button class="btnSinFondo" type="submit">
-                                                                <i class="fas fa-solid fa-file-signature" style="{{ $item->documentoSellado == 1 ? 'color: green; font-size: x-large;' : 'color: red; font-size: x-large;' }}"
-                                                                ></i>
+                                                                <i class="fas fa-solid fa-file-signature"
+                                                                    style="{{ $item->documentoSellado == 1 ? 'color: green; font-size: x-large;' : 'color: red; font-size: x-large;' }}"></i>
                                                             </button>
                                                         @endif
                                                     @endcan
@@ -189,8 +194,8 @@
                                                 @can('mantenimiento_edit')
                                                     <a href="{{ url('/mantenimientos/editar/' . $item->id) }}"
                                                         title="Editar el mantenimiento" class="">
-                                                        <svg xmlns="http://www.w3.org/2000/svg " width="28" height="28"
-                                                            fill="currentColor" title="Editar"
+                                                        <svg xmlns="http://www.w3.org/2000/svg " width="28"
+                                                            height="28" fill="currentColor" title="Editar"
                                                             class="bi bi-pencil accionesIconos mb-2" viewBox="0 0 16 16">
                                                             <path
                                                                 d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
