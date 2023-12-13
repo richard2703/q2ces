@@ -2478,7 +2478,7 @@
                 },
                 eventClick: function(informacion) {
                     let permissionName = 'calendarioPrincipal_show';
-                    fetch(`/check-permission/${permissionName}`)
+                    fetch(`/check-permission-calendarioPrincipal/${permissionName}`)
                     .then(response => response.json())
                     .then(data => {
                         console.log('Vista Manteniemiento', data);
