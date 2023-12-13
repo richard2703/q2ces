@@ -52,7 +52,7 @@
                                         <div class="col-12" id="elementos">
                                             <div class="d-flex">
                                                 <div class="col-12 divBorder">
-                                                    <h2 class="tituloEncabezado ">Equipo: {{$mantenimiento->maquinaria}}, Folio: {{str_pad($id, 5, '0', STR_PAD_LEFT)}}</h2>
+                                                    <h2 class="tituloEncabezado ">Equipo: {{$mantenimiento->maquinaria}}, Folio: {{str_pad($id, 4, '0', STR_PAD_LEFT)}}</h2>
                                                 </div>
                                             </div>
 

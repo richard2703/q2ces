@@ -299,16 +299,16 @@
                                             <label for="prioridad" class="labelTitulo">Prioridad: * </label>
                                         <select name="prioridad" readonly id="prioridadEditSolicitud" required class="form-select">
                                             <option value="">Seleccione</option>
-                                                <option value="Urgente" data-color="#ff0000">
+                                                <option value="Urgente">
                                                     Urgente
                                                 </option>
-                                                <option value="Necesaria" data-color="#ffa500">
+                                                <option value="Necesaria">
                                                     Necesaria
                                                 </option>
-                                                <option value="Deseable" data-color="#ffff00">
+                                                <option value="Deseable">
                                                     Deseable
                                                 </option>
-                                                <option value="Prorrogable" data-color="#a6ce34">
+                                                <option value="Prorrogable">
                                                     Prorrogable
                                                 </option>
                                         </select>
@@ -444,16 +444,16 @@
                                             <label for="prioridad" class="labelTitulo">Prioridad: * </label>
                                         <select name="prioridad" readonly id="prioridadEditTarea" required class="form-select">
                                             <option value="">Seleccione</option>
-                                                <option value="Urgente" data-color="#ff0000">
+                                                <option value="Urgente">
                                                     Urgente
                                                 </option>
-                                                <option value="Necesaria" data-color="#ffa500">
+                                                <option value="Necesaria">
                                                     Necesaria
                                                 </option>
-                                                <option value="Deseable" data-color="#ffff00">
+                                                <option value="Deseable">
                                                     Deseable
                                                 </option>
-                                                <option value="Prorrogable" data-color="#a6ce34">
+                                                <option value="Prorrogable">
                                                     Prorrogable
                                                 </option>
                                         </select>
@@ -499,30 +499,29 @@
                                         <div id="colorBoxEditTarea" class="color-box w-100" style="margin-left:-0.5px"></div>
                                     </div>
 
+                                    <div class="mb-3 col-6">
+                                        <label for="fecha" class="labelTitulo">Fecha de Inicio para la tarea:</label>
+                                        <input type="date" class="inputCaja" name="fecha" id="fechaEditTarea"
+                                            aria-describedby="helpId" placeholder="Fecha" readonly>
+                                    </div>
 
-                                        <div class="mb-3 col-6">
-                                            <label for="fecha" class="labelTitulo">Fecha de Inicio para la tarea:</label>
-                                            <input type="date" class="inputCaja" name="fecha" id="fechaEditTarea"
-                                                aria-describedby="helpId" placeholder="Fecha" readonly>
-                                        </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="hora" class="labelTitulo">Hora de Inicio para la tarea:</label>
+                                        <input type="time" class="inputCaja" name="hora" id="horaEditTarea"
+                                            aria-describedby="helpId" placeholder="Fecha" readonly>
+                                    </div>
 
-                                        <div class="mb-3 col-6">
-                                            <label for="hora" class="labelTitulo">Hora de Inicio para la tarea:</label>
-                                            <input type="time" class="inputCaja" name="hora" id="horaEditTarea"
-                                                aria-describedby="helpId" placeholder="Fecha" readonly>
-                                        </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="fecha" class="labelTitulo">Fecha de Termino para la tarea:</label>
+                                        <input type="date" class="inputCaja" name="fechaSalida" id="fechaSalidaTarea"
+                                            aria-describedby="helpId" placeholder="Fecha" readonly>
+                                    </div>
 
-                                        <div class="mb-3 col-6">
-                                            <label for="fecha" class="labelTitulo">Fecha de Termino para la tarea:</label>
-                                            <input type="date" class="inputCaja" name="fechaSalida" id="fechaSalidaTarea"
-                                                aria-describedby="helpId" placeholder="Fecha" readonly>
-                                        </div>
-
-                                        <div class="mb-3 col-6">
-                                            <label for="hora" class="labelTitulo">Hora de Termino para la tarea:</label>
-                                            <input type="time" class="inputCaja" name="horaSalida" id="horaSalidaTarea"
-                                                aria-describedby="helpId" placeholder="Fecha" readonly>
-                                        </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="hora" class="labelTitulo">Hora de Termino para la tarea:</label>
+                                        <input type="time" class="inputCaja" name="horaSalida" id="horaSalidaTarea"
+                                            aria-describedby="helpId" placeholder="Fecha" readonly>
+                                    </div>
 
                                     <div class="mb-3">
                                         <label for="descripcion" class="labelTitulo">Descripción:</label>
@@ -730,7 +729,7 @@
 
                                     <div class="mb-3">
                                         <label for="color" class="labelTitulo">Color:</label>
-                                        <div id="colorBoxEditExpiranDocumentos" class="color-box w-100" style="margin-left:-0.5px; background: #8a8a8a"></div>
+                                        <div id="colorBoxEditExpiranDocumentos" class="color-box w-100" ></div>
                                     </div>
 
                                         
@@ -837,7 +836,7 @@
 
                                     <div class="mb-3">
                                         <label for="color" class="labelTitulo">Color:</label>
-                                        <div id="colorBoxEditExpiranDocumentos" class="color-box w-100" style="margin-left:-0.5px; background: #a6ce34"></div>
+                                        <div id="colorBoxEditDiaFeriado" class="color-box w-100"></div>
                                     </div>
 
                                     <div class="mb-3">
@@ -1038,16 +1037,16 @@
                                         <label for="prioridad" class="labelTitulo">Prioridad: *</label>
                                         <select name="prioridad" id="prioridadSelect" required class="form-select">
                                             <option value="">Seleccione</option>
-                                                <option value="Urgente" data-color="#ff0000">
+                                                <option value="Urgente">
                                                     Urgente
                                                 </option>
-                                                <option value="Necesaria" data-color="#ffa500">
+                                                <option value="Necesaria">
                                                     Necesaria
                                                 </option>
-                                                <option value="Deseable" data-color="#ffff00">
+                                                <option value="Deseable">
                                                     Deseable
                                                 </option>
-                                                <option value="Prorrogable" data-color="#a6ce34">
+                                                <option value="Prorrogable">
                                                     Prorrogable
                                                 </option>
                                         </select>
@@ -1059,10 +1058,14 @@
                                             <option value="1" selected>En Espera</option>
                                         </select>
                                     </div>
-
+                                    @foreach($eventosCalendarioTipos as $evento)
+                                        @if($evento['tipoEvento'] === 'actividades')
+                                            @php $color = $evento['color']; @endphp
+                                        @endif
+                                    @endforeach
                                     <div class="mb-3">
                                         <label for="color" class="labelTitulo">Color:</label>
-                                        <div id="colorBoxTarea" class="color-box w-100" style="margin-left:-0.5px"></div>
+                                        <div id="colorBoxTarea" class="color-box w-100" style="margin-left:-0.5px; background-color: {{ $color ?? '#FFFFFF' }}"></div>
                                     </div>
                                     <div class="mb-3 col-6">
                                         <label for="fecha" class="labelTitulo">Fecha de Inicio Para la Tarea:</label>
@@ -1156,16 +1159,16 @@
                                         <label for="prioridad" class="labelTitulo">Prioridad: *</label>
                                         <select name="prioridad" id="prioridadSelectSolicitud" required class="form-select">
                                             <option value="">Seleccione</option>
-                                                <option value="Urgente" data-color="#ff0000">
+                                                <option value="Urgente">
                                                     Urgente
                                                 </option>
-                                                <option value="Necesaria" data-color="#ffa500">
+                                                <option value="Necesaria">
                                                     Necesaria
                                                 </option>
-                                                <option value="Deseable" data-color="#ffff00">
+                                                <option value="Deseable">
                                                     Deseable
                                                 </option>
-                                                <option value="Prorrogable" data-color="#a6ce34">
+                                                <option value="Prorrogable">
                                                     Prorrogable
                                                 </option>
                                         </select>
@@ -1201,9 +1204,15 @@
                                         </select>
                                     </div>
 
+                                    @foreach($eventosCalendarioTipos as $evento)
+                                        @if($evento['tipoEvento'] === 'solicitud')
+                                            @php $colorSolicitud = $evento['color']; @endphp
+                                        @endif
+                                    @endforeach
+
                                     <div class="mb-3">
                                         <label for="color" class="labelTitulo">Color:</label>
-                                        <div id="colorBoxSolicitud" class="color-box w-100" style="margin-left:-0.5px"></div>
+                                        <div id="colorBoxSolicitud" class="color-box w-100" style="margin-left:-0.5px; background-color: {{ $colorSolicitud ?? '#FFFFFF' }}"></div>
                                     </div>
                                     <div class="mb-3 col-6">
                                         <label for="fecha" class="labelTitulo">Fecha de Inicio del Requerimiento:</label>
@@ -1429,9 +1438,16 @@
                                             placeholder="Título de Evento Importante..." title="Escriba El Título del Evento Importante.">
                                     </div>
 
+                                    @foreach($eventosCalendarioTipos as $evento)
+                                        @if($evento['tipoEvento'] === 'EventoImportante')
+                                            @php $colorEventoImportante = $evento['color']; @endphp
+                                        @endif
+                                    @endforeach
+
                                     <div class="mb-3">
                                         <label for="color" class="labelTitulo">Color:</label>
-                                        <div id="colorBoxEventoImportante" class="color-box w-100" style="margin-left:-0.5px; background: #8a8a8a"></div>
+                                        
+                                        <div id="colorBoxEventoImportante" class="color-box w-100" style="margin-left:-0.5px; background-color: {{ $colorEventoImportante ?? '#FFFFFF' }}"></div>
                                     </div>
                                     <div class="mb-3 col-6">
                                         <label for="fecha" class="labelTitulo">Fecha Inicio:</label>
@@ -3377,7 +3393,6 @@
             document.getElementById('descripcionEditDiaFeriado').value = evento._def.extendedProps.descripcion;
             document.getElementById("colorBoxEditDiaFeriado").style.backgroundColor = evento._def.ui.backgroundColor;
             
-
             //document.getElementById('searchSEdit').value =  'Equipo ' . nombre . ', Marca ' . marca . ', N. ECO. ' . numeconomico . ', Placas ' .  placas;
             document.getElementById('idDiaFeriadoModal').value = evento._def.publicId;
             // document.getElementById('editarCampos').id =  "editarCampos" + evento._def.publicId;

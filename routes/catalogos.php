@@ -39,7 +39,7 @@ Route::prefix('catalogos')->middleware('auth')->group(function () {
 	Route::get('/proveedores', [App\Http\Controllers\catalogosController::class, 'indexCatalogoProveedor'])->name('catalogoProveedor.index');
 	Route::resource('proveedor', App\Http\Controllers\proveedorController::class);
 
-    Route::get('/proveedor/descarga/{id}/{doc}', [App\Http\Controllers\proveedorController::class, 'download'])->name('proveedor.download');
+	Route::get('/proveedor/descarga/{id}/{doc}', [App\Http\Controllers\proveedorController::class, 'download'])->name('proveedor.download');
 
 	Route::get('/catalogos/proveedores/categorias', [App\Http\Controllers\catalogosController::class, 'indexCatalogoProveedorCategoria'])->name('catalogoProveedorCategoria.index');
 	Route::get('/proveedores/categorias/nuevo', [App\Http\Controllers\proveedorCategoriaController::class, 'create'])->name('proveedorCategoria.create');
@@ -87,9 +87,12 @@ Route::prefix('catalogos')->middleware('auth')->group(function () {
 	Route::get('/catalogos/tiposMantenimiento', [App\Http\Controllers\catalogosController::class, 'indexCatalogoTiposMantenimiento'])->name('catalogoTiposMantenimiento.index');
 	Route::resource('tipoMantenimiento', App\Http\Controllers\tipoMantenimientoController::class);
 
+	// Crud Catalogo de Eventos en el calendario
+	Route::get('/catalogos/eventosCalendarioTipos', [App\Http\Controllers\catalogosController::class, 'indexCatalogoEventosCalendarioTipos'])->name('catalogoEventosCalendarioTipos.index');
+	Route::resource('eventosCalendarioTipos', App\Http\Controllers\eventosCalendarioTiposController::class);
+
 
 	//Caja Chica y Servicios
-
 	Route::get('/catalogos/conceptos', [App\Http\Controllers\catalogosController::class, 'indexCatalogoConceptos'])->name('catalogoConceptos.index');
 	Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
 

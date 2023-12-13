@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\comprobante;
 use App\Models\conceptos;
+use App\Models\eventosCalendarioTipos;
 use App\Models\frecuenciaEjecucion;
 use App\Models\manoDeObra;
 use Illuminate\Http\Request;
@@ -167,6 +168,15 @@ class catalogosController extends Controller
         $records = tipoMantenimiento::orderBy('nombre', 'asc')->paginate(10);
         // dd( $records );
         return view('catalogos.mantenimientoTipos', compact('records'));
+    }
+
+    public function indexCatalogoEventosCalendarioTipos()
+    {
+        abort_if(Gate::denies('catalogos_index'), 403);
+
+        $records = eventosCalendarioTipos::orderBy('nombre', 'asc')->paginate(10);
+        // dd( $records );
+        return view('catalogos.eventosCalendarioTipos', compact('records'));
     }
 
     public function indexCatalogoTipoRefaccion()

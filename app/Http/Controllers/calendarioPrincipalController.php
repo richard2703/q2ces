@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\calendarioPrincipal;
 use App\Http\Controllers\Controller;
+use App\Models\eventosCalendarioTipos;
 use App\Models\inventario;
 use App\Models\mantenimientos;
 use App\Models\marca;
@@ -69,10 +70,11 @@ class calendarioPrincipalController extends Controller
             )
             ->get();
         $eventosJson = $eventos->toJson();
-
+        $solicitudDetalle = solicitudDetalle::all();
+        $eventosCalendarioTipos = eventosCalendarioTipos::all();
         // $solicitudDetalle = solicitudDetalle::where($maquinaria->id)->get();
-        // dd($eventos, $eventosJson);
-        return view('calendarioPrincipal/calendarioPrincipal', compact('eventosJson', 'tiposMantenimiento', 'marca', 'personal', 'herramientas', 'refacciones'));
+        // dd($eventos, $eventosCalendarioTipos);
+        return view('calendarioPrincipal/calendarioPrincipal', compact('eventosJson', 'tiposMantenimiento', 'marca', 'personal', 'herramientas', 'refacciones', 'eventosCalendarioTipos'));
     }
 
     /**
@@ -209,13 +211,13 @@ class calendarioPrincipalController extends Controller
     public function generarDiasFeriados(Request $request)
     {
         $data = $request->input('days'); // Obtiene los datos enviados desde JavaScript
-
+        $eventosCalendarioTipos = eventosCalendarioTipos::where('tipoEvento', 'DiaFeriado')->first();
         foreach ($data as $dia) {
             $eventoCalendario = new calendarioPrincipal();
             $eventoCalendario->title = 'Feriado: ' . $dia['name']; // Accede a 'name' dentro de cada día
             $eventoCalendario->start = strtoupper($dia['date']); // Accede a 'date' dentro de cada día
             $eventoCalendario->descripcion = 'Este día es festivo porque es: ' . $dia['name']; // Accede a 'name' dentro de cada día
-            $eventoCalendario->color = '#a6ce34';
+            $eventoCalendario->color = $eventosCalendarioTipos['color'];
             $eventoCalendario->tipoEvento = 'DiaFeriado';
             $eventoCalendario->estadoId = 3;
             $eventoCalendario->userId = 1;

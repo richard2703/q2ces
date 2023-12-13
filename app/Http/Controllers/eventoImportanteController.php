@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\calendarioPrincipal;
 use App\Models\eventoImportante;
+use App\Models\eventosCalendarioTipos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
@@ -21,6 +22,7 @@ class eventoImportanteController extends Controller
         $actividad['comentario'] = $actividad['descripcion'];
         $nuevoactividad = eventoImportante::create($actividad);
         // dd("NO");
+        $eventosCalendarioTipos = eventosCalendarioTipos::where('tipoEvento', 'EventoImportante')->first();
         $eventoCalendario = new calendarioPrincipal();
         $eventoCalendario->eventoImportanteId = $nuevoactividad->id;
         $eventoCalendario->title = $actividad['title'];
@@ -28,7 +30,7 @@ class eventoImportanteController extends Controller
         $eventoCalendario->start = strtoupper($actividad['fechaEventoImportante'] . ' ' . $actividad['horaEventoImportante']);
         $eventoCalendario->userId = $actividad['userId'];
         $eventoCalendario->descripcion = $actividad['descripcion'];
-        $eventoCalendario->color = $actividad['color'];
+        $eventoCalendario->color = $eventosCalendarioTipos['color'];
         $eventoCalendario->estadoId = 1;
         $eventoCalendario->tipoEvento = 'EventoImportante';
         // dd($eventoCalendario);
