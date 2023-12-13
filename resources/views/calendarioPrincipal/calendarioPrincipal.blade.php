@@ -26,6 +26,7 @@
                     <option value="DiaFeriado">Días Feriados</option>
                     <option value="actividades">Actividades</option>
                     <option value="solicitud">Solicitudes</option>
+                    <option value="cumple">Cumpleaños</option>
                 </select>
             </div>
             <div class="col-4">
@@ -849,6 +850,122 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <div id="contenedorBotonGuardarExpiranDocumentos" style="display:none">
+
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="myModalEditCumpleaños" tabindex="-1" aria-labelledby="modalTitleCumpleañosId"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bacTituloPrincipal">
+                            <h5 class="modal-title fs-5" id="modalTitleId">&nbsp <span id="tituloModalCumpleaños">Cumpleaños
+                            </h5>
+                            <button type="button" class="btn-close align-self-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <form method="post">
+                                    @csrf
+                                    @method('put')
+                                    <!-- <div class="mb-3">
+                                        <label for="id" class="form-label">ID:</label>
+                                        <input type="text"
+                                        class="form-control" name="id" id="id" aria-describedby="helpId" placeholder="ID">
+                                    </div> -->
+                                    <input type="hidden" name="id" value="" id="idCumpleañosModal">
+                                    <input type="hidden" id="colorBoxHiddenEditCumpleaños" name="color" value="">
+
+                                    <div class="row">
+                                        <input type="hidden" id="colorBoxHiddenCumpleañosEdit" name="color" value="">
+
+                                        <div class="col-12 mb-3">
+                                            <label for="title" class="labelTitulo">Título:</label>
+                                            <input autofocus type="text" class="inputCaja" name="title" id="titleEditCumpleaños"
+                                                placeholder="Título de Cumpleaños..." title="Escriba El Título de la Cumpleaños." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-12">
+                                            <label for="fecha" class="labelTitulo">Fecha de Cumpleaños:</label>
+                                            <input type="date" class="inputCaja" name="fecha" id="fechaEditCumpleaños"
+                                                aria-describedby="helpId" placeholder="Fecha" readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-12" style="display: none" id="nombreUsuarioEditCumpleañosHidden">
+                                            <label for="title" class="labelTitulo">Nombre Usuario:</label>
+                                            <input autofocus type="text" class="inputCaja" id="nombreUsuarioEditCumpleaños"
+                                                name="personalNombre" placeholder="Nombre Usuario..." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6" style="display: none" id="emailEditCumpleañosHidden">
+                                            <label for="title" class="labelTitulo">Email:</label>
+                                            <input autofocus type="text" class="inputCaja" id="emailEditCumpleaños"
+                                                placeholder="Email Usuario..." readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6" style="display: none" id="celularEditCumpleañosHidden">
+                                            <label for="title" class="labelTitulo">Telefono:</label>
+                                            <input autofocus type="text" class="inputCaja" id="celularEditCumpleaños"
+                                                placeholder="Telefono Usuario..." readonly>
+                                        </div>
+
+                                        {{--  <div class="col-1 mt-4">
+                                            @can('calendarioPrincipal_edit')
+                                                <div id="editarCamposCumpleaños">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                                                        fill="currentColor" class="bi bi-pencil accionesIconos"
+                                                        viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                    </svg>
+                                                </div>
+                                            @endcan
+                                        </div>  --}}
+                                    </div>
+
+                                    <div class="row">
+
+                                    <div class="mb-3">
+                                        <label for="color" class="labelTitulo">Color:</label>
+                                        <div id="colorBoxEditCumpleaños" class="color-box w-100" ></div>
+                                    </div>
+
+                                        
+
+                                        <div class="mb-3 col-6" style="display: none">
+                                            <label for="hora" class="labelTitulo">Hora Inicio:</label>
+                                            <input type="time" class="inputCaja" name="hora" id="horaEditCumpleaños"
+                                                aria-describedby="helpId" placeholder="Fecha" readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-12" style="display: none">
+                                            <label for="fecha" class="labelTitulo">Fecha Termino:</label>
+                                            <input type="date" class="inputCaja" name="fechaSalida" id="fechaSalidaCumpleaños"
+                                                aria-describedby="helpId" placeholder="Fecha" readonly>
+                                        </div>
+
+                                        <div class="mb-3 col-6" style="display: none">
+                                            <label for="hora" class="labelTitulo">Hora Termino:</label>
+                                            <input type="time" class="inputCaja" name="horaSalida" id="horaSalidaCumpleaños"
+                                                aria-describedby="helpId" placeholder="Fecha" readonl y>
+                                        </div>
+
+                                    <div class="mb-3">
+                                        <label for="descripcion" class="labelTitulo">Descripción:</label>
+                                        <textarea class="form-control-textarea border-green" name="descripcion" id="descripcionEditCumpleaños" rows="3"
+                                            placeholder="Especifique..." readonly></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <div id="contenedorBotonGuardarCumpleaños" style="display:none">
 
                             </div>
                         </div>
@@ -2279,6 +2396,10 @@
                 keyboard: false
             });
 
+            let myModalEditCumpleaños = new bootstrap.Modal(document.getElementById('myModalEditCumpleaños'), {
+                keyboard: false
+            });
+
             var calendarEl = document.getElementById('calendar');
             var eventosJson = {!! $eventosJson !!};
             // Agregar la clase single-day-event a los eventos con la misma fecha (ignorando la hora)
@@ -2301,7 +2422,7 @@
                     // };
 
                 //}
-                if(evento.tipoEvento == 'DiaFeriado'){
+                if(evento.tipoEvento == 'DiaFeriado' || evento.tipoEvento == 'cumple'){
                     evento.allDay = true
                 }
             }
@@ -2383,6 +2504,9 @@
                             else if(informacion.event._def.extendedProps.tipoEvento == 'DiaFeriado'){
                                 myModalEditDiaFeriado.show();
                                 recuperarDatosEventoDiaFeriado(informacion.event);
+                            } else{
+                                myModalEditCumpleaños.show();
+                                recuperarDatosEventoCumpleaños(informacion.event);
                             }
 
                         } else {
@@ -3386,7 +3510,6 @@
             document.getElementById('idExpiranDocumentosModal').value = evento._def.publicId;
             // document.getElementById('editarCampos').id =  "editarCampos" + evento._def.publicId;
         }
-
         
         function recuperarDatosEventoDiaFeriado(evento) {
             let fecha = evento._instance.range.start;
@@ -3455,6 +3578,123 @@
             document.getElementById('idDiaFeriadoModal').value = evento._def.publicId;
             // document.getElementById('editarCampos').id =  "editarCampos" + evento._def.publicId;
         }
+
+        function recuperarDatosEventoCumpleaños(evento) {
+            console.log('info Modal', evento);
+
+            let fecha = evento._instance.range.start;
+            let fechaObj = new Date(fecha);
+            let fechaFormateada = fechaObj.toISOString().split("T")[0];
+            let horaFormateada = fechaObj.toLocaleTimeString("es-MX", {
+                hour12: false
+            });
+            let stringFecha = fechaFormateada + ' ' + horaFormateada;
+            // Convertir al objeto DateTime con formato personalizado
+            var startObj = luxon.DateTime.fromFormat(stringFecha, "yyyy-MM-dd HH:mm:ss");
+
+            // Restar 6 horas
+            var start6Hours = startObj.plus({
+                hours: 6
+            });
+
+            // Obtener la hora local de México
+            var startLocal = start6Hours.setZone("America/Mexico_City").toLocal();
+            var formattedTime = startLocal.toFormat("HH:mm:ss");
+            // var horaModal = startLocal.c.
+            console.log('start', startLocal);
+            console.log('fechaObj', fechaObj);
+            //fechaEdit = evento._def.extendedProps.fecha;
+            let fechaEdit = evento._instance.range.end;
+            let fechaEditObj = new Date(fechaEdit);
+            console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', fechaEditObj.toISOString().split("T")[0]);
+            let fechaEditFormateada = fechaEditObj.toISOString().split("T")[0];
+            let horaEditFormateada = fechaEditObj.toLocaleTimeString("es-MX", {
+                hour12: false
+            });
+            let stringFechaEdit = fechaEditFormateada + ' ' + horaEditFormateada;
+            // Convertir al objeto DateTime con formato personalizado
+            var startObjEdit = luxon.DateTime.fromFormat(stringFechaEdit, "yyyy-MM-dd HH:mm:ss");
+
+            // Restar 6 horas
+            var start6HoursEdit = startObjEdit.plus({
+                hours: 6
+            });
+
+            // Obtener la hora local de México
+            var startLocalEdit = start6HoursEdit.setZone("America/Mexico_City").toLocal();
+            var formattedTimeEdit = startLocalEdit.toFormat("HH:mm:ss");
+            console.log('fechaSalida', evento);
+
+            document.getElementById('fechaEditCumpleaños').value = fechaFormateada;            
+            document.getElementById('horaEditCumpleaños').value = formattedTime;
+            
+            // if(fechaSalida)
+            if(evento._def.hasEnd){
+                console.log('FEHCASSSSSS EDITADA');
+                console.log('fechaEditFormateada',fechaEditFormateada);
+                console.log('fechaEditFormateada',formattedTimeEdit);
+                document.getElementById('fechaSalidaCumpleaños').value = fechaEditFormateada;
+                document.getElementById('horaSalidaCumpleaños').value = formattedTimeEdit;
+            }else{
+                console.log('FEHCASSSSSS NO EDITADA');
+            }
+
+            //fechaEdit = evento._def.extendedProps.fecha;
+            console.log('evento._def.extendedProps.title', evento._def.title);
+            document.getElementById('titleEditCumpleaños').value = evento._def.title;
+            document.getElementById("colorBoxEditCumpleaños").style.backgroundColor = evento._def.ui.backgroundColor;
+            document.getElementById('descripcionEditCumpleaños').value = evento._def.extendedProps.descripcion;
+
+            let nombre = evento._def.extendedProps.nombre;
+            let numeconomico = evento._def.extendedProps.numeconomico;
+            let placas = evento._def.extendedProps.placas;
+
+            let nombrePersonal = evento._def.extendedProps.personalNombre + evento._def.extendedProps.personalApellidoP;
+            let email = evento._def.extendedProps.email;
+            let celular = evento._def.extendedProps.celular;
+
+            console.log('marca',marca);
+            console.log('nombre',nombre);
+            console.log('numeconomico',numeconomico);
+            console.log('placas',placas);
+            console.log('evento', evento);
+
+            if(evento._def.extendedProps.maquinariaId != null){
+                var enlace = document.getElementById('linkCumpleaños');
+                enlace.innerHTML = evento._def.extendedProps.nombre;
+                enlace.href =  'maquinaria/' + evento._def.extendedProps.maquinariaId;
+                document.getElementById('nombreEditCumpleañosHidden').style.display = 'block';
+                document.getElementById('numeconomicoEditCumpleañosHidden').style.display = 'block';
+                document.getElementById('placasEditCumpleañosHidden').style.display = 'block';
+                document.getElementById('nombreUsuarioEditCumpleañosHidden').style.display = 'none';
+                document.getElementById('emailEditCumpleañosHidden').style.display = 'none';
+                document.getElementById('celularEditCumpleañosHidden').style.display = 'none';
+            }
+            if(evento._def.extendedProps.personalId != null){
+                var enlace = document.getElementById('linkCumpleaños');
+                enlace.innerHTML = nombrePersonal;
+                enlace.href = 'personal/' + evento._def.extendedProps.personalId;
+                document.getElementById('nombreEditCumpleañosHidden').style.display = 'none';
+                document.getElementById('numeconomicoEditCumpleañosHidden').style.display = 'none';
+                document.getElementById('placasEditCumpleañosHidden').style.display = 'none';
+                document.getElementById('nombreUsuarioEditCumpleañosHidden').style.display = 'block';
+                document.getElementById('emailEditCumpleañosHidden').style.display = 'block';
+                document.getElementById('celularEditCumpleañosHidden').style.display = 'block';
+            }
+
+            document.getElementById('nombreEditCumpleaños').value = nombre;
+            document.getElementById('numeconomicoEditCumpleaños').value = numeconomico;
+            document.getElementById('placasEditCumpleaños').value = placas;
+
+            document.getElementById('nombreUsuarioEditCumpleaños').value = nombrePersonal;
+            document.getElementById('emailEditCumpleaños').value = email;
+            document.getElementById('celularEditCumpleaños').value = celular;
+
+            //document.getElementById('searchSEdit').value =  'Equipo ' . nombre . ', Marca ' . marca . ', N. ECO. ' . numeconomico . ', Placas ' .  placas;
+            document.getElementById('idCumpleañosModal').value = evento._def.publicId;
+            // document.getElementById('editarCampos').id =  "editarCampos" + evento._def.publicId;
+        }
+
         /*<div id="reparacion_campos" class="campos-solicitud" style="display: none;">
             <div class="row">
                 <div class="col-12 pb-3 text-end">

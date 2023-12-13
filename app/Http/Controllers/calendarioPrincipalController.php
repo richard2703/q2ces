@@ -11,6 +11,7 @@ use App\Models\marca;
 use App\Models\personal;
 use App\Models\solicitudDetalle;
 use App\Models\tipoMantenimiento;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
@@ -72,6 +73,10 @@ class calendarioPrincipalController extends Controller
         $eventosJson = $eventos->toJson();
         $solicitudDetalle = solicitudDetalle::all();
         $eventosCalendarioTipos = eventosCalendarioTipos::all();
+
+        // Resto de tu lógica...
+
+
         // $solicitudDetalle = solicitudDetalle::where($maquinaria->id)->get();
         // dd($eventos, $eventosCalendarioTipos);
         return view('calendarioPrincipal/calendarioPrincipal', compact('eventosJson', 'tiposMantenimiento', 'marca', 'personal', 'herramientas', 'refacciones', 'eventosCalendarioTipos'));
