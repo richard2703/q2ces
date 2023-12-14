@@ -690,11 +690,6 @@
   display: inline-flex;
 }
 
-.titleImpresion{
-  background-color: var(--select);
-  color: #fff;
-}
-
 
 button.regresar:hover{
   background-color: whitesmoke !important;

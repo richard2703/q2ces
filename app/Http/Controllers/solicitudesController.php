@@ -12,6 +12,7 @@ use App\Models\inventario;
 use App\Helpers\Validaciones;
 use App\Helpers\Calculos;
 use App\Models\calendarioPrincipal;
+use App\Models\eventosCalendarioTipos;
 use App\Models\solicitudDetalle;
 use Illuminate\Support\Facades\Gate;
 
@@ -118,6 +119,7 @@ class solicitudesController extends Controller
             $nuevaSolicitudDetalle->save();
         }
         // dd($solicitud, $tipoComentario, $nuevaSolicitudDetalle);
+        $eventosCalendarioTipos = eventosCalendarioTipos::where('tipoEvento', 'solicitud')->first();
         $eventoCalendario = new calendarioPrincipal();
         $eventoCalendario->solicitudesId = $nuevaSolicitud->id;
         $eventoCalendario->title = $solicitud['title'];
@@ -128,7 +130,7 @@ class solicitudesController extends Controller
         $eventoCalendario->maquinariaId = $solicitud['maquinariaId'];
         $eventoCalendario->descripcion = $solicitud['descripcion'];
         $eventoCalendario->estatus = $solicitud['tipo'];
-        $eventoCalendario->color = $solicitud['color'];
+        $eventoCalendario->color = $eventosCalendarioTipos['color'];
         $eventoCalendario->prioridad = $solicitud['prioridad'];
         $eventoCalendario->tipoEvento = 'solicitud';
         $eventoCalendario->save();

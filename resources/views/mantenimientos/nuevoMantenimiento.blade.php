@@ -51,7 +51,7 @@
                                                 <input autofocus type="text" class="text" id="searchMtq" name="searchMtq"
                                                     placeholder="Buscar..."
                                                     title="Escriba la(s) palabra(s) a buscar."><input type="button"
-                                                    onclick="clearInput('search')" class="btn botonGral" value="Borrar">
+                                                    onclick="clearInput('searchMtq')" class="btn botonGral" value="Borrar">
                                             @else
                                                 <input autofocus type="text" class="text" id="search" name="search"
                                                     placeholder="Buscar..."
@@ -130,6 +130,7 @@
 
     <script>
         function clearInput(controlId) {
+            console.log(controlId);
             var getValue = document.getElementById(controlId);
             if (getValue.value != "") {
                 getValue.value = "";
@@ -137,7 +138,7 @@
             }
         }
 
-        var curso = ['html', 'hola', 'hi'];
+        // var curso = ['html', 'hola', 'hi'];
 
         $('#search').autocomplete({
 

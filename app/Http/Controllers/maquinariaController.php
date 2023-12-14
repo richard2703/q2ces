@@ -14,6 +14,7 @@ use App\Models\obras;
 use App\Models\personal;
 use App\Models\marca;
 use App\Models\docs;
+use App\Models\eventosCalendarioTipos;
 use App\Models\maquinariaEstatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -324,13 +325,14 @@ class maquinariaController extends Controller
                         // Evaluar fecha de vencimiento
                         $documento->estatus = '1';
                         //Si es 1 Esta proximo a vencer
+                        $eventosCalendarioTipos = eventosCalendarioTipos::where('tipoEvento', 'ExpiranDocumentos')->first();
                         $eventoCalendario = new calendarioPrincipal();
                         $eventoCalendario->maquinariaId = $documento->maquinariaId;
                         $eventoCalendario->title = 'Expira documento: ' . $request->archivo[$i]['tipoDocsNombre'];
                         $eventoCalendario->end = strtoupper($request->archivo[$i]['fecha'] . ' ' . '23:00:00');
                         $eventoCalendario->start = strtoupper($request->archivo[$i]['fecha'] . ' ' . '01:00:00');
                         $eventoCalendario->descripcion = 'Expiración del Documento: ' . $request->archivo[$i]['tipoDocsNombre'] . ' Perteneciente al Equipo: ' . $maquinaria->nombre . ', con Placas: ' . $maquinaria->placas . ', y N/Económico: ' . $maquinaria->identificador;
-                        $eventoCalendario->color = '#f70202';
+                        $eventoCalendario->color = $eventosCalendarioTipos['color'];
                         $eventoCalendario->tipoEvento = 'ExpiranDocumentos';
                         $eventoCalendario->userId = $maquinaria['userId'];
                         $eventoCalendario->estadoId = 3;
@@ -742,13 +744,14 @@ class maquinariaController extends Controller
                             $documento['fechaVencimiento'] = $request->archivo[$i]['fecha'];
                             // Evaluar fecha de vencimiento
                             if ($request->archivo[$i]['modificacionDocs'] == 1) {
+                                $eventosCalendarioTipos = eventosCalendarioTipos::where('tipoEvento', 'ExpiranDocumentos')->first();
                                 $eventoCalendario = new calendarioPrincipal();
                                 $eventoCalendario->maquinariaId = $maquinaria->id;
                                 $eventoCalendario->title = 'Expira Documento: ' . $request->archivo[$i]['tipoDocsNombre'];
                                 $eventoCalendario->end = strtoupper($documento['fechaVencimiento'] . ' ' . '23:00:00');
                                 $eventoCalendario->start = strtoupper($documento['fechaVencimiento'] . ' ' . '01:00:00');
                                 $eventoCalendario->descripcion = 'Expiración del Documento: ' . $request->archivo[$i]['tipoDocsNombre'] . ' Perteneciente al Equipo: ' . $maquinaria->nombre . ', con Placas: ' . $maquinaria->placas . ', y N/Económico: ' . $maquinaria->identificador;
-                                $eventoCalendario->color = '#f70202';
+                                $eventoCalendario->color = $eventosCalendarioTipos['color'];
                                 $eventoCalendario->tipoEvento = 'ExpiranDocumentos';
                                 $eventoCalendario->userId = $data['userId'];
                                 $eventoCalendario->estadoId = 3;

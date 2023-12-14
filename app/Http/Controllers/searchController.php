@@ -132,7 +132,7 @@ class searchController extends Controller
          foreach ($maquinaria as $item) {
              if ($item->compania == null) {
                  $sugerencias[] = [
-                     'value' =>   ' Equipo ' . $item->identificador . ' - ' .  $item->nombre . ', Marca ' . $item->marca . ', Modelo ' . $item->modelo  . ', NS ' .  $item->numserie . ', Placas ' .  $item->placas,
+                     'value' =>   ' Equipo ' . $item->identificador . ' - ' .  $item->nombre . ', Marca ' . $item->marca . ', Modelo ' . $item->modelo  . ', NS ' .  $item->numserie . ', Placas ' .  $item->placas . ', Uso ' . $item->kilometraje . ' '. $item->kom ,
                      'id' => $item->id,
                      'nombre' => $item->nombre,
                      'identificador' => $item->identificador,
@@ -142,6 +142,8 @@ class searchController extends Controller
                      'modelo' => $item->modelo,
                      'categoria' => $item->categoria,
                      'compania' => $item->compania,
+                     'kom' => $item->kom,
+                     'kilometraje' => $item->kilometraje,
                  ];
              }
          }
@@ -308,7 +310,7 @@ class searchController extends Controller
         foreach ($maquinaria as $item) {
 
             $sugerencias[] = [
-                'value' =>  'Equipo ' . $item->nombre . ', Marca ' . $item->marcaId . ', Modelo ' . $item->modelo  . ', N.E. ' .  $item->identificador . ', Placas ' .  $item->placas,
+                'value' =>  'Equipo ' . $item->nombre . ', Marca ' . $item->marcaId . ', Modelo ' . $item->modelo  . ', N.E. ' .  $item->identificador . ', Placas ' .  $item->placas . ', Uso ' . $item->kilometraje . ' '. $item->kom ,
                 'id' => $item->id,
                 'nombre' => $item->nombre,
                 'marca' => $item->marcaId,
@@ -318,6 +320,7 @@ class searchController extends Controller
                 'identificador' => $item->identificador,
                 'kilometraje' => $item->kilometraje,
                 'compania' => $item->compania,
+                'kom' => $item->kom,
             ];
         }
 

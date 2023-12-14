@@ -55,8 +55,8 @@
                                 <img width="300px;" src="{{ asset('/img/login/Header6GenericoGrande.svg') }}" alt="" class="mb-2">
                             @endif
                             
-                            <br>
-                            <h1 class="text-center" style="font-weight: 1000;">Q2S/COMB-{{ sprintf("%03d", $carga->id) }}</h1><br>
+                             <br>
+                            <h1 class="text-center" style="font-weight: 1000;">Q2S/COMB-{{ sprintf("%03d", $carga->id) }}</h1> <br>
                             <h5 class="text-center" style="font-weight: 1000; ">FECHA DE IMPRESIÓN:</h5>
                             <div class="text-center" id="fecha-hora"></div>
                             <p class="text-center" id="hora"></p>
@@ -72,9 +72,9 @@
                             @if ($carga->tipoCisternaId != null)
                             <div class="text-center"><h5 style="font-weight: 1000;   ">EQUIPO DESPACHADO:</h5> Cisterna Tote</div>
                             @endif
-                            <br><br>
+                              
                             <div class="text-center"><h5 style="font-weight: 1000;   ">EQUIPO Y/O MAQUINARIA:</h5> {{ $carga->maquinaria_nombre }}</div>
-                            <br><br>
+                              
                             <div class="text-center"><h5 style="font-weight: 1000;   ">FECHA DE CARGA:</h5>{{ \Carbon\Carbon::parse($carga->updated_at)->format( 'Y-m-d' ) }}</div>
                             <div class="text-center"><h5 style="font-weight: 1000;   ">HORA DE CARGA:</h5>{{ substr($carga->horaLlegadaCarga, 0, 5) }}</div>
                             {{--  <div class="text-center"><h5 style="font-weight: 1000; ">HORA SALIDA:</h5>11:00 pm</div>  --}}
@@ -87,7 +87,6 @@
                             <p class="pt-5" style="margin-top: 20px; text-align: center;">
                                 ______________________________________<br>
                                 Nombre y Firma de Recibido<br>
-                                {{--  <p class="text-center">:{{$solicitante['nombreSolicitante']}}</p>  --}}
                             </p>
                             <br>
                             {{--  <img width="300px;" src="{{ asset('/img/login/Header3DescargaGrande.svg') }}" alt="" class="mb-2">  --}}
@@ -132,14 +131,20 @@
             visibility:visible !important;
         }
         
-        @page {
+        {{--  @page {
             size: 90mm 105mm; /* Tamaño ISO C7 en milímetros */
             margin-bottom: 0mm;
             margin-top: 0mm;
-        }
+        }  --}}
         body {
             margin-top: -80mm !important;
             padding: 0 !important;
+        }
+        .print-content {
+            max-height: 100vh;
+            /* Establece una altura máxima en la altura de la ventana gráfica */
+            page-break-inside: avoid;
+            /* Evita saltos de página dentro del elemento .ticket */
         }
         
     }
@@ -155,6 +160,6 @@
     #main {
     margin-top: 0px !important; */
     }
-
+    
 </style>
 @endsection

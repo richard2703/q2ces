@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\actividades;
 use App\Http\Controllers\Controller;
 use App\Models\calendarioPrincipal;
+use App\Models\eventosCalendarioTipos;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -43,6 +44,7 @@ class actividadesController extends Controller
         // dd($actividad);
         $actividad['start'] = strtoupper($actividad['fechaTarea'] . ' ' . $actividad['horaTarea']);
         $nuevoactividad = actividades::create($actividad);
+        $eventosCalendarioTipos = eventosCalendarioTipos::where('tipoEvento', 'actividades')->first();
         // dd("NO");
         $eventoCalendario = new calendarioPrincipal();
         $eventoCalendario->actividadesId = $nuevoactividad->id;
@@ -53,7 +55,7 @@ class actividadesController extends Controller
         $eventoCalendario->estadoId = $actividad['estadoId'];
         $eventoCalendario->descripcion = $actividad['descripcion'];
         $eventoCalendario->estatus = $actividad['tipo'];
-        $eventoCalendario->color = $actividad['color'];
+        $eventoCalendario->color = $eventosCalendarioTipos['color'];
         $eventoCalendario->prioridad = $actividad['prioridad'];
         $eventoCalendario->tipoEvento = 'actividades';
         // dd($eventoCalendario);

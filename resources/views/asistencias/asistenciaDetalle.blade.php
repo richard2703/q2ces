@@ -28,13 +28,14 @@ $vctDiasSemanaActual = $objCalendar->getSemanaTrabajo(date_create(date('Y-m-d'))
 if ($asistencias->isEmpty() == true) {
     $blnBloquearRegistro = true;
 } else {
-    //*** preguntamos si esta en la semana en curso para permitir el registro de horas extras ***//
-    if ($fechaSeleccionada->format('Ymd') >= $vctDiasSemanaActual[0]->format('Ymd')) {
-        //*** la fecha seleccionada es mayor o igual que el día inicial del periodo
-        $blnBloquearRegistro = false;
-    } else {
-        $blnBloquearRegistro = true;
-    }
+    $blnBloquearRegistro = $objCalendar->getEditarAsistencia($fechaSeleccionada, 3, 3);
+    // //*** preguntamos si esta en la semana en curso para permitir el registro de horas extras ***//
+    // if ($fechaSeleccionada->format('Ymd') >= $vctDiasSemanaActual[0]->format('Ymd')) {
+    //     //*** la fecha seleccionada es mayor o igual que el día inicial del periodo
+    //     $blnBloquearRegistro = false;
+    // } else {
+    //     $blnBloquearRegistro = true;
+    // }
 }
 
 // dd($asistencias, $diaAnterior, $diaSiguiente, $fechaSeleccionada, $diaSeleccionado, $dtToday, $dtTrabajar);
@@ -268,9 +269,9 @@ if ($asistencias->isEmpty() == true) {
                                                         </tr>
                                                     @empty
                                                         <tr>
-                                                            <td colspan="2">Sin registros.<br><br> <b>Es necesario
-                                                                    Registrar Primero La Asistencia Del Personal Antes De
-                                                                    Poder Realizar Las Acciones De Esta Semana.</b></td>
+                                                            <td colspan="11">Sin registros.<br><br> <b>Es Necesario
+                                                                    Registrar Primero la Asistencia del Personal Antes de
+                                                                    Poder Realizar las Acciones de Esta Semana.</b></td>
                                                         </tr>
                                                     @endforelse
                                                 </tbody>

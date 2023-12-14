@@ -20,11 +20,12 @@
                             <div class="card">
 
                                 <div class="card-header bacTituloPrincipal">
-                                    <h4 class="card-title">Detalle {{ $mantenimiento->titulo }}</h4>
+                                    <h4 class="card-title">Detalle {{ $blnEsMtq == true ? 'MTQ' : '' }}
+                                        {{ $mantenimiento->titulo }}</h4>
                                 </div>
 
                                 <div class="col-12 col-md-2 mt-4" style="margin-left:20px">
-                                    <a href="{{ route('mantenimientos.index') }}">
+                                    <a href="{{ $blnEsMtq == true ? route('mantenimientos.indexMtq') : route('mantenimientos.index') }} ">
                                         <button class="btn regresar">
                                             <span class="material-icons">
                                                 reply
@@ -286,7 +287,7 @@
                                                                                                         </div>
                                                                                                         <div
                                                                                                             class="col-2 ">
-                                                                                                             <input
+                                                                                                            <input
                                                                                                                 type="text"
                                                                                                                 readonly
                                                                                                                 class="inputCaja text-end"
@@ -300,7 +301,7 @@
                                                                                                             class="col-8">
 
                                                                                                             <textarea rows="1" cols="80" class="form-control form-select" id="descripcion" readonly
-                                                                                                                name="descripcion[]" value="">{{ $item->articulo . ', Marca: ' . $item->marca . ', Modelo: ' . $item->modelo  }} </textarea>
+                                                                                                                name="descripcion[]" value="">{{ $item->articulo . ', Marca: ' . $item->marca . ', Modelo: ' . $item->modelo }} </textarea>
                                                                                                         </div>
 
                                                                                                     </div>
@@ -637,7 +638,7 @@
 
 
                                 <div class="col-12 text-center mt-1 pt-1">
-                                    <a href="{{ route('mantenimientos.index') }}">
+                                    <a href="{{ $blnEsMtq == true ? route('mantenimientos.indexMtq') : route('mantenimientos.index') }} ">
                                         <button class="btn regresar">
                                             <span class="material-icons">
                                                 reply

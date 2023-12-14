@@ -25,8 +25,8 @@ $blnFechaSeleccionadaEsSabado = $fechaSeleccionada->format('N') == 6 ? true : fa
 $blnEnSemanaEnCurso = $objCalendar->getEnSemanaDeTrabajo($fechaSeleccionada, 3);
 //*** el dia actual en curso
 $blnEsDiaActual = $dtTrabajar == $dtToday ? true : false;
-//*** bloqueamos fecha mayor al dia actual
-$blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
+
+$blnBloquearRegistro = $objCalendar->getEditarAsistencia($fechaSeleccionada,3,3);
 
 // dd('Asistencias',$asistencias,
 // 'Dia anterior',$diaAnterior,
@@ -393,7 +393,7 @@ $blnBloquearRegistro = $dtToday >= $dtTrabajar ? false : true;
                                             </div>
 
                                             <div class="card-footer mr-auto">
-                                                <?php if($blnEnSemanaEnCurso == true && $blnBloquearRegistro == false ){  ?>
+                                                <?php if(/*$blnEnSemanaEnCurso == true &&*/ $blnBloquearRegistro == false ){  ?>
                                                 <a href="{{ route('asistencia.index') }}">
                                                     <button type="button" class="btn btn-danger">Cancelar</button>
                                                 </a>

@@ -679,7 +679,7 @@
                                                                                             data-max="{{ $numFotosPermitidas }}">
                                                                                     </span>
                                                                                     <label for="mi-archivo">
-                                                                                        <span class="">Sube Imagen
+                                                                                        <span class="">Sube 5 Imagenes o 10
                                                                                             (Puedes subir hasta
                                                                                             {{ $numFotosPermitidas }}
                                                                                             más)</span>
@@ -882,10 +882,7 @@
 
         }
 
-
-        var curso = ['html', 'hola', 'hi'];
-
-        $('#search').autocomplete({
+         $('#search').autocomplete({
 
             source: function(request, response) {
                 $.ajax({
@@ -1005,7 +1002,7 @@
             html += '      <input type="hidden" name="numeroParte[]" id="numeroParte" value="' + numparte + '">';
             html += '      <div class="col-2 ">';
             html +=
-                '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="" onchange="sumarItems()" onblur="sumarItems()">';
+                '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="1" onchange="sumarItems()" onblur="sumarItems()">';
             html += '      </div>';
             html += '      <div class="col-2 ">';
             html +=
@@ -1024,6 +1021,8 @@
             html += '</li>';
 
             $('#newRow').append(html);
+
+            sumarItems();
         }
 
 
@@ -1047,7 +1046,7 @@
             html += '      <input type="hidden" name="concepto[]" id="concepto" value="' + concepto + '">';
             html += '      <input type="hidden" name="numeroParte[]" id="numeroParte" value="' + numparte + '">';
             html += '      <div class="col-2 ">';
-            html += '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="" onchange="sumarItems()" onblur="sumarItems()" >';
+            html += '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="1" onchange="sumarItems()" onblur="sumarItems()" >';
             html += '      </div>';
             html += '      <div class="col-2 ">';
             // html +=
@@ -1069,6 +1068,8 @@
             html += '</li>';
 
             $('#newRowMano').append(html);
+
+            sumarItems();
         }
 
 

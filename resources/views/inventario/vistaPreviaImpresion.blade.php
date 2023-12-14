@@ -50,12 +50,13 @@
                                 <img width="300px;" src="{{ asset('/img/login/Header4GenericoGrande.svg') }}" alt="" class="mb-2">
                             @endif
             
-                            <h1 class="text-center" style="font-weight: 1000;">Q2S/COMB-{{ sprintf("%03d", $descarga->id) }}</h1><br>
+                            <br>
+                            <h1 class="text-center" style="font-weight: 1000;">Q2S/COMB-{{ sprintf("%03d", $descarga->id) }}</h1> <br>
                             <div class="text-center" style="font-weight: 1000; ">FECHA DE IMPRESIÓN:</div>
                             <div class="text-center" id="fecha-hora"></div>
                             <p class="text-center" id="hora"></p>
-
-                            <br>
+                            <br><br>
+                             
                             @if ($descarga->tipoCisternaId == null)
                                 
                                 <h6 class="text-center" style="font-weight: 1000; ">CLIENTE: </h6> <div style="font-size:14px;">
@@ -68,7 +69,7 @@
                                     @endif
                                 </div>
                                 
-                                <br>
+                                 
                                 <h6 class="text-center" style="font-weight: 1000; ">OBRA: </h6> <div style="font-size:14px;">
                                 @if ($obraEdit == false && $descarga->obras_nombre)
                                     {{ $descarga->obras_nombre }}
@@ -127,7 +128,7 @@
                             <h6 style="font-weight: 1000;" class="text-center">GRASA PARA AUTO: </h6> <div class="text-center" style="font-size:16px;"> @if ($descarga->grasa) 
                                 {{ $descarga->grasa }} LTS/KG </div> <div class="text-center" style="font-size:16px;"> 
                                     @if ($cliente != false) 
-                                costo: ${{ $descarga->grasaUnitario }} Total: ${{($descarga->grasa*$descarga->grasaUnitario)}} </div> <br> <br>
+                                costo: ${{ $descarga->grasaUnitario }} Total: ${{($descarga->grasa*$descarga->grasaUnitario)}} </div>    
                                 @endif
                             @else
                                 0 </div> <div class="text-center" style="font-size:14px;"> 
@@ -197,7 +198,7 @@
                                     <div class="text-center"><h6 style="font-weight: 1000; ">KILOMETRAJE ACTUAL: </h6></div>No Habia Un Kilometraje Anterior.
                                 @endif
                                 <div class="text-center"><h6 style="font-weight: 1000;  margin-top: 10px;">OBSERVACIONES: </h6>{{$solicitante['observaciones']}}</div>
-                                <br><br>
+                                  
                                 <img width="300px;" src="{{ asset('/img/login/Header3DescargaGrande.svg') }}" alt="" class="mb-2">
                                 <div class="text-center"><h6 style="font-weight: 1000;">COSTO DE COMBUSTIBLE:</h6>${{ number_format($ultimaCarga[0]->ultimoPrecio * $descarga->litros, 2) }}</div>
                                 <h6 style="font-weight: 1000; ">COSTO DE FLUIDOS: </h6> ${{number_format($totalProductos,2)}}
@@ -213,17 +214,17 @@
                                 @if ($descarga->tipoCisternaId == null)
                                 <p class="pt-5" style="margin-top: 20px; text-align: center;">
                                     ______________________________________<br>
-                                    Nombre Y Firma De Recibido<br>
-                                    <p class="text-center">:{{$solicitante['nombreSolicitante']}}</p>
+                                    Nombre y Firma de Recibido<br>
                                 </p>
+                                <br>
                                 @endif
                             @endif
                             <!--<div class="text-center"><h6 style="font-weight: 1000; ">HORA DESCARGA: </h6>{{ $descarga->horas }}</div>-->
                             @if ($cliente != false)
-                                <br>
+                                 
                                 <img width="300px;" src="{{ asset('/img/login/Header2GenericoGrande.svg') }}" alt="" class="mb-2">
                                 {{--  <div class="text-center"><h6 style="font-weight: 1000; ">HORA SALIDA:...</h6>11:00 pm</div>  --}}
-                                <br> <br>
+                                   
                                 <div class="text-center"><h6 style="font-weight: 1000;   ">FECHA DE DESCARGA:</h6>{{ \Carbon\Carbon::parse($descarga->fechaLlegada)->format( 'Y-m-d' ) }}</div>
                                 <div class="text-center"><h6 style="font-weight: 1000; ">HORA LLEGADA: </h6>{{ \Carbon\Carbon::parse($solicitante['horaLlegada'])->format('h:i A') }}</div>
                                 {{--  <div class="text-center"><h6 style="font-weight: 1000; ">HORARIO: </h6>8:00 am - 7:30 pm</div>  --}}
@@ -233,7 +234,7 @@
                                 <div class="text-center"><h6 style="font-weight: 1000; ">ODOMETRO SALIDA: </h6></div>{{$descarga->odometro}}  {{$descarga->despachado_kom}}
                                 <div class="text-center"><h6 style="font-weight: 1000; ">ODOMETRO LLEGADA: </h6></div>{{$descarga->odometroNuevo}} {{$descarga->despachado_kom}}
                                 @endif
-                                <br>
+                                 
                                 <div class="text-center"><h6 style="font-weight: 1000; ">KILOMETRAJE SALIDA: </h6>{{$descarga->kilometrajeAnterior}} {{$descarga->equipo_kom}} </div>
                                 @if ($descarga->kilometrajeAnterior != null)
                                 <div class="text-center"><h6 style="font-weight: 1000; ">KILOMETRAJE LLEGADA: </h6></div>{{$descarga->kilometrajeNuevo}}  {{$descarga->equipo_kom}}
@@ -245,8 +246,8 @@
                                 <div class="text-center"><h6 style="font-weight: 1000;  margin-top: 10px;">OBSERVACIONES: </h6>{{$solicitante['observaciones']}}</div>
                                 @if ($descarga->tipoCisternaId == null)
                                 <p class="pt-5" style="margin-top: 20px; text-align: center;">
-                                    ______________________________________<br>
-                                    Nombre Y Firma De Recibido<br>
+                                    ______________________________________ 
+                                    Nombre Y Firma De Recibido 
                                     <p class="text-center">:{{$solicitante['nombreSolicitante']}}</p>
                                 </p>
                                 @endif
@@ -262,7 +263,7 @@
                                     <h6 style="font-weight: 1000; ">TOTAL: ${{number_format(($ultimaCarga[0]->ultimoPrecio*$descarga->litros)+$solicitante['costoTrabajo']+$totalProductos, 2)}}</h6>
                                 @endif
                             @endif
-                            <br>
+                             
                             <div class="copyright text-center" style="font-size: 10px;">
                                 &copy; Copyright <strong><span>Q2Ces</span></strong>. All Rights Reserved
                             </div>
@@ -302,14 +303,20 @@
             visibility:visible !important;
         }
         
-        @page {
+        {{--  @page {
             size: 90mm 105mm; /* Tamaño ISO C7 en milímetros */
             margin-bottom: 0mm;
             margin-top: 0mm;
-        }
+        }  --}}
         body {
             margin-top: -115mm !important;
             padding: 0 !important;
+        }
+        .print-content {
+            max-height: 100vh;
+            /* Establece una altura máxima en la altura de la ventana gráfica */
+            page-break-inside: avoid;
+            /* Evita saltos de página dentro del elemento .ticket */
         }
     }
     #print-content {
@@ -332,5 +339,6 @@
         color: white;
         align-items: center;
     }
+    
 </style>
 @endsection
