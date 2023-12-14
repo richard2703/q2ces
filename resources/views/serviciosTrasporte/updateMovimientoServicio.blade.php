@@ -38,11 +38,12 @@
                                     @can('user_create')
                                         <div class="col-6 text-end">
                                             @if ($serviciosTrasporte->cajachica != 1)
-                                                <form action="{{ route('serviciosTrasporte.cajaChica') }}" method="POST"
-                                                    style="display: inline-block;" onsubmit="return confirm('Seguro?')">
+                                                <form class="alertaGuardar" action="{{ route('serviciosTrasporte.cajaChica') }}"
+                                                    method="POST" style="display: inline-block;">
                                                     @csrf
                                                     <input type="hidden" name="id" value="{{ $serviciosTrasporte->id }}">
-                                                    <button class="btn botonGral " type="submit" rel="tooltip">
+                                                    <button class="btn botonGral " onclick="alertaGuardar()" type="submit"
+                                                        rel="tooltip">
                                                         Enviar a Caja Chica
                                                     </button>
                                                 </form>
