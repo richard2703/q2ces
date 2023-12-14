@@ -133,12 +133,13 @@
                                                 ?>
                                                 @if ($blnNuevaSeccion == true)
                                                     <tr>
-                                                        <th class="labelTitulo" colspan="2">Sección
+                                                        <th class="labelTitulo" colspan="3">Sección
                                                             {{ $strNombreGrupo }}</th>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Tarea</strong></td>
-                                                        <td><strong>Resultado</strong></td>
+                                                        <th><strong>Tarea</strong></th>
+                                                        <th><strong>Resultado</strong></th>
+                                                        <th class="labelTitulo"></th>
                                                     </tr>
                                                 @endif
 
@@ -163,91 +164,19 @@
                                                     <td>
                                                         <!-- Mostramos el control de captura de datos -->
                                                         <?php echo $objPresentacion->getControlByTarea($item->tareaId, $item->resultado, $item->valor, $intCont); ?>
+                                                    </td>
+                                                    <td>
+                                                        <!-- Mostramos el control de captura de datos -->
+                                                        <?php echo $objPresentacion->getImagenTareaControl($item->tareaId, 64); ?>
+
+                                                        <?php echo $objPresentacion->getImagenGrupoTareasControl($item->grupoId, 64); ?>
+
+                                                        <?php echo $objPresentacion->getImagenTipoTareaControl($item->tipoId, 64); ?>
 
                                                     </td>
-                                                    <?php
 
-                                                    // switch ($item->tipoValorId) {
-                                                    //     //*** CASO 1
-                                                    //     case 1:
-                                                    ?>
-                                                    {{-- <div>
-                                                            <input type="radio" id="control{{ $intCont }}1"
-                                                                name="resultado{{ $item->tareaId }}[]" value="2"
-                                                                checked>
-                                                            <label class="form-check-label labelProrrogable"
-                                                                for="control{{ $intCont }}1">Revisión Ok</label>
-                                                        </div>
-                                                        <div>
-                                                            <input type="radio" id="control{{ $intCont }}2"
-                                                                name="resultado{{ $item->tareaId }}[]" value="1">
-                                                            <label class="form-check-label labelDeseable"
-                                                                for="control{{ $intCont }}2">Requiere Atención
-                                                                Futura</label>
-                                                        </div>
-                                                        <div>
-                                                            <input type="radio" id="control{{ $intCont }}3"
-                                                                name="resultado{{ $item->tareaId }}[]" value="0">
-                                                            <label class="form-check-label labelUrgente"
-                                                                for="control{{ $intCont }}3">Requiere Atención
-                                                                Inmediata</label>
-                                                        </div> --}}
-                                                    <?php
-                                                    //                                                                 break;
-                                                    // //*** CASO 2
-                                                    //                                                                 case 2:
-                                                    ?>
-                                                    {{-- <div>
-                                                            <input type="radio" id="control{{ $intCont }}1"
-                                                                name="resultado{{ $item->tareaId }}[]" value="2"
-                                                                checked>
-                                                            <label class="form-check-label labelProrrogable"
-                                                                for="control{{ $intCont }}1">Revisión Ok</label>
-                                                        </div>
-                                                        <div>
-                                                            <input type="radio" id="control{{ $intCont }}3"
-                                                                name="resultado{{ $item->tareaId }}[]" value="0">
-                                                            <label class="form-check-label labelUrgente"
-                                                                for="control{{ $intCont }}3">Requiere Atención
-                                                                Inmediata</label>
-                                                        </div> --}}
-                                                    <?php
-                                                    // break;
 
-                                                    // //*** CASO 3
-                                                    // case 3:
-                                                    ?>
-                                                    {{-- <div>
-                                                            <input type="radio" id="control{{ $intCont }}1"
-                                                                name="resultado{{ $item->tareaId }}[]" value="2"
-                                                                checked>
-                                                            <label class="form-check-label labelProrrogable"
-                                                                for="control{{ $intCont }}1">50%
-                                                                o más de
-                                                                Vida</label>
-                                                        </div>
-                                                        <div>
-                                                            <input type="radio" id="control{{ $intCont }}2"
-                                                                name="resultado{{ $item->tareaId }}[]" value="1">
-                                                            <label class="form-check-label labelDeseable"
-                                                                for="control{{ $intCont }}2">20% al 50% de
-                                                                Vida</label>
-                                                        </div>
-                                                        <div>
-                                                            <input type="radio" id="control{{ $intCont }}3"
-                                                                name="resultado{{ $item->tareaId }}[]" value="0">
-                                                            <label class="form-check-label labelUrgente"
-                                                                for="control{{ $intCont }}3">Menos del 20% de
-                                                                Vida</label>
-                                                        </div> --}}
 
-                                                    <?php
-                                                    // break;
-                                                    //     default:
-                                                    //         # code...
-                                                    //         break;
-                                                    // }
-                                                    ?>
                                                 </tr>
 
                                                 <?php

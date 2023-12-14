@@ -32,6 +32,7 @@ class tarea extends Model {
         'requiereUnidadMedida',
         'unidadMedida',
         'requiereImagen',
+        'imagen'
     ];
 
 }

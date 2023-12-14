@@ -24,15 +24,15 @@ class tareaController extends Controller {
     * @return \Illuminate\Http\Response
     */
 
-    public function index(Request $request) {
+    public function index( Request $request ) {
 
         abort_if ( Gate::denies( 'tarea_index' ), 403 );
-        $estatus = $request->input('estatus', '0');
+        $estatus = $request->input( 'estatus', '0' );
 
-        $vctCategorias = tareaCategoria::all()->sortBy('nombre');
-        $vctTipos = tareaTipo::all()->sortBy('nombre');
-        $vctUbicaciones = tareaUbicacion::all()->sortBy('nombre');
-        $vctTipoValor = tipoValorTarea::all()->sortBy('nombre');
+        $vctCategorias = tareaCategoria::all()->sortBy( 'nombre' );
+        $vctTipos = tareaTipo::all()->sortBy( 'nombre' );
+        $vctUbicaciones = tareaUbicacion::all()->sortBy( 'nombre' );
+        $vctTipoValor = tipoValorTarea::all()->sortBy( 'nombre' );
 
         $vctTareas = tarea::select(
             'tarea.*',
@@ -50,17 +50,16 @@ class tareaController extends Controller {
         ->leftJoin( 'tareaUbicacion', 'tareaUbicacion.id', '=', 'tarea.ubicacionId' )
         ->leftJoin( 'tipoValorTarea', 'tipoValorTarea.id', '=', 'tarea.tipoValorId' );
 
-        if ($estatus !== '0') {
-            $vctTareas = $vctTareas->where('grupo.id', $estatus);
+        if ( $estatus !== '0' ) {
+            $vctTareas = $vctTareas->where( 'grupo.id', $estatus );
         }
 
         $vctTareas = $vctTareas->orderBy( 'created_at', 'desc' )->paginate( 15 );
 
+        $vctFilterGrupos = grupo::select( 'grupo.*' )->orderBy( 'grupo.nombre', 'asc' )->get();
+        // dd( $vctTareas );
 
-        $vctFilterGrupos = grupo::select('grupo.*')->orderBy('grupo.nombre','asc')->get();
-        // dd($vctTareas);
-
-        return view( 'tareas.tareas', compact( 'vctTareas', 'vctCategorias', 'vctTipos', 'vctUbicaciones', 'vctTipoValor','vctFilterGrupos' ) );
+        return view( 'tareas.tareas', compact( 'vctTareas', 'vctCategorias', 'vctTipos', 'vctUbicaciones', 'vctTipoValor', 'vctFilterGrupos' ) );
     }
 
     /**
@@ -73,10 +72,10 @@ class tareaController extends Controller {
 
         abort_if ( Gate::denies( 'tarea_create' ), 403 );
 
-        $vctCategorias = tareaCategoria::all()->sortBy('nombre');
-        $vctTipos = tareaTipo::all()->sortBy('nombre');
-        $vctUbicaciones = tareaUbicacion::all()->sortBy('nombre');
-        $vctTipoValor = tipoValorTarea::all()->sortBy('nombre');
+        $vctCategorias = tareaCategoria::all()->sortBy( 'nombre' );
+        $vctTipos = tareaTipo::all()->sortBy( 'nombre' );
+        $vctUbicaciones = tareaUbicacion::all()->sortBy( 'nombre' );
+        $vctTipoValor = tipoValorTarea::all()->sortBy( 'nombre' );
 
         return view( 'tareas.nuevaTarea', compact( 'vctCategorias', 'vctTipos', 'vctUbicaciones', 'vctTipoValor' ) );
     }
@@ -105,6 +104,18 @@ class tareaController extends Controller {
 
         // dd( $tarea );
         tarea::create( $tarea );
+
+        $tarea = tarea::create( $tarea );
+
+        $tareaNombre = 'imagenTarea'.  str_pad( $tarea->id, 2, '0', STR_PAD_LEFT );
+
+        if ( $request->hasFile( 'imagen' ) ) {
+            $tarea->imagen =  $tareaNombre . '_'. time() .'.' . $request->file( 'imagen' )->getClientOriginalExtension();
+
+            $request->file( 'imagen' )->storeAs( '/public/interfaz/tareas/', $tarea->imagen );
+            $tarea->save();
+        }
+
         Session::flash( 'message', 1 );
 
         return redirect()->route( 'tarea.index' );
@@ -133,10 +144,10 @@ class tareaController extends Controller {
         abort_if ( Gate::denies( 'tarea_edit' ), 403 );
 
         $tarea =  tarea::where( 'id', '=', $id )->first();
-        $vctCategorias = tareaCategoria::all()->sortBy('nombre');
-        $vctTipos = tareaTipo::all()->sortBy('nombre');
-        $vctUbicaciones = tareaUbicacion::all()->sortBy('nombre');
-        $vctTipoValor = tipoValorTarea::all()->sortBy('nombre');
+        $vctCategorias = tareaCategoria::all()->sortBy( 'nombre' );
+        $vctTipos = tareaTipo::all()->sortBy( 'nombre' );
+        $vctUbicaciones = tareaUbicacion::all()->sortBy( 'nombre' );
+        $vctTipoValor = tipoValorTarea::all()->sortBy( 'nombre' );
 
         // dd( $tarea );
         return view( 'tareas.editarTarea', compact( 'tarea',  'vctCategorias', 'vctTipos', 'vctUbicaciones', 'vctTipoValor' ) );
@@ -178,6 +189,16 @@ class tareaController extends Controller {
         if ( is_null( $tarea ) == false ) {
             // dd( $data );
             $tarea->update( $data );
+
+            $tareaNombre = 'imagenTarea'.  str_pad( $tarea->id, 2, '0', STR_PAD_LEFT );
+
+            if ( $request->hasFile( 'imagen' ) ) {
+                $tarea->imagen =  $tareaNombre . '_'. time() .'.' . $request->file( 'imagen' )->getClientOriginalExtension();
+
+                $request->file( 'imagen' )->storeAs( '/public/interfaz/tareas/', $tarea->imagen );
+                $tarea->save();
+            }
+
             Session::flash( 'message', 1 );
         }
 
