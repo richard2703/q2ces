@@ -165,7 +165,14 @@ class mantenimientosController extends Controller {
         // $events = calendarioPrincipal::create( $mantenimiento );
         Session::flash( 'message', 1 );
 
-        return redirect()->route( 'mantenimientos.edit', $mantenimiento->id )->with( 'success', 'Mantenimiento creado correctamente, continue con el proceso.' );
+        if ( $maquina->compania == 'mtq' ) {
+            return redirect()->route( 'mantenimientos.editMtq', $mantenimiento->id )->with( 'success', 'Mantenimiento creado correctamente, continue con el proceso.' );
+
+        } else {
+
+            return redirect()->route( 'mantenimientos.edit', $mantenimiento->id )->with( 'success', 'Mantenimiento creado correctamente, continue con el proceso.' );
+        }
+
     }
 
     /**

@@ -25,7 +25,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-2 mt-4" style="margin-left:20px">
-                                    <a href="{{ route('mantenimientos.index') }}">
+                                    <a href="{{ $mantenimiento->compania == 'mtq' ? route('mantenimientos.indexMtq'):  route('mantenimientos.index') }}">
                                         <button class="btn regresar">
                                             <span class="material-icons">
                                                 reply
@@ -807,7 +807,7 @@
                                         </div>
 
                                         <div class="col-12 text-center mt-1 pt-1">
-                                            <a href="{{ route('mantenimientos.index') }}">
+                                            <a href="{{ $maquinaria->compania == 'mtq' ? route('mantenimientos.indexMtq'):  route('mantenimientos.index') }}">
                                                 <button class="btn regresar" name="guardar" value="0">
                                                     <span class="material-icons">
                                                         reply

@@ -238,8 +238,16 @@ class checkListRegistrosController extends Controller {
         $maquinaria = maquinaria::select( 'maquinaria.*' )->where( 'id', '=', $checkList->maquinariaId )->first();
         $bitacora = bitacoras::select( 'bitacoras.*' )->where( 'id', '=', $checkList->bitacoraId )->first();
 
+        $grupos = grupo::select(
+            DB::raw( 'grupo.id AS grupoId' ),
+            DB::raw( 'grupo.nombre AS grupo' ),
+            DB::raw( 'grupo.imagen' ),
+            DB::raw( 'grupoBitacoras.id AS bitacoraId' ),
+        )
+        ->join( 'grupoBitacoras', 'grupoBitacoras.grupoId', '=', 'grupo.id' )
+        ->where( 'grupoBitacoras.bitacoraId', '=', $checkList->bitacoraId )->orderBy( 'grupo', 'asc' )->get();
         // dd( $vctRecords );
-        return view( 'checkList.editarCheckList', compact( 'maquinaria', 'bitacora', 'checkList', 'vctRecords' ) );
+        return view( 'checkList.editarCheckList', compact( 'maquinaria', 'bitacora', 'checkList', 'vctRecords','grupos' ) );
     }
 
     /**
@@ -295,6 +303,11 @@ class checkListRegistrosController extends Controller {
                 if ( $objRegistro ) {
                     //*** actualizamos solo el valor de la tarea y su etiqueta */
                     $objRegistro->valor = $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ][ 0 ] ;
+                    $vctDebug[] = "INFORMACION: ";
+                    $vctDebug[] = "Tarea: " .   $request[ 'tareaId' ][ $i ] [ 0 ] ;
+                    $vctDebug[] = "Valor: " . $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ][ 0 ] ;
+                    $vctDebug[] = "Control: " . $request[ 'controlHtml' ][ $i ] ;
+
                     //*** checamos el tipo de control */
                     if ( $request[ 'controlHtml' ][ $i ] == 'select' || $request[ 'controlHtml' ][ $i ] == 'radio' ) {
                         $vctDebug[] = $objRegistro->resultado = $objTarea->etiquetaValor( $request[ 'resultado' . $request[ 'tareaId' ][ $i ] ][ 0 ], $request[ 'tareaId' ][ $i ] );
