@@ -41,7 +41,6 @@
                             <form action="{{ route('residentes.store') }}"
                                 method="post"class="row alertaGuardar" enctype="multipart/form-data">
                                 @csrf
-                                <input type="hidden" name="userId" id="userId" value="{{ auth()->user()->id }}">
                                 
                                 <div class="row mt-3" style="padding-left: 40px">
                                     <div class=" col-12 col-sm-6 mb-3 pr-3">
