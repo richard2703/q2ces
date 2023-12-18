@@ -516,6 +516,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //*** Mtq */
     Route::resource('residentes', App\Http\Controllers\residenteController::class);
+    Route::post('/residentes/generateUser', [App\Http\Controllers\residenteController::class, 'generate'])->name('residente.generateUser');
     // Route::resource('docs', App\Http\Controllers\docsController::class);
     // Route::resource('tiposDocs', App\Http\Controllers\tiposDocsController::class);
     Route::resource('uso', App\Http\Controllers\usoMaquinariasController::class);

@@ -56,6 +56,14 @@ function alertaNoPermission(){
 	})
 }
 
+function alertaDuplicado(){
+	Swal.fire({
+		icon: 'error',
+		title: 'Usuarios',
+		text: '¡El residente ya tiene un usuario creado!'
+	})
+}
+
 function alertaGuardarMaquinaria(fotos)
 {
 	$('.alertaGuardar').submit(function(e) {
@@ -151,6 +159,15 @@ function mostrarSpinner(estado) {
             title: 'Borrado Exitosamente',
             showConfirmButton: false,
             timer: 1500 // La alerta se cierra automáticamente después de 1.5 segundos
+        });
+    }
+
+	function mostrarAlertaExitoCorta() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Creado Exitosamente',
+            showConfirmButton: false,
+            timer: 2000 // La alerta se cierra automáticamente después de 1.5 segundos
         });
     }
 

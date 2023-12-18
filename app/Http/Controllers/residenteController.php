@@ -10,10 +10,12 @@ use Illuminate\Http\Request;
 use App\Models\residente;
 use App\Models\obras;
 use App\Models\residenteAutos;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 
 class residenteController extends Controller
 {
@@ -22,6 +24,34 @@ class residenteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function generate(Request $request)
+    {
+        $residente = Residente::where('id', $request['userId'])->first();
+
+        if ($residente->userId != null) {
+            Session::flash('message', 7);
+        } else {
+            $userData = [
+                'name' => $residente->nombre, // Utiliza el campo correcto del residente para el nombre del usuario
+                'username' => $residente->nombre, // Utiliza el campo correcto del residente para el username del usuario
+                'email' => $residente->email, // Asegúrate de tener el campo correcto para el email del residente
+                'password' => bcrypt('12345678'),
+            ];
+
+            $newUser = User::create($userData);
+
+            $roles = ['9'];
+            $newUser->syncRoles($roles);
+
+            $residente->userId = $newUser->id;
+            $residente->save();
+            Session::flash('message', 8);
+        }
+
+        return redirect()->route('residentes.index');
+    }
+
 
     public function index()
     {
@@ -94,7 +124,7 @@ class residenteController extends Controller
         ]);
         $record = $request->all();
 
-        $record['clienteId'] = 2; //*** el cliente 2 de MTQ */
+        $record['clienteId'] = 2;
         $newResidente = residente::create($record);
         for ($i = 0; $i < count($request['autoIdR']); $i++) {
 
@@ -140,7 +170,6 @@ class residenteController extends Controller
         $vctObras = obras::where('estatus', 1)->orderBy('nombre', 'asc')->get();
 
         $residentesAutos = residenteAutos::join('maquinaria as equipo', 'autoId', '=', 'equipo.id')->select('equipo.nombre as equipo_nombre', 'equipo.id as equipo_id', 'residenteAutos.id')->where('residenteId', $residente->id)->get();
-        // dd($residentesAutos);
 
         return view('MTQ.detalleResidentes', compact('maquinaria', 'residente', 'vctObras', 'readonly', 'residentesAutos'));
     }
@@ -155,11 +184,7 @@ class residenteController extends Controller
 
     public function update(Request $request, $id)
     {
-
         abort_if(Gate::denies('catalogos_edit'), 403);
-
-        // dd($request);
-
         $request->validate([
             'nombre' => 'required|max:250',
         ], [
@@ -167,31 +192,32 @@ class residenteController extends Controller
             'nombre.max' => 'El campo título excede el límite de caracteres permitidos.',
         ]);
         $data = $request->all();
-
         $record = residente::where('id', $data['residenteId'])->first();
-        // dd($request);
-
         $nuevaLista = collect();
         $record->update($data);
 
         for ($i = 0; $i < count($request['idResidenteAuto']); $i++) {
-
             if ($request['autoIdR'][$i]) {
                 $array = [
                     'id' => $request['idResidenteAuto'][$i],
                     'autoId' => $request['autoIdR'][$i],
                     'residenteId' => $record->id
                 ];
-                // dd($array);
                 $objResidente = residenteAutos::updateOrCreate(['id' => $array['id']], $array);
-                // dd($i, $array, $objResidente);
-                // dd($objResidente, $array, $request);
                 $nuevaLista->push($objResidente->id);
             }
         }
 
-
         $test = residenteAutos::where('residenteId', $record->id)->whereNotIn('id', $nuevaLista)->delete();
+        $user = User::where('id', $record->userId)->first();
+        if ($user) {
+            $request['name'] = $request['nombre'];
+            $request['username'] = $request['nombre'];
+            $dataUser = $request->only('name', 'username', 'email');
+            $user->update($dataUser);
+        } else {
+        }
+
         Session::flash('message', 1);
 
         return redirect()->route('residentes.index');
@@ -208,7 +234,21 @@ class residenteController extends Controller
     {
         abort_if(Gate::denies('residente_mtq_destroy'), 403);
         $residente = residente::select("*")->where('id', '=', $id)->first();
+        $residenteAutos = residenteAutos::select("*")->where('residenteId', '=', $id)->get();
+        if ($residenteAutos) {
+            foreach ($residenteAutos as $residenteAto) {
+                $residenteAto->delete();
+            }
+        }
+
+        $user = User::where('id', $residente->userId)->first();
         $residente->delete();
+        if ($user) {
+            $password = Str::random(50);
+            $user->estadoId = 2;
+            $user->password = bcrypt($password);
+            $user->update();
+        }
 
         Session::flash('message', 4);
 

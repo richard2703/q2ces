@@ -73,6 +73,23 @@
                                                                 </svg>
                                                             </a>--> --}}
                                                         {{-- @endcan --}}
+                                                        @can('residente_mtq_generateUser')
+                                                        <form class="alertaGuardar" id="printForm" action="{{ route('residente.generateUser') }}" method="POST" style="display: inline-block;">
+                                                            @csrf
+                                                            @method('POST')
+                                                            <input type="hidden" name="userId" value="{{$item->id}}">
+                                                            @if ($item->userId != null)
+                                                            <button class="btnSinFondo" type="submit" onclick="alertaGuardar()">
+                                                                <i class="fas fa-user-plus" style="color: #8caf48; font-size: x-large;"></i>
+                                                            </button>    
+                                                            @else
+                                                            <button class="btnSinFondo" type="submit" onclick="alertaGuardar()">
+                                                                <i class="fas fa-user-plus" style="color: red; font-size: x-large;"></i>
+                                                            </button>
+                                                            @endif
+                                                            
+                                                        </form>
+                                                        @endcan
                                                         @can('residente_mtq_edit')
                                                             <a href="{{ route('residentes.edit', $item->id) }}"
                                                                 class="">
@@ -84,6 +101,7 @@
                                                                 </svg>
                                                             </a>
                                                         @endcan
+
                                                         @can('residente_mtq_destroy')
                                                         <form action="{{ route('residentes.destroy', $item->id) }}" method="POST" style="display: inline-block">
                                                             @csrf
@@ -136,11 +154,6 @@
                             <input type="text" class="inputCaja" name="nombre" required value="{{ old('nombre') }}"
                                 required placeholder="Especifique...">
                         </div>
-                        {{--  <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Empresa:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="empresa" name="empresa" required
-                                value="{{ old('empresa') }}" required placeholder="Especifique...">
-                        </div>  --}}
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">E-mail</label></br>
@@ -153,12 +166,6 @@
                             <input type="tel" placeholder="ej. 00-0000-0000" class="inputCaja"
                                 name="telefono"value="{{ old('telefono') }}">
                         </div>
-
-                        {{--  <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Puesto:<span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="puesto" name="puesto" required
-                                value="{{ old('puesto') }}" required placeholder="Especifique...">
-                        </div>  --}}
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Obra: <span>*</span></label></br>
@@ -185,14 +192,6 @@
                                 </select>
                             </div>
                         @endcan
-
-                        {{--  <div class=" col-12  mb-3 ">
-                            <label class="labelTitulo">Comentarios:</label></br>
-                            <textarea class="form-control" placeholder="Escribe tu comentario aquí" id="floatingTextarea" name="comentario"
-                                spellcheck="true">{{ old('comentario') }}</textarea>
-                        </div>  --}}
-
-
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -293,7 +292,7 @@
          console.log(idname);
          jQuery('span.'+idname).next().find('span').html(filename);
         });
-        </script>
+    </script>
 
     <script>
         function Guardado() {
@@ -383,6 +382,18 @@
                 });
             });
         });
+    </script>
+
+    <script>
+        var slug = '{{ Session::get('message') }}';
+
+        if (slug == 7) {
+            alertaDuplicado();
+
+        }
+        if(slug == 8) {
+            mostrarAlertaExitoCorta();
+        }
     </script>
     
 @endsection
